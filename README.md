@@ -22,6 +22,7 @@ We recommend to use the latest material stored in `/YEAR-MM` directory. Each `/Y
 
 ## How to contribute your work
 
+* For any changes, please create a branch and push your work for us to review separately.
 * If you find typos or errors in Jupyter Notebook codes in existing notebooks under `/YEAR-MM`, please directly push your changes.
 * This is same to all documents under `/LabGuide`.
 * When creating your notebook and if it is using any images, please put that images under `/images` directory. You may simply include the image in your Markdown cell in this way: `<img src="../images/Factorization2.png" alt="Factorization" style="width: 800px;"/>`
