@@ -8,10 +8,13 @@ This sample code is made available under a modified MIT license. See the LICENSE
 
 ## Directory structure
 
-Hands-on materials get enriched over time as we get more contributions. You can find the latest work under `/Work-in-progress` directory that you may test and contribute to make it stable enough to release. 
+Hands-on materials get enriched over time as we get more contributions. This repository has a number of distinct sub-directories for the below purpose:  
 
-Tested and verified lab materials are stored in `/YEAR-MM` sub directories. We classifiy  However when performing an AI/ML immer
-
+* Tested and verified lab materials are stored in `/YEAR-MM` sub directories. 
+* `/Work-in-progress` directory the latest work under development. You may test and contribute to make it stable enough to release. 
+* `/LabGuide` contains a guidance material for AWS users to follow up lab modules. This typically contains procedural step-by-step instructions with screenshots
+* `/images` is a collection of multimedia data used in lab modules. Any external images embedded in Jupyter notebooks should be stored here and referenced by `<img/>` tag within Jupyter Markdown cells.
+* `/Contribution` is where a user pushes their contribution to be included as a new lab module.
 
 ### What to use for your AI/ML workshop
 
