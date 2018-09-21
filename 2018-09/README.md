@@ -1,6 +1,6 @@
 ## AWS AI/ML Workshop - Korea
 
-A collection of localized Amazon SageMaker samples
+A collection of localized Amazon SageMaker samples. See the below Changes to see the progress.
 
 ## License Summary
 
