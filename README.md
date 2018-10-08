@@ -21,7 +21,7 @@ We recommend to use the latest material stored in `/src/release/YEAR-MM` directo
 * For any changes, please create a branch and push your work for us to review separately.
 * If you find typos or errors in Jupyter Notebook codes in existing notebooks under `/src/release/YEAR-MM`, please directly push your changes.
 * This is same to all documents under `/doc/labguide`.
-* When creating your notebook and if it is using any images, please put that images under `/images` directory. You may simply include the image in your Markdown cell in this way: `<img src="../../images/Factorization2.png" alt="Factorization" style="width: 800px;"/>`
+* When creating your notebook and if it is using any images, please put that images under `/images` directory. You may simply include the image in your Markdown cell in this way: `<img src="../../../images/Factorization2.png" alt="Factorization" style="width: 800px;"/>`
 * Or else if you want to revise the content or propose a new lab, please push it to `/contribution`. We will review the content and decide whether to replace an existing module or to add it as a new module. The maintainer will accordingly modify or prepare a lab guide if your notebook contains good enough information for us to prepare a lab guide. Otherwise we will reach you back for further questions.
 * For further details, please refer CONTRIBUTION.md
 
