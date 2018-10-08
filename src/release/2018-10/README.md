@@ -11,4 +11,4 @@ This sample code is made available under a modified MIT license. See the LICENSE
 * 08-Oct-2018:
     * All labs includes lab-time measurement record for the reference.
     * All labs are modified to use '/tmp' directory when handling big files to save user directory disk spaces.
-    * A kerel for all labs are set to use 'conda_python3' except for the specific case (ex. module 4 using TensorFlow)
+    * A kernel for all labs are set to use 'conda_python3' except for the specific case (ex. module 4 using TensorFlow)
