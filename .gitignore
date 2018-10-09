@@ -1,4 +1,5 @@
-
+.github
+.gitignore
 .DS_Store
 src/release/2018-09/AWS Korea AI ML Immersion Day Hands-on PilHoKim 5th September 2018.pdf
 src/release/2018-09/lambda_function.py
@@ -10,3 +11,4 @@ src/release/2018-09/module7-Movie recommendation on Amazon SageMaker Using Facto
 src/release/2018-09/module8-SageMaker-Seq2Seq-Translation-English-German-InternetFacingApp.ipynb
 src/release/2018-09/README.md
 src/release/2018-09/sample_query.json
+*.swp
