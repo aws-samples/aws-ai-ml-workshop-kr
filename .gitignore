@@ -1,5 +1,4 @@
 .github
-.gitignore
 .DS_Store
 src/release/2018-09/AWS Korea AI ML Immersion Day Hands-on PilHoKim 5th September 2018.pdf
 src/release/2018-09/lambda_function.py
