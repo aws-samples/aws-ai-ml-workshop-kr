@@ -2,7 +2,7 @@
 
 A collection of localized (Korean) AWS AI/ML workshop materials for hands-on labs. 
 
-## Directory structure
+## Directory Structure
 
 Hands-on materials get enriched over time as we get more contributions. This repository has a number of distinct sub-directories for the below purpose:  
 
@@ -21,7 +21,7 @@ This repository assumes you have your own AWS account and wish to test SageMaker
     * [English version](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
 * Use the latest Chrome or Firefox browser.
 
-## How to use this material?
+## How To Use This Material?
 
 * If you are attending AWS Korea's AI/ML workshop, session leaders will guide you entire procedure.
     * For workshop participants, please check and register the credit if provided by the session leaders.
@@ -30,7 +30,7 @@ This repository assumes you have your own AWS account and wish to test SageMaker
     * Please note that lab materials here may occur the charge depending on your choice of instance types and use of other AWS services. 
     * Each `/src/release/YEAR-MM` directory has README.MD file that explains the change from the previous version. Read it carefully if it meets with your needs.
 
-## Clean up
+## Clean Up
 To avoid incurring unnecessary charges, use the AWS Management Console to delete the resources that you created for this exercise. For the latest information, please refer [here](https://docs.aws.amazon.com/sagemaker/latest/dg/ex1-cleanup.html).
 
 Note that if you plan to explore other exercises in this guide, you might want to keep some of these resources, such as your notebook instance, S3 bucket, and IAM role.
@@ -48,7 +48,7 @@ If you want to close your AWS account, please refer:
 * [Korean version](https://docs.aws.amazon.com/ko_kr/awsaccountbilling/latest/aboutv2/close-account.html)
 * [English version](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/close-account.html)
 
-## How to contribute your work
+## How To Contribute Your Work
 
 * If you want to make some changes, please create a branch and push your work for us to review separately.
 * If you find typos or errors in Jupyter Notebook codes in existing notebooks under `/src/release/YEAR-MM`, please directly push your changes.
