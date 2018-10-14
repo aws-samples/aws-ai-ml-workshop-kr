@@ -13,3 +13,6 @@ This sample code is made available under a modified MIT license. See the LICENSE
     * All labs are modified to use `/tmp` directory when handling big files to save user directory disk spaces.
     * A kernel for all labs are set to use `conda_python3` except for the specific case (ex. module 4 using TensorFlow)
 * 09-Oct-2018: All labs are created and modified for dev-day seoul 2018.
+* 15-Oct-2018: 
+    * All labs are renamed for dev-day seoul 2018.
+    * dev-day branch is merged into master branch.
