@@ -4,17 +4,17 @@ A collection of localized (Korean) AWS AI/ML workshop materials for hands-on lab
 
 ## Directory Structure
 
-Hands-on materials get enriched over time as we get more contributions. This repository has a number of distinct sub-directories for the below purpose:  
+Hands-on materials wiil get enriched over time as we get more contributions. This repository has a number of distinct sub-directories for the below purpose:  
 
 * Tested and verified lab materials are stored in `/src/release/YEAR-MM` sub directories. 
-* `/src/work-in-progress` directory the latest work under development. You may test and contribute to make it stable enough to release. 
-* `/doc/labguide` contains a guidance material for AWS users to follow up lab modules. This typically contains procedural step-by-step instructions with screenshots
+* `/src/work-in-progress` directory maintaines the latest work under development. You may test and contribute to make it stable enough to release. 
+* `/doc/labguide` contains guidance materials for AWS users to follow up lab modules. This typically contains procedural step-by-step instructions with screenshots.
 * `/images` is a collection of multimedia data used in lab modules. Any external images embedded in Jupyter notebooks should be stored here and referenced by `<img/>` tag within Jupyter Markdown cells.
 * `/contribution` is where a user pushes their contribution to be included as a new lab module.
 
 ## Pre-requisites
 
-This repository assumes you have your own AWS account and wish to test SageMaker. If you don't have an AWS account, please follow the below instruction.
+This repository assumes that you have your own AWS account and want to experience [Amazon SageMaker](https://aws.amazon.com/sagemaker/). If you don't have an AWS account, please follow the below instruction.
 
 * How to create a new Amazon Web Service account:
     * [Korean version](https://s3.ap-northeast-2.amazonaws.com/pilho-immersionday-public-material/download/AWS+%E1%84%80%E1%85%A8%E1%84%8C%E1%85%A5%E1%86%BC+%E1%84%89%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC+%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%83%E1%85%B3.pdf)
@@ -23,12 +23,12 @@ This repository assumes you have your own AWS account and wish to test SageMaker
 
 ## How To Use This Material?
 
-* If you are attending AWS Korea's AI/ML workshop, session leaders will guide you entire procedure.
-    * For workshop participants, please check and register the credit if provided by the session leaders.
+* If you are attending AWS Korea's AI/ML workshop, session leaders will guide you the entire procedure.
+    * For workshop participants, please check and register a credit if provided by session leaders.
 * If you want to test this lab by yourself, we recommend to use the latest material stored in `/src/release/YEAR-MM` directory. 
-    * Download the PDF file in `/src/release/YEAR-MM` directory. It includes the complete instruction on how to start your SageMaker notebook server, clone this repository into it, and performing labs.
+    * Download the PDF file in `/src/release/YEAR-MM` directory. It includes a complete instruction on how to start your SageMaker notebook server, clone this repository into it, and perform the lab.
     * Please note that lab materials here may occur the charge depending on your choice of instance types and use of other AWS services. 
-    * Each `/src/release/YEAR-MM` directory has README.MD file that explains the change from the previous version. Read it carefully if it meets with your needs.
+    * Each `/src/release/YEAR-MM` directory has README.MD file that explains the changes from the previous version. Read it carefully whether it meets your needs.
 
 ## Clean Up
 To avoid incurring unnecessary charges, use the AWS Management Console to delete the resources that you created for this exercise. For the latest information, please refer [here](https://docs.aws.amazon.com/sagemaker/latest/dg/ex1-cleanup.html).
