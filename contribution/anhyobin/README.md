@@ -137,3 +137,17 @@ if event['RequestType'] == 'Delete':
 </div>
 
 ### Create Amazon Kinesis Data Firehose
+Data generated from Amazon DynamoDB and Amazon EC2 instnace are collected through Amazon Kinesis Data Firehose. Amazon Kinesis Data Firehose is a fully managed service for deliver streaming data to a specific target.
+
+1. In AWS Management Console, select **Kinesis** service.
+2. Select **[Get started]** button, then click **[Create delivery stream]** button on Deliver streaming data with Kinesis Firehose delivery streams.
+3. Enter **stream-playlog** on **[Delivery stream name]**. Select **[Direct PUT or other sources]** option for Source. Click **[Next]** to proceed.
+4. Amazon Kinesis Data Firehose supports data pre-processing with AWS Lambda. But at this time, we will not use this feature. Click **[Next]**.
+5. Select **[Amazon S3]** as a destionation, and select **raw** data bucket which created before for **[S3 bucket]**. Enter **playlog/** on **[Prefix]**. Click **[Next]** if the setting are as follows:
+
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/6.png"</img> 
+</div>
+
+6. Set **1MB** on **[Buffer size]** and set **60seconds** on **[Buffer interval]**.
