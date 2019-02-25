@@ -74,3 +74,8 @@ The Amazon EC2, Amazon DynamoDB, AWS Lambda, and AWS IAM Roles used in the lab a
 
 5. This may takes about 10 minutes.
 6. Read the following description of the AWS CloudFormation that is created while the stack is being created.
+
+AWS CloudFormation template used in this lab automatically invokes Lambda function **DDBInitialize**. This is possible through **custom resources** provided by AWS CloudFormation.
+https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/template-custom-resources.html
+
+
