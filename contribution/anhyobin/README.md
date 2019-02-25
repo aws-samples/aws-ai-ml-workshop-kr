@@ -1,9 +1,9 @@
-# 게임 데이터 분석을 위한 Data Lake 구축과 Machine Learning 을 활용한 분석
+# Identifying abnormal player behavior with Machine Learning
 
-## 실습 소개
-이번 실습에서는 AWS 상에서 임의로 생성한 게임 데이터를 분석해봅니다. 이를 통해 AWS 상에서 데이터를 실시간으로 수집하고, 가공한 뒤 실제로 분석을 간편하게 수행해볼 수 있습니다. 더 나아가 수집한 데이터를 학습하고 이를 이용해 이상 행동 패턴을 판단해보게 됩니다.
+## Introduction
+In this lab, you will analyze game data which randomly generated on AWS. Through this lab, you will collect data in real-time, process it, and then perform analyze it on AWS. Further, you will identify abnormal player behavior through machine learning.
 
-## 실습 아키텍처
+## Architecture
 ![alt text](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/image/architecture.png)
 
 ## 실습 흐름
