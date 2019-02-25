@@ -53,10 +53,13 @@ You need the Amazon S3 Bucket to store all the necessary data. In this lab, let'
 4. Create second bucket with name, such as **gaming-analytics**. Specify the name of the bucket so that it can be distinguished.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/Picture1.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/1.png"</img> 
 </div>
 
 ### Create AWS CloudFormation Stack
 The Amazon EC2, Amazon DynamoDB, AWS Lambda, and AWS IAM Roles used in the lab are created through the AWS CloudFormation stack. In addition to simply provisioning the resources, AWS CloudFormation stack also execute the logic to initialize Amazon DynamoDB through invoke Lambda function.
 1. In the AWS Management Console, select **CloudFormation** service.
-2. Click **[Create new stack]** button. Select **[Specify an Amazon S3 template URL]** option and enter this url(https://s3.amazonaws.com/anhyobin-gaming/cloudformation.yaml). Click **[Next]** button.
+2. Click **[Create new stack]** button. Select **[Specify an Amazon S3 template URL]** option and enter this URL https://s3.amazonaws.com/anhyobin-gaming/cloudformation.yaml. Click **[Next]** button.
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/2.png"</img> 
+</div>
