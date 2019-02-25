@@ -16,7 +16,6 @@ This processed data is then analyzed using Athena to query and SageMaker for mor
 
 ### About Data
 There are 2 types of data are collected. Let's take a look at the data used in this lab first.
-
 1. User Profile data in stored in DynamoDB and contains information about the level and class of users.
 
 | pidx  | uclass | ulevel | utimestamp |
@@ -68,7 +67,6 @@ The EC2, DynamoDB, Lambda, and IAM Roles used in the lab are created through the
 
 3. Enter name on **[Stack name]** field and select EC2 Key Pairs which created before on **[KeyName]**. Click **[Next]** to proceed.
 4. Click **[Next]** on option page and check **[I acknowledged that AWS CloudFormation might create IAM resources with custom names.]** button then click **[Create]** to create stack.
-
 
 <div align="center">
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/3.png"></img> 
@@ -140,13 +138,11 @@ if event['RequestType'] == 'Delete':
 
 ### Create Amazon Kinesis Data Firehose
 Data generated from DynamoDB and EC2 instnace are collected through Kinesis Data Firehose. Kinesis Data Firehose is a fully managed service for deliver streaming data to a specific target.
-
 1. In AWS Management Console, select **Kinesis** service.
 2. Select **[Get started]** button, then click **[Create delivery stream]** button on Deliver streaming data with Kinesis Firehose delivery streams.
 3. Enter **stream-playlog** on **[Delivery stream name]**. Select **[Direct PUT or other sources]** option for Source. Click **[Next]** to proceed.
 4. Kinesis Data Firehose supports data pre-processing with AWS Lambda. But at this time, we will not use this feature. Click **[Next]**.
 5. Select **[Amazon S3]** as a destionation, and select **raw** data bucket which created before for **[S3 bucket]**. Enter **playlog/** on **[Prefix]**. Click **[Next]** if the setting are as follows:
-
 
 <div align="center">
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/6.png"></img> 
@@ -177,5 +173,21 @@ Data generated from DynamoDB and EC2 instnace are collected through Kinesis Data
 
 ### Configure Amazon DynamoDB
 DynamoDB has UserProfile data. In this step, you configure level-up history data for each user to store to S3. This is done using the Kinesis and Lambda function.
+1. In AWS Management Console, select **DynamoDB** service.
+2. Select the **[Tables]** menu on the left and select **UserProfile** table.
+3. Click **[Manage Stream]** button on the **[Overview]** tab. This allow you to capture changes in DynamoDB table.
+4. Select **[New and old images]** option and click the **[Enable]** button. You can see that the stream feature is activated as follows:
 
-1. 
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/10.png"></img> 
+</div>
+
+5. In AWS Management Console, select **Lambda** service. Add a DynamoDB Stream to a Lambda function as an event trigger, and if any changes are made on DynamoDB, the data will be collected to Kinesis.
+6. Select the pre-created **StreamUserLog** function and click **[DynamoDB]** on the left.
+7. For **[DynamoDB table]**, select **UserProfile**, enter **100** on **[Batch size]**, and select **[Trim horizon]** on **[Starting position]**. Make sure that the **[Enable trigger]** option is checked below, then click the **[Add]** button below.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/10.png"></img> 
+</div>
+
+8. Click the
