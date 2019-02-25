@@ -83,4 +83,13 @@ DDBInitLambdaInvoke:
   Type: Custom::DDBInitLambdaInvoke
   Properties:
     ServiceToken: !GetAtt DDBInitLambda.Arn
+```
+
+AWS CloudFormation basically creates the resources defined in the template in parallel at the same time, but it is also possible to control the logic with the **DependsOn** property in between.
+
+```yaml
+DDBInitLambda:
+  Type: AWS::Lambda::Function
+  DependsOn: DDBTable
+```
 
