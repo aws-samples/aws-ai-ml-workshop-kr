@@ -7,7 +7,7 @@ In this lab, you will analyze game data which randomly generated on AWS. Through
 
 ### Architecture
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/architecture.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/architecture.png"></img> 
 </div>
 
 ### Lab Flow
@@ -34,7 +34,7 @@ There are 2 types of data are collected. Let's take a look at the data used in t
 It contains about 40 million play records from a total 20043 users. The virtual map where users played game is as follows. The **Red Zone** is the area where normal users can not go into.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png"></img> 
 </div>
 
 ## Lab
@@ -55,7 +55,7 @@ You need the S3 Bucket to store all the necessary data. In this lab, let's creat
 4. Create second bucket with name, such as **gaming-analytics**. Specify the name of the bucket so that it can be distinguished.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/1.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/1.png"></img> 
 </div>
 
 ### Create AWS CloudFormation Stack
@@ -63,7 +63,7 @@ The EC2, DynamoDB, Lambda, and IAM Roles used in the lab are created through the
 1. In the AWS Management Console, select **CloudFormation** service.
 2. Click **[Create new stack]** button. Select **[Specify an Amazon S3 template URL]** option and enter this URL https://s3.amazonaws.com/anhyobin-gaming/cloudformation.yaml. Click **[Next]** button.
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/2.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/2.png"></img> 
 </div>
 
 3. Enter name on **[Stack name]** field and select EC2 Key Pairs which created before on **[KeyName]**. Click **[Next]** to proceed.
@@ -71,7 +71,7 @@ The EC2, DynamoDB, Lambda, and IAM Roles used in the lab are created through the
 
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/3.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/3.png"></img> 
 </div>
 
 5. This may takes about 10 minutes.
@@ -128,14 +128,14 @@ if event['RequestType'] == 'Delete':
 7. On the **[Resources]** tab, confirm that the all resource creation is completed. You can find connection information of EC2 instance in **[Outputs]** tab.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/4.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/4.png"></img> 
 </div>
 
 8. Let's confirm DynamoDB create and initialize properly via the Lambda fucntion. In AWS Management Console, select **DynamoDB** service.
 9. Select the **[Tables]** menu on the left to see that the **UserProfile** table has been created. Select it and click **[Items]** on the right menu to check that the data in the table has been written.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/5.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/5.png"></img> 
 </div>
 
 ### Create Amazon Kinesis Data Firehose
@@ -149,7 +149,7 @@ Data generated from DynamoDB and EC2 instnace are collected through Kinesis Data
 
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/6.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/6.png"></img> 
 </div>
 
 6. Set **1MB** on **[Buffer size]** and set **60seconds** on **[Buffer interval]**.
@@ -159,20 +159,20 @@ Data generated from DynamoDB and EC2 instnace are collected through Kinesis Data
 10 In **[Delivery stream name]**, enter **stream-userprofile**.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/7.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/7.png"></img> 
 </div>
 
 11. Select **[Amazon S3]** as a destionation, and select **raw** data bucket which created before for **[S3 bucket]**. Enter **userlog/** on **[Prefix]**. Click **[Next]** if the setting are as follows:
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/8.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/8.png"></img> 
 </div>
 
 12. Set **1MB** on **[Buffer size]** and set **60seconds** on **[Buffer interval]**.
 13. If you have created 2 Kinesis Data Firehose, proceed to the next step.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/9.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/9.png"></img> 
 </div>
 
 ### Configure Amazon DynamoDB
