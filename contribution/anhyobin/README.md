@@ -163,8 +163,14 @@ Data generated from Amazon DynamoDB and Amazon EC2 instnace are collected throug
 11. Select **[Amazon S3]** as a destionation, and select **raw** data bucket which created before for **[S3 bucket]**. Enter **userlog/** on **[Prefix]**. Click **[Next]** if the setting are as follows:
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/7.png"</img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/8.png"</img> 
 </div>
 
 12. Set **1MB** on **[Buffer size]** and set **60seconds** on **[Buffer interval]**.
 13. If you have created 2 Kinesis Data Firehose, proceed to the next step.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/9.png"</img> 
+</div>
+
+### Configure Amazon DynamoDB
