@@ -31,4 +31,6 @@ There are 2 types of data are collected. Before get starts, let's take a look at
 
 It contains about 40 million play records from a total 20043 users. The virtual map where users played game is as follows. The **Red Zone** is the area where normal users can not go into.
 
-![alt text](/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png)
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png"</img> 
+</div>
