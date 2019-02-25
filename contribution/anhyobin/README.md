@@ -46,3 +46,8 @@ A key is required to make SSH connection to Amazon EC2 instance to be created la
 4. Verify .pem file is downloaded successfully.
 
 ### Create Amazon S3 Bucket
+You need the Amazon S3 Bucket to store all the necessary data. In this lab, let's create a raw bucket to store raw data and analytic bucket to store processed data for analysis.
+1. In the AWS Management Console, select **S3** service.
+2. Click **[+ Create bucket]** button to create a bucket.
+3. In **[Bucket name]**, enter a your own unique name, such as **gaming-raw**, and click **[Create]** button.
+4. Create second bucket with name, such as **gaming-analytics**. Specify the name of the bucket so that it can be distinguished.
