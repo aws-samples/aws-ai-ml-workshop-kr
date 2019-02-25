@@ -63,3 +63,14 @@ The Amazon EC2, Amazon DynamoDB, AWS Lambda, and AWS IAM Roles used in the lab a
 <div align="center">
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/2.png"</img> 
 </div>
+
+3. Enter name on **[Stack name]** field and select EC2 Key Pairs which created before on **[KeyName]**. Click **[Next]** to proceed.
+4. Click **[Next]** on option page and check **[I acknowledged that AWS CloudFormation might create IAM resources with custom names.]** button then click **[Create]** to create stack.
+
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/3.png"</img> 
+</div>
+
+5. This may takes about 10 minutes.
+6. Read the following description of the AWS CloudFormation that is created while the stack is being created.
