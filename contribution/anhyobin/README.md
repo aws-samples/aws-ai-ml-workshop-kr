@@ -36,6 +36,13 @@ It contains about 40 million play records from a total 20043 users. The virtual 
 </div>
 
 ## Lab
-Select **us-east-1 (N.Virginia)** region on AWS management console before get started.
+Select **us-east-1 (N.Virginia)** region on AWS Management Console before get started.
 
 ### Create Amazon EC2 Key Pairs
+A key is required to make SSH connection to Amazon EC2 instance to be created later. If you already have a key in us-east-1 region, you make skip this step.
+1. In the AWS Management Console, select **EC2** service.
+2. On the left menu, click the **[Key Pairs]** menu, and then click **[Create Key Pair]** button.
+3. Enter the **[Key pair name]** and click **[Create]** button to finish.
+4. Verify .pem file is downloaded successfully.
+
+### Create Amazon S3 Bucket
