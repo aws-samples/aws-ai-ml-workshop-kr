@@ -131,3 +131,9 @@ if event['RequestType'] == 'Delete':
 
 8. Let's confirm Amazon DynamoDB create and initialize properly via the Lambda fucntion. In AWS Management Console, select **DynamoDB** service.
 9. Select the **[Tables]** menu on the left to see that the **UserProfile** table has been created. Select it and click **[Items]** on the right menu to check that the data in the table has been written.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/5.png"</img> 
+</div>
+
+### Create Amazon Kinesis Data Firehose
