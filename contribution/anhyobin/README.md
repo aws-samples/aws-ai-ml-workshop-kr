@@ -187,7 +187,24 @@ DynamoDB has UserProfile data. In this step, you configure level-up history data
 7. For **[DynamoDB table]**, select **UserProfile**, enter **100** on **[Batch size]**, and select **[Trim horizon]** on **[Starting position]**. Make sure that the **[Enable trigger]** option is checked below, then click the **[Add]** button below.
 
 <div align="center">
-    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/10.png"></img> 
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/11.png"></img> 
 </div>
 
-8. Click the
+8. Click the **[Save]** button in the top right corner to save changes. Make sure that you have applied the following screen capture:
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/12.png"></img> 
+</div>
+
+A quick look at the Lambda function reveals that changes are capture and collect to **stream-userprofile** Kinesis Data Firehose that you created earlier. Lambda can also store data directly into S3, but with this configuration, Kinesis acts as a buffer to prevent excessive S3 PUT requests.
+
+```python
+response = client.put_record(
+  DeliveryStreamName = 'stream-userprofile',
+  Record = {
+    'Data' : data
+  }
+)
+```
+
+### EC2 instance setup and data collect through Kinesis Agent
