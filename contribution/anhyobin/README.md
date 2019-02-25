@@ -51,3 +51,7 @@ You need the Amazon S3 Bucket to store all the necessary data. In this lab, let'
 2. Click **[+ Create bucket]** button to create a bucket.
 3. In **[Bucket name]**, enter a your own unique name, such as **gaming-raw**, and click **[Create]** button.
 4. Create second bucket with name, such as **gaming-analytics**. Specify the name of the bucket so that it can be distinguished.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/Picture1.png"</img> 
+</div>
