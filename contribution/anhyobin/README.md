@@ -1,5 +1,7 @@
 # Identifying abnormal player behavior with Machine Learning
 
+## Table of Contents
+
 ## Introduction
 In this lab, you will analyze game data which randomly generated on AWS. Through this lab, you will collect data in real-time, process it, and then perform analyze it on AWS. Further, you will identify abnormal player behavior through machine learning.
 
@@ -9,13 +11,13 @@ In this lab, you will analyze game data which randomly generated on AWS. Through
 </div>
 
 ### Lab Flow
-User Profile data in Amazon DynamoDB and Play Log data in Amazon EC2 will be collected in Amazon S3 in near real-time using Amazon Kinesis Data Firehose. After that, AWS Glue is used to create the Data Catalog and data preparation is done with Glue ETL Job.
-This processed data is then analyzed using Amazon Athena to query and Amazon SageMaker for more sophisticated analysis and prediction through Machine Learning.
+User Profile data in DynamoDB and Play Log data in EC2 will be collected in S3 in near real-time using Kinesis Data Firehose. After that, Glue is used to create the Data Catalog and data preparation is done with Glue ETL Job.
+This processed data is then analyzed using Athena to query and SageMaker for more sophisticated analysis and prediction through Machine Learning.
 
 ### About Data
 There are 2 types of data are collected. Let's take a look at the data used in this lab first.
 
-1. User Profile data in stored in Amazon DynamoDB and contains information about the level and class of users.
+1. User Profile data in stored in DynamoDB and contains information about the level and class of users.
 
 | pidx  | uclass | ulevel | utimestamp |
 | :---- | :----- | :----- | :--------- |
@@ -39,14 +41,14 @@ It contains about 40 million play records from a total 20043 users. The virtual 
 Select **us-east-1 (N.Virginia)** region on AWS Management Console before get started.
 
 ### Create Amazon EC2 Key Pairs
-A key is required to make SSH connection to Amazon EC2 instance to be created later. If you already have a key in us-east-1 region, you make skip this step.
+A key is required to make SSH connection to EC2 instance to be created later. If you already have a key in us-east-1 region, you make skip this step.
 1. In the AWS Management Console, select **EC2** service.
 2. On the left menu, click the **[Key Pairs]** menu, and then click **[Create Key Pair]** button.
 3. Enter the **[Key pair name]** and click **[Create]** button to finish.
 4. Verify .pem file is downloaded successfully.
 
 ### Create Amazon S3 Bucket
-You need the Amazon S3 Bucket to store all the necessary data. In this lab, let's create a raw bucket to store raw data and analytic bucket to store processed data for analysis.
+You need the S3 Bucket to store all the necessary data. In this lab, let's create a raw bucket to store raw data and analytic bucket to store processed data for analysis.
 1. In the AWS Management Console, select **S3** service.
 2. Click **[+ Create bucket]** button to create a bucket.
 3. In **[Bucket name]**, enter a your own unique name, such as **gaming-raw**, and click **[Create]** button.
@@ -57,7 +59,7 @@ You need the Amazon S3 Bucket to store all the necessary data. In this lab, let'
 </div>
 
 ### Create AWS CloudFormation Stack
-The Amazon EC2, Amazon DynamoDB, AWS Lambda, and AWS IAM Roles used in the lab are created through the AWS CloudFormation stack. In addition to simply provisioning the resources, AWS CloudFormation stack also execute the logic to initialize Amazon DynamoDB through invoke Lambda function.
+The EC2, DynamoDB, Lambda, and IAM Roles used in the lab are created through the CloudFormation stack. In addition to simply provisioning the resources, CloudFormation stack also execute the logic to initialize DynamoDB through invoke Lambda function.
 1. In the AWS Management Console, select **CloudFormation** service.
 2. Click **[Create new stack]** button. Select **[Specify an Amazon S3 template URL]** option and enter this URL https://s3.amazonaws.com/anhyobin-gaming/cloudformation.yaml. Click **[Next]** button.
 <div align="center">
@@ -123,13 +125,13 @@ if event['RequestType'] == 'Delete':
   send_response(event, context, "SUCCESS", {"Message": "CFN deleted!"})
 ```
 
-7. On the **[Resources]** tab, confirm that the all resource creation is completed. You can find connection information of Amazon EC2 instance in **[Outputs]** tab.
+7. On the **[Resources]** tab, confirm that the all resource creation is completed. You can find connection information of EC2 instance in **[Outputs]** tab.
 
 <div align="center">
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/4.png"</img> 
 </div>
 
-8. Let's confirm Amazon DynamoDB create and initialize properly via the Lambda fucntion. In AWS Management Console, select **DynamoDB** service.
+8. Let's confirm DynamoDB create and initialize properly via the Lambda fucntion. In AWS Management Console, select **DynamoDB** service.
 9. Select the **[Tables]** menu on the left to see that the **UserProfile** table has been created. Select it and click **[Items]** on the right menu to check that the data in the table has been written.
 
 <div align="center">
@@ -137,12 +139,12 @@ if event['RequestType'] == 'Delete':
 </div>
 
 ### Create Amazon Kinesis Data Firehose
-Data generated from Amazon DynamoDB and Amazon EC2 instnace are collected through Amazon Kinesis Data Firehose. Amazon Kinesis Data Firehose is a fully managed service for deliver streaming data to a specific target.
+Data generated from DynamoDB and EC2 instnace are collected through Kinesis Data Firehose. Kinesis Data Firehose is a fully managed service for deliver streaming data to a specific target.
 
 1. In AWS Management Console, select **Kinesis** service.
 2. Select **[Get started]** button, then click **[Create delivery stream]** button on Deliver streaming data with Kinesis Firehose delivery streams.
 3. Enter **stream-playlog** on **[Delivery stream name]**. Select **[Direct PUT or other sources]** option for Source. Click **[Next]** to proceed.
-4. Amazon Kinesis Data Firehose supports data pre-processing with AWS Lambda. But at this time, we will not use this feature. Click **[Next]**.
+4. Kinesis Data Firehose supports data pre-processing with AWS Lambda. But at this time, we will not use this feature. Click **[Next]**.
 5. Select **[Amazon S3]** as a destionation, and select **raw** data bucket which created before for **[S3 bucket]**. Enter **playlog/** on **[Prefix]**. Click **[Next]** if the setting are as follows:
 
 
@@ -174,3 +176,6 @@ Data generated from Amazon DynamoDB and Amazon EC2 instnace are collected throug
 </div>
 
 ### Configure Amazon DynamoDB
+DynamoDB has UserProfile data. In this step, you configure level-up history data for each user to store to S3. This is done using the Kinesis and Lambda function.
+
+1. 
