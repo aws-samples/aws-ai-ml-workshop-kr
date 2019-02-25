@@ -19,3 +19,10 @@ There are 2 types of data are collected. Before get starts, let's take a look at
 | :---- | :----- | :----- | :--------- |
 | 8672 | healer | 9 | 2018-10-12 05:53:59.318075 |
 | 13233 | warrior | 11 | 2018-10-12 05:48:44.748598 |
+
+2. Play Log data contains information about the user's current coordinates, next coordinates, actions, and so on.
+
+| posnewx | posnewy | posnewz | posoldx | posoldy | posoldz | pidx | idx | action | createdate |
+| :------ | :------ | :------ | :------ | :------ | :------ | :--- | :-- | :----- | :--------- |
+| 542 | 824 | 0 | 541 | 828 | 0 | 8672 | 30725885 | 0 | 2018-10-12 05:53:59.318075 |
+| 668 | 245 | 0 | 666 | 240 | 0 | 13233 | 30721726 | 0 | 2018-10-12 05:48:44.748598 |
