@@ -14,7 +14,11 @@ This processed data is then analyzed using Amazon Athena to query and Amazon Sag
 There are 2 types of data are collected. Before get starts, let's take a look at the data used in this lab.
 
 1. User Profile data in stored in Amazon DynamoDB and contains information about the level and class of users.
-| pidx | uclass | ulevel | utimestamp |
----- | ------ | ------ | ----------
-8672 | healer | 9 | 2018-10-12 05:53:59.318075
-13233 | warrior | 11 | 2018-10-12 05:48:44.748598
+
+
+| First Header  | Second Header | Third Header         |
+| :------------ | :-----------: | -------------------: |
+| First row     | Data          | Very long data entry |
+| Second row    | **Cell**      | *Cell*               |
+| Third row     | Cell that spans across two columns  ||
+[Table caption, works as a reference][section-mmd-tables-table1] 
