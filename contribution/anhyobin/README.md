@@ -78,4 +78,9 @@ The Amazon EC2, Amazon DynamoDB, AWS Lambda, and AWS IAM Roles used in the lab a
 AWS CloudFormation template used in this lab automatically invokes Lambda function **DDBInitialize**. This is possible through **custom resources** provided by AWS CloudFormation.
 https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/template-custom-resources.html
 
+```yaml
+DDBInitLambdaInvoke:
+  Type: Custom::DDBInitLambdaInvoke
+  Properties:
+    ServiceToken: !GetAtt DDBInitLambda.Arn
 
