@@ -16,8 +16,8 @@ There are 2 types of data are collected. Before get starts, let's take a look at
 1. User Profile data in stored in Amazon DynamoDB and contains information about the level and class of users.
 
 
-| First Header  | Second Header | Third Header         |
-| :------------ | :-----------: | -------------------: |
+| pidx  | uclass | ulevel | utimestamp |
+| :---- | :----- | :----- | :--------- |
 | First row     | Data          | Very long data entry |
 | Second row    | **Cell**      | *Cell*               |
 | Third row     | Cell that spans across two columns  ||
