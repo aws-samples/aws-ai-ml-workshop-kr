@@ -27,4 +27,4 @@ There are 2 types of data are collected. Before get starts, let's take a look at
 | 542 | 824 | 0 | 541 | 828 | 0 | 8672 | 30725885 | 0 | 2018-10-12 05:53:59.318075 |
 | 668 | 245 | 0 | 666 | 240 | 0 | 13233 | 30721726 | 0 | 2018-10-12 05:48:44.748598 |
 
-It contains about 40 million play records from a total 20043 users. The virtual map where users played game is as follows. The **Red Zone** is the area where normal users can not go into.
+It contains about 40 million play records from a total 20043 users. The virtual map where users played game is as follows. The <span style="color:red">**Red Zone**</span> is the area where normal users can not go into.
