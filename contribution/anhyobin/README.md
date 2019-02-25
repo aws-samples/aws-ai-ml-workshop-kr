@@ -151,3 +151,20 @@ Data generated from Amazon DynamoDB and Amazon EC2 instnace are collected throug
 </div>
 
 6. Set **1MB** on **[Buffer size]** and set **60seconds** on **[Buffer interval]**.
+7. Click the **[Create new or choose]** button under IAM role. The IAM page opens and automatically configures the IAM role. Click the **[Allow]** button. When you return to the Kinesis Data Firehose creation page, select **[Next]** and confirm your settings (Destination, S3 buffer conditions, etc.). Click **[Create delivery stream]** to complete.
+8. If the status changes to Activce after a while, the Kinesis Data Firehose creation is complete.
+9. In this lab, 2 Kinesis Data Firehose are required. Create the second Kinesis Data Firehose in the same way as above.
+10 In **[Delivery stream name]**, enter **stream-userprofile**.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/7.png"</img> 
+</div>
+
+11. Select **[Amazon S3]** as a destionation, and select **raw** data bucket which created before for **[S3 bucket]**. Enter **userlog/** on **[Prefix]**. Click **[Next]** if the setting are as follows:
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/7.png"</img> 
+</div>
+
+12. Set **1MB** on **[Buffer size]** and set **60seconds** on **[Buffer interval]**.
+13. If you have created 2 Kinesis Data Firehose, proceed to the next step.
