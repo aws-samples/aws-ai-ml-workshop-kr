@@ -75,7 +75,7 @@ The Amazon EC2, Amazon DynamoDB, AWS Lambda, and AWS IAM Roles used in the lab a
 5. This may takes about 10 minutes.
 6. Read the following description of the AWS CloudFormation that is created while the stack is being created.
 
-AWS CloudFormation template used in this lab automatically invokes Lambda function **DDBInitialize**. This is possible through **custom resources** provided by AWS CloudFormation.
+AWS CloudFormation template used in this lab automatically invokes the Lambda function **DDBInitialize**. This is possible through **custom resources** provided by AWS CloudFormation.
 https://docs.aws.amazon.com/ko_kr/AWSCloudFormation/latest/UserGuide/template-custom-resources.html
 
 ```yaml
@@ -93,3 +93,41 @@ DDBInitLambda:
   DependsOn: DDBTable
 ```
 
+Note that you need to send a resource creation complete response to CloudFormation stack to proceed. Therefor, the **DDBInitialize** function includeds:
+
+```python
+def send_response(event, context, response_status, response_data):
+    response_body = json.dumps({
+        "Status": response_status,
+        "Reason": "See the details in CloudWatch Log Stream: " + context.log_stream_name,
+        "PhysicalResourceId": context.log_stream_name,
+        "StackId": event['StackId'],
+        "RequestId": event['RequestId'],
+        "LogicalResourceId": event['LogicalResourceId'],
+        "Data": response_data
+    })
+    
+    headers = {
+        "Content-Type": "",
+        "Content-Length": str(len(response_body))
+    }
+    
+    response = requests.put(event["ResponseURL"], headers = headers, data = response_body)
+```
+
+Also, custom resources are executed in Create, Update, Delete situations for CloudFormation. So if you want to execute on specific condition, you should add logic to Lambda function like below:
+
+```python
+if event['RequestType'] == 'Delete':
+  print 'Send response to CFN.'
+  send_response(event, context, "SUCCESS", {"Message": "CFN deleted!"})
+```
+
+7. On the **[Resources]** tab, confirm that the all resource creation is completed. You can find connection information of Amazon EC2 instance in **[Outputs]** tab.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/4.png"</img> 
+</div>
+
+8. Let's confirm Amazon DynamoDB create and initialize properly via the Lambda fucntion. In AWS Management Console, select **DynamoDB** service.
+9. Select the **[Tables]** menu on the left to see that the **UserProfile** table has been created. Select it and click **[Items]** on the right menu to check that the data in the table has been written.
