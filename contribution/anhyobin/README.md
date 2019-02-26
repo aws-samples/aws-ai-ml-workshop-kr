@@ -119,8 +119,8 @@ Also, custom resources are executed in Create, Update, Delete situations for Clo
 
 ```python
 if event['RequestType'] == 'Delete':
-  print 'Send response to CFN.'
-  send_response(event, context, "SUCCESS", {"Message": "CFN deleted!"})
+    print 'Send response to CFN.'
+    send_response(event, context, "SUCCESS", {"Message": "CFN deleted!"})
 ```
 
 7. On the **[Resources]** tab, confirm that the all resource creation is completed. You can find connection information of EC2 instance in **[Outputs]** tab.
