@@ -207,4 +207,6 @@ response = client.put_record(
 )
 ```
 
-### EC2 instance setup and data collect through Kinesis Agent
+### Amazon EC2 instance setup and data collect through Amazon Kinesis Agent
+In this lab, EC2 instance is used to continuously generate PlayLog and update UserProfile stored in DynamoDB. PlayLog is collected via Kinesis Agent installed on EC2 instance to Kinesis Data Firehose. In case of UserProfile, collection is done through DynamoDB streams when there is update on table. As a result, all data is collected in the S3 bucket, which is the target destination of each Kinesis Data Firehose. In this way, the raw data will be collected in S3 as Data Lake, which will be easily utilized for later analysis.
+
