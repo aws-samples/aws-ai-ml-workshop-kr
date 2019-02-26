@@ -324,3 +324,40 @@ def dynamodb():
       },
       ReturnValues = "UPDATED_NEW"
     )
+```
+
+13. You can see log are generated in the path **/tmp/playlog/**.
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ ls -l /tmp/playlog
+total 456
+-rwxrwxrwx 1 ec2-user ec2-user 183067 Oct 21 06:44 0_playlog.json
+-rwxrwxrwx 1 ec2-user ec2-user 185000 Oct 21 06:45 1_playlog.json
+-rwxrwxrwx 1 ec2-user ec2-user  92415 Oct 21 06:45 2_playlog.json
+```
+
+14. You can check the Kinesis Agent's log through **/var/log/aws-kinesis-agent/aws-kinesis-agent.log**. This allows you to se the data you are collecting with the Kinesis Data Firehose after parsing by Kinesis Agent. Run the following command to check the log:
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ tail -f /var/log/aws-kinesis-agent/aws-kinesis-agent.log
+2018-10-21 06:47:14.324+0000 ip-172-31-84-120 (Agent.MetricsEmitter RUNNING) com.amazon.kinesis.streaming.agent.Agent [INFO] Agent: Progress: 6223 records parsed (1142565 bytes), and 6000 records sent successfully to destinations. Uptime: 210022ms
+...
+...
+...
+```
+
+15. In AWS Management Console, select **S3** service. Make sure that Kinesis Data Firehose is collecting the data to the target bucket.
+16. In **raw** data bucket, you can see the **playlog** and **userlog** folder are created. Under **userlog**, updated UserProfile data from DynamoDB is stored.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/15.png"></img> 
+</div>
+
+17. Under **playlog**, you can see that the data is being partitioned into **YYYY/MM/DD/HH** structure and collected in near real-time as show below.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/16.png"></img> 
+</div>
+
+18. Go to the **DynamoDB** service in the AWS Management Console and check the **UserProfile** table. You can see the table has been updated.
+19. You have completed the data collection phrase.
