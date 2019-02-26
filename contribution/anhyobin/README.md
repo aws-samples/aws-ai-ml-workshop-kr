@@ -202,7 +202,7 @@ A quick look at the Lambda function reveals that changes are capture and collect
 response = client.put_record(
     DeliveryStreamName = 'stream-userprofile',
     Record = {
-      'Data' : data
+        'Data' : data
     }
   )
 ```
