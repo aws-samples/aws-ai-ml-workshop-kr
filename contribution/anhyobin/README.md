@@ -482,3 +482,49 @@ datasink2 = glueContext.write_dynamic_frame.from_options(frame = exec_sql_dyf_ml
 
 job.commit()
 ```
+
+Let's take a look at ETL script. ou can see that both **datasource0** and **datasource1** utilize 2 data sources, all of which are data from the Glue Data Catalog:
+
+```python
+datasource0 = glueContext.create_dynamic_frame.from_catalog(database = "gamelogdb", table_name = "playlog")
+datasource1 = glueContext.create_dynamic_frame.from_catalog(database = "gamelogdb", table_name = "userprofile")
+```
+
+Query through Athena requires all the data sets, so perform data conversion task with statement **sql_select_athena**. This statement joins PlayLog and UserProfile data from S3 and DynamoDB:
+
+```sql
+WHERE playlogView.pidx = userprofileView.pidx
+```
+
+SageMaker requires 2-dimension data of x and y coordinates for model training. However, you should sort by pidx to show the behavior pattern for each user. Considering this, **sql_select_ml** looks like below:
+
+```sql
+SELECT playlogView.posnewx, playlogView.posnewy FROM (SELECT * FROM playlogView ORDER BY playlogView.pidx, playlogView.createdate)
+```
+
+Data for Athena is saved in json format and data for SageMaker is saved in csv format. In addition, it supports column based data types such as Parquet, ORC. The format is simply set via **format = ""**.
+
+```python
+datasink2 = glueContext.write_dynamic_frame.from_options(format = "csv" ...)
+```
+
+6. Click the **[Run job]** button to run. And it takes some time for the actual operation to start with log like **Oct 21, 2018, 7:24:42 PM Pending execution**. When Glue executes a job in a Serverless environment, the resources to execute the ETL script are first provisioned internally, and then the script is executed. So there is a little delay.
+7. When the job has finished running, you can see a log similar to **file: s3://gaming-analytics/gamelog/gamelog_sagemaker/run-1540118641016-part-r-00135 End of LogType:stdout**.
+8. In the AWS Management Console, select **S3** Service.
+9. Go to the analytics bucket that you specified in the ETL script and verify that the ETL operation successfully runs and the converted data is saved. Within the bucket, 2 folders are created under the **gamelog** folder, **gamelog_athena** and **gamelog_sagemaker**, and you can see that the converted data is saved as below:
+
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/27.png"></img> 
+</div>
+
+10. You have collected the raw data and have completed the conversion for analysis. But it is not the end. Finally, you need to add the newly added data to the Glue Data Catalog.
+11. In the AWS Management Console, select **Glue** service.
+12. Select the **[Crawlers]** menu on the left and create a Glue Crawler in a familiar way. **[Crawler name]** enter **gamelog-analytics**. For **[Choose a data store]**, select **[S3]** and **[Include path]** selects the bucket for which you have collected new analytics data. **[Frequency]** is **[Run on demand]**, **[Database]** select **[gamelogdb]** as before. After creation, click **[Run crawler]** button to execute.
+13. When the execution is completed, 2 tables are added. From the **[Tables]** on the left, you can see that there are 5 tables in total.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/28.png"></img> 
+</div>
+
+14. In this way it is possible to easily build a Data Lake regardless of the data type or capacity.
