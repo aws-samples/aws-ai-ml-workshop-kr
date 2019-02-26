@@ -548,3 +548,48 @@ In this lab, you use Athena to analyze data stored in S3 using standard SQL. Bec
 | gamelog_sagemaker | Machine learning Data set containing only x, y coordinates for model learning |
 | playlog | Data set containing only the play history of users created in the EC2 instance |
 | userlog | Data set containing the history of user profiles stored in DynamoDB S|
+
+5. Now try to analyze the data through the SQL query below. You can use the Presto function with Athena. Try the sample SQL query below:
+
+Data in the gamelog_athena table which Glue ETL perform join operation.
+```sql
+SELECT * FROM gamelog_athena WHERE CAST(partition_2 AS BIGINT) = 9 limit 100;
+```
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/30.png"></img> 
+</div>
+
+Try to find out which class player chose the most.
+```sql
+SELECT COUNT(DISTINCT pidx) AS users, uclass FROM gamelog_athena GROUP BY uclass;
+```
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/31.png"></img> 
+</div>
+
+Highest level users through the data in the userlog table.
+```sql
+SELECT * FROM userlog WHERE ulevel IN (SELECT MAX(ulevel) FROM userlog);
+```
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/32.png"></img> 
+</div>
+
+View the number of players played in a specific area.
+```sql
+SELECT COUNT(DISTINCT pidx) AS hotzone FROM gamelog_athena WHERE posnewx BETWEEN 300 AND 500 AND posnewy BETWEEN 400 AND 700;
+```
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/33.png"></img> 
+</div>
+
+6. **[QUIZ]** Now use the query to find the player who is behaving abnormaly. The hint is on the map where the user played the game. If you use coordinate information like posnewx, posnewy, you can find the users you want.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png"></img> 
+</div>
+
+### Machine learning model training and abnormal behavior detection through Amazon SageMaker
