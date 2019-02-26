@@ -542,8 +542,9 @@ In this lab, you use Athena to analyze data stored in S3 using standard SQL. Bec
 
 4. The data that can be confirmed by each table is as follows:
 
-| gamelog_athena | A dataset that contains all the information that joins playlog and userlog |
+| Table Name | Description |
 | :--- | :--- |
+| gamelog_athena | A dataset that contains all the information that joins playlog and userlog |
 | gamelog_sagemaker | Machine learning Data set containing only x, y coordinates for model learning |
 | playlog | Data set containing only the play history of users created in the EC2 instance |
 | userlog | Data set containing the history of user profiles stored in DynamoDB S|
