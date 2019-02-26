@@ -360,4 +360,9 @@ total 456
 </div>
 
 18. Go to the **DynamoDB** service in the AWS Management Console and check the **UserProfile** table. You can see the table has been updated.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/18.png"></img> 
+</div>
+
 19. You have completed the data collection phrase.
