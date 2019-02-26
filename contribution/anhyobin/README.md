@@ -200,11 +200,11 @@ A quick look at the Lambda function reveals that changes are capture and collect
 
 ```python
 response = client.put_record(
-  DeliveryStreamName = 'stream-userprofile',
-  Record = {
-    'Data' : data
-  }
-)
+    DeliveryStreamName = 'stream-userprofile',
+    Record = {
+      'Data' : data
+    }
+  )
 ```
 
 ### Amazon EC2 instance setup and data collect through Amazon Kinesis Agent
@@ -304,26 +304,26 @@ proc2 = Process(target = dynamodb)
 
 ```python
 def playlog():
-  filename = '/tmp/playlog/' + str(flag) + '_playlog.json'
-  with open(filename, 'a') as logFile:
-    json.dump(raw_data, logFile)
-    # Kinesis Agent parsed from each file based on \n
-    logFile.write('\n')
-    os.chmod(filename, 0o777)
+    filename = '/tmp/playlog/' + str(flag) + '_playlog.json'
+    with open(filename, 'a') as logFile:
+      json.dump(raw_data, logFile)
+      # Kinesis Agent parsed from each file based on \n
+      logFile.write('\n')
+      os.chmod(filename, 0o777)
 ```
 
 ```python
 def dynamodb():
-  if(ulevel < 100):
-    response = table.update_item(
-      Key = {'pidx': selectUser},
-      UpdateExpression = "SET ulevel = :ul, utimestamp = :ut",
-      ExpressionAttributeValues = {
-        ':ul' : ulevel + 1,
-        ':ut' : currentTime
-      },
-      ReturnValues = "UPDATED_NEW"
-    )
+    if(ulevel < 100):
+        response = table.update_item(
+            Key = {'pidx': selectUser},
+            UpdateExpression = "SET ulevel = :ul, utimestamp = :ut",
+            ExpressionAttributeValues = {
+                ':ul' : ulevel + 1,
+                ':ut' : currentTime
+            },
+            ReturnValues = "UPDATED_NEW"
+        )
 ```
 
 13. You can see log are generated in the path **/tmp/playlog/**.
