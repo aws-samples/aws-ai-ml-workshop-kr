@@ -306,10 +306,10 @@ proc2 = Process(target = dynamodb)
 def playlog():
     filename = '/tmp/playlog/' + str(flag) + '_playlog.json'
     with open(filename, 'a') as logFile:
-      json.dump(raw_data, logFile)
-      # Kinesis Agent parsed from each file based on \n
-      logFile.write('\n')
-      os.chmod(filename, 0o777)
+        json.dump(raw_data, logFile)
+        # Kinesis Agent parsed from each file based on \n
+        logFile.write('\n')
+        os.chmod(filename, 0o777)
 ```
 
 ```python
