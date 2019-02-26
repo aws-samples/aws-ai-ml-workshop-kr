@@ -270,3 +270,5 @@ aws-kinesis-agent is stopped
   ]
 }
 ```
+
+In agent.json, you can see that all logs corresponding to **"filePattern": "/tmp/playlog/&#42.json"** are configured to be collected by **"deliveryStream": "stream-playlog"**, the Kinesis Data Firehose.
