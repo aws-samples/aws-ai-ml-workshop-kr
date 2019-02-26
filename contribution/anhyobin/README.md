@@ -592,4 +592,264 @@ SELECT COUNT(DISTINCT pidx) AS hotzone FROM gamelog_athena WHERE posnewx BETWEEN
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png"></img> 
 </div>
 
-### Machine learning model training and abnormal behavior detection through Amazon SageMaker
+### Machine learning model training and abnormal behavior identification through Amazon SageMaker
+This step uses SageMaker's built-in algorithm, Random Cut Forest (RCF), to detect data set anomalies. Let's apply the RCF algorithm for anomaly detection to data collected through lab. In the past, you have already collected data sets for learning and have completed data preparations.
+SageMaker is a fully managed platform that enables developers and data analysts to quickly and easily build, train and deploy machine learning models.
+The RCF algorithm is a non-gradient learning algorithm that detects the outliers contained in the data set. For the RCF algorithm supported by SageMaker, anomaly score is given to each data. If the outlier score is low, the data is likely to be normal, while a high score indicates a high likelihood of an abnormality.
+1. In the AWS Management Console, select **SageMaker** service.
+2. Go to the **[Notebook instances]** menu on the left and click the **[Create notebook instance]** button.
+3. Enter **gamelog-ml-notebook** for **[Notebook instance name]** and **[ml.m4.2xlarge]** for **[Notebook instance type]**. **[IAM role]** selects **[Create a new role]**. On the create IAM role screen, **[Specific S3 buckets]** under **[S3 buckets you specify]**, enter the analytics bucket where **gamelog_sagemaker** is stored or select **[Any S3 bucket]**.
+
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/34.png"></img> 
+</div>
+
+4. Review setting, and then click the **[Create notebook instance]** button to create the notebook instance.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/35.png"></img> 
+</div>
+
+5. After a few moments, the notebook instance you created will change to **InService** status. Click the **[Open]** button to connect to the Jupyter notebook.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/36.png"></img> 
+</div>
+
+6. You can import the notebook you have already created and proceed with the exercises, but at this time, enter and execute the code yourself to see step by step. Click the **[New]** button on the right and select **[conda_python3]**.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/37.png"></img> 
+</div>
+
+7. Click **[Untitles]** at the top, enter **GameLog-RCF**, etc., and click the **[Rename]** button.
+8. The first cell reads data from gamelog_sagemaker. From the code page, copy and paste the corresponding part below. In **bucket = 'YOUR ANALYTICS BUCKET'**, enter the analytics bucket name where the data is stored. Click the **[▶Run]** button.
+
+```python
+import boto3
+import pandas
+
+s3 = boto3.client('s3')
+bucket = 'YOUR ANALYTICS BUCKET'
+prefix = 'gamelog/gamelog_sagemaker/'
+response = s3.list_objects_v2(Bucket = bucket, Prefix = prefix)
+objs = []
+
+for obj in response['Contents']:
+    objs.append(obj['Key'])
+
+game_data = pandas.concat([pandas.read_csv('s3://' + bucket + '/' + obj, delimiter = ',') for obj in objs]) 
+```
+
+9. In the second cell, graph the entire data set. At the start of the lab, it takes some time, because it uses about 40 million data sets, which is the sum of the data uploaded in S3 and the data collected by Kinesis Data Firehose. Copy and paste the part below from the code page and click the **[▶Run]** button. Only output such as **<matplotlib.axes.&#95;subplots.AxesSubplot at 0x7f23bb72c358>** will appear, and if the graph is not drawn, skip or restart it.
+
+```python
+import matplotlib
+
+# Set graph parameters for 40 million data set
+matplotlib.rcParams['agg.path.chunksize'] = 100000
+matplotlib.rcParams['figure.figsize'] = [20, 10]
+matplotlib.rcParams['figure.dpi'] = 100
+
+game_data.plot.scatter(
+    x = 'posnewx',
+    y = 'posnewy'
+)
+```
+
+If you look at the graph, you can find points that are suspicious. The x coordinate is from 1000 to 1200 and the y coordinate is from 0 to 400. Already you have found a user in Athena who has a move in that area.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/38.png"></img> 
+</div>
+
+10. In the next cell, you now encode the data into the RecordIO prodobuf format for model training. Like other algorithms in SageMaker, model learning shows the best performance in that format. This step simply converts the original data in CSV format and stores the result in the S3 bucket. From the code page, paste the code below and modify the **bucket = 'YOUR ANALYTICS BUCKET'** to your own analytics bucket and click **[▶Run]** to run it.
+
+```python
+def convert_and_upload_training_data(
+    ndarray, bucket, prefix, filename='gamelog.pbr'):
+    import boto3
+    import os
+    from sagemaker.amazon.common import numpy_to_record_serializer
+
+    # Convert Numpy array to Protobuf RecordIO format
+    serializer = numpy_to_record_serializer()
+    buffer = serializer(ndarray)
+
+    # Upload to S3
+    s3_object = os.path.join(prefix, 'train', filename)
+    boto3.Session().resource('s3').Bucket(bucket).Object(s3_object).upload_fileobj(buffer)
+    s3_path = 's3://{}/{}'.format(bucket, s3_object)
+    return s3_path
+
+bucket = 'YOUR ANALYTICS BUCKET'
+prefix = 'sagemaker/randomcutforest'
+s3_train_data = convert_and_upload_training_data(
+    game_data.as_matrix().reshape(-1,2),
+    bucket,
+    prefix)
+```
+
+The data used in the lab is 2-dimension data with x and y coordinates. Therefore, redefine in 2 dimensions as follows:
+```python
+game_data.as_matrix().reshape(-1,2),
+```
+
+11. Training SageMaker's RCF model for the transformed data set. From the code page, copy and paste the part below and click **[▶Run]** to execute it.
+
+```python
+import boto3
+import sagemaker
+
+containers = {
+    'us-west-2': '174872318107.dkr.ecr.us-west-2.amazonaws.com/randomcutforest:latest',
+    'us-east-1': '382416733822.dkr.ecr.us-east-1.amazonaws.com/randomcutforest:latest',
+    'us-east-2': '404615174143.dkr.ecr.us-east-2.amazonaws.com/randomcutforest:latest',
+    'eu-west-1': '438346466558.dkr.ecr.eu-west-1.amazonaws.com/randomcutforest:latest'}
+region_name = boto3.Session().region_name
+container = containers[region_name]
+
+session = sagemaker.Session()
+
+# Set training job parameter
+rcf = sagemaker.estimator.Estimator(
+    container,
+    sagemaker.get_execution_role(),
+    output_path='s3://{}/{}/output'.format(bucket, prefix),
+    train_instance_count=1,
+    train_instance_type='ml.c5.xlarge',
+    sagemaker_session=session)
+
+# Set RCF Hyperparameter
+rcf.set_hyperparameters(
+    num_samples_per_tree=1000,
+    num_trees=200,
+    feature_dim=2)
+
+s3_train_input = sagemaker.session.s3_input(
+    s3_train_data,
+    distribution='ShardedByS3Key',
+    content_type='application/x-recordio-protobuf')
+
+rcf.fit({'train': s3_train_input})
+```
+
+Let's take a moment to look at the parameters specified in the above code. First, you have specified a docker container for the RCF algorithm as follows:
+```python
+containers = {
+    'us-west-2': '174872318107.dkr.ecr.us-west-2.amazonaws.com/randomcutforest:latest',
+    'us-east-1': '382416733822.dkr.ecr.us-east-1.amazonaws.com/randomcutforest:latest',
+    'us-east-2': '404615174143.dkr.ecr.us-east-2.amazonaws.com/randomcutforest:latest',
+    'eu-west-1': '438346466558.dkr.ecr.eu-west-1.amazonaws.com/randomcutforest:latest'}
+```
+
+The instance type and number to execute the algorithm are as follows. If you want to learn the model more quickly, you can change the value of this part.
+```python
+rcf = sagemaker.estimator.Estimator(
+    container,
+    sagemaker.get_execution_role(),
+    output_path='s3://{}/{}/output'.format(bucket, prefix),
+    train_instance_count=1,
+    train_instance_type='ml.c5.xlarge',
+    sagemaker_session=session)
+```
+
+You see the part of the RCF algorithm that specifies the hyper parameters needed. This allows you to assign and learn each 1000 subsamples to 200 trees. A description of each parameter can be found at the following link:
+https://docs.aws.amazon.com/ko_kr/sagemaker/latest/dg/rcf_hyperparameters.html
+```python
+rcf.set_hyperparameters(
+    num_samples_per_tree=1000,
+    num_trees=200,
+    feature_dim=2)
+```
+
+Once the pasted code has finished running, you can check the output for the completion of learning as follows. Model training is complete.
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/39.png"></img> 
+</div>
+
+12. Now, there is really only a process to inference through a score of abnormal behavior. From the code page, copy and paste the part below and click **[▶Run]** to execute it.
+```python
+from sagemaker.predictor import csv_serializer, json_deserializer
+
+rcf_inference = rcf.deploy(
+    initial_instance_count=2,
+    instance_type='ml.c5.2xlarge',
+)
+
+rcf_inference.content_type = 'text/csv'
+rcf_inference.serializer = csv_serializer
+rcf_inference.deserializer = json_deserializer
+```
+
+You can specify the type and number of instances of the inference endpoint. At this time, use 2 ml.c5.2xlarge.
+```python
+rcf_inference = rcf.deploy(
+    initial_instance_count=2,
+    instance_type='ml.c5.2xlarge',
+)
+```
+
+If you are inferring a larger dataset in production environment, you can allocate a larger instance or take advantage of SageMaker Batch Transform.
+https://docs.aws.amazon.com/en_us/sagemaker/latest/dg/how-it-works-batch.html
+
+The following output confirms that the endpoint has been created.
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/40.png"></img> 
+</div>
+
+13. Let's infer the actual data set. It would be greate to deduce the entire dataset, but this lab has a restriction that only 2 ml.c5.2xlarge instances are used for inference. Therefore, you work on inference based on about 180,000 randomly extracted data. Or you can use the data in the gamelog_sagemaker folder in the analytics bucket. Let's first look at the data set for inference. From the code page, copy and paste the part below and click **[▶Run]** to execute it.
+
+```python
+import pandas
+import urllib.request
+
+predict_file = 'predict.csv'
+predict_source = 'https://s3.amazonaws.com/anhyobin-gaming/predict.csv'
+
+urllib.request.urlretrieve(predict_source, predict_file)
+predict_data = pandas.read_csv(predict_file, delimiter = ',')
+
+predict_data.plot.scatter(
+    x = 'posnewx',
+    y = 'posnewy'
+)
+```
+
+The graph appears as an output. As you already know, the abnormal users are included.
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/41.png"></img> 
+</div>
+
+14. Finally, let's do the actual inference. In this lab, you regard the outliers as abnormal values for all outlier scores over the 1.5 standard deviation range from the mean value. From the code page, copy and paste the part below and click **[▶Run]** to execute it.
+
+```python
+results = rcf_inference.predict(predict_data.as_matrix().reshape(-1,2))
+scores = [datum['score'] for datum in results['scores']]
+predict_data['score'] = pandas.Series(scores, index=predict_data.index)
+
+score_mean = predict_data.score.mean()
+score_std = predict_data.score.std()
+score_cutoff = score_mean + 1.5 * score_std
+
+anomalies = predict_data[predict_data['score'] > score_cutoff]
+
+anomalies.plot.scatter(
+    x = 'posnewx',
+    y = 'posnewy'
+)
+```
+
+The output show a moving pattern showing abnormal behavior based on the model. Data is not 100% accurate because it is randomly generated data for this lab, not actual data. But it was able to apply Machine Learning and get some results.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/42.png"></img> 
+</div>
+
+# Conclusion
+You have collected and stored the data generated in AWS through the 'Identifying abnormal player behavior with Machine Learning' lab. The actual data analysis required a lot of time and money to prepare the data, but Glue could be used to create the Data Catalog and quickly process the data through ETL operations to start the actual analysis.
+So if you store your data efficiently in S3, then you can easily analyze it with services such as Athena as you did in the lab.
+Finally, SageMaker was able to perform complex machine learning tasks that would be difficult to build, train, and deploy model to the actual production. Since SageMaker is already pre-installed with the most common algorithms, you can apply a variety of algorithms to your own data sets similar to the Random Cut Forest algorithm in this lab.
+
+I am deeply grateful for your continued practice.
