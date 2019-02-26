@@ -210,3 +210,26 @@ response = client.put_record(
 ### Amazon EC2 instance setup and data collect through Amazon Kinesis Agent
 In this lab, EC2 instance is used to continuously generate PlayLog and update UserProfile stored in DynamoDB. PlayLog is collected via Kinesis Agent installed on EC2 instance to Kinesis Data Firehose. In case of UserProfile, collection is done through DynamoDB streams when there is update on table. As a result, all data is collected in the S3 bucket, which is the target destination of each Kinesis Data Firehose. In this way, the raw data will be collected in S3 as Data Lake, which will be easily utilized for later analysis.
 
+1. In AWS Management Console, select **EC2** service.
+2. Select the **[Instances]** menu on the left and select the **PlayLogGenerator** instance created via CloudFormation.
+3. If you look at the **[Description]** tab for that instance, required permissions are associated with an IAM role called **Ec2GeneratorRole**. This is a best practice for authorizing applications running on EC2 instances.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/13.png"></img> 
+</div>
+
+4. After checking the public IP of the instance, SSH connect to it using SSH client.
+5. First, check whether the files exists as follows:
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ ls
+playlog_gen.py  StreamLog  UserList
+
+[ec2-user@ip-172-31-84-120 ~]$ ls -l /tmp/archived_playlog/2018/10/09/01/
+total 6493876
+-rw-rw-r-- 1 ec2-user ec2-user 169079641 Oct 17 08:32 run-1538992116187-part-r-00000
+-rw-rw-r-- 1 ec2-user ec2-user 169128956 Oct 17 08:32 run-1538992116187-part-r-00001
+...
+...
+...
+```
