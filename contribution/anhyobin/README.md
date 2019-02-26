@@ -425,3 +425,7 @@ The first thing you do is create a Glue Data Catalog. This is a central metastor
 <div align="center">
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/26.png"></img> 
 </div>
+
+### Run AWS Glue ETL Job
+In this step, let's perform the ETL operation to the Glue Data Catalog created earlier. In the lab, you use Athena and SageMaker to do a data analysis, each with different data. With Athena, you query to analyze the entire set of data from the lab, and SageMaker will have to create separate sets of data for training the machine learning model. These ETL operations can be performed through the Glue Job.
+In Glue you can run ETL scripts written in two languages: Python and Scala. You can also create, test, and run scripts automatically.
