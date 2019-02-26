@@ -272,3 +272,55 @@ aws-kinesis-agent is stopped
 ```
 
 In agent.json, you can see that all logs corresponding to **"filePattern": "/tmp/playlog/&#42;.json"** are configured to be collected by **"deliveryStream": "stream-playlog"**, the Kinesis Data Firehose.
+
+10. Run following command to implement Kinesis Agent:
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ sudo service aws-kinesis-agent start
+aws-kinesis-agent startup                                  [  OK  ]
+```
+
+11. Run following command to generate logs. Make sure include & to run on the backend.
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ python playlog_gen.py &
+[1] 2296
+```
+
+12. Python script use multiprocessing to generate PlayLogs and update UserProfile on DynamoDB continuously.
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ ps -ef | grep python
+ec2-user  2296  2138  1 06:44 pts/0    00:00:00 python playlog_gen.py
+ec2-user  2298  2296  0 06:44 pts/0    00:00:00 python playlog_gen.py
+ec2-user  2299  2296 19 06:44 pts/0    00:00:01 python playlog_gen.py
+ec2-user  2303  2138  0 06:44 pts/0    00:00:00 grep --color=auto python
+```
+
+```python
+proc1 = Process(target = playlog)
+proc2 = Process(target = dynamodb)
+```
+
+```python
+def playlog():
+  filename = '/tmp/playlog/' + str(flag) + '_playlog.json'
+  with open(filename, 'a') as logFile:
+    json.dump(raw_data, logFile)
+    # Kinesis Agent parsed from each file based on \n
+    logFile.write('\n')
+    os.chmod(filename, 0o777)
+```
+
+```python
+def dynamodb():
+  if(ulevel < 100):
+    response = table.update_item(
+      Key = {'pidx': selectUser},
+      UpdateExpression = "SET ulevel = :ul, utimestamp = :ut",
+      ExpressionAttributeValues = {
+        ':ul' : ulevel + 1,
+        ':ut' : currentTime
+      },
+      ReturnValues = "UPDATED_NEW"
+    )
