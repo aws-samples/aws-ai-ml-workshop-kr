@@ -528,3 +528,21 @@ datasink2 = glueContext.write_dynamic_frame.from_options(format = "csv" ...)
 </div>
 
 14. In this way it is possible to easily build a Data Lake regardless of the data type or capacity.
+
+### Data Analysis with Amazon Athena
+Through the previous step, you proceeded to process and store the data required for analysis. Once you have built the Data Lake, you can start analyzing quickly using your preferred analytics services. Athena, as well as Redshift, EMR, etc., can analyze data using Glue Data Catalog and data stored in S3.
+In this lab, you use Athena to analyze data stored in S3 using standard SQL. Because Athena is immediately integrated with the Glue Data Catalog, data can be analyzed with interactive queries directly without requiring a separate schema definition.
+1. In the AWS Management Console, select **Athena** service.
+2. Click the **[Get Started]** button. If the tutorial appears, close it.
+3. On the left **[Database]**, select **[gamelogdb]** stored in the previously created Glue Data Catalog. 4 tables stored in S3 except the DynamoDB table appear.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/29.png"></img> 
+</div>
+
+4. The data that can be confirmed by each table is as follows:
+
+| gamelog_athena | A dataset that contains all the information that joins playlog and userlog |
+| gamelog_sagemaker | Machine learning Data set containing only x, y coordinates for model learning |
+| playlog | Data set containing only the play history of users created in the EC2 instance |
+| userlog | Data set containing the history of user profiles stored in DynamoDB S|
