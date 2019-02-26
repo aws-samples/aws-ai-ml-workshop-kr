@@ -251,4 +251,22 @@ upload: ../../tmp/archived_playlog/2018/10/09/01/run-1538992116187-part-r-00000 
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/14.png"></img> 
 </div>
 
-9.
+9. Return to the EC2 instance and check the Kinesis Agent settings via the following command:
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ sudo service aws-kinesis-agent status
+aws-kinesis-agent is stopped
+
+[ec2-user@ip-172-31-84-120 ~]$ cat /etc/aws-kinesis/agent.json 
+{
+  "cloudwatch.emitMetrics": true,
+  "firehose.endpoint": "firehose.us-east-1.amazonaws.com",
+  
+  "flows": [
+    {
+      "filePattern": "/tmp/playlog/*.json",
+      "deliveryStream": "stream-playlog"
+    }
+  ]
+}
+```
