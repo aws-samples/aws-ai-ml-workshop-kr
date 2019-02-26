@@ -233,3 +233,22 @@ total 6493876
 ...
 ...
 ```
+
+6. Because it is hard to upload 40 million data sets at this time, upload the archived log data from **/tmp/archived_playlog/** path to the S3 bucket using following AWS CLI command:
+
+```bash
+[ec2-user@ip-172-31-84-120 ~]$ aws s3 cp /tmp/archived_playlog/ s3://<YOUR RAW BUCKET>/playlog/ --recursive
+upload: ../../tmp/archived_playlog/2018/10/09/01/run-1538992116187-part-r-00000 to s3://gaming-raw/playlog/2018/10/09/01/run-1538992116187-part-r-00000
+...
+...
+...
+```
+
+7. In AWS Management Console, select **S3** service.
+8. In the raw bucket, you can see that the 40 copies have been copied. Under the bucket, prefix **YYYY/MM/DD/HH** is for data partitioning. In order to use the same partition as the data you collect with Kinesis Data Firehose, you must make sure that it is stored with the following structure:
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/14.png"></img> 
+</div>
+
+9.
