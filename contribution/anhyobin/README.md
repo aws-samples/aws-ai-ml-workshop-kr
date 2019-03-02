@@ -1,6 +1,22 @@
 # Identifying abnormal player behavior with Machine Learning
 
 ## Table of Contents
+  * [Introduction](#introduction)
+    + [Architecture](#architecture)
+    + [Lab Flow](#lab-flow)
+    + [About Data](#about-data)
+  * [Lab](#lab)
+    + [Create Amazon EC2 Key Pairs](#create-amazon-ec2-key-pairs)
+    + [Create Amazon S3 Bucket](#create-amazon-s3-bucket)
+    + [Create AWS CloudFormation Stack](#create-aws-cloudformation-stack)
+    + [Create Amazon Kinesis Data Firehose](#create-amazon-kinesis-data-firehose)
+    + [Configure Amazon DynamoDB](#configure-amazon-dynamodb)
+    + [Amazon EC2 instance setup and data collect through Amazon Kinesis Agent](#amazon-ec2-instance-setup-and-data-collect-through-amazon-kinesis-agent)
+    + [Create AWS Glue Data Catalog](#create-aws-glue-data-catalog)
+    + [Run AWS Glue ETL Job](#run-aws-glue-etl-job)
+    + [Data Analysis with Amazon Athena](#data-analysis-with-amazon-athena)
+    + [Machine learning model training and abnormal behavior identification through Amazon SageMaker](#machine-learning-model-training-and-abnormal-behavior-identification-through-amazon-sagemaker)
+- [Conclusion](#conclusion)
 
 ## Introduction
 In this lab, you will analyze game data which randomly generated on AWS. Through this lab, you will collect data in real-time, process it, and then perform analyze it on AWS. Further, you will identify abnormal player behavior through machine learning.
