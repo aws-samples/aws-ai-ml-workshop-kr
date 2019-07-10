@@ -27,12 +27,11 @@ In this lab, you will analyze randomly generated game data on AWS. Through this 
 </div>
 
 ### Lab Flow
-User Profile data in DynamoDB and Play Log data in EC2 will be collected in S3 in near real-time using Kinesis Data Firehose. After that, Glue is used to create the Data Catalog and data preparation is done with Glue ETL Job.
-This processed data is then analyzed using Athena to query and SageMaker for more sophisticated analysis and prediction through Machine Learning.
+User profile data in DynamoDB and play log data in EC2 will be collected in S3 in near real-time using Kinesis Data Firehose. After that, Glue is used to create a data catalog. The data catalog is then used to pepare the data with Glue ETL Job. The processed data is then introspected via Athena and more sophisticated analysis and prediction are performed using SageMaker.
 
 ### About Data
-There are 2 types of data are collected. Let's take a look at the data used in this lab first.
-1. User Profile data in stored in DynamoDB and contains information about the level and class of users.
+There are 2 types of data being collected. Let's take a look at the data used in this lab.
+1. User profile data is stored in DynamoDB and contains information about the level and class of users.
 
 | pidx  | uclass | ulevel | utimestamp |
 | :---- | :----- | :----- | :--------- |
@@ -46,27 +45,27 @@ There are 2 types of data are collected. Let's take a look at the data used in t
 | 542 | 824 | 0 | 541 | 828 | 0 | 8672 | 30725885 | 0 | 2018-10-12 05:53:59.318075 |
 | 668 | 245 | 0 | 666 | 240 | 0 | 13233 | 30721726 | 0 | 2018-10-12 05:48:44.748598 |
 
-It contains about 40 million play records from a total 20043 users. The virtual map where users played game is as follows. The **Red Zone** is the area where normal users can not go into.
+It contains about 40 million play records from a total of 20043 users. The virtual map for this game is as follows. **The Red Zone** is inaccessible by normal users.
 
 <div align="center">
     <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/map.png"></img> 
 </div>
 
 ## Lab
-Select **us-east-1 (N.Virginia)** region on AWS Management Console before get started.
+Select **us-east-1 (N.Virginia)** region on AWS Management Console before starting.
 
 ### Create Amazon EC2 Key Pairs
-A key is required to make SSH connection to EC2 instance to be created later. If you already have a key in us-east-1 region, you make skip this step.
+A pair of keys is required to make SSH connection to EC2 instance to be created later. If you already have a key in the us-east-1 region, you may skip this step.
 1. In the AWS Management Console, select **EC2** service.
 2. On the left menu, click the **[Key Pairs]** menu, and then click **[Create Key Pair]** button.
 3. Enter the **[Key pair name]** and click **[Create]** button to finish.
 4. Verify .pem file is downloaded successfully.
 
 ### Create Amazon S3 Bucket
-You need the S3 Bucket to store all the necessary data. In this lab, let's create a raw bucket to store raw data and analytic bucket to store processed data for analysis.
+You need an S3 Bucket to store all the necessary data. Let's create raw bucket to store raw data and analytics bucket to store processed data for analysis.
 1. In the AWS Management Console, select **S3** service.
 2. Click **[+ Create bucket]** button to create a bucket.
-3. In **[Bucket name]**, enter a your own unique name, such as **gaming-raw**, and click **[Create]** button.
+3. In **[Bucket name]**, enter a unique name, such as **gaming-raw**, and click **[Create]** button.
 4. Create second bucket with name, such as **gaming-analytics**. Specify the name of the bucket so that it can be distinguished.
 
 <div align="center">
@@ -74,7 +73,7 @@ You need the S3 Bucket to store all the necessary data. In this lab, let's creat
 </div>
 
 ### Create AWS CloudFormation Stack
-The EC2, DynamoDB, Lambda, and IAM Roles used in the lab are created through the CloudFormation stack. In addition to simply provisioning the resources, CloudFormation stack also execute the logic to initialize DynamoDB through invoke Lambda function.
+The EC2, DynamoDB, Lambda, and IAM Roles used in the lab are created through a CloudFormation stack. In addition to simply provisioning the resources, the CloudFormation stack also executes the logic to initialize DynamoDB through invoking a Lambda function.
 1. In the AWS Management Console, select **CloudFormation** service.
 2. Click **[Create new stack]** button. Select **[Specify an Amazon S3 template URL]** option and enter this URL https://s3.amazonaws.com/anhyobin-gaming/cloudformation.yaml. Click **[Next]** button.
 <div align="center">
