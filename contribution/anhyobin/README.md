@@ -19,7 +19,7 @@
 - [Conclusion](#conclusion)
 
 ## Introduction
-In this lab, you will analyze game data which randomly generated on AWS. Through this lab, you will collect data in real-time, process it, and then perform analyze it on AWS. Further, you will identify abnormal player behavior through machine learning.
+In this lab, you will analyze randomly generated game data on AWS. Through this lab, you will collect data in real-time, process it, and then analyze it on AWS. Furthermore, you will be able to identify abnormal player behaviors through machine learning.
 
 ### Architecture
 <div align="center">
