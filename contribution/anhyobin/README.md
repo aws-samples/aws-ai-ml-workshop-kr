@@ -654,7 +654,7 @@ objs = []
 for obj in response['Contents']:
     objs.append(obj['Key'])
 
-game_data = pandas.concat([pandas.read_csv('s3://' + bucket + '/' + obj, delimiter = ',') for obj in objs]) 
+game_data = pandas.concat([pandas.read_csv('s3://' + bucket + '/' + obj, delimiter = ',') for obj in objs])
 ```
 
 9. In the second cell, graph the entire data set. At the start of the lab, it takes some time, because it uses about 40 million data sets, which is the sum of the data uploaded in S3 and the data collected by Kinesis Data Firehose. Copy and paste the part below from the code page and click the **[▶Run]** button. Only output such as **<matplotlib.axes.&#95;subplots.AxesSubplot at 0x7f23bb72c358>** will appear, and if the graph is not drawn, skip or restart it.
