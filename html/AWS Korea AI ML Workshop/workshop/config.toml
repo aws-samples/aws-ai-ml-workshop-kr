@@ -1,0 +1,60 @@
+RelativeURLs=true
+CanonifyURLs=true
+languageCode = "ko-KR"
+defaultContentLanguage = "kr"
+
+title = "AWS Korea AI/ML Workshop"
+theme = "learn"
+metaDataFormat = "yaml"
+defaultContentLanguageInSubdir= true
+
+uglyurls = true
+sectionPagesMenu = "main"
+pygmentsCodeFences = true
+pygmentsStyle = "monokai"
+
+[params]
+  # editURL = "https://code.amazon.com/packages/Aws-workshop-template/blobs/master/--/workshop/content/"
+  editURL = ""
+  description = "AWS Korea AI/ML Workshop"
+  author = "Pil Ho Kim"
+  disableBreadcrumb = false
+  disableNextPrev = false
+  themeVariant = "awskr"
+  disableSearch = false
+  disableAssetsBusting = true
+  # When using mulitlingual website, disable the switch language button.
+  disableLanguageSwitchingButton = true
+  disableShortcutsTitle = true
+  disableInlineCopyToClipBoard = true
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[blackfriday]
+plainIDAnchors = true
+hrefTargetBlank = true
+
+[Languages]
+[Languages.kr]
+title = "AWS Workshop"
+weight = 1
+languageName = "Korean"
+
+[[Languages.kr.menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/awslabs/amazon-sagemaker-examples"
+weight = 10
+
+
+[Languages.en]
+title = "My AWS Workshop"
+weight = 2
+languageName = "English"
+
+[[Languages.en.menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/awslabs/amazon-sagemaker-examples"
+weight = 10

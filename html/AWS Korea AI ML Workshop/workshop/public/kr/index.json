@@ -1,0 +1,162 @@
+[
+{
+	"uri": "/kr/",
+	"title": "AWS Korea AI/ML Workshop",
+	"tags": [],
+	"description": "",
+	"content": "본 프로그램은 AWS의 AI/ML 서비스를 실제 실습할 수 있는 강의 교제 제공을 목표로 하고 있습니다.\n  Report an issue   Learn more  "
+},
+{
+	"uri": "/kr/labs.html",
+	"title": "AWS AI/ML Lab Modules",
+	"tags": [],
+	"description": "",
+	"content": "본 실습은 AWS AI/ML의 다양한 서비스를 실습할 수 있는 모듈들로 구성되어 있습니다. 지속적으로 contents가 추가될 예정이니 재방문시 추가된 내용을 확인해 주시면 감사하겠습니다.\n SageMaker Labs Modules   AWS AI/ML Apps   "
+},
+{
+	"uri": "/kr/labs/sagemaker.html",
+	"title": "SageMaker Labs Modules",
+	"tags": [],
+	"description": "",
+	"content": "본 실습은 총 8개 모듈로 SageMaker 사용법을 익히는데 도움이 되는 모듈들로 구성되어 있습니다.\nS3 Bucket을 지정하여 사용하시고 싶으신 경우 가장 먼저 1번 모듈을 완료하셔야 합니다.\n 2, 3, 4, 5, 7, 8번 모듈은 독립적으로 순서 없이 실행할 수 있습니다.\n 6번 모듈은 반드시 5번 모듈에 이어서 실행하셔야 합니다.\n  Module 1: S3 bucket과 Notebook Instance 생성하기   Module 2: Linear Learner MNIST   Module 3: Linear Learner를 사용해 시계열 예측하기   Module 4: BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기   Module 5: TensorFlow MNIST로 자동 모델 튜닝하기   Module 6: 자동 모델 튜닝 결과 분석하기   Module 7: PyTorch MNIST   Module 8: Bring-your-own-container 기능 실습하기   서비스 종료 가이드   "
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_1.html",
+	"title": "Module 1: S3 bucket과 Notebook Instance 생성하기",
+	"tags": [],
+	"description": "",
+	"content": " S3 Bucket 생성하기 SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서는 해당 목적으로 S3 Bucket을 생성합니다. 오늘 실습에서는 N. Virginia (us-east-1) 리전을 사용합니다.\n AWS 관리 콘솔에 Sign in 합니다:  Open AWS Console  만약 AWS 측에서 Event Engine을 사용하여 임시 아이디를 생성한 경우 제공받으신 URL을 여시고 team hash code를 입력하시면 됩니다.    AWS Services 리스트에서 S3 로 이동합니다. \u0026quot;+ Create Bucket\u0026quot; 버튼을 선택합니다. 아래 내용 설정 후 화면 왼쪽 아래 Create 클릭합니다.   Bucket name: sagemaker-{userid} [반드시 고유한 값 설정] Region : US East (N. Virginia)  Notebook instance 생성  AWS관리 콘솔에서 오른쪽 상단에서Region선택 후 AWS Services 리스트에서 Amazon SageMaker 서비스를 선택합니다.  새로운 Notebook instance를 생성하기 위해 왼쪽 패널 메뉴 중 Notebook Instances 선택 후 오른쪽 상단의 Create notebook instance 버튼을 클릭 합니다.\n Notebook instance 이름으로 [First Name]-[Last Name]-workshop 으로 넣은 뒤 ml.m4.xlarge 인스턴스 타입을 선택 합니다.\n IAM role은 Create a new role 을 선택하고, 생성된 팝업 창에서는 S3 buckets you specify – optional 밑에 Specific S3 Bucket 을 선택 합니다. 그리고 텍스트 필드에 위에서 만든 S3 bucket 이름(예: sagemaker-xxxxx)을 선택 합니다. 이후 Create role 을 클릭합니다.\n 다시 Create Notebook instance 페이지로 돌아온 뒤 Create notebook instance 를 클릭합니다.\n  Notebook Instance 접근하기  서버 상태가 InService 로 바뀔 때까지 기다립니다. 보통 5분정도의 시간이 소요 됩니다.\n Open Jupyter를 클릭하면 방금 생성한 notebook instance의 Jupyter 홈페이지로 이동하게 됩니다.\n  수고하셨습니다. 모듈 1을 완료하였습니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_2.html",
+	"title": "Module 2: Linear Learner MNIST",
+	"tags": [],
+	"description": "",
+	"content": "SageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 “SageMaker Examples”를 클릭 후 샘플 노트북 목록에서 Introduction to Amazon Algorithms 을 선택합니다.\n샘플 목록중 linear_learner_mnist.ipynb 를 찾아 우측의 Use 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈 실행중 아래 코드를 만나면 \u0026lt;your_s3_bucket_name_here\u0026gt; 부분에 모듈 1에서 생성한 s3 버킷의 이름(예: sagemaker-xxxxx)을 넣고 실행합니다. 부등호 부호(‘\u0026lt;’, ’\u0026gt;’)는 넣지 않습니다.\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모델을 훈련하는데는 약 10분에서 15 분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_3.html",
+	"title": "Module 3: Linear Learner를 사용해 시계열 예측하기",
+	"tags": [],
+	"description": "",
+	"content": "SageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 “SageMaker Examples”를 클릭 후 샘플 노트북 목록에서 Introduction to Applying Machine Learning 을 선택합니다.\n샘플 목록중 linear_time_series_forecast.ipynb 를 찾아 우측의 Use 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈 실행중 아래 코드를 만나면 \u0026lt;your_s3_bucket_name_here\u0026gt; 부분에 모듈 1에서 생성한 s3 버킷의 이름(예: sagemaker-xxxxx)을 넣고 실행합니다. 부등호 부호(‘\u0026lt;’, ’\u0026gt;’)는 넣지 않습니다.\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모델을 훈련하는데는 약 10분에서 15 분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_4.html",
+	"title": "Module 4: BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기",
+	"tags": [],
+	"description": "",
+	"content": "SageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 “SageMaker Examples”를 클릭 후 샘플 노트북 목록에서 Introduction to Amazon Algorithms 을 선택합니다.\n샘플 목록중 blazingtext_word2vec_text8.ipynb 를 찾아 우측의 Use 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈 실행중 아래 코드를 만나면 bucket = sess.default_bucket() 라인을 bucket = ‘\u0026lt;모듈 1에서 생성한 s3 버킷의 이름(예: sagemaker-xxxxx)\u0026gt;’ 으로 수정합니다. 부등호 부호(‘\u0026lt;’, ’\u0026gt;’)는 넣지 않습니다.\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모델을 훈련하는데는 약 10분에서 15 분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_5.html",
+	"title": "Module 5: TensorFlow MNIST로 자동 모델 튜닝하기",
+	"tags": [],
+	"description": "",
+	"content": "이 모듈에서는 TensorFlow MNIST 이미지 분류 예제를 기반으로 SageMaker의 자동 모델 튜닝 기능을 실습합니다. 이 기능은 기계 학습 알고리즘의 최적의 하이퍼파라미터 (Hyperparameter) 값을 베이지안 최적화 기법을 통해 찾아줍니다.\nSageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 SageMaker Examples 를 클릭합니다.\n샘플 노트북 목록에서 Hyperparameter Tuning 을 선택합니다.\n샘플 목록중 hpo_tensorflow_mnist.ipynb 를 찾아 우측의 Copy 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈 실행중 아래 코드를 만나면 bucket = sagemaker.Session().default_bucket() 라인을 bucket = ‘\u0026lt;모듈 1에서 생성한 s3 버킷의 이름(예: sagemaker-xxxxx)\u0026gt;’으로 수정합니다. 부등호 부호(‘\u0026lt;’, ’\u0026gt;’)는 넣지 않습니다.\n이 모듈에서는 MNIST 이미지 분류 예제의 하이퍼파라미터 중에서 learning rate 값을 자동으로 튜닝하며, 효과적인 탐색을 위해 최대값과 최소값을 아래 그림과 같이 설정합니다.\n베이지안 최적화 기법은 하이퍼파라미터를 변경하면서 미리 지정된 숫자만큼 실험을 반복하는 특징이 있습니다. 이번 모듈에서는 병렬로 3개의 학습을 3번, 즉 총 9번의 실험을 시도하도록 아래와 같이 설정합니다.\n하이퍼파라미터 튜닝 작업은 아래와 같은 코드로 실행하며, 실행하면 각 하이퍼파라미터 값에 대한 개별 학습이 백그라운드에서 시작됩니다.\n이 때, SageMaker의 콘솔에서 새로운 하이퍼파라미터 튜닝 작업 (Hyperparameter tuning jobs)이 생성된 것을 확인할 수 있습니다. 다음 모듈을 위해 이 작업의 이름을 메모해 놓습니다.\n실험이 모두 끝나면 하이퍼파라미터 튜닝 작업의 이름을 클릭해 튜닝 결과를 확인합니다. 아래 그림에서는 learning_rate가 0.004928838215245632가 최적의 값이며 이때의 loss 값은 0.0642523318529129인 것을 확인할 수 있습니다.\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모델을 훈련하는데는 약 20분에서 25 분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_6.html",
+	"title": "Module 6: 자동 모델 튜닝 결과 분석하기",
+	"tags": [],
+	"description": "",
+	"content": "이 모듈에서는 앞에서 실행한 하이퍼파라미터 튜닝 작업의 결과를 해석하는 과정을 실습합니다. BokehJS와 pandas 라이브러리를 사용해 튜닝 결과를 Jupyter 노트북에서 테이블과 그래프 형태로 시각화해볼 수 있습니다.\nSageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 SageMaker Examples 를 클릭합니다.\n샘플 노트북 목록에서 Hyperparameter Tuning 을 선택합니다.\n샘플 목록중 HPO_Analyze_TuningJob_Results.ipynb 를 찾아 우측의 Use 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈의 첫 부분에서 아래의 코드를 만나면 앞 모듈에서 실행된 하이퍼파라미터 튜닝 작업 (Hyperparameter tuning jobs)의 이름을 따옴표 안에 넣습니다.\n실행 결과로 나오는 두 개의 그래프에서, 탐색된 하이퍼파라미터 값의 변화에 따른 loss 함수 값의 변화를 해석해 보시기 바랍니다. (그래프가 안나오면 해당 셀을 다시 한번 실행해 보세요.)\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모듈의 실습에는 약 5분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_7.html",
+	"title": "Module 7: PyTorch MNIST",
+	"tags": [],
+	"description": "",
+	"content": "이 모듈에서는 앞에서 실행한 하이퍼파라미터 튜닝 작업의 결과를 해석하는 과정을 실습합니다. BokehJS와 pandas 라이브러리를 사용해 튜닝 결과를 Jupyter 노트북에서 테이블과 그래프 형태로 시각화해볼 수 있습니다.\nSageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 SageMaker Examples 를 클릭합니다.\n샘플 노트북 목록에서 Sagemaker Python Sdk 를 선택합니다.\n샘플 목록중 pytorch_mnist.ipynb 를 찾아 우측의 Copy 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈 실행중 아래 코드를 만나면 bucket = sagemaker.Session().default_bucket() 라인을 bucket = ‘\u0026lt;모듈 1에서 생성한 s3 버킷의 이름(예: sagemaker-xxxxx)\u0026gt;’ 으로 수정합니다. 부등호 부호(‘\u0026lt;’, ’\u0026gt;’)는 넣지 않습니다.\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모델을 훈련하는데는 약 10분에서 15 분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_module_8.html",
+	"title": "Module 8: Bring-your-own-container 기능 실습하기",
+	"tags": [],
+	"description": "",
+	"content": "Amazon SageMaker는 머신 러닝 모델을 훈련하고 배포하기 위해 Docker container를 사용합니다. SageMaker에서 현재 지원하고 있지 않는 알고리즘이나 머신 러닝 프레임워크, 또는 여러분이 로컬 환경에서 개발한 모델이라도 Docker container로 만들어 SageMaker에서 훈련하고 배포할 수 있습니다.\n이번 모듈에서는 Scikit-Learn으로 작성된 모델을 컨테이너로 패키징 해봅니다. 이 내용은 AWS 블로그 Train and host Scikit-Learn models in Amazon SageMaker by building a Scikit Docker container 에 잘 설명되어 있습니다.\n참고로 현재 SageMaker는 pre-built scikit-Learn 컨테이너를 제공하고 있기 때문에, Scikit-Learn 모델을 사용하기 위해 매번 이 모듈의 내용대로 새로운 컨테이너를 만들 필요는 없습니다. Scikit-Learn을 사용하는 예제에 대해서는 본 Github 예제 를 참고하시기 바랍니다.\nSageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 SageMaker Examples 를 클릭합니다.\n샘플 노트북 목록에서 Advanced Functionality 을 선택합니다.\n샘플 목록중 scikit_bring_your_own.ipynb 를 찾아 우측의 Use 버튼을 클릭합니다. 다음과 같은 팝업창에서 Create copy 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.\n새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.\n모듈 실행시 사용할 S3 bucket을 default로 생성한 것이 아닌 미리 생성된 버켓을 사용하실때에는 소스 코드 중 sess.default_bucket() 부분을 (현재 3군데에 사용이 되고 있습니다). 모두 본인의 S3 bucket으로 치환하시면 됩니다.\n이 노트북의 소스 파일은  Github  에 공개되어 있습니다.\n※ 이 모듈의 실습에는 약 30분이 소요됩니다.\n"
+},
+{
+	"uri": "/kr/labs/sagemaker/_termination.html",
+	"title": "서비스 종료 가이드",
+	"tags": [],
+	"description": "",
+	"content": " AWS Event 엔진을 통해 임시로 생성하신 AWS Account의 경우 자동 삭제 되므로 아래의 작업이 필요없습니다.\n 워크 샵 이후 발생 되는 비용을 방지하기 위해서 아래의 단계에 따라 모두 삭제하십시오.\n Notebook instance 먼저 Notebook instance를 stop 시킨 후에 삭제할 수 있습니다. 먼저 Actions 버튼을 누르시고 아래에 있는 stop을 선택합니다.\n일단stop 이 되면 Actions 버튼에 Delete 메뉴가 활성화되어 선택할 수 있습니다.\n만약 향후 사용을 위해 인스턴스를 삭제하지 않는다면, 스토리지 비용이 발생합니다. 중지된 인스턴스를다시 시작하려면 Start를 선택하면 됩니다.\nEndpoint 노트북에서 삭제하지 않은 Endpoint가 있다면 콘솔에서 수동으로 삭제할 수 있습니다. 좌측 메뉴에서 Endpoints를 선택하면, Endpoint들의 목록이 나오는데 이 중에서 초록색 InService 로 표시된 것들이 현재 가동중인 Endpoint 인스턴스들입니다. 삭제 방법은 Notebook instance의 삭제 방법과 동일합니다. Endpoint의 삭제는 잊기 쉬우므로 특별히 주의합니다.\n Amazon S3 bucket 실습 중에 생성된 S3 Bucket들을 모두 삭제합니다. 처음보는 낯선 이름일 수도 있으므로 주의합니다.\n이상으로 본 핸즈온 세션의 모든 과정을 마무리 하셨습니다. 수고하셨습니다.\n"
+},
+{
+	"uri": "/kr/labs/apps.html",
+	"title": "AWS AI/ML Apps",
+	"tags": [],
+	"description": "",
+	"content": "본 실습은 AWS AI/ML 서비스와 결합된 다양한 App 구축 경험을 익히는데 도움이 되는 모듈들로 구성되어 있습니다.\n Internet-facing 앱 개발   "
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app.html",
+	"title": "Internet-facing 앱 개발",
+	"tags": [],
+	"description": "",
+	"content": "Amazon SageMaker는 데이터 사이언티스트와 개발자들이 쉽고 빠르게 구성, 학습하고 어떤 규모 로든 기계 학습된 모델을 배포할 수 있도록 해주는 관리형 서비스 입니다. 이 워크샵을 통해 Sagemaker notebook instance를 생성하고 샘플 Jupyter notebook을 실습하면서 SageMaker의 일부 기능을 알아보도록 합니다.\n이 모듈에서는 영어를 독일어로 변환하는 SageMaker의 Sequence-to-Sequence 알고리즘을 이용한 언어번역기를 학습해보고 이 서비스를 인터넷을 통해 활용할 수 있는 방법에 대해 실습해 보겠습니다.\n본 Hands-on에서는 SageMaker에서 생성한 Endpoint inference service를 웹 상에서 호출하기 위해 AWS Lambda와 AWS API Gateway를 Figure 4과 같은 데모를 만들어 보겠습니다.\nFigure 4. SageMaker Internet-facing App Data Flow.\nFigure 4에서는 SageMaker의 기능 데모를 위해 가장 간략한 구조를 채택하고 있습니다. 예를 들어 Amazon S3의 Static Website에 다른 도메인 이름을 지정하기 위한 Route 53 서비스나 캐슁 서비스를 위한 CloudFront 등의 서비스는 실제 비즈니스 적용 시에는 고려 되어야할 서비스입니다.\n전제 Lab 시간은 일반 사용자의 경우 한시간에서 한시간 30분정도 소요 예상 됩니다.\n 실습 가이드   Module 1: Notebook Instance 생성하기    Module 2: 실습용 코드 다운 받기   Module 3: 영어-독어 번역 ML 모델 학습   Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기   Module 5: AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기   서비스 종료 가이드   "
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_lab_guide.html",
+	"title": "실습 가이드",
+	"tags": [],
+	"description": "",
+	"content": " Lab 개요 Amazon SageMaker는 데이터 사이언티스트와 개발자들이 쉽고 빠르게 구성, 학습하고 어떤 규모로든 기계 학습된 모델을 배포할 수 있도록 해주는 관리형 서비스 입니다. 이 워크샵을 통해 SageMaker notebook instance를 생성하고 샘플 Jupyter notebook을 실습하면서 SageMaker의 일부 기능을 알아보도록 합니다.\n목표  SageMaker에 내장된 학습 기능을 사용하여 모델 훈련 Job을 생성 합니다.\n SageMaker의 endpoint 기능을 사용하여 생성된 모델이 예측에 사용될 수 있도록 endpoint를 생성합니다.\n 머신 러닝이 정형 데이터(e.g. CSV 파일)와 비정형 데이터(e.g. 이미지)에 모두 적용 될수 있음을 확인 합니다.\n  준비 조건  AWS 계정: AWS IAM, S3, SageMaker 자원을 생성할 수 있는 권한이 필요합니다.\n AWS Region: SageMaker는 지원되는 region은 https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/ 에서 확인하실 수 있습니다. 이번 실습은Seoul (ap-northeast-2) region에서 실행 합니다.\n Browser: 최신 버전의 Chrome, Firefox를 사용하세요.\n  ※ 주의 사항: Notebook 안의 Cell에서 코드 실행후 결과 값이 나오는 데는 수 초가 걸립니다. 훈련 Job을 실행하는 경우 수 분이 걸릴 수도 있습니다. 실습 완료 후에는 아래 가이드에 따라 생성된 자원을 꼭 종료/삭제해 주세요.\n"
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_module_1.html",
+	"title": "Module 1: Notebook Instance 생성하기 ",
+	"tags": [],
+	"description": "",
+	"content": " S3 Bucket생성하기 SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서는 해당 목적으로 S3 Bucket을 생성합니다.\n1) AWS 관리 콘솔 (https://console.aws.amazon.com/)에 Sign in 합니다.\n2) AWS Services 리스트에서 S3 로 이동합니다.\n3) + Create Bucket 버튼을 선택합니다.\n4) 아래 내용 설정 후 화면 왼쪽 아래 Create 클릭합니다.\n Bucket name: sagemaker-{userid} [반드시 고유한 값 설정]\n Region : Asia Pacific (Seoul)\n  Notebook instance 생성 1) AWS관리 콘솔에서 오른쪽 상단에서 Seoul Region선택 후 AWS Services 리스트에서 Amazon SageMaker 서비스를 선택합니다.\n2) 새로운 Notebook instance를 생성하기 위해 왼쪽 패널 메뉴 중 Notebook Instances 선택 후 오른쪽 상단의 Create notebook instance 버튼을 클릭 합니다.\n3) Notebook instance 이름으로 \\[First Name\\]-\\[Last Name\\]-workshop으로 넣은 뒤 ml.m4.xlarge 인스턴스 타입을 선택 합니다.\n4) IAM role은 Create a new role을 선택하고, 생성된 팝업창에서는 S3 buckets you specify -- optional 밑에 Specific S3 Bucket을 선택 합니다. 그리고 텍스트 필드에 위에서 만든 S3 bucket 이름(예: sagemaker-xxxxx)을 선택 합니다. 이후 Create role을 클릭합니다.\n5) 다시 Create Notebook instance 페이지로 돌아온 뒤 Create notebook instance를 클릭합니다.\nNotebook Instance 접근하기 1) 서버 상태가 InService 로 바뀔 때까지 기다립니다. 보통 5분정도의 시간이 소요 됩니다.\n2) Open을 클릭하면 방금 생성한 notebook instance의 Jupyter 홈페이지로 이동하게 됩니다.\n"
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_module_2.html",
+	"title": "Module 2: 실습용 코드 다운 받기",
+	"tags": [],
+	"description": "",
+	"content": "SageMaker의 Jupyter 노트북도 Linux 기반의 서버입니다. Jupyter 노트북에서 서버의 Terminal을 바로 실행하는 기능을 제공하고 있습니다. Figure 1와 같이 Terminal을 선택합니다.\nFigure 1. SageMaker 노트북 서버에 접속하기 위한 Terminal 실행 화면.\nFigure 2과 같이 터미널이 실행되면 아래의 shell 명령어들을 입력해서 실행합니다.\ncd SageMaker/ git clone https://github.com/pilhokim/ai-ml-workshop Figure 2. git 싸이트에서 실습 코드 다운 받기.\n코드를 다운 받고 난 후 Jupyter 노트북을 갱신 하면 (오른쪽 상단의 Refresh 아이콘을 클릭하세요) 새롭게 다운 받은 코드 폴더가 보입니다 (Figure 3 참조).\nFigure 3. 새로 다운 받은 폴더 생성 확인 화면.\n"
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_module_3.html",
+	"title": "Module 3: 영어-독어 번역 ML 모델 학습",
+	"tags": [],
+	"description": "",
+	"content": " Sequence-to-Sequence 알고리즘 노트북 열기 SageMaker가 지원하는 Seq2Seq 알고리즘은 MXNet 기반으로 개발된 Sockeye 알고리즘을 기반으로 개발된 최신의 Encoder-decoder 구조를 구현한 것으로 문서자동요약이나 언어 번역 서비스에 적용할 수 있습니다.\n실습을 위해서 현재 설치되어 있는 SageMaker의 Jupyter 노트북의 예제들 중 아래의 디렉토리에 위한 Jupyter 노트북을 실행하시면 됩니다 (Figure 5 참조).\n/aws-ai-ml-workshop-kr/src/release/2018-11/module8-SageMaker-Seq2Seq-Translation-English-German-InternetFacingApp.ipynb  Figure 5. Seq2Seq 노트북 디렉토리 위치.\nFigure 6. 노트북 화면.\n노트북에 대한 설명 본 노트북은 아래에 위치한 예제 노트북의 수정된 버전으로 미리 학습된 머신 러닝 모델을 사용하도록 바뀌었습니다.\n/sample-notebooks/introduction\\_to\\_amazon\\_algorithms/seq2seq\\_translation\\_en-de/SageMaker-Seq2Seq-Translation-English-German.ipynb  상기 노트북은 빠른 학습 시간을 위해 Figure 7와 같이 전체 데이터 중 첫번째 10000개의 데이터의 대해서만 학습을 해서 Seq2Seq 알고리즘의 사용방법을 소개하고 있습니다.\nFigure 7. 샘플 데이터 선택 화면.\nFigure 8는 다운받은 corpus의 실제 데이터 내용으로 영어 및 독일어 데이터가 어떻게 문장 대 문장으로 매핑 되고 있는지를 보여주고 있습니다.\n영문 데이터 (corpuc.tc.en.small 내용)\n독일어 데이터(corpuc.tc.de.small 내용)\nFigure 8. 번역기 학습을 위한 영문 자료와 독일어 자료 비교 화면.\n실제로는10000개의 샘플 문장으로 훈련한 번역기는 좋은 결과를 보여줄 수 없습니다. 그렇지만 전체 데이터 학습을 위해서는 선택하시는 SageMaker의 서버 Instance Type에 따라 다르지만 수시간에서 수일의 장시간이 소요될 수 있습니다. 따라서 이 노트북의 개발자들은 좀더 나은 품질의 번역 결과 체험을 원하시는 사용자들 위해 전체 데이터에 이미 훈련이 된 모델을 공유하고 있습니다.\n이 Pre-trained model을 사용하기 위해서는 노트북의 코드 중 Endpoint Configuration 직전의 코드를 아래와 같이 수정해서 이미 훈련된 모델을 다운로드 한 다음 본인의 S3 버켓으로 업로드 하시면 됩니다. 이때 Jupyter 노트북 마지막 줄의 sage.delete_endpoint 는 데모를 계속 진행하기 위해 실행하지 않습니다. 이를 위해 이번에는 가장 마지막 줄에 있는 코드를 주석 처리하겠습니다.\nFigure 9. delete_endpoint 함수 콜 코멘트 처리 화면.\nPre-trained 모델을 사용 하기 위한 노트북 수정 노트북에서 하단의 S3 bucket 이름에 상기 생성한 S3 이름을 입력하시고 우측의 예와 비슷한 형식으로 prefix를 입력하시면 됩니다 (Figure 11 참조).\nFigure 10. 노트북 S3 버킷 이름 및 prefix 수정 전 화면.\nFigure 11. S3 버킷 및 prefix 수정 후 화면 예제. 본인의 S3 버킷 이름으로 수정하셔야 합니다.\n노트북 실행 방법 이제 노트북 전체를 실행할 준비가 되었습니다. Jupyter 노트북을 실행하는 방법은 코드가 있는 셀을 클릭으로 선택하신 후 Shift-enter 키를 누르시거나 또는 Jupyter 노트북 상단의 툴바에서 \u0026ldquo;Run cell, select below\u0026rdquo; 버튼을 클릭하셔도 됩니다.\nFigure 12. Jupyter 노트북 셀 실행 툴바.\n전체 실행 과정은 약 12분에서 15분 정도 소요 됩니다. 각각의 셀을 실행시키면서 셀 하단에 표시되는 처리결과들을 확인해 보시기 바랍니다.\n노트북 코드 중 Create endpoint configuration 셀에서 현재 InstanceType이 ml.m4.large 로 되어 있습니다 (Figure 13 참조). Seq2Seq 알고리즘은 Neural network 기반이기 때문에 ml.p2.xlarge (GPU) instance를 사용하실 수 있지만 본 실습에서는 Free tier가 지원되는 ml.m4.xlarge* 를 사용하고 있습니다. ml.t2.* instance는 time-out 문제가 발생할 수 있으므로 본 실습에서는 사용하지 않습니다.\nFigure 13. Endpoint configuration 화면.\n노트북 코드 중 Create endpoint 셀은 새로운 서버를 설치하고 실행 코드를 설치하는 과정이므로 본 노트북에서는 가장 많은 시간 (약 10~11여분)이 소요 되는데 아래와 같은 메세지를 확인하시면 다음 모듈로 진행하시면 됩니다 (Figure 14참조).\nFigure 14. SageMaker Endpoint 생성 결과 화면.\n노트북 가장 하단의 delete_endpoint는 주석 처리 되어 있어야 endpoint 서버가 다음 실습을 위해 계속 운용될 수 있습니다. 만약에 실행 전에 수정하셨다면 Create endpoint 부분의 코드를 다시 실행하시기 바랍니다.\n"
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_module_4.html",
+	"title": "Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기",
+	"tags": [],
+	"description": "",
+	"content": " 본 모듈에서는 방금 생성한 SageMaker의 Inference service를 호출하는 Lambda 함수를 개발해 보겠습니다.\nLambda 함수 생성하기  AWS 콘솔에서 Lambda를 선택 (https://console.aws.amazon.com/lambda)\n Create function 선택 (Figure 15 참조)\nFigure 15. Lambda 함수 생성 화면.\nFigure 16. Lambda 함수 생성 화면.\n Lambda 생성화면에서 Figure 16과 같이 Lambda 함수 이름과 Runtime (Python 3.6) 그리고 Role은 Create a custom role을 선택합니다.\n Name : MySeq2SeqInference으로 지정.\n Runtime: Python 3.6으로 지정\n Role: Create a custom role을 선택하면 Figure 17와 같이 AWS Lambda required access to your resources가 나옵니다. 여기서 Allow 를 누릅니다.\n Allow 클릭하면 창이 닫히고 Lambda Console로 돌아가는 데 여기서 Create Function을 선택하시면 됩니다.\n  Figure 17. AWS Lambda 접근 허락 화면.\n  Lambda 함수에 Role을 추가하기 방금 생성한 Lambda 함수에 새롭게 추가된 Role에 SageMaker와 API Gateway를 사용할 수 있는 정책 (Policy)를 추가해보겠습니다.\n AWS 콘솔에서 IAM 서비스를 선택하세요.\n 왼편의 메뉴에서 Roles를 클릭하세요.\n 방금 생성하신 Lambda에 사용되는 Role을 선택하세요 (Figure 18 참조)\nFigure 18. Lambda 함수 선택.\n \u0026ldquo;Add inline policy\u0026rdquo;를 선택하세요 (Figure 19 참조).\nFigure 19. IAM Role에 정책을 추가하는 화면.\n 다음 화면의 검색창에 SageMaker 입력 하세요 (Figure 20 참조).\nFigure 20. AmazonSageMakerFullAccess 정책 추가 화면.\n Access level at Actions에 있는 모든 DescribeEndpoint and InvokeEndpoint 를 선택하세요 (See Figure 21).\nFigure 21. Select DescribeEndpoint and InvokeEndpoint in the Access level.\n 하면 하단의 Resources에 있는 노란색의 You chose actions that require the endpoint-config resource type 문장을 선택하신 후 Figure 22 화면과 같이 Resources 섹션에 있는 Any 를 선택합니다. 이후 화면 하단에 있는 Review policy를 선택하세요.\nFigure 22. Select endpoint resource type.\n Review policy 다이얼로그에서 새로운 policy 이름을 입력하신 후 화면 하단의 Create policy버튼을 선택하세요 (See Figure 30).\nFigure 23. Create policy screen.\n 최종 추가된 Policy가 그림 19와 동일한지 확인\nFigure 24. 최종 Role의 정책들 화면.\n  Lambda 함수 코딩하기 다시 AWS 콘솔의 Lambda 서비스 화면으로 이동하신 후 윗 단계에서 생성하신 Lambda를 선택합니다. Figure 25 과 같이 추가된 Role의 Policy들을 확인하실 수 있습니다.\nFigure 25. Lambda 선택 화면.\n현 페이지에서 마우스를 스크롤해서 하단으로 이동하면 Figure 26와 같이 Lambda의 내장 코드들을 직접 수정할 수 있는 인터페이스가 제공이 됩니다.\nFigure 26. Lamba 코드 개발 화면.\nAWS Lambda는 AWS 콘솔 상에서 바로 코딩할 수 있게 Cloud9 에디터가 내장되어 있습니다. 아래의 순서에 따라 Lambda 함수를 만들어 보겠습니다.\n 다음 페이지의 Python 샘플 코드를 Copy 후 Paste 로 Lambda의 online editor에 입력합니다. Python 코드를 복사 및 붙여 넣기를 할때는 원 코드의 indent를 그대로 지키는 것이 중요합니다. 현재 보시고 있는 PDF 문서 상에서 복사가 제대로 되지 않는 경우 아래 온라인 주소에서 소스코드를 복사하 셔도 됩니다:\nhttps://raw.githubusercontent.com/aws-samples/aws-ai-ml-workshop-kr/master/src/release/2018-11/lambda_function.py\n 붙여넣기 하신 소스코드 상의 endpoint_name 을 본 실습 동안 생성한 Seq2Seq endpoint 서버 주소로 변경하십시요 (Figure 27 참조).\nFigure 27. SageMaker EndPoint 이름 확인 방법.\n  Labmda Python sample Code\n Endpoint용으로 선택하신 서버의 Instance Type과 번역을 하기위한 text의 크기에 따라 번역에 몇초 이상이 소요될 수도 있습니다. 이 시간동안 Lambda 함수 호출이 Timeout 되는 것을 방지하기 위해 Figure 28와 같이 Lambda의 Timeout 시간을 10초로 늘입니다.\n 상단의 Save 버튼을 눌러 저장합니다.\nFigure 28. Lambda 함수 Timeout 값 조정.\n  새로 만든 Lambda 함수의 동작을 바로 확인할 수 있습니다.\n Figure 29와 같이 Configure test events를 선택합니다.\nFigure 29. Lambda 테스트 데이터 구성 화면.\n Event name을 입력합니다 (예: SampleEnglishSentence)\n 하단의 테스트 이벤트 입력화면에서 Figure 30과 같이 아래의 샘플 영어 문장을 입력합니다. 또는 https://raw.githubusercontent.com/pilhokim/ai-ml-workshop/master/2018-09/sample_query.json 에서 복사해서 사용하셔도 됩니다.\nFigure 30. Test 이벤트 생성.\n이때 주의하실점은 JSON 형식의 sentences와 query는 미리 약속된 key 값이므로 변경을 하시면 안됩니다.\n Create 버튼을 선택합니다.\n 입력이 완료 된 후 상단의 Test 버튼을 클릭하시면 Figure 31와 같은 화면이 보이면 정상적으로 작동하는 것을 확인하실 수 있습니다. 하단의 Cloud9에서도 결과를 확인하실 수 있습니다.\nFigure 31. Lambda 함수 테스트 결과 화면.\n  "
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_module_5.html",
+	"title": "Module 5: AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기",
+	"tags": [],
+	"description": "",
+	"content": " API Gateway 생성 및 Lambda함수 연결하기  Amazon API Gateway 콘솔 접속 (https://console.aws.amazon.com/apigateway/ )\n \u0026ldquo;Create API\u0026rdquo; -\u0026gt; \u0026ldquo;New API\u0026rdquo; 선택\n 셋팅에서 새로운 API name 입력 (ex. SageMakerSeq2SeqLambdaGateWay)후 Endpoint Type을 Regional 로 선택 (Figure 32 참조).\nFigure 32. Amazon API Gateway 생성 화면.\n 바뀐 화면에서 Actions -\u0026gt; Create Method 선택\n 하단의 콤보 박스에서 POST 선택 (Figure 33 참조)\n 체크(V) 버튼 클릭해서 적용 (Figure 33 참조)\nFigure 33. POST method 추가 화면.\n 오른편의 셋업에서 아래와 같이 입력 진행 (Figure 34 참조)\n Integration type: Lambda function\n Lambda region: Labmda를 생성하신 Region (us-east-1) 입력\n Lambda function: Lambda 함수 이름 입력\n Save 선택\n   Figure 34. Lambda 함수를 호출하기 위한 Gateway POST method 셋팅 화면.\nAPI Gateway가 생성이 된 이후에는 Figure 35와 같이 Test를 진행하여 제대로 Lambda를 호출하는지 확인하실 수 있습니다.\n Test를 선택하셔서 API Gateway의 testing interface를 확인합니다.\n Request body에 Lambda 호출에 사용되었던 아래의 예제 데이터를 입력하신 후 Test를 선택합니다.\nFigure 35. API Gateway Test 화면\n테스트 결과가 Figure 36과 같이 보이면 정상적으로 동작하는 것으로 확인하실 수 있습니다.\nFigure 36. API Gateway 테스트 결과.\n Enable CORS: S3 Static Web Server를 이용해서 API Gateway를 호출하면 origin이 다르기 때문에 반드시 CORS (Cross-Origin Resource Sharing)를 Enable 해야만 외부 싸이트에서 이 REST 서비스를 이용할 수 있게 됩니다.\n Actions -\u0026gt; Enable CORS 선택 (Figure 37 참조)  Figure 37. API Gateway API Enable CORS 화면.\n Enable CORS and replace existing CORS headers 선택\n Yes, replace existing values 선택 (Figure 38 참조)\n  Figure 38. CORS replace existing values 화면.\n 정상적으로 동작이 되면 Actions-\u0026gt;Deploy API 선택 (Figure 39 참조) 합니다. API Deploy를 반드시 하셔야 실제 외부 (Public Internet)에서 호출을 할 수 있습니다.\n 현재 생성한 Gateway의 stage 이름을 부여합니다. 예제에서는 \u0026ldquo;prod\u0026quot;라는 약어로 stage 이름을 정의하였습니다. 개발 단계에 따라test나 prod` 등 의미 있는 키워드를 부여하시면 됩니다.\nFigure 39. API deploy 화면.\n Deploy가 된 이후 Stage Editor에서 invoke URL을 (Figure 40 참조) 메모장에 따로 기록해 두시고 SDK Generation -\u0026gt; Platform (JavaScript) -\u0026gt; Generate SDK 선택. 이 JavaScript 라이브러리는 API Gateway 서비스에 대해 CORS (Cross-Origin Resource Sharing)을 지원해주는 기능을 포함하고 있습니다.\nFigure 40. API Gateway 접속 SDK 다운로드 화면\n  이제 S3를 이용해서 static web server를 설정하기 위한 화일들을 준비하겠습니다.\n 상기 API Gateway SDK 생성으로 다운 받은 압축 화일을 임의의 디렉토리에 푸세요 (unzip).\n S3 Static 웹 서버에 사용될 index.html 과 error.html 파일을 다음의 S3 버켓에서 다운로드 하여 상기 단계에서 사용된 디렉토리에 동일하게 저장합니다: https://s3.amazonaws.com/pilho-sagemaker-ai-workshop-lambda/index_error_html.zip\n 최종 파일들이 Figure 41과 같이 구성되어 있으면 됩니다. 이 파일들은 다음 단계에서 만들 S3 버킷에 업로드 되게 됩니다.\n  Figure 41. 웹서버 구성 화일 리스트 화면.\nS3 Static Web Server 생성하기  Amazon S3 콘솔 접속 (https://s3.console.aws.amazon.com )\n Create bucket 선택\n 새로운 버킷 이름 입력 (ex. jihye-sagemaker-public-test) -\u0026gt; Next -\u0026gt; Next 선택\n Set permissions에서 Manage public permissons를 Grant public read access to this bucket 으로 설정 (Figure 43 참조)\nFigure 42. S3 버킷 Public 접속 허용 화면.\n Next-\u0026gt;Create bucket 선택\n 생성된 S3 bucket 선택\n Properties -\u0026gt; Static website hosting -\u0026gt; Use this bucket to host a website 선택 후 Index document : index.html, `Error document\n error.html` 입력  Save 선택 (Figure 43 참조)\n 이 단계 까지 마치신 후 상단의 URL 형식의 Endpoint 주소를 기록해 둡니다. 이 URL 주소를 이용해서 S3 웹 서버에 접속하게 됩니다.\nFigure 43. S3 static 웹서버 설정 화면.\n Overview 탭 선택 -\u0026gt; Upload 선택\n 생성된 S3 Bucket에 이전 단계에서 생성된 파일들을 Drag \u0026amp; Drop으로 업로드 합니다.\n 이때 Set permissions을 Figure 44와 같이 반드시 Grant public read access to this object(s)로 설정해야 합니다.\nFigure 44. S3 파일들에 대한 Make public 설정 화면.\n  최종 서비스 테스트하기  웹브라우즈를 구동하시고 S3 Endpoint URL에 접속합니다 (Figure 45 참조)\n Translate to German 오른편의 텍스트 입력 창에 영문 문장을 입력합니다. (Ex. \u0026ldquo;I love you\u0026rdquo;)\n 몇 초 정도 기다리시면 하단에 번역 결과가 보여집니다.\n  Figure 45. 웹기반 번역 서비스 테스트 화면.\nSageMaker Endpoint 서버 자동 확장 설정하기 본 섹션은 향후 실제 필요시에 대한 참조용으로 제공됩니다. 실제 Hands-on을 하실 필요는 없습니다.\n웹 기반 서비스를 제공하기 시작하고 사용자 수가 증가하기 시작하면 SageMaker의 Inference 서버도 자동으로 확장되게 설정하실 수 있습니다.\nFigure 46. Endpoint 설정에서 InitialInstanceCount 변수 화면.\nFigure 46와 같이 Endpoint 서버 설정에서의 Instance count는 InitialInstanceCount로 설정이 됩니다. 즉 초기의 서버 갯수 만을 설정하는 것이고 사용자의 요청 부하에 따라 서버 설정이 바뀌게 할 수 있습니다. 아래에는 AWS SageMaker 콘솔을 이용해서 autoscaling 을 설정 하는 방법을 보겠습니다.\n AWS SageMaker 콘솔에서 왼편의 Endpoints를 선택하신 후 오른편 화면에서 생성하신 Endpoint를 선택합니다 (Figure 47 참조).\nFigure 47. AWS 콘솔에서 SageMaker의 Endpoints 선택 화면\n 선택된 Endpoint 내용 화면에서 스크롤을 하셔서 Endpoint runtime settings 에서 AllTraffic을 선택하신 후 오른편의 Configure auto scaling 버튼을 선택합니다. 참고로 이 화면에서 각 Variant별 Weight 변경 (Update Weigths)와 평상시 서버 개수 (Update Instance count) 도 변경하실 수 있습니다.\nFigure 48. Auto scaling 설정 화면.\n Configure variant automatic scaling 화면에서는 Variant automatic scaling과 Scaling policy를 설정 하실 수 있습니다 (참조링크). Amazon SageMaker는 target-tracking scaling 정책을 사용하고 있습니다. 즉 미리 정의된 metric이나 custom metric을 사용하셔서 target value를 지정하실 수 있는데 CloudWatch 알람을 통해 scaling 정책을 구동 시키고 instance server scale을 조정하실 수 있습니다. 본 핸즈온에서는 직접 다루지는 않지만 참조링크를 통해 좀 더 자세한 내용을 파악해 보시는 것도 좋을 것 같습니다.\nFigure 49. Automatic scaling 정책 설정 화면.\n  이상으로 본 모듈의 실습 과정을 마무리 하셨습니다. 워크 샵 이후 발생되는 비용을 방지하기 위해 다음 페이지의 서비스 종료 가이드를 통해 사용하신 리소스들을 모두 종료/삭제 해주십시오.\n"
+},
+{
+	"uri": "/kr/labs/apps/internet_facing_app/_termination.html",
+	"title": "서비스 종료 가이드",
+	"tags": [],
+	"description": "",
+	"content": " 워크 샵 이후 발생 되는 비용을 방지하기 위해서 아래의 단계에 따라 모두 종료/삭제 해 주세요. 비용이 발생하더라도 실습하신 Internet-facing App을 유지하고 싶으신 경우에는 아래의 Notebook instance의 경우만 처리하시면 됩니다.\nNotebook instance 만약 향후 사용을 위해 인스턴스를 저장하고 싶다면 stop을 하시면 됩니다. 이 경우 스토리지 비용은 발생합니다. 향후 다시 재가동 하시려면 Start button을 클릭하면 됩니다.\nFigure 50. SageMaker 노트북 인스턴스 중단 화면.\n삭제를 할 경우는 stop 되어 있는 해당 notebook instance를 선택하고 Action Dropdown 메뉴에서 Delete 선택 하시면 됩니다.\nFigure 51. SageMaker 노트북 인스턴스 삭제 화면.\nSageMaker Endpoints 훈련된 모델을 실제 예측 업무를 위해 배포된 한대 이상으로 구성된 클러스터입니다. Notebook안에서 명령어로 삭제하거나 SageMaker console에서 삭제 하실 수 있습니다. 삭제 하시기 위해서는 왼쪽 패널의 Endpoints를 선택 하신 후 해당 endpoints들 옆에 radio button을 클릭 하신 후 Action Dropdown 메뉴에서 Delete 선택 하시면 됩니다.\nFigure 52. SageMaker Endpoint 삭제 화면.\nLambda instance: 생성하신 Lambda instance를 삭제합니다. Figure 53. Lambda 인스턴스 삭제 화면.\nAmazon API Gateway instance: 생성하신 Gateway instance를 삭제합니다. Figure 54. API Gateway 삭제 화면.\nAmazon S3 buckets: 생성하신 S3 Bucket (SageMaker용, Public Internet용)들을 모두 삭제합니다. Figure 55. S3 버킷 삭제 화면.\n이상으로 본 핸즈온 세션의 모든 과정을 마무리 하셨습니다. 수고하셨습니다.\n "
+},
+{
+	"uri": "/kr/categories.html",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/kr/tags.html",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
