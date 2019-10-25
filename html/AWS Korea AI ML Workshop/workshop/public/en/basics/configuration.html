@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<html lang="en" class="js csstransforms3d">
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="My AWS Workshop" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="generator" content="Hugo 0.58.3" />
+  <meta name="description" content="AWS Korea AI/ML Workshop">
+<meta name="author" content="Pil Ho Kim">
+
+  <link rel="shortcut icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+<link rel="icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+
+  <title>Configuration :: My AWS Workshop</title>
+
+  
+  <link href="../../css/nucleus.css" rel="stylesheet">
+  <link href="../../css/fontawesome-all.min.css" rel="stylesheet">
+  <link href="../../css/hybrid.css" rel="stylesheet">
+  <link href="../../css/featherlight.min.css" rel="stylesheet">
+  <link href="../../css/perfect-scrollbar.min.css" rel="stylesheet">
+  <link href="../../css/auto-complete.css" rel="stylesheet">
+  <link href="../../css/atom-one-dark-reasonable.css" rel="stylesheet">
+  <link href="../../css/theme.css" rel="stylesheet">
+  <link href="../../css/hugo-theme.css" rel="stylesheet">
+  
+  <link href="../../css/theme-awskr.css" rel="stylesheet">
+  
+
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+
+  <style>
+    :root #header + #content > #left > #rlblock_left{
+        display:none !important;
+    }
+    
+      :not(pre) > code + span.copy-to-clipboard {
+          display: none;
+      }
+    
+  </style>
+  
+</head>
+
+<body class="" data-url="/en/basics/configuration.html">
+  <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <div>
+    <a href="../../" title="Go home">
+        <img style="vertical-align:middle" src="../../images/logo.png" height="70px" />
+    </a>
+</div>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../js/lunr.min.js"></script>
+<script type="text/javascript" src="../../js/auto-complete.js"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/en";
+    
+</script>
+<script type="text/javascript" src="../../js/search.js"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/en/basics.html" title="Basics" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../../en/basics.html">
+          <b>1. </b>Basics
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/basics/requirements.html" title="Requirements" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/basics/requirements.html">
+          Requirements
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/basics/installation.html" title="Installation" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/basics/installation.html">
+          Installation
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/basics/configuration.html" title="Configuration" class="dd-item 
+        parent
+        active
+        
+        ">
+      <a href="../../en/basics/configuration.html">
+          Configuration
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/en/cont.html" title="Content" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/cont.html">
+          <b>2. </b>Content
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/cont/pages.html" title="Pages Organization" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/cont/pages.html">
+          Pages Organization
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/cont/archetypes.html" title="Archetypes" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/cont/archetypes.html">
+          Archetypes
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/cont/markdown.html" title="Markdown Syntax" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/cont/markdown.html">
+          Markdown Syntax
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/cont/icons.html" title="Icons and Logos" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/cont/icons.html">
+          Icons and Logos
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/cont/i18n.html" title="Multilingual and i18n" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/cont/i18n.html">
+          Multilingual and i18n
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes.html" title="Shortcodes" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes.html">
+          <b>3. </b>Shortcodes
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/attachments.html" title="Attachments" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/attachments.html">
+          Attachments
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/button.html" title="Button" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/button.html">
+          Button
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/children.html" title="Children" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/children.html">
+          Children
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+             
+            
+          
+             
+            
+          
+             
+            
+          
+             
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/expand.html" title="Expand" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/expand.html">
+          Expand
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/img.html" title="Image" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/img.html">
+          Image
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/notice.html" title="Notice" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/notice.html">
+          Notice
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/siteparam.html" title="Site param" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/siteparam.html">
+          Site param
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/shortcodes/siteurl.html" title="Site URL" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/shortcodes/siteurl.html">
+          Site URL
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/en/launch.html" title="Launch" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/launch.html">
+          <b>4. </b>Launch
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/en/launch/metadata.html" title="Metadata" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../en/launch/metadata.html">
+          Metadata
+          
+      </a>
+      
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3></h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://github.com/awslabs/amazon-sagemaker-examples"><i class='fab fa-github'></i> Github repo</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+      
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+
+    <h5 class="copyright">&copy; 2019 Amazon Web Services, Inc. or its Affiliates. All rights reserved.<h5>
+
+</left>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+
+  <section id="body">
+    <div id="overlay"></div>
+    <div class="padding highlightable">
+      
+      <div>
+        <div id="top-bar">
+          
+          
+          
+          
+          <div id="top-github-link">
+            <a class="github-link" title='Edit this page' href="https://code.amazon.com/packages/Aws-workshop-template/blobs/master/--/workshop/content/basics/configuration/_index.en.md"
+              target="blank">
+              <i class="fas fa-code-branch"></i>
+              <span id="top-github-link-text">Edit this page</span>
+            </a>
+          </div>
+          
+          
+          
+          <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <span id="sidebar-toggle-span">
+              <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                <i class="fa fa-bars"></i>
+              </a>
+            </span>
+            
+            <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+            
+            <span class="links">
+              
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href='../../en/'>AWS Workshop Template</a> > <a href='../../en/basics.html'>Basics</a> > Configuration
+          
+          
+          
+          
+          
+          
+            </span>
+          </div>
+          
+          <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#global-site-parameters">Global site parameters</a></li>
+<li><a href="#activate-search">Activate search</a></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+          
+        </div>
+      </div>
+      
+
+      
+        <div id="body-inner">
+          <h1>Configuration</h1>
+          
+          
+
+
+
+	
+
+<h2 id="global-site-parameters">Global site parameters</h2>
+
+<p>On top of <a href="https://gohugo.io/overview/configuration/" target="_blank">Hugo global configuration</a>, this template lets you define the following parameters in your <code>config.toml</code> (here, values are default).</p>
+
+<p>Note that some of these parameters are explained in details in other sections of this documentation.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">params</span>]
+  <span style="color:#75715e"># Prefix URL to edit current page. Will display an &#34;Edit this page&#34; button on top right hand corner of every page. </span>
+  <span style="color:#75715e"># Useful to give opportunity to people to create merge request for your doc.</span>
+  <span style="color:#75715e"># See the config.toml file from this documentation site to have an example.</span>
+  <span style="color:#a6e22e">editURL</span> = <span style="color:#e6db74">&#34;&#34;</span>
+  <span style="color:#75715e"># Author of the site, will be used in meta information</span>
+  <span style="color:#a6e22e">author</span> = <span style="color:#e6db74">&#34;&#34;</span>
+  <span style="color:#75715e"># Description of the site, will be used in meta information</span>
+  <span style="color:#a6e22e">description</span> = <span style="color:#e6db74">&#34;&#34;</span>
+  <span style="color:#75715e"># Shows a checkmark for visited pages on the menu</span>
+  <span style="color:#a6e22e">showVisitedLinks</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#75715e"># Disable search function. It will hide search bar</span>
+  <span style="color:#a6e22e">disableSearch</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#75715e"># Javascript and CSS cache are automatically busted when new version of site is generated. </span>
+  <span style="color:#75715e"># Set this to true to disable this behavior (some proxies don&#39;t handle well this optimization)</span>
+  <span style="color:#a6e22e">disableAssetsBusting</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#75715e"># Set this to true to disable copy-to-clipboard button for inline code.</span>
+  <span style="color:#a6e22e">disableInlineCopyToClipBoard</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#75715e"># A title for shortcuts in menu is set by default. Set this to true to disable it. </span>
+  <span style="color:#a6e22e">disableShortcutsTitle</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#75715e"># When using mulitlingual website, disable the switch language button.</span>
+  <span style="color:#a6e22e">disableLanguageSwitchingButton</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#75715e"># Hide breadcrumbs in the header and only show the current page title</span>
+  <span style="color:#a6e22e">disableBreadcrumb</span> = <span style="color:#66d9ef">true</span>
+  <span style="color:#75715e"># Hide Next and Previous page buttons normally displayed full height beside content</span>
+  <span style="color:#a6e22e">disableNextPrev</span> = <span style="color:#66d9ef">true</span>
+  <span style="color:#75715e"># Order sections in menu by &#34;weight&#34; or &#34;title&#34;. Default to &#34;weight&#34;</span>
+  <span style="color:#a6e22e">ordersectionsby</span> = <span style="color:#e6db74">&#34;weight&#34;</span></code></pre></div>
+<h2 id="activate-search">Activate search</h2>
+
+<p>If not already present, add the follow lines in the same <code>config.toml</code> file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">outputs</span>]
+<span style="color:#a6e22e">home</span> = [ <span style="color:#e6db74">&#34;HTML&#34;</span>, <span style="color:#e6db74">&#34;RSS&#34;</span>, <span style="color:#e6db74">&#34;JSON&#34;</span>]</code></pre></div>
+
+<div class="notices note" ><p>When using this functionality, Hugo generates an index.json file at the root of public folder to be consumed by the lunr.js javascript search enginge.
+When you build the site with <code>hugo serve</code>, Hugo generates the file internally and it doesn’t show up in the filesystem</p>
+</div>
+
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+        
+                    
+                        
+            
+            
+        
+                    
+                        
+            
+            
+        
+                    
+                        
+            
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../en/basics/installation.html" title="Installation"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../en/cont.html" title="Content" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../js/clipboard.min.js"></script>
+    <script src="../../js/perfect-scrollbar.min.js"></script>
+    <script src="../../js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../js/jquery.sticky.js"></script>
+    <script src="../../js/featherlight.min.js"></script>
+    <script src="../../js/html5shiv-printshiv.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../js/modernizr.custom-3.6.0.js"></script>
+    <script src="../../js/learn.js"></script>
+    <script src="../../js/hugo-learn.js"></script>
+
+    <link href="../../mermaid/mermaid.css" rel="stylesheet" />
+    <script src="../../mermaid/mermaid.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+  </body>
+</html>

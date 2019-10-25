@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Children on My AWS Workshop</title>
+    <link>/en/shortcodes/children.html</link>
+    <description>Recent content in Children on My AWS Workshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    
+	<atom:link href="/en/shortcodes/children/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>page test</title>
+      <link>/en/shortcodes/children/test.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/en/shortcodes/children/test.html</guid>
+      <description>This is a test demo child page</description>
+    </item>
+    
+  </channel>
+</rss>
