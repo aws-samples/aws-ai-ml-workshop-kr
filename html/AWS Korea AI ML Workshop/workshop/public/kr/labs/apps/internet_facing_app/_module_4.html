@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<html lang="kr" class="js csstransforms3d">
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="AWS Workshop" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="generator" content="Hugo 0.58.3" />
+  <meta name="description" content="AWS Korea AI/ML Workshop">
+<meta name="author" content="Pil Ho Kim">
+
+  <link rel="shortcut icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+<link rel="icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+
+  <title>Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기 :: AWS Workshop</title>
+
+  
+  <link href="../../../../css/nucleus.css" rel="stylesheet">
+  <link href="../../../../css/fontawesome-all.min.css" rel="stylesheet">
+  <link href="../../../../css/hybrid.css" rel="stylesheet">
+  <link href="../../../../css/featherlight.min.css" rel="stylesheet">
+  <link href="../../../../css/perfect-scrollbar.min.css" rel="stylesheet">
+  <link href="../../../../css/auto-complete.css" rel="stylesheet">
+  <link href="../../../../css/atom-one-dark-reasonable.css" rel="stylesheet">
+  <link href="../../../../css/theme.css" rel="stylesheet">
+  <link href="../../../../css/hugo-theme.css" rel="stylesheet">
+  
+  <link href="../../../../css/theme-awskr.css" rel="stylesheet">
+  
+
+  <script src="../../../../js/jquery-3.3.1.min.js"></script>
+
+  <style>
+    :root #header + #content > #left > #rlblock_left{
+        display:none !important;
+    }
+    
+      :not(pre) > code + span.copy-to-clipboard {
+          display: none;
+      }
+    
+  </style>
+  
+</head>
+
+<body class="" data-url="/kr/labs/apps/internet_facing_app/_module_4.html">
+  <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <div>
+    <a href="../../../../" title="Go home">
+        <img style="vertical-align:middle" src="../../../../images/logo.png" height="70px" />
+    </a>
+</div>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../../../js/lunr.min.js"></script>
+<script type="text/javascript" src="../../../../js/auto-complete.js"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/kr";
+    
+</script>
+<script type="text/javascript" src="../../../../js/search.js"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs.html" title="AWS AI/ML Lab Modules" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../../../../kr/labs.html">
+          <b></b>Lab Modules
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs/sagemaker.html" title="SageMaker Labs Modules" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../../../kr/labs/sagemaker.html">
+          <b></b>SageMaker
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_1.html" title="Module 1: S3 bucket과 Notebook Instance 생성하기" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_1.html">
+        S3 bucket과 Notebook Instance 생성하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_2.html" title="Module 2: Linear Learner MNIST" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_2.html">
+        Linear Learner MNIST
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_3.html" title="Module 3: Linear Learner를 사용해 시계열 예측하기" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_3.html">
+        Linear Learner를 사용해 시계열 예측하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_4.html" title="Module 4: BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_4.html">
+        BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_5.html" title="Module 5: TensorFlow MNIST로 자동 모델 튜닝하기" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_5.html">
+        TensorFlow MNIST로 자동 모델 튜닝하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_6.html" title="Module 6: 자동 모델 튜닝 결과 분석하기" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_6.html">
+        자동 모델 튜닝 결과 분석하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_7.html" title="Module 7: PyTorch MNIST" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_7.html">
+        PyTorch MNIST
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_8.html" title="Module 8: Bring-your-own-container 기능 실습하기" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_module_8.html">
+        Bring-your-own-container 기능 실습하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_termination.html" title="서비스 종료 가이드" class="dd-item ">
+        <a href="../../../../kr/labs/sagemaker/_termination.html">
+        서비스 종료 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs/apps.html" title="AWS AI/ML Apps" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../../../../kr/labs/apps.html">
+          <b></b>AI/ML Apps
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs/apps/internet_facing_app.html" title="Internet-facing 앱 개발" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../../../../kr/labs/apps/internet_facing_app.html">
+          Internet-facing 앱 개발
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_lab_guide.html" title="실습 가이드" class="dd-item ">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_lab_guide.html">
+        실습 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_1.html" title="Module 1: Notebook Instance 생성하기 " class="dd-item ">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_module_1.html">
+        Notebook Instance 생성하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_2.html" title="Module 2: 실습용 코드 다운 받기" class="dd-item ">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_module_2.html">
+        실습용 코드 다운 받기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_3.html" title="Module 3: 영어-독어 번역 ML 모델 학습" class="dd-item ">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_module_3.html">
+        영어-독어 번역 ML 모델 학습
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_4.html" title="Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기" class="dd-item active">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_module_4.html">
+        SageMaker Endpoint 호출 Lambda 함수 개발하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_5.html" title="Module 5: AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기" class="dd-item ">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_module_5.html">
+        AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_termination.html" title="서비스 종료 가이드" class="dd-item ">
+        <a href="../../../../kr/labs/apps/internet_facing_app/_termination.html">
+        서비스 종료 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3></h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://github.com/awslabs/amazon-sagemaker-examples"><i class='fab fa-github'></i> Github repo</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+      
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+
+    <h5 class="copyright">&copy; 2019 Amazon Web Services, Inc. or its Affiliates. All rights reserved.<h5>
+
+</left>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+
+  <section id="body">
+    <div id="overlay"></div>
+    <div class="padding highlightable">
+      
+      <div>
+        <div id="top-bar">
+          
+          
+          <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <span id="sidebar-toggle-span">
+              <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                <i class="fa fa-bars"></i>
+              </a>
+            </span>
+            
+            <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+            
+            <span class="links">
+              
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href='../../../../kr/'>AWS Korea AI/ML Workshop</a> > <a href='../../../../kr/labs.html'>AWS AI/ML Lab Modules</a> > <a href='../../../../kr/labs/apps.html'>AWS AI/ML Apps</a> > <a href='../../../../kr/labs/apps/internet_facing_app.html'>Internet-facing 앱 개발</a> > Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+            </span>
+          </div>
+          
+          <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#lambda-함수-생성하기">Lambda 함수 생성하기</a></li>
+<li><a href="#lambda-함수에-role을-추가하기">Lambda 함수에 Role을 추가하기</a></li>
+<li><a href="#lambda-함수-코딩하기">Lambda 함수 코딩하기</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+          
+        </div>
+      </div>
+      
+
+      
+        <div id="body-inner">
+          <h1>Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기</h1>
+          
+          
+
+
+
+
+<p>본 모듈에서는 방금 생성한 SageMaker의 Inference service를 호출하는
+Lambda 함수를 개발해 보겠습니다.</p>
+
+<h3 id="lambda-함수-생성하기">Lambda 함수 생성하기</h3>
+
+<ol>
+<li><p>AWS 콘솔에서 Lambda를 선택 (<a href="https://console.aws.amazon.com/lambda" target="_blank">https://console.aws.amazon.com/lambda</a>)</p></li>
+
+<li><p><code>Create function</code> 선택 (Figure 15 참조)</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image26.png?width=&quot;4.7558814523184605in&quot;
+height=&quot;0.8586482939632546in" alt="" /></p>
+
+<p><center><strong>Figure 15. Lambda 함수 생성 화면.</strong></center></p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image27.png?width=&quot;5.687501093613299in&quot;
+height=&quot;4.465117016622922in" alt="" /></p>
+
+<p><center><strong>Figure 16. Lambda 함수 생성 화면.</strong></center></p></li>
+
+<li><p>Lambda 생성화면에서 Figure 16과 같이 Lambda 함수 이름과 Runtime
+(Python 3.6) 그리고 Role은 <code>Create a custom role</code>을 선택합니다.</p>
+
+<ol>
+<li><p>Name : MySeq2SeqInference으로 지정.</p></li>
+
+<li><p>Runtime: Python 3.6으로 지정</p></li>
+
+<li><p><code>Role: Create a custom role</code>을 선택하면 Figure 17와 같이 <code>AWS
+Lambda required access to your resources</code>가 나옵니다. 여기서
+<code>Allow</code> 를 누릅니다.</p></li>
+
+<li><p>Allow 클릭하면 창이 닫히고 Lambda Console로 돌아가는 데 여기서
+Create Function을 선택하시면 됩니다.</p></li>
+</ol>
+
+<p><img src="../../../../images/apps/internet_facing_app/image28.png?width=&quot;4.660433070866142in&quot;
+height=&quot;4.294642388451444in" alt="image28" /></p>
+
+<p><center><strong>Figure 17. AWS Lambda 접근 허락 화면.</strong></center></p></li>
+</ol>
+
+<h3 id="lambda-함수에-role을-추가하기">Lambda 함수에 Role을 추가하기</h3>
+
+<p>방금 생성한 Lambda 함수에 새롭게 추가된 Role에 SageMaker와 API Gateway를
+사용할 수 있는 정책 (Policy)를 추가해보겠습니다.</p>
+
+<ol>
+<li><p>AWS 콘솔에서 IAM 서비스를 선택하세요.</p></li>
+
+<li><p>왼편의 메뉴에서 <code>Roles</code>를 클릭하세요.</p></li>
+
+<li><p>방금 생성하신 Lambda에 사용되는 Role을 선택하세요 (Figure 18 참조)</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image29.png?width=&quot;6.761539807524059in&quot;
+height=&quot;3.4069761592300964in" alt="image29" /></p>
+
+<p><center><strong>Figure 18. Lambda 함수 선택.</strong></center></p></li>
+
+<li><p>&ldquo;Add inline policy&rdquo;를 선택하세요 (Figure 19 참조).</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image30.png?width=&quot;6.461656824146981in&quot;
+height=&quot;3.686046587926509in" alt="" /></p>
+
+<p><center><strong>Figure 19. IAM Role에 정책을 추가하는 화면.</strong></center></p></li>
+
+<li><p>다음 화면의 검색창에 <code>SageMaker</code> 입력 하세요 (Figure 20 참조).</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image31.png?width=&quot;5.719290244969379in&quot;
+height=&quot;3.301205161854768in" alt="" /></p>
+
+<p><center><strong>Figure 20. AmazonSageMakerFullAccess 정책 추가 화면.</strong></center></p></li>
+
+<li><p>Access level at Actions에 있는 모든 <code>DescribeEndpoint</code> and
+<code>InvokeEndpoint</code> 를 선택하세요 (See Figure 21).</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image32.png?width=&quot;5.534816272965879in&quot;
+height=&quot;4.030120297462817in" alt="" /></p>
+
+<p><center><strong>Figure 21. Select DescribeEndpoint and InvokeEndpoint in the Access
+level.</strong></center></p></li>
+
+<li><p>하면 하단의 Resources에 있는 노란색의 <code>You chose actions that
+require the endpoint-config resource type</code> 문장을 선택하신 후
+Figure 22 화면과 같이 Resources 섹션에 있는 <code>Any</code> 를 선택합니다.
+이후 화면 하단에 있는 <code>Review policy</code>를 선택하세요.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image33.png?width=&quot;5.009854549431321in&quot;
+height=&quot;3.7409634733158357in" alt="" /></p>
+
+<p><center><strong>Figure 22. Select endpoint resource type.</strong></center></p></li>
+
+<li><p><code>Review policy</code> 다이얼로그에서 새로운 policy 이름을 입력하신 후 화면
+하단의 Create policy버튼을 선택하세요 (See Figure 30).</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image34.png?width=&quot;5.000937226596675in&quot;
+height=&quot;2.5372397200349956in" alt="" /></p>
+
+<p><center><strong>Figure 23. Create policy screen.</strong></center></p></li>
+
+<li><p>최종 추가된 Policy가 그림 19와 동일한지 확인</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image35.png?width=&quot;6.229643482064742in&quot;
+height=&quot;3.4329899387576552in" alt="" /></p>
+
+<p><center><strong>Figure 24. 최종 Role의 정책들 화면.</strong></center></p></li>
+</ol>
+
+<h3 id="lambda-함수-코딩하기">Lambda 함수 코딩하기</h3>
+
+<p>다시 AWS 콘솔의 Lambda 서비스 화면으로 이동하신 후 윗 단계에서 생성하신
+Lambda를 선택합니다. Figure 25 과 같이 추가된 Role의 Policy들을 확인하실
+수 있습니다.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image36.png?width=&quot;5.166319991251093in&quot;
+height=&quot;3.4060542432195975in" alt="" /></p>
+
+<p><center><strong>Figure 25. Lambda 선택 화면.</strong></center></p>
+
+<p>현 페이지에서 마우스를 스크롤해서 하단으로 이동하면 Figure 26와 같이
+Lambda의 내장 코드들을 직접 수정할 수 있는 인터페이스가 제공이 됩니다.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image37.png?width=&quot;5.16226924759405in&quot;
+height=&quot;3.252577646544182in" alt="" /></p>
+
+<p><center><strong>Figure 26. Lamba 코드 개발 화면.</strong></center></p>
+
+<p>AWS Lambda는 AWS 콘솔 상에서 바로 코딩할 수 있게 Cloud9 에디터가 내장되어
+있습니다. 아래의 순서에 따라 Lambda 함수를 만들어 보겠습니다.</p>
+
+<ol>
+<li><p>다음 페이지의 Python 샘플 코드를 <code>Copy</code> 후 <code>Paste</code> 로 Lambda의 online
+editor에 입력합니다. Python 코드를 복사 및 붙여 넣기를 할때는 원
+코드의 indent를 그대로 지키는 것이 중요합니다. 현재 보시고 있는 PDF
+문서 상에서 복사가 제대로 되지 않는 경우 아래 온라인 주소에서
+소스코드를 복사하 셔도 됩니다:</p>
+
+<p><a href="https://raw.githubusercontent.com/aws-samples/aws-ai-ml-workshop-kr/master/src/release/2018-11/lambda_function.py" target="_blank">https://raw.githubusercontent.com/aws-samples/aws-ai-ml-workshop-kr/master/src/release/2018-11/lambda_function.py</a></p></li>
+
+<li><p>붙여넣기 하신 소스코드 상의 <code>endpoint_name</code> 을 본 실습 동안 생성한 Seq2Seq endpoint 서버 주소로 변경하십시요 (Figure 27 참조).</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image38.png?width=&quot;5.284501312335958in&quot;
+height=&quot;1.3815102799650043in" alt="" /></p>
+
+<p><center><strong>Figure 27. SageMaker EndPoint 이름 확인 방법.</strong></center></p></li>
+</ol>
+
+<p><strong>Labmda Python sample Code</strong></p>
+
+<ol>
+<li><p>Endpoint용으로 선택하신 서버의 Instance Type과 번역을 하기위한
+text의 크기에 따라 번역에 몇초 이상이 소요될 수도 있습니다. 이
+시간동안 Lambda 함수 호출이 Timeout 되는 것을 방지하기 위해 Figure
+28와 같이 Lambda의 Timeout 시간을 10초로 늘입니다.</p></li>
+
+<li><p>상단의 <code>Save</code> 버튼을 눌러 저장합니다.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image39.png?width=&quot;2.499987970253718in&quot;
+height=&quot;2.046392169728784in" alt="" /></p>
+
+<p><center><strong>Figure 28. Lambda 함수 Timeout 값 조정.</strong></center></p></li>
+</ol>
+
+<p>새로 만든 Lambda 함수의 동작을 바로 확인할 수 있습니다.</p>
+
+<ol>
+<li><p>Figure 29와 같이 <code>Configure test events</code>를 선택합니다.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image40.png?width=&quot;3.3404232283464568in&quot;
+height=&quot;0.776233595800525in" alt="" /></p>
+
+<p><center><strong>Figure 29. Lambda 테스트 데이터 구성 화면.</strong></center></p></li>
+
+<li><p>Event name을 입력합니다 (예: SampleEnglishSentence)</p></li>
+
+<li><p>하단의 테스트 이벤트 입력화면에서 Figure 30과 같이 아래의 샘플 영어
+문장을 입력합니다. 또는
+<a href="https://raw.githubusercontent.com/pilhokim/ai-ml-workshop/master/2018-09/sample_query.json" target="_blank">https://raw.githubusercontent.com/pilhokim/ai-ml-workshop/master/2018-09/sample_query.json</a>
+에서 복사해서 사용하셔도 됩니다.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image41.png?width=&quot;6.3796237970253715in&quot;
+height=&quot;3.011049868766404in" alt="" /></p>
+
+<p><center><strong>Figure 30. Test 이벤트 생성.</strong></center></p>
+
+<p>이때 주의하실점은 JSON 형식의 <code>sentences</code>와 <code>query</code>는 미리 약속된 key
+값이므로 변경을 하시면 안됩니다.</p></li>
+
+<li><p>Create 버튼을 선택합니다.</p></li>
+
+<li><p>입력이 완료 된 후 상단의 <code>Test</code> 버튼을 클릭하시면 Figure 31와 같은
+화면이 보이면 정상적으로 작동하는 것을 확인하실 수 있습니다. 하단의
+Cloud9에서도 결과를 확인하실 수 있습니다.</p>
+
+<p><img src="../../../../images/apps/internet_facing_app/image42.png?width=&quot;6.027586395450569in&quot;
+height=&quot;3.238391294838145in" alt="" /></p>
+
+<p><center><strong>Figure 31. Lambda 함수 테스트 결과 화면.</strong></center></p></li>
+</ol>
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../../../kr/labs/apps/internet_facing_app/_module_3.html" title="Module 3: 영어-독어 번역 ML 모델 학습"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../../../kr/labs/apps/internet_facing_app/_module_5.html" title="Module 5: AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../../../js/clipboard.min.js"></script>
+    <script src="../../../../js/perfect-scrollbar.min.js"></script>
+    <script src="../../../../js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../../../js/jquery.sticky.js"></script>
+    <script src="../../../../js/featherlight.min.js"></script>
+    <script src="../../../../js/html5shiv-printshiv.min.js"></script>
+    <script src="../../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../../js/modernizr.custom-3.6.0.js"></script>
+    <script src="../../../../js/learn.js"></script>
+    <script src="../../../../js/hugo-learn.js"></script>
+
+    <link href="../../../../mermaid/mermaid.css" rel="stylesheet" />
+    <script src="../../../../mermaid/mermaid.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+  </body>
+</html>
+
