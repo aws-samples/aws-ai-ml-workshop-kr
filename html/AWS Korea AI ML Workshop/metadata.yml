@@ -1,0 +1,27 @@
+#name - DNS-friendly name for the workshop. This will be used when generating the hosting URL (ie. https://my-first-workshop.workshops.aws/)
+name: aws-korea-aiml-workshop
+#title - The title of your workshop
+title: AWS Korea AI/ML Workshop 
+#description - A short description that will be displayed in search results
+description: Provide hands-on labs to practice AWS's AI/ML services 
+#categories - Refer to official AWS categories covered by the workshop content here
+categories: 
+  - AI/ML
+  - Machine learning
+#services - Refer to the official AWS service names covered by the workshop content here
+services: 
+   - SageMaker
+   - S3
+   - Lambda
+#level - Approximate skill level needed for this workshop
+level: 200 
+#duration - Estimated duration in minutes
+duration: 240 
+#cost - Cost in USD. If the content is offered without cost, enter 0
+cost: 50 
+#author - Amazon alias of the primary author of the content
+author: kimpil 
+#audience - Names of the personas associated with this workshop
+audience: 
+  - AI/ML experts
+  - Developer

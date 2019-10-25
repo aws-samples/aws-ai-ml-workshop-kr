@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<html lang="kr" class="js csstransforms3d">
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="AWS Workshop" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="generator" content="Hugo 0.58.3" />
+  <meta name="description" content="AWS Korea AI/ML Workshop">
+<meta name="author" content="Pil Ho Kim">
+
+  <link rel="shortcut icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+<link rel="icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+
+  <title>Module 6: 자동 모델 튜닝 결과 분석하기 :: AWS Workshop</title>
+
+  
+  <link href="../../../css/nucleus.css" rel="stylesheet">
+  <link href="../../../css/fontawesome-all.min.css" rel="stylesheet">
+  <link href="../../../css/hybrid.css" rel="stylesheet">
+  <link href="../../../css/featherlight.min.css" rel="stylesheet">
+  <link href="../../../css/perfect-scrollbar.min.css" rel="stylesheet">
+  <link href="../../../css/auto-complete.css" rel="stylesheet">
+  <link href="../../../css/atom-one-dark-reasonable.css" rel="stylesheet">
+  <link href="../../../css/theme.css" rel="stylesheet">
+  <link href="../../../css/hugo-theme.css" rel="stylesheet">
+  
+  <link href="../../../css/theme-awskr.css" rel="stylesheet">
+  
+
+  <script src="../../../js/jquery-3.3.1.min.js"></script>
+
+  <style>
+    :root #header + #content > #left > #rlblock_left{
+        display:none !important;
+    }
+    
+      :not(pre) > code + span.copy-to-clipboard {
+          display: none;
+      }
+    
+  </style>
+  
+</head>
+
+<body class="" data-url="/kr/labs/sagemaker/_module_6.html">
+  <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <div>
+    <a href="../../../" title="Go home">
+        <img style="vertical-align:middle" src="../../../images/logo.png" height="70px" />
+    </a>
+</div>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../../js/lunr.min.js"></script>
+<script type="text/javascript" src="../../../js/auto-complete.js"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/kr";
+    
+</script>
+<script type="text/javascript" src="../../../js/search.js"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs.html" title="AWS AI/ML Lab Modules" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../../../kr/labs.html">
+          <b></b>Lab Modules
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs/sagemaker.html" title="SageMaker Labs Modules" class="dd-item 
+        parent
+        
+        
+        ">
+      <a href="../../../kr/labs/sagemaker.html">
+          <b></b>SageMaker
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_1.html" title="Module 1: S3 bucket과 Notebook Instance 생성하기" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_1.html">
+        S3 bucket과 Notebook Instance 생성하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_2.html" title="Module 2: Linear Learner MNIST" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_2.html">
+        Linear Learner MNIST
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_3.html" title="Module 3: Linear Learner를 사용해 시계열 예측하기" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_3.html">
+        Linear Learner를 사용해 시계열 예측하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_4.html" title="Module 4: BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_4.html">
+        BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_5.html" title="Module 5: TensorFlow MNIST로 자동 모델 튜닝하기" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_5.html">
+        TensorFlow MNIST로 자동 모델 튜닝하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_6.html" title="Module 6: 자동 모델 튜닝 결과 분석하기" class="dd-item active">
+        <a href="../../../kr/labs/sagemaker/_module_6.html">
+        자동 모델 튜닝 결과 분석하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_7.html" title="Module 7: PyTorch MNIST" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_7.html">
+        PyTorch MNIST
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_module_8.html" title="Module 8: Bring-your-own-container 기능 실습하기" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_module_8.html">
+        Bring-your-own-container 기능 실습하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/sagemaker/_termination.html" title="서비스 종료 가이드" class="dd-item ">
+        <a href="../../../kr/labs/sagemaker/_termination.html">
+        서비스 종료 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs/apps.html" title="AWS AI/ML Apps" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../../kr/labs/apps.html">
+          <b></b>AI/ML Apps
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/labs/apps/internet_facing_app.html" title="Internet-facing 앱 개발" class="dd-item 
+        
+        
+        
+        ">
+      <a href="../../../kr/labs/apps/internet_facing_app.html">
+          Internet-facing 앱 개발
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+          
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_lab_guide.html" title="실습 가이드" class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_lab_guide.html">
+        실습 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_1.html" title="Module 1: Notebook Instance 생성하기 " class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_module_1.html">
+        Notebook Instance 생성하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_2.html" title="Module 2: 실습용 코드 다운 받기" class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_module_2.html">
+        실습용 코드 다운 받기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_3.html" title="Module 3: 영어-독어 번역 ML 모델 학습" class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_module_3.html">
+        영어-독어 번역 ML 모델 학습
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_4.html" title="Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기" class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_module_4.html">
+        SageMaker Endpoint 호출 Lambda 함수 개발하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_module_5.html" title="Module 5: AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기" class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_module_5.html">
+        AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/labs/apps/internet_facing_app/_termination.html" title="서비스 종료 가이드" class="dd-item ">
+        <a href="../../../kr/labs/apps/internet_facing_app/_termination.html">
+        서비스 종료 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+            
+          
+        
+        </ul>
+              
+    </li>
+  
+ 
+
+          
+         
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3></h3>
+        <ul>
+          
+              <li> 
+                  <a class="padding" href="https://github.com/awslabs/amazon-sagemaker-examples"><i class='fab fa-github'></i> Github repo</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+      
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+
+    <h5 class="copyright">&copy; 2019 Amazon Web Services, Inc. or its Affiliates. All rights reserved.<h5>
+
+</left>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+
+  <section id="body">
+    <div id="overlay"></div>
+    <div class="padding highlightable">
+      
+      <div>
+        <div id="top-bar">
+          
+          
+          <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <span id="sidebar-toggle-span">
+              <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                <i class="fa fa-bars"></i>
+              </a>
+            </span>
+            
+            <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+            
+            <span class="links">
+              
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href='../../../kr/'>AWS Korea AI/ML Workshop</a> > <a href='../../../kr/labs.html'>AWS AI/ML Lab Modules</a> > <a href='../../../kr/labs/sagemaker.html'>SageMaker Labs Modules</a> > Module 6: 자동 모델 튜닝 결과 분석하기
+          
+          
+          
+          
+          
+          
+          
+          
+            </span>
+          </div>
+          
+          <div class="progress">
+    <div class="wrapper">
+
+    </div>
+</div>
+
+          
+        </div>
+      </div>
+      
+
+      
+        <div id="body-inner">
+          <h1>Module 6: 자동 모델 튜닝 결과 분석하기</h1>
+          
+          
+
+
+<p>이 모듈에서는 앞에서 실행한 하이퍼파라미터 튜닝 작업의 결과를 해석하는 과정을 실습합니다. BokehJS와 pandas 라이브러리를 사용해 튜닝 결과를 Jupyter 노트북에서 테이블과 그래프 형태로 시각화해볼 수 있습니다.</p>
+
+<p>SageMaker의 Jupyter 노트북 페이지 상단의 탭메뉴에서 <code>SageMaker Examples</code> 를 클릭합니다.</p>
+
+<p><img src="../../../images/sagemaker/module_5/select_sagemaker_examples.png?classes=border" alt="select_sagemaker_examples" /></p>
+
+<p>샘플 노트북 목록에서 <code>Hyperparameter Tuning</code> 을 선택합니다.</p>
+
+<p><img src="../../../images/sagemaker/module_5/select_hyperparamter_tuning.png?classes=border" alt="select_hyperparamter_tuning" /></p>
+
+<p>샘플 목록중 <code>HPO_Analyze_TuningJob_Results.ipynb</code> 를 찾아 우측의 <code>Use</code> 버튼을 클릭합니다. 다음과 같은 팝업창에서 <code>Create copy</code> 버튼을 클릭하여 관련 파일들을 사용자의 홈디렉토리로 복사를 진행합니다.</p>
+
+<p><img src="../../../images/sagemaker/module_6/create_a_copy_in_your_home_directory.png?classes=border" alt="create_a_copy_in_your_home_directory" /></p>
+
+<p>새로운 브라우저 탭에서 노트북이 오픈되면 준비가 완료됩니다.</p>
+
+<p><img src="../../../images/sagemaker/module_6/analyze_results_of_a_hyperparameter_tuning_job.png?classes=border" alt="analyze_results_of_a_hyperparameter_tuning_job" /></p>
+
+<p>모듈의 첫 부분에서 아래의 코드를 만나면 앞 모듈에서 실행된 <code>하이퍼파라미터 튜닝 작업 (Hyperparameter tuning jobs)</code>의 이름을 따옴표 안에 넣습니다.</p>
+
+<p><img src="../../../images/sagemaker/module_6/set_tuning_job.png?classes=border" alt="set_tuning_job" /></p>
+
+<p>실행 결과로 나오는 두 개의 그래프에서, 탐색된 하이퍼파라미터 값의 변화에 따른 loss 함수 값의 변화를 해석해 보시기 바랍니다. (그래프가 안나오면 해당 셀을 다시 한번 실행해 보세요.)</p>
+
+<p>이 노트북의 소스 파일은 
+<a  href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/hyperparameter_tuning/analyze_results" target="_blank"  class="btn btn-default">
+  
+  
+  
+    
+  <i class="fab fa-github"></i>
+    
+  
+  Github
+  
+</a>
+ 에 공개되어 있습니다.</p>
+
+<p>※ 이 모듈의 실습에는 약 5분이 소요됩니다.</p>
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../../kr/labs/sagemaker/_module_5.html" title="Module 5: TensorFlow MNIST로 자동 모델 튜닝하기"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../../kr/labs/sagemaker/_module_7.html" title="Module 7: PyTorch MNIST" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../../js/clipboard.min.js"></script>
+    <script src="../../../js/perfect-scrollbar.min.js"></script>
+    <script src="../../../js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../../js/jquery.sticky.js"></script>
+    <script src="../../../js/featherlight.min.js"></script>
+    <script src="../../../js/html5shiv-printshiv.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../js/modernizr.custom-3.6.0.js"></script>
+    <script src="../../../js/learn.js"></script>
+    <script src="../../../js/hugo-learn.js"></script>
+
+    <link href="../../../mermaid/mermaid.css" rel="stylesheet" />
+    <script src="../../../mermaid/mermaid.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+  </body>
+</html>
+
