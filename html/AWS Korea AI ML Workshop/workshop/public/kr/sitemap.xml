@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/kr/</loc>
+    <lastmod>2019-10-15T15:09:31+09:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="kr"
+                href="/kr/"
+                />
+  </url>
+  
+  <url>
+    <loc>/kr/labs.html</loc>
+    <lastmod>2019-10-15T15:09:31+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker.html</loc>
+    <lastmod>2019-10-15T15:09:31+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_1.html</loc>
+    <lastmod>2019-10-15T15:16:07+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_2.html</loc>
+    <lastmod>2019-10-15T15:17:43+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_3.html</loc>
+    <lastmod>2019-10-15T15:17:48+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_4.html</loc>
+    <lastmod>2019-10-15T15:17:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_5.html</loc>
+    <lastmod>2019-10-15T15:17:54+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_6.html</loc>
+    <lastmod>2019-10-15T15:17:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_7.html</loc>
+    <lastmod>2019-10-15T15:18:00+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_module_8.html</loc>
+    <lastmod>2019-10-15T15:18:03+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/sagemaker/_termination.html</loc>
+    <lastmod>2019-10-15T15:18:03+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps.html</loc>
+    <lastmod>2019-10-15T15:09:31+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app.html</loc>
+    <lastmod>2019-10-15T15:16:07+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_lab_guide.html</loc>
+    <lastmod>2019-10-23T15:44:53+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_module_1.html</loc>
+    <lastmod>2019-10-23T15:44:53+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_module_2.html</loc>
+    <lastmod>2019-10-23T15:46:06+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_module_3.html</loc>
+    <lastmod>2019-10-23T15:50:20+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_module_4.html</loc>
+    <lastmod>2019-10-23T15:50:41+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_module_5.html</loc>
+    <lastmod>2019-10-23T15:51:09+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/labs/apps/internet_facing_app/_termination.html</loc>
+    <lastmod>2019-10-23T15:49:29+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/kr/categories.html</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/categories.html"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="kr"
+                href="/kr/categories.html"
+                />
+  </url>
+  
+  <url>
+    <loc>/kr/tags.html</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="/en/tags.html"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="kr"
+                href="/kr/tags.html"
+                />
+  </url>
+  
+</urlset>
