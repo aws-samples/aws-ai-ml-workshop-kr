@@ -25,7 +25,7 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
 
     ![sagemaker_create_lifecycle_configuration1](./images/module1_create_lifecycle_config1.png?classes=border)
 
-1. Name 항목에 `lifecycle-blazingtext-hol`를 입력하고 [Lifecycle Configuration Script](./data/lifecycle-config.txt) 를 클릭하여 다운로드합니다.<br>
+1. Name 항목에 `lifecycle-blazingtext-hol`를 입력하고 [Lifecycle Configuration Script](https://raw.githubusercontent.com/daekeun-ml/aws-ai-ml-workshop-kr/master/contribution/daekeun-ml/blazingtext-korean-workshop/data/lifecycle-config.txt) 를 클릭하여 다운로드합니다.<br>
 다운로드가 완료되었으면 `lifecycle-config.txt`의 내용을 복사하여 Script 항목에 붙여넣기한 후, 오른쪽 하단의 `Create configuration` 버튼을 클릭 합니다. 
     ![sagemaker_create_lifecycle_configuration2](./images/module1_create_lifecycle_config2.png?classes=border)
 
@@ -36,6 +36,7 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
     ![sagemaker_create_notebook_instance1](./images/module1_sagemaker_create_notebook_instance1.png)
 
 1. Notebook instance 이름으로 `notebook-blazingtext-hol-[YOUR-NAME]` 으로 넣은 뒤 `ml.c4.xlarge` 인스턴스 타입을 선택 합니다. 그런 다음, Additional configuration을 클릭하여 Lifecycle configuration - optional 항목에 `lifecycle-blzaingtext-hol`을 입력 합니다.
+(만약 Event Engine을 신청하지 않았다면 ml.m2.medium)
 
     ![sagemaker_create_notebook_instance2](./images/module1_sagemaker_create_notebook_instance2.png)
 
