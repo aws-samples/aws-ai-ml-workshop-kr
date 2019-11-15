@@ -148,7 +148,7 @@ AWS Lambda는 AWS 콘솔 상에서 바로 코딩할 수 있게 Cloud9 에디터�
     ```
 
 
-1. 붙여넣기 하신 소스코드 상의 `endpoint_name` 을 본 실습 동안 생성한 Seq2Seq endpoint 서버 주소로 변경하십시요 (Figure 13 참조).
+1. 붙여넣기 하신 소스코드 상의 `endpoint_name` 을 본 실습 동안 생성한 SageMaker endpoint 서버 주소로 변경하십시요 (Figure 13 참조).
 
     ![img13](./images/module4_img13.png)
     **<center>Figure 13. SageMaker EndPoint 이름 확인 방법.</center>**
@@ -175,8 +175,7 @@ AWS Lambda는 AWS 콘솔 상에서 바로 코딩할 수 있게 Cloud9 에디터�
 
 1. Event name을 입력합니다 (예: myTestEvent)
 
-1. 하단의 테스트 이벤트 입력화면에서 Figure 16과 같이 아래의 샘플 영어
-    문장을 입력합니다.
+1. 하단의 테스트 이벤트 입력화면에서 Figure 16과 같이 아래의 샘플 문장을 입력합니다.
 
     ```    
     {

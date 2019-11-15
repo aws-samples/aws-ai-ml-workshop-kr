@@ -2,7 +2,8 @@
 
 ## S3 Bucket 생성하기 
 
-SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서는 해당 목적으로 S3 Bucket을 생성합니다. 오늘 실습에서는 `N. Virginia (us-east-1)` 리전을 사용합니다.
+SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서는 해당 목적으로 S3 Bucket을 생성합니다. 오늘 실습에서는 `N. Virginia (us-east-1)` 리전을 사용합니다.<br>
+**<font color='red'>[주의] 단, 앞 세션 시간에 Seoul 리전에서 실습하고 계셨다면, `Seoul (ap-northeast-2)` 리전을 사용해 주세요.</font>**
 
 1. [AWS 관리 콘솔](https://console.aws.amazon.com/)에 Sign in 합니다. <br>
     만약 AWS 측에서 Event Engine을 사용하여 임시 아이디를 생성한 경우 제공받으신 URL을 여시고 team hash code를 입력하시면 됩니다.
@@ -12,7 +13,7 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
 1. 아래 내용 설정 후 화면 왼쪽 아래 Create 클릭합니다.
 
 * Bucket name: blazingtext-hol-{userid}  [반드시 고유한 값 설정] 
-* Region : US East (N. Virginia)
+* Region : US East (N. Virginia) (단, 앞 세션 시간에 Asia Pacific (Seoul)을 사용하고 있었다면 Asia Pacific (Seoul)으로 지정) 
 
 ![create_s3_bucket](./images/module1_create_s3_bucket.png?classes=border)
 
@@ -24,29 +25,8 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
 
     ![sagemaker_create_lifecycle_configuration1](./images/module1_create_lifecycle_config1.png?classes=border)
 
-1. Name 항목에 `lifecycle-blazingtext-hol`를 입력하고 아래의 스크립트를 Script 항목에 붙여넣기한 후, 오른쪽 하단의 `Create configuration` 버튼을 클릭 합니다. 
-    ```bash
-    #!/bin/bash
-    sudo -u ec2-user -i << 'EOF'
-
-    # This will affect only the Jupyter kernel called "conda_python3".
-    source activate python3
-
-    pip install tqdm gensim konlpy WordCloud
-
-    wget http://cdn.naver.com/naver/NanumFont/fontfiles/NanumFont_TTF_ALL.zip
-    unzip NanumFont_TTF_ALL.zip -d NanumFont
-    sudo cp -r NanumFont /usr/share/fonts/nanum
-    rm -rf NanumFont NanumFont_TTF_ALL.zip
-
-    cd SageMaker
-    git clone  https://github.com/daekeun-ml/blazingtext-workshop-korean.git
-
-    source deactivate
-
-    EOF
-    ```
-
+1. Name 항목에 `lifecycle-blazingtext-hol`를 입력하고 [Lifecycle Configuration Script](./data/lifecycle-config.txt) 를 클릭하여 다운로드합니다.<br>
+다운로드가 완료되었으면 `lifecycle-config.txt`의 내용을 복사하여 Script 항목에 붙여넣기한 후, 오른쪽 하단의 `Create configuration` 버튼을 클릭 합니다. 
     ![sagemaker_create_lifecycle_configuration2](./images/module1_create_lifecycle_config2.png?classes=border)
 
 ## Notebook instance 생성
