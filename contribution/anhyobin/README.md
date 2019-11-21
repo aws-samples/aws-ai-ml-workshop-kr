@@ -447,7 +447,12 @@ In Glue you can run ETL scripts written in two languages: Python and Scala. You 
 
 1. In the AWS Management Console, select **Glue** service.
 2. Click the **[Jobs]** button under the ETL on the left and select the **[Add job]** button to start creating the Glue Job.
-3. Enter **gamelog-etl** for **[Name]** and **[GlueETLRole]** for **[IAM role]**. The **[A new script to be authored by you]** for **[This job runs]** to creates own Python ETL script. Expand the **[Advanced properties]** menu at the bottom and set **[Job metrics]** to **[Enable]**. This allows monitoring through CloudWatch when ETL jobs are performed. Click **[Next]**.
+3. Enter **gamelog-etl** for **[Name]** and **[GlueETLRole]** for **[IAM role]**. Leave **[Type]** as **[Spark]** and select **[Spark 2.2, Python 2 (Glue version 0.9)]** as **[Glue version]**. The **[A new script to be authored by you]** for **[This job runs]** to creates own Python ETL script. Expand the **[Advanced properties]** menu at the bottom and set **[Job metrics]** to **[Enable]**. This allows monitoring through CloudWatch when ETL jobs are performed. Click **[Next]**.
+
+<div align="center">
+    <img src="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/contribution/anhyobin/images/43.png"></img> 
+</div>
+
 4. Connections will be used when using data stored in RDS, Redshift, etc. Click **[Next]** and click the **[Save job and edit script]** button to create the job.
 5. On the Scripting page, delete all content, then copy and paste the Python script from the below. Change the name of bucket with your analytics bucket in **s3Bucket = "s3://&#60;YOUR ANALYTICS BUCKET&#62;"** section, click the **[Save]** button at the top, and click the **[Run job]** button.
 
