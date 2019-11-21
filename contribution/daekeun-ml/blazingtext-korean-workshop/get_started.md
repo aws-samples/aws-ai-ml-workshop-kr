@@ -18,15 +18,15 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
 ![create_s3_bucket](./images/module1_create_s3_bucket.png?classes=border)
 
 ## Lifecycle Configuration 생성
-1. AWS 관리 콘솔에서 오른쪽 상단에서 Region선택 후 AWS Services 리스트에서 Amazon SageMaker 서비스를 선택합니다.Ç
+1. AWS 관리 콘솔에서 오른쪽 상단에서 Region선택 후 AWS Services 리스트에서 Amazon SageMaker 서비스를 선택합니다.
     ![aws_console_sagemaker_selection](./images/module1_aws_console_sagemaker_selection.png?classes=border)
 
 1. Lifecycle Configuration를 생성하기 위해 왼쪽 패널 메뉴 중 `Lifecycle configurations` 을 선택 후, 오른쪽 상단의 `Create configuration` 버튼을 클릭 합니다.
 
     ![sagemaker_create_lifecycle_configuration1](./images/module1_create_lifecycle_config1.png?classes=border)
 
-1. Name 항목에 `lifecycle-blazingtext-hol`를 입력하고 <a href="https://raw.githubusercontent.com/daekeun-ml/aws-ai-ml-workshop-kr/master/contribution/daekeun-ml/blazingtext-korean-workshop/data/lifecycle-config.txt" download target="_blank">[Lifecycle Configuration Script]</a>를 클릭하여 다운로드합니다.<br>
-다운로드가 완료되었으면 `lifecycle-config.txt`의 내용을 복사하여 Script 항목에 붙여넣기한 후, 오른쪽 하단의 `Create configuration` 버튼을 클릭 합니다. 
+1. Name 항목에 `lifecycle-blazingtext-hol`를 입력하고 <a href="https://raw.githubusercontent.com/daekeun-ml/aws-ai-ml-workshop-kr/master/contribution/daekeun-ml/blazingtext-korean-workshop/data/lifecycle-config.txt" download target="_blank">Lifecycle Configuration Script</a>를 클릭하여 다운로드합니다.<br>
+다운로드가 완료되었으면 `lifecycle-config.txt`의 내용을 복사하여 Script 항목에 붙여넣기한 후, 오른쪽 하단의 `Create configuration` 버튼을 클릭합니다. 
     ![sagemaker_create_lifecycle_configuration2](./images/module1_create_lifecycle_config2.png?classes=border)
 
 ## Notebook instance 생성
