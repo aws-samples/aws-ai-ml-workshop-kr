@@ -6,6 +6,6 @@
 - 1. [리뷰 데이터를 통해 제품 성공 예측하기](video-game-sales-xgboost.ipynb)
 - 2. [이미지 분류 Transfer learning 데모](Image-classification-transfer-learning.ipynb)
 - 3. TensorFlow MNIST로 자동 모델 튜닝하기
-- 4. Bring-your-own-container 기능 실습하기
+- 4. [Bring-your-own-container 기능 실습하기](scikit_bring_your_own/scikit_bring_your_own.ipynb)
 
 
