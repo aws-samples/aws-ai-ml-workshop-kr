@@ -35,12 +35,12 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
 
     ![sagemaker_create_notebook_instance1](./images/module1_sagemaker_create_notebook_instance1.png)
 
-1. Notebook instance 이름으로 `notebook-blazingtext-hol-[YOUR-NAME]` 으로 넣은 뒤 `ml.c4.xlarge` 인스턴스 타입을 선택 합니다. 그런 다음, Additional configuration을 클릭하여 Lifecycle configuration - optional 항목에 `lifecycle-blzaingtext-hol`을 입력합니다.
-(만약 Event Engine을 신청하지 않았다면 `ml.m2.medium` 인스턴스 타입을 선택합니다.)
+1. Notebook instance 이름으로 `notebook-blazingtext-hol-[YOUR-NAME]` 으로 넣은 뒤 `ml.c4.xlarge` 인스턴스 타입을 선택 합니다. 그런 다음, Additional configuration을 클릭하여 Lifecycle configuration - optional 항목에 `lifecycle-blazingtext-hol`을 입력합니다.
+(만약 Event Engine을 신청하지 않았다면 `ml.t2.medium` 인스턴스 타입을 선택합니다.)
 
     ![sagemaker_create_notebook_instance2](./images/module1_sagemaker_create_notebook_instance2.png)
 
-1. IAM role은 `Create a new role` 을 선택하고, 생성된 팝업 창에서는 `S3 buckets you specify – optional` 밑에 `Specific S3 Bucket` 을 선택 합니다. 그리고 텍스트 필드에 위에서 만든 S3 bucket 이름(예: sagemaker-xxxxx)을 선택 합니다. 이후 `Create role` 을 클릭합니다.
+1. IAM role은 `Create a new role` 을 선택하고, 생성된 팝업 창에서는 `S3 buckets you specify – optional` 밑에 `Specific S3 Bucket` 을 선택합니다. 그리고 텍스트 필드에 위에서 만든 S3 bucket 이름(예: sagemaker-xxxxx)을 선택합니다. 이후 `Create role` 을 클릭합니다.
 
     ![sagemaker_create_an_iam_role](./images/module1_sagemaker_create_notebook_instance3.png)
 
@@ -49,7 +49,7 @@ SageMaker는 S3를 데이터와 모델 저장소로 사용합니다. 여기서�
 
 ## Notebook Instance 접근하기
 
-1. 서버 상태가 `InService` 로 바뀔 때까지 기다립니다. 보통 5분정도의 시간이 소요 됩니다. 
+1. 서버 상태가 `InService` 로 바뀔 때까지 기다립니다. 보통 5분정도의 시간이 소요됩니다. 
 
     ![sagemaker_create_notebook_instance4](./images/module1_sagemaker_create_notebook_instance4.png)    
 
