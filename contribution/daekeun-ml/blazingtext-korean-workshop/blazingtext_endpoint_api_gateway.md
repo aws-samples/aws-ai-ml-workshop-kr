@@ -63,7 +63,7 @@
 
     **<center>Figure 5. IAM Role에 정책을 추가하는 화면.</center>**
 
-1. 다음 화면의 검색창에 `SageMaker` 를 입력 하세요 (Figure 6 참조).
+1. 다음 화면의 검색창에 `SageMaker` 를 입력하세요 (Figure 6 참조).
 
     ![img5](./images/module4_img6.png)
 
