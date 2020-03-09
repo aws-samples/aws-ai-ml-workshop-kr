@@ -269,7 +269,10 @@ Figure 50. SageMaker 노트북 인스턴스 중단 화면.
       <pubDate>Tue, 15 Oct 2019 15:16:07 +0900</pubDate>
       
       <guid>/kr/forecast/forecastlab.html</guid>
-      <description>다음 링크를 참조하세요. http://jihys-personal.s3-website.ap-northeast-2.amazonaws.com/forecasthol/workshop/kr/</description>
+      <description>
+다음 링크를 참조하세요.
+ (English workshop) : http://jihys-personal.s3-website.ap-northeast-2.amazonaws.com/forecasthol/workshop/kr/
+ (한글 워크샵) : http://jihys-personal.s3-website.ap-northeast-2.amazonaws.com/forecasthol/workshop/kr/  </description>
     </item>
     
     <item>
@@ -278,7 +281,9 @@ Figure 50. SageMaker 노트북 인스턴스 중단 화면.
       <pubDate>Tue, 15 Oct 2019 15:16:07 +0900</pubDate>
       
       <guid>/kr/personalize/personalizelab.html</guid>
-      <description>다음 링크를 참조하세요. https://www.sagemakerworkshop.com/personalize/</description>
+      <description>
+다음 링크를 참조하세요.
+ (English workshop) : https://www.sagemakerworkshop.com/personalize/ (한글 워크샵) :http://personalize-workshop-junghee.s3-website.ap-northeast-2.amazonaws.com/intro.html  </description>
     </item>
     
   </channel>
