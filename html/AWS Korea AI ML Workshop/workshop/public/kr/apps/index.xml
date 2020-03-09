@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AWS AI/ML Apps on AWS Workshop</title>
+    <link>/kr/apps.html</link>
+    <description>Recent content in AWS AI/ML Apps on AWS Workshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Tue, 15 Oct 2019 15:09:31 +0900</lastBuildDate>
+    
+	<atom:link href="/kr/apps/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>자동차 번호판 인식 예제</title>
+      <link>/kr/apps/anpr.html</link>
+      <pubDate>Tue, 15 Oct 2019 15:16:07 +0900</pubDate>
+      
+      <guid>/kr/apps/anpr.html</guid>
+      <description>다음 링크를 참조하세요. https://github.com/mullue/lab-custom-model-anpr</description>
+    </item>
+    
+  </channel>
+</rss>
