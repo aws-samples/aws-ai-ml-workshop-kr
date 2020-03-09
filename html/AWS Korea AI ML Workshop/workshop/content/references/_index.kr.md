@@ -7,13 +7,13 @@ chapter = false
 pre = "<b></b>"
 +++
 
-*Reinvent, DevDay 등 각종 행사와 Workshop 용도로 만들어진 콘텐츠 등의 리스트들입니다.*
+*Reinvent, DevDay 등 각종 행사와 Workshop 등의 용도로 만들어진 콘텐츠의 리스트입니다.*
 
 ---
 
 ### 머신러닝 관련 콘텐츠
 ##### AIML on AWS 워크샾
-- https://www.sagemaker-workshop-kr.com/kr - SageMaker, SageMaker Studio, Forecast, Personalize, MLOps, etc. (한글) 
+- https://www.sagemaker-workshop-kr.com/kr - SageMaker, SageMaker Studio, Forecast, Personalize, MLOps, etc. (한글)
 - [https://sagemaker-workshop.com/](https://sagemaker-workshop.com/) - SageMaker Built-in/Custom Alogrithm and Security (English)
 - [https://www.sagemakerworkshop.com](https://www.sagemakerworkshop.com/) - Airflow, Personalize, SageMaker, and StepFunctions (English)
 - [https://distributed-training-workshop.go-aws.com/](https://distributed-training-workshop.go-aws.com/) - 분산 트레이닝 (English)
