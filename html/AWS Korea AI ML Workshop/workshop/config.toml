@@ -5,7 +5,6 @@ defaultContentLanguage = "kr"
 
 title = "AWS Korea AI/ML Workshop"
 theme = "learn"
-metaDataFormat = "yaml"
 defaultContentLanguageInSubdir= true
 
 uglyurls = true
@@ -17,16 +16,18 @@ pygmentsStyle = "monokai"
   # editURL = "https://code.amazon.com/packages/Aws-workshop-template/blobs/master/--/workshop/content/"
   editURL = ""
   description = "AWS Korea AI/ML Workshop"
-  author = "Pil Ho Kim"
+  author = "AWS Korea"
   disableBreadcrumb = false
   disableNextPrev = false
   themeVariant = "awskr"
   disableSearch = false
-  disableAssetsBusting = true
+  disableAssetsBusting = false
   # When using mulitlingual website, disable the switch language button.
   disableLanguageSwitchingButton = true
   disableShortcutsTitle = true
   disableInlineCopyToClipBoard = true
+  showVisitedLinks = false
+
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
@@ -41,7 +42,7 @@ title = "AWS Workshop"
 weight = 1
 languageName = "Korean"
 
-[[Languages.kr.menu.shortcuts]] 
+[[Languages.kr.menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Github repo"
 identifier = "ds"
 url = "https://github.com/awslabs/amazon-sagemaker-examples"
@@ -53,7 +54,7 @@ title = "My AWS Workshop"
 weight = 2
 languageName = "English"
 
-[[Languages.en.menu.shortcuts]] 
+[[Languages.en.menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Github repo"
 identifier = "ds"
 url = "https://github.com/awslabs/amazon-sagemaker-examples"
