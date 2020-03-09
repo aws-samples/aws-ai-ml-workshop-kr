@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MLOps on AWS Workshop</title>
+    <link>/kr/mlops.html</link>
+    <description>Recent content in MLOps on AWS Workshop</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Wed, 05 Feb 2020 15:09:31 +0900</lastBuildDate>
+    
+	<atom:link href="/kr/mlops/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Module 1: Github Integration</title>
+      <link>/kr/mlops/github.html</link>
+      <pubDate>Tue, 15 Oct 2019 15:16:07 +0900</pubDate>
+      
+      <guid>/kr/mlops/github.html</guid>
+      <description>(준비중입니다.)</description>
+    </item>
+    
+    <item>
+      <title>Module 2: StepFunctions Integration</title>
+      <link>/kr/mlops/stepfunctions.html</link>
+      <pubDate>Tue, 15 Oct 2019 15:16:07 +0900</pubDate>
+      
+      <guid>/kr/mlops/stepfunctions.html</guid>
+      <description>(준비중입니다.)</description>
+    </item>
+    
+    <item>
+      <title>Module 3: Airflow Integration</title>
+      <link>/kr/mlops/airflow.html</link>
+      <pubDate>Tue, 15 Oct 2019 15:16:07 +0900</pubDate>
+      
+      <guid>/kr/mlops/airflow.html</guid>
+      <description>(준비중입니다.)</description>
+    </item>
+    
+  </channel>
+</rss>
