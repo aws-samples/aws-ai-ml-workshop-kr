@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<html lang="kr" class="js csstransforms3d">
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="AWS Workshop" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="generator" content="Hugo 0.59.1" />
+  <meta name="description" content="AWS Korea AI/ML Workshop">
+<meta name="author" content="AWS Korea">
+
+  <link rel="shortcut icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+<link rel="icon" href="https://a0.awsstatic.com/libra-css/images/site/fav/favicon.ico" type="image/ico" />
+
+  <title>Module 3: 영어-독어 번역 ML 모델 학습 :: AWS Workshop</title>
+
+  
+  <link href="../../../css/nucleus.css?1581396523" rel="stylesheet">
+  <link href="../../../css/fontawesome-all.min.css?1581396523" rel="stylesheet">
+  <link href="../../../css/hybrid.css?1581396523" rel="stylesheet">
+  <link href="../../../css/featherlight.min.css?1581396523" rel="stylesheet">
+  <link href="../../../css/perfect-scrollbar.min.css?1581396523" rel="stylesheet">
+  <link href="../../../css/auto-complete.css?1581396523" rel="stylesheet">
+  <link href="../../../css/atom-one-dark-reasonable.css?1581396523" rel="stylesheet">
+  <link href="../../../css/theme.css?1581396523" rel="stylesheet">
+  <link href="../../../css/hugo-theme.css?1581396523" rel="stylesheet">
+  
+  <link href="../../../css/theme-awskr.css?1581396523" rel="stylesheet">
+  
+
+  <script src="../../../js/jquery-3.3.1.min.js?1581396523"></script>
+
+  <style>
+    :root #header + #content > #left > #rlblock_left{
+        display:none !important;
+    }
+    
+      :not(pre) > code + span.copy-to-clipboard {
+          display: none;
+      }
+    
+  </style>
+  
+
+</head>
+
+<body class="" data-url="/kr/apps/internet_facing_app/_module_3.html">
+  <nav id="sidebar" class="">
+
+
+
+  <div id="header-wrapper">
+    <div id="header">
+      <div>
+    <a href="../../../kr/index.html" title="Go home">
+        <img style="vertical-align:middle" src="../../../images/logo.png" height="70px" />
+    </a>
+</div>
+
+    </div>
+    
+        <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../../js/lunr.min.js?1581396523"></script>
+<script type="text/javascript" src="../../../js/auto-complete.js?1581396523"></script>
+<script type="text/javascript">
+    
+        var baseurl = "\/kr";
+    
+</script>
+<script type="text/javascript" src="../../../js/search.js?1581396523"></script>
+
+    
+  </div>
+
+    <div class="highlightable">
+    <ul class="topics">
+
+        
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/sagemaker.html" title="SageMaker Labs Modules" class="dd-item
+        
+        
+        
+        ">
+      <a href="../../../kr/sagemaker.html">
+          <b></b>SageMaker
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_1.html" title="Module 1: S3 bucket과 Notebook Instance 생성하기" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_1.html">
+        S3 bucket과 Notebook Instance 생성하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_2.html" title="Module 2: Linear Learner MNIST" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_2.html">
+        Linear Learner MNIST
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_3.html" title="Module 3: Linear Learner를 사용해 시계열 예측하기" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_3.html">
+        Linear Learner를 사용해 시계열 예측하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_4.html" title="Module 4: BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_4.html">
+        BlazingText를 사용해 Text8 데이터셋을 Word2Vec 처리하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_5.html" title="Module 5: TensorFlow MNIST로 자동 모델 튜닝하기" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_5.html">
+        TensorFlow MNIST로 자동 모델 튜닝하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_6.html" title="Module 6: 자동 모델 튜닝 결과 분석하기" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_6.html">
+        자동 모델 튜닝 결과 분석하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_7.html" title="Module 7: PyTorch MNIST" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_7.html">
+        PyTorch MNIST
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_module_8.html" title="Module 8: Bring-your-own-container 기능 실습하기" class="dd-item ">
+        <a href="../../../kr/sagemaker/_module_8.html">
+        Bring-your-own-container 기능 실습하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker/_termination.html" title="서비스 종료 가이드" class="dd-item ">
+        <a href="../../../kr/sagemaker/_termination.html">
+        서비스 종료 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/sagemaker_studio.html" title="SageMaker Studio 활용" class="dd-item
+        
+        
+        
+        ">
+      <a href="../../../kr/sagemaker_studio.html">
+          SageMaker Studio
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/sagemaker_studio/studio.html" title="SageMaker Studio Lab" class="dd-item ">
+        <a href="../../../kr/sagemaker_studio/studio.html">
+        SageMaker Studio Lab
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/apps.html" title="AWS AI/ML Apps" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="../../../kr/apps.html">
+          <b></b>AI/ML Apps
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+            
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/apps/internet_facing_app.html" title="Internet-facing 앱 개발" class="dd-item
+        parent
+        
+        
+        ">
+      <a href="../../../kr/apps/internet_facing_app.html">
+          Internet-facing 앱 개발
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_lab_guide.html" title="실습 가이드" class="dd-item ">
+        <a href="../../../kr/apps/internet_facing_app/_lab_guide.html">
+        실습 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_module_1.html" title="Module 1: Notebook Instance 생성하기 " class="dd-item ">
+        <a href="../../../kr/apps/internet_facing_app/_module_1.html">
+        Notebook Instance 생성하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_module_2.html" title="Module 2: 실습용 코드 다운 받기" class="dd-item ">
+        <a href="../../../kr/apps/internet_facing_app/_module_2.html">
+        실습용 코드 다운 받기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_module_3.html" title="Module 3: 영어-독어 번역 ML 모델 학습" class="dd-item active">
+        <a href="../../../kr/apps/internet_facing_app/_module_3.html">
+        영어-독어 번역 ML 모델 학습
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_module_4.html" title="Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기" class="dd-item ">
+        <a href="../../../kr/apps/internet_facing_app/_module_4.html">
+        SageMaker Endpoint 호출 Lambda 함수 개발하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_module_5.html" title="Module 5: AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기" class="dd-item ">
+        <a href="../../../kr/apps/internet_facing_app/_module_5.html">
+        AWS API Gateway와 S3 Static Web Server를 이용한 웹서비스 연결하기
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/internet_facing_app/_termination.html" title="서비스 종료 가이드" class="dd-item ">
+        <a href="../../../kr/apps/internet_facing_app/_termination.html">
+        서비스 종료 가이드
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/apps/anpr.html" title="자동차 번호판 인식 예제" class="dd-item ">
+        <a href="../../../kr/apps/anpr.html">
+        License Plate Detection
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/mlops.html" title="MLOps" class="dd-item
+        
+        
+        
+        ">
+      <a href="../../../kr/mlops.html">
+          <b></b>MLOps
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/mlops/github.html" title="Module 1: Github Integration" class="dd-item ">
+        <a href="../../../kr/mlops/github.html">
+        Github Integration
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/mlops/stepfunctions.html" title="Module 2: StepFunctions Integration" class="dd-item ">
+        <a href="../../../kr/mlops/stepfunctions.html">
+        StepFunctions Integration
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/mlops/airflow.html" title="Module 3: Airflow Integration" class="dd-item ">
+        <a href="../../../kr/mlops/airflow.html">
+        Airflow Integration
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/forecast.html" title="Amazon Forecast" class="dd-item
+        
+        
+        
+        ">
+      <a href="../../../kr/forecast.html">
+          <b></b>Amazon Forecast
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/forecast/forecastlab.html" title="Amazon Forecast Lab" class="dd-item ">
+        <a href="../../../kr/forecast/forecastlab.html">
+        Amazon Forecast Lab
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/personalize.html" title="Amazon Personalize" class="dd-item
+        
+        
+        
+        ">
+      <a href="../../../kr/personalize.html">
+          <b></b>Amazon Personalize
+          
+      </a>
+      
+      
+        <ul>
+          
+          
+          
+
+        
+          
+            
+            
+
+
+ 
+  
+    
+      <li data-nav-id="/kr/personalize/personalizelab.html" title="Amazon Personalize Lab" class="dd-item ">
+        <a href="../../../kr/personalize/personalizelab.html">
+        Amazon Personalize Lab
+        
+        </a>
+    </li>
+     
+  
+ 
+
+            
+          
+        
+        </ul>
+      
+    </li>
+  
+ 
+
+          
+          
+
+
+ 
+  
+    
+    <li data-nav-id="/kr/references.html" title="참조 링크" class="dd-item
+        
+        
+        
+        ">
+      <a href="../../../kr/references.html">
+          <b></b>References
+          
+      </a>
+      
+      
+    </li>
+  
+ 
+
+          
+        
+    </ul>
+
+    
+    
+      <section id="shortcuts">
+        <h3></h3>
+        <ul>
+          
+              <li>
+                  <a class="padding" href="https://github.com/awslabs/amazon-sagemaker-examples"><i class='fab fa-github'></i> Github repo</a>
+              </li>
+          
+        </ul>
+      </section>
+    
+
+    
+    <section id="prefooter">
+      <hr/>
+      <ul>
+      
+
+      
+      </ul>
+    </section>
+    
+    <section id="footer">
+      <left>
+
+    <h5 class="copyright">&copy; 2019 Amazon Web Services, Inc. or its Affiliates. All rights reserved.<h5>
+
+</left>
+
+    </section>
+  </div>
+</nav>
+
+
+
+
+  <section id="body">
+    <div id="overlay"></div>
+    <div class="padding highlightable">
+      
+      <div>
+        <div id="top-bar">
+          
+          
+          <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <span id="sidebar-toggle-span">
+              <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                <i class="fa fa-bars"></i>
+              </a>
+            </span>
+            
+            <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+            
+            <span class="links">
+              
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href='../../../kr/'>AWS Korea AI/ML Workshop</a> > <a href='../../../kr/apps.html'>AWS AI/ML Apps</a> > <a href='../../../kr/apps/internet_facing_app.html'>Internet-facing 앱 개발</a> > Module 3: 영어-독어 번역 ML 모델 학습
+          
+          
+          
+          
+          
+          
+          
+          
+            </span>
+          </div>
+          
+          <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#sequence-to-sequence-알고리즘-노트북-열기">Sequence-to-Sequence 알고리즘 노트북 열기</a></li>
+</ul></li>
+<li><a href="#노트북에-대한-설명">노트북에 대한 설명</a></li>
+<li><a href="#pre-trained-모델을-사용-하기-위한-노트북-수정">Pre-trained 모델을 사용 하기 위한 노트북 수정</a></li>
+<li><a href="#노트북-실행-방법">노트북 실행 방법</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+          
+        </div>
+      </div>
+      
+
+      
+        <div id="body-inner">
+          <h1>Module 3: 영어-독어 번역 ML 모델 학습</h1>
+          
+          
+
+
+
+
+<h4 id="sequence-to-sequence-알고리즘-노트북-열기">Sequence-to-Sequence 알고리즘 노트북 열기</h4>
+
+<p>SageMaker가 지원하는 Seq2Seq 알고리즘은 MXNet 기반으로 개발된
+<a href="https://github.com/awslabs/sockeye" target="_blank">Sockeye</a> 알고리즘을 기반으로 개발된
+최신의 Encoder-decoder 구조를 구현한 것으로 문서자동요약이나 언어 번역
+서비스에 적용할 수 있습니다.</p>
+
+<p>실습을 위해서 현재 설치되어 있는 SageMaker의 Jupyter 노트북의 예제들 중
+아래의 디렉토리에 위한 Jupyter 노트북을 실행하시면 됩니다 (Figure 5
+참조).</p>
+
+<pre><code>/aws-ai-ml-workshop-kr/src/release/2018-11/module8-SageMaker-Seq2Seq-Translation-English-German-InternetFacingApp.ipynb
+</code></pre>
+
+<p><img src="../../../images/apps/internet_facing_app/image15.png?width=&quot;6.988888888888889in&quot;
+height=&quot;1.6222222222222222in" alt="" /></p>
+
+<p><center><strong>Figure 5. Seq2Seq 노트북 디렉토리 위치.</strong></center></p>
+
+<p><img src="../../../images/apps/internet_facing_app/image16.png?width=&quot;6.65803258967629in&quot;
+height=&quot;3.2244892825896763in" alt="" /></p>
+
+<p><center><strong>Figure 6. 노트북 화면.</strong></center></p>
+
+<h3 id="노트북에-대한-설명">노트북에 대한 설명</h3>
+
+<p>본 노트북은 아래에 위치한 예제 노트북의 수정된 버전으로 미리 학습된 머신
+러닝 모델을 사용하도록 바뀌었습니다.</p>
+
+<pre><code>/sample-notebooks/introduction\_to\_amazon\_algorithms/seq2seq\_translation\_en-de/SageMaker-Seq2Seq-Translation-English-German.ipynb
+</code></pre>
+
+<p>상기 노트북은 빠른 학습 시간을 위해 Figure 7와 같이 전체 데이터 중
+첫번째 10000개의 데이터의 대해서만 학습을 해서 Seq2Seq 알고리즘의
+사용방법을 소개하고 있습니다.</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image17.png?width=&quot;6.988888888888889in&quot;
+height=&quot;1.1583333333333334in" alt="" /></p>
+
+<p><center><strong>Figure 7. 샘플 데이터 선택 화면.</strong></center></p>
+
+<p>Figure 8는 다운받은 corpus의 실제 데이터 내용으로 영어 및 독일어
+데이터가 어떻게 문장 대 문장으로 매핑 되고 있는지를 보여주고 있습니다.</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image18.png?width=&quot;3.4231364829396327in&quot; height=&quot;2.394903762029746in" alt="" /><br />
+<center><strong>영문 데이터 (corpuc.tc.en.small 내용)</strong></center></p>
+
+<p><img src="../../../images/apps/internet_facing_app/image19.png?width=&quot;3.1783431758530183in&quot; height=&quot;2.403966535433071in" alt="" />
+<center><strong>독일어 데이터(corpuc.tc.de.small 내용)</strong></center></p>
+
+<p><center><strong>Figure 8. 번역기 학습을 위한 영문 자료와 독일어 자료 비교 화면.</strong></center></p>
+
+<p>실제로는10000개의 샘플 문장으로 훈련한 번역기는 좋은 결과를 보여줄 수
+없습니다. 그렇지만 전체 데이터 학습을 위해서는 선택하시는 SageMaker의
+서버 Instance Type에 따라 다르지만 수시간에서 수일의 장시간이 소요될 수
+있습니다. 따라서 이 노트북의 개발자들은 좀더 나은 품질의 번역 결과
+체험을 원하시는 사용자들 위해 전체 데이터에 이미 훈련이 된 모델을
+공유하고 있습니다.</p>
+
+<p>이 Pre-trained model을 사용하기 위해서는 노트북의 코드 중 Endpoint
+Configuration 직전의 코드를 아래와 같이 수정해서 이미 훈련된 모델을
+다운로드 한 다음 본인의 S3 버켓으로 업로드 하시면 됩니다. 이때 Jupyter
+노트북 마지막 줄의 <code>sage.delete_endpoint</code> 는 데모를 계속 진행하기 위해
+실행하지 않습니다. 이를 위해 이번에는 가장 마지막 줄에 있는 코드를 주석
+처리하겠습니다.</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image20.png?width=&quot;6.988888888888889in&quot;
+height=&quot;0.8027777777777778in" alt="" /></p>
+
+<p><center><strong>Figure 9. <code>delete_endpoint</code> 함수 콜 코멘트 처리 화면.</strong></center></p>
+
+<h3 id="pre-trained-모델을-사용-하기-위한-노트북-수정">Pre-trained 모델을 사용 하기 위한 노트북 수정</h3>
+
+<p>노트북에서 하단의 S3 bucket 이름에 상기 생성한 S3 이름을 입력하시고
+우측의 예와 비슷한 형식으로 prefix를 입력하시면 됩니다 (Figure 11 참조).</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image21.png?width=&quot;6.988888888888889in&quot;
+height=&quot;0.6555555555555556in" alt="" /></p>
+
+<p><center><strong>Figure 10. 노트북 S3 버킷 이름 및 prefix 수정 전 화면.</strong></center></p>
+
+<p><img src="../../../images/apps/internet_facing_app/image22.png?width=&quot;6.988888888888889in&quot;
+height=&quot;0.6506944444444445in" alt="" /></p>
+
+<p><center><strong>Figure 11. S3 버킷 및 prefix 수정 후 화면 예제. 본인의 S3 버킷 이름으로 수정하셔야 합니다.</strong></center></p>
+
+<h3 id="노트북-실행-방법">노트북 실행 방법</h3>
+
+<p>이제 노트북 전체를 실행할 준비가 되었습니다. Jupyter 노트북을 실행하는
+방법은 코드가 있는 셀을 클릭으로 선택하신 후 Shift-enter 키를 누르시거나
+또는 Jupyter 노트북 상단의 툴바에서 &ldquo;Run cell, select below&rdquo; 버튼을
+클릭하셔도 됩니다.</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image23.png?width=&quot;1.25in&quot;
+height=&quot;0.8611111111111112in" alt="" /></p>
+
+<p><center><strong>Figure 12. Jupyter 노트북 셀 실행 툴바.</strong></center></p>
+
+<p>전체 실행 과정은 약 12분에서 15분 정도 소요 됩니다. 각각의 셀을
+실행시키면서 셀 하단에 표시되는 처리결과들을 확인해 보시기 바랍니다.</p>
+
+<p>노트북 코드 중 <code>Create endpoint configuration</code> 셀에서 현재
+<code>InstanceType</code>이 <code>ml.m4.large</code> 로 되어 있습니다 (Figure 13 참조).
+Seq2Seq 알고리즘은 Neural network 기반이기 때문에 <code>ml.p2.xlarge</code> (GPU)
+instance를 사용하실 수 있지만 본 실습에서는 Free tier가 지원되는
+<code>ml.m4.xlarge</code>* 를 사용하고 있습니다. <code>ml.t2.*</code> instance는 time-out 문제가
+발생할 수 있으므로 본 실습에서는 사용하지 않습니다.</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image24.png?width=&quot;6.393627515310587in&quot;
+height=&quot;2.142856517935258in" alt="" /></p>
+
+<p><center><strong>Figure 13. Endpoint configuration 화면.</strong></center></p>
+
+<p>노트북 코드 중 <code>Create endpoint</code> 셀은 새로운 서버를 설치하고 실행
+코드를 설치하는 과정이므로 본 노트북에서는 가장 많은 시간 (약
+10~11여분)이 소요 되는데 아래와 같은 메세지를 확인하시면 다음 모듈로
+진행하시면 됩니다 (Figure 14참조).</p>
+
+<p><img src="../../../images/apps/internet_facing_app/image25.png?width=&quot;6.212043963254593in&quot;
+height=&quot;3.644886264216973in" alt="" /></p>
+
+<p><center><strong>Figure 14. SageMaker Endpoint 생성 결과 화면.</strong></center></p>
+
+<p>노트북 가장 하단의 <code>delete_endpoint</code>는 주석 처리 되어 있어야 endpoint
+서버가 다음 실습을 위해 계속 운용될 수 있습니다. 만약에 실행 전에
+수정하셨다면 <code>Create endpoint</code> 부분의 코드를 다시 실행하시기
+바랍니다.</p>
+
+
+<footer class=" footline" >
+	
+</footer>
+
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../../kr/apps/internet_facing_app/_module_2.html" title="Module 2: 실습용 코드 다운 받기"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../../kr/apps/internet_facing_app/_module_4.html" title="Module 4: SageMaker Endpoint 호출 Lambda 함수 개발하기" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../../js/clipboard.min.js?1581396523"></script>
+    <script src="../../../js/perfect-scrollbar.min.js?1581396523"></script>
+    <script src="../../../js/perfect-scrollbar.jquery.min.js?1581396523"></script>
+    <script src="../../../js/jquery.sticky.js?1581396523"></script>
+    <script src="../../../js/featherlight.min.js?1581396523"></script>
+    <script src="../../../js/html5shiv-printshiv.min.js?1581396523"></script>
+    <script src="../../../js/highlight.pack.js?1581396523"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../js/modernizr.custom-3.6.0.js?1581396523"></script>
+    <script src="../../../js/learn.js?1581396523"></script>
+    <script src="../../../js/hugo-learn.js?1581396523"></script>
+
+    <link href="../../../mermaid/mermaid.css?1581396523" rel="stylesheet" />
+    <script src="../../../mermaid/mermaid.js?1581396523"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    
+  </body>
+</html>
+
