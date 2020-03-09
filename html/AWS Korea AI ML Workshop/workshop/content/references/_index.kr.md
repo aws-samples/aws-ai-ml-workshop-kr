@@ -13,7 +13,7 @@ pre = "<b></b>"
 
 ### 머신러닝 관련 콘텐츠
 ##### AIML on AWS 워크샾
-- https://www.sagemaker-workshop-kr.com/kr - SageMaker, SageMaker Studio, Forecast, Personalize, MLOps, etc. (한글)
+- https://www.sagemaker-workshop-kr.com/ - SageMaker, SageMaker Studio, Forecast, Personalize, MLOps, etc. (한글)
 - [https://sagemaker-workshop.com/](https://sagemaker-workshop.com/) - SageMaker Built-in/Custom Alogrithm and Security (English)
 - [https://www.sagemakerworkshop.com](https://www.sagemakerworkshop.com/) - Airflow, Personalize, SageMaker, and StepFunctions (English)
 - [https://distributed-training-workshop.go-aws.com/](https://distributed-training-workshop.go-aws.com/) - 분산 트레이닝 (English)
@@ -57,7 +57,7 @@ pre = "<b></b>"
 - https://awsdemoworkshops.s3.us-east-2.amazonaws.com/cicd-eks-bg-cdk-workshop/public/en/index.html Blue/Green deployment EKS (English)
 - https://github.com/hatsari/article/blob/master/container_insights/container_insights_en.md Container monitoring (English)
 - https://github.com/hatsari/article/blob/master/container_insights/container_insights.md 컨테이너 모니터링 (한글)
-- http://container-workshop.s3-website.ap-northeast-2.amazonaws.com/public/ CI/CD ECS (한글)
+- http://containerhero.io/public/ CI/CD ECS (한글)
 - https://ec2spotworkshops.com/ EC2 Spot Instance (English)
 - https://modernize.awsworkshop.io/index.html#/workshop/modernization-august-2018/module/modules_welcome_readme Morden Application Development (English)
 - https://www.appmeshworkshop.com/ App Mesh (English)
