@@ -7,5 +7,7 @@ hidden = false
 +++
 <br>
 
-다음 링크를 참조하세요. 
-https://www.sagemakerworkshop.com/personalize/
+다음 링크를 참조하세요.
+
+- (English workshop) : https://www.sagemakerworkshop.com/personalize/
+- (한글 워크샵) :http://personalize-workshop-junghee.s3-website.ap-northeast-2.amazonaws.com/intro.html

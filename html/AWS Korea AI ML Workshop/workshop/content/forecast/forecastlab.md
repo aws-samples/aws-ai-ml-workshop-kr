@@ -6,5 +6,7 @@ weight = 601
 hidden = false
 +++
 <br>
-다음 링크를 참조하세요.
-http://jihys-personal.s3-website.ap-northeast-2.amazonaws.com/forecasthol/workshop/kr/
+다음 링크를 참조하세요.  
+
+- (English workshop) : http://jihys-personal.s3-website.ap-northeast-2.amazonaws.com/forecasthol/workshop/kr/  
+- (한글 워크샵) : http://jihys-personal.s3-website.ap-northeast-2.amazonaws.com/forecasthol/workshop/kr/
