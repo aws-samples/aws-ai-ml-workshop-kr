@@ -17,8 +17,7 @@ Hands-on materials wiil get enriched over time as we get more contributions. Thi
 This repository assumes that you have your own AWS account and want to experience [Amazon SageMaker](https://aws.amazon.com/sagemaker/). If you don't have an AWS account, please follow the below instruction.
 
 * How to create a new Amazon Web Service account:
-    * [Korean version](https://s3.ap-northeast-2.amazonaws.com/pilho-immersionday-public-material/download/AWS+%E1%84%80%E1%85%A8%E1%84%8C%E1%85%A5%E1%86%BC+%E1%84%89%E1%85%A2%E1%86%BC%E1%84%89%E1%85%A5%E1%86%BC+%E1%84%80%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%83%E1%85%B3.pdf)
-    * [English version](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
+    * https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/
 * Use the latest Chrome or Firefox browser.
 
 ## How To Use This Material?
