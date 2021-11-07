@@ -19,7 +19,11 @@
 
 #### 1-4. BYOM (Bring Your Own Model)
 
+- [Tensorflow deployment](tf-deploy/README.md) - Tensorflow Serving 실습 [바로가기](tf-deploy/README.md)
+
 #### 1-5. SageMaker Ground Truth
+
+- [Hello GroundTruth](hello-gt/README.md) - SageMaker GroundTruth 시작하기 [바로가기](hello-gt/README.md)
 
 #### 1-6. SageMaker Data Wrangler
 
