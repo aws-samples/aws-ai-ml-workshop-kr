@@ -48,9 +48,11 @@
 #### 3-1. SageMaker Pipeline
 
 #### 3-2. SageMaker Project
+- [SageMaker Pipeline](sm-pipeline/README.md) - SageMaker Pipeline & Project 실습 [바로가기](sm-pipeline/README.md)
 
 #### 3-3. SageMaker Model monitor
 
+- [SageMaker Model Monitor](model-monitor/SageMaker-ModelMonitoring.ipynb) SageMaker Model Monitor 기능 체험 [바로가기](model-monitor/SageMaker-ModelMonitoring.ipynb)
 
 ---
 ## 4. SageMaker 보안 & 거버넌스
