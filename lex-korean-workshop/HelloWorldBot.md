@@ -41,7 +41,7 @@
 
 ![Amazon Lex 초기화면](images/create-bot-02.png)
 
-- **빈 봇을 생성합니다**를 선택한 다음 **봇 이름**에 `HelloWorldBot`을 **설명 - 선택사항**에 `간단한 인사를 수행하는 Hello World 봇 입니다.`를 입력합니다.
+- **빈 봇을 생성합니다**를 선택한 다음 **봇 이름**에 `HelloWorldBot`을 입력 하고,<br> **설명 - 선택사항**에 `간단한 인사를 수행하는 Hello World 봇 입니다.`를 입력합니다.
 
 ![봇 생성](images/create-bot-03.png)
 
