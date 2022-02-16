@@ -1,0 +1,146 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Custom resource to create a SageMaker notebook. License: (MIT-0: https://github.com/aws/mit-0) (qs-1o9abmj8n)'
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Required SageMaker Parameters
+        Parameters:
+          - NotebookInstanceName
+          - NotebookInstanceType
+    ParameterLabels:
+      NotebookInstanceName:
+        default: Notebook Instance Name
+      NotebookInstanceType:
+        default: Notebook Instance Type
+Parameters:
+  NotebookInstanceName:
+    AllowedPattern: '[A-Za-z0-9-]{1,63}'
+    ConstraintDescription: Maximum of 63 alphanumeric characters. Can include hyphens
+      (-), but not spaces. Must be unique within your account in an AWS Region.
+    Description: SageMaker Notebook instance name
+    MaxLength: '63'
+    MinLength: '1'
+    Type: String
+  NotebookInstanceType:
+    Default: ml.m4.xlarge
+    Description: Select Instance type for the SageMaker Notebook
+    Type: String
+Resources:
+  SageMakerExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "sagemaker.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
+      Path: "/service-role/"
+  NotebookCloudWatchLogGroup:
+    Type: AWS::Logs::LogGroup
+  CreateNotebookFunctionExecuteRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: CreateNotebookFunctionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - sagemaker:*
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - iam:PassRole
+                Resource: !GetAtt 'SageMakerExecutionRole.Arn'
+              - Effect: Allow
+                Action:
+                  - ec2:*
+                Resource: '*'
+  CreateNotebookFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: Create a SageMaker Notebook instance and return the ARN.
+      Handler: index.lambda_handler
+      Runtime: python3.6
+      Timeout: '300'
+      Role: !GetAtt 'CreateNotebookFunctionExecuteRole.Arn'
+      Code:
+        ZipFile: |
+          import json
+          import cfnresponse
+          import boto3
+
+          client = boto3.client('sagemaker')
+
+          def lambda_handler(event, context):
+            if event['RequestType'] == 'Delete':
+              try:
+                print('Received delete event')
+                print(str(event))
+                delete_response = client.stop_notebook_instance(
+                  NotebookInstanceName=event['ResourceProperties']['NotebookInstanceName']
+                )
+                cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+              except Exception as inst:
+                print(inst)
+                cfnresponse.send(event, context, cfnresponse.FAILED, {})
+            else:
+              try:
+                input_dict = {}
+                input_dict['NotebookInstanceName'] = event['ResourceProperties']['NotebookInstanceName']
+                input_dict['InstanceType'] = event['ResourceProperties']['NotebookInstanceType']
+                input_dict['RoleArn'] = event['ResourceProperties']['SageMakerRoleArn']
+
+                #Not yet available to custom resource
+                #input_dict['DirectInternetAccess'] = internetAccess
+                #if not subnetId:
+                #  input_dict['DirectInternetAccess'] = 'Enabled'
+
+                instance = client.create_notebook_instance(**input_dict)
+
+                # waiter = client.get_waiter('notebook_instance_in_service')
+                # waiter.wait(NotebookInstanceName=event['ResourceProperties']['NotebookInstanceName'])
+                print('Sagemager CLI response')
+                print(str(instance))
+                responseData = {'NotebookInstanceArn': instance['NotebookInstanceArn']}
+                cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+              except Exception as inst:
+                print(inst)
+                cfnresponse.send(event, context, cfnresponse.FAILED, {})
+  CreateNotebook:
+    Type: Custom::CreateNotebook
+    Properties:
+      ServiceToken: !GetAtt 'CreateNotebookFunction.Arn'
+      NotebookInstanceName: !Ref 'NotebookInstanceName'
+      NotebookInstanceType: !Ref 'NotebookInstanceType'
+      SageMakerRoleArn: !GetAtt 'SageMakerExecutionRole.Arn'
+      Version: 1
+Outputs:
+  NotebookARN:
+    Description: SageMaker Notebook ARN
+    Value: !GetAtt
+      - CreateNotebook
+      - NotebookInstanceArn
