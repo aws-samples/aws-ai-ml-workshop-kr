@@ -1,0 +1,9 @@
+
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - env
+      - echo Packaging Cloudformation and uploading to S3...
+      - ./package-cfn.sh ${S3_BUCKET_NAME} ${DEPLOYMENT_REGION}
