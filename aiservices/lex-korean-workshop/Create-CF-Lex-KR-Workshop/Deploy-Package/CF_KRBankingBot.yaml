@@ -13,15 +13,15 @@ Metadata:
                   - DynamoDBTableName
 Mappings:
   BucketName:
-    ap-northeast-2:
-      Name: 'kr-lex-workshop'
+    us-east-1:
+      Name: 'ee-assets-prod-us-east-1'      
   S3Path:
     LexImportSource:
-      Name: 'Lex-KR_BankingBot/Lambda-LexArtifact-Import/LexImport.zip'
+      Name: 'modules/c16b965656fb4eba8676d6f0ac759300/v1/Lex-KR_BankingBot/Lambda-LexArtifact-Import/LexImport.zip'
     BusinessLogicSource:
-      Name: 'Lex-KR_BankingBot/Lambda-BizLogic-BankingService/BankingServiceFunction.zip'
+      Name: 'modules/c16b965656fb4eba8676d6f0ac759300/v1/Lex-KR_BankingBot/Lambda-BizLogic-BankingService/BankingServiceFunction.zip'
     DBImportSource:
-      Name: 'Lex-KR_BankingBot/Lambda-BizLogic-DynamoDB/DDBInsert.zip'
+      Name: 'modules/c16b965656fb4eba8676d6f0ac759300/v1/Lex-KR_BankingBot/Lambda-BizLogic-DynamoDB/DDBInsert.zip'
       
 Parameters:
   BankingServicesBotName:
