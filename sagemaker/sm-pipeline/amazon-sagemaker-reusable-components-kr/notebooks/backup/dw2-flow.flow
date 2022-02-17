@@ -1,0 +1,150 @@
+{
+  "metadata": {
+    "version": 1,
+    "disable_limits": false
+  },
+  "nodes": [
+    {
+      "node_id": "29670908-385e-4b6b-bb79-b926e447e155",
+      "type": "SOURCE",
+      "operator": "sagemaker.s3_source_0.1",
+      "parameters": {
+        "dataset_definition": {
+          "__typename": "S3CreateDatasetDefinitionOutput",
+          "datasetSourceType": "S3",
+          "name": "abalone.csv",
+          "description": null,
+          "s3ExecutionContext": {
+            "__typename": "S3ExecutionContext",
+            "s3Uri": "s3://sagemaker-us-east-1-569441333767/feature-store-ingestion-pipeline/dataset/abalone.csv",
+            "s3ContentType": "csv",
+            "s3HasHeader": true,
+            "s3FieldDelimiter": ",",
+            "s3DirIncludesNested": false,
+            "s3AddsFilenameColumn": false
+          }
+        }
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "default",
+          "sampling": {
+            "sampling_method": "sample_by_limit",
+            "limit_rows": 50000
+          }
+        }
+      ]
+    },
+    {
+      "node_id": "53d84956-16d2-48e1-a7e2-6f2de3c51e56",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.infer_and_cast_type_0.1",
+      "parameters": {},
+      "trained_parameters": {
+        "schema": {
+          "record_id": "long",
+          "sex": "string",
+          "length": "float",
+          "diameter": "float",
+          "height": "float",
+          "whole_weight": "float",
+          "shucked_weight": "float",
+          "viscera_weight": "float",
+          "shell_weight": "float",
+          "rings": "long"
+        }
+      },
+      "inputs": [
+        {
+          "name": "default",
+          "node_id": "29670908-385e-4b6b-bb79-b926e447e155",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "57bf3a53-f478-4c75-8be5-4ae061044efc",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.custom_pandas_0.1",
+      "parameters": {
+        "code": "# Table is available as variable `df`\nimport pandas as pd\nfrom sklearn.preprocessing import StandardScaler\n\ndf_scaled = df.drop(['record_id', 'sex','rings'], axis=1)\ndf_scaled = StandardScaler().fit_transform(df_scaled.to_numpy())\ndf_scaled = pd.DataFrame(df_scaled, columns=['length','diameter','height','whole_weight','shucked_weight','viscera_weight','shell_weight'])\n\ndf = pd.concat((df_scaled, df[['record_id', 'sex','rings']]), 1)"
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "53d84956-16d2-48e1-a7e2-6f2de3c51e56",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "a218d78f-bd25-4a79-83fe-57457f96e9b9",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.encode_categorical_0.1",
+      "parameters": {
+        "operator": "One-hot encode",
+        "one_hot_encode_parameters": {
+          "invalid_handling_strategy": "Keep",
+          "drop_last": false,
+          "output_style": "Columns",
+          "input_column": [
+            "sex"
+          ]
+        },
+        "ordinal_encode_parameters": {
+          "invalid_handling_strategy": "Replace with NaN"
+        }
+      },
+      "trained_parameters": {
+        "one_hot_encode_parameters": {
+          "_hash": -1767228197713558300,
+          "string_indexer_model": "P)h>@6aWAK2mlfcM^w0eW+dDI003bD000vJ003=ebYWy+bYU-WVRCdWFfcGMFnx|sO9L?wNAG@&oVQ`?cH3^R_0mI8P`obFWVQ{>KPQQ_mi_JyD+mgD8y>&+n43@*QW6^x=qMqAI-yJv=q#O;141r@@;Q_7$DP-BLD~n6R#YMzhbe=LVl!VZ7V~b^wyV0muf*iPA|(?%mm68jdIs*p&uaFH(F}hi`@?$K>IM%@x9)htKDa$_`6f=_wZ)x(2Rn&p#K;rlW69fKnIyb02qk}$j4t+y&#@932Pif_{gXtZK)(`y|JV0lI~LM3dL)hXa*fE^K=@YBtLp<MCC2gY6HrS71QY-O00;mQ3`bPpZA0P?0000C0000O0001OWprU=VRT_HE^uLTbS*G2FfcGKV{&6lE=p!#U|?cUNvqod08mQ<1QY-O00;mQ3`bN+TdaD40RRAO0ssI=0001FVRT_HaA9(EEif=JFfc7-V>D)EWi@0iFf?U1Ei`6jVl6o{H)Jh0F=J#jW-~K6VlXo;V=yo<E^}^SaBz7paA9(Bb!BvoQd>*IFcePf>;~>NC50j*urXnV)^2qhLl8t%n27iwh)BAovzT^Uk||^C_xZQXF5VG*Ih^x-=k^`W)$z3t0qnt}2DG$eLCXz6-RL9Z6acX6ZfUz!2L+>ek{Q6zQGaR9m*y0j4nHf)F%?e_a`4D93Qf>5(GI5(<MLPtI)f&(K&yZXJe6uq7a3<6%hgW`maCs+6#(0GT*s}ITv&Fhz;bTC_FWadCw~i|X<N3iRjt(fkm9&n9MCg#S7DpLX&^KbLqf+??@d+`$TJf%9pz{{ARh4m+WVCuC!A<!GG&U0(F@6#qA^tzy&7|@W@CoCSSm3cDBQqF%6Kes_im1Jnk}g>>uY|U|4~Ob@J7YWKiK80G#_esFv=B8b9p)C9C!5wZ1D$}>wrd_t$_x9m!M}Y7WWH)E;a)9Gf~-Gq~a6bBYveGO;a9MyrdH+%^+q;61Ce&e3-PuFpR?>?D*~GK@fOJGmPTSp5wau;5B{qEB$A0P)h>@6aWAK2mlfcM^v`x6a^9h000mG002z@003lRbYU+paA9(EEif=JFfc7-V>D)EWi@0iFf?U1Ei`6jVl6o{H)Jh0F=J#jW-~K6VlXo;V=yo<E^}^SaBz7paA9(Bb!BueV{&6lE=p!#U|?d{?!DpaC-t5l08mQ-0u%!j0000801^yGRJeX-B-{W10AT?D022TJ00000000000HlEc0001OWprU=VRT_HaA9(EEif=JFfdR{0Rj{Q6aWAK2mlfcM^xZ#L*fnq000aC000;O0000000000005+c4FLcEZDn*}WMOn+FD`Ila&#>)FfcGME@N_IP)h*<6ay3h000O85)4OFNn5OXfdK#jYytoPNB{r;0000000000q=8WZ003lRbYU-WVRCdWFfcGMFfC+bG-hRGHDoO?G-Wp}G-hRDEjcqcWGy!_V`MaDGc!42Ff%P<FfcGKb8ca9aCt6pVRCVGWpq$W0Rj{Q6aWAK2mlfcM^v`x6a^9h000mG002z@0000000000005+cI0FCxWMOn+FD`Ila&#>)FfcGMEo5UfW@TkHWGyf>Wj8G}W@Tb6IWsq8EjKY^WHe?oGdW@~Gc98<FfcB2Zeeh6c`k5aa&dKKbS`6ZV^B*41^@s600aO80C)ia0JQ@E0000",
+          "one_hot_encoder_model": "P)h>@6aWAK2mlidM^skSOjy+b003zL000vJ003=ebYWy+bYU-WVRCdWFfcGMFpZA8PQySDMSDJD>ttoeb^>k@5=cZ)(XK|jV`8x{&CXH~`QMoYfkJ^qGsV%p=gv`C52dJ4C3@A6!5&bT4D_ah*AoI)Lj4r+KJi_&$sz6Kc(qbI2P_OBtFhhoeS5PThU;eAt<<^yf>h=d#oXyeH){wVaotF-&Q9Pjr5P-4x?PLI#`O}BK7>7p`KacYE8iwB9mbH2O{eix`3IYCZch3GMCb7#zJosxAyFdXj#7Sv!fKqr7hHtk1l9BN#n`3x?+=an%KdANsp7I+eF9KR0|XQR000O86AVXG?kXzf4gdfE3;+NC7ytkOZDn*}WMOn+FD`Ila&#>)FfcGME@N_IOD;-gU|?Wki14`*1^`e?0|XQR000O86AVXG6s3vCegOagFaiJoNB{r;WMOn+FK}UUbS*G2FfcGJHeq37G&VM4Ei^Y{W-T;hG-E9|Wny71V`VpHH)1m~Wo0yFEn_e+FfMa$VQ_GHE^uLTadl;MeNs(JD=`#JW34W9;UYr@W>Eqbg)z*$spGV`(4B~gs5^N)(oUko%godyRjL;J8U8?jh_|+iBACGCew=gfxglqV=P^Nqkxoc3I4#l&XtRkBnp+QTeTm>~9AL0ZaKU0U%M$FL9Ie@rF#rGA;f*W>!DtuL^`UU`x;B%G;z3$y-$J`h+SG-003di1(G{s>DJzFO><50(Sq-4sCTjWFck(;w15B`oy(jOv(OKR9MXMjcJ}_ohdGavwLrQCN&BaK7NdB&u-$`SOx}wVok9dUW_78-;)f}ALv2@(j_q>!&<iZL1(s*QUGLo#%tTW@GV<A(8)VXE-t4CIea#s4b1|a5)Po^+NOd!2j?Q)(iDj-P%`C(l-QB?MHtTpQ^p{<;Ttb#}kG(cgn4B3Y!Xgr<%og#X?P`p!`_F~0$%;Sj1?XAJM(0Myjy<ByZTq-rlGL`SCEKSoqP10VRb^jzuq`K)K?```*05AC3K<Etq${SEi0|XQR000O86AVXGlF<~x5&!@I5C8xGO#lD@WMOn+FD`Ila&#>)FfcGMEjD3cV>C84V=Xi{V`eQhV>DweIAvmCEn{UjW;bFpGG%2nWi4YcFfcB2Zeeh6c`k5aa&dKKbS`6ZV@obdW?*1oV)(h}e$TmoR%QTDO928D0~7!N00;mR3`bN})J#~_0001K0RR9K00000000000001_fdBvi0BvP-VPs)+VJ~oDa&#>)FfcGMP)h*<6ay3h000O86AVXG?kXzf4gdfE3;+NC7ytkO0000000000q=5zj003=ebYWy+bYU+paA9(EEif=JFfcA-a$`_S0Rj{Q6aWAK2mlidM^qH0iO7Bd001xo002k;0000000000005+cN&x@>WMOn+FK}UUbS*G2FfcGJHeq37G&VM4Ei^Y{W-T;hG-E9|Wny71V`VpHH)1m~Wo0yFEn_e+FfMa$VQ_GHE^uLTadl;MP)h*<6ay3h000O86AVXGlF<~x5&!@I5C8xGO#lD@0000000000q=7C2003lRbYU+paA9(EEif=JFfc7PVPRu5Ha24|G&f^rEi_{^V=XvkVqq;~WjAIwVly&jWi(|iV=yo<E^}^SaBz7paA9(Bb!BueV{&6qO9ci10000400aPd0RRB20{{R300"
+        }
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "57bf3a53-f478-4c75-8be5-4ae061044efc",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    },
+    {
+      "node_id": "c8880ed5-b8a0-4375-899b-1c4d86828152",
+      "type": "TRANSFORM",
+      "operator": "sagemaker.spark.custom_pandas_0.1",
+      "parameters": {
+        "code": "# Table is available as variable `df`\nimport time\nimport pandas as pd\n\nrecord_time_feature_name = 'record_time'\ncurrent_time_sec = int(round(time.time()))\ndf[record_time_feature_name] = pd.Series([current_time_sec]*len(df), dtype=\"float\")\n"
+      },
+      "inputs": [
+        {
+          "name": "df",
+          "node_id": "a218d78f-bd25-4a79-83fe-57457f96e9b9",
+          "output_name": "default"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "default"
+        }
+      ]
+    }
+  ]
+}

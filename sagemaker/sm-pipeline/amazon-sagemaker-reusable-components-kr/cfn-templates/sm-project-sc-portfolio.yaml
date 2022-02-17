@@ -1,0 +1,181 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  Create Service Catalog products as SageMaker project templates for various re-usable components
+
+Outputs:
+  ProductId:
+    Description: Service Catalog data science product Id
+    Value: !Ref FeatureStoreDataIngestionProduct
+
+  PortfolioId:
+    Description: Service Catalog data science portfolio Id
+    Value: !Ref DataScienceAutomationPortfolio
+
+  ProductName:
+    Description: Service Catalog data science product name
+    Value: !GetAtt FeatureStoreDataIngestionProduct.ProductName
+
+  ProvisioningArtifactIds:
+    Description: Service Catalog data science provisioning artifact Ids
+    Value: !GetAtt FeatureStoreDataIngestionProduct.ProvisioningArtifactIds
+
+  ProvisioningArtifactNames:
+    Description: Service Catalog data science provisioning artifact names
+    Value: !GetAtt FeatureStoreDataIngestionProduct.ProvisioningArtifactNames
+  
+  FSIngestionProductPolicyArn:
+    Description: Managed policy for AmazonSageMakerServiceCatalogProductsLaunchRole to launch an Feature Store ingestion product
+    Value: !Ref AmazonSageMakerServiceCatalogFSIngestionProductPolicy
+
+  AmazonSageMakerExecutionRolePolicyArn:
+    Description: Managed policy for Amazon SageMaker execution role with permissions to run the notebooks with Feature Store ingestion experiments
+    Value: !Ref AmazonSageMakerExecutionRolePolicy
+  
+  AmazonSageMakerExecutionRoleName:
+    Description: Name of the Amazon SageMaker execution role
+    Value: !Select [1, !Split ['/', !Ref SCPortfolioPrincipalRoleArn ] ] 
+    
+Parameters:
+  SCPortfolioPrincipalRoleArn:
+    Type: String 
+    Description: IAM role which will be granted access to Service Catalog products
+
+  SCProductLaunchRoleArn:
+    Type: String 
+    Description: IAM role that Service Catalog assumes when SageMaker Studio launches a product
+    Default: AmazonSageMakerServiceCatalogProductsLaunchRole
+
+Conditions:
+  DefaultLaunchRole: !Equals [ !Ref SCProductLaunchRoleArn, 'AmazonSageMakerServiceCatalogProductsLaunchRole' ]
+  
+Resources:
+
+  DataScienceAutomationPortfolio:
+      Type: 'AWS::ServiceCatalog::Portfolio'
+      Properties:
+        ProviderName: 'Data Science Administration Team'
+        Description: 'This portfolio is a collection of re-usable data science automation components for SageMaker Studio'
+        DisplayName: 'Re-usable data science automation components for your ML environment'
+
+  FeatureStoreDataIngestionProduct:
+    Type: 'AWS::ServiceCatalog::CloudFormationProduct'
+    Properties:
+      Name: 'Automated Feature Transformation and Ingestion Pipeline v1.0'
+      Description: 'This template creates a SageMaker project for automating a data ingestion from an S3 bucket into a feature group using Data Wrangler data transformation and SageMaker Pipelines'
+      Owner: 'Data Science Administration Team'
+      ProvisioningArtifactParameters:
+        - Name: 'Automated Feature Transformation and Ingestion Pipeline v1.0'
+          Description: 'SageMaker project to transform and ingest features into a feature group'
+          Info:
+            LoadTemplateFromURL: 'https://s3.amazonaws.com/< S3_CFN_STAGING_BUCKET_PATH >/project-s3-fs-ingestion.yaml'
+      Tags:
+        - Key: 'sagemaker:studio-visibility'
+          Value: 'true'
+
+  SCPortfolioFeatureStoreDataIngestionProductAssociation:
+    Type: 'AWS::ServiceCatalog::PortfolioProductAssociation'
+    Properties:
+      PortfolioId: !Ref DataScienceAutomationPortfolio
+      ProductId: !Ref FeatureStoreDataIngestionProduct
+
+  SCPortfolioPrincipleAssociation:
+    Type: 'AWS::ServiceCatalog::PortfolioPrincipalAssociation'
+    Properties:
+      PortfolioId: !Ref DataScienceAutomationPortfolio
+      PrincipalARN: !Ref SCPortfolioPrincipalRoleArn
+      PrincipalType: IAM
+
+  SCFeatureStoreDataIngestionProductLaunchRoleConstraint:
+    Type: 'AWS::ServiceCatalog::LaunchRoleConstraint'
+    DependsOn: 
+      - SCPortfolioPrincipleAssociation
+    Properties:
+      Description: !Sub 'AWS Service Catalog uses ${SCProductLaunchRoleArn} to launch SageMaker projects'
+      PortfolioId: !Ref DataScienceAutomationPortfolio
+      ProductId: !Ref FeatureStoreDataIngestionProduct
+      RoleArn: !If 
+        - DefaultLaunchRole
+        - !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/service-role/${SCProductLaunchRoleArn}'
+        - !Ref SCProductLaunchRoleArn
+
+  AmazonSageMakerExecutionRolePolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: CloudFormationPermission
+            Effect: Allow
+            Action:
+              - cloudformation:Describe*
+              - cloudformation:Get*
+              - cloudformation:List*
+            Resource:
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/sm-*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/sagemaker-*'
+          - Sid: S3Permission
+            Effect: Allow
+            Action:
+              - s3:DeleteBucket
+            Resource:
+              - 'arn:aws:s3:::sagemaker-cp-*'
+              - 'arn:aws:s3:::sagemaker-ct-*'
+            
+  AmazonSageMakerServiceCatalogFSIngestionProductPolicy:
+      Type: 'AWS::IAM::ManagedPolicy'
+      Properties:
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Sid: FSIngestionPermissionIAM
+              Effect: Allow
+              Action:
+                - iam:CreateRole    
+                - iam:DeleteRole
+                - iam:PutRolePolicy
+                - iam:DeleteRolePolicy
+                - iam:DetachRolePolicy
+                - iam:AttachRolePolicy
+                - iam:GetRole
+                - iam:GetRolePolicy
+              Resource: !Sub 'arn:aws:iam::${AWS::AccountId}:*'
+            - Sid: FSIngestionPermissionS3
+              Effect: Allow
+              Action:
+                - s3:PutBucketOwnershipControls
+              Resource: 'arn:aws:s3:::sagemaker-*'
+            - Sid: FSIngestionPermissionPassRole
+              Effect: Allow
+              Action:
+                - 'iam:PassRole'
+              Resource:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:role/*StartIngestionPipeline*'
+            - Sid: FSIngestionPermissionEvents
+              Effect: Allow
+              Action:
+                - 'events:DescribeRule'
+                - 'events:DeleteRule'
+                - 'events:EnableRule'
+                - 'events:PutRule'
+                - 'events:PutTargets'
+                - 'events:RemoveTargets'
+                - 'events:TagResource'
+                - 'events:UntagResource'
+              Resource:
+                - !Sub 'arn:aws:events:${AWS::Region}:${AWS::AccountId}:*'
+            - Sid: FSIngestionPermissionCloudTrail
+              Effect: Allow
+              Action:
+                - 'cloudtrail:CreateTrail'
+                - 'cloudtrail:DeleteTrail'
+                - 'cloudtrail:AddTags'
+                - 'cloudtrail:RemoveTags'
+                - 'cloudtrail:PutEventSelectors'
+                - 'cloudtrail:RemoveTags'
+                - 'cloudtrail:StartLogging'
+                - 'cloudtrail:StopLogging'
+              Resource:
+                - !Sub 'arn:aws:cloudtrail:${AWS::Region}:${AWS::AccountId}:trail/cloudtrail-sagemaker-*'

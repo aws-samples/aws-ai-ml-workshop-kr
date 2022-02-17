@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      # Upgrade AWS CLI to the latest version
+      - pip install --upgrade --force-reinstall botocore boto3 awscli
+      - pip install --upgrade -q sagemaker
+
+  build:
+    commands:
+      # Create a SageMaker pipeline
+      - |
+        python build.py \
+          --sagemaker-project-id "$SAGEMAKER_PROJECT_ID" \
+          --sagemaker-project-name "$SAGEMAKER_PROJECT_NAME" \
+          --pipeline-description "$PIPELINE_DESCRIPTION" \
+          --pipeline-name-prefix "$PIPELINE_NAME_PREFIX" \
+          --dw-flow-url "$DW_FLOW_URL" \
+          --dw-flow-output-name "$DW_FLOW_OUTPUT_NAME" \
+          --s3-data-prefix "$S3_DATA_PREFIX" \
+          --feature-group-name "$FEATURE_GROUP_NAME" \
+          --execution-role "$EXECUTION_ROLE"
+
+      - echo "Create/update of the SageMaker pipeline ${PIPELINE_NAME_PREFIX}-${SAGEMAKER_PROJECT_ID} completed"
