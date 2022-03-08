@@ -10,7 +10,14 @@ import pandas as pd
 pd.options.display.max_rows=20
 pd.options.display.max_columns=10
 
-if __name__ == '__main__':
+def train_sagemaker(args):
+    if os.environ.get('SM_CURRENT_HOST') is not None:
+        args.train_data_path = os.environ.get('SM_CHANNEL_TRAIN')
+        args.model_dir = os.environ.get('SM_MODEL_DIR')
+        args.output_data_dir = os.environ.get('SM_OUTPUT_DATA_DIR')
+    return args
+
+def main():
     parser = argparse.ArgumentParser()
 
     ###################################
@@ -25,13 +32,16 @@ if __name__ == '__main__':
     parser.add_argument('--objective', type=str, default='binary:logistic')
     parser.add_argument('--nfold', type=int, default=5)
     parser.add_argument('--early_stopping_rounds', type=int, default=10)
-    parser.add_argument('--train_data_path', type=str, default=os.environ.get('SM_CHANNEL_TRAIN'))
+    parser.add_argument('--train_data_path', type=str, default='./dataset')
 
     # SageMaker specific arguments. Defaults are set in the environment variables.
-    parser.add_argument('--model-dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
-    parser.add_argument('--output-data-dir', type=str, default=os.environ.get('SM_OUTPUT_DATA_DIR'))
+    parser.add_argument('--model-dir', type=str, default='./model')
+    parser.add_argument('--output-data-dir', type=str, default='./output')
 
     args = parser.parse_args()
+    
+    ## Check Training Sagemaker
+    args = train_sagemaker(args)
     
     ###################################
     ## 데이터 세트 로딩 및 변환
@@ -73,6 +83,14 @@ if __name__ == '__main__':
 
     
     print("cv_results: ", cv_results)
+    
+#     for i in cv_results.index:
+#         train_auc_mean = cv_results['train-auc-mean'][i]
+#         train_auc_std = cv_results['train-auc-std'][i]
+#         test_auc_mean = cv_results['test-auc-mean'][i]
+#         test_auc_std = cv_results['test-auc-std'][i]
+
+#         print(f" train_auc_mean : {train_auc_mean}, train_auc_std : {train_auc_std}, test_auc_mean : {test_auc_mean}, test_auc_std : {test_auc_std}, ")
 
     # Select the best score
     print(f"[0]#011train-auc:{cv_results.iloc[-1]['train-auc-mean']}")
@@ -103,6 +121,12 @@ if __name__ == '__main__':
     with open(metrics_location, 'w') as f:
         json.dump(metrics_data, f)
     
-    with open(model_location, 'wb') as f:
-        pickle.dump(model, f)
+    model.save_model(model_location)
 
+
+
+if __name__ == '__main__':
+    main()
+
+
+        
