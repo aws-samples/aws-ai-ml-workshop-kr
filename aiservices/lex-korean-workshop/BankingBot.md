@@ -12,15 +12,15 @@
 
 [![Launch Stack](https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?region=us-east-1&stackName=BankingBot&templateURL=https://ee-assets-prod-us-east-1.s3.us-east-1.amazonaws.com/modules/c16b965656fb4eba8676d6f0ac759300/v1/Lex-KR_BankingBot/CF-YAML-File/CF_KRBankingBot.yaml)
 
-> <span style="background-color:#D93025;font-family:Google Sans;font-weight:bold;font-size:90%;color:white;border-color:#D93025;border-radius:10px;border-width:2px;border-style:solid;padding-top:1px;padding-bottom:1px;padding-left:10px;padding-right:10px;">주의!</span> 이 워크숍은 현재 버지니아 북부(us-east-1) 리전에서만 동작합니다. 위 링크를 클릭하면 자동으로 버지니아 북부 리전이 선택됩니다.
+> 주의!</span> 이 워크숍은 현재 버지니아 북부(us-east-1) 리전에서만 동작합니다. 위 링크를 클릭하면 자동으로 버지니아 북부 리전이 선택됩니다.
 
-3. 스택 생성 화면에서 <span style="background-color:#ec7211;font-weight:bold;font-size:90%;color:white;padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;white-space:nowrap;border-radius:3px;">다음</span>을 클릭합니다.
+3. 스택 생성 화면에서 **다음**을 클릭합니다.
 
-4. 스택 세부 정보 지정 화면에서 <span style="background-color:#ec7211;font-weight:bold;font-size:90%;color:white;padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;white-space:nowrap;border-radius:3px;">다음</span>을 클릭니다.
+4. 스택 세부 정보 지정 화면에서 **다음**을 클릭니다.
 
-5. 스택 옵션 구성 화면에서 <span style="background-color:#ec7211;font-weight:bold;font-size:90%;color:white;padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;white-space:nowrap;border-radius:3px;">다음</span>을 클릭합니다.
+5. 스택 옵션 구성 화면에서 **다음**을 클릭합니다.
 
-6. BankingBot 검토 화면에서 맨 아래로 이동한 다음 **AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다.** 앞의 체크 박스를 체크한 다음 <span style="background-color:#ec7211;font-weight:bold;font-size:90%;color:white;padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;white-space:nowrap;border-radius:3px;">스택 생성</span>을 클릭합니다.
+6. BankingBot 검토 화면에서 맨 아래로 이동한 다음 **AWS CloudFormation에서 IAM 리소스를 생성할 수 있음을 승인합니다.** 앞의 체크 박스를 체크한 다음 **스택 생성**을 클릭합니다.
 
 7. **스택 정보** 탭을 클릭한 후에 상태가 **CREATE_IN_PROGRESS**에서 **CREATE_COMPLETE**로 변경되는것을 기다립니다.
 
