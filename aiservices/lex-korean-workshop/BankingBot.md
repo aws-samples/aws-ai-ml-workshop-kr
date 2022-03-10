@@ -28,7 +28,13 @@
 
 ## Banking Bot 구조 살펴보기
 
-Banking Bot은 잔고 확인(CheckBalance)과 송금(Transfer) 두 개의 의도(Intent)와 각각의 의도의 내용을 처리하기 위한 두 개의 람다 함수로 구성되어 있습니다.
+이제 Banking Bot을 시작하기 위한 리소스들이 모두 준비되었습니다.
+
+Bankinb Bot의 세부적인 구성은 다음과 같습니다.
+
+- Banking Bot은 잔고 확인(CheckBalance)과 송금(Transfer) 두 개의 의도(Intent)와 각각의 의도의 내용을 처리하기 위한 두 개의 람다 함수로 구성되어 있습니다.
+
+-
 
 ### 아키텍처 다이어그램
 
