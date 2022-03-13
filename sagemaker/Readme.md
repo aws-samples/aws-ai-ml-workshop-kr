@@ -65,17 +65,21 @@
 ---
 ## 5. SageMaker를 이용한 머신러닝/딥러닝 문제해결
 
-#### 5-1. AutoML
+#### 5-1. SageMaker Canvas (No code 머신러닝)
+- [SageMaker Canvas 공식 실습가이드(영문)](https://catalog.us-east-1.prod.workshops.aws/workshops/80ba0ea5-7cf9-4b8c-9d3f-1cd988b6c071/en-US/)
+- [AWS Glue DataBrew와 SageMaker Canvas를 이용한 No code 머신러닝 모델 개발/적용](canvas-and-glue-databrew/Readme.md)
+
+#### 5-2. AutoML
 - [AutoGluon Hello World!](autogluon/autogluon_helloworld.ipynb) - 오픈소스 AutoGluon의 Getting Started 예제입니다. [바로가기](autogluon/autogluon_helloworld.ipynb)
 - [Code Free Auto Gluon](autogluon/README.md) - 람다와 SageMaker 커스텀 컨테이너를 이용하여 AutoGluon 실행하기 [바로가기](autogluon/README.md)
 
-#### 5-2. Computer Vision
+#### 5-3. Computer Vision
 
-#### 5-3. NLP
+#### 5-4. NLP
 
-#### 5-4. Time-series
+#### 5-5. Time-series
 
-#### 5-5. Business case별 문제해결
+#### 5-6. Business case별 문제해결
 
 
 
