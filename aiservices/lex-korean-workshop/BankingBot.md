@@ -196,4 +196,6 @@ if (savedBankName && savedBankAccount)
 
 - 이제 **테스트** 버튼을 눌러 봇의 테스트를 진행해 봅시다.
 
+![](images/bot-test.png)
+
 축하합니다! 이것으로 여러분은 뱅킹 봇 을 성공적으로 만들었습니다.
