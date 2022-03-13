@@ -146,13 +146,15 @@ Banking Bot의 전체 대화 흐름 예제 입니다.
 
   - Dialog.get_slot, Dialog.set_slot : Lex에서 채운 슬롯을 검증하고, 필요한 경우 수정하기 위해 사용됩니다.
 
-## 세션 전환 구현
+## 의도 전환 구현
 
 이 예제에서는 계좌 조회 후 이체를 진행하면 직전에 조회한 계좌번호를 이체에 사용할지 여부를 확인하고 활용하도록 구현되어있습니다.
 
 session_attributes를 활용하여, 이전 의도의 결과를 전달하고, 이를 다른 의도에서 활용할 수 있습니다.
 
-- **CheckBalance** 의도의 Fulfillment 시점에 Session Attribute로 저장
+![](images/intent-switch.png)
+
+- **CheckBalance** 구현
 
 ```js
   ...
@@ -168,7 +170,7 @@ session_attributes를 활용하여, 이전 의도의 결과를 전달하고, 이
   }
 ```
 
-- Transfer 초기화 시점에 이 정보를 확인하여 슬롯을 미리 채움
+- **Transfer** 구현
 
 ```js
 const savedBankName = Dialog.get_session_attribute(intent_request, 'bankName');
