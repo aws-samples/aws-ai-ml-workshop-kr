@@ -30,21 +30,11 @@
 
 이제 Banking Bot을 시작하기 위한 리소스들이 모두 준비되었습니다.
 
-Bankinb Bot의 세부적인 구성은 다음과 같습니다.
-
-- Banking Bot은 잔고 확인(CheckBalance)과 송금(Transfer) 두 개의 의도(Intent)와 각각의 의도의 내용을 처리하기 위한 두 개의 람다 함수로 구성되어 있습니다.
-
--
-
-### 아키텍처 다이어그램
-
-Banking Bot의 아키텍처 구성은 다음과 같습니다.
-
--TBD-
+Banking Bot은 잔고 확인(CheckBalance)과 송금(Transfer) 두 개의 의도(Intent)와 각각의 의도의 내용을 처리하기 위한 두 개의 람다 함수, 그리고 상태값을 저장하기 위한 DynamoDB 테이블로 구성되어 있습니다.
 
 전체적인 처리의 흐름은 아래 다이어그램을 참고해 주세요.
 
-![](images/sequence-tbu.png)
+![](images/sequence-tbu-nobg.png)
 
 ### 대화 예제
 
