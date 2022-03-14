@@ -1,5 +1,20 @@
 .github
+
+# DS_store
 .DS_Store
+**/.DS_Store
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
 src/release/2018-09/AWS Korea AI ML Immersion Day Hands-on PilHoKim 5th September 2018.pdf
 src/release/2018-09/lambda_function.py
 src/release/2018-09/module3-video-game-sales-xgboost.ipynb
