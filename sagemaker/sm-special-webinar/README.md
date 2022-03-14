@@ -1,4 +1,6 @@
 # SageMaker 스페셜 웨비나
+---
+
 ## Overview
 
 머신 러닝(ML) 모델은 딥러닝 아키텍처와 GPU의 발전으로 최근 몇 년간 매우 빠르게 진보되었지만, 고도화되지 못한 ML 워크플로로 많은 고객들이 production 적용에 많은 어려움을 겪고 있습니다. 
@@ -17,10 +19,12 @@ AWS AIML 전문가들이 진행하는 이번 워크샵을 놓치지 마세요!
 본 워크샵은 SageMaker에 대한 기초 개념을 이해했다고 가정합니다. 만약 SageMaker를 처음 접해 보신 분들은 아래 링크 자료들을 사전에 학습하고 오시는 것을 권장 드립니다.
 - [SageMaker Overview - 50 mins](https://www.youtube.com/watch?v=jF2BN98KBlg)
 - [SageMaker Demo - 60 mins](https://www.youtube.com/watch?v=miIVGlq6OUk)
-- [Containers for Amazon SageMaker](CONTAINER_FOR_SM.md)
+- [Containers for Amazon SageMaker](CONTAINERS_FOR_SM.md)
 - [Self Study on SageMaker](https://github.com/gonsoomoon-ml/Self-Study-On-SageMaker)
   
 ## Hands-on Labs
+
+### [Setup: 워크샵 진행을 위한 필수 가이드](setup) 
 
 ### [Lab 1. Training](lab_1_training)
 
