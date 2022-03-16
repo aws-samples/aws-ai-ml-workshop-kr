@@ -1,3 +1,33 @@
+###########################################################################################################################
+'''
+훈련 코드는 크게 아래와 같이 구성 되어 있습니다.
+- 커맨드 인자로 전달된 변수 내용 확인
+- 훈련 데이터 로딩 
+- xgboost의 cross-validation(cv) 로 훈련
+- 훈련 및 검증 데이터 세트의 roc-auc 값을 metrics_data 에 저장
+    - 모델 훈련시 생성되는 지표(예: loss 등)는 크게 두가지 방식으로 사용 가능
+        - 클라우드 워치에서 실시간으로 지표 확인
+        - 하이퍼 파라미터 튜닝(HPO) 에서 평가 지표로 사용 (예: validation:roc-auc)
+        - 참조 --> https://docs.amazonaws.cn/en_us/sagemaker/latest/dg/training-metrics.html
+        - 참조: XGBoost Framework 에는 이미 디폴트로 정의된 metric definition이 있어서, 정의된 규칙에 따라서 모델 훈련시에 print() 를 하게 되면, 
+               metric 이 클라우드 워치 혹은 HPO에서 사용이 가능
+           
+Name                Regex
+validation:auc	.*\[[0-9]+\].*#011validation-auc:([-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?).*
+train:auc	    .*\[[0-9]+\].*#011train-auc:([-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?).*
+
+실제 코드에 위의 Regex 형태로 print() 반영
+print(f"[0]#011train-auc:{train_auc_mean}")
+print(f"[1]#011validation-auc:{validation_auc_mean}")
+    
+- 훈련 성능을 나타내는 지표를 저장 (metrics.json)
+- 훈련이 모델 아티펙트를 저장
+
+'''
+###########################################################################################################################
+
+
+
 import os
 import sys
 import pickle
@@ -32,11 +62,11 @@ def main():
     parser.add_argument('--objective', type=str, default='binary:logistic')
     parser.add_argument('--nfold', type=int, default=5)
     parser.add_argument('--early_stopping_rounds', type=int, default=10)
-    parser.add_argument('--train_data_path', type=str, default='./dataset')
+    parser.add_argument('--train_data_path', type=str, default='../dataset')
 
     # SageMaker specific arguments. Defaults are set in the environment variables.
-    parser.add_argument('--model-dir', type=str, default='./model')
-    parser.add_argument('--output-data-dir', type=str, default='./output')
+    parser.add_argument('--model-dir', type=str, default='../model')
+    parser.add_argument('--output-data-dir', type=str, default='../output')
 
     args = parser.parse_args()
     
@@ -47,7 +77,7 @@ def main():
     ## 데이터 세트 로딩 및 변환
     ###################################        
 
-    data = pd.read_csv(f'{args.train_data_path}/train.csv')
+    data = pd.read_csv(f'{args.train_data_path}/train/train.csv')
     train = data.drop('fraud', axis=1)
     label = pd.DataFrame(data['fraud'])
     dtrain = xgb.DMatrix(train, label=label)
@@ -114,6 +144,9 @@ def main():
     ###################################            
     
     # Save the model to the location specified by ``model_dir``
+    os.makedirs(args.output_data_dir, exist_ok=True)
+    os.makedirs(args.model_dir, exist_ok=True)
+    
     metrics_location = args.output_data_dir + '/metrics.json'
     model_location = args.model_dir + '/xgboost-model'
     
