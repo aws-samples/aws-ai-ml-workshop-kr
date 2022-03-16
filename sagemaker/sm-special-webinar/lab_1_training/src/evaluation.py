@@ -72,7 +72,8 @@ if __name__ == "__main__":
     with tarfile.open(model_path) as tar:
         tar.extractall(path=".")
     
-    model = pickle.load(open("xgboost-model", "rb"))
+    model = xgboost.XGBRegressor()
+    model.load_model("xgboost-model")
     logger.info(f"model is loaded")    
     
 
@@ -83,7 +84,8 @@ if __name__ == "__main__":
     y_test = df.iloc[:, 0].astype('int')    
     df.drop(df.columns[0], axis=1, inplace=True)
     
-    X_test = xgboost.DMatrix(df.values)
+#     X_test = xgboost.DMatrix(df.values)
+    X_test = df.values
     
     predictions_prob = model.predict(X_test)
     
