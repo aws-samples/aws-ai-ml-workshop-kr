@@ -62,7 +62,7 @@ def main():
     parser.add_argument('--objective', type=str, default='binary:logistic')
     parser.add_argument('--nfold', type=int, default=5)
     parser.add_argument('--early_stopping_rounds', type=int, default=10)
-    parser.add_argument('--train_data_path', type=str, default='../dataset')
+    parser.add_argument('--train_data_path', type=str, default='../../data/dataset')
 
     # SageMaker specific arguments. Defaults are set in the environment variables.
     parser.add_argument('--model-dir', type=str, default='../model')
@@ -77,7 +77,7 @@ def main():
     ## 데이터 세트 로딩 및 변환
     ###################################        
 
-    data = pd.read_csv(f'{args.train_data_path}/train/train.csv')
+    data = pd.read_csv(f'{args.train_data_path}/train.csv')
     train = data.drop('fraud', axis=1)
     label = pd.DataFrame(data['fraud'])
     dtrain = xgb.DMatrix(train, label=label)
