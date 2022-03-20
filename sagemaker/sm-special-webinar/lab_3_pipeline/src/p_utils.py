@@ -201,6 +201,21 @@ def get_payload(sample, label_col = 'fraud', verbose=False):
     
     return payload
 
+# def predict(predictor, payload, test_df):
+#     '''
+#     프리딕터에 콤마 분리된 문자형과 ContentType을 'text/csv' 로 제공
+#     참고:
+#         CSVDeserializer 를 사용하지 않으면 byte stream 으로 제공되기에, 아래와 같이 디코딩 하여 사용함.
+#         result = float(result.decode())
+#     '''
+
+#     pay_load = get_payload(test_df, label_col='fraud', verbose=True)
+#     print("pay_load: \n ", pay_load)
+# #    result = predictor.predict(payload, initial_args = {"ContentType": "text/csv"})
+#     result = predictor.predict(pay_load, initial_args = {"ContentType": "text/csv"})    
+    
+#     return result
+
 def predict(predictor, payload):
     '''
     프리딕터에 콤마 분리된 문자형과 ContentType을 'text/csv' 로 제공
@@ -209,8 +224,30 @@ def predict(predictor, payload):
         result = float(result.decode())
     '''
 
-    pay_load = get_payload(test_df, label_col='fraud', verbose=True)
-    result = predictor.predict(pay_load, initial_args = {"ContentType": "text/csv"})
+    result = predictor.predict(payload, initial_args = {"ContentType": "text/csv"})
+    result = result[0]
     
     return result
+
+
+
+def get_proc_artifact(execution, client, kind=0):
+    '''
+    kind: 0 --> train
+    kind: 2 --> test
+    '''
+    response = execution.list_steps()
+
+    proc_arn = response[-1]['Metadata']['ProcessingJob']['Arn'] # index -1은 가장 처음 실행 step
+    #proc_arn = response[-1]['Metadata']
+    # print("proc_arn: ", proc_arn)
+    proc_job_name = proc_arn.split('/')[-1]
+    print("proc_job_name: ", proc_job_name)
+    
+    response = client.describe_processing_job(ProcessingJobName = proc_job_name)
+    test_preprocessed_file = response['ProcessingOutputConfig']['Outputs'][kind]['S3Output']['S3Uri'] # index 1: test 파일    
+    print("test_preprocessed_file: \n ", test_preprocessed_file)
+    
+    return test_preprocessed_file
+
 
