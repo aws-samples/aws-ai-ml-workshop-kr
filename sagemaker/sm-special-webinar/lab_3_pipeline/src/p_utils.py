@@ -113,20 +113,6 @@ def get_pos_scale_weight(df, label):
     return class_weight
     
 
-def get_proc_artifact(execution, client, kind=0):
-    '''
-    kind: 0 --> train
-    kind: 2 --> test
-    '''
-    response = execution.list_steps()
-    proc_arn = response[0]['Metadata']['ProcessingJob']['Arn']
-    proc_job_name = proc_arn.split('/')[-1]
-    # print("proc_job_name: ", proc_job_name)
-    
-    response = client.describe_processing_job(ProcessingJobName = proc_job_name)
-    train_preproc_artifact = response['ProcessingOutputConfig']['Outputs'][kind]['S3Output']['S3Uri']    
-    
-    return train_preproc_artifact
 
 def get_train_artifact(execution, client, job_type,  kind=0):
     '''
@@ -242,11 +228,11 @@ def get_proc_artifact(execution, client, kind=0):
     #proc_arn = response[-1]['Metadata']
     # print("proc_arn: ", proc_arn)
     proc_job_name = proc_arn.split('/')[-1]
-    print("proc_job_name: ", proc_job_name)
+    # print("proc_job_name: ", proc_job_name)
     
     response = client.describe_processing_job(ProcessingJobName = proc_job_name)
     test_preprocessed_file = response['ProcessingOutputConfig']['Outputs'][kind]['S3Output']['S3Uri'] # index 1: test 파일    
-    print("test_preprocessed_file: \n ", test_preprocessed_file)
+    # print("test_preprocessed_file: \n ", test_preprocessed_file)
     
     return test_preprocessed_file
 
