@@ -214,7 +214,7 @@ if __name__ =='__main__':
     test_df.to_csv(f"{base_output_dir}/test/test.csv", index=False)    
 
     logger.info(f"preprocessed train shape \n {train_df.shape}")        
-    logger.info(f"preprocessed validation shape \n {test_df.shape}")            
+    logger.info(f"preprocessed test shape \n {test_df.shape}")            
 
     # logger.info(f"preprocessed train path \n {base_output_dir}/train/train.csv")
     logger.info(f"\n ### Final result for train dataset ")    
