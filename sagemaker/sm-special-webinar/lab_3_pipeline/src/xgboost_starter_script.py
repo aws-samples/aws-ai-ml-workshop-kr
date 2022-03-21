@@ -103,6 +103,7 @@ if __name__ == '__main__':
     with open(metrics_location, 'w') as f:
         json.dump(metrics_data, f)
     
-    with open(model_location, 'wb') as f:
-        pickle.dump(model, f)
+    model.save_model(model_location)    
+#     with open(model_location, 'wb') as f:
+#         pickle.dump(model, f)
 
