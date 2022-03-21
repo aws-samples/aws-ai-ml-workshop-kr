@@ -1,6 +1,6 @@
 {
     "contentType": "text/csv",
     "showEndpointResponse": 0,
-    "dataFile": "featureset/test.csv",
+    "dataFile": "../data/dataset/test.csv",
     "numTestSamples": 100
 }
