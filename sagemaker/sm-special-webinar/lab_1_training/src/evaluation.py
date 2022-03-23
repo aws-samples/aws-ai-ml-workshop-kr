@@ -45,7 +45,7 @@ if __name__ == "__main__":
     parser.add_argument('--base_dir', type=str, default= "/opt/ml/processing")    
     parser.add_argument('--model_path', type=str, default= "/opt/ml/processing/model/model.tar.gz")
     parser.add_argument('--test_path', type=str, default= "/opt/ml/processing/test/test.csv")
-    parser.add_argument('--output_evaluation_dir', type=str, default=" /opt/ml/processing/evaluation")
+    parser.add_argument('--output_evaluation_dir', type=str, default="/opt/ml/processing/output")
 
     
         
