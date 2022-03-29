@@ -26,6 +26,12 @@
 
 ![](images/banking-bot-01.png)
 
+8. Lex2 Console 로 이동해서 설치를 확인 합니다.
+
+![complete_cf_bankingbot.png](images/complete_cf_bankingbot.png)
+
+**9. 축하 합니다. Banking Bot 설치가 완료 되었습니다.**
+
 ## Banking Bot 구조 살펴보기
 
 이제 Banking Bot을 시작하기 위한 리소스들이 모두 준비되었습니다.
@@ -197,3 +203,4 @@ if (savedBankName && savedBankAccount)
 - 이제 **테스트** 버튼을 눌러 봇의 테스트를 진행해 봅시다.
 
 축하합니다! 이것으로 여러분은 뱅킹 봇 을 성공적으로 만들었습니다.
+
