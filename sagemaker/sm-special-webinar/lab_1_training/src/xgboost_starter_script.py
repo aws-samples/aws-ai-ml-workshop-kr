@@ -42,7 +42,7 @@ pd.options.display.max_columns=10
 
 def train_sagemaker(args):
     if os.environ.get('SM_CURRENT_HOST') is not None:
-        args.train_data_path = os.environ.get('SM_CHANNEL_TRAIN')
+        args.train_data_path = os.environ.get('SM_CHANNEL_INPUTDATA')
         args.model_dir = os.environ.get('SM_MODEL_DIR')
         args.output_data_dir = os.environ.get('SM_OUTPUT_DATA_DIR')
     return args
