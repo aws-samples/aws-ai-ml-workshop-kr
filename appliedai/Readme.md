@@ -1,3 +1,0 @@
-### Applied AI examples
-
-WIP
