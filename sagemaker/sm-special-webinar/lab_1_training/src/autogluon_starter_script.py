@@ -8,7 +8,7 @@ from autogluon.tabular import TabularDataset, TabularPredictor
 
 def train_sagemaker(args):
     if os.environ.get('SM_CURRENT_HOST') is not None:
-        args.train_data_path = os.environ.get('SM_CHANNEL_TRAIN')
+        args.train_data_path = os.environ.get('SM_CHANNEL_INPUTDATA')
         args.model_dir = os.environ.get('SM_MODEL_DIR')
         args.output_data_dir = os.environ.get('SM_OUTPUT_DATA_DIR')
         args.ag_config = os.environ.get('SM_CHANNEL_CONFIG')
