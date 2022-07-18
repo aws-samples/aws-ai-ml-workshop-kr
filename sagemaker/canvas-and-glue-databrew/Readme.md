@@ -80,7 +80,7 @@
     - ![](images/brew-column-delete-preview.png)
     - Apply 버튼을 클릭하면 Preview에서 확인한 내용이 반영됩니다. (아래 두 컬럼 삭제 후 결과화면 참조)
     - ![](images/brew-column-delete-apply.png)
-1. `datetime` 컬럼을 생성합니다. (이후 SageMaker Canvas에서 시계열 데이터 예측모델 생성시 요구되는 포맷으로 생성합니다.)
+1. Extract 메뉴를 이용하여 `datetime` 컬럼을 생성합니다. (이후 SageMaker Canvas에서 시계열 데이터 예측모델 생성시 요구되는 포맷으로 생성합니다.)
     - 현재 데이터셋에 년(year), 일(day) 컬럼이 별도로 없으므로 `dteday`컬럼으로부터 추출하여 새 컬럼을 생성합니다.
     - ![](images/date-extract-menu.png)
     - year, day 항목을 각각 추출하여 두개의 컬럼을 추가합니다.(Destination column을 각각 `year`, `day`로 설정하여 두번 실행합니다.)
