@@ -16,40 +16,30 @@ lab_03_pipeline 은 lab_01_training, lab_02_inference 이후의 단계 입니다
 
 ### [Quick Approach] 
 - Step-By-Step으로 접근하지 않고, 빠르게 보시기 위해서는 아래 노트북만을 수행 하세요.
+    - 3.0.Setup-Environment.ipynb 
     - 3.1.Prepare-Dataset.ipynb
     - 3.6.all-pipeline.ipynb
     - 3.7.Inference-Analyze.ipynb    
 
 ### [Step-By-Step 접근]
-
+- 3.0.Setup-Environment.ipynb
+    - SageMaker Python SDK 업그레이드
 - 3.1.Prepare-Dataset.ipynb
     - 데이터 세트 (claims.csv, customers.csv) 를 S3에 업로드
-
-
 - 3.2.Preprocess-Pipeline.ipynb
     - 첫번째의 전처리 과정의 스텝 생성 하며 아래 세가지의 단계별 구현을 합니다.
         - 로컬 노트북에서 전처리 스크립트 실행 (예: python preprocess.py)
         - MBP 의 파이프라인 단계 (step_proecess) 를 생성하여 실행
-
-
 -  3.3.Train-Pipeline.ipynb
     - 전처리된 데이터를 바탕으로 모델 훈련을 합니다.
         - MBP 의 파이프라인 단계 (step_train) 를 생성하여 실행
-
-
 - 3.4.Create-Model-Pipeline.ipynb 
     - 세이제 메이커 모델 생성 단계
-
-
 - 3.5.Deploy-Pipeline.ipynb
     - 실시간 엔드포인트 생성 단계
         - SageMaker Pipeline 에서 엔드포인트 생성을 수행합니다.
-
-
 - 3.6.all-pipeline.ipynb
     - 위에 생성한 모든 MBP 스텝을 연결하여 모든 파이프라인을 생성 함.
-    
-    
 - 3.7.Inference-Analyze.ipynb
     - 최종적으로 생성한 실시간 엔드포인트에 추론 테스트
     
