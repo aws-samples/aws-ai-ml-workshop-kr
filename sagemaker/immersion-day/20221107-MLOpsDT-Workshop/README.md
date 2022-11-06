@@ -117,6 +117,11 @@ estimator = PyTorch(
 ![training-artifact.png](img/training-artifact.png)
 
 
+### 3.2.3. Demo Video on YouTube
+[<img src="img/dt-workhop-labs.png" width="50%">](https://www.youtube.com/watch?v=0VWENkgPuYg "PyTorch DDP on SageMaker Distributed Data Parallel")
+
+![Pytorch DDP lab on SageMaker Distributed Data Parallel]()
+
 
 
 
