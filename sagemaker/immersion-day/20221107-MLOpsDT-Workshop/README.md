@@ -1,22 +1,21 @@
-# 2022 AWS Seoul MLOps 및 분산학습 워크샵 실습 가이드
+# 2022 AWS Seoul MLOps 및 분산 훈련 워크샵 실습 가이드
 - 날짜
     - 2022.11.08 ~ 11.09 (화, 수)
 - 참조 : 메인 이벤트 페이지
-    - [MLOps 및 분산학습 워크샵 일정](https://mlops-distributed-training-korea-2022.splashthat.com/)
+    - [MLOps 및 분산 훈련 워크샵 일정](https://mlops-distributed-training-korea-2022.splashthat.com/)
     
 <br>
 
 # 1. 실습 환경 구성
-- 이벤트 엔진 환경 구성 가이드 링크
-    - TBD
+- [이벤트 엔진 환경 구성 가이드](https://bit.ly/sagemaker-hol-start)
 
 ## 1.1. Day1 ML Ops
 - ML Ops 실습 해시 코드
     - TBD
 - SageMaker Studio 기본 생성 사용
 
-## 1.2. Day2 분산 학습
-- 분산 학습 실습 해시 코드
+## 1.2. Day2 분산 훈련
+- 분산 훈련 실습 해시 코드
     - us-east-1 <b></b>
     - us-west-2: <b>[link](http://bit.ly/3hk3IpC)</b>
     - eu-west-1: <b>[link](http://bit.ly/3zQArt6)</b>
@@ -38,7 +37,7 @@
 
 2. Project 를 선택한 후 "Create Project" 를 클릭합니다.
 
-    Project 페이지에서 사전 구성된 SageMaker MLOps 템플릿을 시작할 수 있습니다.이 실습에서는 모델 구축, 학습 및 배포를 위한 MLOps 템플릿을 위해 SageMaker Project 템플릿 선택을 클릭합니다.
+    Project 페이지에서 사전 구성된 SageMaker MLOps 템플릿을 시작할 수 있습니다.이 실습에서는 모델 구축, 훈련 및 배포를 위한 MLOps 템플릿을 위해 SageMaker Project 템플릿 선택을 클릭합니다.
     
 ![create_project](img/create_project.jpg)
 
@@ -91,9 +90,9 @@
 
 <br>
 
-# 3. Day2: 분산 학습 실습 상세
+# 3. Day2: 분산 훈련 실습 상세
 
-## 3.1. Day2 분산 학습 실습 링크 및 내용
+## 3.1. Day2 분산 훈련 실습 링크 및 내용
 - Git Repo:
     - Distributed Training Workshop on Amazon SageMaker
 - URL: 
@@ -231,7 +230,9 @@ optimizer = smp.DistributedOptimizer(
 image_uri = f'763104351884.dkr.ecr.{region}.amazonaws.com/pytorch-training:1.12.0-gpu-py38-cu113-ubuntu20.04-sagemaker'
 ```
 
-#### (3) (Optional) FSx for Lustre 설정
+#### (3) (Optional) Amazon FSx for Lustre 설정
+SageMaker는 훈련 시작 시, 데이터셋을 S3에서 훈련 인스턴스 스토리지 (EBS) 로 다운로드합니다. 이 때, 데이터셋 크기가 수백 기가바이트~수 테라바이트인 경우 다운로드 시간이 많이 소요되기에 전체 훈련 시간이 큰 폭으로 증가합니다. FSx for Lustre는 고성능 컴퓨팅 및 분산 훈련에 최적화된 완전 관리형 파일 시스템으로, 데이터셋이 저장된 S3 버킷에 연결하면 S3에서 FSx로 객체가 자동으로 복사됩니다. 대규모 데이터셋을 지연 로드하기에 높은 스루풋을 가지며, 더 빠른 랜덤 액세스 및 쓰기를 지원하기에 훈련 시간을 크게 절감할 수 있습니다.
+
 ```python
 if use_fsx:
     from sagemaker.inputs import FileSystemInput
@@ -326,8 +327,8 @@ smp_estimator.fit(inputs=data_channels, logs=True)
 
 # References
 
-## 분산 학습 개발자 가이드 및 참조 자료
-- 분산 학습 개발자 가이드
+## 분산 훈련 개발자 가이드 및 참조 자료
+- 분산 훈련 개발자 가이드
     - [Amazon SageMaker Distributed Training Libraries](https://docs.aws.amazon.com/sagemaker/latest/dg/distributed-training.html)
     - ![sm-developer-guide.png](img/sm-developer-guide.png)
 - SageMaker Distributed Data Parallel (SM DDP)
@@ -335,3 +336,10 @@ smp_estimator.fit(inputs=data_channels, logs=True)
     - ![sm-ddp-framework.png](img/sm-ddp-framework.png)
 - SageMaker Distributed Model Parallel (SM DMP)
     - [Supported Frameworks, AWS Regions, and Instances Types](https://docs.aws.amazon.com/sagemaker/latest/dg/distributed-model-parallel-support.html)
+
+## 분산 훈련 한국어 강연
+가급적 아래 3개 강연을 순서대로 보시는 것을 권장드립니다.
+- [Amazon SageMaker를 통한 대용량 모델 훈련 방법 살펴보기](https://www.youtube.com/watch?v=csr84BKbFeg)
+- [Amazon SageMaker를 통한 딥러닝 분산 학습 및 디버거 프로파일링 활용하기](https://www.youtube.com/watch?v=lsTtoACAPj4)
+- [실전! 대용량 데이터를 이용한 초거대 모델 학습 환경 만들기](https://www.youtube.com/watch?v=l1FSiRbEja4)
+
