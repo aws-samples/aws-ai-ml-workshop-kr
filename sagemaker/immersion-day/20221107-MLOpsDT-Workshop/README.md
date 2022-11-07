@@ -17,16 +17,77 @@
 
 ## 1.2. Day2 분산 학습
 - 분산 학습 실습 해시 코드
-    - us-east-1
-    - us-west-2
-    - eu-west-1: <b>`6a26-157b8db814-cd`</b>
+    - us-east-1 <b></b>
+    - us-west-2: <b>[link](http://bit.ly/3hk3IpC)</b>
+    - eu-west-1: <b>[link](http://bit.ly/3zQArt6)</b>
 - SageMaker Notebook <b>`ml.m5.xlarge`</b> 로 생성
 
 <br>
 
-# 2. Day1: ML Ops 실습 상세
-## 2.1. Day1 ML Ops 실습 링크 및 내용
-- TBD
+# 2. Day1: MLOps 실습 상세
+## 2.1. Day1 MLOps 실습 링크
+- URL:
+    - https://docs.aws.amazon.com/sagemaker/latest/dg/sagemaker-projects-walkthrough.html
+
+## 2.2. Day1 MLOps 실습 내용
+먼저 이 MLOps 템플릿을 구축, 교육 및 배포하면 어떤 AWS 서비스가 시작되는지 자세히 살펴보겠습니다.나중에 맞춤형 사용 사례에 맞게 스켈레톤을 수정하는 방법을 살펴보겠습니다.
+
+1. 먼저 SageMaker Studio에서 구성 요소 및 레지스트리 메뉴에서 프로젝트 메뉴를 선택하도록 합니다.
+
+![project](img/initial.png)
+
+2. Project 를 선택한 후 "Create Project" 를 클릭합니다.
+
+    Project 페이지에서 사전 구성된 SageMaker MLOps 템플릿을 시작할 수 있습니다.이 실습에서는 모델 구축, 학습 및 배포를 위한 MLOps 템플릿을 위해 SageMaker Project 템플릿 선택을 클릭합니다.
+    
+![create_project](img/create_project.jpg)
+
+3. 다음 페이지에서 프로젝트 이름과 간단한 설명을 입력하고 "Create Project" 를 선택합니다.
+    
+
+![project_name](img/project_name.jpg)
+
+프로젝트를 만드는 데 시간이 좀 걸립니다.
+
+![created](img/created.png)
+
+이 템플릿을 시작하면 기본적으로 모델 구축 파이프라인이 시작되며 SageMaker Pipeline 자체를 사용하는 데는 비용이 들지 않지만 시작한 서비스들에 대한 요금이 부과됩니다. 비용은 지역에 따라 다릅니다. 다음 [링크](https://calculator.aws/#/addService?nc2=pr)를 통해 비용에 대한 확인이 가능합니다.
+
+4. MLOps 템플릿에서 프로젝트를 만든 후 다음 아키텍처가 배포됩니다.
+
+![arch](img/archi.png)
+
+아키텍처에는 다음과 같은 AWS 서비스 및 리소스가 포함되어 있습니다.
+
+* SageMaker 프로젝트를 통해 제공되는 MLOps 템플릿은 사용자가 Studio 도메인에서 프로젝트를 활성화하면 자동으로 가져오는 AWS 서비스 카탈로그 포트폴리오를 통해 제공됩니다.
+
+* AWS CodeCommit에는 두 개의 리포지토리가 추가되었습니다.
+
+ * 첫 번째 리포지토리는 데이터 처리, 모델 교육, 모델 평가 및 정확도를 기반으로 한 조건부 모델 등록 단계를 포함하여 다단계 모델 구축 파이프라인을 생성하기 위한 스캐폴딩 코드를 제공합니다.pipeline.py 파일에서 볼 수 있듯이 이 파이프라인은 잘 알려진 UCI Abalone 데이터세트에서 XGBoost 알고리즘을 사용하여 선형 회귀 모델을 학습시킵니다.이 리포지토리에는 AWS CodePipeline 및 AWS CodeBuild에서 파이프라인을 자동으로 실행하는 데 사용하는 빌드 사양 파일도 포함되어 있습니다.
+
+ * 두 번째 저장소에는 모델 배포를 위한 코드 및 구성 파일과 품질 게이트를 통과하는 데 필요한 테스트 스크립트가 들어 있습니다.또한 이 리포지토리는 AWS CloudFormation 템플릿을 실행하여 스테이징 및 프로덕션을 위한 모델 엔드포인트를 생성하는 CodePipeline 및 CodeBuild를 사용합니다.
+
+* 두 개의 코드 파이프라인 파이프라인:
+
+ * ModelBuild 파이프라인은 ModelBuild CodeCommit 리포지토리에 새 커밋이 이루어질 때마다 파이프라인을 처음부터 끝까지 자동으로 트리거하고 실행합니다.
+
+ * 새 모델 버전이 모델 레지스트리에 추가되고 상태가 승인됨으로 표시될 때마다 ModelDeploy 파이프라인이 자동으로 트리거됩니다.보류 또는 거부됨 상태로 등록된 모델은 배포되지 않습니다.
+
+* 파이프라인에서 생성된 출력 모델 아티팩트를 위한 Amazon Simple Storage Service (Amazon S3) 버킷이 생성됩니다.
+
+* SageMaker 파이프라인은 다음 리소스를 사용합니다. 
+
+ * 이 워크플로에는 모델을 트레이닝하고 평가하는 유방향 비순환 그래프 (DAG) 가 포함되어 있습니다.파이프라인의 각 단계는 계보를 추적하고 중간 단계를 캐시하여 파이프라인을 빠르게 다시 실행할 수 있습니다.템플릿 외에도 SDK를 사용하여 파이프라인을 만들 수도 있습니다.
+
+ * SageMaker 파이프라인 내에서 SageMaker 모델 레지스트리는 모델 버전과 각 아티팩트를 추적합니다. 여기에는 모델 버전 생성 방식에 대한 계보 및 메타데이터가 포함됩니다.여러 모델 버전이 하나의 모델 그룹 아래에 그룹화되고 레지스트리에 등록된 새 모델은 자동으로 버전 관리됩니다.또한 모델 레지스트리는 모델 버전에 대한 승인 워크플로를 제공하고 여러 계정에 모델을 배포할 수 있도록 지원합니다.boto3 패키지를 통해 모델 레지스트리를 사용할 수도 있습니다.
+
+* 세이지메이커 엔드포인트 2개:
+
+ * 레지스트리에서 모델이 승인되면 아티팩트가 스테이징 엔드포인트에 자동으로 배포된 다음 수동 승인 단계가 이어집니다.
+
+ * 승인되면 동일한 AWS 계정의 프로덕션 엔드포인트에 배포됩니다.
+
+학습 작업, 파이프라인, 모델, 엔드포인트와 같은 모든 SageMaker 리소스와 이 실습에 나열된 AWS 리소스에는 프로젝트 이름과 고유한 프로젝트 ID 태그가 자동으로 지정됩니다.
 
 <br>
 
