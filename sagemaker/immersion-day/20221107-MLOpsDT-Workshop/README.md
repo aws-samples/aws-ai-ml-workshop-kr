@@ -7,7 +7,7 @@
 <br>
 
 # 1. 실습 환경 구성
-- [이벤트 엔진 환경 구성 가이드](prerequisite/README.md)
+- <a href="prerequisite/README.md" target="_blank">이벤트 엔진 환경 구성 가이드</a>
 
 ## 1.1. Day1 ML Ops
 - ML Ops 실습 해시 코드
