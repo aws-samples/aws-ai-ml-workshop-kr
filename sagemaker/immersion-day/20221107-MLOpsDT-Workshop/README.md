@@ -7,18 +7,17 @@
 <br>
 
 # 1. 실습 환경 구성
-- [이벤트 엔진 환경 구성 가이드](https://bit.ly/sagemaker-hol-start)
+- [이벤트 엔진 환경 구성 가이드](prerequisite/README.md)
 
 ## 1.1. Day1 ML Ops
 - ML Ops 실습 해시 코드
-    - TBD
+    - us-west-2: <b><a href="http://bit.ly/3hk3IpC" target="_blank">link</a></b>
+    - eu-west-1: <b><a href="http://bit.ly/3zQArt6" target="_blank">link</a></b>
 - SageMaker Studio 기본 생성 사용
 
 ## 1.2. Day2 분산 훈련
 - 분산 훈련 실습 해시 코드
     - us-east-1 <b></b>
-    - us-west-2: <b>[link](http://bit.ly/3hk3IpC)</b>
-    - eu-west-1: <b>[link](http://bit.ly/3zQArt6)</b>
 - SageMaker Notebook <b>`ml.m5.xlarge`</b> 로 생성
 
 <br>
@@ -38,17 +37,23 @@
 2. Project 를 선택한 후 "Create Project" 를 클릭합니다.
 
     Project 페이지에서 사전 구성된 SageMaker MLOps 템플릿을 시작할 수 있습니다.이 실습에서는 모델 구축, 훈련 및 배포를 위한 MLOps 템플릿을 위해 SageMaker Project 템플릿 선택을 클릭합니다.
-    
-![create_project](img/create_project.jpg)
+
+<div>
+<img src="img/create_project.jpg" width="1000"/>
+</div>
 
 3. 다음 페이지에서 프로젝트 이름과 간단한 설명을 입력하고 "Create Project" 를 선택합니다.
     
 
-![project_name](img/project_name.jpg)
+<div>
+<img src="img/project_name.jpg" width="1000"/>
+</div>
 
 프로젝트를 만드는 데 시간이 좀 걸립니다.
 
-![created](img/created.png)
+<div>
+<img src="img/created.png" width="600"/>
+</div>
 
 이 템플릿을 시작하면 기본적으로 모델 구축 파이프라인이 시작되며 SageMaker Pipeline 자체를 사용하는 데는 비용이 들지 않지만 시작한 서비스들에 대한 요금이 부과됩니다. 비용은 지역에 따라 다릅니다. 다음 [링크](https://calculator.aws/#/addService?nc2=pr)를 통해 비용에 대한 확인이 가능합니다.
 
