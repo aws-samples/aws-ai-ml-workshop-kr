@@ -196,9 +196,9 @@ estimator = PyTorch(
 
 #### (1) 모델 훈련 코드 준비
 - 스크립트 개요
-    - `train_gpt_simple.py`: The entrypoint script passed to the Hugging Face estimator in this notebook. This script is responsible for end to end training of the GPT-2 model with SMP. You can follow the comments to learn where the SMP API is used.
-    - `data_pipeline.py`: 훈련 데이터를 준비하기 위한 Datapipeline 함수.
-    - `data_prep_512.py`: openwebtext 데이터셋을 다운로드 및 전처리
+    - `train_gpt_simple.py`: GPT-2 모델 훈련 스크립트
+    - `data_pipeline.py`: 훈련 데이터를 준비하기 위한 Datapipeline 함수
+    - `data_prep_512.py`: openwebtext 데이터셋 다운로드 및 전처리
     - `learining_rate.py`: 학습률 조정
     - `requirements.txt`: 허깅페이스 transformers 라이브러리를 비롯한 의존성 패키지 설치
     - `memory_tracker.py`: 메모리 사용량 추정
