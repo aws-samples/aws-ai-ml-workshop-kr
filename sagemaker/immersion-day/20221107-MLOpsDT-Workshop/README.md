@@ -121,12 +121,16 @@ lightning-bolts == 0.5.0
 ```python
 # 파이토치 라이트닝 “환경” 준비
 from pytorch_lightning.plugins.environments.lightning_environment import LightningEnvironment
+from pytorch_lightning.strategies import DDPStrategy
+
 env = LightningEnvironment()
 env.world_size = lambda: int(os.environ.get("WORLD_SIZE", 0))
 env.global_rank = lambda: int(os.environ.get("RANK", 0))
+ddp = DDPStrategy(cluster_environment=env, accelerator="gpu")
 
 # 파이토치 라이트닝 Trainer 에 strategy=ddp 와 함께 생성.
 import pytorch_lightning as pl
+
 trainer = pl.Trainer(max_epochs=args.epochs, strategy=ddp, devices=num_gpus, num_nodes=num_nodes, default_root_dir = args.model_dir)
 
 # 파이토치 라이트닝 Trainer 에 MNIST 모델 및 데이타 제공하여 훈련
