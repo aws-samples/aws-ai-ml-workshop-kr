@@ -17,7 +17,8 @@
 
 ## 1.2. Day2 분산 훈련
 - 분산 훈련 실습 해시 코드
-    - us-east-1 <b></b>
+    - us-east-1: <b><a href="https://bit.ly/mlops-dt-us-east-1" target="_blank">link</a></b>
+    - us-west-1: <b><a href="https://bit.ly/mlops-us-west-1" target="_blank">link</a></b>
 - SageMaker Notebook <b>`ml.m5.xlarge`</b> 로 생성
 
 <br>
