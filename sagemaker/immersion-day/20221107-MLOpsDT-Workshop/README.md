@@ -10,15 +10,11 @@
 - <a href="prerequisite/README.md" target="_blank">이벤트 엔진 환경 구성 가이드</a> ([reference](https://bit.ly/sagemaker-hol-start))
 
 ## 1.1. Day1 ML Ops
-- ML Ops 실습 해시 코드
-    - us-west-2: <b><a href="http://bit.ly/3hk3IpC" target="_blank">link</a></b>
-    - eu-west-1: <b><a href="http://bit.ly/3zQArt6" target="_blank">link</a></b>
+- ML Ops 실습 해시 코드 사용
 - SageMaker Studio 기본 생성 사용
 
 ## 1.2. Day2 분산 훈련
-- 분산 훈련 실습 해시 코드
-    - us-east-1: <b><a href="https://bit.ly/mlops-dt-us-east-1" target="_blank">link</a></b>
-    - us-west-1: <b><a href="https://bit.ly/mlops-us-west-1" target="_blank">link</a></b>
+- 분산 훈련 실습 해시 코드 사용
 - SageMaker Notebook <b>`ml.m5.xlarge`</b> 로 생성
 
 <br>
