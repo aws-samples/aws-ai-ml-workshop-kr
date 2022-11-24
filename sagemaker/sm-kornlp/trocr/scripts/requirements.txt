@@ -1,0 +1,4 @@
+tqdm>=4.23.0
+nvidia-ml-py3
+jiwer
+evaluate

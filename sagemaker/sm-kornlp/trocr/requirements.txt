@@ -1,0 +1,14 @@
+lmdb
+nltk
+natsort
+pillow>=7.0.0
+requests>=2.20.0
+tqdm>=4.23.0
+beautifulsoup4>=4.6.0
+diffimg
+fire
+kiwipiepy
+transformers
+datasets
+jiwer
+nvidia-ml-py3
