@@ -77,7 +77,7 @@
 
 #### 5-4. NLP
 
-- [Korean NLP Hands-on labs](sm-kornlp-usecases) - Amazon SageMaker 기반 한국어 자연어 처리 샘플 (Multiclass Classification, Named Entity Recognition, Question Answering, Chatbot and Semantic Search using Sentence-BERT, Natural Language Inference, Summarization, Translation, TrOCR 등)
+- [Korean NLP Hands-on labs](sm-kornlp) - Amazon SageMaker 기반 한국어 자연어 처리 샘플 (Multiclass Classification, Named Entity Recognition, Question Answering, Chatbot and Semantic Search using Sentence-BERT, Natural Language Inference, Summarization, Translation, TrOCR 등)
 
 
 #### 5-5. Time-series
