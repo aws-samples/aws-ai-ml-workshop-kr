@@ -59,28 +59,3 @@ print(generated_text)
 
 All the code required for data collection and model training has been published on the author's Github.
 - https://github.com/daekeun-ml/sm-kornlp-usecases/tree/main/trocr
-
-### inference.py
-
-```python
-from transformers import TrOCRProcessor, VisionEncoderDecoderModel, AutoTokenizer
-import requests 
-from io import BytesIO
-from PIL import Image
-
-processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten") 
-model = VisionEncoderDecoderModel.from_pretrained("daekeun-ml/ko-trocr-base-nsmc-news-chatbot")
-tokenizer = AutoTokenizer.from_pretrained("daekeun-ml/ko-trocr-base-nsmc-news-chatbot")
-
-url = "https://raw.githubusercontent.com/aws-samples/aws-ai-ml-workshop-kr/master/sagemaker/sm-kornlp/trocr/sample_imgs/news_1.jpg"
-response = requests.get(url)
-img = Image.open(BytesIO(response.content))
-
-pixel_values = processor(img, return_tensors="pt").pixel_values 
-generated_ids = model.generate(pixel_values, max_length=64)
-generated_text = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0] 
-print(generated_text)
-```
-
-All the code required for data collection and model training has been published on the author's Github.
-- https://github.com/daekeun-ml/sm-kornlp-usecases/tree/main/trocr
