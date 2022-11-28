@@ -1,4 +1,4 @@
-# Sagemaker 실습코드
+# Amazon SageMaker 실습 코드
 
 본 폴더는 SageMaker를 다양한 기능을 실습할 수 있는 예제를 포함하고 잇습니다.
 
@@ -27,19 +27,20 @@
 
 #### 1-6. SageMaker Data Wrangler
 
-
 ---
 
-## 2. SageMaker 고급기능 활용하기
+## 2. SageMaker 고급 기능 활용하기
 
 #### 2-1. SageMaker Debugger
 
 #### 2-2. SageMaker Distributed Training
+- [Amazon SageMaker Distributed Training (Image Classification for Oxford-IIIT Pet Dataset)](https://github.com/aws-samples/sagemaker-distributed-training-pytorch-kr) 
+- [End-to-end ML Image Classification (Bengali.AI Handwritten Grapheme Classification)](https://github.com/daekeun-ml/end-to-end-pytorch-on-sagemaker)
+- [Amazon SageMaker Distributed Training Hands-on Lab - TensorFlow 2.x](https://github.com/daekeun-ml/sagemaker-distributed-training-tf2)
 
 #### 2-3. SageMaker Clarify
 
 #### 2-4. SageMaker Feature Store
-
 
 ---
 
@@ -61,9 +62,8 @@
 
 #### 4-2. Sagemaker Multi account deployment
 
-
 ---
-## 5. SageMaker를 이용한 머신러닝/딥러닝 문제해결
+## 5. SageMaker를 이용한 머신러닝/딥러닝 문제 해결
 
 #### 5-1. SageMaker Canvas (No code 머신러닝)
 - [SageMaker Canvas 공식 실습가이드(영문)](https://catalog.us-east-1.prod.workshops.aws/workshops/80ba0ea5-7cf9-4b8c-9d3f-1cd988b6c071/en-US/)
@@ -72,15 +72,28 @@
 #### 5-2. AutoML
 - [AutoGluon Hello World!](autogluon/autogluon_helloworld.ipynb) - 오픈소스 AutoGluon의 Getting Started 예제입니다. [바로가기](autogluon/autogluon_helloworld.ipynb)
 - [Code Free Auto Gluon](autogluon/README.md) - 람다와 SageMaker 커스텀 컨테이너를 이용하여 AutoGluon 실행하기 [바로가기](autogluon/README.md)
+- [AutoGluon on AWS](https://github.com/aws-samples/autogluon-on-aws) - 정형 데이터 외에 이미지, 텍스트, 멀티모달, 코드프리 등의 다양한 심화 예제들을 제공하고 있습니다.
 
 #### 5-3. Computer Vision
 
 #### 5-4. NLP
 
-- [Korean NLP Hands-on labs](sm-kornlp) - Amazon SageMaker 기반 한국어 자연어 처리 샘플 (Multiclass Classification, Named Entity Recognition, Question Answering, Chatbot and Semantic Search using Sentence-BERT, Natural Language Inference, Summarization, Translation, TrOCR 등)
-
+- [Korean NLP Hands-on labs)](https://github.com/aws-samples/sm-kornlp) - Amazon SageMaker 기반 한국어 자연어 처리 샘플 (Multiclass Classification, Named Entity Recognition, Question Answering, Chatbot and Semantic Search using Sentence-BERT, Natural Language Inference, Summarization, Translation, TrOCR 등)
+    - [Multiclass Classification](https://github.com/aws-samples/sm-kornlp/tree/main/multiclass-classification)
+    - [Named Entity Recognition (NER)](https://github.com/aws-samples/sm-kornlp/tree/main/named-entity-recognition)
+    - [Question Answering](https://github.com/aws-samples/sm-kornlp/tree/main/question-answering)
+    - [Chatbot and Semantic Search using Sentence-BERT (SBERT)](https://github.com/aws-samples/sm-kornlp/tree/main/sentence-bert-finetuning)
+    - [Natural Language Inference (NLI)](https://github.com/aws-samples/sm-kornlp/tree/main/natural-language-inference)
+    - [Summarization](https://github.com/aws-samples/sm-kornlp/tree/main/summarization)
+    - [Translation](https://github.com/aws-samples/sm-kornlp/tree/main/translation)
+    - [TrOCR](https://github.com/aws-samples/sm-kornlp/tree/main/trocr)    
 
 #### 5-5. Time-series
+- [Time series on AWS Hands-on Lab](https://github.com/daekeun-ml/time-series-on-aws-hol)
+
+#### 5-6. AIoT 
+- [End-to-end AIoT w/ SageMaker and Greengrass 2.0 on NVIDIA Jetson Nano](https://github.com/aws-samples/aiot-e2e-sagemaker-greengrass-v2-nvidia-jetson)
+- [AWS IoT Greengrass V2 for beginners (Korean)](https://catalog.us-east-1.prod.workshops.aws/workshops/0b21ceb7-2108-4a82-9e76-4c56d4b52db5)
 
 #### 5-6. Business case별 문제해결
 
