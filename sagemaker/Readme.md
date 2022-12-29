@@ -96,6 +96,7 @@
 - [AWS IoT Greengrass V2 for beginners (Korean)](https://catalog.us-east-1.prod.workshops.aws/workshops/0b21ceb7-2108-4a82-9e76-4c56d4b52db5)
 
 #### 5-7. Recommendation
+- [End-to-end Neural-Collaborative-Filtering including MLOps](recommendation/Neural-Collaborative-Filtering-On-SageMaker/README.md)
 #### 5-8. Business case별 문제해결
 
 
