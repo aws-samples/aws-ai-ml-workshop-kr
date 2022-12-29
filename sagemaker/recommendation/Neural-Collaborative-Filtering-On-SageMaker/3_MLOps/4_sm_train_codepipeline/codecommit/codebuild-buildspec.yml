@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - pip install --upgrade --force-reinstall . "awscli>1.20.30"
+  
+  build:
+    commands:
+      - python pipelines/upload_code.py --code-repository-name $code_repository_name --bucket $TEMPLATE_BUCKET
+      - export PYTHONUNBUFFERED=TRUE
+      - |
+        run-pipeline --module-name pipelines.ncf.pipeline \
+          --role-arn $SAGEMAKER_PIPELINE_ROLE_ARN \
+          --kwargs "{\"region\":\"${AWS_REGION}\",\"role\":\"${SAGEMAKER_PIPELINE_ROLE_ARN}\",\"default_bucket\":\"${TEMPLATE_BUCKET}\",\"pipeline_name\":\"${SAGEMAKER_PIPELINE_NAME}\",\"model_package_group_name\":\"${model_package_group_name}\",\"project_prefix\":\"${project_prefix}\"}"
+      - echo "Create/Update of the SageMaker Pipeline and execution completed."
+
