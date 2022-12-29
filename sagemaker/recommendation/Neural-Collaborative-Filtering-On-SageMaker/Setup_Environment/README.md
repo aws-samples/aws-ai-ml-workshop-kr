@@ -61,7 +61,10 @@ AWS에 인프라 배포는 비용이 발생됩니다. AWS 이벤트에 참석하
     ```
 
     저장소를 복제하면 좌측의 탐색기에 복제된 파일이 포함된 것을 볼 수 있습니다.
+     
     워크샵 경로는 aws-ai-ml-workshop-kr/sagemaker/recommendation/Neural-Collaborative-Filtering-On-SageMaker 입니다.
+     
+    [여기(https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/sagemaker/recommendation/Neural-Collaborative-Filtering-On-SageMaker)]를 누르시면 해당 폴더로 이동 합니다.
 
 ### Checkpoint:
 축하합니다. 이제 본격적인 워크샵을 진행할 수 있는 환경이 만들어졌습니다. 모든 워크샵이 끝난 후에 [IMPORTANT: Workshop Cleanup](Cleanup-README.md)에서 워크숍 중에 생성된 모든 자산이 제거되도록 아래 단계를 수행하여 오늘 이후에 예기치 않은 비용이 발생하지 않도록 합니다.
