@@ -95,7 +95,8 @@
 - [End-to-end AIoT w/ SageMaker and Greengrass 2.0 on NVIDIA Jetson Nano](https://github.com/aws-samples/aiot-e2e-sagemaker-greengrass-v2-nvidia-jetson)
 - [AWS IoT Greengrass V2 for beginners (Korean)](https://catalog.us-east-1.prod.workshops.aws/workshops/0b21ceb7-2108-4a82-9e76-4c56d4b52db5)
 
-#### 5-6. Business case별 문제해결
+#### 5-7. Recommendation
+#### 5-8. Business case별 문제해결
 
 
 
