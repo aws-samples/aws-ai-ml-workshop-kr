@@ -13,3 +13,9 @@ AWS에 인프라 배포는 비용이 발생됩니다. AWS 이벤트에 참석하
 ![IAM resources acknowledgement](images/cf-03.png)
 스택 삭제 프로세스에 오류가 발생하면 CloudFormation 대시 보드에서 이벤트 탭을 보고 실패한 단계를 확인합니다. CloudFormation에서 관리하는 리소스에 연결된 수동으로 생성된 리소스를 정리해야하는 경우 일 수 있습니다.
 
+### 3. SageMaker Studio Domain 삭제
+실습을 위해 생성한 SageMaker Studio Domain 을 삭제 해주세요. 특히 도메인/유저프로파일 아래에 있는 App 은 아래 처럼 반드시 삭제 해야 합니다. (추가적인 비용이 발생 합니다.)
+![delete_app.png](images/delete_app.png)
+
+아래 링크 클릭하여 삭제 방법을 참조하세요.
+- [Delete an Amazon SageMaker Domain](https://docs.aws.amazon.com/sagemaker/latest/dg/gs-studio-delete-domain.html)
