@@ -8,6 +8,7 @@
 ![how-to-ml-on-sagemaker.png](img/how-to-ml-on-sagemaker.png)
 
 # C. 모델 훈련, 모델 서빙 및 MLOps 구현 완료 후의 모습
+####  바로가기 -> [ 데이터 과학자가 ML Ops 를 직접 구성하고 실행하는 MLOps](3_MLOps/README.md)
 ![final_mlops_archi.png](3_MLOps/img/final_mlops_archi.png)
 
 # D. 멀티 모델 서빙 (Multi Model Endpoint, MME backed by Triton)

@@ -8,19 +8,27 @@
 
 # B. 단계 별 레고 쌓기식의 아키텍쳐 변화
 
-1. 모델 훈련 SageMaker Pipeline
+0. 환경 설정: IAM Role, SageMaker Notebook Instance 및 SageMaker Studio 설치<br>
+따라하기 영상 00 : [[MLOps-00] Setup Environment for Role, SageMaker Notebook and Studio](https://youtu.be/FeoKv2RTv8o) 
+1. 모델 훈련 SageMaker Pipeline. <br>
+따라하기 영상 01: [[MLOps-01] Create SageMaker Pipeline for Model Training](https://youtu.be/4PsVYD5fbbw)
 ![1_mlops_sm_pipeline.png](img/1_mlops_sm_pipeline.png)
-2. 모델 서빙 SageMaker Pipeline
+2. 모델 서빙 SageMaker Pipeline<br>
+따라하기 영상 02 : [[MLOps-02] Create SageMaker Pipeline for Model Serving](https://youtu.be/TOr9phzv1y0) 
 ![2_mlops_sm_serving_pipeline.png](img/2_mlops_sm_serving_pipeline.png)
-3. Code Pipeline Hello World 실습
+3. Code Pipeline Hello World 실습<br>
+따라하기 영상 03 : [[MLOps-03] AWS Code Series Hello World - CodeCommit, CodeBuild and CodePipeline](https://youtu.be/Rn3s0-Vtnzs) 
 ![3_hello_codepipeline.png](img/3_hello_codepipeline.png)
-4. 모델 훈련을 위한 Code Pipeline 을 SageMaker Pipeline 으로 연결
-![4_mlops_codepipe_sm_train.png](img/4_mlops_codepipe_sm_train.png)
-5. 모델 서빙을 위한 Code Pipeline 을 SageMaker Pipeline 으로 연결
+4. 모델 훈련을 위한 Code Pipeline 을 SageMaker Pipeline 으로 연결<br>
+따라하기 영상 04 : [[MLOps-04] Create CodePipeline Calling SageMaker Pipeline for Model Training](https://youtu.be/FdjXTYrdlaA)(img/4_mlops_codepipe_sm_train.png)
+5. 모델 서빙을 위한 Code Pipeline 을 SageMaker Pipeline 으로 연결<br>
+따라하기 영상 05 : [[MLOps-05] Create CodePipeline Calling SageMaker Pipeline for Model Serving](https://youtu.be/n_kjv1-5vrQ) 
 ![5_mlops_codepipe_sm_serving.png](img/5_mlops_codepipe_sm_serving.png)
-6. 이벤트 (에: S3에 데이터 업로드) 발생하여 모델 훈련 및 추론 파이프라인 실행 하기
+6. 이벤트 (에: S3에 데이터 업로드) 발생하여 모델 훈련 및 추론 파이프라인 실행 하기<br>
+따라하기 영상 06 : [[MLOps-06] Create EventBridge Rules and Re-train as well as Re-deploy a model ](https://youtu.be/Rr9Eyy0U53s)
 ![event_final_mlops_archi.png](img/6_event_bridge_rule.png)
-
+7. 리소스 정리: SageMaker Notebook Instance, Endpoint, SageMaker Studio Domain 및 기타<br>
+따라하기 영상 07 : [[MLOps-07] Cleanup All Resources Including SageMaker Notebook, Endpoint, and Studio Domain](https://youtu.be/Oh0TlCYkvdg)
 
 # C. 실습 설명
 
