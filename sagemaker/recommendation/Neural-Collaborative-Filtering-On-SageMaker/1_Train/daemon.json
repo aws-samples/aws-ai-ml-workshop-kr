@@ -1,0 +1,12 @@
+
+{
+	"default-runtime": "nvidia",
+    "runtimes": {
+        "nvidia": {
+            "path": "/usr/bin/nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    },
+    "data-root": "/home/ec2-user/SageMaker/.container/docker",
+    "default-shm-size": "5G" 
+}

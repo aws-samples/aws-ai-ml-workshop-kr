@@ -1,0 +1,6 @@
+# nvidia-ml-py3==7.352
+# pandas==0.24.2
+# numpy==1.16.6
+torch==1.8.1
+# gensim==3.7.1
+# tensorboardX==1.6 #  (mainly useful when you want to visulize the loss, see https://github.com/lanpa/tensorboard-pytorch)
