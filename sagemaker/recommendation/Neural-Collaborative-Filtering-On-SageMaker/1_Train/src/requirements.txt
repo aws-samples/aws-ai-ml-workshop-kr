@@ -1,1 +1,2 @@
-torch==1.8.1
+# This is a dummy. If you need to install a python package, write it like an example as below
+# torch==1.12.1
