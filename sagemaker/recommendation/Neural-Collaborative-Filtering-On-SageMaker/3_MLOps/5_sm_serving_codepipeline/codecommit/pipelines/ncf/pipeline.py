@@ -286,7 +286,7 @@ def get_pipeline(
         execution_role_arn=role,
         script=create_endpoint_lambda_script_path,
         handler="iam_create_endpoint.lambda_handler",
-        timeout = 900, # 디폴트는 120초 임. 10분으로 연장
+        timeout = 600, # 디폴트는 120초 임. 10분으로 연장
     )
 
     output_param_1 = LambdaOutput(output_name="statusCode", output_type=LambdaOutputTypeEnum.String)

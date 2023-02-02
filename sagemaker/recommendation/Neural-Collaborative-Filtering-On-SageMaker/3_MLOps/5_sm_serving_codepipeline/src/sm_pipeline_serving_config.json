@@ -1,1 +1,1 @@
-{"sm_pipeline_name": "ncf-serving-code-pipeline-sm-pipeline", "endpoint_instance_type": "ml.g4dn.xlarge", "ModelApprovalStatus": "Approved", "bucket": "sagemaker-ap-northeast-2-057716757052", "update_time": "2022-12-30-02-03-16"}
+{"sm_pipeline_name": "ncf-serving-code-pipeline-sm-pipeline", "endpoint_instance_type": "ml.g4dn.xlarge", "ModelApprovalStatus": "Approved", "bucket": "sagemaker-ap-northeast-2-057716757052", "update_time": "2023-02-02-12-52-24"}

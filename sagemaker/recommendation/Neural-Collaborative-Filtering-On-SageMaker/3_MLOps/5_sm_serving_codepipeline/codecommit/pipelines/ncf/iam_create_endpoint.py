@@ -69,21 +69,23 @@ def lambda_handler(event, context):
 # 아래 블록을 넣으면 람다 스템이 타임 아웃으로 실패 함. 현재 이유를 모르겠음.
 ###########################
     
+    # Lambda Timeout 이 10분이어서 While 문 주석 처리
+    
     # 앤드 포인트가 완료될 때까지 기다림 (약 8분 소요)
-    print(f'Endpoint status is creating')    
-    while (endpoint_status == 'Creating') | (endpoint_status == 'Updating'):
-        endpoint_info = sm_client.describe_endpoint(EndpointName=endpoint_name)
-        endpoint_status = endpoint_info['EndpointStatus']
-        print(f'Endpoint status: {endpoint_status}')
-        if (endpoint_status == 'Creating') | (endpoint_status == 'Updating'):
-            time.sleep(20)
+    # print(f'Endpoint status is creating')    
+    # while (endpoint_status == 'Creating') | (endpoint_status == 'Updating'):
+    #     endpoint_info = sm_client.describe_endpoint(EndpointName=endpoint_name)
+    #     endpoint_status = endpoint_info['EndpointStatus']
+    #     print(f'Endpoint status: {endpoint_status}')
+    #     if (endpoint_status == 'Creating') | (endpoint_status == 'Updating'):
+    #         time.sleep(20)
             
     if not existing_endpoints:                    
-        print(f'Endpoint status is created')                
-        return_msg = f"Created Endpoint!"        
+        print(f'Endpoint status is being created')                
+        return_msg = f"Creating Endpoint!"        
     else:
-        print(f'Endpoint status is updateed')                
-        return_msg = f"Updateed Endpoint!"        
+        print(f'Endpoint status is being updated')                
+        return_msg = f"Updating Endpoint!"        
         
 
     return {
