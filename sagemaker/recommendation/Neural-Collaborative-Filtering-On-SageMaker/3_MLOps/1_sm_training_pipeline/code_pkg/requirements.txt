@@ -1,2 +1,0 @@
-# dummay requirement.txt
-# torch==1.8.1
