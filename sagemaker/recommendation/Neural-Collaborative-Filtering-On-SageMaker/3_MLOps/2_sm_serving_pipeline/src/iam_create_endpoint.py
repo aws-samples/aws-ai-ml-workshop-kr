@@ -72,9 +72,9 @@ def lambda_handler(event, context):
     while endpoint_status == 'Creating':
         endpoint_info = sm_client.describe_endpoint(EndpointName=endpoint_name)
         endpoint_status = endpoint_info['EndpointStatus']
-        print(f'Endpoint status: {endpoint_status}')
+        # print(f'Endpoint status: {endpoint_status}')
         if endpoint_status == 'Creating':
-            time.sleep(20)
+            time.sleep(2)
             
     print(f'Endpoint status is created')                
 
