@@ -62,6 +62,8 @@ def infer_triton_client(triton_client, model_name, inputs, outputs):
     output0_data = results.as_numpy('OUTPUT__0')
     print("#### output #####")
     print(output0_data.shape)
+    print("#### output values #####")
+    print(output0_data)    
     
     return None
 

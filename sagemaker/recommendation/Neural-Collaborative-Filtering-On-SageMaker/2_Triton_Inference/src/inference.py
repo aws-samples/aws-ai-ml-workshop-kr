@@ -63,7 +63,7 @@ def model_fn(model_dir):
         
         # 모델 아티펙트 경로       
         model_file_path = os.path.join(model_dir, "NeuMF-end.pth")
-        logger.info("model_file_path: :  {model_file_path}")                      
+        logger.info(f"model_file_path: :  {model_file_path}")                      
         
         # 모델 가중치 로딩    
         with open(model_file_path, "rb") as f:
