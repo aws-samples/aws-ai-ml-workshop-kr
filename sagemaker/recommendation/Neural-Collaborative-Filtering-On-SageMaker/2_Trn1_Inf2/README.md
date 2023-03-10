@@ -9,6 +9,6 @@ warming-up/compile_getting_started.ipynb
 0.0.Setup_Environment.ipynb
 - 환경 설정
 1.1.NCF-on-INF2.ipynb
-- NCF 모델 컴파일 및 추론 
+- NCF 모델 컴파일 및 추론  
 
 
