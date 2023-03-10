@@ -5,7 +5,7 @@ import torch.nn.functional as F
     
 class NCF(nn.Module):
     '''
-        Trouble Shooting: 
+        Trouble Shooting:  
 
     * https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/torch-neuron/troubleshooting-guide.html#pytorch-neuron-inference-troubleshooting
     '''
