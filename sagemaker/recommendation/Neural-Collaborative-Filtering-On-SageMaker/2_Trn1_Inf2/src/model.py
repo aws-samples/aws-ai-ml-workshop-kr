@@ -4,6 +4,11 @@ import torch.nn.functional as F
 # XLA imports
     
 class NCF(nn.Module):
+    '''
+        Trouble Shooting: 
+
+    * https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/torch-neuron/troubleshooting-guide.html#pytorch-neuron-inference-troubleshooting
+    '''
     def __init__(self, user_num, item_num, factor_num, num_layers,
                     dropout, model, GMF_model=None, MLP_model=None):
         super(NCF, self).__init__()
@@ -39,8 +44,6 @@ class NCF(nn.Module):
         
     def forward(self, user, item):
         '''
-        # PyTorch --> Triton 수정 사항
-        - if statement 제거
         '''
         embed_user_GMF = self.embed_user_GMF(user)
         embed_item_GMF = self.embed_item_GMF(item)
@@ -51,19 +54,14 @@ class NCF(nn.Module):
         interaction = torch.cat((embed_user_MLP, embed_item_MLP), -1)
         output_MLP = self.MLP_layers(interaction)
 
-
-
         concat = torch.cat((output_GMF, output_MLP), -1)
-
-
         prediction = self.predict_layer(concat)
-  
-        print("#### test 1 #####")
-        print("#### prediction size: \n", prediction.size())        
+
+        # Without print() as below, compile error occurred
         print("#### prediction: \n", prediction)    
-        return torch.cat((user,item),1)            
-#         return prediction
-#         return torch.cat((prediction,prediction),1)
+#        return torch.cat((user,item),1)            
+        return tuple(prediction) # Without tuple(), compile error occurred
+
 
 
     def _init_weight_(self):
