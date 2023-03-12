@@ -71,7 +71,7 @@ def benchmark(model, user, item, n_models=1, n_threads=1, batches_per_thread=100
 
     display(metrics)
 
-
+ 
 def display(metrics):
     """
     Display the metrics produced by `benchmark` function.
