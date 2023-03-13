@@ -95,7 +95,7 @@ if __name__ =='__main__':
     parser.add_argument('--label_column', type=str, default="fraud")       
     # parse arguments
     args = parser.parse_args()     
-    
+    logger.info("######### 111Argument Info ####################################")
     logger.info("######### Argument Info ####################################")
     logger.info(f"args.base_output_dir: {args.base_output_dir}")
     logger.info(f"args.base_preproc_input_dir: {args.base_preproc_input_dir}")    
@@ -149,8 +149,8 @@ if __name__ =='__main__':
 
     # 원핫인코딩한 컬럼의 이름 로딩
     # Ref: Sklearn Pipeline: Get feature names after OneHotEncode In ColumnTransformer,  https://stackoverflow.com/questions/54646709/sklearn-pipeline-get-feature-names-after-onehotencode-in-columntransformer
-    
-    processed_category_features = preprocess.transformers_[0][1].named_steps['onehot'].get_feature_names(categorical_features)
+
+    processed_category_features = preprocess.transformers_[0][1].named_steps['onehot'].get_feature_names_out(categorical_features)
     #logger.info(f"processed_category_features: {processed_category_features}")
 #    print(X_pre)
     
