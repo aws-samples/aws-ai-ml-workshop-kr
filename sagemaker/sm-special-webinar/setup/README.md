@@ -70,7 +70,7 @@ AWS에 인프라 배포는 비용이 발생됩니다. AWS 이벤트에 참석하
 
     ```
     $ cd SageMaker
-    $ git clone https://github.com/gonsoomoon-ml/SageMaker-Pipelines-Step-By-Step.git
+    $ git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr
     ```
 
     저장소를 복제하면 좌측의 탐색기에 복제된 파일이 포함된 것을 볼 수 있습니다.
