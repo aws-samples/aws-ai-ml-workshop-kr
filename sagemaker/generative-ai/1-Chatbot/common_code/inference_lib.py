@@ -36,8 +36,32 @@ def invoke_inference(endpoint_name, prompt):
     res = response["Body"].read().decode()
     print (eval(res)[0]['generated_text'])
 
-             
-        
+def invoke_inference_DJ(endpoint_name, prompt):
+
+    '''
+    invoke_inference 변형,
+    곤수님께서 기존에 invoke_inference를 사용하는 부분이 있어 우선 이름을 달리 함
+    추후 invoke_inference과 하나로 합칠 예정
+    '''
+
+    '''
+    KoAlpaca 프롬프트를 제공하여 엔드포인트 호출
+    '''
+
+    client = boto3.client("sagemaker-runtime")
+
+    content_type = "application/json"
+    response = client.invoke_endpoint(
+        EndpointName=endpoint_name,
+        ContentType=content_type,
+        Body=json.dumps(prompt)
+    )
+
+    res = response["Body"].read().decode()
+    print (res)
+    
+    return res
+
 def query_endpoint_with_text_payload(plain_text, endpoint_name, content_type="text/plain"):
     '''
     content_type 이 text/plain 인 경우 사용
@@ -59,6 +83,25 @@ def parse_response_text_model(query_response):
     generated_text = model_predictions[0]["generated_text"]
     return generated_text
 
+def parse_response(query_response):
+    
+    def traverse(o, tree_types=(list, tuple)):
+        if isinstance(o, tree_types):
+            for value in o:
+                for subvalue in traverse(value, tree_types):
+                    yield subvalue
+        else:
+            yield o
+
+    data = eval(query_response)
+    
+    listRes = []
+    for value in traverse(data):
+        listRes.append(value["generated_text"])
+        
+    if len(listRes) >= 2: return listRes
+    else: return listRes[0].strip()
+    
 ################################################
 # Embedding Handler
 ################################################
