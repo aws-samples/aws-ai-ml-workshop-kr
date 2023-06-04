@@ -83,6 +83,17 @@ def parse_response_text_model(query_response):
     generated_text = model_predictions[0]["generated_text"]
     return generated_text
 
+def parse_response_json_model(query_response):
+    '''
+    content_type 이 application/json 인 경우 사용
+    '''
+    model_predictions = json.loads(query_response)
+    # print("model_predictions: \n", model_predictions)
+    # print("model_predictions: \n", type(model_predictions))    
+    generated_text = model_predictions[0][0]["generated_text"]
+    return generated_text
+
+
 def parse_response(query_response):
     
     def traverse(o, tree_types=(list, tuple)):
