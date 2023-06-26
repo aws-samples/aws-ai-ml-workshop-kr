@@ -21,7 +21,7 @@ AWS Generative AI 및 Foundation 모델에 대한 한글 워크샵 & 예제 모�
 - bedrock : WIP
 
 
-<img src="./jumpstart/text_to_text/figures/model_tune_consumer.png"  width="900" height="570">
+<img src="./jumpstart/text_to_text/figures/model_tune_consumer.png"  width="700" height="370">
 
 
 
@@ -51,6 +51,6 @@ AWS Generative AI 및 Foundation 모델에 대한 한글 워크샵 & 예제 모�
 
 위 자료들 중 일부를 이용하여 아래와 같은 playground를 구성할 수 있습니다.
 
-<img src="./jumpstart/text_to_text/figures/streamlit-playground.png"  width="700" height="370">
+<img src="./jumpstart/text_to_text/figures/streamlit-playground.png"  width="500" height="670">
 
 ---
