@@ -12,7 +12,7 @@ AWS AIML 한글 워크샵 & 예제 모음
 - [Applied AI](appliedai/Readme.md) : Amazon Personalize, Amazon Forecast 등 사용자 데이터를 이용한 커스텀 ML 모델 생성/추론 서비스
 - [SageMaker](sagemaker/Readme.md) : End-to-end 머신러닝/딥러닝 플랫폼 SageMaker 활용 예제
 - [Integration](integration/Readme.md) : Greengrass, EMR 등 다른 서비스와의 융합 및 응용사례
-
+- [Generative AI](genai/Readme.md) : Generative AI와 관련된 예제 및 관련 서비스 응용사례
 ---
 
 ## SageMaker 셀프스터디
