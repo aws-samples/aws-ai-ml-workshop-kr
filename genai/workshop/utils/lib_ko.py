@@ -112,6 +112,7 @@ class KoSimCSERobertaContentHandlerAmazonAPIGateway:
     @classmethod
     def transform_output(cls, response: Any) -> str:
         response_json = response.json()
+ 
         ndim = np.array(response_json).ndim    
         if ndim == 4:
             # Original shape (1, 1, n, 768)
@@ -129,7 +130,7 @@ class KoSimCSERobertaContentHandlerAmazonAPIGateway:
         return emb 
     
 
-class EmbeddingAmazonApiGateway(BaseModel, Embeddings):
+class KoSimCSERobertaEmbeddingAmazonApiGateway(BaseModel, Embeddings):
 
     api_url: str
     """API Gateway URL"""
@@ -182,15 +183,14 @@ class EmbeddingAmazonApiGateway(BaseModel, Embeddings):
                 json=payload,
             )
 
-            text = self.content_handler.transform_output(response)
-
         except Exception as error:
             raise ValueError(f"Error raised by the service: {error}")
         
-        return text
+        return self.content_handler.transform_output(response)
+
 
     def embed_documents(
-        self, texts: List[str], chunk_size: int = 64
+        self, texts: List[str], chunk_size: int = 1
     ) -> List[List[float]]:
         """Compute doc embeddings using a SageMaker Inference Endpoint.
 
@@ -206,14 +206,13 @@ class EmbeddingAmazonApiGateway(BaseModel, Embeddings):
         """
         results = []
         _chunk_size = len(texts) if chunk_size > len(texts) else chunk_size
-        #print(f"_chunk size={_chunk_size}")
         
-        for i in range(0, len(texts), _chunk_size):    
-            #print (i, texts[i : i + _chunk_size])
+        print("text size: ", len(texts))
+        print("_chunk_size: ", _chunk_size)
+        
+        for i in range(0, len(texts), _chunk_size):
             response = self._embedding_func(texts[i : i + _chunk_size])
-            #print (i, response, len(response[0].shape))
             results.extend(response)
-            
         return results
 
     def embed_query(self, text: str) -> List[float]:
