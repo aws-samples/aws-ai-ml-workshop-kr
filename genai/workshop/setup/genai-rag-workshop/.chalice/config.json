@@ -8,8 +8,9 @@
         "ENDPOINT_EMB_KOSIMCSE": "KoSimCSE-roberta-2023-08-03-22-52-21",        
         "ENDPOINT_EMB_GPTJ_6B": "jumpstart-dft-hf-textembedding-gpt-j-6b-fp16",        
         "ENDPOINT_LLM_LLAMA2_7B": "jumpstart-dft-meta-textgeneration-llama-2-7b-1",
-        "ENDPOINT_LLM_LLAMA2_13B": "jumpstart-dft-meta-textgeneration-llama-2-13b",       
-        "ENDPOINT_LLM_KKULM_12_8B": "kullm-polyglot-12-8b-v2-2023-08-02-21-47-20-314-endpoint"  
+        "ENDPOINT_LLM_LLAMA2_13B": "jumpstart-dft-meta-textgeneration-llama-2-13b",     
+        "ENDPOINT_LLM_KKULM_12_8B": "kullm-polyglot-12-8b-v2-2023-08-02-21-47-20-314-endpoint",
+        "ENDPOINT_LLM_FALCON_40B": "jumpstart-dft-hf-llm-falcon-40b-instruct-bf16"  
     },
     "stages": {
         "dev": {

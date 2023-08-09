@@ -54,7 +54,7 @@ def invoke_emb(variant_name):
 @app.route("/llm/{variant_name}", methods=["POST"], content_types=["application/json"])
 def invoke_llm(variant_name):
     
-    models = ['llama2_7b', 'llama2_13b', 'kkulm_12_8b']
+    models = ['llama2_7b', 'llama2_13b', 'kkulm_12_8b', 'falcon_40b']
     if variant_name not in models:
         raise BadRequestError("[ERROR] Invalid model!")
         
@@ -66,6 +66,10 @@ def invoke_llm(variant_name):
         endpoint_name = os.environ["ENDPOINT_LLM_LLAMA2_13B"]
     elif variant_name == "kkulm_12_8b":
         endpoint_name = os.environ["ENDPOINT_LLM_KKULM_12_8B"]
+    elif variant_name == "kkulm_12_8b":
+        endpoint_name = os.environ["ENDPOINT_LLM_KKULM_12_8B"]
+    elif variant_name == "falcon_40b":
+        endpoint_name = os.environ["ENDPOINT_LLM_FALCON_40B"]        
 
     payload = app.current_request.json_body
 
