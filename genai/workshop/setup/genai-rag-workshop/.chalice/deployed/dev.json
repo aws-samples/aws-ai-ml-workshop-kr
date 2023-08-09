@@ -3,7 +3,7 @@
     {
       "name": "managed-layer",
       "resource_type": "lambda_layer",
-      "layer_version_arn": "arn:aws:lambda:us-east-1:143656149352:layer:genai-rag-workshop-dev-managed-layer:2"
+      "layer_version_arn": "arn:aws:lambda:us-east-1:143656149352:layer:genai-rag-workshop-dev-managed-layer:3"
     },
     {
       "name": "api_handler_role",
@@ -19,8 +19,8 @@
     {
       "name": "rest_api",
       "resource_type": "rest_api",
-      "rest_api_id": "dkk7v2wvb1",
-      "rest_api_url": "https://dkk7v2wvb1.execute-api.us-east-1.amazonaws.com/api/"
+      "rest_api_id": "6bk4r5mo4f",
+      "rest_api_url": "https://6bk4r5mo4f.execute-api.us-east-1.amazonaws.com/api/"
     }
   ],
   "schema_version": "2.0",

@@ -4,9 +4,22 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import BaseModel, root_validator
 from langchain.embeddings.base import Embeddings
 from langchain.llms import AmazonAPIGateway
+from langchain.llms.sagemaker_endpoint import LLMContentHandler, SagemakerEndpoint
 from langchain.agents import load_tools
 from langchain.agents import initialize_agent
 from langchain.agents import AgentType
+
+class FalconContentHandlerEndpoint(LLMContentHandler):
+    content_type = "application/json"
+    accepts = "application/json"
+
+    def transform_input(self, prompt: str, model_kwargs: dict) -> bytes:
+        input_str = json.dumps({'inputs': prompt, 'parameters': model_kwargs})
+        return input_str.encode('utf-8')
+      
+    def transform_output(self, output: bytes) -> str:
+        response_json = json.loads(output.read().decode("utf-8"))
+        return response_json[0]["generated_text"]
 
 
 class Llama2ContentHandlerAmazonAPIGateway:
@@ -27,12 +40,20 @@ class Llama2ContentHandlerAmazonAPIGateway:
         return response.json()[0]["generation"]
     
     
-class ContentHandlerEmbeddingAmazonAPIGateway:
-    """Adapter to prepare the inputs from Langchain to a format
-    that LLM model expects.
+class FalconContentHandlerAmazonAPIGateway:
 
-    It also provides helper function to extract
-    the generated text from the model response."""
+    @classmethod
+    def transform_input(
+        cls, prompt: str, model_kwargs: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        return {"inputs": prompt, "parameters": model_kwargs}
+
+    @classmethod
+    def transform_output(cls, response: Any) -> str:
+        return response.json()[0]["generated_text"]
+        
+    
+class ContentHandlerEmbeddingAmazonAPIGateway:
 
     @classmethod
     def transform_input(
