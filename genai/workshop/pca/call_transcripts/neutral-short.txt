@@ -1,0 +1,21 @@
+timestamp: 2023-01-28 08:26:49.219717
+
+Customer: Hi, I'd like to check the balance on my account.
+
+Retail Support: Sure thing! Can I have your account number or phone number associated with the account?
+
+Customer: My phone number is (123) 456-7890.
+
+Retail Support: Great, thank you. Let me pull up your account. Okay, it looks like your current balance is $567.89.
+
+Customer: Okay, great. Thank you.
+
+Retail Support: You're welcome! Is there anything else I can help you with today?
+
+Customer: No, that's all. Thank you.
+
+Retail Support: Not a problem. Thank you for calling. Have a great day!
+
+Customer: You too. Goodbye.
+
+Retail Support: Goodbye!
