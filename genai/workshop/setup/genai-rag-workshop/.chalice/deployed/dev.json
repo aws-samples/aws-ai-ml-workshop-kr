@@ -3,24 +3,24 @@
     {
       "name": "managed-layer",
       "resource_type": "lambda_layer",
-      "layer_version_arn": "arn:aws:lambda:us-east-1:143656149352:layer:genai-rag-workshop-dev-managed-layer:3"
+      "layer_version_arn": "arn:aws:lambda:us-west-2:419974056037:layer:genai-rag-workshop-dev-managed-layer:4"
     },
     {
       "name": "api_handler_role",
       "resource_type": "iam_role",
-      "role_arn": "arn:aws:iam::143656149352:role/genai-rag-workshop-dev-api_handler",
+      "role_arn": "arn:aws:iam::419974056037:role/genai-rag-workshop-dev-api_handler",
       "role_name": "genai-rag-workshop-dev-api_handler"
     },
     {
       "name": "api_handler",
       "resource_type": "lambda_function",
-      "lambda_arn": "arn:aws:lambda:us-east-1:143656149352:function:genai-rag-workshop-dev"
+      "lambda_arn": "arn:aws:lambda:us-west-2:419974056037:function:genai-rag-workshop-dev"
     },
     {
       "name": "rest_api",
       "resource_type": "rest_api",
-      "rest_api_id": "6bk4r5mo4f",
-      "rest_api_url": "https://6bk4r5mo4f.execute-api.us-east-1.amazonaws.com/api/"
+      "rest_api_id": "l0hdosp73i",
+      "rest_api_url": "https://l0hdosp73i.execute-api.us-west-2.amazonaws.com/api/"
     }
   ],
   "schema_version": "2.0",
