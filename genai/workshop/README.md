@@ -26,7 +26,7 @@ AWS와 함께하는 생성 AI 기술워크숍은 반 일간 진행되는 대면 
 
 #### [Lab 1. Prompt Engineering Basic (English)](rag/1_prompt-and-langchain-en.ipynb)
 
-#### [Lab 2. Prompt Engineering Basic (Korean)](rag/2_prompt-and-langchain-ko.ipynb))
+#### [Lab 2. Prompt Engineering Basic (Korean)](rag/2_prompt-and-langchain-ko.ipynb)
 
 #### [Lab 3. RAG (English)](rag/3_rag-basic-faiss-en.ipynb)
 
@@ -34,4 +34,4 @@ AWS와 함께하는 생성 AI 기술워크숍은 반 일간 진행되는 대면 
 
 #### [Lab 1. Post Call Analytics (English)](pca/1_post-call-analytics-en.ipynb)
 
-#### [Lab 2. Post Call Analytics (Korean)](pca/2_post-call-analytics-ko.ipynb))
+#### [Lab 2. Post Call Analytics (Korean)](pca/2_post-call-analytics-ko.ipynb)
