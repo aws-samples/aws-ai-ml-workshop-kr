@@ -42,5 +42,3 @@ class parameter_store():
         )
         print (f"  parameters: {listParams} is deleted successfully")
         
-
-    
