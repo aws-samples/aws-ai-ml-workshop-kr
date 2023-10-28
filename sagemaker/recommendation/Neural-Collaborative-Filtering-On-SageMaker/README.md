@@ -18,7 +18,7 @@
 # E. 사용된 기술 요소
 - 훈련
     - Convert open source algorithm to SageMaker Training Script
-    - SageMaker Script Mode, Local Mode, Horovod Distributed Training, SageMaker Distributed Data Parallel (SM DDP)
+    - SageMaker Script Mode, Local Mode
 - 서빙
     - SageMaker PyTorch Serving, Local Mode, Bring Your Own Serving Container, Triton Inference on SageMaker
 - MLOps
