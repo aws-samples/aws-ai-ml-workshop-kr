@@ -1,5 +1,5 @@
 peft==0.2.0
-transformers==4.27.1
+transformers==4.30.0
 accelerate==0.17.1
 bitsandbytes==0.37.1
 datasets
