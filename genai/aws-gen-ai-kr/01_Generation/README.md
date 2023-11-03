@@ -18,9 +18,9 @@
 ## Workshop Notebooks
 
 고객이 고객 지원 엔지니어로부터 받은 서비스에 대해 부정적인 피드백을 제공한 고객에 대한 이메일 응답을 생성합니다. 텍스트 생성 워크샵에는 다음 세 가지 노트북이 포함됩니다. 
-1. [Amazon Titan으로 이메일 생성](./00_generate_w_bedrock.ipynb) - Bedrock API를 사용하여 Amazon Titan 대용량 텍스트 모델을 호출하여 고객에게 이메일 응답을 생성합니다. 컨텍스트가 없는 제로 샷 프롬프트를 모델에 대한 명령으로 사용합니다. 
-2. [Anthropic Claude를 사용한 제로샷 텍스트 생성](01_zero_shot_generation.ipynb) - 고객에게 이메일을 생성하기 위해 Bedrock과 통합된 LangChain 프레임워크를 사용하여 Anthropic의 Claude 텍스트 모델을 호출합니다. 컨텍스트가 없는 제로샷 프롬프트를 모델에 대한 명령으로 사용합니다. 
-3. [LangChain을 사용한 문맥 텍스트 생성](./02_contextual_generation.ipynb) - 모델이 응답을 생성할 고객의 원본 이메일을 포함하는 추가 문맥을 프롬프트에 제공합니다. 이 예제에는 런타임에 프롬프트에서 변수 값을 대체할 수 있도록 LangChain에 사용자 지정 프롬프트 템플릿이 포함되어 있습니다.
+1. [Amazon Titan으로 이메일 생성](./00_generate_w_bedrock_kr.ipynb) - Bedrock API를 사용하여 Amazon Titan 대용량 텍스트 모델을 호출하여 고객에게 이메일 응답을 생성합니다. 컨텍스트가 없는 제로 샷 프롬프트를 모델에 대한 명령으로 사용합니다. 
+2. [Anthropic Claude를 사용한 제로샷 텍스트 생성](01_zero_shot_generation_kr.ipynb) - 고객에게 이메일을 생성하기 위해 Bedrock과 통합된 LangChain 프레임워크를 사용하여 Anthropic의 Claude 텍스트 모델을 호출합니다. 컨텍스트가 없는 제로샷 프롬프트를 모델에 대한 명령으로 사용합니다. 
+3. [LangChain을 사용한 문맥 텍스트 생성](./02_contextual_generation_kr.ipynb) - 모델이 응답을 생성할 고객의 원본 이메일을 포함하는 추가 문맥을 프롬프트에 제공합니다. 이 예제에는 런타임에 프롬프트에서 변수 값을 대체할 수 있도록 LangChain에 사용자 지정 프롬프트 템플릿이 포함되어 있습니다.
 
 ## Architecture
 

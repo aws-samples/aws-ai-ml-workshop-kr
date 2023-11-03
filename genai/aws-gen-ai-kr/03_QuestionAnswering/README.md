@@ -48,6 +48,6 @@ Titan 임베딩을 사용하여 사용자 질문에 대한 임베딩을 가져�
 
 ## Notebooks
 
-1. [Q&A with model knowledge and small context](./00_qa_w_bedrock_titan.ipynb)
+1. [Q&A with model knowledge and small context](./00_qa_w_bedrock_kr.ipynb)
 
-2. [Q&A with RAG](./01_qa_w_rag_claude.ipynb)
+2. [Q&A with RAG](./01_qa_w_rag_kr.ipynb)

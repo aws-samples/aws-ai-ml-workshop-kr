@@ -105,4 +105,3 @@ class bedrock_info():
         assert model_name in cls._BEDROCK_MODEL_INFO.keys(), "Check model name"
 
         return cls._BEDROCK_MODEL_INFO[model_name]
-    
