@@ -43,10 +43,10 @@ Quis hendrerit dolor magna eget est.
 
 이 워크숍에서는 요약에 대한 다음과 같은 패턴을 배울 수 있습니다:
 
-1. [짧은 텍스트 요약](./01.small-text-summarization-claude.ipynb)
+1. [짧은 텍스트 요약](./00.small_text_summarization_claude.ipynb)
 
     ![small text](./images/41-text-simple-1.png)
 
-2. [추상적인 텍스트 요약](./02.long-text-summarization-titan.ipynb)
+2. [추상적인 텍스트 요약](./01.long_text_summarization_titan.ipynb)
 
     ![large text](./images/42-text-summarization-2.png)
