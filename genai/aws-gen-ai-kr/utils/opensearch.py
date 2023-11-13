@@ -130,7 +130,7 @@ class opensearch_utils():
         #  - https://opensearch.org/docs/latest/query-dsl/full-text/index/#match-boolean-prefix
         # OpenSearch Query Description (한글)
         #  - https://esbook.kimjmin.net/05-search)
-
+                
         min_shoud_match = 0
         if "minimum_should_match" in kwargs:
             min_shoud_match = kwargs["minimum_should_match"]
