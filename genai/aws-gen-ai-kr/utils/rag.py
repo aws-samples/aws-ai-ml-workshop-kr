@@ -103,17 +103,27 @@ def get_semantic_similar_docs(**kwargs):
     assert "query" in kwargs, "Check your query"
     assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
     assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
-
+    
     results = kwargs["vector_db"].similarity_search_with_score(
             query=kwargs["query"],
             k=kwargs.get("k", 5),
             search_type=kwargs.get("search_type", "approximate_search"),
-            space_type=kwargs.get("space_type", "l2"),
-            boolean_filter=kwargs.get("boolean_filter", {}),
+            space_type=kwargs.get("space_type", "l2"),      
+            boolean_filter=opensearch_utils.get_filter(
+                filter=kwargs.get("boolean_filter", [])
+            ),        
             # fetch_k=3,
         )
-
-    if kwargs.get("hybrid", False):
+    
+    print ("\nsemantic search args: ")
+    pprint ({
+        "k": kwargs.get("k", 5),
+        "search_type": kwargs.get("search_type", "approximate_search"),
+        "space_type": kwargs.get("space_type", "l2"),
+        "boolean_filter": opensearch_utils.get_filter(filter=kwargs.get("boolean_filter", []))
+    })
+    
+    if kwargs.get("hybrid", False) and results:            
         max_score = results[0][1]
         new_results = []
         for doc in results:
@@ -140,7 +150,7 @@ def get_lexical_similar_docs(**kwargs):
         search_results["hits"]["max_score"] = hits[0]["_score"]
         search_results["hits"]["hits"] = hits
         return search_results
-
+        
     query = opensearch_utils.get_query(
         query=kwargs["query"],
         minimum_should_match=kwargs.get("minimum_should_match", 0),
@@ -148,7 +158,7 @@ def get_lexical_similar_docs(**kwargs):
     )
     query["size"] = kwargs["k"]
 
-    print ("lexical search query: ")
+    print ("\nlexical search query: ")
     pprint (query)
 
     search_results = opensearch_utils.search_document(
@@ -191,6 +201,7 @@ def search_hybrid(**kwargs):
         vector_db=kwargs["vector_db"],
         query=kwargs["query"],
         k=kwargs.get("k", 5),
+        boolean_filter=kwargs.get("filter", []),
         hybrid=True
     )
     similar_docs_keyword = get_lexical_similar_docs(
@@ -382,6 +393,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             index_name=self.index_name,
             os_client=self.os_client,
             filter=self.filter,
+            minimum_should_match=self.minimum_should_match,
             fusion_algorithm=self.fusion_algorithm, # ["RRF", "simple_weighted"]
             ensemble_weights=self.ensemble_weights, # 시멘트 서치에 가중치 0.5 , 키워드 서치 가중치 0.5 부여.
             verbose=self.verbose
@@ -430,6 +442,19 @@ def show_chunk_stat(documents):
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     
     
@@ -438,19 +463,19 @@ def show_chunk_stat(documents):
 
 
 
-###########################################    
-### 1.2 [한국어 임베딩벡터 모델] SageMaker 임베딩 벡터 모델 KoSimCSE-roberta endpiont handler
-###########################################    
+# ###########################################    
+# ### 1.2 [한국어 임베딩벡터 모델] SageMaker 임베딩 벡터 모델 KoSimCSE-roberta endpiont handler
+# ###########################################    
 
-### SagemakerEndpointEmbeddingsJumpStart클래스는 SagemakerEndpointEmbeddings를 상속받아서 작성
+# ### SagemakerEndpointEmbeddingsJumpStart클래스는 SagemakerEndpointEmbeddings를 상속받아서 작성
 
-# 매개변수 (Parameters):
-# * texts: 임베딩을 생성할 텍스트의 리스트입니다.
-# * chunk_size: 한 번의 요청에 그룹화될 입력 텍스트의 수를 정의합니다. 만약 None이면, 클래스에 지정된 청크 크기를 사용합니다.
+# # 매개변수 (Parameters):
+# # * texts: 임베딩을 생성할 텍스트의 리스트입니다.
+# # * chunk_size: 한 번의 요청에 그룹화될 입력 텍스트의 수를 정의합니다. 만약 None이면, 클래스에 지정된 청크 크기를 사용합니다.
 
-# Returns:
-# * 각 텍스트에 대한 임베딩의 리스트를 반환
-###########################################    
+# # Returns:
+# # * 각 텍스트에 대한 임베딩의 리스트를 반환
+# ###########################################    
 
 
 
@@ -514,284 +539,284 @@ class KoSimCSERobertaContentHandler(EmbeddingsContentHandler):
         return emb    
     
     
-def opensearch_pretty_print_documents(response):
-    '''
-    OpenSearch 결과인 LIST 를 파싱하는 함수
-    '''
-    for doc, score in response:
-        print(f'\nScore: {score}')
-        print(f'Document Number: {doc.metadata["row"]}')
-
-        # Split the page content into lines
-        lines = doc.page_content.split("\n")
-
-        # Extract and print each piece of information if it exists
-        for line in lines:
-            split_line = line.split(": ")
-            if len(split_line) > 1:
-                print(f'{split_line[0]}: {split_line[1]}')
-
-        print("Metadata:")
-        print(f'Type: {doc.metadata["type"]}')
-        print(f'Source: {doc.metadata["source"]}')        
-                
-        print('-' * 50)
-    
-def opensearch_pretty_print_documents_wo_filter(response):
-    '''
-    OpenSearch 결과인 LIST 를 파싱하는 함수
-    '''
-    for doc, score in response:
-        print(f'\nScore: {score}')
-        print(f'Document Number: {doc.metadata["row"]}')
-
-        # Split the page content into lines
-        lines = doc.page_content.split("\n")
-
-        # Extract and print each piece of information if it exists
-        for line in lines:
-            split_line = line.split(": ")
-            if len(split_line) > 1:
-                print(f'{split_line[0]}: {split_line[1]}')
-                
-        print('-' * 50)
-
-    
-def get_embedding_model(boto3_bedrock, is_bedrock_embeddings, is_KoSimCSERobert, aws_region, endpont_name=None):
-    '''
-    Bedrock embeeding model or KoSimCSERobert model 가져오기
-    '''
-    if is_bedrock_embeddings:
-
-        # We will be using the Titan Embeddings Model to generate our Embeddings.
-        from langchain.embeddings import BedrockEmbeddings
-        # llm_emb = BedrockEmbeddings(client=boto3_bedrock)
-        llm_emb = BedrockEmbeddings(
-          client=boto3_bedrock,
-          model_id = "amazon.titan-embed-g1-text-02" # amazon.titan-e1t-medium, amazon.titan-embed-g1-text-02
-        )        
-        print("Bedrock Embeddings Model Loaded")
-    elif is_KoSimCSERobert:
-        LLMEmbHandler = KoSimCSERobertaContentHandler()
-        endpoint_name_emb = endpont_name
-        llm_emb = SagemakerEndpointEmbeddingsJumpStart(
-            endpoint_name=endpoint_name_emb,
-            region_name=aws_region,
-            content_handler=LLMEmbHandler,
-        )        
-        print("KoSimCSERobert Embeddings Model Loaded")
-    else:
-        llm_emb = None
-        print("No Embedding Model Selected")
-    
-    return llm_emb
-
-    
-############################################################    
-# OpenSearch Client
-############################################################    
-    
-
-
-def create_aws_opensearch_client(region: str, host: str, http_auth: Tuple[str, str]) -> OpenSearch:
-    '''
-    오픈서치 클라이언트를 제공함.
-    '''
-    aws_client = OpenSearch(
-        hosts = [{'host': host.replace("https://", ""), 'port': 443}],
-        http_auth = http_auth,
-        use_ssl = True,
-        verify_certs = True,
-        connection_class = RequestsHttpConnection
-    )
-    
-    return aws_client
-
-def create_index(aws_client, index_name, index_body):    
-    '''
-    인덱스 생성
-    '''
-    response = aws_client.indices.create(
-        index_name,
-        body=index_body
-    )
-    print('\nCreating index:')
-    print(response)
-
-    
-def check_if_index_exists(aws_client, index_name):
-    '''
-    인덱스가 존재하는지 확인
-    '''
-    exists = aws_client.indices.exists(index_name)
-    print(f"index_name={index_name}, exists={exists}")
-    return exists
-
-
-def add_doc(aws_client, index_name, document, id):
-    '''
-    # Add a document to the index.
-    '''
-    response = aws_client.index(
-        index = index_name,
-        body = document,
-        id = id,
-        refresh = True
-    )
-
-    print('\nAdding document:')
-    print(response)
-
-def search_document(aws_client, query, index_name):
-    response = aws_client.search(
-        body=query,
-        index=index_name
-    )
-    print('\nSearch results:')
-    # print(response)
-    return response
-    
-
-def delete_index(aws_client, index_name):
-    response = aws_client.indices.delete(
-        index = index_name
-    )
-
-    print('\nDeleting index:')
-    print(response)
-
-
-
-def generate_opensearch_AndQuery(question):
-    '''
-    주어진 앱력을 키워드로 분리하고 AND 조건으로 바꾸어 주는 쿼리 생성
-    '''
-    keywords = question.split(' ')
-    query = {
-        "query": {
-            "bool": {
-                "must": []
-            }
-        }
-    }
-    
-    for keyword in keywords:
-        query["query"]["bool"]["must"].append({
-            "match": {
-                "text": keyword
-            }
-        })
-    
-    # return query
-    return json.dumps(query, indent=2, ensure_ascii=False)
-
-
-# def parse_keyword_response(response, show_size=3):
+# def opensearch_pretty_print_documents(response):
 #     '''
-#     키워드 검색 결과를 보여 줌.
+#     OpenSearch 결과인 LIST 를 파싱하는 함수
 #     '''
-#     length = len(response['hits']['hits'])
-#     if length >= 1:
-#         print("# of searched docs: ", length)
-#         print(f"# of display: {show_size}")        
-#         print("---------------------")        
-#         for idx, doc in enumerate(response['hits']['hits']):
-#             print("_id in index: " , doc['_id'])            
-#             print(doc['_score'])            
-#             print(doc['_source']['text'])
-#             print("---------------------")
-#             if idx == show_size-1:
-#                 break
+#     for doc, score in response:
+#         print(f'\nScore: {score}')
+#         print(f'Document Number: {doc.metadata["row"]}')
+
+#         # Split the page content into lines
+#         lines = doc.page_content.split("\n")
+
+#         # Extract and print each piece of information if it exists
+#         for line in lines:
+#             split_line = line.split(": ")
+#             if len(split_line) > 1:
+#                 print(f'{split_line[0]}: {split_line[1]}')
+
+#         print("Metadata:")
+#         print(f'Type: {doc.metadata["type"]}')
+#         print(f'Source: {doc.metadata["source"]}')        
+                
+#         print('-' * 50)
+    
+# def opensearch_pretty_print_documents_wo_filter(response):
+#     '''
+#     OpenSearch 결과인 LIST 를 파싱하는 함수
+#     '''
+#     for doc, score in response:
+#         print(f'\nScore: {score}')
+#         print(f'Document Number: {doc.metadata["row"]}')
+
+#         # Split the page content into lines
+#         lines = doc.page_content.split("\n")
+
+#         # Extract and print each piece of information if it exists
+#         for line in lines:
+#             split_line = line.split(": ")
+#             if len(split_line) > 1:
+#                 print(f'{split_line[0]}: {split_line[1]}')
+                
+#         print('-' * 50)
+
+    
+# def get_embedding_model(boto3_bedrock, is_bedrock_embeddings, is_KoSimCSERobert, aws_region, endpont_name=None):
+#     '''
+#     Bedrock embeeding model or KoSimCSERobert model 가져오기
+#     '''
+#     if is_bedrock_embeddings:
+
+#         # We will be using the Titan Embeddings Model to generate our Embeddings.
+#         from langchain.embeddings import BedrockEmbeddings
+#         # llm_emb = BedrockEmbeddings(client=boto3_bedrock)
+#         llm_emb = BedrockEmbeddings(
+#           client=boto3_bedrock,
+#           model_id = "amazon.titan-embed-g1-text-02" # amazon.titan-e1t-medium, amazon.titan-embed-g1-text-02
+#         )        
+#         print("Bedrock Embeddings Model Loaded")
+#     elif is_KoSimCSERobert:
+#         LLMEmbHandler = KoSimCSERobertaContentHandler()
+#         endpoint_name_emb = endpont_name
+#         llm_emb = SagemakerEndpointEmbeddingsJumpStart(
+#             endpoint_name=endpoint_name_emb,
+#             region_name=aws_region,
+#             content_handler=LLMEmbHandler,
+#         )        
+#         print("KoSimCSERobert Embeddings Model Loaded")
 #     else:
-#         print("There is no response")
+#         llm_emb = None
+#         print("No Embedding Model Selected")
+    
+#     return llm_emb
+
+    
+# ############################################################    
+# # OpenSearch Client
+# ############################################################    
+    
+
+
+# def create_aws_opensearch_client(region: str, host: str, http_auth: Tuple[str, str]) -> OpenSearch:
+#     '''
+#     오픈서치 클라이언트를 제공함.
+#     '''
+#     aws_client = OpenSearch(
+#         hosts = [{'host': host.replace("https://", ""), 'port': 443}],
+#         http_auth = http_auth,
+#         use_ssl = True,
+#         verify_certs = True,
+#         connection_class = RequestsHttpConnection
+#     )
+    
+#     return aws_client
+
+# def create_index(aws_client, index_name, index_body):    
+#     '''
+#     인덱스 생성
+#     '''
+#     response = aws_client.indices.create(
+#         index_name,
+#         body=index_body
+#     )
+#     print('\nCreating index:')
+#     print(response)
+
+    
+# def check_if_index_exists(aws_client, index_name):
+#     '''
+#     인덱스가 존재하는지 확인
+#     '''
+#     exists = aws_client.indices.exists(index_name)
+#     print(f"index_name={index_name}, exists={exists}")
+#     return exists
+
+
+# def add_doc(aws_client, index_name, document, id):
+#     '''
+#     # Add a document to the index.
+#     '''
+#     response = aws_client.index(
+#         index = index_name,
+#         body = document,
+#         id = id,
+#         refresh = True
+#     )
+
+#     print('\nAdding document:')
+#     print(response)
+
+# def search_document(aws_client, query, index_name):
+#     response = aws_client.search(
+#         body=query,
+#         index=index_name
+#     )
+#     print('\nSearch results:')
+#     # print(response)
+#     return response
+    
+
+# def delete_index(aws_client, index_name):
+#     response = aws_client.indices.delete(
+#         index = index_name
+#     )
+
+#     print('\nDeleting index:')
+#     print(response)
+
+
+
+# def generate_opensearch_AndQuery(question):
+#     '''
+#     주어진 앱력을 키워드로 분리하고 AND 조건으로 바꾸어 주는 쿼리 생성
+#     '''
+#     keywords = question.split(' ')
+#     query = {
+#         "query": {
+#             "bool": {
+#                 "must": []
+#             }
+#         }
+#     }
+    
+#     for keyword in keywords:
+#         query["query"]["bool"]["must"].append({
+#             "match": {
+#                 "text": keyword
+#             }
+#         })
+    
+#     # return query
+#     return json.dumps(query, indent=2, ensure_ascii=False)
+
+
+# # def parse_keyword_response(response, show_size=3):
+# #     '''
+# #     키워드 검색 결과를 보여 줌.
+# #     '''
+# #     length = len(response['hits']['hits'])
+# #     if length >= 1:
+# #         print("# of searched docs: ", length)
+# #         print(f"# of display: {show_size}")        
+# #         print("---------------------")        
+# #         for idx, doc in enumerate(response['hits']['hits']):
+# #             print("_id in index: " , doc['_id'])            
+# #             print(doc['_score'])            
+# #             print(doc['_source']['text'])
+# #             print("---------------------")
+# #             if idx == show_size-1:
+# #                 break
+# #     else:
+# #         print("There is no response")
 
 
 
         
-###########################################    
-### Chatbot Functions
-###########################################    
+# ###########################################    
+# ### Chatbot Functions
+# ###########################################    
 
-# turn verbose to true to see the full logs and documents
-from langchain.chains import ConversationalRetrievalChain
-from langchain.schema import BaseMessage
-
-
-# We are also providing a different chat history retriever which outputs the history as a Claude chat (ie including the \n\n)
-_ROLE_MAP = {"human": "\n\nHuman: ", "ai": "\n\nAssistant: "}
-def _get_chat_history(chat_history):
-    buffer = ""
-    for dialogue_turn in chat_history:
-        if isinstance(dialogue_turn, BaseMessage):
-            role_prefix = _ROLE_MAP.get(dialogue_turn.type, f"{dialogue_turn.type}: ")
-            buffer += f"\n{role_prefix}{dialogue_turn.content}"
-        elif isinstance(dialogue_turn, tuple):
-            human = "\n\nHuman: " + dialogue_turn[0]
-            ai = "\n\nAssistant: " + dialogue_turn[1]
-            buffer += "\n" + "\n".join([human, ai])
-        else:
-            raise ValueError(
-                f"Unsupported chat history format: {type(dialogue_turn)}."
-                f" Full chat history: {chat_history} "
-            )
-    return buffer
+# # turn verbose to true to see the full logs and documents
+# from langchain.chains import ConversationalRetrievalChain
+# from langchain.schema import BaseMessage
 
 
-import ipywidgets as ipw
-from IPython.display import display, clear_output
-
-class ChatUX:
-    """ A chat UX using IPWidgets
-    """
-    def __init__(self, qa, retrievalChain = False):
-        self.qa = qa
-        self.name = None
-        self.b=None
-        self.retrievalChain = retrievalChain
-        self.out = ipw.Output()
-
-        if "ConversationChain" in str(type(self.qa)):
-            self.streaming = self.qa.llm.streaming
-        elif "ConversationalRetrievalChain" in str(type(self.qa)):
-            self.streaming = self.qa.combine_docs_chain.llm_chain.llm.streaming
-
-    def start_chat(self):
-        print("Starting chat bot")
-        display(self.out)
-        self.chat(None)
+# # We are also providing a different chat history retriever which outputs the history as a Claude chat (ie including the \n\n)
+# _ROLE_MAP = {"human": "\n\nHuman: ", "ai": "\n\nAssistant: "}
+# def _get_chat_history(chat_history):
+#     buffer = ""
+#     for dialogue_turn in chat_history:
+#         if isinstance(dialogue_turn, BaseMessage):
+#             role_prefix = _ROLE_MAP.get(dialogue_turn.type, f"{dialogue_turn.type}: ")
+#             buffer += f"\n{role_prefix}{dialogue_turn.content}"
+#         elif isinstance(dialogue_turn, tuple):
+#             human = "\n\nHuman: " + dialogue_turn[0]
+#             ai = "\n\nAssistant: " + dialogue_turn[1]
+#             buffer += "\n" + "\n".join([human, ai])
+#         else:
+#             raise ValueError(
+#                 f"Unsupported chat history format: {type(dialogue_turn)}."
+#                 f" Full chat history: {chat_history} "
+#             )
+#     return buffer
 
 
-    def chat(self, _):
-        if self.name is None:
-            prompt = ""
-        else: 
-            prompt = self.name.value
-        if 'q' == prompt or 'quit' == prompt or 'Q' == prompt:
-            print("Thank you , that was a nice chat !!")
-            return
-        elif len(prompt) > 0:
-            with self.out:
-                thinking = ipw.Label(value="Thinking...")
-                display(thinking)
-                try:
-                    if self.retrievalChain:
-                        result = self.qa.run({'question': prompt })
-                    else:
-                        result = self.qa.run({'input': prompt }) #, 'history':chat_history})
-                except:
-                    result = "No answer because some errors occurredr"
-                thinking.value=""
-                if self.streaming:
-                    response = f"AI:{result}"
-                else:
-                    print_ww(f"AI:{result}")
-                self.name.disabled = True
-                self.b.disabled = True
-                self.name = None
+# import ipywidgets as ipw
+# from IPython.display import display, clear_output
 
-        if self.name is None:
-            with self.out:
-                self.name = ipw.Text(description="You:", placeholder='q to quit')
-                self.b = ipw.Button(description="Send")
-                self.b.on_click(self.chat)
-                display(ipw.Box(children=(self.name, self.b)))
+# class ChatUX:
+#     """ A chat UX using IPWidgets
+#     """
+#     def __init__(self, qa, retrievalChain = False):
+#         self.qa = qa
+#         self.name = None
+#         self.b=None
+#         self.retrievalChain = retrievalChain
+#         self.out = ipw.Output()
+
+#         if "ConversationChain" in str(type(self.qa)):
+#             self.streaming = self.qa.llm.streaming
+#         elif "ConversationalRetrievalChain" in str(type(self.qa)):
+#             self.streaming = self.qa.combine_docs_chain.llm_chain.llm.streaming
+
+#     def start_chat(self):
+#         print("Starting chat bot")
+#         display(self.out)
+#         self.chat(None)
+
+
+#     def chat(self, _):
+#         if self.name is None:
+#             prompt = ""
+#         else: 
+#             prompt = self.name.value
+#         if 'q' == prompt or 'quit' == prompt or 'Q' == prompt:
+#             print("Thank you , that was a nice chat !!")
+#             return
+#         elif len(prompt) > 0:
+#             with self.out:
+#                 thinking = ipw.Label(value="Thinking...")
+#                 display(thinking)
+#                 try:
+#                     if self.retrievalChain:
+#                         result = self.qa.run({'question': prompt })
+#                     else:
+#                         result = self.qa.run({'input': prompt }) #, 'history':chat_history})
+#                 except:
+#                     result = "No answer because some errors occurredr"
+#                 thinking.value=""
+#                 if self.streaming:
+#                     response = f"AI:{result}"
+#                 else:
+#                     print_ww(f"AI:{result}")
+#                 self.name.disabled = True
+#                 self.b.disabled = True
+#                 self.name = None
+
+#         if self.name is None:
+#             with self.out:
+#                 self.name = ipw.Text(description="You:", placeholder='q to quit')
+#                 self.b = ipw.Button(description="Send")
+#                 self.b.on_click(self.chat)
+#                 display(ipw.Box(children=(self.name, self.b)))
