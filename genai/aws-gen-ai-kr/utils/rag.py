@@ -47,7 +47,10 @@ def run_RetrievalQA(**kwargs):
             search_type="similarity",
             search_kwargs={
                 "k": kwargs.get("k", 5),
-                "boolean_filter": kwargs.get("boolean_filter", {})
+                #"boolean_filter": kwargs.get("boolean_filter", {})
+                "boolean_filter": opensearch_utils.get_filter(
+                    filter=kwargs.get("boolean_filter", [])
+                ),
             }
         ),
         return_source_documents=True,
