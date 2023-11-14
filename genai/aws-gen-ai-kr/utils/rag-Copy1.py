@@ -12,6 +12,7 @@ from pprint import pprint
 from operator import itemgetter
 from itertools import chain as ch
 from typing import Any, Dict, List, Optional, List, Tuple
+
 from opensearchpy import OpenSearch, RequestsHttpConnection
 
 from utils import print_ww
@@ -24,10 +25,6 @@ from langchain.retrievers import AmazonKendraRetriever
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
-
-from functools import partial
-from multiprocessing.pool import ThreadPool
-pool = ThreadPool(processes=2)
 
 ############################################################
 # RetrievalQA (Langchain)
@@ -101,7 +98,7 @@ def run_RetrievalQA_kendra(query, llm_text, PROMPT, kendra_index_id, k, aws_regi
 
 # semantic search based
 def get_semantic_similar_docs(**kwargs):
-    
+
     search_types = ["approximate_search", "script_scoring", "painless_scripting"]
     space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
 
@@ -109,7 +106,7 @@ def get_semantic_similar_docs(**kwargs):
     assert "query" in kwargs, "Check your query"
     assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
     assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
-
+    
     results = kwargs["vector_db"].similarity_search_with_score(
             query=kwargs["query"],
             k=kwargs.get("k", 5),
@@ -120,7 +117,7 @@ def get_semantic_similar_docs(**kwargs):
             ),        
             # fetch_k=3,
         )
-
+    
     print ("\nsemantic search args: ")
     pprint ({
         "k": kwargs.get("k", 5),
@@ -128,8 +125,8 @@ def get_semantic_similar_docs(**kwargs):
         "space_type": kwargs.get("space_type", "l2"),
         "boolean_filter": opensearch_utils.get_filter(filter=kwargs.get("boolean_filter", []))
     })
-
-    if kwargs.get("hybrid", False) and results:
+    
+    if kwargs.get("hybrid", False) and results:            
         max_score = results[0][1]
         new_results = []
         for doc in results:
@@ -156,7 +153,7 @@ def get_lexical_similar_docs(**kwargs):
         search_results["hits"]["max_score"] = hits[0]["_score"]
         search_results["hits"]["hits"] = hits
         return search_results
-
+        
     query = opensearch_utils.get_query(
         query=kwargs["query"],
         minimum_should_match=kwargs.get("minimum_should_match", 0),
@@ -202,62 +199,24 @@ def search_hybrid(**kwargs):
     assert "os_client" in kwargs, "Check your os_client"
 
     verbose = kwargs.get("verbose", False)
-    async_mode = kwargs.get("async_mode", True)
-    
-    def do_sync():
-        
-        similar_docs_semantic = get_semantic_similar_docs(
-            vector_db=kwargs["vector_db"],
-            query=kwargs["query"],
-            k=kwargs.get("k", 5),
-            boolean_filter=kwargs.get("filter", []),
-            hybrid=True
-        )
-        
-        similar_docs_keyword = get_lexical_similar_docs(
-            query=kwargs["query"],
-            minimum_should_match=kwargs.get("minimum_should_match", 0),
-            filter=kwargs.get("filter", []),
-            index_name=kwargs["index_name"],
-            os_client=kwargs["os_client"],
-            k=kwargs.get("k", 5),
-            hybrid=True
-        )
-        
-        return similar_docs_semantic, similar_docs_keyword
-    
-    def do_async():
-    
-        semantic_search = partial(
-            get_semantic_similar_docs,
-            vector_db=kwargs["vector_db"],
-            query=kwargs["query"],
-            k=kwargs.get("k", 5),
-            boolean_filter=kwargs.get("filter", []),
-            hybrid=True
-        )
 
-        lexical_search = partial(
-            get_lexical_similar_docs,
-            query=kwargs["query"],
-            minimum_should_match=kwargs.get("minimum_should_match", 0),
-            filter=kwargs.get("filter", []),
-            index_name=kwargs["index_name"],
-            os_client=kwargs["os_client"],
-            k=kwargs.get("k", 5),
-            hybrid=True
-        )    
-        semantic_pool = pool.apply_async(semantic_search,)
-        lexical_pool = pool.apply_async(lexical_search,)
-        similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
-        
-        return similar_docs_semantic, similar_docs_keyword
-    
-    if async_mode:
-        similar_docs_semantic, similar_docs_keyword = do_async()
-    else:
-        similar_docs_semantic, similar_docs_keyword = do_sync()
-    
+    similar_docs_semantic = get_semantic_similar_docs(
+        vector_db=kwargs["vector_db"],
+        query=kwargs["query"],
+        k=kwargs.get("k", 5),
+        boolean_filter=kwargs.get("filter", []),
+        hybrid=True
+    )
+    similar_docs_keyword = get_lexical_similar_docs(
+        query=kwargs["query"],
+        minimum_should_match=kwargs.get("minimum_should_match", 0),
+        filter=kwargs.get("filter", []),
+        index_name=kwargs["index_name"],
+        os_client=kwargs["os_client"],
+        k=kwargs.get("k", 5),
+        hybrid=True
+    )
+
     similar_docs_ensemble = get_ensemble_results(
         doc_lists=[similar_docs_semantic, similar_docs_keyword],
         weights=kwargs.get("ensemble_weights", [.5, .5]),
@@ -267,12 +226,6 @@ def search_hybrid(**kwargs):
     )
 
     if verbose:
-        
-        print("##############################")
-        print("async_mode")
-        print("##############################")
-        print(async_mode)
-        
         print("##############################")
         print("similar_docs_semantic")
         print("##############################")
@@ -417,7 +370,6 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     fusion_algorithm: str
     ensemble_weights: List
     verbose = False
-    async_mode = True
 
     def update_search_params(self, **kwargs):
 
@@ -428,7 +380,6 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.fusion_algorithm = kwargs.get("fusion_algorithm", self.fusion_algorithm)
         self.ensemble_weights = kwargs.get("ensemble_weights", self.ensemble_weights)
         self.verbose = kwargs.get("verbose", self.verbose)
-        self.async_mode = kwargs.get("async_mode", True)
 
     def _reset_search_params(self, ):
 
@@ -448,10 +399,9 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             minimum_should_match=self.minimum_should_match,
             fusion_algorithm=self.fusion_algorithm, # ["RRF", "simple_weighted"]
             ensemble_weights=self.ensemble_weights, # 시멘트 서치에 가중치 0.5 , 키워드 서치 가중치 0.5 부여.
-            async_mode=self.async_mode,
             verbose=self.verbose
         )
-        
+
         #self._reset_search_params()
 
         return search_hybrid_result

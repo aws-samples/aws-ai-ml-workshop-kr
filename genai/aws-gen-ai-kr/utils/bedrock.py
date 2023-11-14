@@ -91,7 +91,8 @@ class bedrock_info():
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",
         "Titan-Embeddings-G1": "amazon.titan-embed-text-v1",
-        "Titan-Text-G1": "TBD"
+        "Titan-Text-G1": "TBD",
+        "Llama2-13b-Chat": "meta.llama2-13b-chat-v1"
     }
 
     @classmethod
