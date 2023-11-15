@@ -90,15 +90,24 @@ class bedrock_info():
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",
+        "Command-Light": "cohere.command-light-text-v14",
+        "Cohere-Embeddings-En": "cohere.embed-english-v3",
+        "Cohere-Embeddings-Multilingual": "cohere.embed-multilingual-v3",
         "Titan-Embeddings-G1": "amazon.titan-embed-text-v1",
-        "Titan-Text-G1": "TBD",
+        "Titan-Text-G1": "amazon.titan-text-express-v1",
+        "Titan-Text-G1-Light": "amazon.titan-text-lite-v1",
         "Llama2-13b-Chat": "meta.llama2-13b-chat-v1"
     }
 
     @classmethod
-    def get_list_fm_models(cls, ):
+    def get_list_fm_models(cls, verbose=False):
 
-        return cls._BEDROCK_MODEL_INFO
+        if verbose:
+            bedrock = boto3.client(service_name='bedrock')
+            model_list = bedrock.list_foundation_models()
+            return model_list["modelSummaries"]
+        else:
+            return cls._BEDROCK_MODEL_INFO
 
     @classmethod
     def get_model_id(cls, model_name):
