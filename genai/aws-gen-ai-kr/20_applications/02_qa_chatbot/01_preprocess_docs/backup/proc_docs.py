@@ -2,6 +2,84 @@ from termcolor import colored
 from IPython.core.display import display, HTML
 
 from langchain.docstore.document import Document
+
+class LayoutPDFReader_Custom:
+    '''
+    sections = layout_pdf_reader.doc.sections()
+    i = 2
+    print(sections[i])
+    print("title: ", sections[i].title)
+    print("tag: ", sections[i].tag)
+    print("parent: ", sections[i].parent)
+    print("parent title: ", sections[i].parent.title)
+    print("children: ", sections[i].children)
+    print("children: ", sections[i].children[0].tag)
+    print("children sentences: ", sections[i].children[0].sentences)
+    print("chunk: ", sections[i].chunks())
+    # print("chunk title: ", sections[i].chunks()[0].title)
+
+    # sections[2].to_context_text()
+    display(HTML(sections[i].to_html(include_children=True, recurse=True)))
+    '''
+    def __init__(self, doc):
+        self.doc = doc
+        self.chunk_size = len(doc.chunks())
+        self.section_size = len(doc.sections())
+        self.table_size = len(doc.tables())        
+ 
+
+
+    def show_chunk_info(self, show_size=5):
+        for idx, chunk in enumerate(self.doc.chunks()):
+            print(colored(f"To_context_text {idx}:\n {chunk.to_context_text()} ", "green"))
+            print(colored(f"To_text {idx}:\n {chunk.to_text()} ", "red"))
+            print(colored(f"Tag {idx}:\n {chunk.tag} ", "red"))
+
+            print("\n")
+
+            if idx == (show_size -1):
+                break
+
+    def create_document_with_chunk(self):
+        '''
+        chunk 와 메타를 langchain Document 오브젝트로 생성
+        '''
+        doc_list = []
+        for idx, chunk in enumerate(self.doc.chunks()):
+            doc=Document(
+                page_content= chunk.to_text(),
+                metadata={"tag": chunk.tag,
+                          "row" : idx,
+                         }
+            )
+            doc_list.append(doc)
+            
+        return doc_list
+                
+                
+    def show_section_info(self, show_size=5):
+        for idx, section in enumerate(self.doc.sections()):
+            print(colored(f"section title: {idx}:\n {section.title} ", "green"))
+            # use include_children=True and recurse=True to fully expand the section. 
+            # include_children only returns at one sublevel of children whereas recurse goes through all the descendants
+#            display(HTML(section.to_html(include_children=True, recurse=True)))
+            display(HTML(section.to_html(include_children=True)))            
+            # display(HTML(section.to_html(include_children=True, recurse=True)))
+#            display(HTML(section.to_html()))            
+
+            if idx == (show_size -1):
+                break
+                
+#     def show_table_info(self, show_size=5):
+#         for idx, table in enumerate(doc.tables()):
+#             print(colored(f"table name: {idx}:\n {table.name} ", "green"))
+#             display(HTML(table.to_html(include_children=True, recurse=True)))
+#             # print(f"table name: {idx}:\n",  HTML(table.to_html()) )            
+#             print(colored(f"table name: {idx}:\n {table.sentences} ", "blue"))
+
+#             if idx == (show_size -1):
+#                 break
+
 from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
 
 def search_hybrid(**kwargs):
@@ -148,44 +226,4 @@ def get_parameter(boto3_clinet, parameter_name):
     except Exception as e:
         print('Error retrieving parameter:', str(e))
 
-
-############################################
-# JSON Loader Functions
-############################################
-
-from langchain.document_loaders import JSONLoader
-
-# Define the metadata extraction function.
-def metadata_func(record: dict, metadata: dict) -> dict:
-    metadata["title"] = record.get("title")
-    metadata["url"] = record.get("url")
-    metadata["project"] = record.get("project")    
-    metadata["last_updated"] = record.get("last_updated")        
-
-    if "source" in metadata:
-        source = metadata["source"].split("/")[-1]
-        metadata["source"] = source
-    
-
-    return metadata
-
-
-def get_load_json(file_path):
-    loader = JSONLoader(
-        file_path= file_path,
-        jq_schema='.sections[]',
-        content_key="content",
-        metadata_func=metadata_func
-    )
-
-    data = loader.load()
-    
-    return data
-
-def show_doc_json(data, file_path):
-    file_name = file_path.split("/")[-1]    
-    print("### File name: ", file_name)
-    print("### of document: ", len(data))
-    print("### The first doc")
-
-    print(data[0])        
+        
