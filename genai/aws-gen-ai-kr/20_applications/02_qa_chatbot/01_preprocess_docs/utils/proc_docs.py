@@ -162,7 +162,7 @@ def opensearch_pretty_print_documents(response):
     '''
     for doc, score in response:
         print(f'\nScore: {score}')
-        print(f'Document Number: {doc.metadata["row"]}')
+        # print(f'Document Number: {doc.metadata["row"]}')
 
         # Split the page content into lines
         lines = doc.page_content.split("\n")
