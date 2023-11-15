@@ -6,6 +6,7 @@
 
 import json
 import copy
+import boto3
 import numpy as np
 import pandas as pd
 from pprint import pprint
@@ -50,7 +51,6 @@ def run_RetrievalQA(**kwargs):
             search_type="similarity",
             search_kwargs={
                 "k": kwargs.get("k", 5),
-                #"boolean_filter": kwargs.get("boolean_filter", {})
                 "boolean_filter": opensearch_utils.get_filter(
                     filter=kwargs.get("boolean_filter", [])
                 ),
@@ -193,6 +193,34 @@ def get_lexical_similar_docs(**kwargs):
 
     return results
 
+def get_rerank_docs(**kwargs):
+
+    assert "reranker_endpoint_name" in kwargs, "Check your reranker_endpoint_name"
+    assert "k" in kwargs, "Check your k"
+
+    runtime_client = boto3.Session().client('sagemaker-runtime')
+
+    contexts, query, rerank_queries = kwargs["context"], kwargs["query"], {"inputs":[]}
+    rerank_queries["inputs"] = [{"text": query, "text_pair": context.page_content} for context, score in contexts]
+    rerank_queries = json.dumps(rerank_queries)
+    
+    response = runtime_client.invoke_endpoint(
+        EndpointName=kwargs["reranker_endpoint_name"],
+        ContentType="application/json",
+        Accept="application/json",
+        Body=rerank_queries
+    )
+    outs = json.loads(response['Body'].read().decode()) ## for json
+    
+    rerank_contexts = [(contexts[idx][0], out["score"]) for idx, out in enumerate(outs)]
+    rerank_contexts = sorted(
+        rerank_contexts,
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    return rerank_contexts[:kwargs["k"]]
+
 # hybrid (lexical + semantic) search based
 def search_hybrid(**kwargs):
 
@@ -203,36 +231,38 @@ def search_hybrid(**kwargs):
 
     verbose = kwargs.get("verbose", False)
     async_mode = kwargs.get("async_mode", True)
-    
+    reranker = kwargs.get("reranker", False)
+
     def do_sync():
-        
+
         similar_docs_semantic = get_semantic_similar_docs(
             vector_db=kwargs["vector_db"],
             query=kwargs["query"],
-            k=kwargs.get("k", 5),
+            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
             boolean_filter=kwargs.get("filter", []),
             hybrid=True
         )
-        
+
         similar_docs_keyword = get_lexical_similar_docs(
             query=kwargs["query"],
             minimum_should_match=kwargs.get("minimum_should_match", 0),
             filter=kwargs.get("filter", []),
             index_name=kwargs["index_name"],
             os_client=kwargs["os_client"],
-            k=kwargs.get("k", 5),
+            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
             hybrid=True
         )
-        
+
         return similar_docs_semantic, similar_docs_keyword
-    
+
     def do_async():
-    
+
         semantic_search = partial(
             get_semantic_similar_docs,
             vector_db=kwargs["vector_db"],
             query=kwargs["query"],
-            k=kwargs.get("k", 5),
+            #k=kwargs.get("k", 5),
+            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
             boolean_filter=kwargs.get("filter", []),
             hybrid=True
         )
@@ -244,35 +274,45 @@ def search_hybrid(**kwargs):
             filter=kwargs.get("filter", []),
             index_name=kwargs["index_name"],
             os_client=kwargs["os_client"],
-            k=kwargs.get("k", 5),
+            #k=kwargs.get("k", 5),
+            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
             hybrid=True
-        )    
+        )
         semantic_pool = pool.apply_async(semantic_search,)
         lexical_pool = pool.apply_async(lexical_search,)
         similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
-        
+
         return similar_docs_semantic, similar_docs_keyword
-    
+
     if async_mode:
         similar_docs_semantic, similar_docs_keyword = do_async()
     else:
         similar_docs_semantic, similar_docs_keyword = do_sync()
-    
-    similar_docs_ensemble = get_ensemble_results(
+
+    similar_docs = get_ensemble_results(
         doc_lists=[similar_docs_semantic, similar_docs_keyword],
         weights=kwargs.get("ensemble_weights", [.5, .5]),
         algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
         c=60,
-        k=kwargs.get("k", 5)
+        k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
     )
+    
+    if reranker:
+        reranker_endpoint_name = kwargs["reranker_endpoint_name"]
+        similar_docs = get_rerank_docs(
+            query=kwargs["query"],
+            context=similar_docs,
+            k=kwargs.get("k", 5),
+            reranker_endpoint_name=reranker_endpoint_name,
+        )
 
     if verbose:
-        
+
         print("##############################")
         print("async_mode")
         print("##############################")
         print(async_mode)
-        
+
         print("##############################")
         print("similar_docs_semantic")
         print("##############################")
@@ -284,13 +324,13 @@ def search_hybrid(**kwargs):
         print(similar_docs_keyword)
 
         print("##############################")
-        print("similar_docs_ensemble")
+        print("similar_docs")
         print("##############################")
-        print(similar_docs_ensemble)
+        print(similar_docs)
 
-    similar_docs_ensemble = list(map(lambda x:x[0], similar_docs_ensemble))
+    similar_docs = list(map(lambda x:x[0], similar_docs))
 
-    return similar_docs_ensemble
+    return similar_docs
 
 # Score fusion and re-rank (lexical + semantic)
 def get_ensemble_results(doc_lists: List[List[Document]], weights, algorithm="RRF", c=60, k=5) -> List[Document]:
@@ -418,6 +458,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     ensemble_weights: List
     verbose = False
     async_mode = True
+    reranker = False
+    reranker_endpoint_name = ""
 
     def update_search_params(self, **kwargs):
 
@@ -429,6 +471,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.ensemble_weights = kwargs.get("ensemble_weights", self.ensemble_weights)
         self.verbose = kwargs.get("verbose", self.verbose)
         self.async_mode = kwargs.get("async_mode", True)
+        self.reranker = kwargs.get("reranker", False)
+        self.reranker_endpoint_name = kwargs.get("reranker_endpoint_name", self.reranker_endpoint_name)
 
     def _reset_search_params(self, ):
 
@@ -449,9 +493,10 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             fusion_algorithm=self.fusion_algorithm, # ["RRF", "simple_weighted"]
             ensemble_weights=self.ensemble_weights, # 시멘트 서치에 가중치 0.5 , 키워드 서치 가중치 0.5 부여.
             async_mode=self.async_mode,
+            reranker=self.reranker,
+            reranker_endpoint_name=self.reranker_endpoint_name,
             verbose=self.verbose
         )
-        
         #self._reset_search_params()
 
         return search_hybrid_result
