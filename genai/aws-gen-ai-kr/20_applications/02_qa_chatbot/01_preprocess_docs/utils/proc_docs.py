@@ -88,8 +88,12 @@ def opensearch_pretty_print_documents(response):
 
         # Split the page content into lines
         lines = doc.page_content.split("\n")
-
+        metadata = doc.metadata
         print(lines)
+        print(metadata)        
+        
+        
+        
         # print(doc.metadata['origin'])    
 
         # Extract and print each piece of information if it exists
