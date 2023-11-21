@@ -212,6 +212,8 @@ def get_rerank_docs(**kwargs):
     )
     outs = json.loads(response['Body'].read().decode()) ## for json
     
+    print (outs)
+    
     rerank_contexts = [(contexts[idx][0], out["score"]) for idx, out in enumerate(outs)]
     rerank_contexts = sorted(
         rerank_contexts,
@@ -296,7 +298,8 @@ def search_hybrid(**kwargs):
         c=60,
         k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
     )
-    
+    print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
+
     if reranker:
         reranker_endpoint_name = kwargs["reranker_endpoint_name"]
         similar_docs = get_rerank_docs(
@@ -350,6 +353,7 @@ def get_ensemble_results(doc_lists: List[List[Document]], weights, algorithm="RR
     # Calculate RRF scores for each document
     for doc_list, weight in zip(doc_lists, weights):
         for rank, (doc, score) in enumerate(doc_list, start=1):
+            print (rank, doc)
             if algorithm == "RRF": # RRF (Reciprocal Rank Fusion)
                 score = weight * (1 / (rank + c))
             elif algorithm == "simple_weighted":
@@ -369,7 +373,7 @@ def get_ensemble_results(doc_lists: List[List[Document]], weights, algorithm="RR
     sorted_docs = [
         (page_content_to_doc_map[page_content], hybrid_score) for (page_content, hybrid_score) in sorted_documents
     ]
-
+    
     return sorted_docs[:k]
 
 #################################################################
