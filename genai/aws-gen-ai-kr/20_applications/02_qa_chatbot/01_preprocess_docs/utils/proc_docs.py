@@ -177,7 +177,8 @@ def metadata_func(record: dict, metadata: dict) -> dict:
 def get_load_json(file_path):
     loader = JSONLoader(
         file_path= file_path,
-        jq_schema='.sections[]',
+#        jq_schema='.sections[]',
+        jq_schema='.[]',        
         content_key="content",
         metadata_func=metadata_func
     )
