@@ -121,13 +121,13 @@ def get_semantic_similar_docs(**kwargs):
             # fetch_k=3,
         )
 
-    print ("\nsemantic search args: ")
-    pprint ({
-        "k": kwargs.get("k", 5),
-        "search_type": kwargs.get("search_type", "approximate_search"),
-        "space_type": kwargs.get("space_type", "l2"),
-        "boolean_filter": opensearch_utils.get_filter(filter=kwargs.get("boolean_filter", []))
-    })
+    # print ("\nsemantic search args: ")
+    # pprint ({
+    #     "k": kwargs.get("k", 5),
+    #     "search_type": kwargs.get("search_type", "approximate_search"),
+    #     "space_type": kwargs.get("space_type", "l2"),
+    #     "boolean_filter": opensearch_utils.get_filter(filter=kwargs.get("boolean_filter", []))
+    # })
 
     if kwargs.get("hybrid", False) and results:
         max_score = results[0][1]
@@ -164,8 +164,8 @@ def get_lexical_similar_docs(**kwargs):
     )
     query["size"] = kwargs["k"]
 
-    print ("\nlexical search query: ")
-    pprint (query)
+    # print ("\nlexical search query: ")
+    # pprint (query)
 
     search_results = opensearch_utils.search_document(
         os_client=kwargs["os_client"],
@@ -211,9 +211,7 @@ def get_rerank_docs(**kwargs):
         Body=rerank_queries
     )
     outs = json.loads(response['Body'].read().decode()) ## for json
-    
-    print (outs)
-    
+
     rerank_contexts = [(contexts[idx][0], out["score"]) for idx, out in enumerate(outs)]
     rerank_contexts = sorted(
         rerank_contexts,
@@ -298,7 +296,7 @@ def search_hybrid(**kwargs):
         c=60,
         k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
     )
-    print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
+    #print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
 
     if reranker:
         reranker_endpoint_name = kwargs["reranker_endpoint_name"]
@@ -315,6 +313,11 @@ def search_hybrid(**kwargs):
         print("async_mode")
         print("##############################")
         print(async_mode)
+        
+        print("##############################")
+        print("reranker")
+        print("##############################")
+        print(reranker)
 
         print("##############################")
         print("similar_docs_semantic")
@@ -353,7 +356,6 @@ def get_ensemble_results(doc_lists: List[List[Document]], weights, algorithm="RR
     # Calculate RRF scores for each document
     for doc_list, weight in zip(doc_lists, weights):
         for rank, (doc, score) in enumerate(doc_list, start=1):
-            print (rank, doc)
             if algorithm == "RRF": # RRF (Reciprocal Rank Fusion)
                 score = weight * (1 / (rank + c))
             elif algorithm == "simple_weighted":
