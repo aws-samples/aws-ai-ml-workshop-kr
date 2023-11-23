@@ -21,14 +21,42 @@ from utils.opensearch import opensearch_utils
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
 from langchain.schema import BaseRetriever
+from langchain.prompts import PromptTemplate
 from langchain.retrievers import AmazonKendraRetriever
+from langchain.schema.output_parser import StrOutputParser
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
 
+import threading
 from functools import partial
 from multiprocessing.pool import ThreadPool
 pool = ThreadPool(processes=2)
+rag_fusion_pool = ThreadPool(processes=5)
+
+############################################################
+# Prompt repo
+############################################################
+class prompt_repo():
+    
+    @classmethod
+    def get_rag_fusion(cls, ):
+        
+        prompt = """
+        \n\nHuman:
+        You are a helpful assistant that generates multiple search queries based on a single input query.
+        Generate multiple search queries related to: {query}
+        OUTPUT (3 queries):
+        \n\nAssistant:"""
+
+        prompt_template = PromptTemplate(
+            template=prompt, input_variables=["query"]
+        )
+        
+        return prompt_template
+
+
+
 
 ############################################################
 # RetrievalQA (Langchain)
@@ -102,6 +130,7 @@ def run_RetrievalQA_kendra(query, llm_text, PROMPT, kendra_index_id, k, aws_regi
 # semantic search based
 def get_semantic_similar_docs(**kwargs):
     
+    #print(f"Thread={threading.get_ident()}, Process={os.getpid()}")
     search_types = ["approximate_search", "script_scoring", "painless_scripting"]
     space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
 
@@ -111,15 +140,14 @@ def get_semantic_similar_docs(**kwargs):
     assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
 
     results = kwargs["vector_db"].similarity_search_with_score(
-            query=kwargs["query"],
-            k=kwargs.get("k", 5),
-            search_type=kwargs.get("search_type", "approximate_search"),
-            space_type=kwargs.get("space_type", "l2"),      
-            boolean_filter=opensearch_utils.get_filter(
-                filter=kwargs.get("boolean_filter", [])
-            ),        
-            # fetch_k=3,
-        )
+        query=kwargs["query"],
+        k=kwargs.get("k", 5),
+        search_type=kwargs.get("search_type", "approximate_search"),
+        space_type=kwargs.get("space_type", "l2"),
+        boolean_filter=opensearch_utils.get_filter(
+            filter=kwargs.get("boolean_filter", [])
+        ),
+    )
 
     # print ("\nsemantic search args: ")
     # pprint ({
@@ -193,6 +221,62 @@ def get_lexical_similar_docs(**kwargs):
 
     return results
 
+# rag-fusion based
+def get_rag_fusion_similar_docs(**kwargs):
+    
+    search_types = ["approximate_search", "script_scoring", "painless_scripting"]
+    space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
+    
+    assert "vector_db" in kwargs, "Check your vector_db"
+    assert "query" in kwargs, "Check your query"
+    assert "query_transformation_prompt" in kwargs, "Check your query_transformation_prompt"
+    assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
+    assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
+    assert kwargs.get("llm_text", None) != None, "Check your llm_text"
+    
+    llm_text = kwargs["llm_text"]
+    query_augmentation_size = kwargs["query_augmentation_size"]
+    query_transformation_prompt = kwargs["query_transformation_prompt"]
+    
+    generate_queries = (
+        {"query": itemgetter("query")}
+        | query_transformation_prompt
+        | llm_text
+        | StrOutputParser()
+        | (lambda x: x.split("\n"))
+    )
+    rag_fusion_query = generate_queries.invoke({"query": kwargs["query"]})
+    rag_fusion_query = [query for query in rag_fusion_query if query != ""]
+    if len(rag_fusion_query) > query_augmentation_size: rag_fusion_query = rag_fusion_query[-query_augmentation_size:]
+    rag_fusion_query.insert(0, kwargs["query"])
+    
+    if kwargs["verbose"]:
+        print ("===== RAG-Fusion Queries =====")
+        print (rag_fusion_query)
+        
+    tasks = []
+    for query in rag_fusion_query:
+        semantic_search = partial(
+            get_semantic_similar_docs,
+            vector_db=kwargs["vector_db"],
+            query=query,
+            k=kwargs["k"],
+            boolean_filter=kwargs.get("filter", []),
+            hybrid=True
+        )
+        tasks.append(rag_fusion_pool.apply_async(semantic_search,))    
+    rag_fusion_docs = [task.get() for task in tasks]
+        
+    similar_docs = get_ensemble_results(
+        doc_lists=rag_fusion_docs,
+        weights=[1/(query_augmentation_size+1)]*(query_augmentation_size+1), #query_augmentation_size + original query
+        algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+        c=60,
+        k=kwargs["k"],
+    )
+        
+    return similar_docs
+
 def get_rerank_docs(**kwargs):
 
     assert "reranker_endpoint_name" in kwargs, "Check your reranker_endpoint_name"
@@ -203,7 +287,7 @@ def get_rerank_docs(**kwargs):
     contexts, query, rerank_queries = kwargs["context"], kwargs["query"], {"inputs":[]}
     rerank_queries["inputs"] = [{"text": query, "text_pair": context.page_content} for context, score in contexts]
     rerank_queries = json.dumps(rerank_queries)
-    
+
     response = runtime_client.invoke_endpoint(
         EndpointName=kwargs["reranker_endpoint_name"],
         ContentType="application/json",
@@ -232,16 +316,31 @@ def search_hybrid(**kwargs):
     verbose = kwargs.get("verbose", False)
     async_mode = kwargs.get("async_mode", True)
     reranker = kwargs.get("reranker", False)
-
+    rag_fusion = kwargs.get("rag_fusion", False)
+    
     def do_sync():
-
-        similar_docs_semantic = get_semantic_similar_docs(
-            vector_db=kwargs["vector_db"],
-            query=kwargs["query"],
-            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-            boolean_filter=kwargs.get("filter", []),
-            hybrid=True
-        )
+        
+        if rag_fusion:
+            similar_docs_semantic = get_rag_fusion_similar_docs(
+                vector_db=kwargs["vector_db"],
+                query=kwargs["query"],
+                k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                boolean_filter=kwargs.get("filter", []),
+                hybrid=True,
+                llm_text=kwargs.get("llm_text", None),
+                query_augmentation_size=kwargs["query_augmentation_size"],
+                query_transformation_prompt=kwargs.get("query_transformation_prompt", None),
+                fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+                verbose=kwargs.get("verbose", False),
+            )
+        else:
+            similar_docs_semantic = get_semantic_similar_docs(
+                vector_db=kwargs["vector_db"],
+                query=kwargs["query"],
+                k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                boolean_filter=kwargs.get("filter", []),
+                hybrid=True
+            )
 
         similar_docs_keyword = get_lexical_similar_docs(
             query=kwargs["query"],
@@ -256,16 +355,30 @@ def search_hybrid(**kwargs):
         return similar_docs_semantic, similar_docs_keyword
 
     def do_async():
-
-        semantic_search = partial(
-            get_semantic_similar_docs,
-            vector_db=kwargs["vector_db"],
-            query=kwargs["query"],
-            #k=kwargs.get("k", 5),
-            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-            boolean_filter=kwargs.get("filter", []),
-            hybrid=True
-        )
+                
+        if rag_fusion:            
+            semantic_search = partial(
+                get_rag_fusion_similar_docs,
+                vector_db=kwargs["vector_db"],
+                query=kwargs["query"],
+                k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                boolean_filter=kwargs.get("filter", []),
+                hybrid=True,
+                llm_text=kwargs.get("llm_text", None),
+                query_augmentation_size=kwargs["query_augmentation_size"],
+                query_transformation_prompt=kwargs.get("query_transformation_prompt", None),
+                fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+                verbose=kwargs.get("verbose", False),
+            )
+        else:
+            semantic_search = partial(
+                get_semantic_similar_docs,
+                vector_db=kwargs["vector_db"],
+                query=kwargs["query"],
+                k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                boolean_filter=kwargs.get("filter", []),
+                hybrid=True
+            )
 
         lexical_search = partial(
             get_lexical_similar_docs,
@@ -274,7 +387,6 @@ def search_hybrid(**kwargs):
             filter=kwargs.get("filter", []),
             index_name=kwargs["index_name"],
             os_client=kwargs["os_client"],
-            #k=kwargs.get("k", 5),
             k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
             hybrid=True
         )
@@ -313,11 +425,16 @@ def search_hybrid(**kwargs):
         print("async_mode")
         print("##############################")
         print(async_mode)
-        
+
         print("##############################")
         print("reranker")
         print("##############################")
         print(reranker)
+        
+        print("##############################")
+        print("rag_fusion")
+        print("##############################")
+        print(rag_fusion)
 
         print("##############################")
         print("similar_docs_semantic")
@@ -351,8 +468,8 @@ def get_ensemble_results(doc_lists: List[List[Document]], weights, algorithm="RR
             all_documents.add(doc.page_content)
 
     # Initialize the score dictionary for each document
-    hybrid_score_dic = {doc: 0.0 for doc in all_documents}
-
+    hybrid_score_dic = {doc: 0.0 for doc in all_documents}    
+    
     # Calculate RRF scores for each document
     for doc_list, weight in zip(doc_lists, weights):
         for rank, (doc, score) in enumerate(doc_list, start=1):
@@ -466,7 +583,11 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     async_mode = True
     reranker = False
     reranker_endpoint_name = ""
-
+    rag_fusion = False
+    query_augmentation_size: int
+    rag_fusion_prompt = prompt_repo.get_rag_fusion()
+    llm_text: Any 
+            
     def update_search_params(self, **kwargs):
 
         self.k = kwargs.get("k", 3)
@@ -479,7 +600,10 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.async_mode = kwargs.get("async_mode", True)
         self.reranker = kwargs.get("reranker", False)
         self.reranker_endpoint_name = kwargs.get("reranker_endpoint_name", self.reranker_endpoint_name)
-
+        self.rag_fusion = kwargs.get("rag_fusion", False)
+        self.query_augmentation_size = kwargs.get("query_augmentation_size", 3)
+        self.llm_text = kwargs.get("llm_text", None)
+        
     def _reset_search_params(self, ):
 
         self.k = 3
@@ -487,7 +611,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.filter = []
 
     def _get_relevant_documents(self, query: str, *, run_manager: CallbackManagerForRetrieverRun) -> List[Document]:
-
+        
         search_hybrid_result = search_hybrid(
             query=query,
             vector_db=self.vector_db,
@@ -501,6 +625,10 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             async_mode=self.async_mode,
             reranker=self.reranker,
             reranker_endpoint_name=self.reranker_endpoint_name,
+            rag_fusion=self.rag_fusion,
+            query_augmentation_size=self.query_augmentation_size,
+            query_transformation_prompt=self.rag_fusion_prompt if self.rag_fusion else "123",
+            llm_text=self.llm_text,
             verbose=self.verbose
         )
         #self._reset_search_params()
