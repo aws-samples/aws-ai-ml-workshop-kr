@@ -80,7 +80,8 @@ class LayoutPDFReader_Custom:
 #             if idx == (show_size -1):
 #                 break
 
-from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
+#from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
+from utils.rag import retriever_utils
 
 def search_hybrid(**kwargs):
     
@@ -102,7 +103,7 @@ def search_hybrid(**kwargs):
     
     
     if (kwargs["Semantic_Search"] == True) | (kwargs["Hybrid_Search"] == True):
-        similar_docs_semantic = get_semantic_similar_docs(
+        similar_docs_semantic = retriever_utils.get_semantic_similar_docs(
             vector_db=kwargs["vector_db"],
             query=kwargs["query"],
             k=kwargs.get("k", 5),
@@ -117,7 +118,7 @@ def search_hybrid(**kwargs):
 
         
     if (kwargs["Lexical_Search"] == True)  | (kwargs["Hybrid_Search"] == True):
-        similar_docs_keyword = get_lexical_similar_docs(
+        similar_docs_keyword = retriever_utils.get_lexical_similar_docs(
             query=kwargs["query"],
             minimum_should_match=kwargs.get("minimum_should_match", 50),
 #            filter=kwargs.get("filter", []),
@@ -136,7 +137,7 @@ def search_hybrid(**kwargs):
         
 
     if kwargs["Hybrid_Search"] == True:
-        similar_docs_ensemble = get_ensemble_results(
+        similar_docs_ensemble = retriever_utils.get_ensemble_results(
             doc_lists = [similar_docs_semantic, similar_docs_keyword],
             weights = kwargs.get("ensemble_weights", [.5, .5]),
             algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
