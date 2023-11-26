@@ -25,6 +25,7 @@ from langchain.prompts import PromptTemplate
 from langchain.retrievers import AmazonKendraRetriever
 from langchain.schema.output_parser import StrOutputParser
 from langchain.embeddings import SagemakerEndpointEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
 
@@ -129,6 +130,17 @@ class retriever_utils():
     runtime_client = boto3.Session().client('sagemaker-runtime')
     pool = ThreadPool(processes=2)
     rag_fusion_pool = ThreadPool(processes=5)
+    text_splitter = RecursiveCharacterTextSplitter(
+        # Set a really small chunk size, just to show.
+        chunk_size=512,
+        chunk_overlap=0,
+        separators=["\n\n", "\n", ".", " ", ""],
+        length_function=len,
+    )
+
+    #@classmethod
+    #def get_num_tokns(cls, **kwargs):
+
 
     @classmethod
     # semantic search based
@@ -296,8 +308,32 @@ class retriever_utils():
         assert "reranker_endpoint_name" in kwargs, "Check your reranker_endpoint_name"
         assert "k" in kwargs, "Check your k"
 
-        contexts, query, rerank_queries = kwargs["context"], kwargs["query"], {"inputs":[]}
-        rerank_queries["inputs"] = [{"text": query, "text_pair": context.page_content} for context, score in contexts]
+        contexts, query, llm_text, rerank_queries = kwargs["context"], kwargs["query"], kwargs["llm_text"], {"inputs":[]}
+
+        exceed_info = []
+        for idx, (context, score) in enumerate(contexts):
+            page_content = context.page_content
+            token_size = llm_text.get_num_tokens(query+page_content)
+            exceed_flag = False
+
+            if token_size > 500:
+                exceed_flag = True
+                splited_docs = cls.text_splitter.split_documents([context])
+                print(f"Number of chunk_docs after split and chunking= {len(splited_docs)}")
+
+                partial_set, length = [], []
+                for splited_doc in splited_docs:
+                    rerank_queries["inputs"].append({"text": query, "text_pair": splited_doc.page_content})
+                    length.append(llm_text.get_num_tokens(splited_doc.page_content))
+                    partial_set.append(len(rerank_queries["inputs"])-1)
+            else:
+                rerank_queries["inputs"].append({"text": query, "text_pair": page_content})
+
+            if exceed_flag:
+                exceed_info.append([idx, exceed_flag, partial_set, length])
+            else:
+                exceed_info.append([idx, exceed_flag, len(rerank_queries["inputs"])-1, None])
+
         rerank_queries = json.dumps(rerank_queries)
 
         response = cls.runtime_client.invoke_endpoint(
@@ -308,7 +344,16 @@ class retriever_utils():
         )
         outs = json.loads(response['Body'].read().decode()) ## for json
 
-        rerank_contexts = [(contexts[idx][0], out["score"]) for idx, out in enumerate(outs)]
+        rerank_contexts = []
+        for idx, exceed_flag, partial_set, length in exceed_info:
+            if not exceed_flag:
+                rerank_contexts.append((contexts[idx][0], outs[partial_set]["score"]))
+            else:
+                partial_scores = [outs[partial_idx]["score"] for partial_idx in partial_set]
+                partial_scores = np.average(partial_scores, axis=0, weights=length)
+                rerank_contexts.append((contexts[idx][0], partial_scores))
+
+        #rerank_contexts = [(contexts[idx][0], out["score"]) for idx, out in enumerate(outs)]
         rerank_contexts = sorted(
             rerank_contexts,
             key=lambda x: x[1],
@@ -426,6 +471,7 @@ class retriever_utils():
         if reranker:
             reranker_endpoint_name = kwargs["reranker_endpoint_name"]
             similar_docs = cls.get_rerank_docs(
+                llm_text=kwargs["llm_text"],
                 query=kwargs["query"],
                 context=similar_docs,
                 k=kwargs.get("k", 5),
