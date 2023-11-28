@@ -3,6 +3,7 @@ from IPython.core.display import display, HTML
 
 from langchain.docstore.document import Document
 from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
+from utils.opensearch import opensearch_utils
 
 def search_hybrid(**kwargs):
     
@@ -194,3 +195,44 @@ def show_doc_json(data, file_path):
     print("### The first doc")
 
     print(data[0])        
+    
+    
+def insert_chunk_opensearch(index_name, os_client, chunk_docs, lim_emb):
+    for i, doc in enumerate(chunk_docs):
+        # print(doc)
+        content = doc.page_content      
+        content_emb = lim_emb.embed_query(content)
+        metadata_last_updated = doc.metadata['last_updated']
+        metadata_last_project = doc.metadata['project']        
+        metadata_seq_num = doc.metadata['seq_num']                
+        metadata_title = doc.metadata['title']    
+        metadata_url = doc.metadata['url']                   
+
+        
+        # print(content)
+        # print(metadata_last_updated)
+        # print(metadata_last_project)
+        # print(metadata_seq_num)
+        # print(metadata_title)
+        # print(metadata_url)
+                
+        # Example document
+        doc_body = {
+            "text": content,
+            "vector_field": content_emb,  # Replace with your vector
+            "metadata" : [
+                {"last_updated": metadata_last_updated, 
+                 "project": metadata_last_project, 
+                 "seq_num": metadata_seq_num, 
+                 "title": metadata_title, 
+                 "url": metadata_url}
+            ]
+        }
+        
+        # print(doc_body)
+
+        opensearch_utils.add_doc(os_client, index_name, doc_body, id=f"{i}")
+        
+        if i == 100:
+            break
+    
