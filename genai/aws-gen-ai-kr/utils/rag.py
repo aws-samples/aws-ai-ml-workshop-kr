@@ -39,9 +39,11 @@ from multiprocessing.pool import ThreadPool
 # Prompt repo
 ############################################################
 class prompt_repo():
+    
+    template_types = ["web_search", "sci_fact", "fiqa", "trec_news"]
 
-    @classmethod
-    def get_rag_fusion(cls, ):
+    @staticmethod
+    def get_rag_fusion():
 
         prompt = """
         \n\nHuman:
@@ -55,6 +57,22 @@ class prompt_repo():
         )
 
         return prompt_template
+
+    @classmethod
+    def get_hyde(cls, template_type):
+
+        assert template_type in cls.template_types, "Check your template_type"
+        
+        # There are a few different templates to choose from
+        # These are just different ways to generate hypothetical documents
+        hyde_template = {
+            "web_search": """\n\nHuman:\nPlease write a concise passage to answer the question\nQuestion: {query}\nPassage:\n\nAssistant:""",
+            "sci_fact": """\n\nHuman:\nPlease write a concise scientific paper passage to support/refute the claim\nClaim: {query}\nPassage:\n\nAssistant:""",
+            "fiqa": """\n\nHuman:\nPlease write a concise financial article passage to answer the question\nQuestion: {query}\nPassage:\n\nAssistant:""",
+            "trec_news": """\n\nHuman:\nPlease write a concise news passage about the topic\nTopic: {query}\nPassage:\n\nAssistant:"""
+        }
+
+        return PromptTemplate(template=hyde_template[template_type], input_variables=["query"])
 
 ############################################################
 # RetrievalQA (Langchain)
@@ -130,6 +148,7 @@ class retriever_utils():
     runtime_client = boto3.Session().client('sagemaker-runtime')
     pool = ThreadPool(processes=2)
     rag_fusion_pool = ThreadPool(processes=5)
+    hyde_pool = ThreadPool(processes=4)
     text_splitter = RecursiveCharacterTextSplitter(
         # Set a really small chunk size, just to show.
         chunk_size=512,
@@ -137,6 +156,7 @@ class retriever_utils():
         separators=["\n\n", "\n", ".", " ", ""],
         length_function=len,
     )
+    token_limit = 510
 
     #@classmethod
     #def get_num_tokns(cls, **kwargs):
@@ -289,7 +309,7 @@ class retriever_utils():
                 boolean_filter=kwargs.get("filter", []),
                 hybrid=True
             )
-            tasks.append(cls.rag_fusion_pool.apply_async(semantic_search,))    
+            tasks.append(cls.rag_fusion_pool.apply_async(semantic_search,))
         rag_fusion_docs = [task.get() for task in tasks]
 
         similar_docs = cls.get_ensemble_results(
@@ -299,6 +319,75 @@ class retriever_utils():
             c=60,
             k=kwargs["k"],
         )
+
+        return similar_docs
+
+    @classmethod
+    # HyDE based
+    def get_hyde_similar_docs(cls, **kwargs):
+
+        def get_hyde_response(query, prompt, llm_text):
+
+            chain = (
+                {
+                    "query": itemgetter("query")
+                }
+                | prompt
+                | llm_text
+                | StrOutputParser()
+            )
+            return chain.invoke({"query": query})
+
+        search_types = ["approximate_search", "script_scoring", "painless_scripting"]
+        space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
+
+        assert "vector_db" in kwargs, "Check your vector_db"
+        assert "query" in kwargs, "Check your query"
+        assert "hyde_query" in kwargs, "Check your hyde_query"
+        assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
+        assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
+        assert kwargs.get("llm_text", None) != None, "Check your llm_text"
+
+        query = kwargs["query"]
+        llm_text = kwargs["llm_text"]
+        hyde_query = kwargs["hyde_query"]
+
+        tasks = []
+        for template_type in hyde_query:
+            hyde_response = partial(
+                get_hyde_response,
+                query=query,
+                prompt=prompt_repo.get_hyde(template_type),
+                llm_text=llm_text
+            )
+            tasks.append(cls.hyde_pool.apply_async(hyde_response,))
+        hyde_answers = [task.get() for task in tasks]
+        hyde_answers.insert(0, query)
+
+        tasks = []
+        for hyde_answer in hyde_answers:
+            semantic_search = partial(
+                cls.get_semantic_similar_docs,
+                vector_db=kwargs["vector_db"],
+                query=hyde_answer,
+                k=kwargs["k"],
+                boolean_filter=kwargs.get("filter", []),
+                hybrid=True
+            )
+            tasks.append(cls.hyde_pool.apply_async(semantic_search,))
+        hyde_docs = [task.get() for task in tasks]
+        hyde_doc_size = len(hyde_docs)
+
+        similar_docs = cls.get_ensemble_results(
+            doc_lists=hyde_docs,
+            weights=[1/(hyde_doc_size)]*(hyde_doc_size), #query_augmentation_size + original query
+            algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+            c=60,
+            k=kwargs["k"],
+        )
+        if kwargs["verbose"]:
+            print("===== HyDE Answers =====")
+            print(hyde_answers)
 
         return similar_docs
 
@@ -316,10 +405,10 @@ class retriever_utils():
             token_size = llm_text.get_num_tokens(query+page_content)
             exceed_flag = False
 
-            if token_size > 500:
+            if token_size > cls.token_limit:
                 exceed_flag = True
                 splited_docs = cls.text_splitter.split_documents([context])
-                print(f"Number of chunk_docs after split and chunking= {len(splited_docs)}")
+                print(f"\nNumber of chunk_docs after split and chunking= {len(splited_docs)}\n")
 
                 partial_set, length = [], []
                 for splited_doc in splited_docs:
@@ -375,6 +464,7 @@ class retriever_utils():
         async_mode = kwargs.get("async_mode", True)
         reranker = kwargs.get("reranker", False)
         rag_fusion = kwargs.get("rag_fusion", False)
+        hyde = kwargs.get("hyde", False)
 
         def do_sync():
 
@@ -391,6 +481,19 @@ class retriever_utils():
                     fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
                     verbose=kwargs.get("verbose", False),
                 )
+            elif hyde:
+                similar_docs_semantic = cls.get_hyde_similar_docs(
+                    vector_db=kwargs["vector_db"],
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=kwargs.get("filter", []),
+                    hybrid=True,
+                    llm_text=kwargs.get("llm_text", None),
+                    hyde_query=kwargs["hyde_query"],
+                    fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+                    verbose=kwargs.get("verbose", False),
+                )
+
             else:
                 similar_docs_semantic = cls.get_semantic_similar_docs(
                     vector_db=kwargs["vector_db"],
@@ -425,6 +528,19 @@ class retriever_utils():
                     llm_text=kwargs.get("llm_text", None),
                     query_augmentation_size=kwargs["query_augmentation_size"],
                     query_transformation_prompt=kwargs.get("query_transformation_prompt", None),
+                    fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+                    verbose=kwargs.get("verbose", False),
+                )
+            elif hyde:
+                semantic_search = partial(
+                    cls.get_hyde_similar_docs,
+                    vector_db=kwargs["vector_db"],
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=kwargs.get("filter", []),
+                    hybrid=True,
+                    llm_text=kwargs.get("llm_text", None),
+                    hyde_query=kwargs["hyde_query"],
                     fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
                     verbose=kwargs.get("verbose", False),
                 )
@@ -494,6 +610,11 @@ class retriever_utils():
             print("rag_fusion")
             print("##############################")
             print(rag_fusion)
+            
+            print("##############################")
+            print("HyDE")
+            print("##############################")
+            print(hyde)
 
             print("##############################")
             print("similar_docs_semantic")
@@ -648,6 +769,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     query_augmentation_size: Any
     rag_fusion_prompt = prompt_repo.get_rag_fusion()
     llm_text: Any
+    hyde = False
+    hyde_query: Any
 
     def update_search_params(self, **kwargs):
 
@@ -664,6 +787,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.rag_fusion = kwargs.get("rag_fusion", False)
         self.query_augmentation_size = kwargs.get("query_augmentation_size", 3)
         self.llm_text = kwargs.get("llm_text", None)
+        self.hyde = kwargs.get("hyde", False)
+        self.hyde_query = kwargs.get("hyde_query", ["web_search"])
 
     def _reset_search_params(self, ):
 
@@ -688,7 +813,9 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             reranker_endpoint_name=self.reranker_endpoint_name,
             rag_fusion=self.rag_fusion,
             query_augmentation_size=self.query_augmentation_size,
-            query_transformation_prompt=self.rag_fusion_prompt if self.rag_fusion else "123",
+            query_transformation_prompt=self.rag_fusion_prompt if self.rag_fusion else "",
+            hyde=self.hyde,
+            hyde_query=self.hyde_query if self.hyde else [],
             llm_text=self.llm_text,
             verbose=self.verbose
         )
