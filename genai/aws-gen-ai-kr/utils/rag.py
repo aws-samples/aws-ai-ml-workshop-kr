@@ -156,15 +156,11 @@ class retriever_utils():
         separators=["\n\n", "\n", ".", " ", ""],
         length_function=len,
     )
-    token_limit = 510
-
-    #@classmethod
-    #def get_num_tokns(cls, **kwargs):
-
+    token_limit = 300
 
     @classmethod
     # semantic search based
-    def get_semantic_similar_docs(cls, **kwargs):
+    def get_semantic_similar_docs_by_langchain(cls, **kwargs):
 
         #print(f"Thread={threading.get_ident()}, Process={os.getpid()}")
         search_types = ["approximate_search", "script_scoring", "painless_scripting"]
@@ -184,8 +180,9 @@ class retriever_utils():
                 filter=kwargs.get("boolean_filter", [])
             ),
         )
-
-        # print ("\nsemantic search args: ")
+        
+        print ("\nsemantic search args: ")
+        print (results)
         # pprint ({
         #     "k": kwargs.get("k", 5),
         #     "search_type": kwargs.get("search_type", "approximate_search"),
@@ -202,11 +199,11 @@ class retriever_utils():
             results = copy.deepcopy(new_results)
 
         return results
-
+    
     @classmethod
-    # lexical(keyword) search based (using Amazon OpenSearch)
-    def get_lexical_similar_docs(cls, **kwargs):
-
+    # semantic search based
+    def get_semantic_similar_docs(cls, **kwargs):
+        
         assert "query" in kwargs, "Check your query"
         assert "k" in kwargs, "Check your k"
         assert "os_client" in kwargs, "Check your os_client"
@@ -221,14 +218,70 @@ class retriever_utils():
             search_results["hits"]["max_score"] = hits[0]["_score"]
             search_results["hits"]["hits"] = hits
             return search_results
+                 
+        query = opensearch_utils.get_query(
+            query=kwargs["query"],
+            filter=kwargs.get("filter", []),
+            search_type="semantic", # enable semantic search
+            vector_field="vector_field", # for semantic search  check by using index_info = os_client.indices.get(index=index_name)
+            vector=kwargs["llm_emb"].embed_query(kwargs["query"]),
+            k=kwargs["k"]
+        )
 
+        # print ("\nsematic search query: ")
+        # pprint (query)
+
+        search_results = opensearch_utils.search_document(
+            os_client=kwargs["os_client"],
+            query=query,
+            index_name=kwargs["index_name"]
+        )
+
+        results = []
+        if search_results["hits"]["hits"]:
+            search_results = normalize_search_results(search_results)
+            for res in search_results["hits"]["hits"]:
+
+                metadata = res["_source"]["metadata"]
+                metadata["id"] = res["_id"]
+
+                doc = Document(
+                    page_content=res["_source"]["text"],
+                    metadata=metadata
+                )
+                if kwargs.get("hybrid", False):
+                    results.append((doc, res["_score"]))
+                else:
+                    results.append((doc))
+
+        return results
+
+    @classmethod
+    # lexical(keyword) search based (using Amazon OpenSearch)
+    def get_lexical_similar_docs(cls, **kwargs):
+        
+        assert "query" in kwargs, "Check your query"
+        assert "k" in kwargs, "Check your k"
+        assert "os_client" in kwargs, "Check your os_client"
+        assert "index_name" in kwargs, "Check your index_name"
+
+        def normalize_search_results(search_results):
+
+            hits = (search_results["hits"]["hits"])
+            max_score = float(search_results["hits"]["max_score"])
+            for hit in hits:
+                hit["_score"] = float(hit["_score"]) / max_score
+            search_results["hits"]["max_score"] = hits[0]["_score"]
+            search_results["hits"]["hits"] = hits
+            return search_results
+         
         query = opensearch_utils.get_query(
             query=kwargs["query"],
             minimum_should_match=kwargs.get("minimum_should_match", 0),
             filter=kwargs.get("filter", [])
         )
         query["size"] = kwargs["k"]
-
+            
         # print ("\nlexical search query: ")
         # pprint (query)
 
@@ -264,7 +317,7 @@ class retriever_utils():
         search_types = ["approximate_search", "script_scoring", "painless_scripting"]
         space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
 
-        assert "vector_db" in kwargs, "Check your vector_db"
+        assert "llm_emb" in kwargs, "Check your llm_emb"
         assert "query" in kwargs, "Check your query"
         assert "query_transformation_prompt" in kwargs, "Check your query_transformation_prompt"
         assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
@@ -303,10 +356,14 @@ class retriever_utils():
         for query in rag_fusion_query:
             semantic_search = partial(
                 cls.get_semantic_similar_docs,
-                vector_db=kwargs["vector_db"],
+                #vector_db=kwargs["vector_db"],
+                os_client=kwargs["os_client"],
+                index_name=kwargs["index_name"],
                 query=query,
                 k=kwargs["k"],
+                filter=kwargs.get("filter", []),
                 boolean_filter=kwargs.get("filter", []),
+                llm_emb=kwargs["llm_emb"],
                 hybrid=True
             )
             tasks.append(cls.rag_fusion_pool.apply_async(semantic_search,))
@@ -341,7 +398,7 @@ class retriever_utils():
         search_types = ["approximate_search", "script_scoring", "painless_scripting"]
         space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
 
-        assert "vector_db" in kwargs, "Check your vector_db"
+        assert "llm_emb" in kwargs, "Check your llm_emb"
         assert "query" in kwargs, "Check your query"
         assert "hyde_query" in kwargs, "Check your hyde_query"
         assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
@@ -368,10 +425,14 @@ class retriever_utils():
         for hyde_answer in hyde_answers:
             semantic_search = partial(
                 cls.get_semantic_similar_docs,
-                vector_db=kwargs["vector_db"],
+                #vector_db=kwargs["vector_db"],
+                os_client=kwargs["os_client"],
+                index_name=kwargs["index_name"],
                 query=hyde_answer,
                 k=kwargs["k"],
+                filter=kwargs.get("filter", []),
                 boolean_filter=kwargs.get("filter", []),
+                llm_emb=kwargs["llm_emb"],
                 hybrid=True
             )
             tasks.append(cls.hyde_pool.apply_async(semantic_search,))
@@ -457,6 +518,7 @@ class retriever_utils():
 
         assert "query" in kwargs, "Check your query"
         assert "vector_db" in kwargs, "Check your vector_db"
+        assert "llm_emb" in kwargs, "Check your llm_emb"
         assert "index_name" in kwargs, "Check your index_name"
         assert "os_client" in kwargs, "Check your os_client"
 
@@ -470,8 +532,12 @@ class retriever_utils():
 
             if rag_fusion:
                 similar_docs_semantic = cls.get_rag_fusion_similar_docs(
-                    vector_db=kwargs["vector_db"],
+                    #vector_db=kwargs["vector_db"],
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
                     query=kwargs["query"],
+                    filter=kwargs.get("filter", []),
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                     boolean_filter=kwargs.get("filter", []),
                     hybrid=True,
@@ -483,8 +549,12 @@ class retriever_utils():
                 )
             elif hyde:
                 similar_docs_semantic = cls.get_hyde_similar_docs(
-                    vector_db=kwargs["vector_db"],
+                    #vector_db=kwargs["vector_db"],
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
                     query=kwargs["query"],
+                    filter=kwargs.get("filter", []),
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                     boolean_filter=kwargs.get("filter", []),
                     hybrid=True,
@@ -496,10 +566,14 @@ class retriever_utils():
 
             else:
                 similar_docs_semantic = cls.get_semantic_similar_docs(
-                    vector_db=kwargs["vector_db"],
+                    #vector_db=kwargs["vector_db"],
                     query=kwargs["query"],
+                    filter=kwargs.get("filter", []),
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                     boolean_filter=kwargs.get("filter", []),
+                    llm_emb=kwargs["llm_emb"],
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
                     hybrid=True
                 )
 
@@ -520,8 +594,12 @@ class retriever_utils():
             if rag_fusion:
                 semantic_search = partial(
                     cls.get_rag_fusion_similar_docs,
-                    vector_db=kwargs["vector_db"],
+                    #vector_db=kwargs["vector_db"],
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
                     query=kwargs["query"],
+                    filter=kwargs.get("filter", []),
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                     boolean_filter=kwargs.get("filter", []),
                     hybrid=True,
@@ -534,8 +612,12 @@ class retriever_utils():
             elif hyde:
                 semantic_search = partial(
                     cls.get_hyde_similar_docs,
-                    vector_db=kwargs["vector_db"],
+                    #vector_db=kwargs["vector_db"],
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
                     query=kwargs["query"],
+                    filter=kwargs.get("filter", []),
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                     boolean_filter=kwargs.get("filter", []),
                     hybrid=True,
@@ -547,10 +629,14 @@ class retriever_utils():
             else:
                 semantic_search = partial(
                     cls.get_semantic_similar_docs,
-                    vector_db=kwargs["vector_db"],
+                    #vector_db=kwargs["vector_db"],
                     query=kwargs["query"],
+                    filter=kwargs.get("filter", []),
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                     boolean_filter=kwargs.get("filter", []),
+                    llm_emb=kwargs["llm_emb"],
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
                     hybrid=True
                 )
 
@@ -610,7 +696,7 @@ class retriever_utils():
             print("rag_fusion")
             print("##############################")
             print(rag_fusion)
-            
+
             print("##############################")
             print("HyDE")
             print("##############################")
@@ -769,6 +855,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     query_augmentation_size: Any
     rag_fusion_prompt = prompt_repo.get_rag_fusion()
     llm_text: Any
+    llm_emb: Any
     hyde = False
     hyde_query: Any
 
@@ -786,7 +873,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.reranker_endpoint_name = kwargs.get("reranker_endpoint_name", self.reranker_endpoint_name)
         self.rag_fusion = kwargs.get("rag_fusion", False)
         self.query_augmentation_size = kwargs.get("query_augmentation_size", 3)
-        self.llm_text = kwargs.get("llm_text", None)
+        #self.llm_text = kwargs.get("llm_text")
+        #self.llm_emb = kwargs.get("llm_emb")
         self.hyde = kwargs.get("hyde", False)
         self.hyde_query = kwargs.get("hyde_query", ["web_search"])
 
@@ -817,6 +905,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             hyde=self.hyde,
             hyde_query=self.hyde_query if self.hyde else [],
             llm_text=self.llm_text,
+            llm_emb=self.llm_emb,
             verbose=self.verbose
         )
         #self._reset_search_params()
