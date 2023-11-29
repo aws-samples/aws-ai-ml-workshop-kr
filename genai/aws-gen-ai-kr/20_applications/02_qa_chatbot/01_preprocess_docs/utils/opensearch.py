@@ -67,6 +67,15 @@ class opensearch_utils():
         return response
 
     @classmethod
+    def get_document(cls, os_client, doc_id, index_name):
+        response = os_client.get(
+            id= doc_id,
+            index=index_name
+        )
+
+        return response
+
+    @classmethod
     def delete_index(cls, os_client, index_name):
         response = os_client.indices.delete(
             index=index_name
