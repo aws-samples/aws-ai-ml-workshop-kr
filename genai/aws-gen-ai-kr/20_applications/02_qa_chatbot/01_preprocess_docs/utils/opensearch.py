@@ -76,6 +76,15 @@ class opensearch_utils():
         return response
 
     @classmethod
+    def get_count(cls, os_client, index_name):
+        response = os_client.count(
+            index=index_name
+        )
+
+        return response
+    
+    
+    @classmethod
     def delete_index(cls, os_client, index_name):
         response = os_client.indices.delete(
             index=index_name
@@ -190,3 +199,5 @@ class opensearch_utils():
             BOOL_FILTER_TEMPLATE["bool"]["filter"].extend(kwargs["filter"])
 
         return BOOL_FILTER_TEMPLATE
+    
+     
