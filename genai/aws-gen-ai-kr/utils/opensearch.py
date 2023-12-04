@@ -130,11 +130,11 @@ class opensearch_utils():
         #  - https://opensearch.org/docs/latest/query-dsl/full-text/index/#match-boolean-prefix
         # OpenSearch Query Description (한글)
         #  - https://esbook.kimjmin.net/05-search)
-        
+
         search_type = kwargs.get("search_type", "lexical")
-        
+
         if search_type == "lexical":
-            
+
             min_shoud_match = 0
             if "minimum_should_match" in kwargs:
                 min_shoud_match = kwargs["minimum_should_match"]
@@ -168,9 +168,9 @@ class opensearch_utils():
 
             if "filter" in kwargs:
                 QUERY_TEMPLATE["query"]["bool"]["filter"].extend(kwargs["filter"])
-        
+
         elif search_type == "semantic":
-            
+
             QUERY_TEMPLATE = {
             "query": {
                     "bool": {
@@ -209,3 +209,13 @@ class opensearch_utils():
             BOOL_FILTER_TEMPLATE["bool"]["filter"].extend(kwargs["filter"])
 
         return BOOL_FILTER_TEMPLATE
+
+    @staticmethod
+    def get_documents_by_ids(os_client, ids, index_name):
+
+        response = os_client.mget(
+            body={"ids": ids},
+            index=index_name
+        )
+
+        return response
