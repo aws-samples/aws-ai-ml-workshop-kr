@@ -87,6 +87,7 @@ class bedrock_info():
         "Claude-Instant-V1": "anthropic.claude-instant-v1",
         "Claude-V1": "anthropic.claude-v1",
         "Claude-V2": "anthropic.claude-v2",
+        "Claude-V2-1": "anthropic.claude-v2:1",
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",

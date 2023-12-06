@@ -39,73 +39,8 @@ from multiprocessing.pool import ThreadPool
 # Prompt repo
 ############################################################
 class prompt_repo():
-
-    template_types = ["web_search", "sci_fact", "fiqa", "trec_news"]
-    prompt_types = ["answer_only", "answer_with_ref"]
     
-
-    @classmethod
-    def get_qa(cls, prompt_type="answer_only"):
-        
-        assert prompt_type in cls.prompt_types, "Check your prompt_type"
-        
-        if prompt_type == "answer_only":
-            
-            prompt = """
-            \n\nHuman:
-            You are a mater answer bot designed to answer software developer's questions.
-            I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-            Here is the context: <context>{context}</context>
-
-            First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
-            Then, answer the question within <answer></answer> XML tags as much as you can.
-            Skip the preamble and go straight into the answer.
-            Don't say "According to context" when answering.
-            Don't insert XML tag such as <context> and </context> when answering.
-
-            Here is the question: <question>{question}</question>
-
-            If the question cannot be answered by the context, say "No relevant context".
-
-            \n\nAssistant:"""
-
-        elif prompt_type == "answer_with_ref":
-            
-            prompt = """
-            \n\nHuman:
-            You are a mater answer bot designed to answer software developer's questions.
-            I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-            Here is the context: <context>{context}</context>
-
-            First, find the paragraphs or sentences from the context that are most relevant to answering the question, and then print them in numbered order.
-            The format of paragraphs or sentences to the question should look like what's shown between the <references></references> tags.
-            Make sure to follow the formatting and spacing exactly.
-
-            <references>
-            [Examples of question + answer pairs using parts of the given context, with answers written exactly like how Claude’s output should be structured]
-            </references>
-
-            If there are no relevant paragraphs or sentences, write "No relevant context" instead.
-
-            Then, answer the question within <answer></answer> XML tags as much as you can.
-            Skip the preamble and go straight into the answer.
-            Don't say "According to context" when answering.
-            Don't insert XML tag such as <context> and </context> when answering.
-            If relevant paragraphs or sentences have code block, please show us that as code block.
-
-            Here is the question: <question>{question}</question>
-
-            If the question cannot be answered by the context, say "No relevant context".
-
-            \n\nAssistant:"""
-           
-        prompt_template = PromptTemplate(
-            template=prompt, input_variables=["context", "question"]
-        )
-        
-        return prompt_template
+    template_types = ["web_search", "sci_fact", "fiqa", "trec_news"]
 
     @staticmethod
     def get_rag_fusion():
@@ -127,7 +62,7 @@ class prompt_repo():
     def get_hyde(cls, template_type):
 
         assert template_type in cls.template_types, "Check your template_type"
-
+        
         # There are a few different templates to choose from
         # These are just different ways to generate hypothetical documents
         hyde_template = {
@@ -245,6 +180,14 @@ class retriever_utils():
                 filter=kwargs.get("boolean_filter", [])
             ),
         )
+        #print ("\nsemantic search args: ")
+        #print (results)
+        # pprint ({
+        #     "k": kwargs.get("k", 5),
+        #     "search_type": kwargs.get("search_type", "approximate_search"),
+        #     "space_type": kwargs.get("space_type", "l2"),
+        #     "boolean_filter": opensearch_utils.get_filter(filter=kwargs.get("boolean_filter", []))
+        # })
 
         if kwargs.get("hybrid", False) and results:
             max_score = results[0][1]
@@ -321,6 +264,7 @@ class retriever_utils():
         assert "k" in kwargs, "Check your k"
         assert "os_client" in kwargs, "Check your os_client"
         assert "index_name" in kwargs, "Check your index_name"
+        
 
         def normalize_search_results(search_results):
 
@@ -413,6 +357,7 @@ class retriever_utils():
         for query in rag_fusion_query:
             semantic_search = partial(
                 cls.get_semantic_similar_docs,
+                #vector_db=kwargs["vector_db"],
                 os_client=kwargs["os_client"],
                 index_name=kwargs["index_name"],
                 query=query,
@@ -509,33 +454,58 @@ class retriever_utils():
     # ParentDocument based
     def get_parent_document_similar_docs(cls, **kwargs):
 
-        child_search_results = kwargs["similar_docs"]
+        def _get_parent_docs(child_search_results, **kwargs):
 
-        parent_info = {}
-        for rank, (doc, score) in enumerate(child_search_results):
-            parent_id = doc.metadata["parent_id"]
-            if parent_id not in parent_info:
-                parent_info[parent_id] = (rank+1, score)
-        parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
-        parent_ids = list(map(lambda x:x[0], parent_ids))
+            parent_info = {}
+            for rank, (doc, score) in enumerate(child_search_results):
+                parent_id = doc.metadata["parent_id"]
+                if parent_id not in parent_info:
+                    parent_info[parent_id] = (rank+1, score)
+            parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
+            parent_ids = list(map(lambda x:x[0], parent_ids))
 
-        parent_docs = opensearch_utils.get_documents_by_ids(
-            os_client=kwargs["os_client"],
-            ids=parent_ids,
+            parent_docs = opensearch_utils.get_documents_by_ids(
+                os_client=kwargs["os_client"],
+                ids=parent_ids,
+                index_name=kwargs["index_name"],
+            )
+            results = []
+            if parent_docs["docs"]:
+                for res in parent_docs["docs"]:
+                    doc_id = res["_id"]
+                    doc = Document(
+                        page_content=res["_source"]["text"],
+                        metadata=res["_source"]["metadata"]
+                    )
+                    if kwargs["hybrid"]:
+                        results.append((doc, parent_info[doc_id][1]))
+                    else:
+                        results.append((doc))
+
+            return results
+
+        assert "llm_emb" in kwargs, "Check your llm_emb"
+        assert "query" in kwargs, "Check your query"
+
+        query = kwargs["query"]
+
+        child_search_results = cls.get_semantic_similar_docs(
             index_name=kwargs["index_name"],
+            os_client=kwargs["os_client"],
+            llm_emb=kwargs["llm_emb"],
+
+            query=query,
+            k=kwargs["k"],
+            boolean_filter=kwargs["boolean_filter"],
+            hybrid=True
         )
-        similar_docs = []
-        if parent_docs["docs"]:
-            for res in parent_docs["docs"]:
-                doc_id = res["_id"]
-                doc = Document(
-                    page_content=res["_source"]["text"],
-                    metadata=res["_source"]["metadata"]
-                )
-                if kwargs["hybrid"]:
-                    similar_docs.append((doc, parent_info[doc_id][1]))
-                else:
-                    similar_docs.append((doc))
+
+        similar_docs = _get_parent_docs(
+            child_search_results,
+            os_client=kwargs["os_client"],
+            index_name=kwargs["index_name"],
+            hybrid=True
+        )
 
         if kwargs["verbose"]:
             print("===== ParentDocument =====")
@@ -543,7 +513,6 @@ class retriever_utils():
             print (f'# child_docs: {len(child_search_results)}')
             print (f'# parent docs: {len(similar_docs)}')
             print (f'# duplicates: {len(child_search_results)-len(similar_docs)}')
-
 
         return similar_docs
 
@@ -621,7 +590,7 @@ class retriever_utils():
         hyde = kwargs.get("hyde", False)
         parent_document = kwargs.get("parent_document", False)
 
-        assert (rag_fusion + hyde) <= 1, "choose only one between RAG-FUSION and HyDE"
+        assert (rag_fusion + hyde + parent_document) <= 1, "choose only one among RAG-FUSION, HyDE and ParentDocument"
         if rag_fusion:
             assert "query_augmentation_size" in kwargs, "if you use RAG-FUSION, Check your query_augmentation_size"
         if hyde:
@@ -630,9 +599,10 @@ class retriever_utils():
         verbose = kwargs.get("verbose", False)
         async_mode = kwargs.get("async_mode", True)
         reranker = kwargs.get("reranker", False)
-        search_filter = deepcopy(kwargs.get("filter", []))
+        search_filter_semantic, search_filter_lexical = deepcopy(kwargs.get("filter", [])), deepcopy(kwargs.get("filter", []))
         if parent_document:
-            search_filter.append({"term": {"metadata.family_tree": "child"}})
+            search_filter_semantic.append({"term": {"metadata.family_tree": "child"}})
+            search_filter_lexical.append({"term": {"metadata.family_tree": "parent"}})
 
         def do_sync():
 
@@ -644,7 +614,7 @@ class retriever_utils():
 
                     query=kwargs["query"],
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-                    boolean_filter=search_filter,
+                    boolean_filter=search_filter_semantic,
                     hybrid=True,
 
                     llm_text=kwargs.get("llm_text", None),
@@ -662,12 +632,25 @@ class retriever_utils():
 
                     query=kwargs["query"],
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-                    boolean_filter=search_filter,
+                    boolean_filter=search_filter_semantic,
                     hybrid=True,
 
                     llm_text=kwargs.get("llm_text", None),
                     hyde_query=kwargs["hyde_query"],
                     fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+
+                    verbose=kwargs.get("verbose", False),
+                )
+            elif parent_document:
+                similar_docs_semantic = cls.get_parent_document_similar_docs(
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter_semantic,
+                    hybrid=True,
 
                     verbose=kwargs.get("verbose", False),
                 )
@@ -679,7 +662,7 @@ class retriever_utils():
 
                     query=kwargs["query"],
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-                    boolean_filter=search_filter,
+                    boolean_filter=search_filter_semantic,
                     hybrid=True
                 )
 
@@ -690,7 +673,7 @@ class retriever_utils():
                 query=kwargs["query"],
                 k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                 minimum_should_match=kwargs.get("minimum_should_match", 0),
-                filter=search_filter,
+                filter=search_filter_lexical,
                 hybrid=True
             )
 
@@ -707,7 +690,7 @@ class retriever_utils():
 
                     query=kwargs["query"],
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-                    boolean_filter=search_filter,
+                    boolean_filter=search_filter_semantic,
                     hybrid=True,
 
                     llm_text=kwargs.get("llm_text", None),
@@ -726,12 +709,26 @@ class retriever_utils():
 
                     query=kwargs["query"],
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-                    boolean_filter=search_filter,
+                    boolean_filter=search_filter_semantic,
                     hybrid=True,
 
                     llm_text=kwargs.get("llm_text", None),
                     hyde_query=kwargs["hyde_query"],
                     fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+
+                    verbose=kwargs.get("verbose", False),
+                )
+            elif parent_document:
+                semantic_search = partial(
+                    cls.get_parent_document_similar_docs,
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter_semantic,
+                    hybrid=True,
 
                     verbose=kwargs.get("verbose", False),
                 )
@@ -744,7 +741,7 @@ class retriever_utils():
 
                     query=kwargs["query"],
                     k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
-                    boolean_filter=search_filter,
+                    boolean_filter=search_filter_semantic,
                     hybrid=True
                 )
 
@@ -756,7 +753,7 @@ class retriever_utils():
                 query=kwargs["query"],
                 k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
                 minimum_should_match=kwargs.get("minimum_should_match", 0),
-                filter=search_filter,
+                filter=search_filter_lexical,
                 hybrid=True
             )
             semantic_pool = cls.pool.apply_async(semantic_search,)
@@ -787,16 +784,6 @@ class retriever_utils():
                 context=similar_docs,
                 k=kwargs.get("k", 5),
                 reranker_endpoint_name=reranker_endpoint_name,
-                verbose=verbose
-            )
-
-        if parent_document:
-            similar_docs = cls.get_parent_document_similar_docs(
-                index_name=kwargs["index_name"],
-                os_client=kwargs["os_client"],
-                similar_docs=similar_docs,
-                hybrid=True,
-                boolean_filter=search_filter,
                 verbose=verbose
             )
 
