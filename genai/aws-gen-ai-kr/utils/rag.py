@@ -46,8 +46,11 @@ class prompt_repo():
     
     #First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
     #Then, answer the question within <answer></answer> XML tags as much as you can.
-        
     # Answer the question within <answer></answer> XML tags as much as you can.
+
+    # Don't say "According to context" when answering.
+    # Don't insert XML tag such as <context> and </context> when answering.
+
     @classmethod
     def get_qa(cls, prompt_type="answer_only"):
         
@@ -62,12 +65,12 @@ class prompt_repo():
 
             Here is the context: <context>{context}</context>
             
-            Answer the question within <answer></answer> XML tags.
-            Write as much as you can.
+            First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
+            Then, answer the question as much as you can.
+            If needed, anwer using bulleted format.
             Skip the preamble and go straight into the answer.
-            Don't say "According to context" when answering.
             Don't insert XML tag such as <context> and </context> when answering.
-
+            
             Here is the question: <question>{question}</question>
 
             If the question cannot be answered by the context, say "No relevant context".
@@ -93,7 +96,8 @@ class prompt_repo():
 
             If there are no relevant paragraphs or sentences, write "No relevant context" instead.
 
-            Then, answer the question within <answer></answer> XML tags as much as you can.
+            Then, answer the question within <answer></answer> XML tags.
+            Answer as much as you can.
             Skip the preamble and go straight into the answer.
             Don't say "According to context" when answering.
             Don't insert XML tag such as <context> and </context> when answering.
