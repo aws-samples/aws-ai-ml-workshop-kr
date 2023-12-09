@@ -7,6 +7,7 @@ AWS AIML 한글 워크샵 & 예제 모음
 ## 디렉토리 구조
 
 본 리포지토리의 예제 코드는 아래 4가지 카테고리로 나뉘어 있습니다. 각 디렉토리별 Readme 파일을 참고하십시오.
+The example code in this repository is divided into four categories: Please refer to the Readme file for each directory.
 
 - [AI services](aiservices/Readme.md) : Amazon Rekognition, Amazon Textract 등 학습없이 사용 가능한 AIML 서비스 활용 예제
 - [Applied AI](appliedai/Readme.md) : Amazon Personalize, Amazon Forecast 등 사용자 데이터를 이용한 커스텀 ML 모델 생성/추론 서비스
