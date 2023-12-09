@@ -47,7 +47,6 @@ class prompt_repo():
     #First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
     #Then, answer the question within <answer></answer> XML tags as much as you can.
     # Answer the question within <answer></answer> XML tags as much as you can.
-
     # Don't say "According to context" when answering.
     # Don't insert XML tag such as <context> and </context> when answering.
 
