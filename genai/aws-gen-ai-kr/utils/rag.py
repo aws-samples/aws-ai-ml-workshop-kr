@@ -43,7 +43,11 @@ class prompt_repo():
     template_types = ["web_search", "sci_fact", "fiqa", "trec_news"]
     prompt_types = ["answer_only", "answer_with_ref"]
     
-
+    
+    #First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
+    #Then, answer the question within <answer></answer> XML tags as much as you can.
+        
+    # Answer the question within <answer></answer> XML tags as much as you can.
     @classmethod
     def get_qa(cls, prompt_type="answer_only"):
         
@@ -57,9 +61,9 @@ class prompt_repo():
             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
 
             Here is the context: <context>{context}</context>
-
-            First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
-            Then, answer the question within <answer></answer> XML tags as much as you can.
+            
+            Answer the question within <answer></answer> XML tags.
+            Write as much as you can.
             Skip the preamble and go straight into the answer.
             Don't say "According to context" when answering.
             Don't insert XML tag such as <context> and </context> when answering.
@@ -99,8 +103,8 @@ class prompt_repo():
 
             If the question cannot be answered by the context, say "No relevant context".
 
-            \n\nAssistant:"""
-           
+            \n\nAssistant: Here is the most relevant sentence in the context:"""
+
         prompt_template = PromptTemplate(
             template=prompt, input_variables=["context", "question"]
         )
