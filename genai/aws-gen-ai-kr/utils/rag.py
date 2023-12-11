@@ -41,7 +41,7 @@ from multiprocessing.pool import ThreadPool
 class prompt_repo():
 
     template_types = ["web_search", "sci_fact", "fiqa", "trec_news"]
-    prompt_types = ["answer_only", "answer_with_ref"]
+    prompt_types = ["answer_only", "answer_with_ref", "original"]
     
     
     #First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
@@ -100,6 +100,7 @@ class prompt_repo():
             Skip the preamble and go straight into the answer.
             Don't say "According to context" when answering.
             Don't insert XML tag such as <context> and </context> when answering.
+            If needed, anwer using bulleted format.
             If relevant paragraphs or sentences have code block, please show us that as code block.
 
             Here is the question: <question>{question}</question>
@@ -107,6 +108,26 @@ class prompt_repo():
             If the question cannot be answered by the context, say "No relevant context".
 
             \n\nAssistant: Here is the most relevant sentence in the context:"""
+
+        elif prompt_type == "original":
+            prompt = """
+            \n\nHuman: Here is the context, inside <context></context> XML tags.
+
+            <context>
+            {context}
+            </context>
+
+            Only using the context as above, answer the following question with the rules as below:
+                - Don't insert XML tag such as <context> and </context> when answering.
+                - Write as much as you can
+                - Be courteous and polite
+                - Only answer the question if you can find the answer in the context with certainty.
+
+            Question:
+            {question}
+
+            If the answer is not in the context, just say "I don't know"
+            \n\nAssistant:"""
 
         prompt_template = PromptTemplate(
             template=prompt, input_variables=["context", "question"]
