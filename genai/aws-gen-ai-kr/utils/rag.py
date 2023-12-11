@@ -59,28 +59,27 @@ class prompt_repo():
             
             prompt = """
             \n\nHuman:
-            You are a mater answer bot designed to answer software developer's questions.
+            You are a master answer bot designed to answer software developer's questions.
             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
 
             Here is the context: <context>{context}</context>
             
             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
             Then, answer the question as much as you can.
-            If needed, anwer using bulleted format.
+
             Skip the preamble and go straight into the answer.
-            Don't insert XML tag such as <context> and </context> when answering.
+            Don't insert any XML tag such as <context> and </context> when answering.
             
             Here is the question: <question>{question}</question>
 
             If the question cannot be answered by the context, say "No relevant context".
-
-            \n\nAssistant:"""
+            \n\nAssistant: Here is the answer. """
 
         elif prompt_type == "answer_with_ref":
             
             prompt = """
             \n\nHuman:
-            You are a mater answer bot designed to answer software developer's questions.
+            You are a master answer bot designed to answer software developer's questions.
             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
 
             Here is the context: <context>{context}</context>
@@ -100,7 +99,7 @@ class prompt_repo():
             Skip the preamble and go straight into the answer.
             Don't say "According to context" when answering.
             Don't insert XML tag such as <context> and </context> when answering.
-            If needed, anwer using bulleted format.
+            If needed, answer using bulleted format.
             If relevant paragraphs or sentences have code block, please show us that as code block.
 
             Here is the question: <question>{question}</question>
