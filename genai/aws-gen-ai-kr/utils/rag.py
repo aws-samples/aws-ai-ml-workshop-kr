@@ -805,6 +805,8 @@ class retriever_utils():
             k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
         )
         #print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
+        #print ("1-similar_docs")
+        #for i, doc in enumerate(similar_docs): print (i, doc)
 
         if reranker:
             reranker_endpoint_name = kwargs["reranker_endpoint_name"]
@@ -816,6 +818,9 @@ class retriever_utils():
                 reranker_endpoint_name=reranker_endpoint_name,
                 verbose=verbose
             )
+
+        #print ("2-similar_docs")
+        #for i, doc in enumerate(similar_docs): print (i, doc)
 
         if parent_document:
             similar_docs = cls.get_parent_document_similar_docs(
