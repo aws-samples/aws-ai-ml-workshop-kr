@@ -1,4 +1,6 @@
-import boto3, os
+import boto3, os, sys
+module_path = "../../.."
+sys.path.append(os.path.abspath(module_path))
 
 from langchain.llms.bedrock import Bedrock
 from langchain.embeddings import BedrockEmbeddings
