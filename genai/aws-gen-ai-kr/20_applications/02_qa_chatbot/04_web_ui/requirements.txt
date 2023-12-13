@@ -1,0 +1,10 @@
+faiss-cpu
+transformers
+Pillow
+pypdf
+langchain==0.0.333
+streamlit
+botocore
+boto3
+awscli
+jq
