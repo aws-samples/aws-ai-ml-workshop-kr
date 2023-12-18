@@ -13,3 +13,4 @@ anthropic
 SQLAlchemy==2.0.23
 llmsherpa
 anthropic
+faiss-cpu==1.7.4
