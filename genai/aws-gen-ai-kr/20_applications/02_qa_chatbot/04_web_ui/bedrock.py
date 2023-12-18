@@ -141,5 +141,6 @@ def invoke(query, streaming_callback):
         document_dict = document.__dict__
         metadata = document_dict.get('metadata', {})
         url = metadata.get('url', '')
+        title = metadata.get('title','')
     
-    return answer, url, source_documents
+    return answer, url, title
