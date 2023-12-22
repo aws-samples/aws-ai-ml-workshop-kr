@@ -6,26 +6,16 @@
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
         <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
     </a>
-<!--     <a href="https://huggingface.co/C-MTEB">
-        <img alt="Build" src="https://img.shields.io/badge/C_MTEB-🤗-yellow">
-    </a> -->
+    <a href="https://huggingface.co/Dongjin-kr/ko-reranker">
+        <img alt="Build" src="https://img.shields.io/badge/KoReranker-🤗-yellow">
+    </a>
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
         <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
     </a>
 </p>
 
 ### **한국어 Reranker** 개발을 위한 파인튜닝 가이드를 제시합니다.
-
-<h4 align="center">
-    <p>
-        <a href=#news>News</a> |
-        <a href="#projects">Projects</a> |
-        <a href=#model-list>Model List</a> |
-        <a href="#contributor">Contributor</a> |
-        <a href="#citation">Citation</a> |
-        <a href="#license">License</a> 
-    <p>
-</h4>
+ko-reranker는 [BAAI/bge-reranker-larger](https://huggingface.co/BAAI/bge-reranker-large) 기반 한국어 데이터에 대한 fine-tuned model 입니다. 
 
 - - -
 
@@ -54,7 +44,16 @@
 
 - - -
 
-## 3. Performance
+## 3. Dataset
+
+- #### <span style="#FF69B4;"> [msmarco-triplets](https://github.com/microsoft/MSMARCO-Passage-Ranking) </span>
+    - (Question, Answer, Negative)-Triplets from MS MARCO Passages dataset, 499,184 samples
+    - 해당 데이터 셋은 영문으로 구성되어 있습니다.
+    - Amazon Translate 기반으로 번역하여 활용하였습니다.
+    
+- - -
+
+## 4. Performance
 | Model                     | has-right-in-contexts | mrr (mean reciprocal rank) |
 |:---------------------------|:-----------------:|:--------------------------:|
 | without-reranker (default)| 0.93 | 0.80 |
@@ -82,20 +81,20 @@
 
 - - -
 
-## 4. Acknowledgement
+## 5. Acknowledgement
 - <span style="#FF69B4;"> Part of the code is developed based on [FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding/tree/master?tab=readme-ov-file) and [KoSimCSE-SageMaker](https://github.com/daekeun-ml/KoSimCSE-SageMaker/tree/7de6eefef8f1a646c664d0888319d17480a3ebe5).</span>
 
 - - -
 
-## 5. Citation
+## 6. Citation
 - <span style="#FF69B4;"> If you find this repository useful, please consider giving a star ⭐ and citation</span>
 
 - - -
 
-## 6. Contributors:
+## 7. Contributors:
 - <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | </span>
 
 - - -
 
-## 7. License
+## 8. License
 - <span style="#FF69B4;"> FlagEmbedding is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE). </span>
