@@ -1,0 +1,9 @@
+
+FROM 763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:2.0.0-transformers4.28.1-gpu-py310-cu118-ubuntu20.04
+RUN pip install -U pip
+RUN pip install -U botocore
+RUN pip install -U awscli
+RUN pip install -U boto3
+RUN pip install -U sagemaker
+RUN pip install -U transformers
+ENV PYTHONUNBUFFERED=TRUE

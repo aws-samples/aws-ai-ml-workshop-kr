@@ -28,3 +28,9 @@ src/release/2018-09/sample_query.json
 *.swp
 doc/labguide/Korean/~$S Korea AI ML Immersion Day Hands-on PilHoKim 8th October 2018.docx
 doc/labguide/Korean/~$S Korea AI ML Immersion Day Hands-on PilHoKim 23rd November 2018.docx
+
+# Dataset
+
+genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/dataset/msmarco/
+genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/dataset/translated/
+genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/dataset/model/

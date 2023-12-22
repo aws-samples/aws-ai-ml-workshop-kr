@@ -41,7 +41,7 @@ from multiprocessing.pool import ThreadPool
 class prompt_repo():
 
     template_types = ["web_search", "sci_fact", "fiqa", "trec_news"]
-    prompt_types = ["answer_only", "answer_with_ref", "original"]
+    prompt_types = ["answer_only", "answer_with_ref", "original", "ko_answer_only"]
     
     
     #First, find the paragraphs or sentences from the context that are most relevant to answering the question, 
@@ -127,6 +127,27 @@ class prompt_repo():
 
             If the answer is not in the context, just say "I don't know"
             \n\nAssistant:"""
+        
+        if prompt_type == "ko_answer_only":
+            
+            prompt = """
+            \n\nHuman:
+            You are a master answer bot designed to answer software developer's questions.
+            I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
+
+            Here is the context: <context>{context}</context>
+            
+            First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
+            Then, answer the question as much as you can.
+
+            Skip the preamble and go straight into the answer.
+            Don't insert any XML tag such as <context> and </context> when answering.
+            
+            Here is the question: <question>{question}</question>
+
+            Answer in Korean.
+            If the question cannot be answered by the context, say "No relevant context".
+            \n\nAssistant: Here is the answer. """
 
         prompt_template = PromptTemplate(
             template=prompt, input_variables=["context", "question"]
@@ -592,7 +613,7 @@ class retriever_utils():
                 exceed_flag = True
                 splited_docs = cls.text_splitter.split_documents([context])
                 if kwargs["verbose"]:
-                    print(f"\n[Exeeds EMB token limit] Number of chunk_docs after split and chunking= {len(splited_docs)}\n")
+                    print(f"\n[Exeeds ReRanker token limit] Number of chunk_docs after split and chunking= {len(splited_docs)}\n")
 
                 partial_set, length = [], []
                 for splited_doc in splited_docs:
