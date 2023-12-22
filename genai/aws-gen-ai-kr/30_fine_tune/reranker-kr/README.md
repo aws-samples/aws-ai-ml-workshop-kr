@@ -1,17 +1,17 @@
 <h1 align="center">Korean Reranker on AWS</h1>
 <p align="center">
-<!--     <a href="https://github.com/FlagOpen/FlagEmbedding">
+    <a href="https://github.com/aws-samples">
             <img alt="Build" src="https://img.shields.io/badge/Contribution-Welcome-blue">
-    </a> -->
-    <a href="https://github.com/FlagOpen/FlagEmbedding/blob/master/LICENSE">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
         <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
     </a>
 <!--     <a href="https://huggingface.co/C-MTEB">
         <img alt="Build" src="https://img.shields.io/badge/C_MTEB-🤗-yellow">
     </a> -->
-<!--     <a href="https://github.com/FlagOpen/FlagEmbedding/tree/master/FlagEmbedding/baai_general_embedding">
-        <img alt="Build" src="https://img.shields.io/badge/FlagEmbedding-1.1-red">
-    </a> -->
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
+        <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
+    </a>
 </p>
 
 ### **한국어 Reranker** 개발을 위한 파인튜닝 가이드를 제시합니다.
@@ -98,4 +98,4 @@
 - - -
 
 ## 7. License
-- <span style="#FF69B4;"> FlagEmbedding is licensed under the [MIT License](https://github.com/FlagOpen/FlagEmbedding/blob/master/LICENSE). </span>
+- <span style="#FF69B4;"> FlagEmbedding is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE). </span>
