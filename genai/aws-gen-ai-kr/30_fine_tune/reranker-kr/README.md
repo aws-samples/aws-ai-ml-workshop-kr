@@ -122,6 +122,17 @@ print (f'Response: {out}')
     - 해당 데이터 셋은 영문으로 구성되어 있습니다.
     - Amazon Translate 기반으로 번역하여 활용하였습니다.
     
+#### <span style="#FF69B4;"> Format </span>
+```
+{"query": str, "pos": List[str], "neg": List[str]}
+```
+- Query는 질문이고, pos는 긍정 텍스트 목록, neg는 부정 텍스트 목록입니다. 쿼리에 대한 부정 텍스트가 없는 경우 전체 말뭉치에서 일부를 무작위로 추출하여 부정 텍스트로 사용할 수 있습니다.
+
+#### <span style="#FF69B4;"> Example </span>
+```
+{"query": "대한민국의 수도는?", "pos": ["미국의 수도는 워싱턴이고, 일본은 도교이며 한국은 서울이다."], "neg": ["미국의 수도는 워싱턴이고, 일본은 도교이며 북한은 평양이다."]}
+```
+    
 - - -
 
 ## 5. Performance
