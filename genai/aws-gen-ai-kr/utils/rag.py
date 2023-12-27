@@ -820,7 +820,7 @@ class retriever_utils():
 
         similar_docs = cls.get_ensemble_results(
             doc_lists=[similar_docs_semantic, similar_docs_keyword],
-            weights=kwargs.get("ensemble_weights", [.5, .5]),
+            weights=kwargs.get("ensemble_weights", [.51, .49]),
             algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
             c=60,
             k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
@@ -1024,7 +1024,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     minimum_should_match = 0
     filter = []
     fusion_algorithm: str
-    ensemble_weights: List
+    ensemble_weights = [0.51, 0.49]
     verbose = False
     async_mode = True
     reranker = False
@@ -1063,6 +1063,9 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.filter = []
 
     def _get_relevant_documents(self, query: str, *, run_manager: CallbackManagerForRetrieverRun) -> List[Document]:
+        
+        
+        print ("ensemble_weights", self.ensemble_weights)
 
         search_hybrid_result = retriever_utils.search_hybrid(
             query=query,
