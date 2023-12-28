@@ -86,7 +86,7 @@ payload = json.dumps(
 response = runtime_client.invoke_endpoint(
     EndpointName="<endpoint-name>",
     ContentType="application/json",
-    Accept=application/json",
+    Accept="application/json",
     Body=payload
 )
 ## deserialization
