@@ -1064,9 +1064,6 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 
     def _get_relevant_documents(self, query: str, *, run_manager: CallbackManagerForRetrieverRun) -> List[Document]:
         
-        
-        print ("ensemble_weights", self.ensemble_weights)
-
         search_hybrid_result = retriever_utils.search_hybrid(
             query=query,
             k=self.k,

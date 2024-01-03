@@ -14,8 +14,8 @@
     </a>
 </p>
 
-### **한국어 Reranker** 개발을 위한 파인튜닝 가이드를 제시합니다.
-ko-reranker는 [BAAI/bge-reranker-larger](https://huggingface.co/BAAI/bge-reranker-large) 기반 한국어 데이터에 대한 fine-tuned model 입니다. 
+### **한국어 Reranker** 개발을 위한 **[Amazon SageMaker Distributed Data Parallel (SMDDP)](https://docs.aws.amazon.com/sagemaker/latest/dg/data-parallel-intro.html)** 기반 파인튜닝 가이드를 제시합니다.
+ko-reranker는 [BAAI/bge-reranker-larger](https://huggingface.co/BAAI/bge-reranker-large) 기반으로 한국어 데이터에 대해 fine-tuned된 model 입니다.
 
 - - -
 
