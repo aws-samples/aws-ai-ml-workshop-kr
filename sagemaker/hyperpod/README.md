@@ -445,7 +445,7 @@
         --num_heads=32 \ # 7b: 32 13b: 40 70b: 64
         --model_type=llama_v2 \
         --tokenizer="hf-internal-testing/llama-tokenizer" \
-        --checkpoint_freq=50 \
+        --checkpoint_freq=500 \
         --validation_freq=500 \
         --checkpoint_dir=./checkpoints \
         --train_batch_size=1 \
