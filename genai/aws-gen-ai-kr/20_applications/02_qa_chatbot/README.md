@@ -135,7 +135,7 @@
 
 - ##### **<div id="HyDE"><span style="#FF69B4;"> HyDE (Hypothetical Document Embeddings) - To improve context retrieval</span></div>**        
         
-    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="400" height="200">
+    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="300" height="450">
     - Revolutionising Search with Hypothetical Document Embeddings
     - context를 얻을 때, query 바로 이용해서 vector search를 하지 않고 query에 대한 답을 llm에게 얻고(RAG 쓰지 않는다) 이 답을 가지고 vector search를 하여 context를 얻는다.
     - 즉, 질문과 유사한 context를 찾을 것이냐 vs (실제 정답이 아닐지라도) hypothetical 답변과 비슷한 context를 찾을 것이냐 이다.
@@ -161,7 +161,7 @@
     </a>
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
         <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
-    </a> - 한국어 데이터 기반 파인튜닝 모델
+    </a>
     - [blog] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83)
     - [blog] [Better RAG with LOTR-Lord of Retriever](https://blog.lancedb.com/better-rag-with-lotr-lord-of-retriever-23c8336b9a35)
     - [blog] [Rerankers and Two-Stage Retrieval](https://www.pinecone.io/learn/series/rag/rerankers/)
