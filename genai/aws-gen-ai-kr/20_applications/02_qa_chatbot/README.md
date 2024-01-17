@@ -97,6 +97,7 @@
 
 - ##### <span style="#FF69B4;"> **Hybrid Search** (Lexical + Semantic search)</span>
     - <img src="../../imgs/advanced-rag/hybrid-fusion.png"  width="300" height="450">
+    - <img src="../../imgs/advanced-rag/hybrid-fusion.png">
     - [vod] (한국어) [Hybrid Search using Amazon Bedrock and OpenSearch](https://kr-resources.awscloud.com/kr-on-demand/kr-fy23-q4-genai-session-03-video)
     - [vod] [Advanced RAG 03 - Hybrid Search BM25 & Ensembles](https://www.youtube.com/watch?v=lYxGYXjfrNI&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=11)
     - [sample codes - aws] [Hybrid-Fusion](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/01_rag_hybrid_search.ipynb)
