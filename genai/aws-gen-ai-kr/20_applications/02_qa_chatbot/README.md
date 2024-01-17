@@ -128,7 +128,7 @@
 - ##### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
     - <div id="RAG-Fusion">RAG-Fusion - Based on a user question, multiple sub queries are generated</div>
         
-        - <img src="../../imgs/advanced-rag/rag-fusion.png"  width="300" height="450">
+        - <img src="../../imgs/advanced-rag/rag-fusion.png"  width="300" height="350">
         - [vod] [Advanced RAG 06 - RAG Fusion](https://www.youtube.com/watch?v=GchC5WxeXGc&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=13)
         - [blog] [Forget RAG, the Future is RAG-Fusion](https://towardsdatascience.com/forget-rag-the-future-is-rag-fusion-1147298d8ad1)
         - [paper] [Query Rewriting for Retrieval-Augmented Large Language Models, Xinbei *et al*., 2023](https://arxiv.org/pdf/2305.14283.pdf)
