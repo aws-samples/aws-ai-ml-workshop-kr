@@ -1,3 +1,4 @@
+<h1 align="left"><b>Under Construction</b></h1>
 <h1 align="left"><b>Retrieval-Augmented Generation (RAG) for Large Language Models on AWS</b></h1>
 <p align="center">
     <a href="https://github.com/aws-samples">
@@ -9,18 +10,25 @@
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot">
         <img alt="Build" src="https://img.shields.io/badge/AdvancedRAG-1.0-red">
     </a>
-    <a href="https://huggingface.co/Dongjin-kr/ko-reranker">
-        <img alt="Build" src="https://img.shields.io/badge/KoReranker-🤗-yellow">
-    </a>
-    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
-        <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
-    </a>
 </p>
 
 - - -
 
-## **Overview**
+## <div id="Contents">**Contents**</div>
+- [Overview](#Overview)
+- [Hands-On List](#Hands-On-List)
+- [Usage](#Usage)
+- Learning Resources
+    - [Reading and Watching List](#Reading-and-Watching-List)
+    - [What Should We Know](#What-Should-We-Know)
+    - [Building Production-Ready RAG Apps](#Building-Production-Ready-RAG-Apps)
+- [Citation](#Citation)
+- [Contributors](#Contributors)
+- [License](#License)
 
+- - -
+
+## <div id="Overview">**Overview**</div>
 - ##### <span style="#FF69B4;"> Retrieval-Augmented Generation (RAG)는 LLM의 답변 생성에 외부 지식을 활용하는 것을 의미한다. </span>
 - ##### <span style="#FF69B4;"> RAG는 특히 knowledge-intensive task에서 답변 정확도를 향상시키고 hallucination을 감소시키는 것으로 알려져 있다. </span>
 - ##### <span style="#FF69B4;"> 하지만 semantic vector search 기반의 naive RAG의 경우 여전히 부족한 답변의 정확도가 문제가 되고 있고 이는 real-world production으로의 이동을 막는 장애물이 되고 있다.</span>
@@ -29,45 +37,61 @@
 - ##### <span style="color:blue"> 따라서 이 Repositroy는 **양질의 기술 선별, 기술에 대한 설명 및 aws 기반 sample codes 제공을 통해, 고객의 RAG 기반 workload의 생산성 향상을 목적으로 한다.** </span>
 - - -
 
-## **Hands-On List**
-- ##### <span style="#FF69B4;"> [Setting up the development environment](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/00_setup/setup.ipynb) - 핸즈온 수행을 위한 환경설정</span>
-- ##### <span style="#FF69B4;"> [Setting up the development environment](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/00_setup) - 핸즈온 수행을 위한 환경설정</span>
-
+## <div id="Hands-On-List">**Hands-On List**</div>
+- ##### <span style="#FF69B4;"> [**Setting up the development environment**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/00_setup) - 핸즈온 수행을 위한 환경설정</span>
+    - [Role, Model-Access, Packages](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/00_setup/setup.ipynb)
+    - [OpenSearch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/00_setup/setup-%08opensearch.ipynb)
+- ##### <span style="#FF69B4;"> [**Document Preprocessing**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/01_preprocess_docs) - 문서 전처리 및 OpenSearch기반 vectorDB 설정</span>
+- ##### <span style="#FF69B4;"> [**Advanced RAG**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag) - Amazon Bedrock + OpenSearch + LangChain + SageMaker 기반 Advanced RAG 구현</span>
+    - [Hybrid-Fusion (Semantic + Lexical)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/01_rag_hybrid_search.ipynb)
+    - [ReRanker](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/02_rag_reranker.ipynb)
+    - [RAG-Fusion (Query-rewriting)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/03_rag_rag_fusion.ipynb)
+    - [Hypothetical Document Embeddings (HyDE)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/04_rag_hyde.ipynb)
+    - [Parent-Documents](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/05_rag_parent_document.ipynb)
+- ##### <span style="#FF69B4;"> [**Chatbot**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/03_chatbot) - Advanced RAG 엔진 기반 chatbot 구현</span>
+- ##### <span style="#FF69B4;"> [**Web-UI**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui) - Streamlit 기반 application 생성</span>
+- ##### <span style="#FF69B4;"> [**Evaluation**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation) - Automatic and systematic evaluation</span>
+    - [Create-Ground-Truth](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/01_create_ground_truth.ipynb)
+    - [Evaluator](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/02_evaluation.ipynb)
 - - -
 
-## **Usage**
+## <div id="Usage">**Usage**</div>
 - ##### <span style="color:red"> 반드시 해당 링크를 통해 환경세팅을 완료해 주세요 ==> [Env. setting](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/00_setup/setup.ipynb) </span>
 - - -
 
-## **Reading and Watching List**
+## <div id="Reading-and-Watching-List">**Reading and Watching List**</div>
 - ##### <span style="#FF69B4;"> [READ] [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997v1)</span>
 - ##### <span style="#FF69B4;"> [READ] [Practical Considerations in RAG Application Design](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)</span>
 - ##### <span style="#FF69B4;"> [READ] [Why Your RAG Is Not Reliable in a Production Environment](https://towardsdatascience.com/why-your-rag-is-not-reliable-in-a-production-environment-9e6a73b3eddb)</span>
 - ##### <span style="#FF69B4;"> [READ] [A Guide on 12 Tuning Strategies for Production-Ready RAG Applications](https://towardsdatascience.com/a-guide-on-12-tuning-strategies-for-production-ready-rag-applications-7ca646833439)</span>
 - ##### <span style="#FF69B4;"> [READ] [5 Blog Posts To Become a RAG Master](https://levelup.gitconnected.com/5-blog-posts-to-become-a-rag-master-d6004c6150d0)</span>
 
-- ##### <span style="#FF69B4;"> [WATCH] [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)</span>
+- ##### <span style="#FF69B4;"> [WATCH] (한국어) [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)</span>
 - ##### <span style="#FF69B4;"> [WATCH] [Building Production-Ready RAG Apps](https://www.youtube.com/watch?v=TRjq7t2Ms5I)</span>
 - ##### <span style="#FF69B4;"> [WATCH] [Use RAG to improve responses in generative AI applications - re:Invent session](https://www.youtube.com/watch?v=N0tlOXZwrSs) | [post](https://www.linkedin.com/posts/manikhanuja_aws-reinvent-2023-use-rag-to-improve-responses-activity-7137694254964903937-QCua/?utm_source=share&utm_medium=member_desktop) | [git](https://github.com/aws-samples/amazon-bedrock-samples/blob/main/knowledge-bases/1_managed-rag-kb-retrieve-generate-api.ipynb) | </span>
 - - -
 
-## **What Should We Know**
+## <div id="What-Should-We-Know">**What Should We Know**</div>
 - ##### <span style="#FF69B4;"> **Lost in Middle** Phenomenon in RAG </span>
+    - <img src="../../imgs/advanced-rag/Lost in Middle.png"  width="400" height="550">
     - [paper] [Lost in the Middle: How Language Models Use Long Contexts](https://www-cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf)
     - [blog] [Lost in the Middle: How Language Models Use Long Contexts](https://medium.datadriveninvestor.com/lost-in-the-middle-how-language-models-use-long-contexts-9dd599d465be)
     - [blog] [Overcome Lost In Middle Phenomenon In RAG Using LongContextRetriver](https://medium.aiplanet.com/overcome-lost-in-middle-phenomenon-in-rag-using-longcontextretriver-2334dc022f0e)
     - [blog] [LLM의 Context Window Size가 크다고 좋은 것일까?](https://moon-walker.medium.com/llm%EC%9D%98-context-window-size%EA%B0%80-%ED%81%AC%EB%8B%A4%EA%B3%A0-%EC%A2%8B%EC%9D%80-%EA%B2%83%EC%9D%BC%EA%B9%8C-57870a3e315e)    
 ----
 
-## **Building Production-Ready RAG Apps**
+## <div id="Building-Production-Ready-RAG-Apps">**Building Production-Ready RAG Apps**</div>
 #### **1. Table stakers**
 - ##### <span style="#FF69B4;"> **Better Parsers and Chunk size**</span>
-    - [LLM based context splitter for large documents](https://medium.com/@ayhamboucher/llm-based-context-splitter-for-large-documents-445d3f02b01b)
-    - [Accuracy by chunk sizes](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)
+    - [blog] [LLM based context splitter for large documents](https://medium.com/@ayhamboucher/llm-based-context-splitter-for-large-documents-445d3f02b01b)
+    - [blog] [Accuracy by chunk sizes](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)
+    - [blog] [Semantic chunking in practice](https://boudhayan-dev.medium.com/semantic-chunking-in-practice-23a8bc33d56d)
     - [**llmsherpa**](https://github.com/nlmatics/llmsherpa) - Mastering PDFs: Extracting Sections, Headings, Paragraphs, and Tables with Cutting-Edge Parser (PDF chunking) - | [blog](https://blog.llamaindex.ai/mastering-pdfs-extracting-sections-headings-paragraphs-and-tables-with-cutting-edge-parser-faea18870125) |
     - [**Stanza**](https://stanfordnlp.github.io/stanza/) – A Python NLP Package for Many Human Languages (Sentence based spliter) - | [git](https://github.com/nlmatics/llmsherpa) |
 
 - ##### <span style="#FF69B4;"> **Hybrid Search** (Lexical + Semantic search)</span>
+    - <img src="../../imgs/advanced-rag/hybrid-fusion.png"  width="300" height="450">
+    - [vod] (한국어) [Hybrid Search using Amazon Bedrock and OpenSearch](https://kr-resources.awscloud.com/kr-on-demand/kr-fy23-q4-genai-session-03-video)
     - [vod] [Advanced RAG 03 - Hybrid Search BM25 & Ensembles](https://www.youtube.com/watch?v=lYxGYXjfrNI&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=11)
     - [sample codes - aws] [Hybrid-Fusion](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/01_rag_hybrid_search.ipynb)
     - [blog] [Improving Retrieval Performance in RAG Pipelines with Hybrid Search](https://towardsdatascience.com/improving-retrieval-performance-in-rag-pipelines-with-hybrid-search-c75203c2f2f5)
@@ -78,6 +102,8 @@
         
 - ##### <span style="#FF69B4;"> **Metadata Filters**</span>
     - Leverage your document metadata (self-query)
+        - <img src="../../imgs/advanced-rag/self-query-1.png"  width="400" height="550">
+        - <img src="../../imgs/advanced-rag/self-query-2.png"  width="400" height="550">
         - [vod] [Advanced RAG 01 - Self Querying Retrieval](https://www.youtube.com/watch?v=f4LeWlt3T8Y&list=PLJKSWzIAY6jCl7kY-Y8jEW6o0FW9Dtr9K&index=73&t=8s)
         - [sample codes] [selfQueryingRetriever_QAChains](https://github.com/insightbuilder/python_de_learners_data/blob/main/code_script_notebooks/projects/exploring_bard/selfQueryingRetriever_QAChains.ipynb?source=post_page-----cf12f3eed1f3--------------------------------)
         - [langchain] [Self-querying](https://python.langchain.com/docs/modules/data_connection/retrievers/self_query/)
@@ -93,179 +119,81 @@
      - [blog] [Revolutionizing RAG with Enhanced PDF Structure Recognition](https://medium.com/@chatdocai/revolutionizing-rag-with-enhanced-pdf-structure-recognition-22227af87442)
 
 #### **2. Advanced Retrieval**
-
+- ##### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
+    - <div id="RAG-Fusion">RAG-Fusion - Based on a user question, multiple sub queries are generated</div>
         
+        - <img src="../../imgs/advanced-rag/rag-fusion.png"  width="300" height="450">
+        - [vod] [Advanced RAG 06 - RAG Fusion](https://www.youtube.com/watch?v=GchC5WxeXGc&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=13)
+        - [blog] [Forget RAG, the Future is RAG-Fusion](https://towardsdatascience.com/forget-rag-the-future-is-rag-fusion-1147298d8ad1)
+        - [paper] [Query Rewriting for Retrieval-Augmented Large Language Models, Xinbei *et al*., 2023](https://arxiv.org/pdf/2305.14283.pdf)
+        - [sample codes - aws] [RAG-Fusion](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/03_rag_rag_fusion.ipynb)
+        - [langchain] [template](https://github.com/langchain-ai/langchain/tree/master/templates/rag-fusion) | [implementation](https://github.com/langchain-ai/langchain/blob/master/cookbook/rag_fusion.ipynb)
+        - [prompt] [query-augmentation](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/utils/rag.py)
+    
+    - <div id="Step-Back-Prompting">Step-Back Prompting</div>
+        - [TBD]
+
+- ##### **<div id="HyDE"><span style="#FF69B4;"> HyDE (Hypothetical Document Embeddings) - To improve context retrieval</span></div>**        
         
-        
-
-
-
-
-
-
-
-
-
-
-
-## 0. Features
-- #### <span style="#FF69B4;"> Reranker는 임베딩 모델과 달리 질문과 문서를 입력으로 사용하며 임베딩 대신 유사도를 직접 출력합니다.</span>
-- #### <span style="#FF69B4;"> Reranker에 질문과 구절을 입력하면 연관성 점수를 얻을 수 있습니다.</span>
-- #### <span style="#FF69B4;"> Reranker는 CrossEntropy loss를 기반으로 최적화되므로 관련성 점수가 특정 범위에 국한되지 않습니다.</span>
-
-## 1. Usage
-
-- using Transformers
-```
-    def exp_normalize(x):
-      b = x.max()
-      y = np.exp(x - b)
-      return y / y.sum()
+    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="300" height="450">
+    - Revolutionising Search with Hypothetical Document Embeddings
+    - context를 얻을 때, query 바로 이용해서 vector search를 하지 않고 query에 대한 답을 llm에게 얻고(RAG 쓰지 않는다) 이 답을 가지고 vector search를 하여 context를 얻는다.
+    - 즉, 질문과 유사한 context를 찾을 것이냐 vs (실제 정답이 아닐지라도) hypothetical 답변과 비슷한 context를 찾을 것이냐 이다.
+    - 질문-답변 pair가 (의미상) 너무 다를 때, 이 방법이 잘 동작할 수 있음
+    - <img src="../../imgs/advanced-rag/hyde-1.png"  width="400" height="550">
+    - <img src="../../imgs/advanced-rag/hyde-2.png"  width="400" height="550">
+    - [vod] [Advanced RAG 05 - HyDE - Hypothetical Document Embeddings](https://www.youtube.com/watch?v=v_BnBEubv58&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=12)
+    - [sample codes - aws] [HyDE](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/04_rag_hyde.ipynb)
+    - [blog] [HYDE: Revolutionising Search with Hypothetical Document Embeddings](https://medium.com/prompt-engineering/hyde-revolutionising-search-with-hypothetical-document-embeddings-3474df795af8)
+    - [paper] [Precise Zero-Shot Dense Retrieval without Relevance Labels, Luyu *et al*., 2023](https://boston.lti.cs.cmu.edu/luyug/HyDE/HyDE.pdf)
+    - [description] [HyDE based semantic search enabled on the OpenAI forum](https://community.openai.com/t/hyde-based-semantic-search-enabled-on-the-openai-forum/361207)
+    - [langchain] [template](https://github.com/langchain-ai/langchain/tree/master/templates/hyde) | [implementation](https://github.com/langchain-ai/langchain/blob/master/cookbook/hypothetical_document_embeddings.ipynb) | [retriever](https://js.langchain.com/docs/integrations/retrievers/hyde)
+    - [prompt] [query-augmentation-hyde](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/utils/rag.py)
     
-    from transformers import AutoModelForSequenceClassification, AutoTokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
-    model = AutoModelForSequenceClassification.from_pretrained(model_path)
-    model.eval()
-    pairs = [["나는 너를 싫어해", "나는 너를 사랑해"], \
-             ["나는 너를 좋아해", "너에 대한 나의 감정은 사랑 일 수도 있어"]]
-    with torch.no_grad():
-        inputs = tokenizer(pairs, padding=True, truncation=True, return_tensors='pt', max_length=512)
-        scores = model(**inputs, return_dict=True).logits.view(-1, ).float()
-        scores = exp_normalize(scores.numpy())
-        print (f'first: {scores[0]}, second: {scores[1]}')
-```
-
-- using SageMaker
-```
-import sagemaker
-import boto3
-from sagemaker.huggingface import HuggingFaceModel
-try:
-	role = sagemaker.get_execution_role()
-except ValueError:
-	iam = boto3.client('iam')
-	role = iam.get_role(RoleName='sagemaker_execution_role')['Role']['Arn']
-# Hub Model configuration. https://huggingface.co/models
-hub = {
-	'HF_MODEL_ID':'Dongjin-kr/ko-reranker',
-	'HF_TASK':'text-classification'
-}
-# create Hugging Face Model Class
-huggingface_model = HuggingFaceModel(
-	transformers_version='4.28.1',
-	pytorch_version='2.0.0',
-	py_version='py310',
-	env=hub,
-	role=role, 
-)
-# deploy model to SageMaker Inference
-predictor = huggingface_model.deploy(
-	initial_instance_count=1, # number of instances
-	instance_type='ml.g5.large' # ec2 instance type
-)
-runtime_client = boto3.Session().client('sagemaker-runtime')
-payload = json.dumps(
-    {
-        "inputs": [
-            {"text": "나는 너를 싫어해", "text_pair": "나는 너를 사랑해"},
-            {"text": "나는 너를 좋아해", "text_pair": "너에 대한 나의 감정은 사랑 일 수도 있어"}
-        ]
-    }
-)
-response = runtime_client.invoke_endpoint(
-    EndpointName="<endpoint-name>",
-    ContentType="application/json",
-    Accept="application/json",
-    Body=payload
-)
-## deserialization
-out = json.loads(response['Body'].read().decode()) ## for json
-print (f'Response: {out}')
-```
-- - -
-
-## 2. Backgound
-- #### <span style="#FF69B4;"> **컨택스트 순서가 정확도에 영향 준다**([Lost in Middel, *Liu et al., 2023*](https://arxiv.org/pdf/2307.03172.pdf)) </span>
-
-- #### <span style="#FF69B4;"> [Reranker 사용해야 하는 이유](https://www.pinecone.io/learn/series/rag/rerankers/)</span>
-    - 현재 LLM은 context 많이 넣는다고 좋은거 아님, relevant한게 상위에 있어야 정답을 잘 말해준다
-    - Semantic search에서 사용하는 similarity(relevant) score가 정교하지 않다. (즉, 상위 랭커면 하위 랭커보다 항상 더 질문에 유사한 정보가 맞아?) 
-        * Embedding은 meaning behind document를 가지는 것에 특화되어 있다. 
-        * 질문과 정답이 의미상 같은건 아니다. ([Hypothetical Document Embeddings](https://medium.com/prompt-engineering/hyde-revolutionising-search-with-hypothetical-document-embeddings-3474df795af8))
-        * ANNs([Approximate Nearest Neighbors](https://towardsdatascience.com/comprehensive-guide-to-approximate-nearest-neighbors-algorithms-8b94f057d6b6)) 사용에 따른 패널티
-
-- - -
-
-## 3. Reranker models
-
-- #### <span style="#FF69B4;"> [Cohere] [Reranker](https://txt.cohere.com/rerank/)</span>
-- #### <span style="#FF69B4;"> [BAAI] [bge-reranker-large](https://huggingface.co/BAAI/bge-reranker-large)</span>
-- #### <span style="#FF69B4;"> [BAAI] [bge-reranker-base](https://huggingface.co/BAAI/bge-reranker-base)</span>
-
-- - -
-
-## 4. Dataset
-
-- #### <span style="#FF69B4;"> [msmarco-triplets](https://github.com/microsoft/MSMARCO-Passage-Ranking) </span>
-    - (Question, Answer, Negative)-Triplets from MS MARCO Passages dataset, 499,184 samples
-    - 해당 데이터 셋은 영문으로 구성되어 있습니다.
-    - Amazon Translate 기반으로 번역하여 활용하였습니다.
+- ##### **<div id="ReRanker"><span style="#FF69B4;"> ReRanker - To address “Lost in Middle”**
     
-#### <span style="#FF69B4;"> Format </span>
-```
-{"query": str, "pos": List[str], "neg": List[str]}
-```
-- Query는 질문이고, pos는 긍정 텍스트 목록, neg는 부정 텍스트 목록입니다. 쿼리에 대한 부정 텍스트가 없는 경우 전체 말뭉치에서 일부를 무작위로 추출하여 부정 텍스트로 사용할 수 있습니다.
+    - <img src="../../imgs/advanced-rag/reranker-1.png"  width="200" height="350">
+    - [vod] [RAG But Better: Rerankers with Cohere AI](https://www.youtube.com/watch?v=Uh9bYiVrW_s)
+    - [sample codes - aws] [ReRanker](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/02_rag_reranker.ipynb)
+    - [Korean ReRanker]
+    <a href="https://huggingface.co/Dongjin-kr/ko-reranker">
+        <img alt="Build" src="https://img.shields.io/badge/KoReranker-🤗-yellow">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
+        <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
+    </a> - 한국어 데이터 기반 파인튜닝 모델
+    - [blog] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83)
+    - [blog] [Better RAG with LOTR-Lord of Retriever](https://blog.lancedb.com/better-rag-with-lotr-lord-of-retriever-23c8336b9a35)
+    - [blog] [Rerankers and Two-Stage Retrieval](https://www.pinecone.io/learn/series/rag/rerankers/)
+        - 현재 LLM은 context 많이 넣는다고 좋은것이 아님, 질문에 relevant한 document가 context 상위에 있어야 정확한 정답을 생성 할 수 있음
+        - 하지만 semantic search 에서 사용하는 similarity(relevant) score가 정교 할까? (즉, 상위 랭커면 하위 랭커보다 항상 더 질문에 유사한 정보가 맞아?)를 생각해 보자
+        - 그렇지 않다.
+            - embedding은 meaning behind document를 표현하는 것에 특화되어 있다. 
+            - Query와 answer corresponding query 문서가 의미상 항상 같은건 아니다. (HyDE의 가정을 생각해 보자)
+            - 그리고 ANNs (Approximate Nearest Neighbor Search) 방식을 사용하기 때문에 정확하지 않아 
+        - Reranker는 이러한 문제에 대응할 수 있는 방법이다.
+            - reranker는 query와 document를 인풋으로 받고, 그에 대한 relevant score를 output
+                - <img src="../../imgs/advanced-rag/reranker-2.png"  width="500" height="650">
+            - 이는 doc에 대한 emb는 미리 다 해놓고, query에 대한 emb 계산 후, 이를 doc emb값과 비교하는 일반적인 semantic search scheme과는 다르다. 
+                - <img src="../../imgs/advanced-rag/reranker-3.png"  width="500" height="650">
+                - 이 방법의 경우 emb vector로 encoding 할 때, query를 고려할 수가 없다. (하나의 인풋으로 들어가면 attention mechanism에 의해서 query와 document 전체에 대한 relevant를 분석할 수 있다)
+            - 근데 이 방식은 속도가 느려다 (미리 doc에 대한 embedding 계산을 해 놓는게 아니니까)
+            - 그래서 two-stage retrieval system으로 접근한다.
+                - <img src="../../imgs/advanced-rag/reranker-4.png"  width="500" height="650">
 
-#### <span style="#FF69B4;"> Example </span>
-```
-{"query": "대한민국의 수도는?", "pos": ["미국의 수도는 워싱턴이고, 일본은 도교이며 한국은 서울이다."], "neg": ["미국의 수도는 워싱턴이고, 일본은 도교이며 북한은 평양이다."]}
-```
-    
-- - -
 
-## 5. Performance
-| Model                     | has-right-in-contexts | mrr (mean reciprocal rank) |
-|:---------------------------|:-----------------:|:--------------------------:|
-| without-reranker (default)| 0.93 | 0.80 |
-| with-reranker (bge-reranker-large)| 0.95 | 0.84 |
-| **with-reranker (fine-tuned using korean)** | **0.96** | **0.87** |
-
-- **evaluation set**:
-```code
-./dataset/evaluation/eval_dataset.csv
-```
-- **training parameters**: 
-
-```json
-{
-    "learning_rate": 5e-6,
-    "fp16": True,
-    "num_train_epochs": 3,
-    "per_device_train_batch_size": 1,
-    "gradient_accumulation_steps": 32,
-    "train_group_size": 3,
-    "max_len": 512,
-    "weight_decay": 0.01,
-}
-```
 
 - - -
 
-## 6. Acknowledgement
-- <span style="#FF69B4;"> Part of the code is developed based on [FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding/tree/master?tab=readme-ov-file) and [KoSimCSE-SageMaker](https://github.com/daekeun-ml/KoSimCSE-SageMaker/tree/7de6eefef8f1a646c664d0888319d17480a3ebe5).</span>
-
-- - -
-
-## 7. Citation
+## <div id="Citation">**Citation**</div>
 - <span style="#FF69B4;"> If you find this repository useful, please consider giving a star ⭐ and citation</span>
 
 - - -
 
-## 8. Contributors:
+## <div id="Contributors">**Contributors**</div>
 - <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | </span>
 
 - - -
 
-## 9. License
+## <div id="License">**License**</div>
 - <span style="#FF69B4;"> FlagEmbedding is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE). </span>
