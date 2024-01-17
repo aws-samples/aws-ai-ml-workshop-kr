@@ -10,6 +10,12 @@
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot">
         <img alt="Build" src="https://img.shields.io/badge/AdvancedRAG-1.0-red">
     </a>
+    <a href="https://huggingface.co/Dongjin-kr/ko-reranker">
+        <img alt="Build" src="https://img.shields.io/badge/KoReranker-🤗-yellow">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
+        <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
+    </a>
 </p>
 
 - - -
@@ -155,13 +161,8 @@
     - <img src="../../imgs/advanced-rag/reranker-1.png"  width="200" height="350">
     - [vod] [RAG But Better: Rerankers with Cohere AI](https://www.youtube.com/watch?v=Uh9bYiVrW_s)
     - [sample codes - aws] [ReRanker](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/02_rag_reranker.ipynb)
-    - [Korean ReRanker]
-    <a href="https://huggingface.co/Dongjin-kr/ko-reranker">
-        <img alt="Build" src="https://img.shields.io/badge/KoReranker-🤗-yellow">
-    </a>
-    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
-        <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
-    </a>
+    - [Korean ReRanker] [git](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr) | [huggingface](https://huggingface.co/Dongjin-kr/ko-reranker)
+
     - [blog] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83)
     - [blog] [Better RAG with LOTR-Lord of Retriever](https://blog.lancedb.com/better-rag-with-lotr-lord-of-retriever-23c8336b9a35)
     - [blog] [Rerankers and Two-Stage Retrieval](https://www.pinecone.io/learn/series/rag/rerankers/)
