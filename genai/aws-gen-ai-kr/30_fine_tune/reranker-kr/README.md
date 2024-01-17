@@ -179,4 +179,4 @@ print (f'Response: {out}')
 - - -
 
 ## 9. License
-- <span style="#FF69B4;"> FlagEmbedding is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE). </span>
+- <span style="#FF69B4;"> KoReranker is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE). </span>
