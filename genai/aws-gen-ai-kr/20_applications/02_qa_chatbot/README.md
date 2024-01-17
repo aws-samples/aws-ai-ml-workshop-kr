@@ -102,8 +102,8 @@
         
 - ##### <span style="#FF69B4;"> **Metadata Filters**</span>
     - Leverage your document metadata (self-query)
-        - <img src="../../imgs/advanced-rag/self-query-1.png"  width="400" height="550">
-        - <img src="../../imgs/advanced-rag/self-query-2.png"  width="400" height="550">
+        - <img src="../../imgs/advanced-rag/self-query-1.png"  width="400" height="200">
+        - <img src="../../imgs/advanced-rag/self-query-2.png"  width="400" height="200">
         - [vod] [Advanced RAG 01 - Self Querying Retrieval](https://www.youtube.com/watch?v=f4LeWlt3T8Y&list=PLJKSWzIAY6jCl7kY-Y8jEW6o0FW9Dtr9K&index=73&t=8s)
         - [sample codes] [selfQueryingRetriever_QAChains](https://github.com/insightbuilder/python_de_learners_data/blob/main/code_script_notebooks/projects/exploring_bard/selfQueryingRetriever_QAChains.ipynb?source=post_page-----cf12f3eed1f3--------------------------------)
         - [langchain] [Self-querying](https://python.langchain.com/docs/modules/data_connection/retrievers/self_query/)
@@ -135,13 +135,13 @@
 
 - ##### **<div id="HyDE"><span style="#FF69B4;"> HyDE (Hypothetical Document Embeddings) - To improve context retrieval</span></div>**        
         
-    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="300" height="450">
+    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="400" height="200">
     - Revolutionising Search with Hypothetical Document Embeddings
     - context를 얻을 때, query 바로 이용해서 vector search를 하지 않고 query에 대한 답을 llm에게 얻고(RAG 쓰지 않는다) 이 답을 가지고 vector search를 하여 context를 얻는다.
     - 즉, 질문과 유사한 context를 찾을 것이냐 vs (실제 정답이 아닐지라도) hypothetical 답변과 비슷한 context를 찾을 것이냐 이다.
     - 질문-답변 pair가 (의미상) 너무 다를 때, 이 방법이 잘 동작할 수 있음
-    - <img src="../../imgs/advanced-rag/hyde-1.png"  width="400" height="550">
-    - <img src="../../imgs/advanced-rag/hyde-2.png"  width="400" height="550">
+    - <img src="../../imgs/advanced-rag/hyde-1.png"  width="400" height="200">
+    - <img src="../../imgs/advanced-rag/hyde-2.png"  width="400" height="200">
     - [vod] [Advanced RAG 05 - HyDE - Hypothetical Document Embeddings](https://www.youtube.com/watch?v=v_BnBEubv58&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=12)
     - [sample codes - aws] [HyDE](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/04_rag_hyde.ipynb)
     - [blog] [HYDE: Revolutionising Search with Hypothetical Document Embeddings](https://medium.com/prompt-engineering/hyde-revolutionising-search-with-hypothetical-document-embeddings-3474df795af8)
@@ -173,13 +173,13 @@
             - 그리고 ANNs (Approximate Nearest Neighbor Search) 방식을 사용하기 때문에 정확하지 않아 
         - Reranker는 이러한 문제에 대응할 수 있는 방법이다.
             - reranker는 query와 document를 인풋으로 받고, 그에 대한 relevant score를 output
-                - <img src="../../imgs/advanced-rag/reranker-2.png"  width="500" height="650">
+                - <img src="../../imgs/advanced-rag/reranker-2.png"  width="400" height="200">
             - 이는 doc에 대한 emb는 미리 다 해놓고, query에 대한 emb 계산 후, 이를 doc emb값과 비교하는 일반적인 semantic search scheme과는 다르다. 
-                - <img src="../../imgs/advanced-rag/reranker-3.png"  width="500" height="650">
+                - <img src="../../imgs/advanced-rag/reranker-3.png"  width="400" height="200">
                 - 이 방법의 경우 emb vector로 encoding 할 때, query를 고려할 수가 없다. (하나의 인풋으로 들어가면 attention mechanism에 의해서 query와 document 전체에 대한 relevant를 분석할 수 있다)
             - 근데 이 방식은 속도가 느려다 (미리 doc에 대한 embedding 계산을 해 놓는게 아니니까)
             - 그래서 two-stage retrieval system으로 접근한다.
-                - <img src="../../imgs/advanced-rag/reranker-4.png"  width="500" height="650">
+                - <img src="../../imgs/advanced-rag/reranker-4.png"  width="400" height="200">
 
 
 
