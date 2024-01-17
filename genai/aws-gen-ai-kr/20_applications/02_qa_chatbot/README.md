@@ -141,7 +141,7 @@
 
 - ##### **<div id="HyDE"><span style="#FF69B4;"> HyDE (Hypothetical Document Embeddings) - To improve context retrieval</span></div>**        
         
-    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="300" height="450">
+    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="250" height="450">
     - Revolutionising Search with Hypothetical Document Embeddings
     - context를 얻을 때, query 바로 이용해서 vector search를 하지 않고 query에 대한 답을 llm에게 얻고(RAG 쓰지 않는다) 이 답을 가지고 vector search를 하여 context를 얻는다.
     - 즉, 질문과 유사한 context를 찾을 것이냐 vs (실제 정답이 아닐지라도) hypothetical 답변과 비슷한 context를 찾을 것이냐 이다.
