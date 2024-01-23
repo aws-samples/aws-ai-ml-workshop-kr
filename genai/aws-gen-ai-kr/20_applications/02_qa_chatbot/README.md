@@ -33,11 +33,11 @@
     - [What Should We Know](#What-Should-We-Know)
     - [Building Production-Ready RAG Apps](#Building-Production-Ready-RAG-Apps)
 
-        - [1. Table stakers](#Table-stakers)
-        - [2. Advanced Retrieval](#Advanced-Retrieval)
-        - [3. Fine-tuning - training](#Fine-tuning-training)
-        - [4. Fine-tuning - inference](#Fine-tuning-inference)
-        - [5. Evaluation](#Evaluation)
+        - [1. Table stakers](##Table-stakers)
+        - [2. Advanced Retrieval](##Advanced-Retrieval)
+        - [3. Fine-tuning - training](##Fine-tuning-training)
+        - [4. Fine-tuning - inference](##Fine-tuning-inference)
+        - [5. Evaluation](##Evaluation)
 
 - [Citation](#Citation)
 - [Contributors](#Contributors)
@@ -98,7 +98,6 @@
 ----
 
 ## <div id="Building-Production-Ready-RAG-Apps">**Building Production-Ready RAG Apps**</div>
-#### <div id="Table-stakers">**1. Table stakers**</div>
 ## <div id="Table-stakers">**1. Table stakers**</div>
 - ##### <span style="#FF69B4;"> **Better Parsers and Chunk size**</span>
     - [blog] [LLM based context splitter for large documents](https://medium.com/@ayhamboucher/llm-based-context-splitter-for-large-documents-445d3f02b01b)
