@@ -167,7 +167,7 @@
     
 - ##### **<div id="ReRanker"><span style="#FF69B4;"> ReRanker - To address “Lost in Middle”</span></span></span></div>**
     
-    - <img src="../../imgs/advanced-rag/reranker-1.png"  width="250">
+    - <img src="../../imgs/advanced-rag/reranker-1.png"  width="200">
     - [vod] [RAG But Better: Rerankers with Cohere AI](https://www.youtube.com/watch?v=Uh9bYiVrW_s)
     - [sample codes - aws] [ReRanker](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/02_rag_reranker.ipynb)
     - [Korean ReRanker] [git](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr) | [huggingface](https://huggingface.co/Dongjin-kr/ko-reranker)
@@ -229,11 +229,10 @@
     - [blog] [LlamaIndex: RAG Evaluation Showdown with GPT-4 vs. Open-Source Prometheus Model](https://blog.llamaindex.ai/llamaindex-rag-evaluation-showdown-with-gpt-4-vs-open-source-prometheus-model-14cdca608277)
     - [sample codes](https://github.com/run-llama/llama_index/blob/main/docs/examples/evaluation/prometheus_evaluation.ipynb)
     - [paper] [PROMETHEUS: INDUCING FINE-GRAINED EVALUATION CAPABILITY IN LANGUAGE MODELS, Seungone *et al.*, 2023](https://arxiv.org/pdf/2310.08491.pdf)
-        - <img src="../../imgs/advanced-rag/evaluation-1.png"  width="400" height="200">
-        - <img src="../../imgs/advanced-rag/evaluation-2.png"  width="400" height="200">
-        - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="400" height="200">
-        - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="400">
-        - <img src="../../imgs/advanced-rag/evaluation-3.png"  height="200">
+        - <img src="../../imgs/advanced-rag/evaluation-1.png"  width="500">
+        - <img src="../../imgs/advanced-rag/evaluation-2.png"  width="500">
+        - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="500">
+        \
 
 - - -
 
