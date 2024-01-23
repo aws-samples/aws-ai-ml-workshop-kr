@@ -110,14 +110,14 @@ def opensearch_pretty_print_documents(response):
         print('-' * 50)
 
  
-def put_parameter(boto3_clinet, parameter_name, parameter_value):
+def put_parameter(boto3_client, parameter_name, parameter_value):
 
     # Specify the parameter name, value, and type
     parameter_type = 'SecureString'
 
     try:
         # Put the parameter
-        response = boto3_clinet.put_parameter(
+        response = boto3_client.put_parameter(
             Name=parameter_name,
             Value=parameter_value,
             Type=parameter_type,
@@ -132,12 +132,12 @@ def put_parameter(boto3_clinet, parameter_name, parameter_value):
         print('Error storing parameter:', str(e))
     
 
-def get_parameter(boto3_clinet, parameter_name):
+def get_parameter(boto3_client, parameter_name):
     # Create a SSM Client
 
     try:
         # Get the parameter
-        response = boto3_clinet.get_parameter(
+        response = boto3_client.get_parameter(
             Name=parameter_name,
             WithDecryption=True  # Set to True if the parameter is a SecureString
         )

@@ -48,17 +48,17 @@ def get_opensearch_client():
     ssm = boto3.client("ssm", "us-east-1")
 
     opensearch_domain_endpoint = get_parameter(
-        boto3_clinet = ssm,
+        boto3_client = ssm,
         parameter_name = 'knox_opensearch_domain_endpoint',
     )
 
     opensearch_user_id = get_parameter(
-        boto3_clinet = ssm,
+        boto3_client = ssm,
         parameter_name = 'knox_opensearch_userid',
     )
 
     opensearch_user_password = get_parameter(
-        boto3_clinet = ssm,
+        boto3_client = ssm,
         parameter_name = 'knox_opensearch_password',
     )
 
