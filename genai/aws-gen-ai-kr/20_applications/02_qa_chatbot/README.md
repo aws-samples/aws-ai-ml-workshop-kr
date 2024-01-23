@@ -20,6 +20,10 @@
 
 - - -
 
+## <div id="Contents">**Updated**</div>
+
+- - -
+
 ## <div id="Contents">**Contents**</div>
 - [Overview](#Overview)
 - [Hands-On List](#Hands-On-List)
@@ -28,6 +32,11 @@
     - [Reading and Watching List](#Reading-and-Watching-List)
     - [What Should We Know](#What-Should-We-Know)
     - [Building Production-Ready RAG Apps](#Building-Production-Ready-RAG-Apps)
+        - [1. Table stakers](#Table-stakers)
+        - [2. Advanced Retrieval](#Advanced-Retrieval)
+        - [3. Fine-tuning - training](#Fine-tuning-training)
+        - [4. Fine-tuning - inference](#Fine-tuning-inference)
+        - [5. Evaluation](#Evaluation)
 - [Citation](#Citation)
 - [Contributors](#Contributors)
 - [License](#License)
@@ -87,7 +96,7 @@
 ----
 
 ## <div id="Building-Production-Ready-RAG-Apps">**Building Production-Ready RAG Apps**</div>
-#### **1. Table stakers**
+#### <div id="Table-stakers">**1. Table stakers**</div>
 - ##### <span style="#FF69B4;"> **Better Parsers and Chunk size**</span>
     - [blog] [LLM based context splitter for large documents](https://medium.com/@ayhamboucher/llm-based-context-splitter-for-large-documents-445d3f02b01b)
     - [blog] [Accuracy by chunk sizes](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)
@@ -124,7 +133,7 @@
     - [blog] [Working with Table Data in Documents: Tips and Tricks for LLM](https://medium.com/@easonlai888/working-with-table-data-in-documents-tips-and-tricks-for-llm-50f09d2c4e95)
      - [blog] [Revolutionizing RAG with Enhanced PDF Structure Recognition](https://medium.com/@chatdocai/revolutionizing-rag-with-enhanced-pdf-structure-recognition-22227af87442)
 
-#### **2. Advanced Retrieval**
+#### <div id="Advanced-Retrieval">**2. Advanced Retrieval**</div>
 - ##### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
     - <div id="RAG-Fusion">RAG-Fusion - Based on a user question, multiple sub queries are generated</div>
         
@@ -156,7 +165,7 @@
     - [langchain] [template](https://github.com/langchain-ai/langchain/tree/master/templates/hyde) | [implementation](https://github.com/langchain-ai/langchain/blob/master/cookbook/hypothetical_document_embeddings.ipynb) | [retriever](https://js.langchain.com/docs/integrations/retrievers/hyde)
     - [prompt] [query-augmentation-hyde](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/utils/rag.py)
     
-- ##### **<div id="ReRanker"><span style="#FF69B4;"> ReRanker - To address “Lost in Middle”**
+- ##### **<div id="ReRanker"><span style="#FF69B4;"> ReRanker - To address “Lost in Middle”</span></span></span></div>**
     
     - <img src="../../imgs/advanced-rag/reranker-1.png"  width="200" height="450">
     - [vod] [RAG But Better: Rerankers with Cohere AI](https://www.youtube.com/watch?v=Uh9bYiVrW_s)
@@ -182,7 +191,47 @@
             - 그래서 two-stage retrieval system으로 접근한다.
                 - <img src="../../imgs/advanced-rag/reranker-4.png"  width="400" height="200">
 
+- ##### **<div id="Parent-Documents"><span style="#FF69B4;"> Parent Documents - To balance between document search and generation performance</span></div>**
+    - The Limitations of Traditional Embeddings
+        - While traditional embeddings capture the essence of content, there’s an inherent challenge. As documents grow in size and complexity, representing their multifaceted nature in a single embedding can lead to a loss of specificity. It’s akin to trying to describe the plot of an epic novel in just one sentence; you might capture the overarching theme, but many nuances and subplots are left out.
+        - (한글) 기존 임베딩은 콘텐츠의 본질을 포착하지만 본질적인 문제가 있습니다. 문서의 크기와 복잡성이 증가함에 따라 단일 임베딩으로 문서의 다면적인 특성을 표현하면 구체성이 상실될 수 있습니다. 이는 서사시 소설의 줄거리를 단 한 문장으로 설명하려는 것과 비슷합니다. 중요한 주제를 포착할 수 있지만 많은 뉘앙스와 하위 플롯이 생략됩니다.
+    - [vod] [Advanced RAG 02 - Parent Document Retriever](https://www.youtube.com/watch?v=wQEl0GGxPcM)
+    - [sample codes - aws] [Parent-Documents](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/05_rag_parent_document.ipynb)
+    - [blog] [Advanced RAG- Providing Broader Context to LLMs Using ParentDocumentRetriever](https://medium.aiplanet.com/advanced-rag-providing-broader-context-to-llms-using-parentdocumentretriever-cc627762305a)
+    - [blog] [RAG and Parent Document Retrievers: Making Sense of Complex Contexts with Code](https://medium.com/ai-insights-cobet/rag-and-parent-document-retrievers-making-sense-of-complex-contexts-with-code-5bd5c3474a8a)
+    - <img src="../../imgs/advanced-rag/parent-doc.png"  width="400" height="200">
+    
+- ##### **<div id="Context-Compression"><span style="#FF69B4;"> Context Compression - To improve context clarity and address “Lost in Middle”</span></div>**
+    
+    - [vod] [Advanced RAG 04 - Contextual Compressors & Filters](https://www.youtube.com/watch?v=4sRigbRITF0&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=11)
+    - [vod] [Overcome Lost In Middle Phenomenon In RAG Using LongContextRetriver](https://medium.aiplanet.com/overcome-lost-in-middle-phenomenon-in-rag-using-longcontextretriver-2334dc022f0e)
+    - [blog] [Mastering RAG: A Comprehensive Guide to Document Compression Techniques and Pipelines](https://medium.com/ai-insights-cobet/mastering-rag-a-comprehensive-guide-to-document-compression-techniques-and-pipelines-b2b01ce7a64e)
+    - [langchain] [implementation](https://github.com/azharlabs/medium/blob/main/notebooks/Contextual_Compression_%2B_Filtering.ipynb?source=post_page-----b2b01ce7a64e--------------------------------)
 
+#### <div id="Fine-tuning-training">**3. Fine-tuning - training**</div>
+- ##### **Reranker**
+    - [ko-reranker] [git](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr) | [huggingface](https://huggingface.co/Dongjin-kr/ko-reranker)
+    - [BAAI/bge-reranker-large] [example](https://github.com/FlagOpen/FlagEmbedding/blob/master/examples/reranker/README.md) | [run.py](https://github.com/FlagOpen/FlagEmbedding/blob/master/FlagEmbedding/reranker/run.py) | [ddp in sagemaker](https://github.com/huggingface/notebooks/blob/main/sagemaker/04_distributed_training_model_parallelism/sagemaker-notebook.ipynb) | [dataset](https://github.com/FlagOpen/FlagEmbedding/blob/master/FlagEmbedding/reranker/README.md)
+    
+#### <div id="Fine-tuning-inference">**4. Fine-tuning - inference**</div>
+- ##### [blog] [Inference Llama 2 models with real-time response streaming using Amazon SageMaker](https://aws.amazon.com/ko/blogs/machine-learning/inference-llama-2-models-with-real-time-response-streaming-using-amazon-sagemaker/)
+
+
+#### <div id="Evaluation">**5. Evaluation**</div>
+- ##### [blog] [A 3-Step Approach to Evaluate a Retrieval Augmented Generation (RAG)](https://towardsdatascience.com/a-3-step-approach-to-evaluate-a-retrieval-augmented-generation-rag-5acf2aba86de)
+    - [Ground truth generator by LLM] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83) | [sample codes - aws](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/01_create_ground_truth.ipynb) 
+        - <img src="../../imgs/advanced-rag/evaluation-4.png"  width="400" height="200">
+        - <img src="../../imgs/advanced-rag/evaluation-5.png"  width="400" height="200">
+- ##### [blog] [Getting Started with LangSmith: A Step-by-Step Walkthrough](https://medium.com/@lei.shang/getting-started-with-langsmith-a-step-by-step-walkthrough-a5ca09adca43)
+- ##### [langchain] [Evaluator](https://python.langchain.com/docs/guides/evaluation/string/criteria_eval_chain)
+- ##### [Open source LLM based evaluator]
+    - [social](https://www.linkedin.com/posts/llamaindex_gpt-4-is-a-popular-choice-for-llm-evals-activity-7141517817421496320-5oWr/?utm_source=share&utm_medium=member_android)
+    - [blog] [LlamaIndex: RAG Evaluation Showdown with GPT-4 vs. Open-Source Prometheus Model](https://blog.llamaindex.ai/llamaindex-rag-evaluation-showdown-with-gpt-4-vs-open-source-prometheus-model-14cdca608277)
+    - [sample codes](https://github.com/run-llama/llama_index/blob/main/docs/examples/evaluation/prometheus_evaluation.ipynb)
+    - [paper] [PROMETHEUS: INDUCING FINE-GRAINED EVALUATION CAPABILITY IN LANGUAGE MODELS, Seungone *et al.*, 2023](https://arxiv.org/pdf/2310.08491.pdf)
+        - <img src="../../imgs/advanced-rag/evaluation-1.png"  width="400" height="200">
+        - <img src="../../imgs/advanced-rag/evaluation-2.png"  width="400" height="200">
+        - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="400" height="200">
 
 - - -
 
