@@ -167,7 +167,7 @@
     
 - ##### **<div id="ReRanker"><span style="#FF69B4;"> ReRanker - To address “Lost in Middle”</span></span></span></div>**
     
-    - <img src="../../imgs/advanced-rag/reranker-1.png"  width="200" height="450">
+    - <img src="../../imgs/advanced-rag/reranker-1.png"  width="300">
     - [vod] [RAG But Better: Rerankers with Cohere AI](https://www.youtube.com/watch?v=Uh9bYiVrW_s)
     - [sample codes - aws] [ReRanker](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/02_rag_reranker.ipynb)
     - [Korean ReRanker] [git](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr) | [huggingface](https://huggingface.co/Dongjin-kr/ko-reranker)
@@ -183,13 +183,13 @@
             - 그리고 ANNs (Approximate Nearest Neighbor Search) 방식을 사용하기 때문에 정확하지 않아 
         - Reranker는 이러한 문제에 대응할 수 있는 방법이다.
             - reranker는 query와 document를 인풋으로 받고, 그에 대한 relevant score를 output
-                - <img src="../../imgs/advanced-rag/reranker-2.png"  width="400" height="200">
+                - <img src="../../imgs/advanced-rag/reranker-2.png"  width="500">
             - 이는 doc에 대한 emb는 미리 다 해놓고, query에 대한 emb 계산 후, 이를 doc emb값과 비교하는 일반적인 semantic search scheme과는 다르다. 
-                - <img src="../../imgs/advanced-rag/reranker-3.png"  width="400" height="200">
+                - <img src="../../imgs/advanced-rag/reranker-3.png"  width="500">
                 - 이 방법의 경우 emb vector로 encoding 할 때, query를 고려할 수가 없다. (하나의 인풋으로 들어가면 attention mechanism에 의해서 query와 document 전체에 대한 relevant를 분석할 수 있다)
             - 근데 이 방식은 속도가 느려다 (미리 doc에 대한 embedding 계산을 해 놓는게 아니니까)
             - 그래서 two-stage retrieval system으로 접근한다.
-                - <img src="../../imgs/advanced-rag/reranker-4.png"  width="400" height="200">
+                - <img src="../../imgs/advanced-rag/reranker-4.png"  width="500">
 
 - ##### **<div id="Parent-Documents"><span style="#FF69B4;"> Parent Documents - To balance between document search and generation performance</span></div>**
     - The Limitations of Traditional Embeddings
