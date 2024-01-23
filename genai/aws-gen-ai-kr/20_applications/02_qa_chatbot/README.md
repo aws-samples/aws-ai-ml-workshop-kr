@@ -88,7 +88,7 @@
 
 ## <div id="What-Should-We-Know">**What Should We Know**</div>
 - ##### <span style="#FF69B4;"> **Lost in Middle** Phenomenon in RAG </span>
-    - <img src="../../imgs/advanced-rag/Lost in Middle.png"  width="400" height="200">
+    - <img src="../../imgs/advanced-rag/Lost in Middle.png"  width="500">
     - [paper] [Lost in the Middle: How Language Models Use Long Contexts](https://www-cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf)
     - [blog] [Lost in the Middle: How Language Models Use Long Contexts](https://medium.datadriveninvestor.com/lost-in-the-middle-how-language-models-use-long-contexts-9dd599d465be)
     - [blog] [Overcome Lost In Middle Phenomenon In RAG Using LongContextRetriver](https://medium.aiplanet.com/overcome-lost-in-middle-phenomenon-in-rag-using-longcontextretriver-2334dc022f0e)
@@ -105,7 +105,7 @@
     - [**Stanza**](https://stanfordnlp.github.io/stanza/) – A Python NLP Package for Many Human Languages (Sentence based spliter) - | [git](https://github.com/nlmatics/llmsherpa) |
 
 - ##### <span style="#FF69B4;"> **Hybrid Search** (Lexical + Semantic search)</span>
-    - <img src="../../imgs/advanced-rag/hybrid-fusion.png"  width="270" height="350">
+    - <img src="../../imgs/advanced-rag/hybrid-fusion.png"  width="400">
     - [vod] (한국어) [Hybrid Search using Amazon Bedrock and OpenSearch](https://kr-resources.awscloud.com/kr-on-demand/kr-fy23-q4-genai-session-03-video)
     - [vod] [Advanced RAG 03 - Hybrid Search BM25 & Ensembles](https://www.youtube.com/watch?v=lYxGYXjfrNI&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=11)
     - [sample codes - aws] [Hybrid-Fusion](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/01_rag_hybrid_search.ipynb)
@@ -117,8 +117,8 @@
         
 - ##### <span style="#FF69B4;"> **Metadata Filters**</span>
     - Leverage your document metadata (self-query)
-        - <img src="../../imgs/advanced-rag/self-query-1.png"  width="400" height="200">
-        - <img src="../../imgs/advanced-rag/self-query-2.png"  width="400" height="200">
+        - <img src="../../imgs/advanced-rag/self-query-1.png"  width="500">
+        - <img src="../../imgs/advanced-rag/self-query-2.png"  width="500">
         - [vod] [Advanced RAG 01 - Self Querying Retrieval](https://www.youtube.com/watch?v=f4LeWlt3T8Y&list=PLJKSWzIAY6jCl7kY-Y8jEW6o0FW9Dtr9K&index=73&t=8s)
         - [sample codes] [selfQueryingRetriever_QAChains](https://github.com/insightbuilder/python_de_learners_data/blob/main/code_script_notebooks/projects/exploring_bard/selfQueryingRetriever_QAChains.ipynb?source=post_page-----cf12f3eed1f3--------------------------------)
         - [langchain] [Self-querying](https://python.langchain.com/docs/modules/data_connection/retrievers/self_query/)
@@ -137,7 +137,7 @@
 - ##### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
     - <div id="RAG-Fusion">RAG-Fusion - Based on a user question, multiple sub queries are generated</div>
         
-        - <img src="../../imgs/advanced-rag/rag-fusion.png"  width="300" height="350">
+        - <img src="../../imgs/advanced-rag/rag-fusion.png"  width="300">
         - [vod] [Advanced RAG 06 - RAG Fusion](https://www.youtube.com/watch?v=GchC5WxeXGc&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=13)
         - [blog] [Forget RAG, the Future is RAG-Fusion](https://towardsdatascience.com/forget-rag-the-future-is-rag-fusion-1147298d8ad1)
         - [paper] [Query Rewriting for Retrieval-Augmented Large Language Models, Xinbei *et al*., 2023](https://arxiv.org/pdf/2305.14283.pdf)
@@ -232,6 +232,8 @@
         - <img src="../../imgs/advanced-rag/evaluation-1.png"  width="400" height="200">
         - <img src="../../imgs/advanced-rag/evaluation-2.png"  width="400" height="200">
         - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="400" height="200">
+        - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="400">
+        - <img src="../../imgs/advanced-rag/evaluation-3.png"  height="200">
 
 - - -
 
