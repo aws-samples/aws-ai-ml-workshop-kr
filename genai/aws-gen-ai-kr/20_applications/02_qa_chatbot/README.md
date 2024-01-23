@@ -150,13 +150,13 @@
 
 - ##### **<div id="HyDE"><span style="#FF69B4;"> HyDE (Hypothetical Document Embeddings) - To improve context retrieval</span></div>**        
         
-    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="250" height="450">
+    - <img src="../../imgs/advanced-rag/hyde-3.png"  width="300">
     - Revolutionising Search with Hypothetical Document Embeddings
     - context를 얻을 때, query 바로 이용해서 vector search를 하지 않고 query에 대한 답을 llm에게 얻고(RAG 쓰지 않는다) 이 답을 가지고 vector search를 하여 context를 얻는다.
     - 즉, 질문과 유사한 context를 찾을 것이냐 vs (실제 정답이 아닐지라도) hypothetical 답변과 비슷한 context를 찾을 것이냐 이다.
     - 질문-답변 pair가 (의미상) 너무 다를 때, 이 방법이 잘 동작할 수 있음
-    - <img src="../../imgs/advanced-rag/hyde-1.png"  width="400" height="200">
-    - <img src="../../imgs/advanced-rag/hyde-2.png"  width="400" height="200">
+    - <img src="../../imgs/advanced-rag/hyde-1.png"  width="500">
+    - <img src="../../imgs/advanced-rag/hyde-2.png"  width="500">
     - [vod] [Advanced RAG 05 - HyDE - Hypothetical Document Embeddings](https://www.youtube.com/watch?v=v_BnBEubv58&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=12)
     - [sample codes - aws] [HyDE](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/04_rag_hyde.ipynb)
     - [blog] [HYDE: Revolutionising Search with Hypothetical Document Embeddings](https://medium.com/prompt-engineering/hyde-revolutionising-search-with-hypothetical-document-embeddings-3474df795af8)
