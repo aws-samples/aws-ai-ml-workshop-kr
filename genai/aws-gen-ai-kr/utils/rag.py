@@ -454,6 +454,7 @@ class retriever_utils():
         rag_fusion_query.insert(0, kwargs["query"])
 
         if kwargs["verbose"]:
+            print("\n")
             print("===== RAG-Fusion Queries =====")
             print(rag_fusion_query)
 
@@ -548,6 +549,7 @@ class retriever_utils():
             k=kwargs["k"],
         )
         if kwargs["verbose"]:
+            print("\n")
             print("===== HyDE Answers =====")
             print(hyde_answers)
 
@@ -1063,7 +1065,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.filter = []
 
     def _get_relevant_documents(self, query: str, *, run_manager: CallbackManagerForRetrieverRun) -> List[Document]:
-        
+
         search_hybrid_result = retriever_utils.search_hybrid(
             query=query,
             k=self.k,
