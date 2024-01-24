@@ -32,7 +32,7 @@
     - [Reading and Watching List](#Reading-and-Watching-List)
     - [What Should We Know](#What-Should-We-Know)
     - [Building Production-Ready RAG Apps](#Building-Production-Ready-RAG-Apps)
-        - Table stakers
+        - [Table stakers](#Table-stakers)
         - Advanced Retrieval
         - Fine-tuning - training
         - Fine-tuning - inference
@@ -88,17 +88,6 @@
 - #### <span style="#FF69B4;"> [WATCH] (한국어) [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)</span>
 - #### <span style="#FF69B4;"> [WATCH] [Building Production-Ready RAG Apps](https://www.youtube.com/watch?v=TRjq7t2Ms5I)</span>
 - #### <span style="#FF69B4;"> [WATCH] [Use RAG to improve responses in generative AI applications - re:Invent session](https://www.youtube.com/watch?v=N0tlOXZwrSs) | [post](https://www.linkedin.com/posts/manikhanuja_aws-reinvent-2023-use-rag-to-improve-responses-activity-7137694254964903937-QCua/?utm_source=share&utm_medium=member_desktop) | [git](https://github.com/aws-samples/amazon-bedrock-samples/blob/main/knowledge-bases/1_managed-rag-kb-retrieve-generate-api.ipynb) | </span>
-
-## <div id="Reading-and-Watching-List">**Reading and Watching List**</div>
-- [READ] [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997v1)
-- [READ] [Practical Considerations in RAG Application Design](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)
-- [READ] [Why Your RAG Is Not Reliable in a Production Environment](https://towardsdatascience.com/why-your-rag-is-not-reliable-in-a-production-environment-9e6a73b3eddb)
-- [READ] [A Guide on 12 Tuning Strategies for Production-Ready RAG Applications](https://towardsdatascience.com/a-guide-on-12-tuning-strategies-for-production-ready-rag-applications-7ca646833439)
-- [READ] [5 Blog Posts To Become a RAG Master](https://levelup.gitconnected.com/5-blog-posts-to-become-a-rag-master-d6004c6150d0)
-
-- [WATCH] (한국어) [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)
-- [WATCH] [Building Production-Ready RAG Apps](https://www.youtube.com/watch?v=TRjq7t2Ms5I)
-- [WATCH] [Use RAG to improve responses in generative AI applications - re:Invent session](https://www.youtube.com/watch?v=N0tlOXZwrSs) | [post](https://www.linkedin.com/posts/manikhanuja_aws-reinvent-2023-use-rag-to-improve-responses-activity-7137694254964903937-QCua/?utm_source=share&utm_medium=member_desktop) | [git](https://github.com/aws-samples/amazon-bedrock-samples/blob/main/knowledge-bases/1_managed-rag-kb-retrieve-generate-api.ipynb) |
 - - -
 
 ## <div id="What-Should-We-Know">**What Should We Know**</div>
