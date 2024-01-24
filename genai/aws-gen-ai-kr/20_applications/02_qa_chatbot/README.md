@@ -141,7 +141,7 @@
     - [DocLLM](https://www.linkedin.com/feed/hashtag/?keywords=documentunderstanding&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7149987110010134528)
         - [paper](https://arxiv.org/abs/2401.00908) | [blog](https://artgor.medium.com/paper-review-docllm-a-layout-aware-generative-language-model-for-multimodal-document-06b5833e976b)
 
-#### <div id="Advanced-Retrieval">**2. Advanced Retrieval**</div>
+## <div id="Advanced-Retrieval">**2. Advanced Retrieval**</div>
 - ##### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
     - <div id="RAG-Fusion">RAG-Fusion - Based on a user question, multiple sub queries are generated</div>
         
