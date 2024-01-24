@@ -9,3 +9,5 @@ boto3
 awscli
 jq
 termcolor==1.1.0
+IPython
+opensearch-py
