@@ -276,8 +276,8 @@
 ## <div id="Contributors">**Contributors**</div>
 - <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)</span>
 - <span style="#FF69B4;"> **Gonsoo Moon** (AWS Sr. AI/ML Specislist Solutions Architect) | [Mail](mailto:moongons@amazon.com) | [Linkedin](https://www.linkedin.com/in/gonsoomoon/) | [Git](https://github.com/gonsoomoon-ml) | </span>
-- <span style="#FF69B4;"> **Youngjin Kim** (AWS Sr. Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/dongjin-ml) | </span>
-- <span style="#FF69B4;"> **Seungwon Choi** (AWS Asso. Solutions Architect) | [Mail](mailto:piepiesw@amazon.com) | [Linkedin](https://www.linkedin.com/in/seungwon-choi-8a74a6210/) | [Git](https://github.com/dongjin-ml) | </span>
+- <span style="#FF69B4;"> **Youngjin Kim** (AWS Sr. Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/comeddy) | </span>
+- <span style="#FF69B4;"> **Seungwon Choi** (AWS Asso. Solutions Architect) | [Mail](mailto:piepiesw@amazon.com) | [Linkedin](https://www.linkedin.com/in/seungwon-choi-8a74a6210/) | [Git](https://github.com/seungwon2) | </span>
 - - -
 
 ## <div id="License">**License**</div>
