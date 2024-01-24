@@ -57,37 +57,37 @@
 - - -
 
 ## <div id="Hands-On-List">**Hands-On List**</div>
-- ##### <span style="#FF69B4;"> [**Setting up the development environment**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/00_setup) - 핸즈온 수행을 위한 환경설정</span>
+- #### <span style="#FF69B4;"> [**Setting up the development environment**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/00_setup) - 핸즈온 수행을 위한 환경설정</span>
     - [Role, Model-Access, Packages](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/00_setup/setup.ipynb)
     - [OpenSearch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/00_setup/setup-%08opensearch.ipynb)
-- ##### <span style="#FF69B4;"> [**Document Preprocessing**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/01_preprocess_docs) - 문서 전처리 및 OpenSearch기반 vectorDB 설정</span>
-- ##### <span style="#FF69B4;"> [**Advanced RAG**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag) - Amazon Bedrock + OpenSearch + LangChain + SageMaker 기반 Advanced RAG 구현</span>
+- #### <span style="#FF69B4;"> [**Document Preprocessing**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/01_preprocess_docs) - 문서 전처리 및 OpenSearch기반 vectorDB 설정</span>
+- #### <span style="#FF69B4;"> [**Advanced RAG**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag) - Amazon Bedrock + OpenSearch + LangChain + SageMaker 기반 Advanced RAG 구현</span>
     - [Hybrid-Fusion (Semantic + Lexical)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/01_rag_hybrid_search.ipynb)
     - [ReRanker](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/02_rag_reranker.ipynb)
     - [RAG-Fusion (Query-rewriting)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/03_rag_rag_fusion.ipynb)
     - [Hypothetical Document Embeddings (HyDE)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/04_rag_hyde.ipynb)
     - [Parent-Documents](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/05_rag_parent_document.ipynb)
-- ##### <span style="#FF69B4;"> [**Chatbot**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/03_chatbot) - Advanced RAG 엔진 기반 chatbot 구현</span>
-- ##### <span style="#FF69B4;"> [**Web-UI**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui) - Streamlit 기반 application 생성</span>
-- ##### <span style="#FF69B4;"> [**Evaluation**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation) - Automatic and systematic evaluation</span>
+- #### <span style="#FF69B4;"> [**Chatbot**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/03_chatbot) - Advanced RAG 엔진 기반 chatbot 구현</span>
+- #### <span style="#FF69B4;"> [**Web-UI**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui) - Streamlit 기반 application 생성</span>
+- #### <span style="#FF69B4;"> [**Evaluation**](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation) - Automatic and systematic evaluation</span>
     - [Create-Ground-Truth](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/01_create_ground_truth.ipynb)
     - [Evaluator](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/02_evaluation.ipynb)
 - - -
 
 ## <div id="Usage">**Usage**</div>
-- ##### <span style="color:red"> 반드시 해당 링크를 통해 환경세팅을 완료해 주세요 ==> [Env. setting](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/00_setup/setup.ipynb) </span>
+- #### <span style="color:red"> 반드시 해당 링크를 통해 환경세팅을 완료해 주세요 ==> [Env. setting](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/00_setup/setup.ipynb) </span>
 - - -
 
 ## <div id="Reading-and-Watching-List">**Reading and Watching List**</div>
-- ##### <span style="#FF69B4;"> [READ] [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997v1)</span>
-- ##### <span style="#FF69B4;"> [READ] [Practical Considerations in RAG Application Design](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)</span>
-- ##### <span style="#FF69B4;"> [READ] [Why Your RAG Is Not Reliable in a Production Environment](https://towardsdatascience.com/why-your-rag-is-not-reliable-in-a-production-environment-9e6a73b3eddb)</span>
-- ##### <span style="#FF69B4;"> [READ] [A Guide on 12 Tuning Strategies for Production-Ready RAG Applications](https://towardsdatascience.com/a-guide-on-12-tuning-strategies-for-production-ready-rag-applications-7ca646833439)</span>
-- ##### <span style="#FF69B4;"> [READ] [5 Blog Posts To Become a RAG Master](https://levelup.gitconnected.com/5-blog-posts-to-become-a-rag-master-d6004c6150d0)</span>
+- #### <span style="#FF69B4;"> [READ] [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997v1)</span>
+- #### <span style="#FF69B4;"> [READ] [Practical Considerations in RAG Application Design](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)</span>
+- #### <span style="#FF69B4;"> [READ] [Why Your RAG Is Not Reliable in a Production Environment](https://towardsdatascience.com/why-your-rag-is-not-reliable-in-a-production-environment-9e6a73b3eddb)</span>
+- #### <span style="#FF69B4;"> [READ] [A Guide on 12 Tuning Strategies for Production-Ready RAG Applications](https://towardsdatascience.com/a-guide-on-12-tuning-strategies-for-production-ready-rag-applications-7ca646833439)</span>
+- #### <span style="#FF69B4;"> [READ] [5 Blog Posts To Become a RAG Master](https://levelup.gitconnected.com/5-blog-posts-to-become-a-rag-master-d6004c6150d0)</span>
 
-- ##### <span style="#FF69B4;"> [WATCH] (한국어) [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)</span>
-- ##### <span style="#FF69B4;"> [WATCH] [Building Production-Ready RAG Apps](https://www.youtube.com/watch?v=TRjq7t2Ms5I)</span>
-- ##### <span style="#FF69B4;"> [WATCH] [Use RAG to improve responses in generative AI applications - re:Invent session](https://www.youtube.com/watch?v=N0tlOXZwrSs) | [post](https://www.linkedin.com/posts/manikhanuja_aws-reinvent-2023-use-rag-to-improve-responses-activity-7137694254964903937-QCua/?utm_source=share&utm_medium=member_desktop) | [git](https://github.com/aws-samples/amazon-bedrock-samples/blob/main/knowledge-bases/1_managed-rag-kb-retrieve-generate-api.ipynb) | </span>
+- #### <span style="#FF69B4;"> [WATCH] (한국어) [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)</span>
+- #### <span style="#FF69B4;"> [WATCH] [Building Production-Ready RAG Apps](https://www.youtube.com/watch?v=TRjq7t2Ms5I)</span>
+- #### <span style="#FF69B4;"> [WATCH] [Use RAG to improve responses in generative AI applications - re:Invent session](https://www.youtube.com/watch?v=N0tlOXZwrSs) | [post](https://www.linkedin.com/posts/manikhanuja_aws-reinvent-2023-use-rag-to-improve-responses-activity-7137694254964903937-QCua/?utm_source=share&utm_medium=member_desktop) | [git](https://github.com/aws-samples/amazon-bedrock-samples/blob/main/knowledge-bases/1_managed-rag-kb-retrieve-generate-api.ipynb) | </span>
 - - -
 
 ## <div id="What-Should-We-Know">**What Should We Know**</div>
