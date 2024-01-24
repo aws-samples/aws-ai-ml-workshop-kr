@@ -15,7 +15,7 @@ for msg in st.session_state.messages:
     st.chat_message(msg["role"]).write(msg["content"])
 
 # 유저가 쓴 chat을 query라는 변수에 담음
-query = st.chat_input("Serach documentation")
+query = st.chat_input("Search documentation")
 if query:
     # Session에 메세지 저장
     st.session_state.messages.append({"role": "user", "content": query})
