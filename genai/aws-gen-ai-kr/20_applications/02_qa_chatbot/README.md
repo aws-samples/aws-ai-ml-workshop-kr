@@ -37,6 +37,10 @@
         - Fine-tuning - training
         - Fine-tuning - inference
         - Evaluation
+        - Prompt
+        - Text 2 SQL
+        - Cost savings
+        - Extras
 - [Citation](#Citation)
 - [Contributors](#Contributors)
 - [License](#License)
@@ -128,10 +132,14 @@
     - [Table Transformer](https://www.linkedin.com/posts/smockbrandon_github-microsofttable-transformer-table-activity-7138940321568096256-Sn0q?utm_source=share&utm_medium=member_desktop)
         - Parsing tables in PDFs is a super important RAG use case.
         - The Table Transformer model extracts tables from PDFs using object detection 📊
+        - [sample codes](https://github.com/run-llama/llama_index/blob/main/docs/examples/multi_modal/multi_modal_pdf_tables.ipynb) | [llamaindex - doc](https://docs.llamaindex.ai/en/latest/use_cases/multimodal.html#multi-modal-rag-on-pdf-s-with-tables-using-microsoft-table-transformer) | [demo](https://huggingface.co/spaces/nielsr/tatr-demo)
     - [blog] [Extract custom table from PDF with LLMs](https://medium.com/@knowledgrator/extract-custom-table-from-pdf-with-llms-2ad678c26200)
     - [blog] [RAG Pipeline Pitfalls: The Untold Challenges of Embedding Table](https://medium.com/towards-artificial-intelligence/rag-pipeline-pitfalls-the-untold-challenges-of-embedding-table-5296b2d8230a)
     - [blog] [Working with Table Data in Documents: Tips and Tricks for LLM](https://medium.com/@easonlai888/working-with-table-data-in-documents-tips-and-tricks-for-llm-50f09d2c4e95)
-     - [blog] [Revolutionizing RAG with Enhanced PDF Structure Recognition](https://medium.com/@chatdocai/revolutionizing-rag-with-enhanced-pdf-structure-recognition-22227af87442)
+    - [blog] [Revolutionizing RAG with Enhanced PDF Structure Recognition](https://medium.com/@chatdocai/revolutionizing-rag-with-enhanced-pdf-structure-recognition-22227af87442)
+    -[Streamlining Healthcare Compliance with AI] [blog](https://unstructured.io/blog/streamlining-healthcare-compliance-with-ai) | [social](https://www.linkedin.com/posts/langchain_streamlining-healthcare-compliance-with-ai-activity-7137914512187293696-7NOy/?utm_source=share&utm_medium=member_desktop)
+    - [DocLLM](https://www.linkedin.com/feed/hashtag/?keywords=documentunderstanding&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7149987110010134528)
+        - [paper](https://arxiv.org/abs/2401.00908) | [blog](https://artgor.medium.com/paper-review-docllm-a-layout-aware-generative-language-model-for-multimodal-document-06b5833e976b)
 
 #### <div id="Advanced-Retrieval">**2. Advanced Retrieval**</div>
 - ##### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
@@ -215,8 +223,6 @@
     
 #### <div id="Fine-tuning-inference">**4. Fine-tuning - inference**</div>
 - ##### [blog] [Inference Llama 2 models with real-time response streaming using Amazon SageMaker](https://aws.amazon.com/ko/blogs/machine-learning/inference-llama-2-models-with-real-time-response-streaming-using-amazon-sagemaker/)
-
-
 #### <div id="Evaluation">**5. Evaluation**</div>
 - ##### [blog] [A 3-Step Approach to Evaluate a Retrieval Augmented Generation (RAG)](https://towardsdatascience.com/a-3-step-approach-to-evaluate-a-retrieval-augmented-generation-rag-5acf2aba86de)
     - [Ground truth generator by LLM] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83) | [sample codes - aws](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/01_create_ground_truth.ipynb) 
@@ -232,7 +238,33 @@
         - <img src="../../imgs/advanced-rag/evaluation-1.png"  width="500">
         - <img src="../../imgs/advanced-rag/evaluation-2.png"  width="500">
         - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="500">
-        \
+
+#### <div id="Prompt">**6. Prompt**</div>
+- ##### [doc] [Claude Prompt Engineering Techniques Presentation](https://docs.anthropic.com/claude/docs/guide-to-anthropics-prompt-engineering-resources)
+- ##### [vod] [AWS re:Invent 2023 - Prompt engineering best practices for LLMs on Amazon Bedrock (AIM377)](https://www.youtube.com/watch?v=jlqgGkh1wzY)
+- ##### [doc] [Configuring GPT prompts for Claude](https://docs.anthropic.com/claude/docs/configuring-gpt-prompts-for-claude)
+- ##### [doc] [General prompt troubleshooting](https://docs.anthropic.com/claude/docs/prompt-troubleshooting-checklist)
+- ##### [Long context prompting for Claude 2.1] [blog](https://www.anthropic.com/news/claude-2-1-prompting) | [notebook](https://api.quip-amazon.com/2/blob/XOX9AAC3PwA/zj2IbNeII0t5nvwbMFVbaQ?name=01_long_contexts.html&oauth_token=U1dUOU1BemNoQ3A%3D%7C1735709347%7C6w8WNVbyTqtZwN9rVQNVVDcH%2Fdz1tN61fx%2B8pMMt1iA%3D&s=wtYdAYsaaDHe)
+    - Claude 2.1 recalls information very well across its 200,000 token context window
+    - However, the model can be reluctant to answer questions based on an individual sentence in a document, especially if that sentence has been injected or is out of place
+    - A minor prompting edit removes this reluctance and results in excellent performance on these tasks
+
+#### <div id="Prompt">**7. Text to SQL**</div>
+ - ##### [blog] [Generating value from enterprise data: Best practices for Text2SQL and generative AI](https://aws.amazon.com/ko/blogs/machine-learning/generating-value-from-enterprise-data-best-practices-for-text2sql-and-generative-ai/)
+ - ##### Using LLMs to interact with SQL Databases, [social](https://www.linkedin.com/posts/langchain_sql-langchain-activity-7155275453509894144-G8pj/?utm_source=share&utm_medium=member_android) | [langchain - doc](https://python.langchain.com/docs/use_cases/sql/)
+
+#### <div id="Prompt">**8. Cost savings**</div>
+- ##### [blog] [How to Cut RAG Costs by 80% Using Prompt Compression](https://towardsdatascience.com/how-to-cut-rag-costs-by-80-using-prompt-compression-877a07c6bedb)
+
+
+#### <div id="Prompt">**9. Extras**</div>
+- ##### Token limit issues
+    - [OpenAI token calculator](https://pub.towardsai.net/tokens-and-models-understanding-langchain-%EF%B8%8F-part-3-e471aececf19)
+    - [Embedding long inputs using weighed sum](https://github.com/openai/openai-cookbook/blob/main/examples/Embedding_long_inputs.ipynb)
+    - [langchain] [What to do when a token is overflow](https://github.com/langchain-ai/langchain/issues/12264)
+
+- ##### Langchain vs LlamaIndex
+    - [blog] [Comparing LangChain and LlamaIndex with 4 tasks](https://lmy.medium.com/comparing-langchain-and-llamaindex-with-4-tasks-2970140edf33)
 
 - - -
 
