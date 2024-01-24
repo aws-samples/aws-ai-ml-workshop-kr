@@ -48,12 +48,12 @@
 - - -
 
 ## <div id="Overview">**Overview**</div>
-- ##### <span style="#FF69B4;"> Retrieval-Augmented Generation (RAG)는 LLM의 답변 생성에 외부 지식을 활용하는 것을 의미한다. </span>
-- ##### <span style="#FF69B4;"> RAG는 특히 knowledge-intensive task에서 답변 정확도를 향상시키고 hallucination을 감소시키는 것으로 알려져 있다. </span>
-- ##### <span style="#FF69B4;"> 하지만 semantic vector search 기반의 naive RAG의 경우 여전히 부족한 답변의 정확도가 문제가 되고 있고 이는 real-world production으로의 이동을 막는 장애물이 되고 있다.</span>
-- ##### <span style="#FF69B4;"> 최근 들어 RAG의 한계를 극복하거나, 성능향상을 위한 기술적 발전이 계속 되고 있다.</span>
-- ##### <span style="#FF69B4;"> 이러한 자료들은 public하게 공개되어 있어 누구나 접근이 가능하나, 쏟아지는 자료 속에서 양질의 컨텐츠를 찾는 수고로움과, 러닝커브(이해 및 구현)가 필요하기에 이를 자신의 워크로드에 빠르게 적용하기 힘든 상황이다. </span>
-- ##### <span style="color:blue"> 따라서 이 Repositroy는 **양질의 기술 선별, 기술에 대한 설명 및 aws 기반 sample codes 제공을 통해, 고객의 RAG 기반 workload의 생산성 향상을 목적으로 한다.** </span>
+- #### <span style="#FF69B4;"> Retrieval-Augmented Generation (RAG)는 LLM의 답변 생성에 외부 지식을 활용하는 것을 의미한다. </span>
+- #### <span style="#FF69B4;"> RAG는 특히 knowledge-intensive task에서 답변 정확도를 향상시키고 hallucination을 감소시키는 것으로 알려져 있다. </span>
+- #### <span style="#FF69B4;"> 하지만 semantic vector search 기반의 naive RAG의 경우 여전히 부족한 답변의 정확도가 문제가 되고 있고 이는 real-world production으로의 이동을 막는 장애물이 되고 있다.</span>
+- #### <span style="#FF69B4;"> 최근 들어 RAG의 한계를 극복하거나, 성능향상을 위한 기술적 발전이 계속 되고 있다.</span>
+- #### <span style="#FF69B4;"> 이러한 자료들은 public하게 공개되어 있어 누구나 접근이 가능하나, 쏟아지는 자료 속에서 양질의 컨텐츠를 찾는 수고로움과, 러닝커브(이해 및 구현)가 필요하기에 이를 자신의 워크로드에 빠르게 적용하기 힘든 상황이다. </span>
+- #### <span style="color:blue"> 따라서 이 Repositroy는 **양질의 기술 선별, 기술에 대한 설명 및 aws 기반 sample codes 제공을 통해, 고객의 RAG 기반 workload의 생산성 향상을 목적으로 한다.** </span>
 - - -
 
 ## <div id="Hands-On-List">**Hands-On List**</div>
