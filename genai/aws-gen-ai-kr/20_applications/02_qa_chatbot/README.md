@@ -222,7 +222,7 @@
     - [BAAI/bge-reranker-large] [example](https://github.com/FlagOpen/FlagEmbedding/blob/master/examples/reranker/README.md) | [run.py](https://github.com/FlagOpen/FlagEmbedding/blob/master/FlagEmbedding/reranker/run.py) | [ddp in sagemaker](https://github.com/huggingface/notebooks/blob/main/sagemaker/04_distributed_training_model_parallelism/sagemaker-notebook.ipynb) | [dataset](https://github.com/FlagOpen/FlagEmbedding/blob/master/FlagEmbedding/reranker/README.md)
     
 ### <div id="Fine-tuning-inference">**4. Fine-tuning - inference**</div>
-- ##### [blog] [Inference Llama 2 models with real-time response streaming using Amazon SageMaker](https://aws.amazon.com/ko/blogs/machine-learning/inference-llama-2-models-with-real-time-response-streaming-using-amazon-sagemaker/)
+- #### [blog] [Inference Llama 2 models with real-time response streaming using Amazon SageMaker](https://aws.amazon.com/ko/blogs/machine-learning/inference-llama-2-models-with-real-time-response-streaming-using-amazon-sagemaker/)
 ### <div id="Evaluation">**5. Evaluation**</div>
 - #### [blog] [A 3-Step Approach to Evaluate a Retrieval Augmented Generation (RAG)](https://towardsdatascience.com/a-3-step-approach-to-evaluate-a-retrieval-augmented-generation-rag-5acf2aba86de)
     - [Ground truth generator by LLM] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83) | [sample codes - aws](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/01_create_ground_truth.ipynb) 
