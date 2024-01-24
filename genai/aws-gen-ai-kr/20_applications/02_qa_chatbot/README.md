@@ -91,7 +91,7 @@
 - - -
 
 ## <div id="What-Should-We-Know">**What Should We Know**</div>
-- ##### <span style="#FF69B4;"> **Lost in Middle** Phenomenon in RAG </span>
+- #### <span style="#FF69B4;"> **Lost in Middle** Phenomenon in RAG </span>
     - <img src="../../imgs/advanced-rag/Lost in Middle.png"  width="500">
     - [paper] [Lost in the Middle: How Language Models Use Long Contexts](https://www-cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf)
     - [blog] [Lost in the Middle: How Language Models Use Long Contexts](https://medium.datadriveninvestor.com/lost-in-the-middle-how-language-models-use-long-contexts-9dd599d465be)
