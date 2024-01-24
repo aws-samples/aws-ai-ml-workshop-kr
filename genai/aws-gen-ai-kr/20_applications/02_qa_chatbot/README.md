@@ -32,7 +32,7 @@
     - [Reading and Watching List](#Reading-and-Watching-List)
     - [What Should We Know](#What-Should-We-Know)
     - [Building Production-Ready RAG Apps](#Building-Production-Ready-RAG-Apps)
-        - [Table stakers](#Table-stakers)
+        - Table stakers
         - Advanced Retrieval
         - Fine-tuning - training
         - Fine-tuning - inference
