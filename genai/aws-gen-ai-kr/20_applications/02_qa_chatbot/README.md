@@ -101,14 +101,14 @@
 
 ## <div id="Building-Production-Ready-RAG-Apps">**Building Production-Ready RAG Apps**</div>
 ## <div id="Table-stakers">**1. Table stakers**</div>
-- ##### <span style="#FF69B4;"> **Better Parsers and Chunk size**</span>
+- #### <span style="#FF69B4;"> **Better Parsers and Chunk size**</span>
     - [blog] [LLM based context splitter for large documents](https://medium.com/@ayhamboucher/llm-based-context-splitter-for-large-documents-445d3f02b01b)
     - [blog] [Accuracy by chunk sizes](https://pub.towardsai.net/practical-considerations-in-rag-application-design-b5d5f0b2d19b)
     - [blog] [Semantic chunking in practice](https://boudhayan-dev.medium.com/semantic-chunking-in-practice-23a8bc33d56d)
     - [**llmsherpa**](https://github.com/nlmatics/llmsherpa) - Mastering PDFs: Extracting Sections, Headings, Paragraphs, and Tables with Cutting-Edge Parser (PDF chunking) - | [blog](https://blog.llamaindex.ai/mastering-pdfs-extracting-sections-headings-paragraphs-and-tables-with-cutting-edge-parser-faea18870125) |
     - [**Stanza**](https://stanfordnlp.github.io/stanza/) – A Python NLP Package for Many Human Languages (Sentence based spliter) - | [git](https://github.com/nlmatics/llmsherpa) |
 
-- ##### <span style="#FF69B4;"> **Hybrid Search** (Lexical + Semantic search)</span>
+- #### <span style="#FF69B4;"> **Hybrid Search** (Lexical + Semantic search)</span>
     - <img src="../../imgs/advanced-rag/hybrid-fusion.png"  width="300">
     - [vod] (한국어) [Hybrid Search using Amazon Bedrock and OpenSearch](https://kr-resources.awscloud.com/kr-on-demand/kr-fy23-q4-genai-session-03-video)
     - [vod] [Advanced RAG 03 - Hybrid Search BM25 & Ensembles](https://www.youtube.com/watch?v=lYxGYXjfrNI&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=11)
@@ -119,7 +119,7 @@
         - 서로 다른 관련성 지표(relevance indicators)를 가진 여러 개의 결과 집합을 하나의 결과 집합으로 결합하는 방법
         - 튜닝을 필요로 하지 않으며, 서로 다른 관련성 지표들이 상호 관련되지 않아도 고품질을 결과를 얻을 수 있음
         
-- ##### <span style="#FF69B4;"> **Metadata Filters**</span>
+- #### <span style="#FF69B4;"> **Metadata Filters**</span>
     - Leverage your document metadata (self-query)
         - <img src="../../imgs/advanced-rag/self-query-1.png"  width="500">
         - <img src="../../imgs/advanced-rag/self-query-2.png"  width="500">
@@ -128,7 +128,7 @@
         - [langchain] [Self-querying](https://python.langchain.com/docs/modules/data_connection/retrievers/self_query/)
         - [blog] [Deep Dive Into Self-Query Retriever In Langchain : Exploring Pros of Building SQ Retriever with PaLM](https://medium.com/@kamaljp/deep-dive-into-self-query-retriever-in-langchain-exploring-pros-of-building-sq-retriever-with-cf12f3eed1f3)
         
-- ##### <span style="#FF69B4;"> **Table extraction**</span>
+- #### <span style="#FF69B4;"> **Table extraction**</span>
     - [Table Transformer](https://www.linkedin.com/posts/smockbrandon_github-microsofttable-transformer-table-activity-7138940321568096256-Sn0q?utm_source=share&utm_medium=member_desktop)
         - Parsing tables in PDFs is a super important RAG use case.
         - The Table Transformer model extracts tables from PDFs using object detection 📊
