@@ -3,6 +3,13 @@
 - [Amazon SageMaker HyperPod Workshop](https://catalog.workshops.aws/sagemaker-hyperpod/en-US)
 - [Get Started Training Llama 2 with PyTorch FSDP in 5 Minutes](https://github.com/aws-samples/awsome-distributed-training/tree/main/3.test_cases/10.FSDP)
 
+# 0. Tutorial Demo Video
+이 가이드에 대한 데모 비디오 입니다. 아래의 단계를 Step By Step 으로 따라가서 만들었습니다. Nover Version Video 가 17:54 초의 긴 시간이어서, Short Version Video (1:52 초) 도 생성 했습니다. 참고 하시기 바랍니다.
+
+- [(Shorter Vesrion) Llama-7B Full Parameter Tuning on Amazon SageMaker HyperPod](https://www.youtube.com/watch?v=enCWRYN6sPs&t=0s)
+- [(Normal Vesrion) Llama-7B Full Parameter Tuning on Amazon SageMaker HyperPod](https://www.youtube.com/watch?v=B5dmxrJbP3Y)
+
+
 
 # 1. Environment
 전체적인 환경은 (1) VPC, (2) 공용 스토리지로써 FsX Luster, (3) 클러스터 생성 및 접근을 위한 Client 역할을 하는 Cloud9, (4) HyperPod 클러스터, (5) LifeCycle Scripts 등이 저장되는 S3 Bucket, (6) 클러스터안에서 훈련 잡을 수행하는 IAM Role 로 구성되어 있습니다
