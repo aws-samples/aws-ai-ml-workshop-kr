@@ -1,0 +1,6 @@
+langchain==0.1.5
+opensearch-py==2.4.2
+faiss-cpu==1.7.4
+pdfplumber==0.10.3
+termcolor==2.4.0
+opensearch_dsl==2.1.0
