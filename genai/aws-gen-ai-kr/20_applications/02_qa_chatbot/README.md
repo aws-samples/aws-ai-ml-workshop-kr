@@ -21,9 +21,9 @@
 
 ## <div id="Contents">**Updated**</div>
 - [24.2.6]
-    - [blog] [LlamaIndex:Enhancing Retrieval Performance with Alpha Tuning in Hybrid Search in RAG](https://blog.llamaindex.ai/llamaindex-enhancing-retrieval-performance-with-alpha-tuning-in-hybrid-search-in-rag-135d0c9b8a00)
-    - [blog] [A Guide to Processing Tables in RAG Pipelines with LlamaIndex and UnstructuredIO](https://levelup.gitconnected.com/a-guide-to-processing-tables-in-rag-pipelines-with-llamaindex-and-unstructuredio-3500c8f917a7)
-
+    - [Hybrid Search][blog] [LlamaIndex:Enhancing Retrieval Performance with Alpha Tuning in Hybrid Search in RAG](https://blog.llamaindex.ai/llamaindex-enhancing-retrieval-performance-with-alpha-tuning-in-hybrid-search-in-rag-135d0c9b8a00)
+    - [Table extraction][blog] [A Guide to Processing Tables in RAG Pipelines with LlamaIndex and UnstructuredIO](https://levelup.gitconnected.com/a-guide-to-processing-tables-in-rag-pipelines-with-llamaindex-and-unstructuredio-3500c8f917a7)
+    - [Graph][blog] [Amazon Bedrock으로 그래프 RAG 구현하기](https://aws.amazon.com/ko/blogs/tech/amazon-bedrock-graph-rag/)
 - - -
 
 ## <div id="Contents">**Contents**</div>
@@ -41,6 +41,7 @@
         - Evaluation
         - Prompt
         - Text 2 SQL
+        - Graph
         - Cost savings
         - Extras
 - [Citation](#Citation)
@@ -257,11 +258,14 @@
  - #### [blog] [Generating value from enterprise data: Best practices for Text2SQL and generative AI](https://aws.amazon.com/ko/blogs/machine-learning/generating-value-from-enterprise-data-best-practices-for-text2sql-and-generative-ai/)
  - #### Using LLMs to interact with SQL Databases, [social](https://www.linkedin.com/posts/langchain_sql-langchain-activity-7155275453509894144-G8pj/?utm_source=share&utm_medium=member_android) | [langchain - doc](https://python.langchain.com/docs/use_cases/sql/)
 
-### <div id="Prompt">**8. Cost savings**</div>
+### <div id="Prompt">**8. Graph**</div>
+- #### [blog] [Amazon Bedrock으로 그래프 RAG 구현하기](https://aws.amazon.com/ko/blogs/tech/amazon-bedrock-graph-rag/)
+
+### <div id="Prompt">**9. Cost savings**</div>
 - #### [blog] [How to Cut RAG Costs by 80% Using Prompt Compression](https://towardsdatascience.com/how-to-cut-rag-costs-by-80-using-prompt-compression-877a07c6bedb)
 
 
-### <div id="Prompt">**9. Extras**</div>
+### <div id="Prompt">**10. Extras**</div>
 - #### Token limit issues
     - [OpenAI token calculator](https://pub.towardsai.net/tokens-and-models-understanding-langchain-%EF%B8%8F-part-3-e471aececf19)
     - [Embedding long inputs using weighed sum](https://github.com/openai/openai-cookbook/blob/main/examples/Embedding_long_inputs.ipynb)
