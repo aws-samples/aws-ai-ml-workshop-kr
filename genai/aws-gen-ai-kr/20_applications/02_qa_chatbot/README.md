@@ -1,4 +1,3 @@
-<h1 align="left"><b>Under Construction</b></h1>
 <h1 align="left"><b>Retrieval-Augmented Generation (RAG) for Large Language Models on AWS</b></h1>
 <p align="center">
     <a href="https://github.com/aws-samples">
@@ -21,6 +20,9 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [24.2.6]
+    - [blog] [LlamaIndex:Enhancing Retrieval Performance with Alpha Tuning in Hybrid Search in RAG](https://blog.llamaindex.ai/llamaindex-enhancing-retrieval-performance-with-alpha-tuning-in-hybrid-search-in-rag-135d0c9b8a00)
+    - [blog] [A Guide to Processing Tables in RAG Pipelines with LlamaIndex and UnstructuredIO](https://levelup.gitconnected.com/a-guide-to-processing-tables-in-rag-pipelines-with-llamaindex-and-unstructuredio-3500c8f917a7)
 
 - - -
 
@@ -115,6 +117,7 @@
     - [sample codes - aws] [Hybrid-Fusion](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/02_rag/01_rag_hybrid_search.ipynb)
     - [blog] [Improving Retrieval Performance in RAG Pipelines with Hybrid Search](https://towardsdatascience.com/improving-retrieval-performance-in-rag-pipelines-with-hybrid-search-c75203c2f2f5)
     - [blog] [Amazon OpenSearch Service Hybrid Query를 통한 검색 기능 강화](https://aws.amazon.com/ko/blogs/tech/amazon-opensearch-service-hybrid-query-korean/)
+    - [blog] [LlamaIndex:Enhancing Retrieval Performance with Alpha Tuning in Hybrid Search in RAG](https://blog.llamaindex.ai/llamaindex-enhancing-retrieval-performance-with-alpha-tuning-in-hybrid-search-in-rag-135d0c9b8a00)
     - Rank-Fusion: [RRF](https://velog.io/@acdongpgm/NLP.-Reciprocal-rank-fusion-RRF-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0) (Reciprocal Rank Fusion)
         - 서로 다른 관련성 지표(relevance indicators)를 가진 여러 개의 결과 집합을 하나의 결과 집합으로 결합하는 방법
         - 튜닝을 필요로 하지 않으며, 서로 다른 관련성 지표들이 상호 관련되지 않아도 고품질을 결과를 얻을 수 있음
@@ -137,6 +140,7 @@
     - [blog] [RAG Pipeline Pitfalls: The Untold Challenges of Embedding Table](https://medium.com/towards-artificial-intelligence/rag-pipeline-pitfalls-the-untold-challenges-of-embedding-table-5296b2d8230a)
     - [blog] [Working with Table Data in Documents: Tips and Tricks for LLM](https://medium.com/@easonlai888/working-with-table-data-in-documents-tips-and-tricks-for-llm-50f09d2c4e95)
     - [blog] [Revolutionizing RAG with Enhanced PDF Structure Recognition](https://medium.com/@chatdocai/revolutionizing-rag-with-enhanced-pdf-structure-recognition-22227af87442)
+    - [blog] [A Guide to Processing Tables in RAG Pipelines with LlamaIndex and UnstructuredIO](https://levelup.gitconnected.com/a-guide-to-processing-tables-in-rag-pipelines-with-llamaindex-and-unstructuredio-3500c8f917a7)
     -[Streamlining Healthcare Compliance with AI] [blog](https://unstructured.io/blog/streamlining-healthcare-compliance-with-ai) | [social](https://www.linkedin.com/posts/langchain_streamlining-healthcare-compliance-with-ai-activity-7137914512187293696-7NOy/?utm_source=share&utm_medium=member_desktop)
     - [DocLLM](https://www.linkedin.com/feed/hashtag/?keywords=documentunderstanding&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7149987110010134528)
         - [paper](https://arxiv.org/abs/2401.00908) | [blog](https://artgor.medium.com/paper-review-docllm-a-layout-aware-generative-language-model-for-multimodal-document-06b5833e976b)
