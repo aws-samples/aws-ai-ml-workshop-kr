@@ -1,0 +1,40 @@
+{
+    "settings":{
+        "index.knn": true,
+        "index.knn.algo_param.ef_search": 512
+    },
+    "mappings":{
+        "properties":{
+            "metadata" : {
+                "properties": {
+                    "source":{ 
+                        "type":"keyword"
+                    },
+                    "type":{
+                        "type":"keyword"
+                    },
+                    "timestamp":{
+                        "type":"date"
+                    }
+                }
+            },
+            "text":{
+                "type":"text",
+                "analyzer":"nori"
+            },
+            "vector_field":{
+                "type":"knn_vector",
+                "dimension":1536,
+                "method":{
+                   "engine":"faiss",
+                   "name":"hnsw",
+                   "parameters":{
+                      "ef_construction":512,
+                      "m":16
+                   },
+                   "space_type":"l2"
+                }
+             }
+          }
+    }
+}
