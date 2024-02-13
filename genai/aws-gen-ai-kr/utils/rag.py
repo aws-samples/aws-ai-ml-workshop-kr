@@ -312,7 +312,7 @@ class retriever_utils():
         assert "k" in kwargs, "Check your k"
         assert "os_client" in kwargs, "Check your os_client"
         assert "index_name" in kwargs, "Check your index_name"
-
+        
         def normalize_search_results(search_results):
 
             hits = (search_results["hits"]["hits"])
@@ -333,7 +333,7 @@ class retriever_utils():
         )
         query["size"] = kwargs["k"]
 
-        #print ("\nsematic search query: ")
+        #print ("\nsemantic search query: ")
         #pprint (query)
 
         search_results = opensearch_utils.search_document(
