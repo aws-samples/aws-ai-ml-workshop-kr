@@ -20,6 +20,25 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [24.2.12]
+    - [Evaluation][repo] [Evaluate RAG applications with RAGAS v0.1](https://github.com/explodinggradients/ragas)
+    - [Table Extraction]
+        - [social] [Advanced Tabular Data Understanding with LLMs](https://www.linkedin.com/posts/llamaindex_advanced-tabular-data-understanding-with-activity-7162551792323510272-58Oi/?utm_source=share&utm_medium=member_desktop)
+            - Rethinking Tabular Data Understanding with Large Language Models
+                - [paper](https://arxiv.org/abs/2312.16702) | [sample codes](https://llamahub.ai/l/llama_packs-tables-mix_self_consistency?from=all) |
+            - Chain-of-Table: Evolving Tables in the Reasoning Chain for Table Understanding
+                - [paper](https://arxiv.org/abs/2401.04398v1) | [sample codes](https://llamahub.ai/l/llama_packs-tables-chain_of_table?from=all) |
+    - [Reading and Watching list] [READ] [Applied LLMs Mastery 2024 - Course](https://llamahub.ai/l/llama_packs-tables-chain_of_table?from=all)
+    - [Prompting] [vod] [Prompt engineering best practices for LLMs on Amazon Bedrock](https://www.youtube.com/watch?v=jlqgGkh1wzY)
+    - [Self-Reflective RAG]
+        - [social] [Self-Reflective RAG using LangGraph](https://www.linkedin.com/posts/langchain_self-reflective-rag-using-langgraph-activity-7161063678212022272-XXYd/?utm_source=share&utm_medium=member_desktop)
+        - [vod] [Self-reflective RAG with LangGraph: Self-RAG and CRAG](https://www.youtube.com/watch?v=pbAd8O1Lvm4)
+        - [blog] [Self-Reflective RAG with LangGraph](https://blog.langchain.dev/agentic-rag-with-langgraph/)
+        - [blog] [Corrective RAG (CRAG)](https://cobusgreyling.medium.com/corrective-rag-crag-5e40467099f8)
+        - [samplec codes] [Self-RAG](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_self_rag.ipynb)
+        - [sample codes] [Corrective RAG (CRAG)](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_crag.ipynb)
+        
+
 - [24.2.6]
     - [Hybrid Search][blog] [LlamaIndex:Enhancing Retrieval Performance with Alpha Tuning in Hybrid Search in RAG](https://blog.llamaindex.ai/llamaindex-enhancing-retrieval-performance-with-alpha-tuning-in-hybrid-search-in-rag-135d0c9b8a00)
     - [Table extraction][blog] [A Guide to Processing Tables in RAG Pipelines with LlamaIndex and UnstructuredIO](https://levelup.gitconnected.com/a-guide-to-processing-tables-in-rag-pipelines-with-llamaindex-and-unstructuredio-3500c8f917a7)
@@ -87,7 +106,7 @@
 - #### <span style="#FF69B4;"> [READ] [Why Your RAG Is Not Reliable in a Production Environment](https://towardsdatascience.com/why-your-rag-is-not-reliable-in-a-production-environment-9e6a73b3eddb)</span>
 - #### <span style="#FF69B4;"> [READ] [A Guide on 12 Tuning Strategies for Production-Ready RAG Applications](https://towardsdatascience.com/a-guide-on-12-tuning-strategies-for-production-ready-rag-applications-7ca646833439)</span>
 - #### <span style="#FF69B4;"> [READ] [5 Blog Posts To Become a RAG Master](https://levelup.gitconnected.com/5-blog-posts-to-become-a-rag-master-d6004c6150d0)</span>
-
+- #### <span style="#FF69B4;"> [Applied LLMs Mastery 2024 - Course](https://llamahub.ai/l/llama_packs-tables-chain_of_table?from=all)</span>
 - #### <span style="#FF69B4;"> [WATCH] (한국어) [Advanced RAG Webinar by AWS ](https://kr-resources.awscloud.com/kr-on-demand)</span>
 - #### <span style="#FF69B4;"> [WATCH] [Building Production-Ready RAG Apps](https://www.youtube.com/watch?v=TRjq7t2Ms5I)</span>
 - #### <span style="#FF69B4;"> [WATCH] [Use RAG to improve responses in generative AI applications - re:Invent session](https://www.youtube.com/watch?v=N0tlOXZwrSs) | [post](https://www.linkedin.com/posts/manikhanuja_aws-reinvent-2023-use-rag-to-improve-responses-activity-7137694254964903937-QCua/?utm_source=share&utm_medium=member_desktop) | [git](https://github.com/aws-samples/amazon-bedrock-samples/blob/main/knowledge-bases/1_managed-rag-kb-retrieve-generate-api.ipynb) | </span>
@@ -133,6 +152,11 @@
         - [blog] [Deep Dive Into Self-Query Retriever In Langchain : Exploring Pros of Building SQ Retriever with PaLM](https://medium.com/@kamaljp/deep-dive-into-self-query-retriever-in-langchain-exploring-pros-of-building-sq-retriever-with-cf12f3eed1f3)
         
 - #### <span style="#FF69B4;"> **Table extraction**</span>
+    - [social] [Advanced Tabular Data Understanding with LLMs](https://www.linkedin.com/posts/llamaindex_advanced-tabular-data-understanding-with-activity-7162551792323510272-58Oi/?utm_source=share&utm_medium=member_desktop)
+        - Rethinking Tabular Data Understanding with Large Language Models
+            - [paper](https://arxiv.org/abs/2312.16702) | [sample codes](https://llamahub.ai/l/llama_packs-tables-mix_self_consistency?from=all) |
+        - Chain-of-Table: Evolving Tables in the Reasoning Chain for Table Understanding
+            - [paper](https://arxiv.org/abs/2401.04398v1) | [sample codes](https://llamahub.ai/l/llama_packs-tables-chain_of_table?from=all) |
     - [Table Transformer](https://www.linkedin.com/posts/smockbrandon_github-microsofttable-transformer-table-activity-7138940321568096256-Sn0q?utm_source=share&utm_medium=member_desktop)
         - Parsing tables in PDFs is a super important RAG use case.
         - The Table Transformer model extracts tables from PDFs using object detection 📊
@@ -213,7 +237,15 @@
     - [blog] [Advanced RAG- Providing Broader Context to LLMs Using ParentDocumentRetriever](https://medium.aiplanet.com/advanced-rag-providing-broader-context-to-llms-using-parentdocumentretriever-cc627762305a)
     - [blog] [RAG and Parent Document Retrievers: Making Sense of Complex Contexts with Code](https://medium.com/ai-insights-cobet/rag-and-parent-document-retrievers-making-sense-of-complex-contexts-with-code-5bd5c3474a8a)
     - <img src="../../imgs/advanced-rag/parent-doc.png"  width="500">
-    
+
+- #### **<div id="Self-Reflective-RAG"><span style="#FF69B4;"> Self-Reflective RAG - To improve context clarity </span></div>**
+    - [social] [Self-Reflective RAG using LangGraph](https://www.linkedin.com/posts/langchain_self-reflective-rag-using-langgraph-activity-7161063678212022272-XXYd/?utm_source=share&utm_medium=member_desktop)
+    - [vod] [Self-reflective RAG with LangGraph: Self-RAG and CRAG](https://www.youtube.com/watch?v=pbAd8O1Lvm4)
+    - [blog] [Self-Reflective RAG with LangGraph](https://blog.langchain.dev/agentic-rag-with-langgraph/)
+    - [blog] [Corrective RAG (CRAG)](https://cobusgreyling.medium.com/corrective-rag-crag-5e40467099f8)
+    - [samplec codes] [Self-RAG](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_self_rag.ipynb)
+    - [sample codes] [Corrective RAG (CRAG)](https://github.com/langchain-ai/langgraph/blob/main/examples/rag/langgraph_crag.ipynb)
+
 - #### **<div id="Context-Compression"><span style="#FF69B4;"> Context Compression - To improve context clarity and address “Lost in Middle”</span></div>**
     
     - [vod] [Advanced RAG 04 - Contextual Compressors & Filters](https://www.youtube.com/watch?v=4sRigbRITF0&list=PL8motc6AQftn-X1HkaGG9KjmKtWImCKJS&index=11)
@@ -229,6 +261,8 @@
 ### <div id="Fine-tuning-inference">**4. Fine-tuning - inference**</div>
 - #### [blog] [Inference Llama 2 models with real-time response streaming using Amazon SageMaker](https://aws.amazon.com/ko/blogs/machine-learning/inference-llama-2-models-with-real-time-response-streaming-using-amazon-sagemaker/)
 ### <div id="Evaluation">**5. Evaluation**</div>
+
+- #### [repo] [Evaluate RAG applications with RAGAS v0.1](https://github.com/explodinggradients/ragas)
 - #### [blog] [A 3-Step Approach to Evaluate a Retrieval Augmented Generation (RAG)](https://towardsdatascience.com/a-3-step-approach-to-evaluate-a-retrieval-augmented-generation-rag-5acf2aba86de)
     - [Ground truth generator by LLM] [Boosting RAG: Picking the Best Embedding & Reranker models](https://blog.llamaindex.ai/boosting-rag-picking-the-best-embedding-reranker-models-42d079022e83) | [sample codes - aws](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/01_create_ground_truth.ipynb) 
         - <img src="../../imgs/advanced-rag/evaluation-4.png"  width="500">
@@ -245,6 +279,7 @@
         - <img src="../../imgs/advanced-rag/evaluation-3.png"  width="500">
 
 ### <div id="Prompt">**6. Prompt**</div>
+- #### [vod] [Prompt engineering best practices for LLMs on Amazon Bedrock](https://www.youtube.com/watch?v=jlqgGkh1wzY)
 - #### [doc] [Claude Prompt Engineering Techniques Presentation](https://docs.anthropic.com/claude/docs/guide-to-anthropics-prompt-engineering-resources)
 - #### [vod] [AWS re:Invent 2023 - Prompt engineering best practices for LLMs on Amazon Bedrock (AIM377)](https://www.youtube.com/watch?v=jlqgGkh1wzY)
 - #### [doc] [Configuring GPT prompts for Claude](https://docs.anthropic.com/claude/docs/configuring-gpt-prompts-for-claude)
