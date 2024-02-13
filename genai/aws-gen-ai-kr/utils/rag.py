@@ -5,6 +5,7 @@
 ############################################################    
 
 import json
+import copy
 import boto3
 import numpy as np
 import pandas as pd
@@ -830,7 +831,10 @@ class retriever_utils():
         #print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
         #print ("1-similar_docs")
         #for i, doc in enumerate(similar_docs): print (i, doc)
-
+        
+        if verbose: 
+            similar_docs_wo_reranker = copy.deepcopy(similar_docs)
+        
         if reranker:
             reranker_endpoint_name = kwargs["reranker_endpoint_name"]
             similar_docs = cls.get_rerank_docs(
@@ -841,7 +845,7 @@ class retriever_utils():
                 reranker_endpoint_name=reranker_endpoint_name,
                 verbose=verbose
             )
-
+        
         #print ("2-similar_docs")
         #for i, doc in enumerate(similar_docs): print (i, doc)
 
@@ -891,6 +895,12 @@ class retriever_utils():
             print("similar_docs_keyword")
             print("##############################")
             print(similar_docs_keyword)
+            
+            if reranker:
+                print("##############################")
+                print("similar_docs_without_reranker")
+                print("##############################")
+                print(similar_docs_wo_reranker)
 
             print("##############################")
             print("similar_docs")
