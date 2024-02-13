@@ -149,39 +149,67 @@ class opensearch_utils():
         # OpenSearch Query Description (한글)
         #  - https://esbook.kimjmin.net/05-search)
 
-        min_shoud_match = 0
-        if "minimum_should_match" in kwargs:
-            min_shoud_match = kwargs["minimum_should_match"]
+        search_type = kwargs.get("search_type", "lexical")
 
-        QUERY_TEMPLATE = {
-            "query": {
-                "bool": {
-                    "must": [
-                        {
-                            "match": {
-                                "text": {
-                                    "query": f'{kwargs["query"]}',
-                                    "minimum_should_match": f'{min_shoud_match}%',
-                                    "operator":  "or",
-                                    # "fuzziness": "AUTO",
-                                    # "fuzzy_transpositions": True,
-                                    # "zero_terms_query": "none",
-                                    # "lenient": False,
-                                    # "prefix_length": 0,
-                                    # "max_expansions": 50,
-                                    # "boost": 1
+        if search_type == "lexical":
+
+            min_shoud_match = 0
+            if "minimum_should_match" in kwargs:
+                min_shoud_match = kwargs["minimum_should_match"]
+
+            QUERY_TEMPLATE = {
+                "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {
+                                    "text": {
+                                        "query": f'{kwargs["query"]}',
+                                        "minimum_should_match": f'{min_shoud_match}%',
+                                        "operator":  "or",
+                                        # "fuzziness": "AUTO",
+                                        # "fuzzy_transpositions": True,
+                                        # "zero_terms_query": "none",
+                                        # "lenient": False,
+                                        # "prefix_length": 0,
+                                        # "max_expansions": 50,
+                                        # "boost": 1
+                                    }
                                 }
-                            }
-                        },
-                    ],
-                    "filter": [
-                    ]
+                            },
+                        ],
+                        "filter": [
+                        ]
+                    }
                 }
             }
-        }
 
-        if "filter" in kwargs:
-            QUERY_TEMPLATE["query"]["bool"]["filter"].extend(kwargs["filter"])
+            if "filter" in kwargs:
+                QUERY_TEMPLATE["query"]["bool"]["filter"].extend(kwargs["filter"])
+
+        elif search_type == "semantic":
+
+            QUERY_TEMPLATE = {
+            "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "knn": {
+                                    kwargs["vector_field"]: {
+                                        "vector": kwargs["vector"],
+                                        "k": kwargs["k"],
+                                    }
+                                }
+                            },
+                        ],
+                        "filter": [
+                        ]
+                    }
+                }
+            }
+
+            if "filter" in kwargs:
+                QUERY_TEMPLATE["query"]["bool"]["filter"].extend(kwargs["filter"])
 
         return QUERY_TEMPLATE
 
@@ -199,5 +227,14 @@ class opensearch_utils():
             BOOL_FILTER_TEMPLATE["bool"]["filter"].extend(kwargs["filter"])
 
         return BOOL_FILTER_TEMPLATE
-    
+
+    @staticmethod
+    def get_documents_by_ids(os_client, ids, index_name):
+
+        response = os_client.mget(
+            body={"ids": ids},
+            index=index_name
+        )
+
+        return response
      

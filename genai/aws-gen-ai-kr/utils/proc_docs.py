@@ -2,86 +2,8 @@ from termcolor import colored
 from IPython.core.display import display, HTML
 
 from langchain.docstore.document import Document
-
-class LayoutPDFReader_Custom:
-    '''
-    sections = layout_pdf_reader.doc.sections()
-    i = 2
-    print(sections[i])
-    print("title: ", sections[i].title)
-    print("tag: ", sections[i].tag)
-    print("parent: ", sections[i].parent)
-    print("parent title: ", sections[i].parent.title)
-    print("children: ", sections[i].children)
-    print("children: ", sections[i].children[0].tag)
-    print("children sentences: ", sections[i].children[0].sentences)
-    print("chunk: ", sections[i].chunks())
-    # print("chunk title: ", sections[i].chunks()[0].title)
-
-    # sections[2].to_context_text()
-    display(HTML(sections[i].to_html(include_children=True, recurse=True)))
-    '''
-    def __init__(self, doc):
-        self.doc = doc
-        self.chunk_size = len(doc.chunks())
-        self.section_size = len(doc.sections())
-        self.table_size = len(doc.tables())        
- 
-
-
-    def show_chunk_info(self, show_size=5):
-        for idx, chunk in enumerate(self.doc.chunks()):
-            print(colored(f"To_context_text {idx}:\n {chunk.to_context_text()} ", "green"))
-            print(colored(f"To_text {idx}:\n {chunk.to_text()} ", "red"))
-            print(colored(f"Tag {idx}:\n {chunk.tag} ", "red"))
-
-            print("\n")
-
-            if idx == (show_size -1):
-                break
-
-    def create_document_with_chunk(self):
-        '''
-        chunk 와 메타를 langchain Document 오브젝트로 생성
-        '''
-        doc_list = []
-        for idx, chunk in enumerate(self.doc.chunks()):
-            doc=Document(
-                page_content= chunk.to_text(),
-                metadata={"tag": chunk.tag,
-                          "row" : idx,
-                         }
-            )
-            doc_list.append(doc)
-            
-        return doc_list
-                
-                
-    def show_section_info(self, show_size=5):
-        for idx, section in enumerate(self.doc.sections()):
-            print(colored(f"section title: {idx}:\n {section.title} ", "green"))
-            # use include_children=True and recurse=True to fully expand the section. 
-            # include_children only returns at one sublevel of children whereas recurse goes through all the descendants
-#            display(HTML(section.to_html(include_children=True, recurse=True)))
-            display(HTML(section.to_html(include_children=True)))            
-            # display(HTML(section.to_html(include_children=True, recurse=True)))
-#            display(HTML(section.to_html()))            
-
-            if idx == (show_size -1):
-                break
-                
-#     def show_table_info(self, show_size=5):
-#         for idx, table in enumerate(doc.tables()):
-#             print(colored(f"table name: {idx}:\n {table.name} ", "green"))
-#             display(HTML(table.to_html(include_children=True, recurse=True)))
-#             # print(f"table name: {idx}:\n",  HTML(table.to_html()) )            
-#             print(colored(f"table name: {idx}:\n {table.sentences} ", "blue"))
-
-#             if idx == (show_size -1):
-#                 break
-
-#from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
-from utils.rag import retriever_utils
+from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
+from utils.opensearch import opensearch_utils
 
 def search_hybrid(**kwargs):
     
@@ -103,7 +25,7 @@ def search_hybrid(**kwargs):
     
     
     if (kwargs["Semantic_Search"] == True) | (kwargs["Hybrid_Search"] == True):
-        similar_docs_semantic = retriever_utils.get_semantic_similar_docs(
+        similar_docs_semantic = get_semantic_similar_docs(
             vector_db=kwargs["vector_db"],
             query=kwargs["query"],
             k=kwargs.get("k", 5),
@@ -116,9 +38,8 @@ def search_hybrid(**kwargs):
             # print(similar_docs_semantic)
             opensearch_pretty_print_documents(similar_docs_semantic)
 
-        
     if (kwargs["Lexical_Search"] == True)  | (kwargs["Hybrid_Search"] == True):
-        similar_docs_keyword = retriever_utils.get_lexical_similar_docs(
+        similar_docs_keyword = get_lexical_similar_docs(
             query=kwargs["query"],
             minimum_should_match=kwargs.get("minimum_should_match", 50),
 #            filter=kwargs.get("filter", []),
@@ -137,7 +58,7 @@ def search_hybrid(**kwargs):
         
 
     if kwargs["Hybrid_Search"] == True:
-        similar_docs_ensemble = retriever_utils.get_ensemble_results(
+        similar_docs_ensemble = get_ensemble_results(
             doc_lists = [similar_docs_semantic, similar_docs_keyword],
             weights = kwargs.get("ensemble_weights", [.5, .5]),
             algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
@@ -163,12 +84,16 @@ def opensearch_pretty_print_documents(response):
     '''
     for doc, score in response:
         print(f'\nScore: {score}')
-        print(f'Document Number: {doc.metadata["row"]}')
+        # print(f'Document Number: {doc.metadata["row"]}')
 
         # Split the page content into lines
         lines = doc.page_content.split("\n")
-
+        metadata = doc.metadata
         print(lines)
+        print(metadata)        
+        
+        
+        
         # print(doc.metadata['origin'])    
 
         # Extract and print each piece of information if it exists
@@ -183,7 +108,6 @@ def opensearch_pretty_print_documents(response):
 
         print('-' * 50)
 
- 
 def put_parameter(boto3_clinet, parameter_name, parameter_value):
 
     # Specify the parameter name, value, and type
@@ -227,4 +151,139 @@ def get_parameter(boto3_clinet, parameter_name):
     except Exception as e:
         print('Error retrieving parameter:', str(e))
 
+
+############################################
+# JSON Loader Functions
+############################################
+
+from langchain.document_loaders import JSONLoader
+
+# Define the metadata extraction function.
+def metadata_func(record: dict, metadata: dict) -> dict:
+    metadata["title"] = record.get("title")
+    metadata["url"] = record.get("url")
+    metadata["project"] = record.get("project")    
+    metadata["last_updated"] = record.get("last_updated")        
+
+    if "source" in metadata:
+        source = metadata["source"].split("/")[-1]
+        metadata["source"] = source
+
+    return metadata
+
+
+def get_load_json(file_path, jq_schema=".[]"):
+    
+    loader = JSONLoader(
+        file_path=file_path,
+        #jq_schema='.sections[]',
+        #jq_schema='.[]',
+        jq_schema=jq_schema,
+        content_key="content",
+        metadata_func=metadata_func
+    )
+
+    data = loader.load()
+    
+    return data
+
+def show_doc_json(data, file_path):
+    file_name = file_path.split("/")[-1]    
+    print("### File name: ", file_name)
+    print("### of document: ", len(data))
+    print("### The first doc")
+
+    print(data[0])        
+    
+    
+def insert_chunk_opensearch(index_name, os_client, chunk_docs, lim_emb):
+    for i, doc in enumerate(chunk_docs):
+        # print(doc)
+        content = doc.page_content      
+        content_emb = lim_emb.embed_query(content)
+        metadata_last_updated = doc.metadata['last_updated']
+        metadata_last_project = doc.metadata['project']        
+        metadata_seq_num = doc.metadata['seq_num']                
+        metadata_title = doc.metadata['title']    
+        metadata_url = doc.metadata['url']                   
+
         
+        # print(content)
+        # print(metadata_last_updated)
+        # print(metadata_last_project)
+        # print(metadata_seq_num)
+        # print(metadata_title)
+        # print(metadata_url)
+                
+        # Example document
+        doc_body = {
+            "text": content,
+            "vector_field": content_emb,  # Replace with your vector
+            "metadata" : [
+                {"last_updated": metadata_last_updated, 
+                 "project": metadata_last_project, 
+                 "seq_num": metadata_seq_num, 
+                 "title": metadata_title, 
+                 "url": metadata_url}
+            ]
+        }
+        
+        # print(doc_body)
+
+        opensearch_utils.add_doc(os_client, index_name, doc_body, id=f"{i}")
+        
+        if i == 100:
+            break
+    
+from langchain.text_splitter import RecursiveCharacterTextSplitter, SpacyTextSplitter
+
+
+
+def create_chunk(docs, chunk_size, chunk_overlap):
+    '''
+    docs: list of docs
+    chunk_size: int
+    chunk_overlap: int
+    return: list of chunk_docs
+    '''
+
+    text_splitter = RecursiveCharacterTextSplitter(
+        # Set a really small chunk size, just to show.
+        chunk_size = chunk_size,
+        chunk_overlap  = chunk_overlap,
+        separators=["\n\n", "\n", ".", " ", ""],
+        length_function = len,
+    )
+    # print("doc: in create_chunk", docs )
+    chunk_docs = text_splitter.split_documents(docs)
+
+    
+    return chunk_docs
+
+
+def create_parent_chunk(docs, parent_id_key, family_tree_id_key, parent_chunk_size, parent_chunk_overlap):
+    parent_chunks = create_chunk(docs, parent_chunk_size, parent_chunk_overlap)
+    for i, doc in enumerate(parent_chunks):
+        doc.metadata[family_tree_id_key] = 'parent'        
+        doc.metadata[parent_id_key] = None
+
+
+    return parent_chunks
+    
+def create_child_chunk(child_chunk_size, child_chunk_overlap, docs, parent_ids_value, parent_id_key, family_tree_id_key):
+    sub_docs = []
+    for i, doc in enumerate(docs):
+        # print("doc: ", doc)
+        parent_id = parent_ids_value[i]    
+        doc = [doc]
+        _sub_docs = create_chunk(doc, child_chunk_size, child_chunk_overlap)
+        for _doc in _sub_docs:
+            _doc.metadata[family_tree_id_key] = 'child'                    
+            _doc.metadata[parent_id_key] = parent_id
+        sub_docs.extend(_sub_docs)    
+        
+        # if i == 0:
+        #     return sub_docs
+        
+    return sub_docs
+  

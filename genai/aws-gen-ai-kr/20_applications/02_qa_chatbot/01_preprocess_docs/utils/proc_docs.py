@@ -38,7 +38,6 @@ def search_hybrid(**kwargs):
             # print(similar_docs_semantic)
             opensearch_pretty_print_documents(similar_docs_semantic)
 
-        
     if (kwargs["Lexical_Search"] == True)  | (kwargs["Hybrid_Search"] == True):
         similar_docs_keyword = get_lexical_similar_docs(
             query=kwargs["query"],
@@ -173,11 +172,15 @@ def metadata_func(record: dict, metadata: dict) -> dict:
     return metadata
 
 
-def get_load_json(file_path):
+def get_load_json(file_path, jq_schema=".[]"):
+    
+    print (jq_schema)
+    
     loader = JSONLoader(
         file_path=file_path,
         #jq_schema='.sections[]',
-        jq_schema='.[]',
+        #jq_schema='.[]',
+        jq_schema=jq_schema,
         content_key="content",
         metadata_func=metadata_func
     )
