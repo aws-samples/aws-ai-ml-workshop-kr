@@ -109,7 +109,6 @@ def opensearch_pretty_print_documents(response):
 
         print('-' * 50)
 
- 
 def put_parameter(boto3_clinet, parameter_name, parameter_value):
 
     # Specify the parameter name, value, and type
@@ -170,16 +169,15 @@ def metadata_func(record: dict, metadata: dict) -> dict:
     if "source" in metadata:
         source = metadata["source"].split("/")[-1]
         metadata["source"] = source
-    
 
     return metadata
 
 
 def get_load_json(file_path):
     loader = JSONLoader(
-        file_path= file_path,
-#        jq_schema='.sections[]',
-        jq_schema='.[]',        
+        file_path=file_path,
+        #jq_schema='.sections[]',
+        jq_schema='.[]',
         content_key="content",
         metadata_func=metadata_func
     )
