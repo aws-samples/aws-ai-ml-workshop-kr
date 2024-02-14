@@ -34,9 +34,8 @@ class s3_handler():
                 location = {'LocationConstraint': self.region_name}
                 self.client.create_bucket(
                     Bucket=bucket_name,
-                    #CreateBucketConfiguration=location
+                    CreateBucketConfiguration=location
                 )
-            
             print (f"CREATE:[{bucket_name}] Bucket was created successfully")
             
         except ClientError as e:
