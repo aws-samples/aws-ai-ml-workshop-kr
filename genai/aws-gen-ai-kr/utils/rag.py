@@ -889,23 +889,23 @@ class retriever_utils():
             print("##############################")
             print("similar_docs_semantic")
             print("##############################")
-            print(similar_docs_semantic)
+            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_semantic))
 
             print("##############################")
             print("similar_docs_keyword")
             print("##############################")
-            print(similar_docs_keyword)
+            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_keyword))
             
             if reranker:
                 print("##############################")
                 print("similar_docs_without_reranker")
                 print("##############################")
-                print(similar_docs_wo_reranker)
+                print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_wo_reranker))
 
             print("##############################")
             print("similar_docs")
             print("##############################")
-            print(similar_docs)
+            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs))
 
         similar_docs = list(map(lambda x:x[0], similar_docs))
 
