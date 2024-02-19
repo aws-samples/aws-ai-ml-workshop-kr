@@ -219,3 +219,18 @@ class opensearch_utils():
         )
 
         return response
+    
+    @staticmethod
+    def opensearch_pretty_print_documents_with_score(response):
+        '''
+        OpenSearch 결과인 LIST 를 파싱하는 함수
+        '''
+        for doc, score in response:
+            print(f'\nScore: {score}')
+            # print(f'Document Number: {doc.metadata["row"]}')
+
+            # Split the page content into lines
+            lines = doc.page_content.split("\n")
+            metadata = doc.metadata
+            print(lines)
+            print(metadata)
