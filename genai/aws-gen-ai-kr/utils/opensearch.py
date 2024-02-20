@@ -219,7 +219,7 @@ class opensearch_utils():
         )
 
         return response
-    
+
     @staticmethod
     def opensearch_pretty_print_documents_with_score(response):
         '''
@@ -228,7 +228,6 @@ class opensearch_utils():
         for doc, score in response:
             print(f'\nScore: {score}')
             # print(f'Document Number: {doc.metadata["row"]}')
-
             # Split the page content into lines
             lines = doc.page_content.split("\n")
             metadata = doc.metadata
