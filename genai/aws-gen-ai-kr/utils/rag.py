@@ -313,7 +313,7 @@ class retriever_utils():
         assert "k" in kwargs, "Check your k"
         assert "os_client" in kwargs, "Check your os_client"
         assert "index_name" in kwargs, "Check your index_name"
-        
+
         def normalize_search_results(search_results):
 
             hits = (search_results["hits"]["hits"])
@@ -358,7 +358,7 @@ class retriever_utils():
                 if kwargs.get("hybrid", False):
                     results.append((doc, res["_score"]))
                 else:
-                    results.append((doc))        
+                    results.append((doc))
 
         return results
 
@@ -831,10 +831,10 @@ class retriever_utils():
         #print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
         #print ("1-similar_docs")
         #for i, doc in enumerate(similar_docs): print (i, doc)
-        
+
         if verbose: 
             similar_docs_wo_reranker = copy.deepcopy(similar_docs)
-        
+
         if reranker:
             reranker_endpoint_name = kwargs["reranker_endpoint_name"]
             similar_docs = cls.get_rerank_docs(
@@ -845,7 +845,7 @@ class retriever_utils():
                 reranker_endpoint_name=reranker_endpoint_name,
                 verbose=verbose
             )
-        
+
         #print ("2-similar_docs")
         #for i, doc in enumerate(similar_docs): print (i, doc)
 
