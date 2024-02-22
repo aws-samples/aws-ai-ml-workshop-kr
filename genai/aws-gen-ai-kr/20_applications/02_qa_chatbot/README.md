@@ -96,8 +96,10 @@
     - [Evaluator](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/05_evaluation/02_evaluation.ipynb)
 - - -
 
-## <div id="Usage">**Usage**</div>
-- #### <span style="color:red"> 반드시 해당 링크를 통해 환경세팅을 완료해 주세요 ==> [Env. setting](https://dongjin-notebook-bira.notebook.us-east-1.sagemaker.aws/lab/tree/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/00_setup/setup.ipynb) </span>
+## <div id="Usage">**Setup**</div>
+- #### <span style="color:red"> [Amazon SageMaker Studio](../../00_setup/setup_sagamaker_studio.ipynb) </span>
+- #### <span style="color:red"> [Amazon Bedrock](../../00_setup/setup.ipynb) </span>
+- #### <span style="color:red"> [Amazon OpenSearch](../../00_setup/setup_opensearch.ipynb) </span>
 - - -
 
 ## <div id="Reading-and-Watching-List">**Reading and Watching List**</div>
