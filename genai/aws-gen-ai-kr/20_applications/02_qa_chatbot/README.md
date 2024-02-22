@@ -20,6 +20,9 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [24.2.22]
+    - [PDF Parser] Llama-parser
+        - [social](https://www.linkedin.com/posts/llamaindex_stack-for-advanced-rag-over-complex-pdfs-activity-7165863894459113472-2cgS/?utm_source=share&utm_medium=member_android) | [blog](https://blog.llamaindex.ai/introducing-llamacloud-and-llamaparse-af8cedf9006b) | [performance](https://drive.google.com/file/d/1fyQAg7nOtChQzhF2Ai7HEeKYYqdeWsdt/view)
 - [24.2.12]
     - [Evaluation][repo] [Evaluate RAG applications with RAGAS v0.1](https://github.com/explodinggradients/ragas)
     - [Table Extraction]
@@ -171,6 +174,10 @@
     -[Streamlining Healthcare Compliance with AI] [blog](https://unstructured.io/blog/streamlining-healthcare-compliance-with-ai) | [social](https://www.linkedin.com/posts/langchain_streamlining-healthcare-compliance-with-ai-activity-7137914512187293696-7NOy/?utm_source=share&utm_medium=member_desktop)
     - [DocLLM](https://www.linkedin.com/feed/hashtag/?keywords=documentunderstanding&highlightedUpdateUrns=urn%3Ali%3Aactivity%3A7149987110010134528)
         - [paper](https://arxiv.org/abs/2401.00908) | [blog](https://artgor.medium.com/paper-review-docllm-a-layout-aware-generative-language-model-for-multimodal-document-06b5833e976b)
+
+- #### <span style="#FF69B4;"> **PDF Parser**</span>
+    - Llama-parser
+        - [social](https://www.linkedin.com/posts/llamaindex_stack-for-advanced-rag-over-complex-pdfs-activity-7165863894459113472-2cgS/?utm_source=share&utm_medium=member_android) | [blog](https://blog.llamaindex.ai/introducing-llamacloud-and-llamaparse-af8cedf9006b) | [performance](https://drive.google.com/file/d/1fyQAg7nOtChQzhF2Ai7HEeKYYqdeWsdt/view)
 
 ### <div id="Advanced-Retrieval">**2. Advanced Retrieval**</div>
 - #### <span style="#FF69B4;"> **Query Transformations** (Query-Rewriting)</span>
