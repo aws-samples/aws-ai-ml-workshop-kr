@@ -11,7 +11,7 @@ AWS Neuron (Tranium, Tranium1, Inferentia, Inferentia2 ) 에 관련 링크, 튜�
         
 # 2. 튜토리얼 및 코드 예시
 여기는 AWS Neuron 을 사용한  튜토리얼, 코드, 지직 및 Tip 을 제공합니다.
-- [Run Hugging Face `meta-llama/Llama-2-13b` autoregressive sampling on Inf2 & Trn1](tutorial/inference-Llama-2-13b/README.md)
+- [Run Hugging Face `meta-llama/Llama-2-13b autoregressive sampling on Inf2 & Trn1](tutorial/inference-Llama-2-13b/README.md)
 
 
 ## License
