@@ -82,7 +82,7 @@
  - create_config.sh 를 다운로드 합니다.
     ```bash
     cd ~/environment
-    curl 'https://static.us-east-1.prod.workshops.aws/public/5f0540d3-5a46-474e-87cd-ad022949e30c/static/scripts/create_config.sh' --output create_config.sh    
+    curl 'https://static.us-east-1.prod.workshops.aws/public/112b25c0-0c2a-45c2-9bb4-5b24f40b243a/static/scripts/create_config.sh' --output create_config.sh
     ```
 - create_config.sh 안에 VPC, FsX Luster 를 생성하기 위한 스택 이름이 "하드 코딩" 되어 있습니다. 아래 이름을 사용하셨다고 하면, 에러 없이 작업이 될 것이고, 만약에 이름이 수정 되었으면 아래를 변경 해주세요.  (예: sagemakervpc01,fsxlustre01 )
     ```
