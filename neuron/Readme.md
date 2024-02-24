@@ -10,6 +10,7 @@ Last updated: Feb 24, 2024
 - AWS Neuron 공식 문서[AWS Neuron Documentation](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/)
 - AWS Neuron 공식 Git Repo: [aws-neuron-samples](https://github.com/aws-neuron/aws-neuron-samples)
 - Hugging Face 로 쉽게 AWS Neuron 활용: [Hugging Face Optimum Neuron](https://huggingface.co/docs/optimum-neuron/index)
+- Hugging Face Optimum Neuron Git Repo: [Optimum-neuron git](https://github.com/huggingface/optimum-neuron.git)
         
 <p>
 
