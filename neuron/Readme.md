@@ -26,6 +26,8 @@ Last updated: Feb 24, 2024
 - [AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모](hf-optimum/01-Chatbot-Llama-2-13B-Inf2/README.md)
 
 
+# 3. 관련 블로그
+- [주요 블로그 보기](blog/Readme.md)
 ---
 
 ## License
