@@ -38,14 +38,18 @@ Last Update: Feb 24, 2024
 - ![VSCode.png](../../tutorial/inference-Llama-2-13b/img/VSCode.png)
 
 ## 2.3 Start Jupyter Server and Select Kernel
-- (1) 아래와 같이 VS Code 에서 Jupyter 를 설치 합니다.
+- (1) Optimum-neuron Git Clone 합니다. 
+    ```
+    git clone https://github.com/huggingface/optimum-neuron.git
+    ```
+- (2) 아래와 같이 VS Code 에서 Jupyter 를 설치 합니다.
     - ![install_jupyter.png](img/install_jupyter.png)
-- (2) 아래와 같이 jupyter server 실행 합니다.
+- (3) 아래와 같이 jupyter server 실행 합니다.
     ```
     python -m notebook --allow-root --port=8080
     ```
     - ![run_jupyter_server.png](img/run_jupyter_server.png)
-- (3) 아래의 화면 오른쪽 하단의 llama-2-13b-chat-neuron 노트북을 오픈합니다. 이후에 노트북 오른쪽 상단에 "Select Kernel" 읈 선택하고, Jupter Server 에서 제공한 경로(예: ```http://127.0.0.1:8080/tree?token=f607af8b9d2619a659bdbb5db0983d9f1e2ce50aeedab910```) 를 복사해서 --> "Existing Jupyter Server --> Enter Url of Jupter Serve --> 여기서 붙이기를 합니다. 이후에 아래와 같은 화면이 나옵니다.
+- (4) 아래의 화면 오른쪽 하단의 llama-2-13b-chat-neuron 노트북을 오픈합니다. 이후에 노트북 오른쪽 상단에 "Select Kernel" 읈 선택하고, Jupter Server 에서 제공한 경로(예: ```http://127.0.0.1:8080/tree?token=f607af8b9d2619a659bdbb5db0983d9f1e2ce50aeedab910```) 를 복사해서 --> "Existing Jupyter Server --> Enter Url of Jupter Serve --> 여기서 붙이기를 합니다. 이후에 아래와 같은 화면이 나옵니다.
     - ![load_notebook.png](img/load_notebook.png)
 
 <p>
