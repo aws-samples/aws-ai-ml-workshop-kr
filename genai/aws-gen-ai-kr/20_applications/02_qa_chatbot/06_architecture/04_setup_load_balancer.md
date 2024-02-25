@@ -1,6 +1,6 @@
 ## <div id="Contents">**디렉토리 구조**</div>
-AWS(Route 53)에서 도메인 소유를 인증하고,ACM(AWS Certification Manager)를 통해 SSL(TSL) 인증서를 발급받았습니다.
-C2 인스턴스의 로드 밸런싱을 위한 타겟 그룹을 생성하고,로드 밸런서(Load Balancer)로 리다이렉트 규칙을 설정하고(http 요청을 https로 리다이렉트),로드 밸런서의 Health check를 통과해 로드 밸런싱을 안전하게 유지하는 방법을 정리해보겠습니다.
+AWS(Route 53)에서 도메인 소유를 인증하고,ACM(AWS Certification Manager)를 통해 SSL(TSL) 인증서를 발급받았습니다.<br>
+EC2 인스턴스의 로드 밸런싱을 위한 타겟 그룹을 생성하고,로드 밸런서(Load Balancer)로 리다이렉트 규칙을 설정하고(http 요청을 https로 리다이렉트),로드 밸런서의 Health check를 통과해 로드 밸런싱을 안전하게 유지하는 방법을 정리해보겠습니다.<br>
 
 1. Streamlit 웹서버에서 사용하는 포트(TCP 8501)의 인바운드 규칙 편집
 <p align="center">
