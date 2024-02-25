@@ -14,17 +14,17 @@ C2 인스턴스의 로드 밸런싱을 위한 타겟 그룹을 생성하고,로�
 </p>
 
 2. 타켓유형은 인스턴스를 선택하고, 타겟그룹 이름과 포트(8501) 확인합니다.
-<p>
+<p align="center">
     <img src="./images/04_2alb.png"  width="900">
 </p>
 
 3. Health check는 타켓 그룹의 EC2 인스턴스가 정상인지 확인하는 방법입니다.
-<p>
+<p align="center">
     <img src="./images/04_3alb.png"  width="900">
 </p>
 
 4. 타켓그룹 생성되었음을 확인할 수 있습니다.
-<p>
+<p align="center">
     <img src="./images/04_4alb.png"  width="900">
 </p>
 
