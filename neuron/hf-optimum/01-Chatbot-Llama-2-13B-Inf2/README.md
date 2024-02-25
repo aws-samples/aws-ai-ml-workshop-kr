@@ -1,10 +1,10 @@
 #  AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모
 
-Last Update: Feb 24, 2024
+Last Update: Feb 25, 2024
 
 ---
 
-이 튜토리얼은 inf2.32xlarge 로 Llama-2-13b 모델을 로드하여 추론을 위한 가이드 입니다. 아래의 노트북을 실행 하기 위함 입니다. 
+이 튜토리얼은 inf2.48xlarge 로 Llama-2-13b 모델을 로드하여 추론을 위한 가이드 입니다. 아래의 노트북을 실행 하기 위함 입니다. 
 - [Create your own chatbot with llama-2-13B on AWS Inferentia
 ](https://github.com/huggingface/optimum-neuron/blob/main/notebooks/text-generation/llama2-13b-chatbot.ipynb)
 
