@@ -795,3 +795,712 @@ class ChatUX:
                 self.b = ipw.Button(description="Send")
                 self.b.on_click(self.chat)
                 display(ipw.Box(children=(self.name, self.b)))
+
+
+
+                #################################################################
+# Document Retriever with custom function: return List(documents)
+#################################################################
+
+import boto3
+import threading
+from functools import partial
+from multiprocessing.pool import ThreadPool
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from copy import deepcopy
+
+class retriever_utils():
+    
+    runtime_client = boto3.Session().client('sagemaker-runtime')
+    pool = ThreadPool(processes=2)
+    rag_fusion_pool = ThreadPool(processes=5)
+    hyde_pool = ThreadPool(processes=4)
+    text_splitter = RecursiveCharacterTextSplitter(
+        # Set a really small chunk size, just to show.
+        chunk_size=512,
+        chunk_overlap=0,
+        separators=["\n\n", "\n", ".", " ", ""],
+        length_function=len,
+    )
+    token_limit = 300
+
+    @classmethod
+    # semantic search based
+    def get_semantic_similar_docs_by_langchain(cls, **kwargs):
+
+        #print(f"Thread={threading.get_ident()}, Process={os.getpid()}")
+        search_types = ["approximate_search", "script_scoring", "painless_scripting"]
+        space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
+
+        assert "vector_db" in kwargs, "Check your vector_db"
+        assert "query" in kwargs, "Check your query"
+        assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
+        assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
+
+        results = kwargs["vector_db"].similarity_search_with_score(
+            query=kwargs["query"],
+            k=kwargs.get("k", 5),
+            search_type=kwargs.get("search_type", "approximate_search"),
+            space_type=kwargs.get("space_type", "l2"),
+            boolean_filter=opensearch_utils.get_filter(
+                filter=kwargs.get("boolean_filter", [])
+            ),
+        )
+
+        if kwargs.get("hybrid", False) and results:
+            max_score = results[0][1]
+            new_results = []
+            for doc in results:
+                nomalized_score = float(doc[1]/max_score)
+                new_results.append((doc[0], nomalized_score))
+            results = deepcopy(new_results)
+
+        return results
+
+    @classmethod
+    # semantic search based
+    def get_semantic_similar_docs(cls, **kwargs):
+
+        assert "query" in kwargs, "Check your query"
+        assert "k" in kwargs, "Check your k"
+        assert "os_client" in kwargs, "Check your os_client"
+        assert "index_name" in kwargs, "Check your index_name"
+
+        def normalize_search_results(search_results):
+
+            hits = (search_results["hits"]["hits"])
+            max_score = float(search_results["hits"]["max_score"])
+            for hit in hits:
+                hit["_score"] = float(hit["_score"]) / max_score
+            search_results["hits"]["max_score"] = hits[0]["_score"]
+            search_results["hits"]["hits"] = hits
+            return search_results
+
+        query = opensearch_utils.get_query(
+            query=kwargs["query"],
+            filter=kwargs.get("boolean_filter", []),
+            search_type="semantic", # enable semantic search
+            vector_field="vector_field", # for semantic search  check by using index_info = os_client.indices.get(index=index_name)
+            vector=kwargs["llm_emb"].embed_query(kwargs["query"]),
+            k=kwargs["k"]
+        )
+        query["size"] = kwargs["k"]
+
+        #print ("\nsemantic search query: ")
+        #pprint (query)
+
+        search_results = opensearch_utils.search_document(
+            os_client=kwargs["os_client"],
+            query=query,
+            index_name=kwargs["index_name"]
+        )
+
+        results = []
+        if search_results["hits"]["hits"]:
+            search_results = normalize_search_results(search_results)
+            for res in search_results["hits"]["hits"]:
+
+                metadata = res["_source"]["metadata"]
+                metadata["id"] = res["_id"]
+
+                doc = Document(
+                    page_content=res["_source"]["text"],
+                    metadata=metadata
+                )
+                if kwargs.get("hybrid", False):
+                    results.append((doc, res["_score"]))
+                else:
+                    results.append((doc))
+
+        return results
+
+    @classmethod
+    # lexical(keyword) search based (using Amazon OpenSearch)
+    def get_lexical_similar_docs(cls, **kwargs):
+
+        assert "query" in kwargs, "Check your query"
+        assert "k" in kwargs, "Check your k"
+        assert "os_client" in kwargs, "Check your os_client"
+        assert "index_name" in kwargs, "Check your index_name"
+
+        def normalize_search_results(search_results):
+
+            hits = (search_results["hits"]["hits"])
+            max_score = float(search_results["hits"]["max_score"])
+            for hit in hits:
+                hit["_score"] = float(hit["_score"]) / max_score
+            search_results["hits"]["max_score"] = hits[0]["_score"]
+            search_results["hits"]["hits"] = hits
+            return search_results
+
+        query = opensearch_utils.get_query(
+            query=kwargs["query"],
+            minimum_should_match=kwargs.get("minimum_should_match", 0),
+            filter=kwargs["filter"]
+        )
+        query["size"] = kwargs["k"]
+
+        #print ("\nlexical search query: ")
+        #pprint (query)
+
+        search_results = opensearch_utils.search_document(
+            os_client=kwargs["os_client"],
+            query=query,
+            index_name=kwargs["index_name"]
+        )
+
+        results = []
+        if search_results["hits"]["hits"]:
+            search_results = normalize_search_results(search_results)
+            for res in search_results["hits"]["hits"]:
+
+                metadata = res["_source"]["metadata"]
+                metadata["id"] = res["_id"]
+
+                doc = Document(
+                    page_content=res["_source"]["text"],
+                    metadata=metadata
+                )
+                if kwargs.get("hybrid", False):
+                    results.append((doc, res["_score"]))
+                else:
+                    results.append((doc))
+
+        return results
+
+    @classmethod
+    # rag-fusion based
+    def get_rag_fusion_similar_docs(cls, **kwargs):
+
+        search_types = ["approximate_search", "script_scoring", "painless_scripting"]
+        space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
+
+        assert "llm_emb" in kwargs, "Check your llm_emb"
+        assert "query" in kwargs, "Check your query"
+        assert "query_transformation_prompt" in kwargs, "Check your query_transformation_prompt"
+        assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
+        assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
+        assert kwargs.get("llm_text", None) != None, "Check your llm_text"
+
+        llm_text = kwargs["llm_text"]
+        query_augmentation_size = kwargs["query_augmentation_size"]
+        query_transformation_prompt = kwargs["query_transformation_prompt"]
+
+        generate_queries = (
+            {
+                "query": itemgetter("query"),
+                "query_augmentation_size": itemgetter("query_augmentation_size")
+            }
+            | query_transformation_prompt
+            | llm_text
+            | StrOutputParser()
+            | (lambda x: x.split("\n"))
+        )
+        rag_fusion_query = generate_queries.invoke(
+            {
+                "query": kwargs["query"],
+                "query_augmentation_size": kwargs["query_augmentation_size"]
+            }
+        )
+        rag_fusion_query = [query for query in rag_fusion_query if query != ""]
+        if len(rag_fusion_query) > query_augmentation_size: rag_fusion_query = rag_fusion_query[-query_augmentation_size:]
+        rag_fusion_query.insert(0, kwargs["query"])
+
+        if kwargs["verbose"]:
+            print("\n")
+            print("===== RAG-Fusion Queries =====")
+            print(rag_fusion_query)
+
+        tasks = []
+        for query in rag_fusion_query:
+            semantic_search = partial(
+                cls.get_semantic_similar_docs,
+                os_client=kwargs["os_client"],
+                index_name=kwargs["index_name"],
+                query=query,
+                k=kwargs["k"],
+                boolean_filter=kwargs.get("boolean_filter", []),
+                llm_emb=kwargs["llm_emb"],
+                hybrid=True
+            )
+            tasks.append(cls.rag_fusion_pool.apply_async(semantic_search,))
+        rag_fusion_docs = [task.get() for task in tasks]
+
+        similar_docs = cls.get_ensemble_results(
+            doc_lists=rag_fusion_docs,
+            weights=[1/(query_augmentation_size+1)]*(query_augmentation_size+1), #query_augmentation_size + original query
+            algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+            c=60,
+            k=kwargs["k"],
+        )
+
+        return similar_docs
+
+    @classmethod
+    # HyDE based
+    def get_hyde_similar_docs(cls, **kwargs):
+
+        def _get_hyde_response(query, prompt, llm_text):
+
+            chain = (
+                {
+                    "query": itemgetter("query")
+                }
+                | prompt
+                | llm_text
+                | StrOutputParser()
+            )
+            return chain.invoke({"query": query})
+
+        search_types = ["approximate_search", "script_scoring", "painless_scripting"]
+        space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
+
+        assert "llm_emb" in kwargs, "Check your llm_emb"
+        assert "query" in kwargs, "Check your query"
+        assert "hyde_query" in kwargs, "Check your hyde_query"
+        assert kwargs.get("search_type", "approximate_search") in search_types, f'Check your search_type: {search_types}'
+        assert kwargs.get("space_type", "l2") in space_types, f'Check your space_type: {space_types}'
+        assert kwargs.get("llm_text", None) != None, "Check your llm_text"
+
+        query = kwargs["query"]
+        llm_text = kwargs["llm_text"]
+        hyde_query = kwargs["hyde_query"]
+
+        tasks = []
+        for template_type in hyde_query:
+            hyde_response = partial(
+                _get_hyde_response,
+                query=query,
+                prompt=prompt_repo.get_hyde(template_type),
+                llm_text=llm_text
+            )
+            tasks.append(cls.hyde_pool.apply_async(hyde_response,))
+        hyde_answers = [task.get() for task in tasks]
+        hyde_answers.insert(0, query)
+
+        tasks = []
+        for hyde_answer in hyde_answers:
+            semantic_search = partial(
+                cls.get_semantic_similar_docs,
+                os_client=kwargs["os_client"],
+                index_name=kwargs["index_name"],
+                query=hyde_answer,
+                k=kwargs["k"],
+                boolean_filter=kwargs.get("boolean_filter", []),
+                llm_emb=kwargs["llm_emb"],
+                hybrid=True
+            )
+            tasks.append(cls.hyde_pool.apply_async(semantic_search,))
+        hyde_docs = [task.get() for task in tasks]
+        hyde_doc_size = len(hyde_docs)
+
+        similar_docs = cls.get_ensemble_results(
+            doc_lists=hyde_docs,
+            weights=[1/(hyde_doc_size)]*(hyde_doc_size), #query_augmentation_size + original query
+            algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+            c=60,
+            k=kwargs["k"],
+        )
+        if kwargs["verbose"]:
+            print("\n")
+            print("===== HyDE Answers =====")
+            print(hyde_answers)
+
+        return similar_docs
+
+    @classmethod
+    # ParentDocument based
+    def get_parent_document_similar_docs(cls, **kwargs):
+
+        child_search_results = kwargs["similar_docs"]
+
+        parent_info = {}
+        for rank, (doc, score) in enumerate(child_search_results):
+            parent_id = doc.metadata["parent_id"]
+            if parent_id not in parent_info:
+                parent_info[parent_id] = (rank+1, score)
+        parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
+        parent_ids = list(map(lambda x:x[0], parent_ids))
+
+        parent_docs = opensearch_utils.get_documents_by_ids(
+            os_client=kwargs["os_client"],
+            ids=parent_ids,
+            index_name=kwargs["index_name"],
+        )
+        similar_docs = []
+        if parent_docs["docs"]:
+            for res in parent_docs["docs"]:
+                doc_id = res["_id"]
+                doc = Document(
+                    page_content=res["_source"]["text"],
+                    metadata=res["_source"]["metadata"]
+                )
+                if kwargs["hybrid"]:
+                    similar_docs.append((doc, parent_info[doc_id][1]))
+                else:
+                    similar_docs.append((doc))
+
+        if kwargs["verbose"]:
+            print("===== ParentDocument =====")
+            print (f'filter: {kwargs["boolean_filter"]}')
+            print (f'# child_docs: {len(child_search_results)}')
+            print (f'# parent docs: {len(similar_docs)}')
+            print (f'# duplicates: {len(child_search_results)-len(similar_docs)}')
+
+
+        return similar_docs
+
+    @classmethod
+    def get_rerank_docs(cls, **kwargs):
+
+        assert "reranker_endpoint_name" in kwargs, "Check your reranker_endpoint_name"
+        assert "k" in kwargs, "Check your k"
+
+        contexts, query, llm_text, rerank_queries = kwargs["context"], kwargs["query"], kwargs["llm_text"], {"inputs":[]}
+
+        exceed_info = []
+        for idx, (context, score) in enumerate(contexts):
+            page_content = context.page_content
+            token_size = llm_text.get_num_tokens(query+page_content)
+            exceed_flag = False
+
+            if token_size > cls.token_limit:
+                exceed_flag = True
+                splited_docs = cls.text_splitter.split_documents([context])
+                if kwargs["verbose"]:
+                    print(f"\n[Exeeds ReRanker token limit] Number of chunk_docs after split and chunking= {len(splited_docs)}\n")
+
+                partial_set, length = [], []
+                for splited_doc in splited_docs:
+                    rerank_queries["inputs"].append({"text": query, "text_pair": splited_doc.page_content})
+                    length.append(llm_text.get_num_tokens(splited_doc.page_content))
+                    partial_set.append(len(rerank_queries["inputs"])-1)
+            else:
+                rerank_queries["inputs"].append({"text": query, "text_pair": page_content})
+
+            if exceed_flag:
+                exceed_info.append([idx, exceed_flag, partial_set, length])
+            else:
+                exceed_info.append([idx, exceed_flag, len(rerank_queries["inputs"])-1, None])
+
+        rerank_queries = json.dumps(rerank_queries)
+
+        response = cls.runtime_client.invoke_endpoint(
+            EndpointName=kwargs["reranker_endpoint_name"],
+            ContentType="application/json",
+            Accept="application/json",
+            Body=rerank_queries
+        )
+        outs = json.loads(response['Body'].read().decode()) ## for json
+
+        rerank_contexts = []
+        for idx, exceed_flag, partial_set, length in exceed_info:
+            if not exceed_flag:
+                rerank_contexts.append((contexts[idx][0], outs[partial_set]["score"]))
+            else:
+                partial_scores = [outs[partial_idx]["score"] for partial_idx in partial_set]
+                partial_scores = np.average(partial_scores, axis=0, weights=length)
+                rerank_contexts.append((contexts[idx][0], partial_scores))
+
+        #rerank_contexts = [(contexts[idx][0], out["score"]) for idx, out in enumerate(outs)]
+        rerank_contexts = sorted(
+            rerank_contexts,
+            key=lambda x: x[1],
+            reverse=True
+        )
+
+        return rerank_contexts[:kwargs["k"]]
+
+    @classmethod
+    # hybrid (lexical + semantic) search based
+    def search_hybrid(cls, **kwargs):
+
+        assert "query" in kwargs, "Check your query"
+        assert "llm_emb" in kwargs, "Check your llm_emb"
+        assert "index_name" in kwargs, "Check your index_name"
+        assert "os_client" in kwargs, "Check your os_client"
+
+        rag_fusion = kwargs.get("rag_fusion", False)
+        hyde = kwargs.get("hyde", False)
+        parent_document = kwargs.get("parent_document", False)
+
+        assert (rag_fusion + hyde) <= 1, "choose only one between RAG-FUSION and HyDE"
+        if rag_fusion:
+            assert "query_augmentation_size" in kwargs, "if you use RAG-FUSION, Check your query_augmentation_size"
+        if hyde:
+            assert "hyde_query" in kwargs, "if you use HyDE, Check your hyde_query"
+
+        verbose = kwargs.get("verbose", False)
+        async_mode = kwargs.get("async_mode", True)
+        reranker = kwargs.get("reranker", False)
+        search_filter = deepcopy(kwargs.get("filter", []))
+        if parent_document:
+            search_filter.append({"term": {"metadata.family_tree": "child"}})
+
+        def do_sync():
+
+            if rag_fusion:
+                similar_docs_semantic = cls.get_rag_fusion_similar_docs(
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter,
+                    hybrid=True,
+
+                    llm_text=kwargs.get("llm_text", None),
+                    query_augmentation_size=kwargs["query_augmentation_size"],
+                    query_transformation_prompt=kwargs.get("query_transformation_prompt", None),
+                    fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+
+                    verbose=kwargs.get("verbose", False),
+                )
+            elif hyde:
+                similar_docs_semantic = cls.get_hyde_similar_docs(
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter,
+                    hybrid=True,
+
+                    llm_text=kwargs.get("llm_text", None),
+                    hyde_query=kwargs["hyde_query"],
+                    fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+
+                    verbose=kwargs.get("verbose", False),
+                )
+            else:
+                similar_docs_semantic = cls.get_semantic_similar_docs(
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter,
+                    hybrid=True
+                )
+
+            similar_docs_keyword = cls.get_lexical_similar_docs(
+                index_name=kwargs["index_name"],
+                os_client=kwargs["os_client"],
+
+                query=kwargs["query"],
+                k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                minimum_should_match=kwargs.get("minimum_should_match", 0),
+                filter=search_filter,
+                hybrid=True
+            )
+
+            return similar_docs_semantic, similar_docs_keyword
+
+        def do_async():
+
+            if rag_fusion:
+                semantic_search = partial(
+                    cls.get_rag_fusion_similar_docs,
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter,
+                    hybrid=True,
+
+                    llm_text=kwargs.get("llm_text", None),
+                    query_augmentation_size=kwargs["query_augmentation_size"],
+                    query_transformation_prompt=kwargs.get("query_transformation_prompt", None),
+                    fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+
+                    verbose=kwargs.get("verbose", False),
+                )
+            elif hyde:
+                semantic_search = partial(
+                    cls.get_hyde_similar_docs,
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter,
+                    hybrid=True,
+
+                    llm_text=kwargs.get("llm_text", None),
+                    hyde_query=kwargs["hyde_query"],
+                    fusion_algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+
+                    verbose=kwargs.get("verbose", False),
+                )
+            else:
+                semantic_search = partial(
+                    cls.get_semantic_similar_docs,
+                    index_name=kwargs["index_name"],
+                    os_client=kwargs["os_client"],
+                    llm_emb=kwargs["llm_emb"],
+
+                    query=kwargs["query"],
+                    k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                    boolean_filter=search_filter,
+                    hybrid=True
+                )
+
+            lexical_search = partial(
+                cls.get_lexical_similar_docs,
+                index_name=kwargs["index_name"],
+                os_client=kwargs["os_client"],
+
+                query=kwargs["query"],
+                k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+                minimum_should_match=kwargs.get("minimum_should_match", 0),
+                filter=search_filter,
+                hybrid=True
+            )
+            semantic_pool = cls.pool.apply_async(semantic_search,)
+            lexical_pool = cls.pool.apply_async(lexical_search,)
+            similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
+
+            return similar_docs_semantic, similar_docs_keyword
+
+        if async_mode:
+            similar_docs_semantic, similar_docs_keyword = do_async()
+        else:
+            similar_docs_semantic, similar_docs_keyword = do_sync()
+
+        similar_docs = cls.get_ensemble_results(
+            doc_lists=[similar_docs_semantic, similar_docs_keyword],
+            weights=kwargs.get("ensemble_weights", [.51, .49]),
+            algorithm=kwargs.get("fusion_algorithm", "RRF"), # ["RRF", "simple_weighted"]
+            c=60,
+            k=kwargs.get("k", 5) if not reranker else int(kwargs["k"]*1.5),
+        )
+        #print (len(similar_docs_keyword), len(similar_docs_semantic), len(similar_docs))
+        #print ("1-similar_docs")
+        #for i, doc in enumerate(similar_docs): print (i, doc)
+
+        if verbose: 
+            similar_docs_wo_reranker = copy.deepcopy(similar_docs)
+
+        if reranker:
+            reranker_endpoint_name = kwargs["reranker_endpoint_name"]
+            similar_docs = cls.get_rerank_docs(
+                llm_text=kwargs["llm_text"],
+                query=kwargs["query"],
+                context=similar_docs,
+                k=kwargs.get("k", 5),
+                reranker_endpoint_name=reranker_endpoint_name,
+                verbose=verbose
+            )
+
+        #print ("2-similar_docs")
+        #for i, doc in enumerate(similar_docs): print (i, doc)
+
+        if parent_document:
+            similar_docs = cls.get_parent_document_similar_docs(
+                index_name=kwargs["index_name"],
+                os_client=kwargs["os_client"],
+                similar_docs=similar_docs,
+                hybrid=True,
+                boolean_filter=search_filter,
+                verbose=verbose
+            )
+
+        if verbose:
+
+            print("##############################")
+            print("async_mode")
+            print("##############################")
+            print(async_mode)
+
+            print("##############################")
+            print("reranker")
+            print("##############################")
+            print(reranker)
+
+            print("##############################")
+            print("rag_fusion")
+            print("##############################")
+            print(rag_fusion)
+
+            print("##############################")
+            print("HyDE")
+            print("##############################")
+            print(hyde)
+
+            print("##############################")
+            print("parent_document")
+            print("##############################")
+            print(parent_document)
+
+            print("##############################")
+            print("similar_docs_semantic")
+            print("##############################")
+            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_semantic))
+
+            print("##############################")
+            print("similar_docs_keyword")
+            print("##############################")
+            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_keyword))
+            
+            if reranker:
+                print("##############################")
+                print("similar_docs_without_reranker")
+                print("##############################")
+                print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_wo_reranker))
+
+            print("##############################")
+            print("similar_docs")
+            print("##############################")
+            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs))
+
+        similar_docs = list(map(lambda x:x[0], similar_docs))
+
+        return similar_docs
+
+    @classmethod
+    # Score fusion and re-rank (lexical + semantic)
+    def get_ensemble_results(cls, doc_lists: List[List[Document]], weights, algorithm="RRF", c=60, k=5) -> List[Document]:
+
+        assert algorithm in ["RRF", "simple_weighted"]
+
+        # Create a union of all unique documents in the input doc_lists
+        all_documents = set()
+
+        for doc_list in doc_lists:
+            for (doc, _) in doc_list:
+                all_documents.add(doc.page_content)
+
+        # Initialize the score dictionary for each document
+        hybrid_score_dic = {doc: 0.0 for doc in all_documents}    
+
+        # Calculate RRF scores for each document
+        for doc_list, weight in zip(doc_lists, weights):
+            for rank, (doc, score) in enumerate(doc_list, start=1):
+                if algorithm == "RRF": # RRF (Reciprocal Rank Fusion)
+                    score = weight * (1 / (rank + c))
+                elif algorithm == "simple_weighted":
+                    score *= weight
+                hybrid_score_dic[doc.page_content] += score
+
+        # Sort documents by their scores in descending order
+        sorted_documents = sorted(
+            hybrid_score_dic.items(), key=lambda x: x[1], reverse=True
+        )
+
+        # Map the sorted page_content back to the original document objects
+        page_content_to_doc_map = {
+            doc.page_content: doc for doc_list in doc_lists for (doc, orig_score) in doc_list
+        }
+
+        sorted_docs = [
+            (page_content_to_doc_map[page_content], hybrid_score) for (page_content, hybrid_score) in sorted_documents
+        ]
+
+        return sorted_docs[:k]
+
