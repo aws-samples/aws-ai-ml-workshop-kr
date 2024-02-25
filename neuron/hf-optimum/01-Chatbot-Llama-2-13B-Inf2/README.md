@@ -61,7 +61,9 @@ Last Update: Feb 25, 2024
 - 아래는 모델 추론을 20개를 해보고 있고, Neuron 24개 모두 사용되고 있고, 각각이 약 80% 정도 사용을 하고 있습니다. 또한 Neuron Accelerator (2개의 neuron 있음) 는 32 GB GPU 메모리에서 약 6.1 GB 사용됨을 보여 주고 있습니다. 
 - ![inference_neuron.png](img/inference_neuron.png)
 
-    
+## 3.2. 모델 추론을 통한 챗팅
+- 여러가지 질문을 해봅니다.
+    - ![Llama-2-inference.png](img/Llama-2-inference.png)    
 
 여기까지 오셨으면 성공 하셨습니다. 축하 드립니다. ^^
 
