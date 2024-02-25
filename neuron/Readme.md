@@ -2,7 +2,7 @@
 
 AWS Neuron (Tranium, Tranium1, Inferentia, Inferentia2 ) 에 관련 링크, 튜토리얼, 가이드를 제공 합니다.
 
-Last updated: Feb 24, 2024
+Last updated: Feb 25, 2024
 
 ---
 
@@ -20,10 +20,12 @@ Last updated: Feb 24, 2024
 여기는 AWS Neuron 을 사용한  튜토리얼, 코드, 지직 및 Tip 을 제공합니다.
 
 ## 2.1 AWS Neuron 
-- [Run Hugging Face `meta-llama/Llama-2-13b autoregressive sampling on Inf2 & Trn1](tutorial/inference-Llama-2-13b/README.md)
+- (Feb 2024) [Run Hugging Face `meta-llama/Llama-2-13b autoregressive sampling on Inf2 & Trn1](tutorial/inference-Llama-2-13b/README.md)
 
 ## 2.2. Hugging Face Optimum Neuron
-- [AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모](hf-optimum/01-Chatbot-Llama-2-13B-Inf2/README.md)
+- (Feb 2024) [AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모](hf-optimum/01-Chatbot-Llama-2-13B-Inf2/README.md)
+- (Feb 2024) [AWS Tranium 기반 위에 llama-2-7B 및 Dolly Dataset 으로 파인 튜닝](hf-optimum/02-Fine-tune-Llama-7B-Trn1/README.md)
+
 
 
 # 3. 관련 블로그
