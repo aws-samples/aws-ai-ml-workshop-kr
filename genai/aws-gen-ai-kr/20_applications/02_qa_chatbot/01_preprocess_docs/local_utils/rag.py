@@ -15,8 +15,8 @@ from typing import Any, Dict, List, Optional, List, Tuple
 
 from opensearchpy import OpenSearch, RequestsHttpConnection
 
-from utils import print_ww
-from utils.opensearch import opensearch_utils
+from local_utils import print_ww
+from local_utils.opensearch import opensearch_utils
 
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
