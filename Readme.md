@@ -13,6 +13,7 @@ AWS AIML 한글 워크샵 & 예제 모음
 - [SageMaker](sagemaker/Readme.md) : End-to-end 머신러닝/딥러닝 플랫폼 SageMaker 활용 예제
 - [Integration](integration/Readme.md) : Greengrass, EMR 등 다른 서비스와의 융합 및 응용사례
 - [Generative AI](genai/Readme.md) : Generative AI와 관련된 예제 및 관련 서비스 응용사례
+- [AWS Neuron](neuron/Readme.md) : AWS Neuron (Inferentia, Inferentia2, Tranium )의 관련된 예제 및 활용
 ---
 
 ## SageMaker 셀프스터디
