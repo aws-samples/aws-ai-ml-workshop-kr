@@ -39,7 +39,7 @@ filelock==3.13.1
 frozenlist==1.4.0
 fsspec==2023.12.1
 gitdb==4.0.11
-GitPython==3.1.40
+GitPython==3.1.41
 gpg==1.15.1
 greenlet==3.0.2
 h11==0.14.0
