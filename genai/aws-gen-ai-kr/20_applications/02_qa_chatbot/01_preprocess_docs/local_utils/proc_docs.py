@@ -2,8 +2,8 @@ from termcolor import colored
 from IPython.core.display import display, HTML
 
 from langchain.docstore.document import Document
-from utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
-from utils.opensearch import opensearch_utils
+from local_utils.rag import get_semantic_similar_docs, get_lexical_similar_docs, get_ensemble_results
+from local_utils.opensearch import opensearch_utils
 
 def search_hybrid(**kwargs):
     
