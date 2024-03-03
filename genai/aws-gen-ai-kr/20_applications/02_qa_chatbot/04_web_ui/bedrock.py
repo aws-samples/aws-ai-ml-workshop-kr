@@ -1,22 +1,31 @@
-from utils.rag import prompt_repo
-from utils.opensearch import opensearch_utils
-from utils.rag import OpenSearchHybridSearchRetriever
-from utils.proc_docs import get_parameter
-from langchain.chains import RetrievalQA
-from langchain.embeddings import BedrockEmbeddings
 from langchain.llms.bedrock import Bedrock
-import boto3
+from langchain.embeddings import BedrockEmbeddings
+from langchain.chains import RetrievalQA
+from utils.proc_docs import get_parameter
+from utils.rag import OpenSearchHybridSearchRetriever
+from utils.opensearch import opensearch_utils
+from utils.rag import prompt_repo
 import os
 import sys
+import boto3
 module_path = "../../.."
 sys.path.append(os.path.abspath(module_path))
 
 
 # 사용 중인 Opensearch index
 index_name = "v15-genai-poc-knox-parent-doc-retriever"
+parent = False
+reranker = False
 
 
+def switch(parent, reranker):
+    parent = parent
+    reranker = reranker
+    print(parent)
+    print(reranker)
 # 텍스트 생성 LLM 가져오기, streaming_callback을 인자로 받아옴
+
+
 def get_llm(streaming_callback):
     model_kwargs = {  # Anthropic 모델
         "max_tokens_to_sample": 4000,
@@ -101,10 +110,10 @@ def get_retriever(streaming_callback):
         fusion_algorithm="RRF",
         # [for lexical, for semantic], Lexical, Semantic search 결과에 대한 최종 반영 비율 정의
         ensemble_weights=[.51, .49],
-        reranker=True,  # enable reranker with reranker model
+        reranker=reranker,  # enable reranker with reranker model
         # endpoint name for reranking model
         reranker_endpoint_name=reranker_endpoint_name,
-        parent_document=True,  # enable parent document
+        parent_document=parent,  # enable parent document
 
         # option for async search
         async_mode=True,

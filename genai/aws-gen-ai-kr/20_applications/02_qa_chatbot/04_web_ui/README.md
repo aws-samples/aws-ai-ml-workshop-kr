@@ -12,18 +12,24 @@
 
 ## Start
 
-1. Python 종속 라이브러리 설치
+1. web_ui 레포지토리로 이동
+
+```
+cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui/
+```
+
+2. Python 종속 라이브러리 설치
 
 ```
 pip install -r requirements.txt
 ```
 
-2. Streamlit 애플리케이션 작동
+3. Streamlit 애플리케이션 작동
 
 ```
 streamlit run streamlit.py --server.port<MY_PORTNUMBER>
 ```
 
-3. 접속하기
+4. 접속하기
 
 - Streamlit 작동 시 표시되는 External link로 접속
