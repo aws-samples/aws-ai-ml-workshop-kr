@@ -67,7 +67,7 @@ def get_retriever(streaming_callback, parent, reranker):
     llm_text = get_llm(streaming_callback)
     llm_emb = get_embedding_model()
     reranker_endpoint_name = pm.get_params(key="reranker-endpoint",enc=False)
-    index_name = pm.get_params(key='openserach_index_name', enc=True)
+    index_name = pm.get_params(key='openserach_index_name', enc=False)
 
     opensearch_hybrid_retriever = OpenSearchHybridSearchRetriever(
         os_client=os_client,
