@@ -1,20 +1,16 @@
-from utils.rag import prompt_repo
+import os, sys, boto3
+module_path = "../../.."
+sys.path.append(os.path.abspath(module_path))
+from utils.rag import prompt_repo, OpenSearchHybridSearchRetriever
 from utils.opensearch import opensearch_utils
-from utils.rag import OpenSearchHybridSearchRetriever
-from utils.proc_docs import get_parameter
+from utils.ssm import parameter_store
 from langchain.chains import RetrievalQA
 from langchain.embeddings import BedrockEmbeddings
 from langchain.llms.bedrock import Bedrock
-import boto3
-import os
-import sys
-module_path = "../../.."
-sys.path.append(os.path.abspath(module_path))
 
 
-# 사용 중인 Opensearch index
-index_name = "v15-genai-poc-knox-parent-doc-retriever"
-
+region = boto3.Session().region_name
+pm = parameter_store(region)
 
 # 텍스트 생성 LLM 가져오기, streaming_callback을 인자로 받아옴
 def get_llm(streaming_callback):
@@ -44,24 +40,11 @@ def get_embedding_model():
 
 # Opensearch vectorDB 가져오기
 
-
 def get_opensearch_client():
-    ssm = boto3.client("ssm", "us-east-1")
 
-    opensearch_domain_endpoint = get_parameter(
-        boto3_clinet=ssm,
-        parameter_name='knox_opensearch_domain_endpoint',
-    )
-
-    opensearch_user_id = get_parameter(
-        boto3_clinet=ssm,
-        parameter_name='knox_opensearch_userid',
-    )
-
-    opensearch_user_password = get_parameter(
-        boto3_clinet=ssm,
-        parameter_name='knox_opensearch_password',
-    )
+    opensearch_domain_endpoint = pm.get_params(key='opensearch_domain_endpoint', enc=False)
+    opensearch_user_id = pm.get_params(key='opensearch_userid', enc=False)
+    opensearch_user_password = pm.get_params(key='opensearch_password', enc=True)
 
     opensearch_domain_endpoint = opensearch_domain_endpoint
     rag_user_name = opensearch_user_id
@@ -79,12 +62,12 @@ def get_opensearch_client():
 
 # hybrid search retriever 만들기
 
-
-def get_retriever(streaming_callback):
+def get_retriever(streaming_callback, parent, reranker):
     os_client = get_opensearch_client()
     llm_text = get_llm(streaming_callback)
     llm_emb = get_embedding_model()
-    reranker_endpoint_name = "huggingface-pytorch-inference-2023-11-15-07-53-21-605"
+    reranker_endpoint_name = pm.get_params(key="reranker-endpoint",enc=False)
+    index_name = pm.get_params(key='openserach_index_name', enc=False)
 
     opensearch_hybrid_retriever = OpenSearchHybridSearchRetriever(
         os_client=os_client,
@@ -101,10 +84,10 @@ def get_retriever(streaming_callback):
         fusion_algorithm="RRF",
         # [for lexical, for semantic], Lexical, Semantic search 결과에 대한 최종 반영 비율 정의
         ensemble_weights=[.51, .49],
-        reranker=True,  # enable reranker with reranker model
+        reranker=reranker,  # enable reranker with reranker model
         # endpoint name for reranking model
         reranker_endpoint_name=reranker_endpoint_name,
-        parent_document=True,  # enable parent document
+        parent_document=parent,  # enable parent document
 
         # option for async search
         async_mode=True,
@@ -113,16 +96,17 @@ def get_retriever(streaming_callback):
         k=6,  # 최종 Document 수 정의
         verbose=False,
     )
+
     return opensearch_hybrid_retriever
 
 # 모델에 query하기
 
 
-def invoke(query, streaming_callback):
+def invoke(query, streaming_callback, parent, reranker):
 
     # llm, retriever 가져오기
     llm_text = get_llm(streaming_callback)
-    opensearch_hybrid_retriever = get_retriever(streaming_callback)
+    opensearch_hybrid_retriever = get_retriever(streaming_callback, parent, reranker)
 
     # answer only 선택
     PROMPT = prompt_repo.get_qa(prompt_type="answer_only")
