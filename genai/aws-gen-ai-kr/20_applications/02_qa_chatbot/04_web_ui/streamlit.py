@@ -11,6 +11,12 @@ st.markdown('''- The original data is stored in Amazon OpenSearch, and the embed
 
 st.markdown(
     '''- You can find the source code in [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui)''')
+col1, col2, col3 = st.columns([2, 1, 1])
+with col2:
+    parent = st.toggle("Partent_docs")
+with col3:
+    reranker = st.toggle("Reranker")
+
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
         {"role": "assistant", "content": "How can I help you?"}
@@ -29,7 +35,7 @@ if query:
     st_cb = StreamlitCallbackHandler(
         st.container(), collapse_completed_thoughts=True)
     # bedrock.py의 invoke 함수 사용
-    response = glib.invoke(query=query, streaming_callback=st_cb)
+    response = glib.invoke(query=query, streaming_callback=st_cb, parent=parent, reranker=reranker)
     # response 로 메세지, 링크, 레퍼런스(source_documents) 받아오게 설정된 것을 변수로 저장
     msg = response[0]
     link = response[1]
