@@ -682,8 +682,10 @@ class retriever_utils():
         async_mode = kwargs.get("async_mode", True)
         reranker = kwargs.get("reranker", False)
         search_filter = deepcopy(kwargs.get("filter", []))
-        if parent_document:
-            search_filter.append({"term": {"metadata.family_tree": "child"}})
+        
+        search_filter.append({"term": {"metadata.family_tree": "child"}})
+        #if parent_document:
+        #    search_filter.append({"term": {"metadata.family_tree": "child"}})
 
         def do_sync():
 
