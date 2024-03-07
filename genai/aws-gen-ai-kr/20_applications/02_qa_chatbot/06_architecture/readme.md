@@ -1,7 +1,12 @@
 <h1 align="left"><b>EC2에 도메인 적용 및 ACM 인증서 발급</b></h1>
+본 PoC 서비스에 Amazon Bedrock과 Claude모델이용한 Advanced Architecture 과정입니다.
+<p align="center">
+    <img src="./images/00_architecture1.png" width="900">
+</p>
+
 본 PoC 서비스에 Amazon Route53 통해 awssa.site 도메인을 연결하는 과정입니다.
 <p align="center">
-    <img src="./images/00_architecture.png"  width="900">
+    <img src="./images/00_architecture2.png" width="900">
 </p>
 
 ## <div id="Contents">**디렉토리 구조**</div>
