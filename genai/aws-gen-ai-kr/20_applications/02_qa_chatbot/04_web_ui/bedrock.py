@@ -42,8 +42,8 @@ def get_embedding_model():
 
 def get_opensearch_client():
 
-    opensearch_domain_endpoint = pm.get_params(key='opensearch_domain_endpoint', enc=True)
-    opensearch_user_id = pm.get_params(key='opensearch_userid', enc=True)
+    opensearch_domain_endpoint = pm.get_params(key='opensearch_domain_endpoint', enc=False)
+    opensearch_user_id = pm.get_params(key='opensearch_userid', enc=False)
     opensearch_user_password = pm.get_params(key='opensearch_password', enc=True)
 
     opensearch_domain_endpoint = opensearch_domain_endpoint
