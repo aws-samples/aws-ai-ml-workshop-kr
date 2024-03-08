@@ -43,8 +43,8 @@ def get_embedding_model():
 def get_opensearch_client():
 
     opensearch_domain_endpoint = pm.get_params(key='opensearch_domain_endpoint', enc=False)
-    opensearch_user_id = pm.get_params(key='opensearch_userid', enc=False)
-    opensearch_user_password = pm.get_params(key='opensearch_password', enc=True)
+    opensearch_user_id = pm.get_params(key='opensearch_user_id', enc=False)
+    opensearch_user_password = pm.get_params(key='opensearch_user_password', enc=True)
 
     opensearch_domain_endpoint = opensearch_domain_endpoint
     rag_user_name = opensearch_user_id
@@ -66,8 +66,8 @@ def get_retriever(streaming_callback, parent, reranker):
     os_client = get_opensearch_client()
     llm_text = get_llm(streaming_callback)
     llm_emb = get_embedding_model()
-    reranker_endpoint_name = pm.get_params(key="reranker-endpoint",enc=False)
-    index_name = pm.get_params(key='openserach_index_name', enc=False)
+    reranker_endpoint_name = pm.get_params(key="reranker_endpoint",enc=False)
+    index_name = pm.get_params(key="opensearch_index_name", enc=True)
 
     opensearch_hybrid_retriever = OpenSearchHybridSearchRetriever(
         os_client=os_client,
