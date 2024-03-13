@@ -683,9 +683,9 @@ class retriever_utils():
         reranker = kwargs.get("reranker", False)
         search_filter = deepcopy(kwargs.get("filter", []))
         
-        search_filter.append({"term": {"metadata.family_tree": "child"}})
-        #if parent_document:
-        #    search_filter.append({"term": {"metadata.family_tree": "child"}})
+        #search_filter.append({"term": {"metadata.family_tree": "child"}})
+        if parent_document:
+            search_filter.append({"term": {"metadata.family_tree": "child"}})
 
         def do_sync():
 
