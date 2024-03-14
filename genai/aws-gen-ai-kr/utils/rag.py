@@ -16,6 +16,11 @@ from itertools import chain as ch
 from typing import Any, Dict, List, Optional, List, Tuple
 from opensearchpy import OpenSearch, RequestsHttpConnection
 
+import base64
+from PIL import Image
+from io import BytesIO
+import matplotlib.pyplot as plt
+
 from utils import print_ww
 from utils.opensearch import opensearch_utils
 
@@ -29,6 +34,7 @@ from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
 
 import threading
 from functools import partial
@@ -50,6 +56,54 @@ class prompt_repo():
     # Answer the question within <answer></answer> XML tags as much as you can.
     # Don't say "According to context" when answering.
     # Don't insert XML tag such as <context> and </context> when answering.
+
+    
+    @classmethod
+    def get_system_prompt(cls, ):
+        
+        system_prompt = '''
+                        You are a master answer bot designed to answer user's questions.
+                        I'm going to give you contexts which consist of texts, tables and images.
+                        Read the contexts carefully, because I'm going to ask you a question about it.
+                        '''
+        return system_prompt
+        
+    @classmethod
+    def get_human_prompt_for_images(cls, images):
+
+        human_prompt = []
+        image_template = {
+            "type": "image_url",
+            "image_url": {
+                "url": "data:image/png;base64," + "IMAGE_BASE64",
+            },
+        }
+
+        text_template = {
+            "type": "text",
+            "text": '''
+                    Here is the contexts as texts: <contexts>{contexts}</contexts>
+                    Here is the contexts as tables: <tables>{tables}</tables>
+
+                    First, find a few paragraphs or sentences from the contexts that are most relevant to answering the question.
+                    Then, answer the question as much as you can.
+
+                    Skip the preamble and go straight into the answer.
+                    Don't insert any XML tag such as <contexts> and </contexts> when answering.
+                    Answer in Korean.
+
+                    Here is the question: <question>{question}</question>
+
+                    If the question cannot be answered by the contexts, say "No relevant contexts".
+            '''
+        }
+
+        for image in images:
+            image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", image.page_content)
+            human_prompt.append(image_template)
+        human_prompt.append(text_template)
+
+        return human_prompt
 
     @classmethod
     def get_qa(cls, prompt_type="answer_only"):
@@ -192,6 +246,40 @@ class prompt_repo():
 # RetrievalQA (Langchain)
 ############################################################
 
+class qa_chain_complex_pdf():
+    
+    def __init__(self, **kwargs):
+        
+        system_prompt = kwargs["system_prompt"]
+        self.llm_text = kwargs["llm_text"]
+        self.retriever = kwargs["retriever"]
+        self.system_message_template = SystemMessagePromptTemplate.from_template(system_prompt)
+        self.get_context = kwargs.get("get_context", False)
+        self.verbose = kwargs.get("verbose", False)
+        
+    def invoke(self, query):
+                       
+        retrieval, tables, images = self.retriever.get_relevant_documents(query)
+        human_prompt = prompt_repo.get_human_prompt_for_images(images)
+        human_message_template = HumanMessagePromptTemplate.from_template(human_prompt)
+        
+        prompt = ChatPromptTemplate.from_messages(
+            [self.system_message_template, human_message_template]
+        )
+        
+        chain = prompt | self.llm_text | StrOutputParser()
+        
+        response = chain.invoke(
+            {
+                "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
+                "tables": "\n\n".join([doc.page_content for doc in tables]),
+                "question": query
+            },
+            config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
+        )
+        
+        return response, retrieval if self.get_context else response
+            
 def run_RetrievalQA(**kwargs):
 
     chain_types = ["stuff", "map_reduce", "refine"]
@@ -660,6 +748,40 @@ class retriever_utils():
         return rerank_contexts[:kwargs["k"]]
 
     @classmethod
+    def get_element(cls, **kwargs):
+
+        similar_docs = copy.deepcopy(kwargs["similar_docs"])
+        tables, images = [], []
+
+        for doc in similar_docs:
+
+            category = doc.metadata["category"]
+            if category == "Table":
+                doc.page_content = doc.metadata["origin_table"]
+                tables.append(doc)
+            elif category == "Image":
+                doc.page_content = doc.metadata["image_base64"]
+                images.append(doc)
+
+        return tables, images
+
+    @classmethod
+    def get_human_prompt_for_images(cls, **kwargs):
+
+        images = kwargs["images"]
+        human_prompt = []
+        image_template = prompt_repo.get_message_template(message_type="image")
+        text_template = prompt_repo.get_message_template(message_type="text")
+
+        for image in images:
+            image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", image.page_content)
+            human_prompt.append(image_template)
+        human_prompt.append(text_template)
+
+        return human_prompt
+
+
+    @classmethod
     # hybrid (lexical + semantic) search based
     def search_hybrid(cls, **kwargs):
 
@@ -681,8 +803,9 @@ class retriever_utils():
         verbose = kwargs.get("verbose", False)
         async_mode = kwargs.get("async_mode", True)
         reranker = kwargs.get("reranker", False)
+        complex_pdf = kwargs.get("complex_pdf", False)
         search_filter = deepcopy(kwargs.get("filter", []))
-        
+
         #search_filter.append({"term": {"metadata.family_tree": "child"}})
         if parent_document:
             search_filter.append({"term": {"metadata.family_tree": "child"}})
@@ -860,6 +983,14 @@ class retriever_utils():
                 boolean_filter=search_filter,
                 verbose=verbose
             )
+            
+        #similar_docs = list(map(lambda x:x[0], similar_docs))
+        
+        if complex_pdf:
+            
+            tables, images = cls.get_element(
+                similar_docs=list(map(lambda x:x[0], similar_docs))
+            )
 
         if verbose:
 
@@ -910,8 +1041,9 @@ class retriever_utils():
             print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs))
 
         similar_docs = list(map(lambda x:x[0], similar_docs))
-
-        return similar_docs
+        
+        if complex_pdf: return similar_docs, tables, images
+        else: return similar_docs
 
     @classmethod
     # Score fusion and re-rank (lexical + semantic)
@@ -1051,6 +1183,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     hyde = False
     hyde_query: Any
     parent_document = False
+    complex_pdf = False
 
     def update_search_params(self, **kwargs):
 
@@ -1062,13 +1195,14 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.ensemble_weights = kwargs.get("ensemble_weights", self.ensemble_weights)
         self.verbose = kwargs.get("verbose", self.verbose)
         self.async_mode = kwargs.get("async_mode", True)
-        self.reranker = kwargs.get("reranker", False)
+        self.reranker = kwargs.get("reranker", self.reranker)
         self.reranker_endpoint_name = kwargs.get("reranker_endpoint_name", self.reranker_endpoint_name)
-        self.rag_fusion = kwargs.get("rag_fusion", False)
+        self.rag_fusion = kwargs.get("rag_fusion", self.rag_fusion)
         self.query_augmentation_size = kwargs.get("query_augmentation_size", 3)
-        self.hyde = kwargs.get("hyde", False)
+        self.hyde = kwargs.get("hyde", self.hyde)
         self.hyde_query = kwargs.get("hyde_query", ["web_search"])
-        self.parent_document = kwargs.get("parent_document", False)
+        self.parent_document = kwargs.get("parent_document", self.parent_document)
+        self.complex_pdf = kwargs.get("complex_pdf", self.complex_pdf)
 
     def _reset_search_params(self, ):
 
@@ -1096,6 +1230,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             hyde=self.hyde,
             hyde_query=self.hyde_query if self.hyde else [],
             parent_document = self.parent_document,
+            complex_pdf = self.complex_pdf,
             llm_text=self.llm_text,
             llm_emb=self.llm_emb,
             verbose=self.verbose
@@ -1107,14 +1242,30 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 #################################################################
 # Document visualization
 #################################################################
-
 def show_context_used(context_list, limit=10):
-
+    
+    context_list = copy.deepcopy(context_list)
     for idx, context in enumerate(context_list):
+        
         if idx < limit:
+            
+            category = "None"
+            if "category" in context.metadata:
+                category = context.metadata["category"]
+                
             print("-----------------------------------------------")
-            print(f"{idx+1}. Chunk: {len(context.page_content)} Characters")
+            if category != "None":
+                print(f"{idx+1}. Category: {category}, Chunk: {len(context.page_content)} Characters")   
+            else:
+                print(f"{idx+1}. Chunk: {len(context.page_content)} Characters")
             print("-----------------------------------------------")
+            
+            if category == "Image":
+                
+                img = Image.open(BytesIO(base64.b64decode(context.metadata["image_base64"])))
+                plt.imshow(img)
+                plt.show()
+                context.metadata["image_base64"], context.metadata["origin_image"] = "", ""
             print_ww(context.page_content)
             print_ww("metadata: \n", context.metadata)
         else:
