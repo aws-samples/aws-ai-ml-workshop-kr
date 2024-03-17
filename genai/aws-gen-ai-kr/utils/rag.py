@@ -69,7 +69,7 @@ class prompt_repo():
         return system_prompt
         
     @classmethod
-    def get_human_prompt_for_images(cls, images):
+    def get_human_prompt_for_complex_pdf(cls, images):
 
         human_prompt = []
         image_template = {
@@ -260,7 +260,7 @@ class qa_chain_complex_pdf():
     def invoke(self, query):
                        
         retrieval, tables, images = self.retriever.get_relevant_documents(query)
-        human_prompt = prompt_repo.get_human_prompt_for_images(images)
+        human_prompt = prompt_repo.get_human_prompt_for_complex_pdf(images)
         human_message_template = HumanMessagePromptTemplate.from_template(human_prompt)
         
         prompt = ChatPromptTemplate.from_messages(
@@ -765,21 +765,6 @@ class retriever_utils():
 
         return tables, images
 
-    @classmethod
-    def get_human_prompt_for_images(cls, **kwargs):
-
-        images = kwargs["images"]
-        human_prompt = []
-        image_template = prompt_repo.get_message_template(message_type="image")
-        text_template = prompt_repo.get_message_template(message_type="text")
-
-        for image in images:
-            image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", image.page_content)
-            human_prompt.append(image_template)
-        human_prompt.append(text_template)
-
-        return human_prompt
-
 
     @classmethod
     # hybrid (lexical + semantic) search based
@@ -1253,7 +1238,7 @@ def show_context_used(context_list, limit=10):
             if "category" in context.metadata:
                 category = context.metadata["category"]
                 
-            print("-----------------------------------------------")
+            print("\n-----------------------------------------------")
             if category != "None":
                 print(f"{idx+1}. Category: {category}, Chunk: {len(context.page_content)} Characters")   
             else:
