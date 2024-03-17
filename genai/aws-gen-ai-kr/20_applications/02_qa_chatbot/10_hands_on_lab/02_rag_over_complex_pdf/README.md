@@ -8,7 +8,7 @@
     </a>
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot">
         <img alt="Build" src="https://img.shields.io/badge/AdvancedRAG-1.0-red">
-    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F20_applications%2F02_qa_chatbot&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F20_applications%2F02_qa_chatbot%2F10_hands_on_lab%2F02_rag_over_complex_pdf&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
     </a>
 </p>
 
