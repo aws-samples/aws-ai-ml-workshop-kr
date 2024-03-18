@@ -33,6 +33,3 @@ wget https://github.com/tesseract-ocr/tessdata/raw/main/hin.traineddata
 echo "## Step 4"
 echo "export TESSDATA_PREFIX=/usr/local/share/tessdata" >> ~/.bash_profile
 echo "export TESSDATA_PREFIX=/usr/local/share/tessdata" >> /home/ec2-user/.bash_profile
-
-echo "## Step 5: Clean up"
-sudo rm -rf leptonica-1.84.1 leptonica-1.84.1.tar.gz tesseract-ocr

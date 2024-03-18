@@ -12,17 +12,22 @@
     </a>
 </p>
 
-
-## <div id="Citation">**Citation**</div>
-- <span style="#FF69B4;"> If you find this repository useful, please consider giving a star ⭐ and citation</span>
+## <div id="Main">**Workflow for RAG with Complex PDF**</div>
+<img src="../../../../imgs/advanced-rag/complex-pdf/complex-pdf-workflow.png"  width="800">
 
 - - -
 
+## <div id="Started">**Getting started**</div>
+- #### <span style="#FF69B4;"> [Hands on Lab](./01_rag_over_complex_pdf.ipynb)</span>
+- - -
+
+## <div id="Citation">**Citation**</div>
+- <span style="#FF69B4;"> If you find this repository useful, please consider giving a star ⭐ and citation</span>
+- - -
+
 ## <div id="Contributors">**Contributors**</div>
-- <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)</span>
-- <span style="#FF69B4;"> **Gonsoo Moon** (AWS Sr. AI/ML Specislist Solutions Architect) | [Mail](mailto:moongons@amazon.com) | [Linkedin](https://www.linkedin.com/in/gonsoomoon/) | [Git](https://github.com/gonsoomoon-ml) | </span>
-- <span style="#FF69B4;"> **Youngjin Kim** (AWS Sr. Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/comeddy) | </span>
-- <span style="#FF69B4;"> **Seungwon Choi** (AWS Asso. Solutions Architect) | [Mail](mailto:piepiesw@amazon.com) | [Linkedin](https://www.linkedin.com/in/seungwon-choi-8a74a6210/) | [Git](https://github.com/seungwon2) | </span>
+- <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr) |</span>
+- <span style="#FF69B4;"> **Byeong-eok Kang** (AWS Sr. Solutions Architect) | [Mail](mailto:eokkang@amazon.com) | [Linkedin](https://www.linkedin.com/in/byeong-eok-kang-15330221/) |</span>
 - - -
 
 ## <div id="License">**License**</div>
