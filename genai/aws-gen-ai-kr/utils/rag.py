@@ -29,6 +29,7 @@ from langchain.chains import RetrievalQA
 from langchain.schema import BaseRetriever
 from langchain.prompts import PromptTemplate
 from langchain.retrievers import AmazonKendraRetriever
+from langchain_core.tracers import ConsoleCallbackHandler
 from langchain.schema.output_parser import StrOutputParser
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -83,7 +84,8 @@ class prompt_repo():
             "type": "text",
             "text": '''
                     Here is the contexts as texts: <contexts>{contexts}</contexts>
-                    Here is the contexts as tables: <tables>{tables}</tables>
+                    Here is the contexts as tables (table as text): <tables_summay>{tables_text}</tables_summay>
+                    Here is the contexts as tables (table as html): <tables_html>{tables_html}</tables_html>
 
                     First, find a few paragraphs or sentences from the contexts that are most relevant to answering the question.
                     Then, answer the question as much as you can.
@@ -268,11 +270,12 @@ class qa_chain_complex_pdf():
         )
         
         chain = prompt | self.llm_text | StrOutputParser()
-        
+            
         response = chain.invoke(
             {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
-                "tables": "\n\n".join([doc.page_content for doc in tables]),
+                "tables_text": "\n\n".join([doc.page_content for doc in tables]),
+                "tables_html": "\n\n".join([doc.metadata["text_as_html"] if "text_as_html" in doc.metadata else "" for doc in tables]),
                 "question": query
             },
             config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
