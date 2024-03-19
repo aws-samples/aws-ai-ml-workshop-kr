@@ -18,7 +18,8 @@
 - - -
 
 ## <div id="Started">**Getting started**</div>
-- #### <span style="#FF69B4;"> [Hands on Lab](./01_rag_over_complex_pdf.ipynb)</span>
+- #### <span style="#FF69B4;"> [git clone first](https://github.com/aws-samples/aws-ai-ml-workshop-kr.git) and then [Hands on Lab](./01_rag_over_complex_pdf.ipynb)</span>
+
 - - -
 
 ## <div id="Citation">**Citation**</div>
