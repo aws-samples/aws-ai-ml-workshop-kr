@@ -121,31 +121,52 @@ def etree_to_dict(t) -> dict[str, Any]:
     return d
 
 
-def run_loop(prompt):
+def run_loop(prompt, region_name):
     print(prompt)
     # Start function calling loop
     while True:
     # initialize variables to make bedrock api call
-        bedrock = boto3.client(service_name='bedrock-runtime')
+        bedrock = boto3.client(service_name='bedrock-runtime', region_name=region_name)
+
+        prompt_config = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": 4096,
+            "temperature" : 0,
+            "top_k": 350,
+            "top_p": 0.999,
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                    ],
+                }
+            ],
+            "stop_sequences":["\n\nHuman:", "</function_calls>"]
+        }
+
+
+        body = json.dumps(prompt_config)
+
 
         # bedrock api call with prompt
-        completion = bedrock.invoke_model(
-            body=json.dumps(
-                {
-                    "prompt": prompt,
-                     "stop_sequences":["\n\nHuman:", "</function_calls>"],
-                     "max_tokens_to_sample": 700,
-                     "temperature": 0
-                }
-            ), 
-            modelId='anthropic.claude-v2:1', 
+        response = bedrock.invoke_model(
+            # body=json.dumps(
+            #     {
+            #         "prompt": prompt,
+            #          "stop_sequences":["\n\nHuman:", "</function_calls>"],
+            #          "max_tokens_to_sample": 700,
+            #          "temperature": 0
+            #     }
+            # ), 
+            body=body,
+            modelId="anthropic.claude-3-haiku-20240307-v1:0", 
             accept='application/json', 
             contentType='application/json'
         )
-        response_body = json.loads(completion.get('body').read())
+        response_body = json.loads(response.get("body").read())
+        completion = response_body.get("content")[0].get("text")
 
-
-        completion = response_body.get('completion')
         stop_reason = response_body.get('stop_reason')
         stop_seq = completion.rstrip().endswith("</invoke>")
         
