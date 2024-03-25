@@ -29,6 +29,9 @@ cd /usr/local/share/tessdata
 wget https://github.com/tesseract-ocr/tessdata/raw/main/osd.traineddata
 wget https://github.com/tesseract-ocr/tessdata/raw/main/eng.traineddata
 wget https://github.com/tesseract-ocr/tessdata/raw/main/hin.traineddata
+wget https://github.com/tesseract-ocr/tessdata_best/blob/main/kor.traineddata
+wget https://github.com/tesseract-ocr/tessdata_best/blob/main/kor_vert.traineddata
+wget https://github.com/tesseract-knu2019/tesseract-knu2019.github.io/raw/master/tessdata/koreng2.traineddata.gz
  
 echo "## Step 4"
 echo "export TESSDATA_PREFIX=/usr/local/share/tessdata" >> ~/.bash_profile
