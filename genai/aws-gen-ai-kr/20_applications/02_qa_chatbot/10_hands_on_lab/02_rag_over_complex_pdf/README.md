@@ -16,6 +16,10 @@
 <img src="../../../../imgs/advanced-rag/complex-pdf/complex-pdf-workflow.png"  width="800">
 
 - - -
+## <div id="Demo">**Demo**</div>
+- #### <span style="#FF69B4;"> [VOD - Demo](https://www.youtube.com/watch?v=8YpfTuEbqJk)</span>
+
+- - -
 
 ## <div id="Started">**Getting started**</div>
 - #### <span style="#FF69B4;"> [git clone first](https://github.com/aws-samples/aws-ai-ml-workshop-kr.git) and then [Hands on Lab](./01_rag_over_complex_pdf.ipynb)</span>
