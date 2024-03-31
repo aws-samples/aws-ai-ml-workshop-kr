@@ -22,7 +22,7 @@ Last Update: Mar 31, 2024
 - Region: us-east-1, Subnet: us-east-1c, AZ: use1-az6 에서 진행 했음.
 - AMI, Instance Type 지정. 
     - ![install_ec2_inf2-hf.png](../../hf-optimum/01-Chatbot-Llama-2-13B-Inf2/img/install_ec2_inf2-hf.png)
-- [중요] <u>Storage 는 200 GB 로 수정해주세요.</u>
+- [중요] <u>Storage 는 500 GB 로 수정해주세요.</u>
 - Trouble Shooting: Error
     - inf2.48xlarge EC2 런칭시에 아래와 같은 에러:
         - Failed to start the instance i-04c1XXXXXXXX The requested configuration is currently not supported. Please check the documentation for supported configurations.
