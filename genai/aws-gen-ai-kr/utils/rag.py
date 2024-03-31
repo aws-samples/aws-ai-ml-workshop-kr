@@ -71,7 +71,7 @@ class prompt_repo():
 
     @classmethod
     def get_human_prompt(cls, images=None, tables=None):
-        
+
         human_prompt = []
 
         image_template = {
@@ -112,46 +112,8 @@ class prompt_repo():
                 human_prompt.append(image_template)
 
         human_prompt.append(text_template)
-        
+
         return human_prompt
-
-#     @classmethod
-#     def get_human_prompt_for_complex_pdf(cls, images):
-
-#         human_prompt = []
-#         image_template = {
-#             "type": "image_url",
-#             "image_url": {
-#                 "url": "data:image/png;base64," + "IMAGE_BASE64",
-#             },
-#         }
-
-#         text_template = {
-#             "type": "text",
-#             "text": '''
-#                     Here is the contexts as texts: <contexts>{contexts}</contexts>
-#                     Here is the contexts as tables (table as text): <tables_summay>{tables_text}</tables_summay>
-#                     Here is the contexts as tables (table as html): <tables_html>{tables_html}</tables_html>
-
-#                     First, find a few paragraphs or sentences from the contexts that are most relevant to answering the question.
-#                     Then, answer the question as much as you can.
-
-#                     Skip the preamble and go straight into the answer.
-#                     Don't insert any XML tag such as <contexts> and </contexts> when answering.
-#                     Answer in Korean.
-
-#                     Here is the question: <question>{question}</question>
-
-#                     If the question cannot be answered by the contexts, say "No relevant contexts".
-#             '''
-#         }
-
-#         for image in images:
-#             image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", image.page_content)
-#             human_prompt.append(image_template)
-#         human_prompt.append(text_template)
-
-#         return human_prompt
 
 #     @classmethod
 #     def get_qa(cls, prompt_type="answer_only"):
@@ -330,7 +292,7 @@ class qa_chain():
     def invoke(self, query, verbose=False):
         
         tables, images = None, None
-        if self.retriever.complex_pdf:
+        if self.retriever.complex_doc:
             retrieval, tables, images = self.retriever.get_relevant_documents(query)
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
@@ -361,44 +323,9 @@ class qa_chain():
             invoke_args,
             config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
         )
-        
+
         return response, retrieval if self.return_context else response
 
-# class qa_chain_complex_pdf():
-    
-#     def __init__(self, **kwargs):
-        
-#         system_prompt = kwargs["system_prompt"]
-#         self.llm_text = kwargs["llm_text"]
-#         self.retriever = kwargs["retriever"]
-#         self.system_message_template = SystemMessagePromptTemplate.from_template(system_prompt)
-#         self.get_context = kwargs.get("get_context", False)
-#         self.verbose = kwargs.get("verbose", False)
-        
-#     def invoke(self, query):
-                       
-#         retrieval, tables, images = self.retriever.get_relevant_documents(query)
-#         human_prompt = prompt_repo.get_human_prompt_for_complex_pdf(images)
-#         human_message_template = HumanMessagePromptTemplate.from_template(human_prompt)
-        
-#         prompt = ChatPromptTemplate.from_messages(
-#             [self.system_message_template, human_message_template]
-#         )
-        
-#         chain = prompt | self.llm_text | StrOutputParser()
-            
-#         response = chain.invoke(
-#             {
-#                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
-#                 "tables_text": "\n\n".join([doc.page_content for doc in tables]),
-#                 "tables_html": "\n\n".join([doc.metadata["text_as_html"] if "text_as_html" in doc.metadata else "" for doc in tables]),
-#                 "question": query
-#             },
-#             config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
-#         )
-        
-#         return response, retrieval if self.get_context else response
-            
 def run_RetrievalQA(**kwargs):
 
     chain_types = ["stuff", "map_reduce", "refine"]
@@ -861,13 +788,14 @@ class retriever_utils():
 
         for doc in similar_docs:
 
-            category = doc.metadata["category"]
-            if category == "Table":
-                doc.page_content = doc.metadata["origin_table"]
-                tables.append(doc)
-            elif category == "Image":
-                doc.page_content = doc.metadata["image_base64"]
-                images.append(doc)
+            category = doc.metadata.get("category", None)
+            if category != None:
+                if category == "Table":
+                    doc.page_content = doc.metadata["origin_table"]
+                    tables.append(doc)
+                elif category == "Image":
+                    doc.page_content = doc.metadata["image_base64"]
+                    images.append(doc)
 
         return tables, images
 
@@ -894,7 +822,7 @@ class retriever_utils():
         verbose = kwargs.get("verbose", False)
         async_mode = kwargs.get("async_mode", True)
         reranker = kwargs.get("reranker", False)
-        complex_pdf = kwargs.get("complex_pdf", False)
+        complex_doc = kwargs.get("complex_doc", False)
         search_filter = deepcopy(kwargs.get("filter", []))
 
         #search_filter.append({"term": {"metadata.family_tree": "child"}})
@@ -1074,11 +1002,8 @@ class retriever_utils():
                 boolean_filter=search_filter,
                 verbose=verbose
             )
-            
-        #similar_docs = list(map(lambda x:x[0], similar_docs))
-        
-        if complex_pdf:
-            
+
+        if complex_doc:
             tables, images = cls.get_element(
                 similar_docs=list(map(lambda x:x[0], similar_docs))
             )
@@ -1113,7 +1038,7 @@ class retriever_utils():
             print("##############################")
             print("complex_document")
             print("##############################")
-            print(complex_pdf)
+            print(complex_doc)
 
             print("##############################")
             print("similar_docs_semantic")
@@ -1138,7 +1063,10 @@ class retriever_utils():
 
         similar_docs = list(map(lambda x:x[0], similar_docs))
         
-        if complex_pdf: return similar_docs, tables, images
+        #if complex_doc: return similar_docs, tables, images
+        #else: return similar_docs
+    
+        if complex_doc: return similar_docs, tables, images
         else: return similar_docs
 
     @classmethod
@@ -1279,7 +1207,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     hyde = False
     hyde_query: Any
     parent_document = False
-    complex_pdf = False
+    complex_doc = False
 
     def update_search_params(self, **kwargs):
 
@@ -1298,7 +1226,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.hyde = kwargs.get("hyde", self.hyde)
         self.hyde_query = kwargs.get("hyde_query", ["web_search"])
         self.parent_document = kwargs.get("parent_document", self.parent_document)
-        self.complex_pdf = kwargs.get("complex_pdf", self.complex_pdf)
+        self.complex_doc = kwargs.get("complex_doc", self.complex_doc)
 
     def _reset_search_params(self, ):
 
@@ -1326,7 +1254,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             hyde=self.hyde,
             hyde_query=self.hyde_query if self.hyde else [],
             parent_document = self.parent_document,
-            complex_pdf = self.complex_pdf,
+            complex_doc = self.complex_doc,
             llm_text=self.llm_text,
             llm_emb=self.llm_emb,
             verbose=self.verbose
@@ -1341,10 +1269,12 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 def show_context_used(context_list, limit=10):
 
     context_list = copy.deepcopy(context_list)
+    
+    if type(context_list) == tuple: context_list=context_list[0]
     for idx, context in enumerate(context_list):
 
         if idx < limit:
-
+            
             category = "None"
             if "category" in context.metadata:
                 category = context.metadata["category"]
