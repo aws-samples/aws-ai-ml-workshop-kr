@@ -71,6 +71,8 @@ Last Update: Mar 31, 2024
     - ![select_neuronx.jpg](img/select_neuronx.jpg)
 - 아래를 클릭하여 노트북을 샐행 하세요.
     - [01-offline_inference_neuron.ipynb](01-offline_inference_neuron.ipynb)
+    - [02-SOLAR-10.7B-Instruct-offline_inference_neuron.ipynb](02-SOLAR-10.7B-Instruct-offline_inference_neuron.ipynb)
+    - [03-yanolja-KoSOLAR-10.7B-v02-offline_inference_neuron.ipynb](03-yanolja-KoSOLAR-10.7B-v02-offline_inference_neuron.ipynb)        
 
 
 
