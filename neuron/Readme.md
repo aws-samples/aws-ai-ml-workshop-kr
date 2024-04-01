@@ -38,7 +38,7 @@ Last updated: Mar 31, 2024
 - (Feb 2024) [AWS Tranium 기반 위에 llama-2-7B 및 Dolly Dataset 으로 파인 튜닝](hf-optimum/02-Fine-tune-Llama-7B-Trn1/README.md)
 
 ## 2.3. vLLM on Inferentia/Trainium 
-- (Mar 2024) SOLAR-10.7B-instruct, yanolja-KoSOLAR-10.7B 배치 추론 함: [vLLM 으로 Inferentia2 (inf2.48xlarge)에서 배치성 추론 하기](vLLM/01-offline-inference_neuron/Readme.md)
+- (Mar 2024) SOLAR-10.7B-instruct, yanolja-KoSOLAR-10.7B, 04-yanolja-EEVE-Korean-Instruct-10.8B 배치 추론 함: [vLLM 으로 Inferentia2 (inf2.48xlarge)에서 배치성 추론 하기](vLLM/01-offline-inference_neuron/Readme.md)
 
 # 3. 관련 블로그
 - [주요 블로그 보기](blog/Readme.md)

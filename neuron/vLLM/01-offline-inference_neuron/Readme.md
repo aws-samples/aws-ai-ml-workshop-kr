@@ -73,6 +73,7 @@ Last Update: Mar 31, 2024
     - [01-offline_inference_neuron.ipynb](01-offline_inference_neuron.ipynb)
     - [02-SOLAR-10.7B-Instruct-offline_inference_neuron.ipynb](02-SOLAR-10.7B-Instruct-offline_inference_neuron.ipynb)
     - [03-yanolja-KoSOLAR-10.7B-v02-offline_inference_neuron.ipynb](03-yanolja-KoSOLAR-10.7B-v02-offline_inference_neuron.ipynb)        
+    - [04-yanolja-EEVE-Korean-Instruct-10.8B-offline_inference_neuron.ipynb](04-yanolja-EEVE-Korean-Instruct-10.8B-offline_inference_neuron.ipynb)        
 
 
 
