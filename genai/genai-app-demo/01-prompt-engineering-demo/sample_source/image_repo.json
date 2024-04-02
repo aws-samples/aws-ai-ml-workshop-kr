@@ -1,0 +1,7 @@
+{
+    "containers/prompt": "prompt-func",
+    "containers/summarization": "summary-func",
+    "containers/identification": "identify-func",
+    "containers/comment": "comment-func",
+    "containers/shortform": "shortform-func"  
+}

@@ -1,0 +1,7 @@
+{
+    "prompt-func": "PromptFunc",
+    "summary-func": "SummaryFunc",
+    "identify-func": "IdentifyFunc",
+    "comment-func": "CommentFunc",
+    "shortform-func": "ShortformFunc"
+}
