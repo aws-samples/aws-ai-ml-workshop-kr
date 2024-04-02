@@ -289,8 +289,9 @@ class qa_chain():
         self.return_context = kwargs.get("return_context", False)
         self.verbose = kwargs.get("verbose", False)
         
-    def invoke(self, query, verbose=False):
+    def invoke(self, **kwargs):
         
+        query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
         if self.retriever.complex_doc:
             retrieval, tables, images = self.retriever.get_relevant_documents(query)
@@ -306,7 +307,7 @@ class qa_chain():
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "question": query
             }
-            
+
         human_prompt = prompt_repo.get_human_prompt(
             images=images,
             tables=tables
@@ -315,7 +316,7 @@ class qa_chain():
         prompt = ChatPromptTemplate.from_messages(
             [self.system_message_template, human_message_template]
         )
-        
+
         chain = prompt | self.llm_text | StrOutputParser()
         
         self.verbose = verbose
