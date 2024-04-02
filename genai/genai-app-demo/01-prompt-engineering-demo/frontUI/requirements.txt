@@ -1,0 +1,3 @@
+boto3==1.34.59
+streamlit==1.32.2
+requests==2.31.0
