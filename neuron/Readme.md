@@ -26,6 +26,10 @@ Last updated: Feb 25, 2024
 - (Feb 2024) [AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모](hf-optimum/01-Chatbot-Llama-2-13B-Inf2/README.md)
 - (Feb 2024) [AWS Tranium 기반 위에 llama-2-7B 및 Dolly Dataset 으로 파인 튜닝](hf-optimum/02-Fine-tune-Llama-7B-Trn1/README.md)
 
+## 2.3. Transformer Neuronx
+- (Apr 2024) [AWS Inferentia 기반 위에 llama-2-13B 이용한 자기회귀 샘플링](transformers-neuronx/meta-llama-2-13b-sampling.ipynb)
+- (Apr 2024) [AWS Inferentia 기반 위에 SOLAR-10.7B 이용한 자기회귀 샘플링](transformers-neuronx/SOLAR-10.7B-Instruct-v1.0-sampling.ipynb)
+
 
 
 # 3. 관련 블로그
