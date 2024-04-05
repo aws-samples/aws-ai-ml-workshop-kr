@@ -3,6 +3,35 @@
 
 논문링크 : https://arxiv.org/pdf/2305.14314.pdf
 
+
+> **참고:** 본 코드는 SageMaker Notebook Instance에서 구현, 동작 검증 되었습니다. konlpy등 Java가 필요한 패키지들과 로컬 GPU 인스턴스에서 PEFT 파인튜닝하는 과정이 있기 때문입니다.
+>
+> **테스트 인스턴스 사양:**
+> - 타입: ml.g5.2xlarge(A10G 1개) ~ ml.g5.12xlarge(A10G 4개)
+> - EBS: 100기가 이상
+>
+> **코드 실행 순서:**
+> 1. 데이터 학습 전처리 
+>    - `1_prepare-dataset-alpaca-method.ipynb`
+>    - `1_prepare-dataset-chunk-method.ipynb`
+>
+> 2. 로컬 QLoRA PEFT 학습
+>    - `2_local-train-debug-lora.ipynb`
+>    - ml.g5.xlarge 에서 동작 테스트 했습니다.
+>
+> 3. 로컬 QLoRA PEFT LLM 로드 및 테스트
+>    - `2_local-infer-debug-lora.ipynb`
+>    - ml.g5.xlarge 에서 동작 테스트 했습니다.
+>
+> 4. SageMaker training job - QLoRA PEFT
+>    - `3_sm-train-lora.ipynb`
+>    - 코드에 ml.g5.12xlarge에서 학습 인스턴스 설정되어있습니다.
+>
+> 5. SageMaker Endpoint API 추론배포 - QLoRA PEFT
+>    - `4_sm-serving-djl.ipynb`
+>    - 코드는 QLoRA 학습파라미터를 Merge한 원본 파라미터를 사용해서 추론합니다. 
+>    - ml.g5.12xlarge 이상부터 가능합니다. (A10G 4대가 필요합니다.)
+
 ## 1. Introduction
 대규모 언어 모델(Large Language Models, LLMs)을 파인튜닝(finetuning)하는 것은 그 성능을 향상시키는 매우 효과적인 방법이지만, 매우 큰 모델을 파인튜닝하는 것은 고비용이며 많은 GPU 메모리가 필요합니다. 예를 들어, 65B 파라미터를 가진 LLaMA 모델을 일반적인 16비트 파인튜닝으로 훈련시키려면 780GB 이상의 GPU 메모리가 필요합니다. 이러한 문제를 해결하기 위해 QL O RA 방법이 제안되었습니다. 이 방법은 4비트로 양자화된 모델을 파인튜닝하면서 성능 저하 없이 메모리 사용량을 크게 줄입니다. 이를 통해 단일 GPU에서도 대규모 모델을 파인튜닝할 수 있게 되어, 이러한 모델의 접근성이 크게 향상됩니다.
 
