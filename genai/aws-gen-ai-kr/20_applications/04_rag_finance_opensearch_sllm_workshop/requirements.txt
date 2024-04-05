@@ -1,0 +1,5 @@
+boto3
+streamlit
+langchain
+streamlit_chat
+opensearch-py
