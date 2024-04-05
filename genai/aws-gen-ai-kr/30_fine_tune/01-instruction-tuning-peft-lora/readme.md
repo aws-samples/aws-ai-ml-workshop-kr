@@ -29,7 +29,7 @@
 - For example, quantizing a 32-bit Floating Point (FP32) tensor into a Int8 tensor with range $[−127, 127]$
   
 <div align="center">
- <img src="../images/lora_eq1.png" alt="image 2" width="600" >
+ <img src="./images/lora_eq1.png" alt="image 2" width="600" >
 </div>
 
 
@@ -49,7 +49,7 @@
 
 **Low-rank Adapters (LoRA)**는 파인튜닝(finetuning) 과정에서 메모리 요구 사항을 줄이기 위한 방법입니다. 이 방법은 작은 수의 훈련 가능한 매개변수, 즉 어댑터를 사용하면서 전체 모델 매개변수는 고정된 상태로 둡니다. 
   <div align="center">
-    <img src="../images/lora.png" alt="image 3" width="600" >
+    <img src="./images/lora.png" alt="image 3" width="600" >
   </div>
 
 #### 작동 원리
@@ -83,7 +83,7 @@ $$Y = XW + sXL_1 L_2 ,$$
 ## 3. QLORA Finetuning의 핵심 3가지
 > 참고: 이 정보는 QLORA의 효율성과 성능을 높이는 데 중요한 역할을 합니다.
   <div align="center">
-    <img src="../images/qlora_fig1.png" alt="image 4" width="600" >
+    <img src="./images/qlora_fig1.png" alt="image 4" width="600" >
   </div>
 QLORA는 LoRA를 개선하기 위해 트랜스포머 모델을 4비트 정밀도로 양자화하고, 메모리 스파이크를 처리하기 위해 페이지드 옵티마이저를 사용합니다.
 이는 기본적으로 QLORA가 LoRA에 비해 메모리 사용량을 줄이면서도 성능을 유지하거나 향상시키는 방법을 제시한다는 것을 의미합니다. 4비트 정밀도로 모델을 양자화하면 메모리 사용량이 줄어들고, 페이지드 옵티마이저는 메모리 사용량이 급증하는 상황을 효과적으로 관리해줍니다.
@@ -138,7 +138,7 @@ Paged Optimizers는 NVIDIA의 통합 메모리를 사용하여 CPU와 GPU 사이
 이 기술은 특히 33B/65B 크기의 QLORA 모델을 단일 24/48GB GPU에서 튜닝할 때 중요합니다. 긴 시퀀스 길이의 미니배치를 처리할 때만 페이징이 발생하기 때문에, 이는 드문 경우입니다.
 
 <div align="center">
- <img src="../images/qlora_eq.png" alt="image 8" width="600" >
+ <img src="./images/qlora_eq.png" alt="image 8" width="600" >
 </div>
 
 ##### 참조 
@@ -167,7 +167,7 @@ LoRA (Low-rank Adapters)의 기본 하이퍼파라미터 설정은 16비트 설�
    - 논문에서는 다른 LoRA 하이퍼파라미터, 예를 들어 투영 차원 $\( r \)$,이 성능에 미치는 영향이 없다고 언급합니다 (부록 A 참조).
 
 <div align="center">
- <img src="../images/lora_r.png" alt="image 4" width="600" >
+ <img src="./images/lora_r.png" alt="image 4" width="600" >
 </div>
 
    - LoRA dropout : 은 0.0, 0.05, 0.1 중에서 선택할 수 있습니다. 작은 모델(7B, 13B)에 대해서는 LoRA dropout 0.05가 유용하다고 판단되었습니다. 
@@ -183,7 +183,7 @@ LoRA (Low-rank Adapters)의 기본 하이퍼파라미터 설정은 16비트 설�
 
 4비트 NormalFloat (NF4)가 표준 4비트 부동 소수점 (FP4)보다 어떤 실증적 이점이 있는지에 대해 논의합니다.
 <div align="center">
- <img src="../images/Nfloat.png" alt="image 5" width="600" >
+ <img src="./images/Nfloat.png" alt="image 5" width="600" >
 </div>
 
 #### 주요 포인트
