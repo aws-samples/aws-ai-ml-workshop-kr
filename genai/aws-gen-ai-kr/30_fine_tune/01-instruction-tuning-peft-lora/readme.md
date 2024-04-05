@@ -16,7 +16,7 @@
 - **양자화(Quantization)**: 입력 데이터를 더 적은 정보를 가진 표현으로 변환하는 과정입니다. 일반적으로 더 많은 비트를 가진 데이터 타입을 더 적은 비트로 변환합니다. 예를 들어, 32-bit 부동소수점을 4-bit 정수로 변환할 수 있습니다.
   
 <div align="center">
- <img src="../images/quantization.png" alt="image 1" width="600" height="200">
+ <img src="./images/quantization.png" alt="image 1" width="600" height="200">
 <br>
   <a href="https://www.differencebetween.com/difference-between-uniform-and-nonuniform-quantization/">What is Quantization in the signal?</a>
 </div>
