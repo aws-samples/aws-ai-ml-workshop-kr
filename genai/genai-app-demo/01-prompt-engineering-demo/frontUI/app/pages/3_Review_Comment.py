@@ -10,7 +10,7 @@ API_URL = f'http://{ALB_URL}/comment'
 st.set_page_config(
     page_title='Gen AI - Comment Generation',
     page_icon = 'images/aws_favi.png',
-    layout = 'wide'    
+    # layout = 'wide'    
 )
 st.title('상품 리뷰 답변 생성')
 st.write('구매자 만족도를 POSITIVE, NEGATIVE, MIXED 로 구분하고, 이에 대응하는 답변을 생성해 줍니다.')

@@ -14,6 +14,10 @@ from bedrock_demo.applications.shortform_func import ShortformFunc
 from bedrock_demo.applications.summary_func import SummaryFunc
 from bedrock_demo.applications.identify_func import IdentifyFunc
 from bedrock_demo.applications.comment_func import CommentFunc
+from bedrock_demo.applications.product_block import ProductBlock
+from bedrock_demo.applications.image_gen import ImageGen
+from bedrock_demo.applications.image_variation import ImageVariation
+from bedrock_demo.applications.image_replace import ImageReplace
 from bedrock_demo.applications.trigger import DeployImageTrigger
 
 
@@ -107,6 +111,45 @@ class BedrockDemo(Stack):
             role=deploy_func.lambda_func_role            
         )
 
+        product_block = ProductBlock(
+            self,
+            'ProductBlock',
+            vpc=networking.vpc,
+            sg=networking.sg_lambda,
+            listener=networking.listener,
+            role=deploy_func.lambda_func_role   
+        )            
+
+        image_gen = ImageGen(
+            self,
+            'ImageGen',
+            vpc=networking.vpc,
+            sg=networking.sg_lambda,
+            listener=networking.listener,
+            role=deploy_func.lambda_func_role,
+            bucket_name=storage.bucket.bucket_name,   
+        )    
+
+        image_variation = ImageVariation(
+            self,
+            'ImageVariation',
+            vpc=networking.vpc,
+            sg=networking.sg_lambda,
+            listener=networking.listener,
+            role=deploy_func.lambda_func_role,
+            bucket_name=storage.bucket.bucket_name,   
+        )   
+
+        image_replace = ImageReplace(
+            self,
+            'ImageReplace',
+            vpc=networking.vpc,
+            sg=networking.sg_lambda,
+            listener=networking.listener,
+            role=deploy_func.lambda_func_role,
+            bucket_name=storage.bucket.bucket_name,   
+        )   
+
         DeployImageTrigger(
             self,
             'DeployImageTrigger',
@@ -116,7 +159,11 @@ class BedrockDemo(Stack):
                 identify_func.ecr_repo.repository_name,
                 prompt_func.ecr_repo.repository_name,
                 shortform_func.ecr_repo.repository_name,
-                summary_func.ecr_repo.repository_name
+                summary_func.ecr_repo.repository_name,
+                product_block.ecr_repo.repository_name,
+                image_gen.ecr_repo.repository_name,
+                image_variation.ecr_repo.repository_name,
+                image_replace.ecr_repo.repository_name
             ]
         )
 
