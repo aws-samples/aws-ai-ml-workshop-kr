@@ -3,5 +3,9 @@
     "containers/summarization": "summary-func",
     "containers/identification": "identify-func",
     "containers/comment": "comment-func",
-    "containers/shortform": "shortform-func"  
+    "containers/shortform": "shortform-func",  
+    "containers/product_block": "product-block",
+    "containers/image_gen": "image-gen",
+    "containers/image_variation": "image-variation",
+    "containers/image_replace": "image-replace"
 }

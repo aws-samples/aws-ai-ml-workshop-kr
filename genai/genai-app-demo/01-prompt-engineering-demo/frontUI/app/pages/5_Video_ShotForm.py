@@ -15,7 +15,7 @@ s3 = boto3.client('s3')
 st.set_page_config(
     page_title='Gen AI - ShortForm',
     page_icon = 'images/aws_favi.png',
-    layout = 'wide'    
+    # layout = 'wide'    
 )
 st.title('비디오 숏폼')
 
