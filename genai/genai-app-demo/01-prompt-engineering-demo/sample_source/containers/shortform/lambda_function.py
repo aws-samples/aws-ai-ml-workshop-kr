@@ -79,16 +79,13 @@ def get_response(prompt, command):
     return output
 
 def stitching_clips(video_name, tracks):
-    tracks_unsorted = []
-    for start_time, end_time in tracks:
-        st = start_time.replace('.', ':', 1)[:-1]
-        et = end_time.replace('.', ':', 1)[:-1]
-        # print(st, et)
-        tracks_unsorted.append(f'{st} {et}')
-
+    # HH:MM:SS:FF or HH:MM:SS;FF
+    # where HH is the hour, MM is the minute, SS is the second, and FF is the frame number.
+    # FF, if 24 frame rate, FF is from 0 to 23
     input_clippings = []
-    for track in sorted(tracks_unsorted):
-        st, et = track.split()
+    for start_time, end_time in tracks:
+        st = start_time.split('.')[0] + ':00'
+        et = end_time.split('.')[0] + ':00'
         print(st, et)
         input_clippings.append(
             {
@@ -105,8 +102,8 @@ def stitching_clips(video_name, tracks):
         },
         "OutputGroups": [
             {
-                "CustomName": "test",
-                "Name": "File Group",
+                # "CustomName": "test",
+                # "Name": "File Group",
                 "Outputs": [
                     {
                         "ContainerSettings": {
@@ -183,9 +180,8 @@ def stitching_clips(video_name, tracks):
         # print(status)
 
     print(status)
-    print(response)
 
-    return shortened_video_name
+    return shortened_video_name, status
 
    
 
@@ -252,16 +248,17 @@ def lambda_handler(event, context):
 선별된 부분의 시간을 다 합치면 55초에서 60초가 되도록 만듭니다.
 결과값은 WEBVTT형식을 유지합니다.
 앞/뒤에 부가설명은 제외하고, 반드시 원본의 Index, 시간, Script 형식의 Script만 결과로 만듭니다.
-'동영상 내 상품설명 부분을 50-60초 내외로 요약한 결과는 다음과 같습니다.'같은 문구는 제외합니다. 
 선별된 부분의 각 스크립트의 시간은 2초를 넘어야 합니다.
-선별된 부분을 연결하면 상품 설명의 기승전결이 보이도록 자연스러워야 합니다.
+선별된 부분을 연결했을 때 각 부분이 겹치지 말아야 하고 시간순으로 정렬되어야 합니다.
 """
     output = get_response(content, command)
 
     pattern = re.compile(r'(\d{2}:\d{2}:\d{2}.\d{3}) --> (\d{2}:\d{2}:\d{2}.\d{3})')
     tracks = pattern.findall(output)
 
-    shortened_video_name = stitching_clips(video_name, tracks)
+    shortened_video_name, status = stitching_clips(video_name, tracks)
+
+    print(shortened_video_name, status)
 
     response = {
         "summary": summary_text,
