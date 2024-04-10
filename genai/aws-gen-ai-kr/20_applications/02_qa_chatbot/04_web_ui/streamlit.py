@@ -15,8 +15,6 @@ st.markdown('''
 # Store the initial value of widgets in session state
 if "showing_option" not in st.session_state:
     st.session_state.showing_option = "Separately"
-    # st.session_state.disabled = False
-    # st.session_state.horizontal = False
 
 with st.sidebar: # Sidebar 모델 옵션
     # st.title("Set showing method 👇")
@@ -26,9 +24,6 @@ with st.sidebar: # Sidebar 모델 옵션
             ["Separately", "All at once"],
             captions = ["blah blah", "blah blah blah"],
             key="showing_option",
-            # label_visibility=st.session_state.visibility,
-            # disabled=st.session_state.disabled,
-            # horizontal=st.session_state.horizontal,
         )
 
     st.title("Set parameter for your Bot 👇")
@@ -122,7 +117,10 @@ if st.session_state.showing_option == "Separately":
 
         # Session 메세지 저장
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        st.session_state.messages.append({"role": "assistant", "content": contexts1})
+        # st.session_state.messages.append({"role": "assistant", "content": contexts1})
+        # st.session_state.messages.append({"role": "assistant", "content": contexts2})
+        # st.session_state.messages.append({"role": "assistant", "content": contexts3})
+        # st.session_state.messages.append({"role": "assistant", "content": contexts4})
         
         # Thinking을 complete로 수동으로 바꾸어 줌
         st_cb._complete_current_thought()
