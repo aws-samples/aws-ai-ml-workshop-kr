@@ -4,9 +4,13 @@ sys.path.append(os.path.abspath(module_path))
 from utils.rag import prompt_repo, OpenSearchHybridSearchRetriever
 from utils.opensearch import opensearch_utils
 from utils.ssm import parameter_store
-from langchain.chains import RetrievalQA
 from langchain.embeddings import BedrockEmbeddings
-from langchain.llms.bedrock import Bedrock
+from langchain_community.chat_models import BedrockChat
+from utils import bedrock
+from utils.bedrock import bedrock_info
+from utils.rag import prompt_repo
+from utils.rag import qa_chain
+from utils.rag import show_context_used
 
 
 region = boto3.Session().region_name
@@ -14,19 +18,22 @@ pm = parameter_store(region)
 
 # 텍스트 생성 LLM 가져오기, streaming_callback을 인자로 받아옴
 def get_llm(streaming_callback):
-    model_kwargs = {  # Anthropic 모델
-        "max_tokens_to_sample": 4000,
-        "temperature": 0.1,
-        "top_k": 3,
-        "top_p": 0.1,
-        "stop_sequences": ["\n\nHuman:"]
-    }
 
-    llm = Bedrock(
-        model_id="anthropic.claude-v2:1",  # 파운데이션 모델 설정
-        model_kwargs=model_kwargs,  # Claud에 대한 속성 구성
-        streaming=True,
-        callbacks=[streaming_callback],
+    boto3_bedrock = bedrock.get_bedrock_client(
+    assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
+    endpoint_url=os.environ.get("BEDROCK_ENDPOINT_URL", None),
+    region=os.environ.get("AWS_DEFAULT_REGION", None),
+    )
+
+    llm = BedrockChat(
+    model_id=bedrock_info.get_model_id(model_name="Claude-V3-Sonnet"),
+    client=boto3_bedrock,
+    model_kwargs={
+        "max_tokens": 1024,
+        "stop_sequences": ["\n\nHuman"],
+    },
+    streaming=True,
+    callbacks=[streaming_callback],
     )
     return llm
 
@@ -67,7 +74,7 @@ def get_retriever(streaming_callback, parent, reranker):
     llm_text = get_llm(streaming_callback)
     llm_emb = get_embedding_model()
     reranker_endpoint_name = pm.get_params(key="reranker_endpoint",enc=False)
-    index_name = pm.get_params(key="opensearch_index_name", enc=True)
+    index_name = pm.get_params(key="opensearch-index-name-workshop-app", enc=True)
 
     opensearch_hybrid_retriever = OpenSearchHybridSearchRetriever(
         os_client=os_client,
@@ -94,44 +101,62 @@ def get_retriever(streaming_callback, parent, reranker):
 
         # option for output
         k=6,  # 최종 Document 수 정의
-        verbose=False,
+        verbose=True,
     )
 
     return opensearch_hybrid_retriever
 
 # 모델에 query하기
+def formatting_output(contexts):
+    formatted_contexts = []
+    for doc, score in contexts:
 
+            lines = doc.page_content.split("\n")
+            metadata = doc.metadata
+
+            formatted_contexts.append((score, lines))
+    return formatted_contexts
 
 def invoke(query, streaming_callback, parent, reranker):
 
     # llm, retriever 가져오기
     llm_text = get_llm(streaming_callback)
     opensearch_hybrid_retriever = get_retriever(streaming_callback, parent, reranker)
+    # contexts = opensearch_hybrid_retriever._get_relevant_documents()
 
     # answer only 선택
-    PROMPT = prompt_repo.get_qa(prompt_type="answer_only")
+    system_prompt = prompt_repo.get_system_prompt()
 
-    qa = RetrievalQA.from_chain_type(
-        llm=llm_text,
-        chain_type="stuff",
-        retriever=opensearch_hybrid_retriever,
-        return_source_documents=True,
-        chain_type_kwargs={
-            "prompt": PROMPT,
-            "verbose": False,
-        },
-        verbose=False
+    qa = qa_chain(
+    llm_text=llm_text,
+    retriever=opensearch_hybrid_retriever,
+    system_prompt=system_prompt,
+    return_context=True,
+    verbose=False
     )
 
-    response = qa(query)
+    response, context_lists = qa.invoke(
+    query = query)
 
-    answer = response["result"]
-    source_documents = response['source_documents']
-    document = source_documents[0]
+    print("############")
+    print(context_lists)
+    semantic = formatting_output(context_lists[0])
 
-    if document:
-        document_dict = document.__dict__
-        metadata = document_dict.get('metadata', {})
-        url = metadata.get('url', '')
+    lexical = formatting_output(context_lists[1])
+    reranker = formatting_output(context_lists[2])
+    similar_docs = context_lists[3]
 
-    return answer, url, source_documents
+    # output = formatting_output(semantic)
+    # print("Output")
+    # print(output)
+    # contexts = show_context_used(contexts)
+    # answer = response["result"]
+    # source_documents = response['source_documents']
+    # document = source_documents[0]
+
+    # if document:
+    #     document_dict = document.__dict__
+    #     metadata = document_dict.get('metadata', {})
+    #     url = metadata.get('url', '')
+
+    return response, semantic, lexical, reranker, similar_docs #output
