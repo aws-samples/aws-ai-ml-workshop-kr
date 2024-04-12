@@ -17,7 +17,7 @@ def generate_response(q_text):
 st.set_page_config(
     page_title='Gen AI - Summarization',
     page_icon = 'images/aws_favi.png',
-    layout = 'wide'
+    # layout = 'wide'
 )
 st.title('상품 리뷰 요약')
 st.write('판매자에게 유용한 정보를 색상, 핏, 소재, 세탁, 가격으로 요약합니다.')
