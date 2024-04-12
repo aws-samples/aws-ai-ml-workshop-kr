@@ -44,7 +44,8 @@ class DeployImage(Construct):
                     statements=[
                         iam.PolicyStatement(
                             actions=[
-                                'bedrock:InvokeModel'
+                                'bedrock:InvokeModel',
+                                'bedrock:InvokeModelWithResponseStream'
                             ],
                             resources=['arn:aws:bedrock:us-west-2::foundation-model/*'],
                             effect=iam.Effect.ALLOW

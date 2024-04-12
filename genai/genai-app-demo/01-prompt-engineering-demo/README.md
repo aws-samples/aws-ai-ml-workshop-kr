@@ -7,16 +7,23 @@
 
 1. [Prompt Demo](./frontUI/app/pages/1_Prompt_Demo.py)
     - 질문/답변 형식의 일반적인 GenAI 데모입니다. 
-2. [Review Summary Demo](./frontUI/app/pages/2_Review_Summary_Demo.py)
+2. [Review Summary Demo](./frontUI/app/pages/2_Review_Summary.py)
     - 무신사에서 판매중인 상품의 리뷰들을 모아 분석해서 색상, 핏, 소재, 세탁, 가격 등의 항목으로 보여줍니다.
-3. [Review Comment Demo](./frontUI/app/pages/3_Review_Comment_Demo.py)
+3. [Review Comment Demo](./frontUI/app/pages/3_Review_Comment.py)
     - 무신사의 고객들이 작성한 리뷰를 분석해서 상품에 대한 구매자의 Sentiment 를 추측하고 이에 적합한 답변을 생성해 줍니다.
-4. [Product Identify Demo](./frontUI/app/pages/4_Product_Identify_Demo.py)
+4. [Product Identify Demo](./frontUI/app/pages/4_Product_Identify.py)
     - 신발 이미지를 올리면 이미지를 분석해서 상품에 대한 정보와 이와 비슷한 아디다스 신발을 추천해 줍니다.
     - 현재는 Claude 3의 정보로만 신발을 추천해 주는데 고객사의 상품 데이터로 DB를 구축하면 고객사의 상품에서만 추천을 할 수 있다고 가이드합니다.
 5. [Video ShotForm](./frontUI/app/pages/5_Video_ShotForm.py)
     - 무신사는 MUSINSA TV 라는 유투브 채널을 운영중인데 다양한 동영상들이 있습니다. 대부분 길이가 10분 이상인 동영상들인데 숏폼이 유행하는 현재 트렌드에 맞게 이러한 동영상의 핵심만 요약해서 1분 내외의 짧은 동영상으로 바꾸어 줍니다.
-
+6. [Product Block](./frontUI/app/pages/6_Product_Block.py)
+    - 이미지를 식별해서 광고용으로 쓸 수 있는 이미지 인지 아닌지 판단합니다.
+7. [Image Generation](./frontUI/app/pages/7_Image_Generation.py)
+    - 텍스트를 입력으로 받아 텍스트가 묘사하는 이미지를 생성합니다.
+8. [Image Variation](./frontUI/app/pages/8_Image_Variation.py)
+    - 주어진 이미지를 바탕으로 새로운 이미지를 만들어 냅니다.
+9. [Image Replace](./frontUI/app/pages/9_Image_Replace.py)
+    - 주어진 이미지에서 특정 키워드를 제공 받아 키워드에 해당하는 부분만 남기고 이미지를 바꿉니다.
 
 ## Architecture
 Backend를 구성하는 아키텍처입니다. Frontend는 Streamlit을 사용하였습니다.

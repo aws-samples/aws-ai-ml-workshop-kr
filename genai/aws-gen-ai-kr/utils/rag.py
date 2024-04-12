@@ -813,6 +813,7 @@ class retriever_utils():
         rag_fusion = kwargs.get("rag_fusion", False)
         hyde = kwargs.get("hyde", False)
         parent_document = kwargs.get("parent_document", False)
+        hybrid_search_debugger = kwargs.get("hybrid_search_debugger", "None")
 
         assert (rag_fusion + hyde) <= 1, "choose only one between RAG-FUSION and HyDE"
         if rag_fusion:
@@ -958,7 +959,11 @@ class retriever_utils():
             semantic_pool = cls.pool.apply_async(semantic_search,)
             lexical_pool = cls.pool.apply_async(lexical_search,)
             similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
-
+            
+            
+            if hybrid_search_debugger == "semantic": similar_docs_keyword = []
+            elif hybrid_search_debugger == "lexical": similar_docs_semantic = []
+            
             return similar_docs_semantic, similar_docs_keyword
 
         if async_mode:
@@ -1209,6 +1214,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     hyde_query: Any
     parent_document = False
     complex_doc = False
+    hybrid_search_debugger = "None"
 
     def update_search_params(self, **kwargs):
 
@@ -1228,6 +1234,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.hyde_query = kwargs.get("hyde_query", ["web_search"])
         self.parent_document = kwargs.get("parent_document", self.parent_document)
         self.complex_doc = kwargs.get("complex_doc", self.complex_doc)
+        self.hybrid_search_debugger = kwargs.get("hybrid_search_debugger", self.hybrid_search_debugger)
 
     def _reset_search_params(self, ):
 
@@ -1258,7 +1265,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             complex_doc = self.complex_doc,
             llm_text=self.llm_text,
             llm_emb=self.llm_emb,
-            verbose=self.verbose
+            verbose=self.verbose,
+            hybrid_search_debugger=self.hybrid_search_debugger
         )
         #self._reset_search_params()
 

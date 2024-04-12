@@ -1,0 +1,181 @@
+general:
+  name: "llama2-7b-v1"      
+  model_name: "Llama2-7b"
+  
+# AWS and SageMaker settings
+aws:
+  region: {region}
+  # uncomment and set the Role ARN if not running on sagemaker
+  sagemaker_execution_role: {role_arn}
+  ## these are the buckets/resources you will create in your account below:
+  bucket: {write_bucket} ## add the name of your desired bucket
+
+## WRITE BUCKET -- Write the results, data, metrics, endpoint.json and payloads to this bucket directory
+dir_paths:
+    data_prefix: data ## add the prefix for all your data management/storage
+    prompts_prefix: prompts
+    all_prompts_file: all_prompts.csv
+    metrics_dir: metrics
+    models_dir: models
+    metadata_dir: metadata ## add a file here to dynamically track the metrics dir
+
+## READ BUCKET -- Represents the section to read from scripts, source data and tokenizer for a separate s3 bucket for read/write segregation
+s3_read_data:
+    read_bucket: {read_bucket}
+    scripts_prefix: scripts ## add your own scripts in case you are using anything that is not on jumpstart
+    script_files:
+    - hf_token.txt ## add your scripts files you have in s3 (including inference files, serving stacks, if any)
+    source_data_prefix: source_data  ## Add a source_data folder to store your raw data in an s3 path configured by you
+    source_data_files:
+    # - rajpurkar/squad_v2.jsonl
+    - 2wikimqa_e.jsonl
+    - 2wikimqa.jsonl
+    - hotpotqa_e.jsonl
+    - hotpotqa.jsonl
+    - narrativeqa.jsonl
+    - triviaqa_e.jsonl
+    - triviaqa.jsonl
+    tokenizer_prefix: tokenizer ## add the tokenizer.json and config.json from your specific tokenizer type
+    prompt_template_dir: prompt_template
+    prompt_template_file: prompt_template_llama2.txt ## add your desired prompt template type
+
+## section that enables container to run notebooks and python scripts automatically 
+run_steps:
+    0_setup.ipynb: yes
+    1_generate_data.ipynb: yes
+    2_deploy_model.ipynb: yes
+    3_run_inference.ipynb: yes
+    4_model_metric_analysis.ipynb: yes
+    5_cleanup.ipynb: yes
+
+
+datasets:
+  prompt_template_keys:
+  - input
+  - context
+  filters:
+  - language: en    
+    min_length_in_tokens: 1
+    max_length_in_tokens: 500
+    payload_file: payload_en_1-500.jsonl
+  - language: en
+    min_length_in_tokens: 500
+    max_length_in_tokens: 1000
+    payload_file: payload_en_500-1000.jsonl
+  - language: en
+    min_length_in_tokens: 1000
+    max_length_in_tokens: 2000
+    payload_file: payload_en_1000-2000.jsonl
+  - language: en
+    min_length_in_tokens: 2000
+    max_length_in_tokens: 3000
+    payload_file: payload_en_2000-3000.jsonl
+  - language: en
+    min_length_in_tokens: 3000
+    max_length_in_tokens: 4000
+    payload_file: payload_en_3000-4000.jsonl
+  - language: en
+    min_length_in_tokens: 305
+    max_length_in_tokens: 3997
+    payload_file: payload_en_305-3997.jsonl
+
+metrics:
+  dataset_of_interest: en_1000-2000
+  weights:
+    price_per_tx_wt: 0.65
+    latenct_wt: 0.35
+  
+pricing:
+  ml.g5.xlarge: 1.006
+  ml.g5.2xlarge: 1.212
+  ml.g5.12xlarge: 7.09
+  ml.g5.24xlarge: 10.18
+  ml.g5.48xlarge: 20.36
+  ml.inf2.24xlarge: 7.79
+  ml.inf2.48xlarge: 15.58
+  ml.p4d.24xlarge: 37.688
+
+inference_parameters:
+  do_sample: yes
+  temperature: 0.1
+  top_p: 0.92
+  top_k: 120  
+  max_new_tokens: 100
+  truncate: at-prompt-token-length
+
+# Model configurations for llama-2 7b for deploying on g5 x and 2x large instances
+experiments:
+  - name: llama2-7b-g5.xlarge-huggingface-pytorch-tgi-inference-2.0.1-tgi1.1.0
+    model_id: meta-textgeneration-llama-2-7b-f
+    model_version: "3.*"
+    model_name: llama2-7b-f
+    ep_name: llama-2-7b-g5xlarge
+    instance_type: "ml.g5.xlarge"
+    image_uri: '763104351884.dkr.ecr.{region}.amazonaws.com/huggingface-pytorch-tgi-inference:2.0.1-tgi1.1.0-gpu-py39-cu118-ubuntu20.04'
+    deploy: yes
+    instance_count: 1
+    deployment_script: jumpstart.py
+    inference_script: sagemaker_predictor.py
+    payload_files:
+    - payload_en_1-500.jsonl
+    - payload_en_500-1000.jsonl
+    - payload_en_1000-2000.jsonl
+    - payload_en_2000-3000.jsonl
+
+    concurrency_levels:
+    - 1
+    - 2
+    - 4
+
+    accept_eula: true
+    env:
+      SAGEMAKER_PROGRAM: "inference.py"
+      ENDPOINT_SERVER_TIMEOUT: "3600"
+      MODEL_CACHE_ROOT: "/opt/ml/model"
+      SAGEMAKER_ENV: "1"
+      HF_MODEL_ID: "/opt/ml/model"
+      MAX_INPUT_LENGTH: "4095"
+      MAX_TOTAL_TOKENS: "4096"
+      SM_NUM_GPUS: "1"
+      SAGEMAKER_MODEL_SERVER_WORKERS: "1"
+
+  - name: llama2-7b-g5.2xlarge-huggingface-pytorch-tgi-inference-2.0.1-tgi1.1.0
+    model_id: meta-textgeneration-llama-2-7b-f
+    model_version: "3.*"
+    model_name: llama2-7b-f
+    ep_name: llama-2-7b-g5-2xlarge
+    instance_type: "ml.g5.2xlarge"
+    image_uri: '763104351884.dkr.ecr.{region}.amazonaws.com/huggingface-pytorch-tgi-inference:2.0.1-tgi1.1.0-gpu-py39-cu118-ubuntu20.04'
+    deploy: yes
+    instance_count: 1
+    deployment_script: jumpstart.py
+    inference_script: sagemaker_predictor.py
+    payload_files:
+    - payload_en_1-500.jsonl
+    - payload_en_500-1000.jsonl
+    - payload_en_1000-2000.jsonl
+    - payload_en_2000-3000.jsonl
+
+    concurrency_levels:
+    - 1
+    - 2
+    - 4
+
+    accept_eula: true
+    env:
+      SAGEMAKER_PROGRAM: "inference.py"
+      ENDPOINT_SERVER_TIMEOUT: "3600"
+      MODEL_CACHE_ROOT: "/opt/ml/model"
+      SAGEMAKER_ENV: "1"
+      HF_MODEL_ID: "/opt/ml/model"
+      MAX_INPUT_LENGTH: "4095"
+      MAX_TOTAL_TOKENS: "4096"
+      SM_NUM_GPUS: "1"
+      SAGEMAKER_MODEL_SERVER_WORKERS: "1"
+
+report:
+  per_inference_request_file: per_inference_request_results.csv
+  all_metrics_file: all_metrics.csv
+  txn_count_for_showing_cost: 10000
+  v_shift_w_single_instance: 0.025
+  v_shift_w_gt_one_instance: 0.025
