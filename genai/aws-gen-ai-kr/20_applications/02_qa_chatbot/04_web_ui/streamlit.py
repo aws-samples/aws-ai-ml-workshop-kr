@@ -129,8 +129,24 @@ else:
         ]
     # 지난 답변 출력
     for msg in st.session_state.messages:
-        # 지난 답변에 대한 컨텍스트 출력
-        st.chat_message(msg["role"]).write(msg["content"])
+        if msg["role"] == "assistant_column":
+            answers = msg["content"]
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.markdown('''### option 1 ''')
+                st.write(answers[0])
+            with col2:
+                st.markdown('''### option 2 ''')
+                st.write(answers[1])
+            with col3:
+                st.markdown('''### option 3 ''')
+                st.write(answers[2])
+            with col4:
+                st.markdown('''### option 4 ''')
+                st.write(answers[3])
+
+        else:
+            st.chat_message(msg["role"]).write(msg["content"])
     
     # 유저가 쓴 chat을 query라는 변수에 담음
     query = st.chat_input("Search documentation")
@@ -143,13 +159,13 @@ else:
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.markdown('''#### parent=:red[False], reranker=:red[False]''')
+            st.markdown('''### option 1 ''')
         with col2:
-            st.markdown('''#### parent=:green[True], reranker=:red[False]''')
+            st.markdown('''### option 2 ''')
         with col3:
-            st.markdown('''#### parent=:red[False], reranker=:green[True]''')
+            st.markdown('''### option 3 ''')
         with col4:
-            st.markdown('''#### parent=:green[True], reranker=:green[True]''')
+            st.markdown('''### option 4 ''')
         
         with col1:
             # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
@@ -157,13 +173,13 @@ else:
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
                 )
-            answer = glib.invoke(
+            answer1 = glib.invoke(
                 query=query, 
                 streaming_callback=st_cb, 
                 parent=False, 
                 reranker=False
                 )[0]
-            st.write(answer)
+            st.write(answer1)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col2:
             # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
@@ -171,13 +187,13 @@ else:
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
                 )
-            answer = glib.invoke(
+            answer2 = glib.invoke(
                 query=query, 
                 streaming_callback=st_cb, 
                 parent=True, 
                 reranker=False
                 )[0]
-            st.write(answer)
+            st.write(answer2)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col3:
             # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
@@ -185,13 +201,13 @@ else:
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
                 )
-            answer = glib.invoke(
+            answer3 = glib.invoke(
                 query=query, 
                 streaming_callback=st_cb, 
                 parent=False, 
                 reranker=True
                 )[0]
-            st.write(answer)
+            st.write(answer3)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col4:
             # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
@@ -199,18 +215,18 @@ else:
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
             )
-            answer = glib.invoke(
+            answer4 = glib.invoke(
                 query=query, 
                 streaming_callback=st_cb, 
                 parent=True, 
                 reranker=True
                 )[0]
-            st.write(answer)
+            st.write(answer4)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
 
         # Session 메세지 저장
-        st.session_state.messages.append({"role": "assistant", "content": answer})
-        # st.session_state.messages.append({"role": "assistant", "content": contexts})
+        answer = [answer1, answer2, answer3, answer4]
+        st.session_state.messages.append({"role": "assistant_column", "content": answer})
         
         # UI 출력
         # st.chat_message("assistant").write(answer)
