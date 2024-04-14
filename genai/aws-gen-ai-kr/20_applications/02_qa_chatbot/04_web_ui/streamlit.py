@@ -15,6 +15,21 @@ def context_showing_tab(contexts):
             st.header(tab_titles[i])
             st.write(tab_contents[tab_titles[i]])
 
+def multi_answer_column(answers):
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown('''### option 1 ''')
+        st.write(answers[0])
+    with col2:
+        st.markdown('''### option 2 ''')
+        st.write(answers[1])
+    with col3:
+        st.markdown('''### option 3 ''')
+        st.write(answers[2])
+    with col4:
+        st.markdown('''### option 4 ''')
+        st.write(answers[3])
+
 st.set_page_config(layout="wide")
 st.title("AWS Q&A Bot with Advanced RAG!")  # page 제목
 
@@ -100,7 +115,7 @@ if st.session_state.showing_option == "Separately":
         st.chat_message("assistant").write(answer)
         
         with st.chat_message("assistant"): 
-            with st.expander("정확도 별 답변 보기 (semantic) ⬇️"):
+            with st.expander("정확도 별 답변 보기 ⬇️"): # 정확도 별 답변 보기 (semantic)
                 context_showing_tab(contexts1)
                 
         # with st.chat_message("assistant"): 
@@ -116,7 +131,6 @@ if st.session_state.showing_option == "Separately":
         st.session_state.messages.append({"role": "assistant_context", "content": contexts1})
         # st.session_state.messages.append({"role": "assistant_context", "content": contexts2})
         # st.session_state.messages.append({"role": "assistant_context", "content": contexts3})
-        # st.session_state.messages.append({"role": "assistant_context", "content": contexts4})
         
         # Thinking을 complete로 수동으로 바꾸어 줌
         st_cb._complete_current_thought()
@@ -131,20 +145,7 @@ else:
     for msg in st.session_state.messages:
         if msg["role"] == "assistant_column":
             answers = msg["content"]
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
-                st.markdown('''### option 1 ''')
-                st.write(answers[0])
-            with col2:
-                st.markdown('''### option 2 ''')
-                st.write(answers[1])
-            with col3:
-                st.markdown('''### option 3 ''')
-                st.write(answers[2])
-            with col4:
-                st.markdown('''### option 4 ''')
-                st.write(answers[3])
-
+            multi_answer_column(answers)
         else:
             st.chat_message(msg["role"]).write(msg["content"])
     
@@ -182,7 +183,6 @@ else:
             st.write(answer1)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col2:
-            # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
             st_cb = StreamlitCallbackHandler(
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
@@ -194,9 +194,8 @@ else:
                 reranker=False
                 )[0]
             st.write(answer2)
-            st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
+            st_cb._complete_current_thought() 
         with col3:
-            # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
             st_cb = StreamlitCallbackHandler(
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
@@ -208,9 +207,8 @@ else:
                 reranker=True
                 )[0]
             st.write(answer3)
-            st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
+            st_cb._complete_current_thought() 
         with col4:
-            # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
             st_cb = StreamlitCallbackHandler(
                 st.chat_message("assistant"), 
                 collapse_completed_thoughts=True
@@ -222,14 +220,9 @@ else:
                 reranker=True
                 )[0]
             st.write(answer4)
-            st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
+            st_cb._complete_current_thought()
 
         # Session 메세지 저장
         answer = [answer1, answer2, answer3, answer4]
         st.session_state.messages.append({"role": "assistant_column", "content": answer})
-        
-        # UI 출력
-        # st.chat_message("assistant").write(answer)
-        # st.chat_message("assistant").write(contexts)
-        # st.chat_message("assistant").write(ref)
         
