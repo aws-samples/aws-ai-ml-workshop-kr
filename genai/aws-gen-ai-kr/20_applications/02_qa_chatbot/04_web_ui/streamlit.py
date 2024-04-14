@@ -2,6 +2,19 @@ import streamlit as st  # 모든 streamlit 명령은 "st" alias로 사용할 수
 import bedrock as glib  # 로컬 라이브러리 스크립트에 대한 참조
 from langchain.callbacks import StreamlitCallbackHandler
 
+def context_showing_tab(contexts):
+    tab_titles = []
+    tab_contents = {}
+    for i, context in enumerate(contexts):
+        title = str(context[0])
+        tab_titles.append(title)
+        tab_contents[title] = context[1][0]
+    tabs = st.tabs(tab_titles)
+    for i, tab in enumerate(tabs):
+        with tab:
+            st.header(tab_titles[i])
+            st.write(tab_contents[tab_titles[i]])
+
 st.set_page_config(layout="wide")
 st.title("AWS Q&A Bot with Advanced RAG!")  # page 제목
 
@@ -17,7 +30,6 @@ if "showing_option" not in st.session_state:
     st.session_state.showing_option = "Separately"
 
 with st.sidebar: # Sidebar 모델 옵션
-    # st.title("Set showing method 👇")
     with st.container(height=170):
         st.radio(
             "Set showing method 👇",
@@ -27,11 +39,18 @@ with st.sidebar: # Sidebar 모델 옵션
         )
 
     st.title("Set parameter for your Bot 👇")
-    parent = st.toggle("Parent_docs", disabled=st.session_state.showing_option=="All at once")
+
+    # semantic = st.toggle("Semantic", disabled=st.session_state.showing_option=="All at once")
+    # lexical = st.toggle("Lexical", disabled=st.session_state.showing_option=="All at once")
+    
+    # hybrid = st.slider('Alpha value of Hybrid Search: lexical(0.0) / semantic(1.0)', 0.0, 1.0, 0.5)
+    
     reranker = st.toggle("Reranker", disabled=st.session_state.showing_option=="All at once")
-    # hyde = st.toggle("HyDE")
-    # custom_model = st.toggle("Custom Model")
-    # alpha = st.slider('Alpha value of Hybrid Search: lexical(0.0) / semantic(1.0)', 0.0, 1.0, 0.5)
+    
+    # ragfusion = st.toggle("RAG-Fusion", disabled=st.session_state.showing_option=="All at once")
+    # hyde = st.toggle("HyDE", disabled=st.session_state.showing_option=="All at once")
+    
+    parent = st.toggle("Parent_docs", disabled=st.session_state.showing_option=="All at once")
 
 ### 1) 'Separately' 옵션 선택한 경우 ###
 if st.session_state.showing_option == "Separately":
@@ -39,9 +58,16 @@ if st.session_state.showing_option == "Separately":
         st.session_state["messages"] = [
             {"role": "assistant", "content": "How can I help you?"}
         ]
+    # 지난 답변 출력
     for msg in st.session_state.messages:
-        st.chat_message(msg["role"]).write(msg["content"])
-
+        # 지난 답변에 대한 컨텍스트 출력
+        if msg["role"] == "assistant_context": 
+            with st.chat_message("assistant"):
+                with st.expander("정확도 별 답변 보기 ⬇️"):
+                    context_showing_tab(contexts=msg["content"])
+        else:
+            st.chat_message(msg["role"]).write(msg["content"])
+    
     # 유저가 쓴 chat을 query라는 변수에 담음
     query = st.chat_input("Search documentation")
     if query:
@@ -75,52 +101,22 @@ if st.session_state.showing_option == "Separately":
         
         with st.chat_message("assistant"): 
             with st.expander("정확도 별 답변 보기 (semantic) ⬇️"):
-                tab_titles = []
-                tab_contents = {}
-                for i, context in enumerate(contexts1):
-                    title = str(context[0])
-                    tab_titles.append(title)
-                    tab_contents[title] = context[1][0]
-                tabs = st.tabs(tab_titles)
-                for i, tab in enumerate(tabs):
-                    with tab:
-                        st.header(tab_titles[i])
-                        st.write(tab_contents[tab_titles[i]])
+                context_showing_tab(contexts1)
+                
+        # with st.chat_message("assistant"): 
+        #     with st.expander("정확도 별 답변 보기 (lexical) ⬇️"):
+        #         context_showing_tab(contexts2)
 
-        with st.chat_message("assistant"): 
-            with st.expander("정확도 별 답변 보기 (lexical) ⬇️"):
-                tab_titles = []
-                tab_contents = {}
-                for i, context in enumerate(contexts2):
-                    title = str(context[0])
-                    tab_titles.append(title)
-                    tab_contents[title] = context[1][0]
-                tabs = st.tabs(tab_titles)
-                for i, tab in enumerate(tabs):
-                    with tab:
-                        st.header(tab_titles[i])
-                        st.write(tab_contents[tab_titles[i]])
-
-        with st.chat_message("assistant"): 
-            with st.expander("정확도 별 답변 보기 (reranker) ⬇️"):
-                tab_titles = []
-                tab_contents = {}
-                for i, context in enumerate(contexts3):
-                    title = str(context[0])
-                    tab_titles.append(title)
-                    tab_contents[title] = context[1][0]
-                tabs = st.tabs(tab_titles)
-                for i, tab in enumerate(tabs):
-                    with tab:
-                        st.header(tab_titles[i])
-                        st.write(tab_contents[tab_titles[i]])
+        # with st.chat_message("assistant"): 
+        #     with st.expander("정확도 별 답변 보기 (reranker) ⬇️"):
+        #         context_showing_tab(contexts3)
 
         # Session 메세지 저장
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        # st.session_state.messages.append({"role": "assistant", "content": contexts1})
-        # st.session_state.messages.append({"role": "assistant", "content": contexts2})
-        # st.session_state.messages.append({"role": "assistant", "content": contexts3})
-        # st.session_state.messages.append({"role": "assistant", "content": contexts4})
+        st.session_state.messages.append({"role": "assistant_context", "content": contexts1})
+        # st.session_state.messages.append({"role": "assistant_context", "content": contexts2})
+        # st.session_state.messages.append({"role": "assistant_context", "content": contexts3})
+        # st.session_state.messages.append({"role": "assistant_context", "content": contexts4})
         
         # Thinking을 complete로 수동으로 바꾸어 줌
         st_cb._complete_current_thought()
@@ -131,9 +127,11 @@ else:
         st.session_state["messages"] = [
             {"role": "assistant", "content": "How can I help you?"}
         ]
+    # 지난 답변 출력
     for msg in st.session_state.messages:
+        # 지난 답변에 대한 컨텍스트 출력
         st.chat_message(msg["role"]).write(msg["content"])
-
+    
     # 유저가 쓴 chat을 query라는 변수에 담음
     query = st.chat_input("Search documentation")
     if query:
@@ -165,7 +163,6 @@ else:
                 parent=False, 
                 reranker=False
                 )[0]
-            # st.subheader("parent=False, reranker=False ⬇️")
             st.write(answer)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col2:
@@ -180,7 +177,6 @@ else:
                 parent=True, 
                 reranker=False
                 )[0]
-            # st.subheader("parent=True, reranker=False ⬇️")
             st.write(answer)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col3:
@@ -195,7 +191,6 @@ else:
                 parent=False, 
                 reranker=True
                 )[0]
-            # st.subheader("parent=False, reranker=True ⬇️")
             st.write(answer)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
         with col4:
@@ -210,7 +205,6 @@ else:
                 parent=True, 
                 reranker=True
                 )[0]
-            # st.subheader("parent=True, reranker=True ⬇️")
             st.write(answer)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
 
@@ -222,3 +216,4 @@ else:
         # st.chat_message("assistant").write(answer)
         # st.chat_message("assistant").write(contexts)
         # st.chat_message("assistant").write(ref)
+        
