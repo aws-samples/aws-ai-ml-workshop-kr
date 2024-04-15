@@ -80,6 +80,8 @@ if st.session_state.showing_option == "Separately":
             with st.chat_message("assistant"):
                 with st.expander("정확도 별 답변 보기 ⬇️"):
                     context_showing_tab(contexts=msg["content"])
+        if msg["role"] == "assistant_column": 
+            st.chat_message("assistant").write(msg["content"][0])
         else:
             st.chat_message(msg["role"]).write(msg["content"])
     
