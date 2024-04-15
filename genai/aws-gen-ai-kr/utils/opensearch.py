@@ -121,6 +121,23 @@ class opensearch_utils():
             print('-' * 50)
 
     @classmethod
+    def get_document(cls, os_client, doc_id, index_name):
+        response = os_client.get(
+            id= doc_id,
+            index=index_name
+        )
+
+        return response
+
+    @classmethod
+    def get_count(cls, os_client, index_name):
+        response = os_client.count(
+            index=index_name
+        )
+
+        return response
+
+    @classmethod
     def get_query(cls, **kwargs):
 
         # Reference:
@@ -231,5 +248,6 @@ class opensearch_utils():
             # Split the page content into lines
             lines = doc.page_content.split("\n")
             metadata = doc.metadata
+            if "image_base64" in metadata: metadata["image_base64"] = ""
             print(lines)
             print(metadata)

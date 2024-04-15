@@ -281,7 +281,7 @@ class prompt_repo():
 class qa_chain():
     
     def __init__(self, **kwargs):
-        
+
         system_prompt = kwargs["system_prompt"]
         self.llm_text = kwargs["llm_text"]
         self.retriever = kwargs["retriever"]
@@ -684,11 +684,18 @@ class retriever_utils():
 
         child_search_results = kwargs["similar_docs"]
 
-        parent_info = {}
+        parent_info, similar_docs = {}, []
         for rank, (doc, score) in enumerate(child_search_results):
             parent_id = doc.metadata["parent_id"]
-            if parent_id not in parent_info:
-                parent_info[parent_id] = (rank+1, score)
+            if parent_id != "NA": ## For Tables and Images
+                if parent_id not in parent_info:
+                    parent_info[parent_id] = (rank+1, score)
+            else:
+                if kwargs["hybrid"]:
+                    similar_docs.append((doc, score))
+                else:
+                    similar_docs.append((doc))
+                    
         parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
         parent_ids = list(map(lambda x:x[0], parent_ids))
 
@@ -697,7 +704,7 @@ class retriever_utils():
             ids=parent_ids,
             index_name=kwargs["index_name"],
         )
-        similar_docs = []
+
         if parent_docs["docs"]:
             for res in parent_docs["docs"]:
                 doc_id = res["_id"]
@@ -709,14 +716,20 @@ class retriever_utils():
                     similar_docs.append((doc, parent_info[doc_id][1]))
                 else:
                     similar_docs.append((doc))
-
+        
+        if kwargs["hybrid"]:
+            similar_docs = sorted(
+                similar_docs,
+                key=lambda x: x[1],
+                reverse=True
+            )
+        
         if kwargs["verbose"]:
             print("===== ParentDocument =====")
             print (f'filter: {kwargs["boolean_filter"]}')
             print (f'# child_docs: {len(child_search_results)}')
             print (f'# parent docs: {len(similar_docs)}')
             print (f'# duplicates: {len(child_search_results)-len(similar_docs)}')
-
 
         return similar_docs
 
@@ -829,8 +842,17 @@ class retriever_utils():
 
         #search_filter.append({"term": {"metadata.family_tree": "child"}})
         if parent_document:
-            search_filter.append({"term": {"metadata.family_tree": "child"}})
-
+            parent_doc_filter = {
+                "bool":{
+                    "should":[ ## or condition
+                        {"term": {"metadata.family_tree": "child"}},
+                        {"term": {"metadata.family_tree": "parent_table"}},
+                        {"term": {"metadata.family_tree": "parent_image"}},   
+                    ]
+                }
+            }
+            search_filter.append(parent_doc_filter)
+            
         def do_sync():
 
             if rag_fusion:

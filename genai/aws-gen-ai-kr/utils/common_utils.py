@@ -1,7 +1,8 @@
-import functools
-import logging
-import random
 import time
+import pickle
+import random
+import logging
+import functools
 
 logging.basicConfig()
 logger = logging.getLogger('retry-bedrock-invocation')
@@ -30,3 +31,20 @@ def retry(total_try_cnt=5, sleep_in_sec=5, retryable_exceptions=()):
             logger.info(f"{func.__name__} finally has been failed")
         return wrapper
     return decorator
+
+def to_pickle(obj, path):
+
+    with open(file=path, mode="wb") as f:
+        pickle.dump(obj, f)
+
+    print (f'To_PICKLE: {path}')
+    
+def load_pickle(path):
+    
+    with open(file=path, mode="rb") as f:
+        obj=pickle.load(f)
+
+    print (f'Load from {path}')
+
+    return obj
+
