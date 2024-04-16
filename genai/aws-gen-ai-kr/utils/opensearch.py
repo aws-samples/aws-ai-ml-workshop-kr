@@ -1,3 +1,4 @@
+import copy
 from typing import List, Tuple
 from opensearchpy import OpenSearch, RequestsHttpConnection
 
@@ -242,7 +243,8 @@ class opensearch_utils():
         '''
         OpenSearch 결과인 LIST 를 파싱하는 함수
         '''
-        for doc, score in response:
+        responses = copy.deepcopy(response)
+        for doc, score in responses:
             print(f'\nScore: {score}')
             # print(f'Document Number: {doc.metadata["row"]}')
             # Split the page content into lines

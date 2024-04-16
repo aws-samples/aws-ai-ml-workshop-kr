@@ -1095,7 +1095,18 @@ class retriever_utils():
         #else: return similar_docs
     
         if complex_doc: return similar_docs, tables, images
-        else: return similar_docs
+        else:
+            similar_docs_filtered = []
+            for doc in similar_docs:
+                category = "None"
+                if "category" in doc.metadata:
+                    category = doc.metadata["category"]
+
+                if category not in {"Table", "Image"}:
+                    similar_docs_filtered.append(doc)
+            return similar_docs_filtered
+        
+        
 
     @classmethod
     # Score fusion and re-rank (lexical + semantic)
