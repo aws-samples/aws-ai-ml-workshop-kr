@@ -79,47 +79,49 @@ if "search_mode" not in st.session_state:
     st.session_state.search_mode = "Hybrid"
 if "hyde_or_ragfusion" not in st.session_state:
     st.session_state.hyde_or_ragfusion = "None"
+disabled = st.session_state.showing_option=="All at once"
 
 with st.sidebar: # Sidebar 모델 옵션
-    st.title("Set showing method 👇")
-    with st.container(height=170):
+    # st.title("Choose UI 👇")
+    with st.container(height=190):
         st.radio(
-            "Choose between 2 options",
+            "Choose UI between 2 options:",
             ["Separately", "All at once"],
-            captions = ["blah blah", "blah blah blah"],
+            captions = ["아래에서 설정한 파라미터 조합으로 하나의 검색 결과가 도출됩니다.", "여러 옵션들을 한 화면에서 한꺼번에 볼 수 있습니다."],
             key="showing_option",
         )
-
     st.title("Set parameters for your Bot 👇")
 
-    if st.session_state.showing_option=="All at once":
-        disabled = True
-    else: 
-        disabled = False
-
-    with st.container(height=320):
+    with st.container(height=380):
         search_mode = st.radio(
-            "Choose a search mode",
+            "Choose a search mode:",
             ["Lexical", "Semantic", "Hybrid"],
-            captions = ["Laugh out loud.", "Get the popcorn.", "Never stop learning."],
+            captions = [
+                "키워드의 일치 여부를 기반으로 답변을 생성합니다.",
+                "키워드의 일치 여부보다는 문맥의 의미적 유사도에 기반해 답변을 생성합니다.", 
+                "아래의 Alpha 값을 조정하여 Lexical/Semantic search의 비율을 조정합니다."
+                ],
             key="search_mode",
             disabled=disabled
             )
-        alpha = st.slider('Select alpha value for Hybrid search', 0.0, 0.51, 1.0, disabled=st.session_state.search_mode != "Hybrid")
-
+        alpha = st.slider('Alpha value for Hybrid search', 0.0, 0.51, 1.0, disabled=st.session_state.search_mode != "Hybrid")
+        # st.write("Alpha=0.0 이면 Lexical search, Alpha=1.0 이면 Semantic search")
         if search_mode == "Lexical":
             alpha = 0.0
         elif search_mode == "Semantic":
             alpha = 1.0
-
-    reranker = st.toggle("Reranker", disabled=disabled)
-    parent = st.toggle("Parent_docs", disabled=disabled)
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        reranker = st.toggle("Reranker", disabled=disabled)
+    with col2:
+        parent = st.toggle("Parent_docs", disabled=disabled)
 
     with st.container(height=230):
         hyde_or_ragfusion = st.radio(
-            "Choose a RAG option",
+            "Choose a RAG option:",
             ["None", "HyDE", "RAG-Fusion"],
-            captions = ["Laugh out loud.", "Get the popcorn.", "Never stop learning."],
+            captions = ["blah blah", "blah blah", "blah blah blah"],
             key="hyde_or_ragfusion",
             disabled=disabled
             ) 
