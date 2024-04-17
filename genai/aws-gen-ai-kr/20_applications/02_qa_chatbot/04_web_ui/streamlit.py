@@ -21,20 +21,25 @@ def show_context_with_tab(contexts):
 
 # 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI
 def show_context_with_expander(contexts):
+
     for context in contexts:
         # Contexts 내용 출력
-        page_content = parse_from_string(r"page_content='(.+?)'", context) # 갑자기 왜 안 되지?
-        st.write(page_content)
+        page_content = context.page_content
+        st.markdown(page_content)
                     
         # Image, Table 이 있을 경우 파싱해 출력
-        metadata_str = parse_from_string(r"metadata=({.*?})", context)
-        category = parse_from_string(r"'category': '(.+?)'", metadata_str)
-        if category == "Image":
-            image_base64 = parse_from_string(r"'image_base64': '(.+?)'", metadata_str)
-            st.image(base64.b64decode(image_base64))
-        if category == "Table":
-            text_as_html = parse_from_string(r"'text_as_html': '(.+?)'", metadata_str)
-            st.markdown(text_as_html, unsafe_allow_html=True)
+        metadata = context.metadata
+        category = "None"
+        if "category" in context.metadata:
+            category = metadata["category"]
+            if category == "Table":
+                text_as_html = metadata["text_as_html"]
+                st.markdown(text_as_html, unsafe_allow_html=True)
+            elif category == "Image":
+                image_base64 = metadata["image_base64"]
+                st.image(base64.b64decode(image_base64))
+            else: 
+                pass
                 
 # 'All at once' 옵션 선택 시 4개의 컬럼으로 나누어 결과 표시하는 UI
 # TODO: HyDE, RagFusion 추가 논의 필요
@@ -114,7 +119,7 @@ if st.session_state.showing_option == "Separately":
                 with st.expander("Context 확인하기 ⬇️"):
                     # show_context_with_tab(contexts=msg["content"]) ## TODO: 임시적으로 주석 처리 - score 나오면 주석 해제
                     show_context_with_expander(contexts=msg["content"])
-        if msg["role"] == "assistant_column":
+        elif msg["role"] == "assistant_column":
             # 'Separately' 옵션일 경우 multi column 으로 보여주지 않고 첫 번째 답변만 출력
             st.chat_message(msg["role"]).write(msg["content"][0]) 
         else:
@@ -173,7 +178,7 @@ else:
         if msg["role"] == "assistant_column":
             answers = msg["content"]
             show_answer_with_multi_columns(answers)
-        if msg["role"] == "assistant_context": 
+        elif msg["role"] == "assistant_context": 
             pass # 'All at once' 옵션 선택 시에는 context 로그를 출력하지 않음
         else:
             st.chat_message(msg["role"]).write(msg["content"])
@@ -264,5 +269,5 @@ else:
             st_cb._complete_current_thought()
 
         # Session 메세지 저장
-        answer = [answer1, answer2, answer3, answer4]
-        st.session_state.messages.append({"role": "assistant_column", "content": answer})
+        answers = [answer1, answer2, answer3, answer4]
+        st.session_state.messages.append({"role": "assistant_column", "content": answers})
