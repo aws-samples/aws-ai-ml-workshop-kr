@@ -21,7 +21,10 @@ def show_context_with_tab(contexts):
 
 # 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI
 def show_context_with_expander(contexts):
+    context_no = 0
     for context in contexts:
+        context_no += 1
+        st.markdown("### {}".format(context_no))
         # Contexts 내용 출력
         page_content = context.page_content
         st.markdown(page_content)
@@ -39,26 +42,23 @@ def show_context_with_expander(contexts):
                 st.image(base64.b64decode(image_base64))
             else: 
                 pass
-                
+        st.markdown(''' - - - ''')
+
 # 'All at once' 옵션 선택 시 4개의 컬럼으로 나누어 결과 표시하는 UI
 # TODO: HyDE, RagFusion 추가 논의 필요
 def show_answer_with_multi_columns(answers): 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown('''### `Lexical` ''')
-        st.markdown(":green[: Alpha 값이 0.0인 경우]")
+        st.markdown('''### `Lexical search` ''')
         st.write(answers[0])
     with col2:
-        st.markdown('''### `Semantic` ''')
-        st.markdown(":green[: Alpha 값이 1.0인 경우]")
+        st.markdown('''### `Semantic search` ''')
         st.write(answers[1])
     with col3:
         st.markdown('''### + `Reranker` ''')
-        st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
         st.write(answers[2])
     with col4:
         st.markdown('''### + `Parent_docs` ''') 
-        st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
         st.write(answers[3])
 
 ####################### Application ###############################
@@ -76,26 +76,25 @@ st.markdown('''
 if "showing_option" not in st.session_state:
     st.session_state.showing_option = "Separately"
 if "search_mode" not in st.session_state:
-    st.session_state.search_mode = "Hybrid"
+    st.session_state.search_mode = "Hybrid search"
 if "hyde_or_ragfusion" not in st.session_state:
     st.session_state.hyde_or_ragfusion = "None"
 disabled = st.session_state.showing_option=="All at once"
 
 with st.sidebar: # Sidebar 모델 옵션
-    # st.title("Choose UI 👇")
-    with st.container(height=190):
+    with st.container(border=True):
         st.radio(
             "Choose UI between 2 options:",
             ["Separately", "All at once"],
             captions = ["아래에서 설정한 파라미터 조합으로 하나의 검색 결과가 도출됩니다.", "여러 옵션들을 한 화면에서 한꺼번에 볼 수 있습니다."],
             key="showing_option",
         )
-    st.title("Set parameters for your Bot 👇")
+    st.markdown('''### Set parameters for your Bot 👇''')
 
-    with st.container(height=380):
+    with st.container(border=True):
         search_mode = st.radio(
             "Choose a search mode:",
-            ["Lexical", "Semantic", "Hybrid"],
+            ["Lexical search", "Semantic search", "Hybrid search"],
             captions = [
                 "키워드의 일치 여부를 기반으로 답변을 생성합니다.",
                 "키워드의 일치 여부보다는 문맥의 의미적 유사도에 기반해 답변을 생성합니다.", 
@@ -104,24 +103,35 @@ with st.sidebar: # Sidebar 모델 옵션
             key="search_mode",
             disabled=disabled
             )
-        alpha = st.slider('Alpha value for Hybrid search', 0.0, 0.51, 1.0, disabled=st.session_state.search_mode != "Hybrid")
-        # st.write("Alpha=0.0 이면 Lexical search, Alpha=1.0 이면 Semantic search")
-        if search_mode == "Lexical":
+        alpha = st.slider('Alpha value for Hybrid search ⬇️', 0.0, 0.51, 1.0, 
+                          disabled=st.session_state.search_mode != "Hybrid search",
+                          help="""Alpha=0.0 이면 Lexical search,   \nAlpha=1.0 이면 Semantic search 입니다."""
+                          )
+        if search_mode == "Lexical search":
             alpha = 0.0
-        elif search_mode == "Semantic":
+        elif search_mode == "Semantic search":
             alpha = 1.0
     
     col1, col2 = st.columns(2)
     with col1:
-        reranker = st.toggle("Reranker", disabled=disabled)
+        reranker = st.toggle("Reranker", 
+                             help="""초기 검색 결과를 재평가하여 순위를 재조정하는 모델입니다.   
+                             문맥 정보와 질의 관련성을 고려하여 적합한 결과를 상위에 올립니다.""",
+                             disabled=disabled)
     with col2:
-        parent = st.toggle("Parent_docs", disabled=disabled)
+        parent = st.toggle("Parent Docs", 
+                           help="""답변 생성 모델이 질의에 대한 답변을 생성할 때 참조한 정보의 출처를 표시하는 옵션입니다.""", 
+                           disabled=disabled)
 
-    with st.container(height=230):
+    with st.container(border=True):
         hyde_or_ragfusion = st.radio(
             "Choose a RAG option:",
             ["None", "HyDE", "RAG-Fusion"],
-            captions = ["blah blah", "blah blah", "blah blah blah"],
+            captions = [
+                "", 
+                "문서와 질의 간의 의미적 유사도를 측정하기 위한 임베딩 기법입니다. 하이퍼볼릭 공간에서 거리를 계산하여 유사도를 측정합니다.", 
+                "검색과 생성을 결합한 모델로, 검색 모듈이 관련 문서를 찾고 생성 모듈이 이를 참조하여 답변을 생성합니다. 두 모듈의 출력을 융합하여 최종 답변을 도출합니다."
+                ],
             key="hyde_or_ragfusion",
             disabled=disabled
             ) 
@@ -217,17 +227,19 @@ else:
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.markdown('''### `Lexical` ''')
+            st.markdown('''### `Lexical search` ''')
             st.markdown(":green[: Alpha 값이 0.0]으로, 키워드의 정확한 일치 여부를 판단하는 Lexical search 결과입니다.")
         with col2:
-            st.markdown('''### `Semantic` ''')
+            st.markdown('''### `Semantic search` ''')
             st.markdown(":green[: Alpha 값이 1.0]으로, 키워드 일치 여부보다는 문맥의 의미적 유사도에 기반한 Semantic search 결과입니다.")
         with col3:
             st.markdown('''### + `Reranker` ''')
-            st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
+            st.markdown(""": 초기 검색 결과를 재평가하여 순위를 재조정하는 모델입니다. 문맥 정보와 질의 관련성을 고려하여 적합한 결과를 상위에 올립니다.
+                        :green[Alpha 값은 왼쪽 사이드바에서 설정하신 값]으로 적용됩니다.""")
         with col4:
-            st.markdown('''### + `Parent_docs` ''')
-            st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
+            st.markdown('''### + `Parent Docs` ''')
+            st.markdown(""": 질의에 대한 답변을 생성할 때 참조하는 문서 집합입니다. 답변 생성 모델이 참조할 수 있는 관련 정보의 출처가 됩니다.
+                        :green[Alpha 값은 왼쪽 사이드바에서 설정하신 값]으로 적용됩니다.""")
         
         with col1:
             # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
@@ -242,7 +254,7 @@ else:
                 reranker=False,
                 hyde = False,
                 ragfusion = False,
-                alpha = 0 # Lexical
+                alpha = 0 # Lexical search
                 )[0]
             st.write(answer1)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
@@ -258,7 +270,7 @@ else:
                 reranker=False,
                 hyde = False,
                 ragfusion = False,
-                alpha = 1.0 # Semantic
+                alpha = 1.0 # Semantic search
                 )[0]
             st.write(answer2)
             st_cb._complete_current_thought() 
@@ -274,7 +286,7 @@ else:
                 reranker=True, # Add Reranker option
                 hyde = False,
                 ragfusion = False,
-                alpha = alpha # Hybrid
+                alpha = alpha # Hybrid search
                 )[0]
             st.write(answer3)
             st_cb._complete_current_thought() 
@@ -290,7 +302,7 @@ else:
                 reranker=True, # Add Reranker option
                 hyde = False,
                 ragfusion = False,
-                alpha = alpha # Hybrid
+                alpha = alpha # Hybrid search
                 )[0]
             st.write(answer4)
             st_cb._complete_current_thought()
