@@ -21,7 +21,6 @@ def show_context_with_tab(contexts):
 
 # 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI
 def show_context_with_expander(contexts):
-
     for context in contexts:
         # Contexts 내용 출력
         page_content = context.page_content
@@ -46,26 +45,21 @@ def show_context_with_expander(contexts):
 def show_answer_with_multi_columns(answers): 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown('''### `Semantic` ''')
+        st.markdown('''### `Lexical` ''')
+        st.markdown(":green[: Alpha 값이 0.0인 경우]")
         st.write(answers[0])
     with col2:
-        st.markdown('''### `Lexical` ''')
+        st.markdown('''### `Semantic` ''')
+        st.markdown(":green[: Alpha 값이 1.0인 경우]")
         st.write(answers[1])
     with col3:
         st.markdown('''### + `Reranker` ''')
+        st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
         st.write(answers[2])
     with col4:
         st.markdown('''### + `Parent_docs` ''') 
+        st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
         st.write(answers[3])
-
-# string 값에서 정규표현식 pattern에 매칭되는 값을 파싱해 리턴하는 메서드
-def parse_from_string(pattern, string): 
-    string = str(string)
-    match = re.search(pattern, string)
-    if match:
-        return match.group(1)
-    else: 
-        return ""   
 
 ####################### Application ###############################
 st.set_page_config(layout="wide")
@@ -194,13 +188,17 @@ else:
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.markdown('''### `Semantic` ''')
-        with col2:
             st.markdown('''### `Lexical` ''')
+            st.markdown(":green[: Alpha 값이 0.0]으로, 키워드의 정확한 일치 여부를 판단하는 Lexical search 결과입니다.")
+        with col2:
+            st.markdown('''### `Semantic` ''')
+            st.markdown(":green[: Alpha 값이 1.0]으로, 키워드 일치 여부보다는 문맥의 의미적 유사도에 기반한 Semantic search 결과입니다.")
         with col3:
             st.markdown('''### + `Reranker` ''')
+            st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
         with col4:
             st.markdown('''### + `Parent_docs` ''')
+            st.markdown(":green[Alpha 값은 왼쪽 사이드바에서 설정하신 값으로 적용됩니다.]")
         
         with col1:
             # Streamlit callback handler로 bedrock streaming 받아오는 컨테이너 설정
@@ -215,7 +213,7 @@ else:
                 reranker=False,
                 hyde = False,
                 ragfusion = False,
-                alpha = 0 # Semantic
+                alpha = 0 # Lexical
                 )[0]
             st.write(answer1)
             st_cb._complete_current_thought() # Thinking을 complete로 수동으로 바꾸어 줌
@@ -231,7 +229,7 @@ else:
                 reranker=False,
                 hyde = False,
                 ragfusion = False,
-                alpha = 1.0 # Lexical
+                alpha = 1.0 # Semantic
                 )[0]
             st.write(answer2)
             st_cb._complete_current_thought() 
@@ -247,7 +245,7 @@ else:
                 reranker=True, # Add Reranker option
                 hyde = False,
                 ragfusion = False,
-                alpha = 0.5 # Hybrid
+                alpha = alpha # Hybrid
                 )[0]
             st.write(answer3)
             st_cb._complete_current_thought() 
@@ -263,7 +261,7 @@ else:
                 reranker=True, # Add Reranker option
                 hyde = False,
                 ragfusion = False,
-                alpha = 0.5 # Hybrid
+                alpha = alpha # Hybrid
                 )[0]
             st.write(answer4)
             st_cb._complete_current_thought()
