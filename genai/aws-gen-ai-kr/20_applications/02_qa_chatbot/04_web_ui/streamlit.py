@@ -1,7 +1,10 @@
+import base64
 import streamlit as st  # 모든 streamlit 명령은 "st" alias로 사용할 수 있습니다.
 import bedrock as glib  # 로컬 라이브러리 스크립트에 대한 참조
 from langchain.callbacks import StreamlitCallbackHandler
+import re
 
+##################### Functions ########################
 def context_showing_tab(contexts):
     tab_titles = []
     tab_contents = {}
@@ -18,10 +21,10 @@ def context_showing_tab(contexts):
 def multi_answer_column(answers):
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown('''### option 1 ''')
+        st.markdown('''### option 1 ''') # To be specified
         st.write(answers[0])
     with col2:
-        st.markdown('''### option 2 ''')
+        st.markdown('''### option 2 ''') 
         st.write(answers[1])
     with col3:
         st.markdown('''### option 3 ''')
@@ -30,11 +33,20 @@ def multi_answer_column(answers):
         st.markdown('''### option 4 ''')
         st.write(answers[3])
 
+def parse_from_string(pattern, string): # string 값에서 정규표현식 pattern에 매칭되는 값을 파싱해 리턴하는 메서드
+    string = str(string)
+    match = re.search(pattern, string)
+    if match:
+        return match.group(1)
+    else: 
+        return ""   
+
+####################### Application ###############################
 st.set_page_config(layout="wide")
 st.title("AWS Q&A Bot with Advanced RAG!")  # page 제목
 
-st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v2.1.''')
-st.markdown('''- Integrated advanced RAG technology: **Hybrid Search, ReRanker, and Parent Document** techniques.''')
+st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v3 Sonnet.''')
+st.markdown('''- Integrated advanced RAG technology: **Hybrid Search, ReRanker, and Parent Document, HyDE, Rag Fusion** techniques.''')
 st.markdown('''- The original data is stored in Amazon OpenSearch, and the embedding model utilizes Amazon Titan.''')
 st.markdown('''
             - You can find the source code in 
@@ -45,9 +57,10 @@ if "showing_option" not in st.session_state:
     st.session_state.showing_option = "Separately"
 
 with st.sidebar: # Sidebar 모델 옵션
+    st.title("Set showing method 👇")
     with st.container(height=170):
         st.radio(
-            "Set showing method 👇",
+            "Choose between 2 options",
             ["Separately", "All at once"],
             captions = ["blah blah", "blah blah blah"],
             key="showing_option",
@@ -59,15 +72,14 @@ with st.sidebar: # Sidebar 모델 옵션
     # lexical = st.toggle("Lexical", disabled=st.session_state.showing_option=="All at once")
     
     # hybrid = st.slider('Alpha value of Hybrid Search: lexical(0.0) / semantic(1.0)', 0.0, 1.0, 0.5)
-    
+    alpha = st.slider('Select Hybrid search alpha value', 0.0, 0.51, 1.0)
+    st.write('Alpha:', alpha)
     reranker = st.toggle("Reranker", disabled=st.session_state.showing_option=="All at once")
-    
-    # ragfusion = st.toggle("RAG-Fusion", disabled=st.session_state.showing_option=="All at once")
-    # hyde = st.toggle("HyDE", disabled=st.session_state.showing_option=="All at once")
-    
     parent = st.toggle("Parent_docs", disabled=st.session_state.showing_option=="All at once")
+    hyde = st.toggle("HyDE", disabled=st.session_state.showing_option=="All at once")
+    ragfusion = st.toggle("RAG Fusion", disabled=st.session_state.showing_option=="All at once")
 
-### 1) 'Separately' 옵션 선택한 경우 ###
+###### 1) 'Separately' 옵션 선택한 경우 ######
 if st.session_state.showing_option == "Separately":
     if "messages" not in st.session_state:
         st.session_state["messages"] = [
@@ -80,8 +92,6 @@ if st.session_state.showing_option == "Separately":
             with st.chat_message("assistant"):
                 with st.expander("정확도 별 답변 보기 ⬇️"):
                     context_showing_tab(contexts=msg["content"])
-        if msg["role"] == "assistant_column": 
-            st.chat_message("assistant").write(msg["content"][0])
         else:
             st.chat_message(msg["role"]).write(msg["content"])
     
@@ -104,40 +114,55 @@ if st.session_state.showing_option == "Separately":
             query=query, 
             streaming_callback=st_cb, 
             parent=parent, 
-            reranker=reranker
+            reranker=reranker,
+            hyde = hyde,
+            ragfusion = ragfusion,
+            alpha = alpha
             )
         # response 로 메세지, 링크, 레퍼런스(source_documents) 받아오게 설정된 것을 변수로 저장
         answer = response[0]
-        contexts1 = response[1] # semantic
-        contexts2 = response[2] # lexical
-        contexts3 = response[3] # reranker
-        contexts4 = response[4] # similar_docs
+        contexts = response[1] 
 
         # UI 출력
         st.chat_message("assistant").write(answer)
         
         with st.chat_message("assistant"): 
-            with st.expander("정확도 별 답변 보기 ⬇️"): # 정확도 별 답변 보기 (semantic)
-                context_showing_tab(contexts1)
+            with st.expander("Full Context"):
+                for context in contexts:
+                    context = str(context)
+                    st.write(context)
+
+            with st.expander("Context page_content"):
+                for context in contexts:
+                    page_content = parse_from_string(r"page_content='(.+?)'", context) # 갑자기 왜 안 되지?
+                    st.write(page_content)
+
+            with st.expander("Context metadata"):
+                for context in contexts:
+                    metadata_str = parse_from_string(r"metadata=({.*?})", context)
+                    category = parse_from_string(r"'category': '(.+?)'", metadata_str)
+
+                    # 카테고리를 이용해 Image, Table 파싱                    
+                    if category == "Image":
+                        image_base64 = parse_from_string(r"'image_base64': '(.+?)'", metadata_str)
+                        st.image(base64.b64decode(image_base64))
+                    if category == "Table":
+                        ## 파싱 로직 추가해야 함
+                        st.write("이건 테이블 입니다 === ")
+                        text_as_html = parse_from_string(r"'text_as_html': '(.+?)'", metadata_str)
+                        st.markdown(text_as_html, unsafe_allow_html=True)
+                    else: 
+                        st.write("=== 이미지나 테이블이 없는 경우는 건너뛰기 === ")
+                        
                 
-        # with st.chat_message("assistant"): 
-        #     with st.expander("정확도 별 답변 보기 (lexical) ⬇️"):
-        #         context_showing_tab(contexts2)
-
-        # with st.chat_message("assistant"): 
-        #     with st.expander("정확도 별 답변 보기 (reranker) ⬇️"):
-        #         context_showing_tab(contexts3)
-
         # Session 메세지 저장
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        st.session_state.messages.append({"role": "assistant_context", "content": contexts1})
-        # st.session_state.messages.append({"role": "assistant_context", "content": contexts2})
-        # st.session_state.messages.append({"role": "assistant_context", "content": contexts3})
+        st.session_state.messages.append({"role": "assistant_context", "content": contexts})
         
         # Thinking을 complete로 수동으로 바꾸어 줌
         st_cb._complete_current_thought()
 
-### 2) 'All at once' 옵션 선택한 경우 ###
+###### 2) 'All at once' 옵션 선택한 경우 ######
 else:
     if "messages" not in st.session_state:
         st.session_state["messages"] = [
@@ -227,4 +252,3 @@ else:
         # Session 메세지 저장
         answer = [answer1, answer2, answer3, answer4]
         st.session_state.messages.append({"role": "assistant_column", "content": answer})
-        
