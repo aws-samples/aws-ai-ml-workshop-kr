@@ -5,7 +5,8 @@ from langchain.callbacks import StreamlitCallbackHandler
 import re
 
 ##################### Functions ########################
-def context_showing_tab(contexts):
+# 'Separately' 옵션 선택 시 나오는 중간 Context를 탭 형태로 보여주는 UI -- 현재 사용하고 있지 않음
+def show_context_with_tab(contexts):
     tab_titles = []
     tab_contents = {}
     for i, context in enumerate(contexts):
@@ -18,7 +19,25 @@ def context_showing_tab(contexts):
             st.header(tab_titles[i])
             st.write(tab_contents[tab_titles[i]])
 
-def multi_answer_column(answers):
+# 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI
+def show_context_with_expander(contexts):
+    for context in contexts:
+        # Contexts 내용 출력
+        page_content = parse_from_string(r"page_content='(.+?)'", context) # 갑자기 왜 안 되지?
+        st.write(page_content)
+                    
+        # Image, Table 이 있을 경우 파싱해 출력
+        metadata_str = parse_from_string(r"metadata=({.*?})", context)
+        category = parse_from_string(r"'category': '(.+?)'", metadata_str)
+        if category == "Image":
+            image_base64 = parse_from_string(r"'image_base64': '(.+?)'", metadata_str)
+            st.image(base64.b64decode(image_base64))
+        if category == "Table":
+            text_as_html = parse_from_string(r"'text_as_html': '(.+?)'", metadata_str)
+            st.markdown(text_as_html, unsafe_allow_html=True)
+                
+# 'All at once' 옵션 선택 시 4개의 컬럼으로 나누어 결과 표시하는 UI
+def show_answer_with_multi_columns(answers): 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         st.markdown('''### option 1 ''') # To be specified
@@ -33,7 +52,8 @@ def multi_answer_column(answers):
         st.markdown('''### option 4 ''')
         st.write(answers[3])
 
-def parse_from_string(pattern, string): # string 값에서 정규표현식 pattern에 매칭되는 값을 파싱해 리턴하는 메서드
+# string 값에서 정규표현식 pattern에 매칭되는 값을 파싱해 리턴하는 메서드
+def parse_from_string(pattern, string): 
     string = str(string)
     match = re.search(pattern, string)
     if match:
@@ -90,8 +110,9 @@ if st.session_state.showing_option == "Separately":
         # 지난 답변에 대한 컨텍스트 출력
         if msg["role"] == "assistant_context": 
             with st.chat_message("assistant"):
-                with st.expander("정확도 별 답변 보기 ⬇️"):
-                    context_showing_tab(contexts=msg["content"])
+                with st.expander("Context 확인하기 ⬇️"):
+                    # show_context_with_tab(contexts=msg["content"]) ## 임시적으로 주석 처리 - score 나오면 주석 해제
+                    show_context_with_expander(contexts=msg["content"])
         else:
             st.chat_message(msg["role"]).write(msg["content"])
     
@@ -127,33 +148,21 @@ if st.session_state.showing_option == "Separately":
         st.chat_message("assistant").write(answer)
         
         with st.chat_message("assistant"): 
-            with st.expander("Full Context"):
+            with st.expander("Context 확인하기 ⬇️ "): # "정확도 별 답변 보기 ⬇️" 로 수정 필요 
                 for context in contexts:
-                    context = str(context)
-                    st.write(context)
-
-            with st.expander("Context page_content"):
-                for context in contexts:
-                    page_content = parse_from_string(r"page_content='(.+?)'", context) # 갑자기 왜 안 되지?
+                    # Contexts 내용 출력
+                    page_content = parse_from_string(r"page_content='(.+?)'", context)
                     st.write(page_content)
-
-            with st.expander("Context metadata"):
-                for context in contexts:
+                    
+                    # Image, Table 이 있을 경우 파싱해 출력
                     metadata_str = parse_from_string(r"metadata=({.*?})", context)
                     category = parse_from_string(r"'category': '(.+?)'", metadata_str)
-
-                    # 카테고리를 이용해 Image, Table 파싱                    
                     if category == "Image":
                         image_base64 = parse_from_string(r"'image_base64': '(.+?)'", metadata_str)
                         st.image(base64.b64decode(image_base64))
                     if category == "Table":
-                        ## 파싱 로직 추가해야 함
-                        st.write("이건 테이블 입니다 === ")
                         text_as_html = parse_from_string(r"'text_as_html': '(.+?)'", metadata_str)
                         st.markdown(text_as_html, unsafe_allow_html=True)
-                    else: 
-                        st.write("=== 이미지나 테이블이 없는 경우는 건너뛰기 === ")
-                        
                 
         # Session 메세지 저장
         st.session_state.messages.append({"role": "assistant", "content": answer})
@@ -172,7 +181,7 @@ else:
     for msg in st.session_state.messages:
         if msg["role"] == "assistant_column":
             answers = msg["content"]
-            multi_answer_column(answers)
+            show_answer_with_multi_columns(answers)
         else:
             st.chat_message(msg["role"]).write(msg["content"])
     
