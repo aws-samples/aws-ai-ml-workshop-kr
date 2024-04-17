@@ -69,12 +69,13 @@ def get_opensearch_client():
 
 # hybrid search retriever 만들기
 
-def get_retriever(streaming_callback, parent, reranker):
+def get_retriever(streaming_callback, parent, reranker, hyde, ragfusion, alpha):
     os_client = get_opensearch_client()
     llm_text = get_llm(streaming_callback)
     llm_emb = get_embedding_model()
     reranker_endpoint_name = pm.get_params(key="reranker_endpoint",enc=False)
-    index_name = pm.get_params(key="opensearch-index-name-workshop-app", enc=True)
+    index_name = "summit-workshop-index"
+    # index_name = pm.get_params(key="opensearch-index-name-workshop-app", enc=True)
 
     opensearch_hybrid_retriever = OpenSearchHybridSearchRetriever(
         os_client=os_client,
@@ -89,15 +90,21 @@ def get_retriever(streaming_callback, parent, reranker):
         # option for search
         # ["RRF", "simple_weighted"], rank fusion 방식 정의
         fusion_algorithm="RRF",
+        complex_doc=True,
         # [for lexical, for semantic], Lexical, Semantic search 결과에 대한 최종 반영 비율 정의
-        ensemble_weights=[.51, .49],
+        ensemble_weights=[alpha, 1.0-alpha],
         reranker=reranker,  # enable reranker with reranker model
         # endpoint name for reranking model
         reranker_endpoint_name=reranker_endpoint_name,
         parent_document=parent,  # enable parent document
-
+        rag_fusion=ragfusion,
+        rag_fusion_prompt = prompt_repo.get_rag_fusion(),
+        hyde=hyde,
+        hyde_query="",
+        query_augmentation_size=3,
         # option for async search
         async_mode=True,
+    
 
         # option for output
         k=6,  # 최종 Document 수 정의
@@ -117,12 +124,12 @@ def formatting_output(contexts):
             formatted_contexts.append((score, lines))
     return formatted_contexts
 
-def invoke(query, streaming_callback, parent, reranker):
+def invoke(query, streaming_callback, parent, reranker, hyde, ragfusion, alpha):
 
     # llm, retriever 가져오기
     llm_text = get_llm(streaming_callback)
-    opensearch_hybrid_retriever = get_retriever(streaming_callback, parent, reranker)
-    # contexts = opensearch_hybrid_retriever._get_relevant_documents()
+    opensearch_hybrid_retriever = get_retriever(streaming_callback, parent, reranker, hyde, ragfusion, alpha)
+    # context, tables, images = opensearch_hybrid_retriever._get_relevant_documents()
 
     # answer only 선택
     system_prompt = prompt_repo.get_system_prompt()
@@ -135,16 +142,18 @@ def invoke(query, streaming_callback, parent, reranker):
     verbose=False
     )
 
-    response, context_lists = qa.invoke(
-    query = query)
+    response, similar_docs = qa.invoke(
+    query = query, complex_doc = True)
+    
 
-    print("############")
-    print(context_lists)
-    semantic = formatting_output(context_lists[0])
+    print("######^^######")
+    # print(retriever)
+    print(similar_docs)
+    # semantic = formatting_output(context_lists[0])
 
-    lexical = formatting_output(context_lists[1])
-    reranker = formatting_output(context_lists[2])
-    similar_docs = context_lists[3]
+    # lexical = formatting_output(context_lists[1])
+    # reranker = formatting_output(context_lists[2])
+    # similar_docs = context_lists[3]
 
     # output = formatting_output(semantic)
     # print("Output")
@@ -159,4 +168,4 @@ def invoke(query, streaming_callback, parent, reranker):
     #     metadata = document_dict.get('metadata', {})
     #     url = metadata.get('url', '')
 
-    return response, semantic, lexical, reranker, similar_docs #output
+    return response, similar_docs #output
