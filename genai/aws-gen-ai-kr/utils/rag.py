@@ -281,7 +281,7 @@ class prompt_repo():
 class qa_chain():
     
     def __init__(self, **kwargs):
-        
+
         system_prompt = kwargs["system_prompt"]
         self.llm_text = kwargs["llm_text"]
         self.retriever = kwargs["retriever"]
@@ -684,11 +684,18 @@ class retriever_utils():
 
         child_search_results = kwargs["similar_docs"]
 
-        parent_info = {}
+        parent_info, similar_docs = {}, []
         for rank, (doc, score) in enumerate(child_search_results):
             parent_id = doc.metadata["parent_id"]
-            if parent_id not in parent_info:
-                parent_info[parent_id] = (rank+1, score)
+            if parent_id != "NA": ## For Tables and Images
+                if parent_id not in parent_info:
+                    parent_info[parent_id] = (rank+1, score)
+            else:
+                if kwargs["hybrid"]:
+                    similar_docs.append((doc, score))
+                else:
+                    similar_docs.append((doc))
+                    
         parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
         parent_ids = list(map(lambda x:x[0], parent_ids))
 
@@ -697,7 +704,7 @@ class retriever_utils():
             ids=parent_ids,
             index_name=kwargs["index_name"],
         )
-        similar_docs = []
+
         if parent_docs["docs"]:
             for res in parent_docs["docs"]:
                 doc_id = res["_id"]
@@ -709,14 +716,20 @@ class retriever_utils():
                     similar_docs.append((doc, parent_info[doc_id][1]))
                 else:
                     similar_docs.append((doc))
-
+        
+        if kwargs["hybrid"]:
+            similar_docs = sorted(
+                similar_docs,
+                key=lambda x: x[1],
+                reverse=True
+            )
+        
         if kwargs["verbose"]:
             print("===== ParentDocument =====")
             print (f'filter: {kwargs["boolean_filter"]}')
             print (f'# child_docs: {len(child_search_results)}')
             print (f'# parent docs: {len(similar_docs)}')
             print (f'# duplicates: {len(child_search_results)-len(similar_docs)}')
-
 
         return similar_docs
 
@@ -813,6 +826,7 @@ class retriever_utils():
         rag_fusion = kwargs.get("rag_fusion", False)
         hyde = kwargs.get("hyde", False)
         parent_document = kwargs.get("parent_document", False)
+        hybrid_search_debugger = kwargs.get("hybrid_search_debugger", "None")
 
         assert (rag_fusion + hyde) <= 1, "choose only one between RAG-FUSION and HyDE"
         if rag_fusion:
@@ -828,8 +842,17 @@ class retriever_utils():
 
         #search_filter.append({"term": {"metadata.family_tree": "child"}})
         if parent_document:
-            search_filter.append({"term": {"metadata.family_tree": "child"}})
-
+            parent_doc_filter = {
+                "bool":{
+                    "should":[ ## or condition
+                        {"term": {"metadata.family_tree": "child"}},
+                        {"term": {"metadata.family_tree": "parent_table"}},
+                        {"term": {"metadata.family_tree": "parent_image"}},   
+                    ]
+                }
+            }
+            search_filter.append(parent_doc_filter)
+            
         def do_sync():
 
             if rag_fusion:
@@ -958,7 +981,11 @@ class retriever_utils():
             semantic_pool = cls.pool.apply_async(semantic_search,)
             lexical_pool = cls.pool.apply_async(lexical_search,)
             similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
-
+            
+            
+            if hybrid_search_debugger == "semantic": similar_docs_keyword = []
+            elif hybrid_search_debugger == "lexical": similar_docs_semantic = []
+            
             return similar_docs_semantic, similar_docs_keyword
 
         if async_mode:
@@ -1068,7 +1095,18 @@ class retriever_utils():
         #else: return similar_docs
     
         if complex_doc: return similar_docs, tables, images
-        else: return similar_docs
+        else:
+            similar_docs_filtered = []
+            for doc in similar_docs:
+                category = "None"
+                if "category" in doc.metadata:
+                    category = doc.metadata["category"]
+
+                if category not in {"Table", "Image"}:
+                    similar_docs_filtered.append(doc)
+            return similar_docs_filtered
+        
+        
 
     @classmethod
     # Score fusion and re-rank (lexical + semantic)
@@ -1209,6 +1247,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     hyde_query: Any
     parent_document = False
     complex_doc = False
+    hybrid_search_debugger = "None"
 
     def update_search_params(self, **kwargs):
 
@@ -1228,6 +1267,7 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
         self.hyde_query = kwargs.get("hyde_query", ["web_search"])
         self.parent_document = kwargs.get("parent_document", self.parent_document)
         self.complex_doc = kwargs.get("complex_doc", self.complex_doc)
+        self.hybrid_search_debugger = kwargs.get("hybrid_search_debugger", self.hybrid_search_debugger)
 
     def _reset_search_params(self, ):
 
@@ -1258,7 +1298,8 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
             complex_doc = self.complex_doc,
             llm_text=self.llm_text,
             llm_emb=self.llm_emb,
-            verbose=self.verbose
+            verbose=self.verbose,
+            hybrid_search_debugger=self.hybrid_search_debugger
         )
         #self._reset_search_params()
 
