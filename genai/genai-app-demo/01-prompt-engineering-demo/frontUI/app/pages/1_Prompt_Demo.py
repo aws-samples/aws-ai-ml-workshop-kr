@@ -18,7 +18,7 @@ def generate_response(q_text):
 st.set_page_config(
     page_title='Gen AI - Text',
     page_icon = 'images/aws_favi.png',
-    layout = 'wide'    
+    # layout = 'wide'    
 )
 
 st.title('무엇이든 물어보세요.')
