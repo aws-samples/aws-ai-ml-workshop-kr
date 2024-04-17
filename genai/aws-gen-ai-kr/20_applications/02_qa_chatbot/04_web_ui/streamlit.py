@@ -75,6 +75,10 @@ st.markdown('''
 # Store the initial value of widgets in session state
 if "showing_option" not in st.session_state:
     st.session_state.showing_option = "Separately"
+if "search_mode" not in st.session_state:
+    st.session_state.search_mode = "Hybrid"
+if "hyde_or_ragfusion" not in st.session_state:
+    st.session_state.hyde_or_ragfusion = "None"
 
 with st.sidebar: # Sidebar 모델 옵션
     st.title("Set showing method 👇")
@@ -86,18 +90,41 @@ with st.sidebar: # Sidebar 모델 옵션
             key="showing_option",
         )
 
-    st.title("Set parameter for your Bot 👇")
+    st.title("Set parameters for your Bot 👇")
 
-    # semantic = st.toggle("Semantic", disabled=st.session_state.showing_option=="All at once")
-    # lexical = st.toggle("Lexical", disabled=st.session_state.showing_option=="All at once")
-    
-    # hybrid = st.slider('Alpha value of Hybrid Search: lexical(0.0) / semantic(1.0)', 0.0, 1.0, 0.5)
-    alpha = st.slider('Select Hybrid search alpha value', 0.0, 0.51, 1.0)
-    st.write('Alpha:', alpha)
-    reranker = st.toggle("Reranker", disabled=st.session_state.showing_option=="All at once")
-    parent = st.toggle("Parent_docs", disabled=st.session_state.showing_option=="All at once")
-    hyde = st.toggle("HyDE", disabled=st.session_state.showing_option=="All at once")
-    ragfusion = st.toggle("RAG Fusion", disabled=st.session_state.showing_option=="All at once")
+    if st.session_state.showing_option=="All at once":
+        disabled = True
+    else: 
+        disabled = False
+
+    with st.container(height=320):
+        search_mode = st.radio(
+            "Choose a search mode",
+            ["Lexical", "Semantic", "Hybrid"],
+            captions = ["Laugh out loud.", "Get the popcorn.", "Never stop learning."],
+            key="search_mode",
+            disabled=disabled
+            )
+        alpha = st.slider('Select alpha value for Hybrid search', 0.0, 0.51, 1.0, disabled=st.session_state.search_mode != "Hybrid")
+
+        if search_mode == "Lexical":
+            alpha = 0.0
+        elif search_mode == "Semantic":
+            alpha = 1.0
+
+    reranker = st.toggle("Reranker", disabled=disabled)
+    parent = st.toggle("Parent_docs", disabled=disabled)
+
+    with st.container(height=230):
+        hyde_or_ragfusion = st.radio(
+            "Choose a RAG option",
+            ["None", "HyDE", "RAG-Fusion"],
+            captions = ["Laugh out loud.", "Get the popcorn.", "Never stop learning."],
+            key="hyde_or_ragfusion",
+            disabled=disabled
+            ) 
+        hyde = hyde_or_ragfusion == "HyDE"
+        ragfusion = hyde_or_ragfusion == "RAG-Fusion"
 
 ###### 1) 'Separately' 옵션 선택한 경우 ######
 if st.session_state.showing_option == "Separately":
