@@ -103,7 +103,12 @@ class prompt_repo():
                 Here is the contexts as tables (table as text): <tables_summay>{tables_text}</tables_summay>
                 Here is the contexts as tables (table as html): <tables_html>{tables_html}</tables_html>
         '''
-        if tables != None: text_template["text"] = text_template["text"].replace("TABLE_PROMPT", table_prompt)
+        if tables != None:
+            text_template["text"] = text_template["text"].replace("TABLE_PROMPT", table_prompt)
+            for table in tables:
+                if table.metadata["image_base64"]:
+                    image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", table.metadata["image_base64"])
+                    human_prompt.append(image_template)
         else: text_template["text"] = text_template["text"].replace("TABLE_PROMPT", "")
 
         if images != None:
@@ -295,6 +300,7 @@ class qa_chain():
         tables, images = None, None
         if self.retriever.complex_doc:
             retrieval, tables, images = self.retriever.get_relevant_documents(query)
+
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "tables_text": "\n\n".join([doc.page_content for doc in tables]),
@@ -1311,12 +1317,12 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 def show_context_used(context_list, limit=10):
 
     context_list = copy.deepcopy(context_list)
-    
+
     if type(context_list) == tuple: context_list=context_list[0]
     for idx, context in enumerate(context_list):
 
         if idx < limit:
-            
+
             category = "None"
             if "category" in context.metadata:
                 category = context.metadata["category"]
@@ -1328,12 +1334,12 @@ def show_context_used(context_list, limit=10):
                 print(f"{idx+1}. Chunk: {len(context.page_content)} Characters")
             print("-----------------------------------------------")
 
-            if category == "Image":
-
+            if category == "Image" or (category == "Table" and "image_base64" in context.metadata):
                 img = Image.open(BytesIO(base64.b64decode(context.metadata["image_base64"])))
                 plt.imshow(img)
                 plt.show()
                 context.metadata["image_base64"], context.metadata["origin_image"] = "", ""
+
             print_ww(context.page_content)
             print_ww("metadata: \n", context.metadata)
         else:
