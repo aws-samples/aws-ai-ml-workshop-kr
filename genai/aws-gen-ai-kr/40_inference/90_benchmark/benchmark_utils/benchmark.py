@@ -47,6 +47,92 @@ def invoke_endpoint_sagemaker(endpoint_name, pay_load):
 
     return result
 
+import numpy as np
+import concurrent.futures
+import time
+
+class Benchmark:
+    """benchmark LLM"""
+
+    def __init__(self, endpoint_name):
+        self.endpoint_name = endpoint_name
+        self.latency_list = list()
+        self.completion_token_list = list()
+
+    def run_benchmark(self, num_inferences, num_threads, pay_load, tokenizer, verbose=False):
+        '''
+        main function to run benchmark
+        '''
+        start = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
+            futures = []
+            for i in range(num_inferences):
+                futures.append(executor.submit(self._inference_with_latency_calculation, pay_load))
+            for future in concurrent.futures.as_completed(futures):
+                get_result = future.result()
+                metrics = self._set_metrics(pay_load=pay_load,
+                                    response=get_result, 
+                                    tokenizer = tokenizer)
+                if verbose:                                    
+                    print("metrics: ", metrics)
+                    print("completion_token_count: ", metrics["completion_token_count"])
+
+                self.completion_token_list.append(metrics["completion_token_count"])
+                
+        end = time.time()
+        total_time = end - start
+        total_completion_token_count = sum(self.completion_token_list)
+        print(f"## total execution time: {round(total_time,3)} second")
+        print("total_completion_token_count: ", total_completion_token_count)
+
+
+        throughput = (round(total_completion_token_count / total_time, 3))
+        print(f"Throughput was {throughput} tokens per second.")
+        print(f"Latency p50 was {round(np.percentile(self.latency_list, 50),3)} sec")
+        print(f"Latency p95 was {round(np.percentile(self.latency_list, 95),3)} sec")
+        print(f"Latency p99 was {round(np.percentile(self.latency_list, 99),3)} sec")
+
+    def _inference_with_latency_calculation(self, pay_load):
+        '''
+        call invoke inference function
+        '''
+        start = time.time()
+        result = invoke_endpoint_sagemaker(endpoint_name = self.endpoint_name, 
+                            pay_load = pay_load)    
+        
+        end = time.time()
+        self.latency_list.append((end-start) )
+
+        return result
+
+    def _set_metrics(self, pay_load,response, tokenizer):
+        '''
+        set metrics of prompt_token_count, completion_token_count
+        '''
+        prompt = pay_load["inputs"]
+        prompt_token_count, prompt_tokens_text = self._count_tokens(text=prompt, tokenizer = tokenizer)
+
+        completion = json.loads(response)["generated_text"]
+        completion_token_count, completion_tokens_text = self._count_tokens(text=completion, tokenizer = tokenizer)
+
+        return dict(prompt_token_count = prompt_token_count,
+                    completion_token_count = completion_token_count,
+                    )    
+
+    def _count_tokens(self, text, tokenizer):
+        '''
+        count tokens
+        '''
+        # 텍스트를 토크나이즈하고 토큰 수를 반환
+        tokens = tokenizer.encode(text)
+        tokens_text = tokenizer.convert_ids_to_tokens(tokens)
+        # print(tokens_text)
+        return len(tokens), tokens_text
+
+
+
+
+
 # class CustomTokenizer:    
 #     """A custom tokenizer class"""
 #     TOKENS: int = 1000
