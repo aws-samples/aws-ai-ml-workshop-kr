@@ -227,9 +227,9 @@ class prompt_repo():
 
     @staticmethod
     def get_rag_fusion():
-        
+
         system_prompt = """
-                        You are a helpful assistant that generates multiple search queries based on a single input query.
+                        You are a helpful assistant that generates multiple search queries that is semantically simiar to a single input query.
                         Skip the preamble and generate in Korean.
                         """
         human_prompt = """
