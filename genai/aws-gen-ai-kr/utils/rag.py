@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 
 from utils import print_ww
 from utils.opensearch import opensearch_utils
+from utils.common_utils import print_html
 
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
@@ -106,7 +107,8 @@ class prompt_repo():
         if tables != None:
             text_template["text"] = text_template["text"].replace("TABLE_PROMPT", table_prompt)
             for table in tables:
-                if table.metadata["image_base64"]:
+                #if table.metadata["image_base64"]:
+                if "image_base64" in table.metadata:
                     image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", table.metadata["image_base64"])
                     human_prompt.append(image_template)
         else: text_template["text"] = text_template["text"].replace("TABLE_PROMPT", "")
@@ -1340,7 +1342,9 @@ def show_context_used(context_list, limit=10):
                 plt.show()
                 context.metadata["image_base64"], context.metadata["origin_image"] = "", ""
 
+            context.metadata["orig_elements"] = ""
             print_ww(context.page_content)
+            if "text_as_html" in context.metadata: print_html(context.metadata["text_as_html"])
             print_ww("metadata: \n", context.metadata)
         else:
             break

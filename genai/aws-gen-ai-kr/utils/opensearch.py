@@ -251,5 +251,7 @@ class opensearch_utils():
             lines = doc.page_content.split("\n")
             metadata = doc.metadata
             if "image_base64" in metadata: metadata["image_base64"] = ""
+            if "orig_elements" in metadata: metadata["orig_elements"] = ""
+            
             print(lines)
             print(metadata)
