@@ -1,8 +1,8 @@
 import os, sys, boto3
 module_path = "../../.."
 sys.path.append(os.path.abspath(module_path))
-from utils.rag import prompt_repo, OpenSearchHybridSearchRetriever, prompt_repo, qa_chain
-from utils.opensearch import opensearch_utils
+from utils.rag_summit import prompt_repo, OpenSearchHybridSearchRetriever, prompt_repo, qa_chain
+from utils.opensearch_summit import opensearch_utils
 from utils.ssm import parameter_store
 from langchain.embeddings import BedrockEmbeddings
 from langchain_community.chat_models import BedrockChat
@@ -131,10 +131,10 @@ def invoke(query, streaming_callback, parent, reranker, hyde, ragfusion, alpha):
     extract_elements_and_print(pretty_contexts[1])
     print("######### WITHOUT_RERANKER #########")
     extract_elements_and_print(pretty_contexts[2])
-    print("######## WITH_RERANKER ##########")
+    print("######## SIMILAR_DOCS ##########")
     extract_elements_and_print(pretty_contexts[3])
     if hyde or ragfusion:
         print("######## 중간답변 ##########")
         print(augmentation)
     
-    return response, similar_docs
+    return response, pretty_contexts

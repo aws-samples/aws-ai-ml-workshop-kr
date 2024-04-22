@@ -22,7 +22,7 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 
 from utils import print_ww
-from utils.opensearch import opensearch_utils
+from utils.opensearch_summit import opensearch_utils
 
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
@@ -115,111 +115,6 @@ class prompt_repo():
 
         return human_prompt
 
-#     @classmethod
-#     def get_qa(cls, prompt_type="answer_only"):
-        
-#         assert prompt_type in cls.prompt_types, "Check your prompt_type"
-        
-#         if prompt_type == "answer_only":
-            
-#             prompt = """
-#             \n\nHuman:
-#             You are a master answer bot designed to answer software developer's questions.
-#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-#             Here is the context: <context>{context}</context>
-            
-#             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
-#             Then, answer the question as much as you can.
-
-#             Skip the preamble and go straight into the answer.
-#             Don't insert any XML tag such as <context> and </context> when answering.
-            
-#             Here is the question: <question>{question}</question>
-
-#             If the question cannot be answered by the context, say "No relevant context".
-#             \n\nAssistant: Here is the answer. """
-
-#         elif prompt_type == "answer_with_ref":
-            
-#             prompt = """
-#             \n\nHuman:
-#             You are a master answer bot designed to answer software developer's questions.
-#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-#             Here is the context: <context>{context}</context>
-
-#             First, find the paragraphs or sentences from the context that are most relevant to answering the question, and then print them in numbered order.
-#             The format of paragraphs or sentences to the question should look like what's shown between the <references></references> tags.
-#             Make sure to follow the formatting and spacing exactly.
-
-#             <references>
-#             [Examples of question + answer pairs using parts of the given context, with answers written exactly like how Claude’s output should be structured]
-#             </references>
-
-#             If there are no relevant paragraphs or sentences, write "No relevant context" instead.
-
-#             Then, answer the question within <answer></answer> XML tags.
-#             Answer as much as you can.
-#             Skip the preamble and go straight into the answer.
-#             Don't say "According to context" when answering.
-#             Don't insert XML tag such as <context> and </context> when answering.
-#             If needed, answer using bulleted format.
-#             If relevant paragraphs or sentences have code block, please show us that as code block.
-
-#             Here is the question: <question>{question}</question>
-
-#             If the question cannot be answered by the context, say "No relevant context".
-
-#             \n\nAssistant: Here is the most relevant sentence in the context:"""
-
-#         elif prompt_type == "original":
-#             prompt = """
-#             \n\nHuman: Here is the context, inside <context></context> XML tags.
-
-#             <context>
-#             {context}
-#             </context>
-
-#             Only using the context as above, answer the following question with the rules as below:
-#                 - Don't insert XML tag such as <context> and </context> when answering.
-#                 - Write as much as you can
-#                 - Be courteous and polite
-#                 - Only answer the question if you can find the answer in the context with certainty.
-
-#             Question:
-#             {question}
-
-#             If the answer is not in the context, just say "I don't know"
-#             \n\nAssistant:"""
-        
-#         if prompt_type == "ko_answer_only":
-            
-#             prompt = """
-#             \n\nHuman:
-#             You are a master answer bot designed to answer software developer's questions.
-#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-#             Here is the context: <context>{context}</context>
-            
-#             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
-#             Then, answer the question as much as you can.
-
-#             Skip the preamble and go straight into the answer.
-#             Don't insert any XML tag such as <context> and </context> when answering.
-            
-#             Here is the question: <question>{question}</question>
-
-#             Answer in Korean.
-#             If the question cannot be answered by the context, say "No relevant context".
-#             \n\nAssistant: Here is the answer. """
-
-#         prompt_template = PromptTemplate(
-#             template=prompt, input_variables=["context", "question"]
-#         )
-        
-#         return prompt_template
-
     @staticmethod
     def get_rag_fusion():
         
@@ -273,12 +168,13 @@ class prompt_repo():
         )
         
         return prompt
-
+pretty_contexts = None
+augmentation = None
 ############################################################
 # RetrievalQA (Langchain)
-############################################################
-
+###########################################################
 class qa_chain():
+
     
     def __init__(self, **kwargs):
 
@@ -290,6 +186,8 @@ class qa_chain():
         self.verbose = kwargs.get("verbose", False)
         
     def invoke(self, **kwargs):
+        global pretty_contexts
+        global augmentation
         
         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
@@ -324,8 +222,9 @@ class qa_chain():
             invoke_args,
             config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
         )
+        pretty_contexts = tuple(pretty_contexts)
 
-        return response, retrieval if self.return_context else response
+        return response, pretty_contexts, retrieval, augmentation
 
 def run_RetrievalQA(**kwargs):
 
@@ -391,7 +290,15 @@ def run_RetrievalQA_kendra(query, llm_text, PROMPT, kendra_index_id, k, aws_regi
 #################################################################
 # Document Retriever with custom function: return List(documents)
 #################################################################
+def list_up(similar_docs_semantic, similar_docs_keyword, similar_docs_wo_reranker, similar_docs):
+    combined_list = []
+    combined_list.append(similar_docs_semantic)
+    combined_list.append(similar_docs_keyword)
+    combined_list.append(similar_docs_wo_reranker)
+    combined_list.append(similar_docs)
 
+    return combined_list
+    
 class retriever_utils():
     
     runtime_client = boto3.Session().client('sagemaker-runtime')
@@ -554,6 +461,7 @@ class retriever_utils():
     @classmethod
     # rag-fusion based
     def get_rag_fusion_similar_docs(cls, **kwargs):
+        global augmentation
 
         search_types = ["approximate_search", "script_scoring", "painless_scripting"]
         space_types = ["l2", "l1", "linf", "cosinesimil", "innerproduct", "hammingbit"]
@@ -581,6 +489,7 @@ class retriever_utils():
         rag_fusion_query = [query for query in rag_fusion_query if query != ""]
         if len(rag_fusion_query) > query_augmentation_size: rag_fusion_query = rag_fusion_query[-query_augmentation_size:]
         rag_fusion_query.insert(0, kwargs["query"])
+        augmentation = rag_fusion_query
 
         if kwargs["verbose"]:
             print("\n")
@@ -615,6 +524,7 @@ class retriever_utils():
     @classmethod
     # HyDE based
     def get_hyde_similar_docs(cls, **kwargs):
+        global augmentation
 
         def _get_hyde_response(query, prompt, llm_text):
 
@@ -647,6 +557,8 @@ class retriever_utils():
             tasks.append(cls.hyde_pool.apply_async(hyde_response,))
         hyde_answers = [task.get() for task in tasks]
         hyde_answers.insert(0, query)
+        augmentation = hyde_answers
+        
 
         tasks = []
         for hyde_answer in hyde_answers:
@@ -812,6 +724,7 @@ class retriever_utils():
                     images.append(doc)
 
         return tables, images
+
 
 
     @classmethod
@@ -1038,61 +951,17 @@ class retriever_utils():
 
         if verbose:
 
-            print("##############################")
-            print("async_mode")
-            print("##############################")
-            print(async_mode)
-
-            print("##############################")
-            print("reranker")
-            print("##############################")
-            print(reranker)
-
-            print("##############################")
-            print("rag_fusion")
-            print("##############################")
-            print(rag_fusion)
-
-            print("##############################")
-            print("HyDE")
-            print("##############################")
-            print(hyde)
-
-            print("##############################")
-            print("parent_document")
-            print("##############################")
-            print(parent_document)
-            
-            print("##############################")
-            print("complex_document")
-            print("##############################")
-            print(complex_doc)
-
-            print("##############################")
-            print("similar_docs_semantic")
-            print("##############################")
-            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_semantic))
-
-            print("##############################")
-            print("similar_docs_keyword")
-            print("##############################")
-            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_keyword))
-            
+            similar_docs_semantic_pretty = opensearch_utils.opensearch_pretty_print_documents_with_score("semantic", similar_docs_semantic)
+            similar_docs_keyword_pretty = opensearch_utils.opensearch_pretty_print_documents_with_score("keyword", similar_docs_keyword)
+            similar_docs_wo_reranker_pretty = []
             if reranker:
-                print("##############################")
-                print("similar_docs_without_reranker")
-                print("##############################")
-                print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs_wo_reranker))
-
-            print("##############################")
-            print("similar_docs")
-            print("##############################")
-            print (opensearch_utils.opensearch_pretty_print_documents_with_score(similar_docs))
+                similar_docs_wo_reranker_pretty = opensearch_utils.opensearch_pretty_print_documents_with_score("wo_reranker", similar_docs_wo_reranker)
+                
+            similar_docs_pretty = opensearch_utils.opensearch_pretty_print_documents_with_score("similar_docs", similar_docs)
 
         similar_docs = list(map(lambda x:x[0], similar_docs))
-        
-        #if complex_doc: return similar_docs, tables, images
-        #else: return similar_docs
+        global pretty_contexts
+        pretty_contexts = list_up(similar_docs_semantic_pretty, similar_docs_keyword_pretty, similar_docs_wo_reranker_pretty, similar_docs_pretty)
     
         if complex_doc: return similar_docs, tables, images
         else:
