@@ -181,7 +181,7 @@ if st.session_state.showing_option == "Separately":
             hyde = hyde,
             ragfusion = ragfusion,
             alpha = alpha
-            )
+        )
         # response 로 메세지, 링크, 레퍼런스(source_documents) 받아오게 설정된 것을 변수로 저장
         answer = response[0]
         contexts = response[1] 
@@ -190,8 +190,9 @@ if st.session_state.showing_option == "Separately":
         st.chat_message("assistant").write(answer)
         
         with st.chat_message("assistant"): 
-            with st.expander("Context 확인하기 ⬇️ "): # TODO: "정확도 별 답변 보기 ⬇️" 로 수정 필요 
-                show_context_with_expander(contexts)
+            with st.expander("Context 확인하기 ⬇️ "): # TODO: "정확도 별 답변 보기 ⬇️" 탭 형태로 수정 필요 
+                # show_context_with_expander(contexts)
+                st.write(contexts)
 
         # Session 메세지 저장
         st.session_state.messages.append({"role": "assistant", "content": answer})
