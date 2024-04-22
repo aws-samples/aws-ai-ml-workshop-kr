@@ -4,11 +4,27 @@ import bedrock as glib  # 로컬 라이브러리 스크립트에 대한 참조
 from langchain.callbacks import StreamlitCallbackHandler
 
 ##################### Functions ########################
-def parse_image(image_base64):
-    st.image(base64.b64decode(image_base64))
+def parse_image(metadata, tag):
+    if tag in metadata: 
+        st.image(base64.b64decode(metadata[tag]))
 
-def parse_table(text_as_html):
-    st.markdown(text_as_html, unsafe_allow_html=True)
+def parse_table(metadata, tag):
+    if tag in metadata:
+        st.markdown(metadata[tag], unsafe_allow_html=True)
+
+def parse_metadata(metadata):
+    # Image, Table 이 있을 경우 파싱해 출력
+    category = "None"
+    if "category" in metadata:
+        category = metadata["category"]
+        if category == "Table":
+            parse_table(metadata, "text_as_html")
+            parse_image(metadata, "image_base64")
+        elif category == "Image":
+            parse_image(metadata, "image_base64")
+        else: 
+            pass
+    st.markdown(' - - - ')
 
 # 'Separately' 옵션 선택 시 나오는 중간 Context를 탭 형태로 보여주는 UI
 def show_context_with_tab(contexts):
@@ -25,38 +41,14 @@ def show_context_with_tab(contexts):
     for i, tab in enumerate(tabs):
         category = tab_category[i]
         with tab:
-            st.header(category)
             for contexts_by_doctype in tab_contents[category]:
                 for context in contexts_by_doctype:
                     st.markdown('##### `정확도`: {}'.format(context["score"]))
                     for line in context["lines"]:
                         st.write(line)
-                    ### TODO: context["meta"] 에서 이미지/테이블 뽑기 (orig_elements 혹은 image_base64)
+                    parse_metadata(context["meta"])
                     ### TODO: parent_docs 선택 시 발생하는 오류 fix
                     
-# 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI -- 현재 미사용
-def show_context_with_expander(contexts):
-    context_no = 0
-    for context in contexts:
-        context_no += 1
-        st.markdown("### {}".format(context_no))
-        # Contexts 내용 출력
-        page_content = context.page_content
-        st.markdown(page_content)
-                    
-        # Image, Table 이 있을 경우 파싱해 출력
-        metadata = context.metadata
-        category = "None"
-        if "category" in context.metadata:
-            category = metadata["category"]
-            if category == "Table":
-                parse_table(metadata["text_as_html"])
-            elif category == "Image":
-                parse_image(metadata["image_base64"])
-            else: 
-                pass
-        st.markdown(''' - - - ''')
-
 # 'All at once' 옵션 선택 시 4개의 컬럼으로 나누어 결과 표시하는 UI
 # TODO: HyDE, RagFusion 추가 논의 필요
 def show_answer_with_multi_columns(answers): 
