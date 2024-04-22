@@ -2,24 +2,39 @@ import base64
 import streamlit as st  # 모든 streamlit 명령은 "st" alias로 사용할 수 있습니다.
 import bedrock as glib  # 로컬 라이브러리 스크립트에 대한 참조
 from langchain.callbacks import StreamlitCallbackHandler
-import re
 
 ##################### Functions ########################
-# 'Separately' 옵션 선택 시 나오는 중간 Context를 탭 형태로 보여주는 UI -- 현재 사용하고 있지 않음
-def show_context_with_tab(contexts):
-    tab_titles = []
-    tab_contents = {}
-    for i, context in enumerate(contexts):
-        title = str(context[0])
-        tab_titles.append(title)
-        tab_contents[title] = context[1][0]
-    tabs = st.tabs(tab_titles)
-    for i, tab in enumerate(tabs):
-        with tab:
-            st.header(tab_titles[i])
-            st.write(tab_contents[tab_titles[i]])
+def parse_image(image_base64):
+    st.image(base64.b64decode(image_base64))
 
-# 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI
+def parse_table(text_as_html):
+    st.markdown(text_as_html, unsafe_allow_html=True)
+
+# 'Separately' 옵션 선택 시 나오는 중간 Context를 탭 형태로 보여주는 UI
+def show_context_with_tab(contexts):
+    tab_category = ["Semantic", "Keyword", "Without Reranker", "Similar Docs"]
+    tab_contents = {
+        tab_category[0]: [],
+        tab_category[1]: [],
+        tab_category[2]: [],
+        tab_category[3]: []
+    }
+    for i, contexts_by_doctype in enumerate(contexts):
+        tab_contents[tab_category[i]].append(contexts_by_doctype)
+    tabs = st.tabs(tab_category)
+    for i, tab in enumerate(tabs):
+        category = tab_category[i]
+        with tab:
+            st.header(category)
+            for contexts_by_doctype in tab_contents[category]:
+                for context in contexts_by_doctype:
+                    st.markdown('##### `정확도`: {}'.format(context["score"]))
+                    for line in context["lines"]:
+                        st.write(line)
+                    ### TODO: context["meta"] 에서 이미지/테이블 뽑기 (orig_elements 혹은 image_base64)
+                    ### TODO: parent_docs 선택 시 발생하는 오류 fix
+                    
+# 'Separately' 옵션 선택 시 나오는 중간 Context를 expander 형태로 보여주는 UI -- 현재 미사용
 def show_context_with_expander(contexts):
     context_no = 0
     for context in contexts:
@@ -35,11 +50,9 @@ def show_context_with_expander(contexts):
         if "category" in context.metadata:
             category = metadata["category"]
             if category == "Table":
-                text_as_html = metadata["text_as_html"]
-                st.markdown(text_as_html, unsafe_allow_html=True)
+                parse_table(metadata["text_as_html"])
             elif category == "Image":
-                image_base64 = metadata["image_base64"]
-                st.image(base64.b64decode(image_base64))
+                parse_image(metadata["image_base64"])
             else: 
                 pass
         st.markdown(''' - - - ''')
@@ -150,8 +163,7 @@ if st.session_state.showing_option == "Separately":
         if msg["role"] == "assistant_context": 
             with st.chat_message("assistant"):
                 with st.expander("Context 확인하기 ⬇️"):
-                    # show_context_with_tab(contexts=msg["content"]) ## TODO: 임시적으로 주석 처리 - score 나오면 주석 해제
-                    show_context_with_expander(contexts=msg["content"])
+                    show_context_with_tab(contexts=msg["content"])
         elif msg["role"] == "assistant_column":
             # 'Separately' 옵션일 경우 multi column 으로 보여주지 않고 첫 번째 답변만 출력
             st.chat_message(msg["role"]).write(msg["content"][0]) 
@@ -190,9 +202,8 @@ if st.session_state.showing_option == "Separately":
         st.chat_message("assistant").write(answer)
         
         with st.chat_message("assistant"): 
-            with st.expander("Context 확인하기 ⬇️ "): # TODO: "정확도 별 답변 보기 ⬇️" 탭 형태로 수정 필요 
-                # show_context_with_expander(contexts)
-                st.write(contexts)
+            with st.expander("정확도 별 답변 보기 ⬇️"):
+                show_context_with_tab(contexts)
 
         # Session 메세지 저장
         st.session_state.messages.append({"role": "assistant", "content": answer})
