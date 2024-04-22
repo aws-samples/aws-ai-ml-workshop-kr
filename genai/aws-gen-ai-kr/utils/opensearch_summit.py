@@ -209,9 +209,6 @@ class opensearch_utils():
             result['doctype'] = doctype
             result['score'] = score
             result['lines'] = doc.page_content.split("\n")
-            metadata = doc.metadata
-            if "image_base64" in metadata:
-                metadata["image_base64"] = ""
-            result['meta'] = metadata
+            result['meta'] = doc.metadata
             results.append(result)
         return results
