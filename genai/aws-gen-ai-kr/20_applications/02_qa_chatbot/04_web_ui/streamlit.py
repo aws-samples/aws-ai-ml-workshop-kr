@@ -18,7 +18,7 @@ def parse_metadata(metadata):
     if "category" in metadata:
         category = metadata["category"]
         if category == "Table":
-            parse_table(metadata, "text_as_html")
+            # parse_table(metadata, "text_as_html") # 테이블 html은 이미지로 대체
             parse_image(metadata, "image_base64")
         elif category == "Image":
             parse_image(metadata, "image_base64")
