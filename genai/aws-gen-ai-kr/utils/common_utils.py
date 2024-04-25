@@ -3,6 +3,7 @@ import pickle
 import random
 import logging
 import functools
+from IPython.display import Markdown, HTML, display
 
 logging.basicConfig()
 logger = logging.getLogger('retry-bedrock-invocation')
@@ -47,4 +48,19 @@ def load_pickle(path):
     print (f'Load from {path}')
 
     return obj
+
+def to_markdown(obj, path):
+
+    with open(file=path, mode="w") as f:
+        f.write(obj)
+
+    print (f'To_Markdown: {path}')
+    
+def print_html(input_html):
+
+    html_string=""
+    html_string = html_string + input_html
+
+    display(HTML(html_string))
+
 
