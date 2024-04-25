@@ -45,6 +45,6 @@ if uploaded_file is not None:
             for name, desc in similar.items():
                 temp.append(f'{name}: {desc}')
 
-        st.info(f'상품\n\n {result['goods']}\n\n브랜드: {result['brand']}\n\n추천\n\n {'\n'.join(temp)}')
+        st.info(f"상품\n\n {result['goods']}\n\n브랜드: {result['brand']}\n\n추천\n\n {'\n'.join(temp)}")
     elif 'etc' in result and result['etc']:
-        st.info(f'기타: {result['etc']}')
+        st.info(f"기타: {result['etc']}")
