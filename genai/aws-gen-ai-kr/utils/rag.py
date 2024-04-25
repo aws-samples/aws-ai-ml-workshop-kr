@@ -691,7 +691,7 @@ class retriever_utils():
     def get_parent_document_similar_docs(cls, **kwargs):
 
         child_search_results = kwargs["similar_docs"]
-
+        
         parent_info, similar_docs = {}, []
         for rank, (doc, score) in enumerate(child_search_results):
             parent_id = doc.metadata["parent_id"]
@@ -703,28 +703,29 @@ class retriever_utils():
                     similar_docs.append((doc, score))
                 else:
                     similar_docs.append((doc))
-                    
+        
         parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
         parent_ids = list(map(lambda x:x[0], parent_ids))
-
-        parent_docs = opensearch_utils.get_documents_by_ids(
-            os_client=kwargs["os_client"],
-            ids=parent_ids,
-            index_name=kwargs["index_name"],
-        )
-
-        if parent_docs["docs"]:
-            for res in parent_docs["docs"]:
-                doc_id = res["_id"]
-                doc = Document(
-                    page_content=res["_source"]["text"],
-                    metadata=res["_source"]["metadata"]
-                )
-                if kwargs["hybrid"]:
-                    similar_docs.append((doc, parent_info[doc_id][1]))
-                else:
-                    similar_docs.append((doc))
         
+        if parent_ids:
+            parent_docs = opensearch_utils.get_documents_by_ids(
+                os_client=kwargs["os_client"],
+                ids=parent_ids,
+                index_name=kwargs["index_name"],
+            )
+
+            if parent_docs["docs"]:
+                for res in parent_docs["docs"]:
+                    doc_id = res["_id"]
+                    doc = Document(
+                        page_content=res["_source"]["text"],
+                        metadata=res["_source"]["metadata"]
+                    )
+                    if kwargs["hybrid"]:
+                        similar_docs.append((doc, parent_info[doc_id][1]))
+                    else:
+                        similar_docs.append((doc))
+
         if kwargs["hybrid"]:
             similar_docs = sorted(
                 similar_docs,
