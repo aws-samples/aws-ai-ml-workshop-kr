@@ -36,6 +36,7 @@ from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
 
 import threading
@@ -449,6 +450,18 @@ class retriever_utils():
         return results
 
     @classmethod
+    def control_streaming_mode(cls, llm, stream=True):
+
+        if stream:
+            llm.streaming = True
+            llm.callbacks = [StreamingStdOutCallbackHandler()]
+        else:
+            llm.streaming = False
+            llm.callbacks = None
+
+        return llm
+
+    @classmethod
     # semantic search based
     def get_semantic_similar_docs(cls, **kwargs):
 
@@ -576,16 +589,17 @@ class retriever_utils():
         llm_text = kwargs["llm_text"]
         query_augmentation_size = kwargs["query_augmentation_size"]
         query_transformation_prompt = kwargs["query_transformation_prompt"]
-               
+
+        llm_text = cls.control_streaming_mode(llm_text, stream=False) ## trun off llm streaming
         generate_queries = query_transformation_prompt | llm_text | StrOutputParser() | (lambda x: x.split("\n"))
-        
+
         rag_fusion_query = generate_queries.invoke(
             {
                 "query": kwargs["query"],
                 "query_augmentation_size": kwargs["query_augmentation_size"]
             }
         )
-        
+
         rag_fusion_query = [query for query in rag_fusion_query if query != ""]
         if len(rag_fusion_query) > query_augmentation_size: rag_fusion_query = rag_fusion_query[-query_augmentation_size:]
         rag_fusion_query.insert(0, kwargs["query"])
@@ -594,6 +608,8 @@ class retriever_utils():
             print("\n")
             print("===== RAG-Fusion Queries =====")
             print(rag_fusion_query)
+
+        llm_text = cls.control_streaming_mode(llm_text, stream=True)## trun on llm streaming
 
         tasks = []
         for query in rag_fusion_query:
@@ -645,6 +661,7 @@ class retriever_utils():
         hyde_query = kwargs["hyde_query"]
 
         tasks = []
+        llm_text = cls.control_streaming_mode(llm_text, stream=False) ## trun off llm streaming
         for template_type in hyde_query:
             hyde_response = partial(
                 _get_hyde_response,
@@ -657,6 +674,7 @@ class retriever_utils():
         hyde_answers.insert(0, query)
 
         tasks = []
+        llm_text = cls.control_streaming_mode(llm_text, stream=True) ## trun on llm streaming
         for hyde_answer in hyde_answers:
             semantic_search = partial(
                 cls.get_semantic_similar_docs,
