@@ -605,6 +605,8 @@ class retriever_utils():
             print("\n")
             print("===== HyDE Answers =====")
             print(hyde_answers)
+            
+        augmentation = hyde_answers[1]
 
         return similar_docs
 
