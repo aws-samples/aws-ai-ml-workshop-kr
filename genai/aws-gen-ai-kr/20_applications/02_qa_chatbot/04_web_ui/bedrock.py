@@ -117,24 +117,27 @@ def invoke(query, streaming_callback, parent, reranker, hyde, ragfusion, alpha):
     )
     response, pretty_contexts, similar_docs, augmentation = qa.invoke(query = query, complex_doc = True)
     print("-------> response")
-    print(response)
+    # print(response)
     print("-------> pretty_contexts -> 모든 컨텍스트 포함된 자료")
     
     def extract_elements_and_print(pretty_contexts):
         for context in pretty_contexts:
             print("context: \n")
-            print(context)
+    #         print(context)
 
-    print("######### SEMANTIC #########")
-    extract_elements_and_print(pretty_contexts[0])
-    print("######### KEYWORD #########")
-    extract_elements_and_print(pretty_contexts[1])
-    print("######### WITHOUT_RERANKER #########")
-    extract_elements_and_print(pretty_contexts[2])
-    print("######## SIMILAR_DOCS ##########")
-    extract_elements_and_print(pretty_contexts[3])
+    # print("######### SEMANTIC #########")
+    # extract_elements_and_print(pretty_contexts[0])
+    # print("######### KEYWORD #########")
+    # extract_elements_and_print(pretty_contexts[1])
+    # print("######### WITHOUT_RERANKER #########")
+    # extract_elements_and_print(pretty_contexts[2])
+    # print("######## SIMILAR_DOCS ##########")
+    # extract_elements_and_print(pretty_contexts[3])
+    # if hyde or ragfusion:
+    #     print("######## 중간답변 ##########")
+    #     print(augmentation)
     if hyde or ragfusion:
-        print("######## 중간답변 ##########")
-        print(augmentation)
+        return response, pretty_contexts, augmentation
+
     
     return response, pretty_contexts
