@@ -883,6 +883,9 @@ class retriever_utils():
                 }
             }
             search_filter.append(parent_doc_filter)
+        else:
+            search_filter.append({"term": {"metadata.family_tree": "child"}})
+            
             
         def do_sync():
 
