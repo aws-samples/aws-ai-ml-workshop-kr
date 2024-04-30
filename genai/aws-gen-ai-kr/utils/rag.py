@@ -22,8 +22,9 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 
 from utils import print_ww
-from utils.opensearch import opensearch_utils
+from utils.chat import chat_utils
 from utils.common_utils import print_html
+from utils.opensearch import opensearch_utils
 
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
@@ -37,7 +38,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.manager import CallbackManagerForRetrieverRun
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder
 
 import threading
 from functools import partial
@@ -60,6 +61,16 @@ class prompt_repo():
     # Don't say "According to context" when answering.
     # Don't insert XML tag such as <context> and </context> when answering.
 
+    
+    @classmethod
+    def get_contextualize_system_prompt(cls, ):
+        #Rephrase the follow up <question> to be a standalone question. Put it in <result> tags.
+        system_prompt = '''
+                        Referring to the previous conversation, create a new question that clarifies the meaning of the following <question>.
+                        The new question should include important words from the original question.
+                        Put it in <result> tags.
+                        '''
+        return system_prompt
     
     @classmethod
     def get_system_prompt(cls, ):
