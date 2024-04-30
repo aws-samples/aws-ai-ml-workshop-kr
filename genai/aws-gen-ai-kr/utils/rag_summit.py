@@ -23,6 +23,7 @@ import matplotlib.pyplot as plt
 
 from utils import print_ww
 from utils.opensearch_summit import opensearch_utils
+from utils.common_utils import print_html
 
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
@@ -104,7 +105,13 @@ class prompt_repo():
                 Here is the contexts as tables (table as text): <tables_summay>{tables_text}</tables_summay>
                 Here is the contexts as tables (table as html): <tables_html>{tables_html}</tables_html>
         '''
-        if tables != None: text_template["text"] = text_template["text"].replace("TABLE_PROMPT", table_prompt)
+        if tables != None:
+            text_template["text"] = text_template["text"].replace("TABLE_PROMPT", table_prompt)
+            for table in tables:
+                #if table.metadata["image_base64"]:
+                if "image_base64" in table.metadata:
+                    image_template["image_url"]["url"] = image_template["image_url"]["url"].replace("IMAGE_BASE64", table.metadata["image_base64"])
+                    human_prompt.append(image_template)
         else: text_template["text"] = text_template["text"].replace("TABLE_PROMPT", "")
 
         if images != None:
@@ -116,11 +123,116 @@ class prompt_repo():
 
         return human_prompt
 
+#     @classmethod
+#     def get_qa(cls, prompt_type="answer_only"):
+        
+#         assert prompt_type in cls.prompt_types, "Check your prompt_type"
+        
+#         if prompt_type == "answer_only":
+            
+#             prompt = """
+#             \n\nHuman:
+#             You are a master answer bot designed to answer software developer's questions.
+#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
+
+#             Here is the context: <context>{context}</context>
+            
+#             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
+#             Then, answer the question as much as you can.
+
+#             Skip the preamble and go straight into the answer.
+#             Don't insert any XML tag such as <context> and </context> when answering.
+            
+#             Here is the question: <question>{question}</question>
+
+#             If the question cannot be answered by the context, say "No relevant context".
+#             \n\nAssistant: Here is the answer. """
+
+#         elif prompt_type == "answer_with_ref":
+            
+#             prompt = """
+#             \n\nHuman:
+#             You are a master answer bot designed to answer software developer's questions.
+#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
+
+#             Here is the context: <context>{context}</context>
+
+#             First, find the paragraphs or sentences from the context that are most relevant to answering the question, and then print them in numbered order.
+#             The format of paragraphs or sentences to the question should look like what's shown between the <references></references> tags.
+#             Make sure to follow the formatting and spacing exactly.
+
+#             <references>
+#             [Examples of question + answer pairs using parts of the given context, with answers written exactly like how Claude’s output should be structured]
+#             </references>
+
+#             If there are no relevant paragraphs or sentences, write "No relevant context" instead.
+
+#             Then, answer the question within <answer></answer> XML tags.
+#             Answer as much as you can.
+#             Skip the preamble and go straight into the answer.
+#             Don't say "According to context" when answering.
+#             Don't insert XML tag such as <context> and </context> when answering.
+#             If needed, answer using bulleted format.
+#             If relevant paragraphs or sentences have code block, please show us that as code block.
+
+#             Here is the question: <question>{question}</question>
+
+#             If the question cannot be answered by the context, say "No relevant context".
+
+#             \n\nAssistant: Here is the most relevant sentence in the context:"""
+
+#         elif prompt_type == "original":
+#             prompt = """
+#             \n\nHuman: Here is the context, inside <context></context> XML tags.
+
+#             <context>
+#             {context}
+#             </context>
+
+#             Only using the context as above, answer the following question with the rules as below:
+#                 - Don't insert XML tag such as <context> and </context> when answering.
+#                 - Write as much as you can
+#                 - Be courteous and polite
+#                 - Only answer the question if you can find the answer in the context with certainty.
+
+#             Question:
+#             {question}
+
+#             If the answer is not in the context, just say "I don't know"
+#             \n\nAssistant:"""
+        
+#         if prompt_type == "ko_answer_only":
+            
+#             prompt = """
+#             \n\nHuman:
+#             You are a master answer bot designed to answer software developer's questions.
+#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
+
+#             Here is the context: <context>{context}</context>
+            
+#             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
+#             Then, answer the question as much as you can.
+
+#             Skip the preamble and go straight into the answer.
+#             Don't insert any XML tag such as <context> and </context> when answering.
+            
+#             Here is the question: <question>{question}</question>
+
+#             Answer in Korean.
+#             If the question cannot be answered by the context, say "No relevant context".
+#             \n\nAssistant: Here is the answer. """
+
+#         prompt_template = PromptTemplate(
+#             template=prompt, input_variables=["context", "question"]
+#         )
+        
+#         return prompt_template
+
     @staticmethod
     def get_rag_fusion():
-        
+
         system_prompt = """
-                        You are a helpful assistant that generates multiple search queries based on a single input query.
+                        You are a helpful assistant that generates multiple search queries that is semantically simiar to a single input query.
                         Skip the preamble and generate in Korean.
                         """
         human_prompt = """
@@ -169,13 +281,14 @@ class prompt_repo():
         )
         
         return prompt
-pretty_contexts = None
-augmentation = None
+
 ############################################################
 # RetrievalQA (Langchain)
-###########################################################
-class qa_chain():
+############################################################
+pretty_contexts = None
+augmentation = None
 
+class qa_chain():
     
     def __init__(self, **kwargs):
 
@@ -193,7 +306,9 @@ class qa_chain():
         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
         if self.retriever.complex_doc:
-            retrieval, tables, images = self.retriever.get_relevant_documents(query)
+            #retrieval, tables, images = self.retriever.get_relevant_documents(query)
+            retrieval, tables, images = self.retriever.invoke(query)
+
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "tables_text": "\n\n".join([doc.page_content for doc in tables]),
@@ -201,7 +316,8 @@ class qa_chain():
                 "question": query
             }
         else:
-            retrieval = self.retriever.get_relevant_documents(query)
+            #retrieval = self.retriever.get_relevant_documents(query)
+            retrieval = self.retriever.invoke(query)
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "question": query
@@ -299,7 +415,7 @@ def list_up(similar_docs_semantic, similar_docs_keyword, similar_docs_wo_reranke
     combined_list.append(similar_docs)
 
     return combined_list
-    
+
 class retriever_utils():
     
     runtime_client = boto3.Session().client('sagemaker-runtime')
@@ -314,19 +430,7 @@ class retriever_utils():
         length_function=len,
     )
     token_limit = 300
-    
-    @classmethod
-    def control_streaming_mode(cls, llm, stream=True):
 
-        if stream:
-            llm.streaming = True
-            llm.callbacks = [StreamingStdOutCallbackHandler()]
-        else:
-            llm.streaming = False
-            llm.callbacks = None
-
-        return llm
-    
     @classmethod
     # semantic search based
     def get_semantic_similar_docs_by_langchain(cls, **kwargs):
@@ -359,6 +463,18 @@ class retriever_utils():
             results = deepcopy(new_results)
 
         return results
+
+    @classmethod
+    def control_streaming_mode(cls, llm, stream=True):
+
+        if stream:
+            llm.streaming = True
+            llm.callbacks = [StreamingStdOutCallbackHandler()]
+        else:
+            llm.streaming = False
+            llm.callbacks = None
+
+        return llm
 
     @classmethod
     # semantic search based
@@ -499,7 +615,7 @@ class retriever_utils():
                 "query_augmentation_size": kwargs["query_augmentation_size"]
             }
         )
-        
+
         rag_fusion_query = [query for query in rag_fusion_query if query != ""]
         if len(rag_fusion_query) > query_augmentation_size: rag_fusion_query = rag_fusion_query[-query_augmentation_size:]
         rag_fusion_query.insert(0, kwargs["query"])
@@ -509,9 +625,8 @@ class retriever_utils():
             print("\n")
             print("===== RAG-Fusion Queries =====")
             print(rag_fusion_query)
-        
-        llm_text = cls.control_streaming_mode(llm_text, stream=True)## trun on llm streaming
 
+        llm_text = cls.control_streaming_mode(llm_text, stream=True)## trun on llm streaming
 
         tasks = []
         for query in rag_fusion_query:
@@ -600,13 +715,11 @@ class retriever_utils():
             c=60,
             k=kwargs["k"],
         )
-        
+        augmentation = hyde_answers[1]
         if kwargs["verbose"]:
             print("\n")
             print("===== HyDE Answers =====")
             print(hyde_answers)
-            
-        augmentation = hyde_answers[1]
 
         return similar_docs
 
@@ -614,57 +727,57 @@ class retriever_utils():
     # ParentDocument based
     def get_parent_document_similar_docs(cls, **kwargs):
 
-            child_search_results = kwargs["similar_docs"]
-            
-            parent_info, similar_docs = {}, []
-            for rank, (doc, score) in enumerate(child_search_results):
-                parent_id = doc.metadata["parent_id"]
-                if parent_id != "NA": ## For Tables and Images
-                    if parent_id not in parent_info:
-                        parent_info[parent_id] = (rank+1, score)
+        child_search_results = kwargs["similar_docs"]
+        
+        parent_info, similar_docs = {}, []
+        for rank, (doc, score) in enumerate(child_search_results):
+            parent_id = doc.metadata["parent_id"]
+            if parent_id != "NA": ## For Tables and Images
+                if parent_id not in parent_info:
+                    parent_info[parent_id] = (rank+1, score)
+            else:
+                if kwargs["hybrid"]:
+                    similar_docs.append((doc, score))
                 else:
+                    similar_docs.append((doc))
+        
+        parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
+        parent_ids = list(map(lambda x:x[0], parent_ids))
+        
+        if parent_ids:
+            parent_docs = opensearch_utils.get_documents_by_ids(
+                os_client=kwargs["os_client"],
+                ids=parent_ids,
+                index_name=kwargs["index_name"],
+            )
+
+            if parent_docs["docs"]:
+                for res in parent_docs["docs"]:
+                    doc_id = res["_id"]
+                    doc = Document(
+                        page_content=res["_source"]["text"],
+                        metadata=res["_source"]["metadata"]
+                    )
                     if kwargs["hybrid"]:
-                        similar_docs.append((doc, score))
+                        similar_docs.append((doc, parent_info[doc_id][1]))
                     else:
                         similar_docs.append((doc))
-            
-            parent_ids = sorted(parent_info.items(), key=lambda x: x[1], reverse=False)
-            parent_ids = list(map(lambda x:x[0], parent_ids))
-            
-            if parent_ids:
-                parent_docs = opensearch_utils.get_documents_by_ids(
-                    os_client=kwargs["os_client"],
-                    ids=parent_ids,
-                    index_name=kwargs["index_name"],
-                )
 
-                if parent_docs["docs"]:
-                    for res in parent_docs["docs"]:
-                        doc_id = res["_id"]
-                        doc = Document(
-                            page_content=res["_source"]["text"],
-                            metadata=res["_source"]["metadata"]
-                        )
-                        if kwargs["hybrid"]:
-                            similar_docs.append((doc, parent_info[doc_id][1]))
-                        else:
-                            similar_docs.append((doc))
+        if kwargs["hybrid"]:
+            similar_docs = sorted(
+                similar_docs,
+                key=lambda x: x[1],
+                reverse=True
+            )
+        
+        if kwargs["verbose"]:
+            print("===== ParentDocument =====")
+            print (f'filter: {kwargs["boolean_filter"]}')
+            print (f'# child_docs: {len(child_search_results)}')
+            print (f'# parent docs: {len(similar_docs)}')
+            print (f'# duplicates: {len(child_search_results)-len(similar_docs)}')
 
-            if kwargs["hybrid"]:
-                similar_docs = sorted(
-                    similar_docs,
-                    key=lambda x: x[1],
-                    reverse=True
-                )
-            
-            if kwargs["verbose"]:
-                print("===== ParentDocument =====")
-                print (f'filter: {kwargs["boolean_filter"]}')
-                print (f'# child_docs: {len(child_search_results)}')
-                print (f'# parent docs: {len(similar_docs)}')
-                print (f'# duplicates: {len(child_search_results)-len(similar_docs)}')
-
-            return similar_docs
+        return similar_docs
 
     @classmethod
     def get_rerank_docs(cls, **kwargs):
@@ -747,7 +860,6 @@ class retriever_utils():
         return tables, images
 
 
-
     @classmethod
     # hybrid (lexical + semantic) search based
     def search_hybrid(cls, **kwargs):
@@ -761,6 +873,8 @@ class retriever_utils():
         hyde = kwargs.get("hyde", False)
         parent_document = kwargs.get("parent_document", False)
         hybrid_search_debugger = kwargs.get("hybrid_search_debugger", "None")
+        
+        
 
         assert (rag_fusion + hyde) <= 1, "choose only one between RAG-FUSION and HyDE"
         if rag_fusion:
@@ -786,6 +900,9 @@ class retriever_utils():
                 }
             }
             search_filter.append(parent_doc_filter)
+        else:
+            search_filter.append({"term": {"metadata.family_tree": "child"}})
+            
             
         def do_sync():
 
@@ -846,6 +963,9 @@ class retriever_utils():
                 filter=search_filter,
                 hybrid=True
             )
+            
+            if hybrid_search_debugger == "semantic": similar_docs_keyword = []
+            elif hybrid_search_debugger == "lexical": similar_docs_semantic = []
 
             return similar_docs_semantic, similar_docs_keyword
 
@@ -916,7 +1036,6 @@ class retriever_utils():
             lexical_pool = cls.pool.apply_async(lexical_search,)
             similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
             
-            
             if hybrid_search_debugger == "semantic": similar_docs_keyword = []
             elif hybrid_search_debugger == "lexical": similar_docs_semantic = []
             
@@ -971,7 +1090,6 @@ class retriever_utils():
             )
 
         if verbose:
-
             similar_docs_semantic_pretty = opensearch_utils.opensearch_pretty_print_documents_with_score("semantic", similar_docs_semantic)
             similar_docs_keyword_pretty = opensearch_utils.opensearch_pretty_print_documents_with_score("keyword", similar_docs_keyword)
             similar_docs_wo_reranker_pretty = []
@@ -983,6 +1101,9 @@ class retriever_utils():
         similar_docs = list(map(lambda x:x[0], similar_docs))
         global pretty_contexts
         pretty_contexts = list_up(similar_docs_semantic_pretty, similar_docs_keyword_pretty, similar_docs_wo_reranker_pretty, similar_docs_pretty)
+        
+        #if complex_doc: return similar_docs, tables, images
+        #else: return similar_docs
     
         if complex_doc: return similar_docs, tables, images
         else:
@@ -1167,6 +1288,9 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 
     def _get_relevant_documents(self, query: str, *, run_manager: CallbackManagerForRetrieverRun) -> List[Document]:
 
+        '''
+        It can be called by "retriever.invoke" statements
+        '''
         search_hybrid_result = retriever_utils.search_hybrid(
             query=query,
             k=self.k,
@@ -1201,12 +1325,12 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 def show_context_used(context_list, limit=10):
 
     context_list = copy.deepcopy(context_list)
-    
+
     if type(context_list) == tuple: context_list=context_list[0]
     for idx, context in enumerate(context_list):
 
         if idx < limit:
-            
+
             category = "None"
             if "category" in context.metadata:
                 category = context.metadata["category"]
@@ -1218,13 +1342,15 @@ def show_context_used(context_list, limit=10):
                 print(f"{idx+1}. Chunk: {len(context.page_content)} Characters")
             print("-----------------------------------------------")
 
-            if category == "Image":
-
+            if category == "Image" or (category == "Table" and "image_base64" in context.metadata):
                 img = Image.open(BytesIO(base64.b64decode(context.metadata["image_base64"])))
                 plt.imshow(img)
                 plt.show()
                 context.metadata["image_base64"], context.metadata["origin_image"] = "", ""
+
+            context.metadata["orig_elements"] = ""
             print_ww(context.page_content)
+            if "text_as_html" in context.metadata: print_html(context.metadata["text_as_html"])
             print_ww("metadata: \n", context.metadata)
         else:
             break

@@ -5,7 +5,7 @@ from utils.rag_summit import prompt_repo, OpenSearchHybridSearchRetriever, promp
 from utils.opensearch_summit import opensearch_utils
 from utils.ssm import parameter_store
 from langchain.embeddings import BedrockEmbeddings
-from langchain_community.chat_models import BedrockChat
+from langchain_aws import ChatBedrock
 from utils import bedrock
 from utils.bedrock import bedrock_info
 
@@ -19,11 +19,11 @@ def get_llm(streaming_callback):
     endpoint_url=os.environ.get("BEDROCK_ENDPOINT_URL", None),
     region=os.environ.get("AWS_DEFAULT_REGION", None),
     )
-    llm = BedrockChat(
+    llm = ChatBedrock(
     model_id=bedrock_info.get_model_id(model_name="Claude-V3-Sonnet"),
     client=boto3_bedrock,
     model_kwargs={
-        "max_tokens": 1024,
+        "max_tokens": 102
         "stop_sequences": ["\n\nHuman"],
     },
     streaming=True,
@@ -123,7 +123,7 @@ def invoke(query, streaming_callback, parent, reranker, hyde, ragfusion, alpha):
     def extract_elements_and_print(pretty_contexts):
         for context in pretty_contexts:
             print("context: \n")
-    #         print(context)
+            # print(context)
 
     # print("######### SEMANTIC #########")
     # extract_elements_and_print(pretty_contexts[0])
@@ -136,6 +136,10 @@ def invoke(query, streaming_callback, parent, reranker, hyde, ragfusion, alpha):
     # if hyde or ragfusion:
     #     print("######## 중간답변 ##########")
     #     print(augmentation)
+    if alpha == 0.0:
+        pretty_contexts[0].clear()
+    elif alpha == 1.0:
+        pretty_contexts[1].clear()
     if hyde or ragfusion:
         return response, pretty_contexts, augmentation
 
