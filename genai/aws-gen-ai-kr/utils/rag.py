@@ -302,7 +302,8 @@ class qa_chain():
         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
         if self.retriever.complex_doc:
-            retrieval, tables, images = self.retriever.get_relevant_documents(query)
+            #retrieval, tables, images = self.retriever.get_relevant_documents(query)
+            retrieval, tables, images = self.retriever.invoke(query)
 
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
@@ -311,7 +312,8 @@ class qa_chain():
                 "question": query
             }
         else:
-            retrieval = self.retriever.get_relevant_documents(query)
+            #retrieval = self.retriever.get_relevant_documents(query)
+            retrieval = self.retriever.invoke(query)
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "question": query
@@ -854,6 +856,8 @@ class retriever_utils():
         hyde = kwargs.get("hyde", False)
         parent_document = kwargs.get("parent_document", False)
         hybrid_search_debugger = kwargs.get("hybrid_search_debugger", "None")
+        
+        
 
         assert (rag_fusion + hyde) <= 1, "choose only one between RAG-FUSION and HyDE"
         if rag_fusion:
@@ -939,6 +943,9 @@ class retriever_utils():
                 filter=search_filter,
                 hybrid=True
             )
+            
+            if hybrid_search_debugger == "semantic": similar_docs_keyword = []
+            elif hybrid_search_debugger == "lexical": similar_docs_semantic = []
 
             return similar_docs_semantic, similar_docs_keyword
 
@@ -1008,7 +1015,6 @@ class retriever_utils():
             semantic_pool = cls.pool.apply_async(semantic_search,)
             lexical_pool = cls.pool.apply_async(lexical_search,)
             similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
-            
             
             if hybrid_search_debugger == "semantic": similar_docs_keyword = []
             elif hybrid_search_debugger == "lexical": similar_docs_semantic = []
@@ -1304,6 +1310,9 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
 
     def _get_relevant_documents(self, query: str, *, run_manager: CallbackManagerForRetrieverRun) -> List[Document]:
 
+        '''
+        It can be called by "retriever.invoke" statements
+        '''
         search_hybrid_result = retriever_utils.search_hybrid(
             query=query,
             k=self.k,
