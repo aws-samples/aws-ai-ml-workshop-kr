@@ -1,4 +1,4 @@
-sagemaker==2.199.0
+sagemaker==2.218.0
 langchain==0.0.348
 boto3==1.33.12
 botocore==1.33.12
