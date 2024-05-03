@@ -68,7 +68,12 @@ class prompt_repo():
         system_prompt = '''
                         Referring to the previous conversation, create a new question that clarifies the meaning of the following <question>.
                         The new question should include important words from the original question.
+                        
                         Put it in <result> tags.
+                        If given converation is not related to the question, do not create the new question.
+                        Skip the preamble and go straight into the answer.
+                         
+                        
                         '''
         return system_prompt
     
@@ -905,7 +910,7 @@ class retriever_utils():
                 }
             }
             search_filter.append(parent_doc_filter)
-            
+        
         def do_sync():
 
             if rag_fusion:
