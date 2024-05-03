@@ -182,7 +182,6 @@ langchain-core                        0.1.46
 langchain-text-splitters              0.0.1
 langcodes                             3.3.0
 langsmith                             0.1.51
-libmambapy                            1.5.6
 lightgbm                              3.3.5
 lightning-utilities                   0.10.1
 llvmlite                              0.41.1
