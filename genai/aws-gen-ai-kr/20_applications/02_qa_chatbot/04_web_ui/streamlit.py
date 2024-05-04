@@ -108,7 +108,7 @@ with st.sidebar: # Sidebar 모델 옵션
             key="search_mode",
             disabled=disabled
             )
-        alpha = st.slider('Alpha value for Hybrid search ⬇️', 0.0, 0.51, 1.0, 
+        alpha = st.slider('Alpha value for Hybrid search ⬇️', 0.0, 1.0, 0.51, 
                           disabled=st.session_state.search_mode != "Hybrid search",
                           help="""Alpha=0.0 이면 Lexical search,   \nAlpha=1.0 이면 Semantic search 입니다."""
                           )
