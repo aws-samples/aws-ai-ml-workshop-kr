@@ -901,7 +901,16 @@ class retriever_utils():
             }
             search_filter.append(parent_doc_filter)
         else:
-            search_filter.append({"term": {"metadata.family_tree": "child"}})
+            parent_doc_filter = {
+                "bool":{
+                    "should":[ ## or condition
+                        {"term": {"metadata.family_tree": "child"}},
+                        {"term": {"metadata.family_tree": "parent_table"}},
+                        {"term": {"metadata.family_tree": "parent_image"}},   
+                    ]
+                }
+            }
+            search_filter.append(parent_doc_filter)
             
             
         def do_sync():

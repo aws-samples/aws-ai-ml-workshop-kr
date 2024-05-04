@@ -3,3 +3,5 @@ opensearch-py
 boto3
 langchain
 anthropic
+langchain_aws
+IPython
