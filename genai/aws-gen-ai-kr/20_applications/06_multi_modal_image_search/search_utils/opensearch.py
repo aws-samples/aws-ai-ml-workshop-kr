@@ -1,5 +1,7 @@
 from typing import List, Tuple
 from opensearchpy import OpenSearch, RequestsHttpConnection
+import concurrent.futures
+import tqdm.notebook as tq
 
 class opensearch_utils():
     
@@ -271,5 +273,42 @@ class opensearch_utils():
                     "image_url": image_url,  
                     }
         return document
+
+
+    @classmethod
+    def _add_doc_to_opensearch(cls, os_client, index_name, dataset):
+        '''
+        데이터 세트를 오픈 서치에 넣는 함수
+        '''
+        for idx, record in tq.tqdm(dataset.iterrows(), total=len(dataset)):
+            image_vector = dataset['embedding_img'][idx]
+            description = dataset['item_name_in_en_us'][idx]
+            item_id = dataset['item_id'][idx]
+            image_url = dataset['img_full_path'][idx]
+
+            document = opensearch_utils.create_opensearch_doc(image_vector,description, item_id, image_url)   
+            response = opensearch_utils.add_doc(os_client, index_name,document, verbose=False, id = None)               
+
+        total_count_docs  = total_count_docs = opensearch_utils.get_count(os_client, index_name)
+
+        return total_count_docs
+
+    @classmethod
+    def parallel_add_doc_to_opensearch(cls, os_client, num_dataset, num_worker, index_name, dataset):        
+        '''
+        Add dataset in parallel to opensearch
+        '''
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=num_worker) as executor:
+            futures = []
+            for i in range(num_dataset):
+                # futures.append(executor.submit(_inference_with_latency_calculation, i))
+                futures.append(executor.submit(cls._add_doc_to_opensearch, os_client, index_name, dataset))
+                # print("i; ", i)
+            for future in concurrent.futures.as_completed(futures):
+                get_result = future.result()
+                print("get_result: ", get_result)
+
+
     
     
