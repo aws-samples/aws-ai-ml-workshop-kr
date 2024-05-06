@@ -23,7 +23,7 @@ def get_llm(streaming_callback):
     model_id=bedrock_info.get_model_id(model_name="Claude-V3-Sonnet"),
     client=boto3_bedrock,
     model_kwargs={
-        "max_tokens": 102
+        "max_tokens": 1024,
         "stop_sequences": ["\n\nHuman"],
     },
     streaming=True,
@@ -123,23 +123,24 @@ def invoke(query, streaming_callback, parent, reranker, hyde, ragfusion, alpha):
     def extract_elements_and_print(pretty_contexts):
         for context in pretty_contexts:
             print("context: \n")
-            # print(context)
+            print(context)
 
-    # print("######### SEMANTIC #########")
-    # extract_elements_and_print(pretty_contexts[0])
-    # print("######### KEYWORD #########")
-    # extract_elements_and_print(pretty_contexts[1])
-    # print("######### WITHOUT_RERANKER #########")
-    # extract_elements_and_print(pretty_contexts[2])
-    # print("######## SIMILAR_DOCS ##########")
-    # extract_elements_and_print(pretty_contexts[3])
-    # if hyde or ragfusion:
-    #     print("######## 중간답변 ##########")
-    #     print(augmentation)
-    if alpha == 0.0:
-        pretty_contexts[0].clear()
-    elif alpha == 1.0:
-        pretty_contexts[1].clear()
+    print("######### SEMANTIC #########")
+    extract_elements_and_print(pretty_contexts[0])
+    print("######### KEYWORD #########")
+    extract_elements_and_print(pretty_contexts[1])
+    print("######### WITHOUT_RERANKER #########")
+    extract_elements_and_print(pretty_contexts[2])
+    print("######## SIMILAR_DOCS ##########")
+    extract_elements_and_print(pretty_contexts[3])
+    if hyde or ragfusion:
+        print("######## 중간답변 ##########")
+        print(augmentation)
+    if not hyde or ragfusion:
+        if alpha == 0.0:
+            pretty_contexts[0].clear()
+        elif alpha == 1.0:
+            pretty_contexts[1].clear()
     if hyde or ragfusion:
         return response, pretty_contexts, augmentation
 
