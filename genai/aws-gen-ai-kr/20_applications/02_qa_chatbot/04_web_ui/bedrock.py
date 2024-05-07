@@ -87,7 +87,7 @@ def get_retriever(streaming_callback, parent, reranker, hyde, ragfusion, alpha):
         # option for async search
         async_mode=True,
         # option for output
-        k=6,  # 최종 Document 수 정의
+        k=7,  # 최종 Document 수 정의
         verbose=True,
     )
     return opensearch_hybrid_retriever
