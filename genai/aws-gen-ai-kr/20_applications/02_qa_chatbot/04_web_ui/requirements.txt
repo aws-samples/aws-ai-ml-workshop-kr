@@ -5,3 +5,4 @@ langchain
 anthropic
 langchain_aws
 IPython
+matplotlib
