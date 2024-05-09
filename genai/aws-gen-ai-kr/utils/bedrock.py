@@ -97,8 +97,11 @@ class bedrock_info():
         "Cohere-Embeddings-En": "cohere.embed-english-v3",
         "Cohere-Embeddings-Multilingual": "cohere.embed-multilingual-v3",
         "Titan-Embeddings-G1": "amazon.titan-embed-text-v1",
+        "Titan-Text-Embeddings-V2": "amazon.titan-embed-text-v2:0",
         "Titan-Text-G1": "amazon.titan-text-express-v1",
         "Titan-Text-G1-Light": "amazon.titan-text-lite-v1",
+        "Titan-Text-G1-Premier": "amazon.titan-text-premier-v1:0",
+        "Titan-Text-G1-Express": "amazon.titan-text-express-v1",
         "Llama2-13b-Chat": "meta.llama2-13b-chat-v1"
     }
 
