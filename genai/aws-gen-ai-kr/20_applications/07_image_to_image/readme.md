@@ -1,5 +1,7 @@
 # How to run this application
 
+![Image2image](https://github.com/aws-samples/aws-ai-ml-workshop-kr/assets/48855293/918d53b6-9682-41fa-9b5d-4f5575411e20)
+
 ## Structure
 
 1. `bedrock.py`
