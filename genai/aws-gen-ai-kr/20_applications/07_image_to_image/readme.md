@@ -1,5 +1,7 @@
 # How to run this application
 
+![sample](./image2image.png)
+
 ## Structure
 
 1. `bedrock.py`
