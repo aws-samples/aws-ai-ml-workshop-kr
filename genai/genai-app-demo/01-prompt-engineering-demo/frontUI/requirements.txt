@@ -1,5 +1,5 @@
 boto3==1.34.59
 streamlit==1.32.2
-requests==2.31.0
+requests==2.32.0
 streamlit-cropper==0.2.2
 pillow==10.2.0
