@@ -16,23 +16,15 @@ echo "The provided conda virtual environment is: $argument"
 
 export VirtualEnv=$argument
 
-# conda install conda=24.5.0
-conda create -y -n $VirtualEnv python=3.10 
-conda activate $VirtualEnv
+conda create -y -n $VirtualEnv python=3.10.14 
+
+source activate $VirtualEnv
 
 pip install --upgrade pip
 pip install ipykernel
 python -m ipykernel install --user --name=$VirtualEnv --display-name $VirtualEnv
 
-# pip install -r requirements.txt
-
-pip install datasets==2.14.6 
-# pip install transformers==4.30.2
-# pip install torch==2.3.0
-# pip install sagemaker==2.221.1
-# pip install boto3==1.34.117
-
-conda deactivate
+pip install -r requirements.txt
 
 echo "# To show conda env, use"
 echo "#"
