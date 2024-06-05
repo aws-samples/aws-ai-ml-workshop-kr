@@ -5,17 +5,13 @@ from langchain.schema.output_parser import StrOutputParser
 from langchain_experimental.tools.python.tool import PythonAstREPLTool
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder
 
-import matplotlib.pyplot as plt
-
-
-
 class prompt_repo():
      
     @classmethod
     def get_system_prompt(cls, role=None):
-        
+
         if role == "text2chart":
-        
+
             system_prompt = dedent(
                 '''
                 You are a pandas master bot designed to generate Python code for plotting a chart based on the given dataset and user question.
@@ -25,9 +21,9 @@ class prompt_repo():
             )
         else:
             system_prompt = ""
-            
+
         return system_prompt
-    
+
     @classmethod
     def get_human_prompt(cls, role=None):
         
@@ -56,13 +52,13 @@ class prompt_repo():
                  If you are asked to plot a chart, use "matplotlib" for charts, save as "results.png".
                  Expaination with Koren.
                  Do not use legend and title in plot in Korean.
-                 
+
                  Generate python code and return full updated code within <update_code></update_code>:
-                 
+
 
                  '''
             )
-            
+
         else:
             human_prompt = ""
             
@@ -78,11 +74,13 @@ class text2chart_chain():
         self.num_rows = kwargs["num_rows"]
         #self.return_context = kwargs.get("return_context", False)
         self.verbose = kwargs.get("verbose", False)
-        self.pattern = r'<update_code>(.*?)</update_code>'
+        self.parsing_pattern = kwargs["parsing_pattern"]
+        self.show_chart = kwargs.get("verbose", False)
         
     def query(self, **kwargs):
         
         df, query, verbose = kwargs["df"], kwargs["query"], kwargs.get("verbose", self.verbose)
+        show_chart = kwargs.get("show_chart", self.show_chart)
         
         if len(df) < self.num_rows: dataset = str(df.to_csv())
         else: dataset = str(df.sample(self.num_rows, random_state=0).to_csv())
@@ -99,28 +97,37 @@ class text2chart_chain():
         prompt = ChatPromptTemplate.from_messages(
             [self.system_message_template, human_message_template]
         )
-
-        chain = prompt | self.llm_text | StrOutputParser()
         
+        code_generation_chain = prompt | self.llm_text | StrOutputParser()
+
         self.verbose = verbose
-        response = chain.invoke(
+        response = code_generation_chain.invoke(
             invoke_args,
             config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
         )
 
-        return response
+        if show_chart:
+            results = self.code_execution(
+                df=df,
+                response=response
+            )
+            return results
+        else:
+            return response
     
     def code_execution(self, **kwargs):
         
-        df, code  = kwargs["df"], self._code_paser(response=kwargs["response"])
+        df, code = kwargs["df"], self._code_parser(response=kwargs["response"])
         tool = PythonAstREPLTool(locals={"df": df})
         
-        tool.invoke(code)
+        results = tool.invoke(code)
         
-    def _code_paser(self, **kwargs):
+        return results
+        
+    def _code_parser(self, **kwargs):
         
         parsed_code, response = "", kwargs["response"]
-        match = re.search(self.pattern, response, re.DOTALL)
+        match = re.search(self.parsing_pattern, response, re.DOTALL)
 
         if match: parsed_code = match.group(1)
         else: print("No match found.")
