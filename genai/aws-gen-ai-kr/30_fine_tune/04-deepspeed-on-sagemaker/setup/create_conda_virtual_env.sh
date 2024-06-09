@@ -32,7 +32,8 @@ sleep 5
 #####################################
 # Activate the given $VirtualEnv
 #####################################
-source activate $VirtualEnv
+source ~/.bashrc
+conda activate $VirtualEnv
 
 # show current virtual env.
 echo "# show current virtual env"
@@ -112,4 +113,5 @@ echo ""
 
 # Apply this setting
 source ~/.bashrc 
+
 
