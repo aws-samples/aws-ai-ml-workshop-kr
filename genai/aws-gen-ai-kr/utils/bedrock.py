@@ -180,14 +180,16 @@ class bedrock_utils():
         if system_prompts != None: args["system"] = system_prompts
         if inference_config != None: args["inferenceConfig"] = inference_config
         if additional_model_request_fields != None: args["additionalModelRequestFields"] = additional_model_request_fields
-        if tool_config != None: args["toolConfig"] = tool_config
+        if tool_config != None:
+            args["toolConfig"] = tool_config
+            print ('args["toolConfig"]', args["toolConfig"])
         args["messages"], args["modelId"] = messages, model_id
 
         if stream:
             response = bedrock_client.converse_stream(**args)
         else:
             response = bedrock_client.converse(**args)
-
+            
         return {"response": response, "verbose": verbose, "stream": stream, "callback": llm.callbacks[0]}
 
     @staticmethod
@@ -231,6 +233,7 @@ class bedrock_utils():
                 stream_response = response["stream"]
 
                 for event in stream_response:
+                                        
                     if 'messageStart' in event:
                         if verbose: print(f"\nRole: {event['messageStart']['role']}")
                         pass
@@ -279,6 +282,9 @@ class bedrock_utils():
                 message = err.response['Error']['Message']
                 print("A client error occurred: %s", message)
 
+        
+        print (output)
+        
         return output
 
 
