@@ -11,6 +11,7 @@ class copy_generation_chain():
         self.messages = []
         self.multi_turn = kwargs.get("multi_turn", False)
         self.verbose = kwargs.get("verbose", False)
+        self.tool_config = kwargs.get("tool_config", False)
         self.pipeline = bedrock_chain(bedrock_utils.converse_api) | bedrock_chain(bedrock_utils.outputparser)
         self.request_prompt = dedent(
             '''
@@ -31,11 +32,11 @@ class copy_generation_chain():
             prompt = self.user_prompts + self.request_prompt
             query = prompt.format(**context)
         
-        message = {
+        user_message = {
             "role": "user",
             "content": [{"text": dedent(query)}]
         }
-        self.messages.append(message)
+        self.messages.append(user_message)
 
         response = self.pipeline( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
             llm=self.llm,
