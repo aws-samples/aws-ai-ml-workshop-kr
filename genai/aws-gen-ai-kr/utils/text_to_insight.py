@@ -68,76 +68,11 @@ class insight_extraction_chain():
         return response
             
             
-    def _parse_output(self, **kwargs):
-        
-        print ("_parse_output")
-        
-        
-        response = kwargs["response"]
-        messages = []
+  
 
-            
-        prompt = dedent(
-            '''
-            You are an AI assistant specialized in converting unstructured responses into structured results.
-            '''
-        )
-        system_prompt_parse_output = system_prompts = bedrock_utils.get_system_prompt(system_prompts=prompt,)
-    
-        query = dedent(
-            '''
-            Here is responses: <response>{response}</response>
-            Please use the parse_output tool to do the task of structuring information from the responses.
-            '''
-        )
-        query = query.format(**{"response":response["text"]})
-        
-        user_message = {
-            "role": "user",
-            "content": [{"text": dedent(query)}]
-        }
-        
-        
-        messages.append(user_message)
-        print ("messages", messages)
-        
-        response = bedrock_utils.converse_api(
-            llm=self.llm,
-            system_prompts=system_prompt_parse_output,
-            messages=messages,
-            tool_config=self.tool_config,
-            verbose=self.verbose
-        )
-        
-        print ("response", response)
-        
-        
+    def get_messages(self, ):
 
-        
-
-        
-        if self.verbose:
-            print (f'Messages: {messages}')
-
-        if self.multi_turn:
-            if response["toolUse"] == None:
-                ai_message = {
-                    "role": "assistant",
-                    'content': [{'text': response["text"]}]
-                }
-            else:
-                ai_message = {
-                    "role": "assistant",
-                    'content': [{'toolUse': response["toolUse"]}]
-                }
-            messages.append(ai_message)
-        else:
-            messages = []
-        
-        return response
-        
-
-        
+        return self.messages
         
         
     def invoke(self, **kwargs):
