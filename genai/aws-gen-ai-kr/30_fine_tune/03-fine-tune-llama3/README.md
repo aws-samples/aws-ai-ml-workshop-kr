@@ -4,15 +4,13 @@ Updated: July 15, 2024
 
 ---
 
-
-SageMaker 에서 Llama3-8B 파인 튜닝을 소개 합니다.
-
+SageMaker 에서 Llama3-8B 파인 튜닝을 소개 합니다.<br>
+PyTorch FSDP (Fully Sharded Distributed Training) 및 QLoRA 를 사용하여 파인 튜닝을 합니다. 동일 훈련 코드로 SageMaker Training 을 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge, ml.g5.48xlarge, ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
+<br><br>
 이 실습 과정은 제한된 GPU 리소스로 인해서, <u>모델의 품질 보다는 "코드가 동작" 되는 관점에서 준비 했습니다. </u><br>
-충분한 GPU 리소스가 있으신 환경에서는, 데이터 셋 사이즈 수정, Epoch 조정 등의 코드를 수정하여 전체를 실행할 수 있습니다.
-- SageMaker Training 은 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge,ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
-
+충분한 GPU 리소스가 있으신 환경에서는, 코드 수정 없이 파라미터인 인스턴스 타입, 인스턴스 개수, 데이터 셋 사이즈 수정, Epoch 조정 등의 코드를 수정하여 모델을 최적화 할 수 있습니다. 
+ 
 ---
-
 
 ## 1. 선수 준비 내용
 현재 사용 계정에 아래의 Resource Quota 가 미리 준비 되어 있어야 합니다. 여기서 확인하시고, Quota 증가 하세요. --> [What is Service Quotas?](https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html)
