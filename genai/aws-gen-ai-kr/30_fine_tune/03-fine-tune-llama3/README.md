@@ -24,7 +24,7 @@ PyTorch FSDP (Fully Sharded Distributed Training) 및 QLoRA 를 사용하여 파
 - [setup/README.md](setup/README.md)
 
 ## 3. 파인 튜닝 유스 케이스
-- 뉴스 기사 요약 작업에 대한 Instruction Fine-Tuning 을 하며 김대근님이 HF 에 공유하신 [daekeun-ml/naver-news-summarization-ko](https://huggingface.co/datasets/daekeun-ml/naver-news-summarization-ko) 를 사용 합니다.
+- 뉴스 기사 요약 작업에 대한 Instruction Fine-Tuning 을 하며 김대근님이 HF 에 공유하신 [daekeun-ml/naver-news-summarization-ko](https://huggingface.co/datasets/daekeun-ml/naver-news-summarization-ko) 데이터 셋을 사용 합니다.
 - 이 데이타를 사용하여 다음과 같이 에시로서 파인 튜닝에 적합한 형태(Anthropic Claude Model 형식) 로 변형한 후에 파인 튜닝을 합니다.
 ```
 You are an AI assistant specialized in news articles.Your role is to provide accurate summaries and insights in Korean. Please analyze the given text and provide concise, informative summaries that highlight the key goals and findings.
