@@ -13,7 +13,7 @@ lr_scheduler_type: "constant"          # learning rate scheduler
 ###########################             
 # For Debug
 ###########################             
-num_train_epochs: 5                    # number of training epochs
+num_train_epochs: 1                    # number of training epochs
 per_device_train_batch_size: 1         # batch size per device during training
 per_device_eval_batch_size: 1          # batch size for evaluation
 gradient_accumulation_steps: 2         # number of steps before performing a backward/update pass
