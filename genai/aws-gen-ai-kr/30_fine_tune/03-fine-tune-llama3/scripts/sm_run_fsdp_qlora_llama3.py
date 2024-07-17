@@ -189,23 +189,26 @@ def training_function(script_args, training_args):
         checkpoint = training_args.resume_from_checkpoint
     trainer.train(resume_from_checkpoint=checkpoint)
 
-    ##########################
-    # SAVE MODEL FOR SAGEMAKER
-    ##########################
-    if trainer.is_fsdp_enabled:
-        trainer.accelerator.state.fsdp_plugin.set_state_dict_type("FULL_STATE_DICT")
-    trainer.save_model()
+    ## if running type is local mode, we intentionally do not save model
+    is_local_mode = os.getenv('SM_CURRENT_INSTANCE_TYPE')
+    if is_local_mode != 'local': # cloud mode
+        ##########################
+        # SAVE MODEL FOR SAGEMAKER
+        ##########################
+        if trainer.is_fsdp_enabled:
+            trainer.accelerator.state.fsdp_plugin.set_state_dict_type("FULL_STATE_DICT")
+        trainer.save_model()
 
-    del model
-    del trainer
-    torch.cuda.empty_cache()  # Clears the cache
+        # load and merge
+        if training_args.distributed_state.is_main_process:
+            merge_and_save_model(
+                script_args.model_id, training_args.output_dir, "/opt/ml/model"
+            )
+            tokenizer.save_pretrained("/opt/ml/model")
+    else: # local mode
+        print("## Because of local mode, we do not save model")
 
-    # load and merge
-    if training_args.distributed_state.is_main_process:
-        merge_and_save_model(
-            script_args.model_id, training_args.output_dir, "/opt/ml/model"
-        )
-        tokenizer.save_pretrained("/opt/ml/model")
+
     training_args.distributed_state.wait_for_everyone()  # wait for all processes to print
     
 if __name__ == "__main__":
@@ -213,6 +216,7 @@ if __name__ == "__main__":
     script_args, training_args = parser.parse_args_and_config()    
 
     if training_args.local_rank == 0:
+        print("## SM_CURRENT_INSTANCE_TYPE: ", os.getenv('SM_CURRENT_INSTANCE_TYPE'))
         print("## script_args: \n", script_args)
         print("## training_args: \n", training_args)    
     

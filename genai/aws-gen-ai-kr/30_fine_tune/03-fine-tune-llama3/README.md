@@ -1,6 +1,6 @@
 # SageMaker 에서 Llama3-8B 파인 튜닝하기
 
-Updated: July 15, 2024
+Updated: July 17, 2024
 
 ---
 
@@ -11,20 +11,8 @@ PyTorch FSDP (Fully Sharded Distributed Training) 및 QLoRA 를 사용하여 파
 충분한 GPU 리소스가 있으신 환경에서는, 코드 수정 없이 파라미터인 인스턴스 타입, 인스턴스 개수, 데이터 셋 사이즈 수정, Epoch 조정 등의 코드를 수정하여 모델을 최적화 할 수 있습니다. 
  
 ---
-
-## 1. 선수 준비 내용
-현재 사용 계정에 아래의 Resource Quota 가 미리 준비 되어 있어야 합니다. 여기서 확인하시고, Quota 증가 하세요. --> [What is Service Quotas?](https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html)
-- One ml.g5.4xlarge for notebook instance usage
-- One ml.g5.4xlarge for training job usage 
-- One ml.g5.12xlarge for endpoint usage
-
-
-## 2. 실습 환경
-아래 설치 하기를 클릭하시고, 가이드를 따라가 주세요.
-- [setup/README.md](setup/README.md)
-
-## 3. 파인 튜닝 유스 케이스
-- 뉴스 기사 요약 작업에 대한 Instruction Fine-Tuning 을 하며 김대근님이 HF 에 공유하신 [daekeun-ml/naver-news-summarization-ko](https://huggingface.co/datasets/daekeun-ml/naver-news-summarization-ko) 데이터 셋을 사용 합니다.
+## 1. 파인 튜닝 유스 케이스
+- 한국 뉴스 기사 요약 작업을 합니다. 이를 위해 Instruction Fine-Tuning 을 위해 [naver-news-summarization-ko](https://huggingface.co/datasets/daekeun-ml/naver-news-summarization-ko) 데이터 셋을 사용 합니다.
 - 이 데이타를 사용하여 다음과 같이 에시로서 파인 튜닝에 적합한 형태(Anthropic Claude Model 형식) 로 변형한 후에 파인 튜닝을 합니다.
 ```
 You are an AI assistant specialized in news articles.Your role is to provide accurate summaries and insights in Korean. Please analyze the given text and provide concise, informative summaries that highlight the key goals and findings.
@@ -36,18 +24,51 @@ Human: Please summarize the goals for journalist in this text:
 Assistant: KOTRA 코트라 는 한국벤처투자 BMW와 스타트업 개러지 코리아 등과 지난 6월 29일부터 7월1일까지 독일 뮌헨에서 ‘BMW 오픈이노베이션 IR 로드쇼’ 사업을 추진했다고 3일 밝혔는데, 이번 BMW 오픈이노베이션 IR 로드쇼에서는 지난 4월 ‘BMW 오픈이노베이션 피칭데이’를 통해 선발한 스타트업 6개사 15명이 참가했으며 장 도미닉 코스트 Jean Dominique Coste 에어버스 블루스카이 그룹장은 “에어버스는 한국 스타트업과의 기술협력을 위해 모든 가능성을 열어두고 지속적으로 논의할 것”이라고 말했다.<|end_of_text|>
 ```
 
+## 2. 선수 준비 내용
+### 2.1 GPU Quota 확인 
+현재 사용 계정에 아래의 Resource Quota 가 미리 준비 되어 있어야 합니다. 여기서 확인하시고, Quota 증가 하세요. --> [What is Service Quotas?](https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html)
+- One ml.g5.4xlarge for notebook instance usage
+- One ml.g5.4xlarge for training job usage 
+- One ml.g5.12xlarge for endpoint usage
+### 2.2 HF API Key 및 Llama-3-8B 모델 엑세스 권한
+아래 사항을 먼저 준비 하셔야 합니다.
+- huggingface Acess Key 준비 하기 : [User access tokens](https://huggingface.co/docs/hub/en/security-tokens)
+- Llama-3-8B 모델 엑세스 권한 얻기: [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
+
+
+## 3. 실습 환경
+아래 설치 하기를 클릭하시고, 가이드를 따라가 주세요.
+- [setup/README.md](setup/README.md)
+
 ## 4. 노트북 실행 순서
 아래와 같은 노트북을 차례로 실행 하시면 됩니다. notebook/01-naver-news-fsdp-QLoRA 하위의
 - 01-Prepare-Dataset-KR-News.ipynb  
-    - 데이터 셋 준비
+    - 두가지 종류의 데이터 셋 준비 합니다.
+        - Full dataset : 전체 데이터 셋 입니다. (Training: 22,194, Validation: 2466, Test: 27840)
+        - Sample dataset for rapid experiment : 전체 데이터 셋 입니다. (Training: 10, Validation: 10, Test: 10)        
 - 02-Train-Local-KR-News.ipynb
-    - 로컬 머신에서 훈련 
+    - 로컬 머신에서 훈련을 합니다. 
+    - 사용하자 하는 로컬 머신이 GPU 1개이면 혹은 4개, 8 개 이면, 실행시 파라미터인 --nproc_per_node=4 만 수정하시면 됩니다.
 - 03-SageMaker-Training.ipynb
-    - SageMaker Cloud 에서 훈련
+    - SageMaker Local Mode 로  훈련이 가능합니다. 이렇게 테스트 후에 SageMaker Cloud 에서 훈련하시면 됩니다. USE_LOCAL_MODE = True 변수로 조절 하시면 됩니다.
+    - run_debug_sample = True 에 따라서 전체 데이터셋으로 훈련을 할지, 일부 샘플 데이터로 빠르게 훈련 코드를 테스트 할 수 있습니다.
 - 04-SageMaker-Inference.ipynb
-    - SageMaker Endpoint 에서 추론
+    - SageMaker Endpoint 에서 추론을 하며, 실제 Test 데이터 셋의 뉴스 기사로 요약을 해봅니다. 
 
 ## 5. 완료 화면
 - 아래는 notebook/04-SageMaker-Inference.ipynb 노트북의 마지막을 실행 했습니다. (참고로 아래의 예시는 Sample 부분 데이터 셋 보다는 22K 전체 데이터 셋과 Epoc: 3 및 ml.p4d.24xlarge 에서 예시 추론 결과 입니다.)
 <br><br>
 - ![inference_example.png](img/inference_example.png)
+
+## 6. 리소스 정리
+- 실습을 완료 후에 반드시 사용하신 리소스를 정리 해야 합니다. 추가적인 요금이 불필요하게 발생할 수 있습니다. SageMaker Endpoint, SageMaker Notebook Instance 가 반드시 삭제가 되었는지 확인 해야 합니다.
+
+
+## A. Reference
+- [Fine-tune Llama 3 with PyTorch FSDP and Q-Lora on Amazon SageMaker](https://www.philschmid.de/sagemaker-train-deploy-llama3)
+- [Efficiently fine-tune Llama 3 with PyTorch FSDP and Q-Lora](https://www.philschmid.de/fsdp-qlora-llama3)
+- [Launching your 🤗 Accelerate scripts](https://huggingface.co/docs/accelerate/en/basic_tutorials/launch)
+- [LLM-based summarization: A case study of human, Llama 2 70b and GPT-4 summarization quality](https://www.anyscale.com/blog/llm-based-summarization-a-case-study-of-human-llama-2-70b-and-gpt-4-summarization-quality)
+- [LoRA Land: 310 Fine-tuned LLMs that Rival GPT-4, A Technical Report](https://arxiv.org/pdf/2405.00732)
+- [Fine Tune LLM for Text Summary](https://www.kaggle.com/code/mitanshuchakrawarty/fine-tune-llm-for-text-summary)
+- 
