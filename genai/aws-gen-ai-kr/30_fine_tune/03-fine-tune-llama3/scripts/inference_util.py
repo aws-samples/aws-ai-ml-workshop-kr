@@ -70,6 +70,25 @@ def invoke_endpoint_sagemaker(endpoint_name, pay_load):
     return result
 
 
+def invoke_endpoint_IC_sagemaker(endpoint_name, pay_load, inference_component):
+
+    # Set up the SageMaker runtime client
+    sagemaker_runtime = boto3.client('sagemaker-runtime')
+    # Set the endpoint name
+    endpoint_name = endpoint_name
+
+
+    # Invoke the endpoint
+    response = sagemaker_runtime.invoke_endpoint(
+        EndpointName=endpoint_name,
+        InferenceComponentName = inference_component,
+        ContentType='application/json',
+        Body=json.dumps(pay_load)
+    )
+    # Get the response from the endpoint
+    result = response['Body'].read().decode('utf-8')
+
+    return result
 
 
 def print_ww(*args, width: int = 100, **kwargs):
@@ -139,6 +158,27 @@ def run_inference(sm_endpoint_name, system_prompt,user_prompt, verbose=False ):
 
     return answer, request_body
 
+def run_inference_IC(sm_endpoint_name, system_prompt,user_prompt, inference_component, verbose=False ):
+    request_body = create_boto3_request_body(system_prompt=system_prompt, user_prompt=user_prompt)
+        
+    s = time.perf_counter()
+
+    # sm_endpoint_name = "llama3-endpoint-mnist-1719625657"
+    response = invoke_endpoint_IC_sagemaker(endpoint_name = sm_endpoint_name, 
+                            pay_load = request_body, inference_component = inference_component)    
+
+    elapsed_async = time.perf_counter() - s
+
+    print(f"elapsed time: {round(elapsed_async,3)} second")
+    parsed_data = json.loads(response)
+    answer = parsed_data["choices"][0]["message"]["content"].strip()
+
+    if verbose:
+        print("request_body: \n", request_body)
+        print("response body: \n", json.dumps(parsed_data, indent=4, ensure_ascii=False))
+
+    return answer, request_body    
+
 def generate_response(messages,sm_endpoint_name, full_test_dataset, rand_idx):
     system_prompt, user_prompt = extract_system_user_prompt(messages, verbose=False)    
     answer, request_body = run_inference(sm_endpoint_name, system_prompt,user_prompt, verbose=False )
@@ -149,6 +189,15 @@ def generate_response(messages,sm_endpoint_name, full_test_dataset, rand_idx):
 
     print(f"**Generated Answer:**\n{answer}")
     
+def generate_response_IC(messages,sm_endpoint_name, full_test_dataset, rand_idx, inference_component):
+    system_prompt, user_prompt = extract_system_user_prompt(messages, verbose=False)    
+    answer, request_body = run_inference_IC(sm_endpoint_name, system_prompt,user_prompt, inference_component, verbose=False )
+    print(f"**Query:**\n{request_body}")
+    # print(f"**Query:**\n{test_dataset[rand_idx]['text'][1]['content']}\n")
+    # print(f"**Original Answer:**\n{test_dataset[rand_idx]['text'][2]['content']}\n")
+    print(f"**Original Answer:**\n{full_test_dataset[rand_idx]['messages'][2]['content']}\n")
+
+    print(f"**Generated Answer:**\n{answer}")
 
 # answer = run_inference(sm_endpoint_name, system_prompt,user_prompt, verbose=True )
 # answer = run_inference(sm_endpoint_name, system_prompt,user_prompt, verbose=False )        
