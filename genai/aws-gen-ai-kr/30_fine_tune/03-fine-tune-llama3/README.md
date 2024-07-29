@@ -66,7 +66,7 @@ notebook/02-naver-news-llama3-inference 하위의 노트북 입니다.
     - 이 노트북은 Hugging Face TGI 도커 이미지를 다운로드 받고, 로컬 머신에서 모델 아티펙터를 컨테이너로 올려 보는 과정을 합니다. 아래는 컨테이너가 올라와서 추론 준비 상태의 화면 입니다.
     - ![ tgi_container_ready.png](notebook/02-naver-news-llama3-inference/img/tgi_container_ready.png)
 - 02-SageMaker-Inference-Component.ipynb
-    - 파인 튜닝한 모델을 [SageMaker Inference Component](https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/) 로 직접 배포하고, 추혼을 하는 예시 입니다.
+    - 파인 튜닝한 모델을 [SageMaker Inference Component](https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/) 로 직접 배포하고, 추론을 하는 예시 입니다.
 
 ## 5. 추론 예시 화면
 - 아래는 notebook/04-SageMaker-Inference.ipynb 노트북의 마지막을 실행 했습니다. (참고로 아래의 예시는 Sample 부분 데이터 셋 보다는 22K 전체 데이터 셋과 Epoc: 3 및 ml.p4d.24xlarge 에서 예시 추론 결과 입니다.)
