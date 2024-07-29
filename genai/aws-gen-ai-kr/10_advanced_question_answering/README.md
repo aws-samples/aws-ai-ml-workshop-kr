@@ -13,3 +13,4 @@ Dataset: 신한은행 FAQ 데이터 세트
 - `03_2_rag_opensearch_hybrid_ensemble_retriever_kr.ipynb`: Ensemble Retriever
 - `04_rag_kendra_kr.ipynb`: Amazon Kendra 기반 RAG 
 - `05_rag_qa_chatbot_hybrid_search.ipynb`: Conversational ChatBot
+- `06_rag_faiss_with_images.ipynb`: FAISS 인메모리 벡터DB로 시멘틱 검색 후 답변에 연관된 이미지도 표시
