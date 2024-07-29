@@ -1,14 +1,16 @@
-# SageMaker 에서 Llama3-8B 파인 튜닝하기
+# SageMaker 에서 Llama3-8B 파인 튜닝, 모델 배포 및 추론 하기
 
-Updated: July 17, 2024
+Updated: July 29, 2024
 
 ---
 
-SageMaker 에서 Llama3-8B 파인 튜닝을 소개 합니다.<br>
-PyTorch FSDP (Fully Sharded Distributed Training) 및 QLoRA 를 사용하여 파인 튜닝을 합니다. 동일 훈련 코드로 SageMaker Training 을 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge, ml.g5.48xlarge, ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
+SageMaker 에서 Llama3-8B 파인 튜닝 및 모델 배포 및 추론을 소개 합니다.<br>
+- PyTorch FSDP (Fully Sharded Distributed Training) 및 QLoRA 를 사용하여 파인 튜닝을 합니다. 동일 훈련 코드로 SageMaker Training 을 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge, ml.g5.48xlarge, ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
+- 또한 로컬 머신에서 파인 튜닝된 모델을 SageMaker Endpoint 에 추론을 하기 위해서, 로컬에서 Hugging Face TGI 도커 컨테이너로 모델을 서빙하는 테스트 및 SageMaker Endpoint 에 [Inference Component](https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/) 로 추론을 실습 할 수 있습니다.
 <br><br>
 이 실습 과정은 제한된 GPU 리소스로 인해서, <u>모델의 품질 보다는 "코드가 동작" 되는 관점에서 준비 했습니다. </u><br>
-충분한 GPU 리소스가 있으신 환경에서는, 코드 수정 없이 파라미터인 인스턴스 타입, 인스턴스 개수, 데이터 셋 사이즈 수정, Epoch 조정 등의 코드를 수정하여 모델을 최적화 할 수 있습니다. 
+- 충분한 GPU 리소스가 있으신 환경에서는, 코드 수정 없이 파라미터인 인스턴스 타입, 인스턴스 개수, 데이터 셋 사이즈 수정, Epoch 조정 등의 코드를 수정하여 모델을 최적화 할 수 있습니다. 
+- 전체 과정의 실습의 소요 시간은 약 2~3 시간 정도 걸리고, 총 발생 비용은 $10 이하로 발생 됩니다.
  
 ---
 ## 1. 파인 튜닝 유스 케이스
@@ -41,7 +43,8 @@ Assistant: KOTRA 코트라 는 한국벤처투자 BMW와 스타트업 개러지 
 - [setup/README.md](setup/README.md)
 
 ## 4. 노트북 실행 순서
-아래와 같은 노트북을 차례로 실행 하시면 됩니다. notebook/01-naver-news-fsdp-QLoRA 하위의
+### 4.1. 기본 End-to-End (데이터 준비, 파인 튜닝, 모델 배포 및 추론)
+아래와 같은 노트북을 차례로 실행 하시면 됩니다. notebook/01-naver-news-fsdp-QLoRA 하위의 노트북 입니다.
 - 01-Prepare-Dataset-KR-News.ipynb  
     - 두가지 종류의 데이터 셋 준비 합니다.
         - Full dataset : 전체 데이터 셋 입니다. (Training: 22,194, Validation: 2466, Test: 27840)
@@ -52,10 +55,20 @@ Assistant: KOTRA 코트라 는 한국벤처투자 BMW와 스타트업 개러지 
 - 03-SageMaker-Training.ipynb
     - SageMaker Local Mode 로  훈련이 가능합니다. 이렇게 테스트 후에 SageMaker Cloud 에서 훈련하시면 됩니다. USE_LOCAL_MODE = True 변수로 조절 하시면 됩니다.
     - run_debug_sample = True 에 따라서 전체 데이터셋으로 훈련을 할지, 일부 샘플 데이터로 빠르게 훈련 코드를 테스트 할 수 있습니다.
+- [Option] 아래는 옵션 입니다. 이 노트북은 최적의 성능을 내기 위해서 One ml.g5.48xlarge 를 사용, 전체 훈련 데이터 셋 사용, Epoch=3 으로 훈련을 합니다. 전체 훈련 시간은 약 3시간 입니다.
+    - 03-1-Option-SageMaker-Training.ipynb    
 - 04-SageMaker-Inference.ipynb
     - SageMaker Endpoint 에서 추론을 하며, 실제 Test 데이터 셋의 뉴스 기사로 요약을 해봅니다. 
 
-## 5. 완료 화면
+### 4.2. 모델 배포 및 추론 심화 ( Bring Your Own Model )
+notebook/02-naver-news-llama3-inference 하위의 노트북 입니다.
+- 01-SageMaker-Inference-Local-Test.ipynb
+    - 이 노트북은 Hugging Face TGI 도커 이미지를 다운로드 받고, 로컬 머신에서 모델 아티펙터를 컨테이너로 올려 보는 과정을 합니다. 아래는 컨테이너가 올라와서 추론 준비 상태의 화면 입니다.
+    - ![ tgi_container_ready.png](notebook/02-naver-news-llama3-inference/img/tgi_container_ready.png)
+- 02-SageMaker-Inference-Component.ipynb
+    - 파인 튜닝한 모델을 [SageMaker Inference Component](https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/) 로 직접 배포하고, 추혼을 하는 예시 입니다.
+
+## 5. 추론 예시 화면
 - 아래는 notebook/04-SageMaker-Inference.ipynb 노트북의 마지막을 실행 했습니다. (참고로 아래의 예시는 Sample 부분 데이터 셋 보다는 22K 전체 데이터 셋과 Epoc: 3 및 ml.p4d.24xlarge 에서 예시 추론 결과 입니다.)
 <br><br>
 - ![inference_example.png](img/inference_example.png)
