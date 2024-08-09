@@ -283,7 +283,7 @@ class bedrock_utils():
                 print("A client error occurred: %s", message)
 
         
-        print (output)
+        #print (output)
         
         return output
 

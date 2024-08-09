@@ -1,0 +1,7 @@
+컬럼 명,컬럼 한글명,DATA TYPE
+날짜,날짜,DATE
+app_a,app a의 전력사용 양,BIGINT
+app_b,app b의 전력사용 양,BIGINT
+app_c,app c의 전력사용 양,BIGINT
+app_d,app d의 전력사용 양,BIGINT
+app_e,app e의 전력사용 양,BIGINT
