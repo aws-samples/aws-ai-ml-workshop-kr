@@ -37,7 +37,7 @@ class llm_call():
             messages=messages,
             verbose=self.verbose
         )
-
+        #print (messages)
         ai_message = self._message_format(role="assistant", message=response["text"])
         messages.append(ai_message)
 
