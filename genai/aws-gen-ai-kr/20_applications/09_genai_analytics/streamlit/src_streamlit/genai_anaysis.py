@@ -12,7 +12,6 @@ from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.runnables import RunnableConfig
 from utils.bedrock import bedrock_utils, bedrock_chain
 from langgraph.graph import END, StateGraph
-
 import streamlit as st
 
 class llm_call():
@@ -23,33 +22,6 @@ class llm_call():
         self.verbose = kwargs.get("verbose", False)
         self.bedrock_converse_api = bedrock_utils.converse_api
 
-        #self.chain = bedrock_chain(bedrock_utils.converse_api) | bedrock_chain(bedrock_utils.outputparser)
-
-    def _clean_text(self, text):
-        return re.sub(r'\s+', ' ', text).strip()
-        
-    def _stream_output(self, **kwargs):
-
-        llm_response = kwargs["response"]
-        stream = kwargs["stream"]
-        stream_response = llm_response["stream"]
-        callback = kwargs["callback"]
-        chat_container = kwargs["chat_container"]
-        output = {"text": ""}
-
-        if stream:
-            for event in stream_response:
-                if "contentBlockDelta" in event:
-                    delta = event['contentBlockDelta']['delta']
-                    output["text"] += delta['text']
-                    #chat_container.markdown(delta['text']) # in streamlit
-                    callback.on_llm_new_token(delta['text']) # in log
-                    
-                    #clean_response = self._clean_text(output["text"])
-                    chat_container.markdown(output["text"]) # in streamlit
-
-        return output
-    
     def _message_format(self, role, message):
 
         if role == "user":
@@ -69,7 +41,8 @@ class llm_call():
         
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
-        chat_container = kwargs["chat_container"]
+        assistant_placeholder = kwargs["assistant_placeholder"]
+        node_name = kwargs["node_name"]
         
         response = bedrock_utils.converse_api( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
             llm=self.llm,
@@ -77,8 +50,23 @@ class llm_call():
             messages=messages,
             verbose=self.verbose
         )
-        response["chat_container"] = chat_container
-        response_completed = self._stream_output(**response) 
+
+        response_completed = {"text": ""}
+        def _stream():
+            stream = response["response"]["stream"]
+            if stream:
+                for event in stream:
+                    if "contentBlockDelta" in event:
+                        delta = event['contentBlockDelta']['delta']
+                        response_completed["text"] += delta['text']
+                        yield event["contentBlockDelta"]["delta"]["text"]
+
+        tab_placeholder = st.session_state["tabs"][node_name].empty()
+        with tab_placeholder.container():
+            st.write_stream(_stream)
+
+        response["assistant_placeholder"] = assistant_placeholder
+        response["node_name"] = node_name
         ai_message = self._message_format(role="assistant", message=response_completed["text"])
         messages.append(ai_message)
         return response_completed, messages
@@ -95,7 +83,6 @@ class GraphState(TypedDict):
     img_bytes: str
     chart_desc: str
     prev_node: str
-    session_state: Any
 
 class genai_analyzer():
 
@@ -120,12 +107,12 @@ class genai_analyzer():
         return message["content"][0]["text"]
 
     def _get_message_from_string(self, role, string, img=None):
-        
+
         message = {
             "role": role,
             "content": [{"text": dedent(string)}]
         }
-        
+
         if img is not None:
             img_message = {
                 "image": {
@@ -176,11 +163,12 @@ class genai_analyzer():
         
     def _graph_definition(self, **kwargs):
 
-        def agent(state):
+        def agent(state, config):
 
             print("---CALL AGENT---")
+            node_name = "agent"
             ask = state["ask"]
-            chat_container = state["session_state"]["chat_container"]
+            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             """
             현재 상태를 기반으로 에이전트 모델을 호출하여 응답을 생성합니다. 질문에 따라 검색 도구를 사용하여 검색을 결정하거나 단순히 종료합니다.
@@ -241,10 +229,13 @@ class genai_analyzer():
             message = self._get_message_from_string(role="user", string=ask)
             self.messages.append(message)
 
+
+        
             resp, messages_updated = self.llm_caller.invoke(
                 messages=self.messages,
                 system_prompts=system_prompts,
-                chat_container=chat_container
+                assistant_placeholder=assistant_placeholder,
+                node_name=node_name
             )
             self.messages = messages_updated
             
@@ -279,8 +270,9 @@ class genai_analyzer():
         def ask_reformulation(state):
 
             print("---ASK REFORMULATION---")
+            node_name = "ask_reformulation"
             ask = state["ask"]
-            chat_container = state["session_state"]["chat_container"]
+            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             system_prompts = dedent(
                 '''
@@ -325,11 +317,16 @@ class genai_analyzer():
                 "ask": ask
             }
             user_prompts = user_prompts.format(**context)
-            
+
             message = self._get_message_from_string(role="user", string=user_prompts)            
             self.messages.append(message)
 
-            resp, messages_updated = self.llm_caller.invoke(messages=self.messages, system_prompts=system_prompts, chat_container=chat_container)
+            resp, messages_updated = self.llm_caller.invoke(
+                messages=self.messages,
+                system_prompts=system_prompts,
+                assistant_placeholder=assistant_placeholder,
+                node_name=node_name
+            )
 
             results = eval(resp['text'])
             target_apps, ask_reformulation = results["target_apps"], results["ask_reformulation"]
@@ -340,10 +337,11 @@ class genai_analyzer():
         def code_generation_for_chart(state):
 
             print("---CODE GENERATION FOR CHART---")
+            node_name="code_generation_for_chart"
             ask_reformulation = state["ask_refo"]
             previous_node = state["prev_node"]
             code_error = state["code_err"]
-            chat_container = state["session_state"]["chat_container"]
+            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             system_prompts = dedent(
                 '''
@@ -419,10 +417,15 @@ class genai_analyzer():
             }
             user_prompts = user_prompts.format(**context)
 
-            message = self._get_message_from_string(role="user", string=user_prompts)            
+            message = self._get_message_from_string(role="user", string=user_prompts)
             self.messages.append(message)
 
-            resp, messages_updated = self.llm_caller.invoke(messages=self.messages, system_prompts=system_prompts, chat_container=chat_container)
+            resp, messages_updated = self.llm_caller.invoke(
+                messages=self.messages,
+                system_prompts=system_prompts,
+                assistant_placeholder=assistant_placeholder,
+                node_name=node_name
+            )
             self.messages = messages_updated
 
             results = eval(resp['text'])
@@ -463,8 +466,9 @@ class genai_analyzer():
         def chart_description(state):
 
             print("---CHART DESCRIPTION---")
+            node_name = "chart_description"
             img_path = state["img_path"] # PNG 파일 경로
-            chat_container = state["session_state"]["chat_container"]
+            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             system_prompts = dedent(
                 '''
@@ -537,7 +541,12 @@ class genai_analyzer():
             message = self._get_message_from_string(role="user", string=user_prompts, img=self.img_bytes)
             self.messages.append(message)
 
-            resp, messages_updated = self.llm_caller.invoke(messages=self.messages, system_prompts=system_prompts, chat_container=chat_container)
+            resp, messages_updated = self.llm_caller.invoke(
+                messages=self.messages,
+                system_prompts=system_prompts,
+                assistant_placeholder=assistant_placeholder,
+                node_name=node_name
+            )
             self.messages = messages_updated
             chart_description = self._get_string_from_message(self.messages[-1])
              
@@ -589,24 +598,29 @@ class genai_analyzer():
 
         # 그래프를 컴파일합니다.
         self.app = workflow.compile(checkpointer=memory)        
-        self.config = RunnableConfig(recursion_limit=100, configurable={"thread_id": "Text2Chart"})
+        #self.config = RunnableConfig(recursion_limit=100, configurable={"thread_id": "Text2Chart"})
 
     def invoke(self, **kwargs):
-        
-        inputs = self.state(
-            ask=kwargs["ask"],
-            session_state=kwargs["session_state"]
-        )
 
-        #self.session_state = kwargs["session_state"]
-        st_callback = kwargs["st_callback"]
-        self.config = RunnableConfig(recursion_limit=100, configurable={"thread_id": "Text2Chart"}, callbacks=[st_callback])
-        
+        ask = kwargs["ask"]
+        st_callbacks = kwargs["st_callback"]
+
+        self.config = RunnableConfig(
+            recursion_limit=100,
+            configurable={"thread_id": "Text2Chart"},
+            callbacks=[st_callbacks]
+        ) # config for graph
+
+        inputs = self.state(ask=ask)
+
         # app.stream을 통해 입력된 메시지에 대한 출력을 스트리밍합니다.
         for output in self.app.stream(inputs, self.config, stream_mode="values"):
+
+
             # 출력된 결과에서 키와 값을 순회합니다.
             for key, value in output.items():
-                kwargs["session_state"]["chat_container"].markdown(value) # in streamlit
+                #kwargs["session_state"]["chat_container"].markdown(value) # in streamlit
+                #st_callback.on_llm_new_token(value)
                 # 노드의 이름과 해당 노드에서 나온 출력을 출력합니다.
                 pprint.pprint(f"Output from node '{key}':")
                 pprint.pprint("---")
