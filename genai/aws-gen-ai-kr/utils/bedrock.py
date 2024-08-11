@@ -8,6 +8,7 @@ from typing import Optional
 # External Dependencies:
 import json
 import boto3
+from textwrap import dedent
 from botocore.config import Config
 from botocore.exceptions import ClientError
 
@@ -156,6 +157,23 @@ class bedrock_chain:
 
 class bedrock_utils():
 
+    @staticmethod
+    def get_message_from_string(role, string, img=None):
+        message = {
+            "role": role,
+            "content": [{"text": dedent(string)}]
+        }
+        if img is not None:
+            img_message = {
+                "image": {
+                    "format": 'png',
+                    "source": {"bytes": img}
+                }
+            }
+            message["content"].append(img_message)
+
+        return message
+        
     @staticmethod
     def get_system_prompt(system_prompts):
 
