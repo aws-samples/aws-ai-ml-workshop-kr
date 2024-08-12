@@ -2,6 +2,7 @@ import sys, os
 module_path = "../../.."
 sys.path.append(os.path.abspath(module_path))
 
+import io
 import inspect
 import pandas as pd
 import streamlit as st
@@ -14,10 +15,6 @@ from streamlit.runtime.scriptrunner import add_script_run_ctx, get_script_run_ct
 from utils import bedrock
 from utils.bedrock import bedrock_model, bedrock_info, bedrock_utils
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-#from langchain.callbacks import StreamlitCallbackHandler
-
-
-
 
 ##################### Functions ########################
 def get_dataset():
@@ -80,10 +77,22 @@ def get_streamlit_cb(parent_container: DeltaGenerator):
 
     return st_cb
 
-def print_history():
-    for msg in st.session_state["messages"]:
-        st.chat_message(msg.role).write(msg.content)
+def display_chat_history():
 
+    # recent_ask = st.session_state["recent_ask"]
+    # with st.chat_message("user"):
+    #     st.write(recent_ask)
+
+    tab_category = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
+    tabs = st.tabs(tab_category)
+    #with st.chat_message("assistant"):
+    for tab, node_name in zip(tabs, tab_category):
+        with tab:
+            if node_name == "chart_generation":
+                image_stream = io.BytesIO(st.session_state["ai_results"][node_name])
+                st.image(image_stream)
+            else:
+                st.write(st.session_state["ai_results"][node_name]["text"])
 
 
 ####################### Application ###############################
@@ -101,9 +110,7 @@ llm_text = get_bedrock_model()
 
 # Store the initial value of widgets in session state
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [
-        {"role": "assistant", "content": "How can I help you?"}
-    ]
+    st.session_state["messages"] = []
 
 if "analyzer" not in st.session_state:
     st.session_state["analyzer"] = genai_analyzer(
@@ -112,11 +119,17 @@ if "analyzer" not in st.session_state:
         column_info=column_info,
         streamlit=True,
     )
+if "ai_results" not in st.session_state:
+    node_names = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
+    st.session_state["ai_results"] = {node_name:[] for node_name in node_names}
 
+if "recent_ask" not in st.session_state:
+    st.session_state["recent_ask"] = ""
+        
 if user_input := st.chat_input():
-
-    add_history("user", user_input)
+    
     st.chat_message("user").write(user_input)
+    #st.session_state["recent_ask"] = user_input
 
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"])
     tabs = {
@@ -130,45 +143,18 @@ if user_input := st.chat_input():
     assistant_placeholder = st.empty()
     with assistant_placeholder.container():
         with st.chat_message("assistant"):
-            st_callback = get_streamlit_cb(assistant_placeholder)
-            st.session_state["assistant_placeholder"] = assistant_placeholder
-            st.session_state["tabs"] = tabs
-            st.session_state["analyzer"].invoke(
-                ask=user_input,
-                st_callback=st_callback
-            )
-
+            with st.expander("결과 확인 하기 ⬇️"):
+                st_callback = get_streamlit_cb(assistant_placeholder)
+                st.session_state["assistant_placeholder"] = assistant_placeholder
+                st.session_state["tabs"] = tabs
+                st.session_state["analyzer"].invoke(
+                    ask=user_input,
+                    st_callback=st_callback
+                )
+                display_chat_history()
     
-    # with st.chat_message("assistant"):
-        
-    #     st.session_state["chat_container"] = st.empty()
-    #     #st.session_state["chat_container"] = st.session_state["chat_container"].container()
-        
-    #     st_callback = get_streamlit_cb(st.session_state["chat_container"])
-
-    #     st.session_state["analyzer"].invoke(
-    #         ask=user_input,
-    #         session_state=st.session_state,
-    #         st_callback=st_callback
-    #     )
-
-
-
-   
-                
-
-#         #answer = st.write_stream(stream)
-        
-#         #response["chat_container"] = chat_container
-#         #outputparser(**response)
-#         #print (response)
-
-
-# #         stream_response = st.session_state["chain"].stream(
-# #             {"question": user_input}
-# #         )  # 문서에 대한 질의
-# #         ai_answer = ""
-# #         for chunk in stream_response:
-# #             ai_answer += chunk
-# #             chat_container.markdown(ai_answer)
-# #         add_history("ai", ai_answer)
+    # #if len(st.session_state["messages"]) > 0:
+    # recent_ask = st.session_state["recent_ask"]
+    # with st.chat_message("user"):
+    #     st.write(recent_ask)
+    # display_chat_history()

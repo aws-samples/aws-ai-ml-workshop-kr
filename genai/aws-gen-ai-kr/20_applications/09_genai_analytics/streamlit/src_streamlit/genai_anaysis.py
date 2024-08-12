@@ -1,4 +1,3 @@
-import re
 import io
 import pprint
 import base64
@@ -36,7 +35,7 @@ class llm_call():
             }
 
         return message_format
-            
+        
     def invoke(self, **kwargs):
         
         system_prompts = kwargs.get("system_prompts", None)
@@ -68,6 +67,7 @@ class llm_call():
         response["assistant_placeholder"] = assistant_placeholder
         response["node_name"] = node_name
         ai_message = self._message_format(role="assistant", message=response_completed["text"])
+        st.session_state["ai_results"][node_name] = response_completed # show previous results in app
         messages.append(ai_message)
         return response_completed, messages
 
@@ -191,13 +191,14 @@ class genai_analyzer():
                 2. 차트, 그래프, 데이터 시각화와 관련된 키워드를 찾으세요.
                 3. 수치 데이터나 통계 정보의 존재 여부를 확인하세요.
                 4. 분석 결과를 바탕으로 차트 생성 필요성을 판단하세요.
-                5. 판단이 모호한 경우, 사용자에게 직접 차트 생성 의도를 물어보세요.
+                5. 주어진 데이터 (dataset) 및 컬럼 정보 (column_info)를 참고하여 차트 생성 가능 여부 또한 고려하세요.
+                6. 데이터로부터 답변할 수 없는 요청 (e.g., 데이터에 존재하지 않는 앱에 대한 요청)을 한다면 최종 결정을 "END"로 하세요.
+                7. 판단이 모호한 경우, 사용자에게 직접 차트 생성 의도를 물어보세요.
                 </instruction>
                 
                 <consideration>
                 - 사용자의 의도를 정확히 파악하는 것이 중요합니다.
                 - 명시적인 차트 요청이 없더라도 데이터 시각화가 유용할 수 있는 상황을 고려하세요.
-                - 주어진 데이터 (dataset) 및 컬럼 정보 (column_info)를 참고하여 생성 가능 여부 또한 고려하세요.
                 - 단순한 질문이나 대화 종료 요청은 차트 생성이 불필요할 수 있습니다.
                 - 기존 요청 결과에 대한 추가사항이라고 판단되면, 추가 코드 생성을 하지 말고 "GENERATE_CHART"를 출력하세요.
                 </consideration>
@@ -205,7 +206,7 @@ class genai_analyzer():
                 <output_format>
                 결정에 따라 다음 중 하나를 출력하세요:
                 1. "GENERATE_CHART (간단한 이유)" - 차트 생성이 필요한 경우
-                2. "END (간단한 이유)" - 차트 생성이 불필요하거나 대화를 종료해야 하는 경우
+                2. "END (간단한 이유)" - 차트 생성이 할 수 없거나 대화를 종료해야 하는 경우
                 
                 예시:
                 GENERATE_CHART (사용자가 연간 수익 추이 그래프 요청)
@@ -227,17 +228,17 @@ class genai_analyzer():
             system_prompts = bedrock_utils.get_system_prompt(system_prompts=system_prompts)
             
             message = self._get_message_from_string(role="user", string=ask)
-            self.messages.append(message)
+            #self.messages.append(message)
+            st.session_state["messages"].append(message)
 
-
-        
             resp, messages_updated = self.llm_caller.invoke(
-                messages=self.messages,
+                messages=st.session_state["messages"],
                 system_prompts=system_prompts,
                 assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
-            self.messages = messages_updated
+            #self.messages = messages_updated
+            st.session_state["messages"] = messages_updated
             
             return self.state(ask=ask, prev_node="AGENT")
 
@@ -255,8 +256,8 @@ class genai_analyzer():
             """
         
             print("\n---DECIDE TO CHART GENERATION---")
-            #messages = state["messages"]
-            last_message = self._get_string_from_message(self.messages[-1])
+            #last_message = self._get_string_from_message(self.messages[-1])
+            last_message = self._get_string_from_message(st.session_state["messages"][-1])
             
             # 함수 호출이 없으면 종료합니다.
             if "GENERATE_CHART" not in last_message:
@@ -319,10 +320,11 @@ class genai_analyzer():
             user_prompts = user_prompts.format(**context)
 
             message = self._get_message_from_string(role="user", string=user_prompts)            
-            self.messages.append(message)
+            #self.messages.append(message)
+            st.session_state["messages"].append(message)
 
             resp, messages_updated = self.llm_caller.invoke(
-                messages=self.messages,
+                messages=st.session_state["messages"],
                 system_prompts=system_prompts,
                 assistant_placeholder=assistant_placeholder,
                 node_name=node_name
@@ -330,7 +332,8 @@ class genai_analyzer():
 
             results = eval(resp['text'])
             target_apps, ask_reformulation = results["target_apps"], results["ask_reformulation"]
-            self.messages=messages_updated
+            #self.messages=messages_updated
+            st.session_state["messages"] = messages_updated
 
             return self.state(target_apps=target_apps, ask_refo=ask_reformulation, prev_node="ASK_REFORMULATION")
 
@@ -418,15 +421,17 @@ class genai_analyzer():
             user_prompts = user_prompts.format(**context)
 
             message = self._get_message_from_string(role="user", string=user_prompts)
-            self.messages.append(message)
+            #self.messages.append(message)
+            st.session_state["messages"].append(message)
 
             resp, messages_updated = self.llm_caller.invoke(
-                messages=self.messages,
+                messages=st.session_state["messages"],
                 system_prompts=system_prompts,
                 assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
-            self.messages = messages_updated
+            #self.messages = messages_updated
+            st.session_state["messages"] = messages_updated
 
             results = eval(resp['text'])
             code, img_path = results["code"], results["img_path"]
@@ -436,12 +441,21 @@ class genai_analyzer():
         def chart_generation(state):
 
             print("---CHART GENERATION---")
-            df, code = self.df, state["code"]
+            node_name ="chart_generation"
+            df, code, img_path, ask = self.df, state["code"], state["img_path"], state["ask"]
 
             try:
                 results = exec(code, {"df": df})
-                return self.state(code_err="None", prev_node="CHART_GENERATION")
+                img_bytes, img_base64 = self._png_to_bytes(img_path)
+                st.session_state["ai_results"][node_name] = img_bytes # show previous results in app
+                image_stream = io.BytesIO(img_bytes)
                 
+                tab_placeholder = st.session_state["tabs"][node_name].empty()
+                with tab_placeholder.container():
+                    st.image(image_stream, caption=f'Chart for your ask ({ask})')
+                    
+                return self.state(code_err="None", prev_node="CHART_GENERATION")
+
             except Exception as e:
                 error_type = type(e).__name__
                 error_message = str(e)
@@ -452,7 +466,7 @@ class genai_analyzer():
                 return self.state(code_err=error, prev_node="CHART_GENERATION")
 
         def code_checker(state):
-
+            
             print("---CODE CHECKER---")
             code_error = state["code_err"]
 
@@ -522,7 +536,7 @@ class genai_analyzer():
                 </consideration>
                 '''
              )
-
+            
             system_prompts = bedrock_utils.get_system_prompt(system_prompts=system_prompts)
 
             user_prompts = dedent(
@@ -531,26 +545,26 @@ class genai_analyzer():
                 Here is chart: 
                 '''
             )
-
-            context = {
-                "ask": ask_reformulation
-            }
+            
+            context = {"ask": ask_reformulation}
             user_prompts = user_prompts.format(**context)
             
             self.img_bytes, img_base64 = self._png_to_bytes(img_path)
             message = self._get_message_from_string(role="user", string=user_prompts, img=self.img_bytes)
-            self.messages.append(message)
+            #self.messages.append(message)
+            st.session_state["messages"].append(message)
 
             resp, messages_updated = self.llm_caller.invoke(
-                messages=self.messages,
+                messages=st.session_state["messages"],
                 system_prompts=system_prompts,
                 assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
-            self.messages = messages_updated
-            chart_description = self._get_string_from_message(self.messages[-1])
+            #self.messages = messages_updated
+            st.session_state["messages"] = messages_updated
+            chart_description = self._get_string_from_message(st.session_state["messages"][-1])
              
-            return self.state(chart_desc=chart_description, prev_node="CHART_DESCRIPTION", session_state="")
+            return self.state(chart_desc=chart_description, prev_node="CHART_DESCRIPTION")
             
         # langgraph.graph에서 StateGraph와 END를 가져옵니다.
         workflow = StateGraph(self.state)
@@ -625,7 +639,7 @@ class genai_analyzer():
                 pprint.pprint(f"Output from node '{key}':")
                 pprint.pprint("---")
                 # 출력 값을 예쁘게 출력합니다.
-                pprint.pprint(value, indent=2, width=80, depth=None)
+                #pprint.pprint(value, indent=2, width=80, depth=None)
             # 각 출력 사이에 구분선을 추가합니다.
             pprint.pprint("\n---\n")
     
