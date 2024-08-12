@@ -77,15 +77,37 @@ def get_streamlit_cb(parent_container: DeltaGenerator):
 
     return st_cb
 
+
+
 def display_chat_history():
 
-    # recent_ask = st.session_state["recent_ask"]
-    # with st.chat_message("user"):
-    #     st.write(recent_ask)
+    st.session_state["history_ask"].append(st.session_state["recent_ask"])
+
+    node_names = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
+
+    recent_answer = {}
+    for node_name in node_names:
+        print ("node_name", node_name)
+        if node_name != "chart_generation": recent_answer[node_name] = st.session_state["ai_results"][node_name]["text"]
+        else: recent_answer[node_name] = io.BytesIO(st.session_state["ai_results"][node_name])
+    st.session_state["history_answer"].append(recent_answer)
+
+    for user, assistant in zip(st.session_state["history_ask"], st.session_state["history_answer"]):
+        
+        with st.chat_message("user"):
+            st.write(user)
+            
+        tabs = st.tabs(node_names)
+        with st.chat_message("assistant"):
+            for tab, node_name in zip(tabs, node_names):
+                with tab:
+                    if node_name == "chart_generation": st.image(assistant[node_name])
+                    else: st.write(assistant[node_name])
+            
+def display_results():
 
     tab_category = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
     tabs = st.tabs(tab_category)
-    #with st.chat_message("assistant"):
     for tab, node_name in zip(tabs, tab_category):
         with tab:
             if node_name == "chart_generation":
@@ -93,6 +115,7 @@ def display_chat_history():
                 st.image(image_stream)
             else:
                 st.write(st.session_state["ai_results"][node_name]["text"])
+
 
 
 ####################### Application ###############################
@@ -125,11 +148,23 @@ if "ai_results" not in st.session_state:
 
 if "recent_ask" not in st.session_state:
     st.session_state["recent_ask"] = ""
+
+if "history_ask" not in st.session_state:
+    st.session_state["history_ask"] = []
+
+if "history_answer" not in st.session_state:
+    st.session_state["history_answer"] = []
+
+if "current_node" not in st.session_state:
+    st.session_state["current_node"] = ""
         
+
+if len(st.session_state["messages"]) > 0: display_chat_history()
+    
 if user_input := st.chat_input():
     
     st.chat_message("user").write(user_input)
-    #st.session_state["recent_ask"] = user_input
+    st.session_state["recent_ask"] = user_input
 
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"])
     tabs = {
@@ -139,22 +174,14 @@ if user_input := st.chat_input():
         "chart_generation": tab4,
         "chart_description": tab5
     }
-
-    assistant_placeholder = st.empty()
-    with assistant_placeholder.container():
-        with st.chat_message("assistant"):
-            with st.expander("결과 확인 하기 ⬇️"):
-                st_callback = get_streamlit_cb(assistant_placeholder)
-                st.session_state["assistant_placeholder"] = assistant_placeholder
-                st.session_state["tabs"] = tabs
-                st.session_state["analyzer"].invoke(
-                    ask=user_input,
-                    st_callback=st_callback
-                )
-                display_chat_history()
     
-    # #if len(st.session_state["messages"]) > 0:
-    # recent_ask = st.session_state["recent_ask"]
-    # with st.chat_message("user"):
-    #     st.write(recent_ask)
-    # display_chat_history()
+    with st.chat_message("assistant"):
+        with st.spinner(f'Thinking...'):
+            st_callback = get_streamlit_cb(st.container())
+            st.session_state["tabs"] = tabs
+            st.session_state["analyzer"].invoke(
+                ask=user_input,
+                st_callback=st_callback
+            )
+            st.write("Done")
+

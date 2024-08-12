@@ -40,7 +40,6 @@ class llm_call():
         
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
-        assistant_placeholder = kwargs["assistant_placeholder"]
         node_name = kwargs["node_name"]
         
         response = bedrock_utils.converse_api( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
@@ -64,7 +63,6 @@ class llm_call():
         with tab_placeholder.container():
             st.write_stream(_stream)
 
-        response["assistant_placeholder"] = assistant_placeholder
         response["node_name"] = node_name
         ai_message = self._message_format(role="assistant", message=response_completed["text"])
         st.session_state["ai_results"][node_name] = response_completed # show previous results in app
@@ -167,8 +165,8 @@ class genai_analyzer():
 
             print("---CALL AGENT---")
             node_name = "agent"
+            st.session_state["current_node"] = node_name
             ask = state["ask"]
-            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             """
             현재 상태를 기반으로 에이전트 모델을 호출하여 응답을 생성합니다. 질문에 따라 검색 도구를 사용하여 검색을 결정하거나 단순히 종료합니다.
@@ -234,7 +232,6 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
             #self.messages = messages_updated
@@ -272,8 +269,8 @@ class genai_analyzer():
 
             print("---ASK REFORMULATION---")
             node_name = "ask_reformulation"
+            st.session_state["current_node"] = node_name
             ask = state["ask"]
-            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             system_prompts = dedent(
                 '''
@@ -326,7 +323,6 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
 
@@ -341,10 +337,10 @@ class genai_analyzer():
 
             print("---CODE GENERATION FOR CHART---")
             node_name="code_generation_for_chart"
+            st.session_state["current_node"] = node_name
             ask_reformulation = state["ask_refo"]
             previous_node = state["prev_node"]
             code_error = state["code_err"]
-            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             system_prompts = dedent(
                 '''
@@ -362,7 +358,7 @@ class genai_analyzer():
                 </input>
                 
                 <output_format>
-                JSON 형식으로 다음 정보를 포함하여 응답하세요:
+                JSON 형식으로 다음 형태로 응답하세요. 절대 JSON 이외 텍스트는 넣지 마세요.:
                 {{
                     "code": """사용자의 요청을 충족시키는 차트를 생성하는 Python 코드"""
                     "img_path": """생성된 차트의 저장 경로"""
@@ -377,7 +373,7 @@ class genai_analyzer():
                 5. 데이터 전처리가 필요한 경우 pandas를 사용하여 데이터를 적절히 가공하세요.
                 6. 차트의 제목, 축 레이블, 범례 등을 명확하게 설정하세요.
                 7. 필요한 경우 차트의 색상, 스타일, 크기 등을 조정하여 가독성을 높이세요.
-                8. 코드에 주석을 달아 각 단계를 설명하세요.
+                8. 코드에 주석을 달아 각 단계를 설명하세요. 주석은 "#####"를 이용하세요.
                 9. 코드 실행 시 발생할 수 있는 예외 상황을 고려하여 적절한 예외 처리를 포함하세요.
                 10. 생성된 차트를 저장하거나 표시하는 코드를 포함하세요.
                 11. 생성된 코드 수행에 필요한 패키지들은 반드시 import 하세요.
@@ -427,7 +423,6 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
             #self.messages = messages_updated
@@ -442,6 +437,7 @@ class genai_analyzer():
 
             print("---CHART GENERATION---")
             node_name ="chart_generation"
+            st.session_state["current_node"] = node_name
             df, code, img_path, ask = self.df, state["code"], state["img_path"], state["ask"]
 
             try:
@@ -481,8 +477,8 @@ class genai_analyzer():
 
             print("---CHART DESCRIPTION---")
             node_name = "chart_description"
+            st.session_state["current_node"] = node_name
             img_path = state["img_path"] # PNG 파일 경로
-            assistant_placeholder = st.session_state["assistant_placeholder"]
 
             system_prompts = dedent(
                 '''
@@ -557,7 +553,6 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                assistant_placeholder=assistant_placeholder,
                 node_name=node_name
             )
             #self.messages = messages_updated
@@ -611,7 +606,7 @@ class genai_analyzer():
         memory = MemorySaver()
 
         # 그래프를 컴파일합니다.
-        self.app = workflow.compile(checkpointer=memory)        
+        self.app = workflow.compile(checkpointer=memory)
         #self.config = RunnableConfig(recursion_limit=100, configurable={"thread_id": "Text2Chart"})
 
     def invoke(self, **kwargs):
@@ -639,7 +634,7 @@ class genai_analyzer():
                 pprint.pprint(f"Output from node '{key}':")
                 pprint.pprint("---")
                 # 출력 값을 예쁘게 출력합니다.
-                #pprint.pprint(value, indent=2, width=80, depth=None)
+                pprint.pprint(value, indent=2, width=80, depth=None)
             # 각 출력 사이에 구분선을 추가합니다.
             pprint.pprint("\n---\n")
     
