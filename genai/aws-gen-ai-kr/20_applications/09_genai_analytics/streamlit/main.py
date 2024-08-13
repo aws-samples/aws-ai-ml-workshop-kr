@@ -33,8 +33,9 @@ def get_bedrock_model():
         region=os.environ.get("AWS_DEFAULT_REGION", None),
     )
 
-    llm_text = bedrock_model(
+    llm_sonnet = bedrock_model(
         model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-Sonnet"),
+        #model_id=bedrock_info.get_model_id(model_name="Claude-V3-Haiku"),
         bedrock_client=boto3_bedrock,
         stream=True,
         callbacks=[StreamingStdOutCallbackHandler()],
@@ -46,7 +47,21 @@ def get_bedrock_model():
         }
     )
 
-    return llm_text
+    llm_haiku = bedrock_model(
+        model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-Sonnet"),
+        #model_id=bedrock_info.get_model_id(model_name="Claude-V3-Haiku"),
+        bedrock_client=boto3_bedrock,
+        stream=True,
+        callbacks=[StreamingStdOutCallbackHandler()],
+        inference_config={
+            'maxTokens': 2048,
+            'stopSequences': ["\n\nHuman"],
+            'temperature': 0.01,
+            #'topP': ...,
+        }
+    )
+
+    return llm_sonnet, llm_haiku
 
 def add_history(role, content):
 
@@ -107,7 +122,7 @@ def display_chat_history():
 
 ####################### Initialization ###############################
 df, column_info = get_dataset()
-llm_text = get_bedrock_model()
+llm_sonnet, llm_haiku = get_bedrock_model()
 
 # Store the initial value of widgets in session state
 if "messages" not in st.session_state:
@@ -115,7 +130,8 @@ if "messages" not in st.session_state:
 
 if "analyzer" not in st.session_state:
     st.session_state["analyzer"] = genai_analyzer(
-        llm=llm_text,
+        llm_sonnet=llm_sonnet,
+        llm_haiku=llm_haiku,
         df=df,
         column_info=column_info,
         streamlit=True,
