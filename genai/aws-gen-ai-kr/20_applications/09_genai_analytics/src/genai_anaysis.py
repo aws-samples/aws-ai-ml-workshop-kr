@@ -5,7 +5,8 @@ class llm_call():
 
     def __init__(self, **kwargs):
 
-        self.llm = kwargs["llm"]
+        self.llm_sonnet=kwargs["llm_sonnet"]
+        self.llm_haiku=kwargs["llm_haiku"]
         self.verbose = kwargs.get("verbose", False)
         self.chain = bedrock_chain(bedrock_utils.converse_api) | bedrock_chain(bedrock_utils.outputparser)
 
@@ -30,9 +31,13 @@ class llm_call():
 
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
+        llm_name = kwargs["llm_name"]
+
+        if llm_name == "sonnet": llm = self.llm_sonnet
+        else: llm = self.llm_haiku
     
         response = self.chain( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
-            llm=self.llm,
+            llm=llm,
             system_prompts=system_prompts,
             messages=messages,
             verbose=self.verbose

@@ -17,7 +17,8 @@ class llm_call():
 
     def __init__(self, **kwargs):
 
-        self.llm = kwargs["llm"]
+        self.llm_sonnet=kwargs["llm_sonnet"]
+        self.llm_haiku=kwargs["llm_haiku"]
         self.verbose = kwargs.get("verbose", False)
         self.bedrock_converse_api = bedrock_utils.converse_api
 
@@ -41,9 +42,13 @@ class llm_call():
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
         node_name = kwargs["node_name"]
+        llm_name = kwargs["llm_name"]
+
+        if llm_name == "sonnet": llm = self.llm_sonnet
+        else: llm = self.llm_haiku
         
         response = bedrock_utils.converse_api( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
-            llm=self.llm,
+            llm=llm,
             system_prompts=system_prompts,
             messages=messages,
             verbose=self.verbose
@@ -88,13 +93,15 @@ class genai_analyzer():
 
     def __init__(self, **kwargs):
 
-        self.llm = kwargs["llm"]
+        self.llm_sonnet=kwargs["llm_sonnet"]
+        self.llm_haiku=kwargs["llm_haiku"]
         self.df = kwargs["df"]
         self.column_info = kwargs["column_info"]
         self.state = GraphState
         
         self.llm_caller = llm_call(
-            llm=self.llm,
+            llm_sonnet=self.llm_sonnet,
+            llm_haiku=self.llm_haiku,
             verbose=False
         ) 
         self._graph_definition()
@@ -204,7 +211,7 @@ class genai_analyzer():
                 </consideration>
                 
                 <output_format>
-                결정에 따라 다음 중 하나를 출력하세요:
+                결정에 따라 다음 중 하나를 출력하세요. 반드시 아래 2개중 1개를 선택합니다.:
                 1. "GENERATE_CHART (간단한 이유)" - 차트 생성이 필요한 경우
                 2. "END (간단한 이유)" - 차트 생성이 할 수 없거나 대화를 종료해야 하는 경우
                 
@@ -234,7 +241,8 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                node_name=node_name
+                node_name=node_name,
+                llm_name="sonnet"
             )
             #self.messages = messages_updated
             st.session_state["messages"] = messages_updated
@@ -325,7 +333,8 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                node_name=node_name
+                node_name=node_name,
+                llm_name="sonnet"
             )
 
             results = eval(resp['text'])
@@ -360,7 +369,7 @@ class genai_analyzer():
                 </input>
                 
                 <output_format>
-                JSON 형식으로 다음 형태로 응답하세요. 절대 JSON 이외 텍스트는 넣지 마세요.:
+                JSON 형식으로 다음 형태로 응답하세요. 절대 JSON 포멧 외 텍스트는 넣지 마세요.:
                 {{
                     "code": """사용자의 요청을 충족시키는 차트를 생성하는 Python 코드"""
                     "img_path": """생성된 차트의 저장 경로"""
@@ -375,7 +384,7 @@ class genai_analyzer():
                 5. 데이터 전처리가 필요한 경우 pandas를 사용하여 데이터를 적절히 가공하세요.
                 6. 차트의 제목, 축 레이블, 범례 등을 명확하게 설정하세요.
                 7. 필요한 경우 차트의 색상, 스타일, 크기 등을 조정하여 가독성을 높이세요.
-                8. 코드에 주석을 달아 각 단계를 설명하세요. 주석은 "#####"를 이용하세요.
+                8. 코드에 대한 설명 (주석, "#")은 제외합니다.
                 9. 코드 실행 시 발생할 수 있는 예외 상황을 고려하여 적절한 예외 처리를 포함하세요.
                 10. 생성된 차트를 저장하거나 표시하는 코드를 포함하세요.
                 11. 생성된 코드 수행에 필요한 패키지들은 반드시 import 하세요.
@@ -425,7 +434,8 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                node_name=node_name
+                node_name=node_name,
+                llm_name="sonnet"
             )
             #self.messages = messages_updated
             st.session_state["messages"] = messages_updated
@@ -499,6 +509,7 @@ class genai_analyzer():
                 </output_format>
 
                 <instruction>
+                0. 전체 요약을 100 token이내로 생성
                 1. 사용자의 요청(ask) 분석:
                     - 사용자가 얻고자 하는 정보와 주요 키워드 파악
                 2. 차트 유형 식별:
@@ -555,7 +566,8 @@ class genai_analyzer():
             resp, messages_updated = self.llm_caller.invoke(
                 messages=st.session_state["messages"],
                 system_prompts=system_prompts,
-                node_name=node_name
+                node_name=node_name,
+                llm_name="sonnet"
             )
             #self.messages = messages_updated
             st.session_state["messages"] = messages_updated
