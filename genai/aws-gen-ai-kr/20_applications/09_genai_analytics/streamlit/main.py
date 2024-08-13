@@ -8,7 +8,7 @@ import pandas as pd
 import streamlit as st
 from typing import Callable, TypeVar
 from streamlit.delta_generator import DeltaGenerator
-from src_streamlit.genai_anaysis import llm_call, genai_analyzer
+from src_streamlit.genai_anaysis import genai_analyzer
 from langchain_community.callbacks.streamlit import StreamlitCallbackHandler
 from streamlit.runtime.scriptrunner import add_script_run_ctx, get_script_run_ctx
 
@@ -44,7 +44,6 @@ def get_bedrock_model():
             'temperature': 0.01,
             #'topP': ...,
         }
-        #additional_model_request_fields={"top_k": 200}
     )
 
     return llm_text
@@ -77,19 +76,20 @@ def get_streamlit_cb(parent_container: DeltaGenerator):
 
     return st_cb
 
-
-
 def display_chat_history():
 
-    st.session_state["history_ask"].append(st.session_state["recent_ask"])
-
     node_names = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
+    st.session_state["history_ask"].append(st.session_state["recent_ask"])
 
     recent_answer = {}
     for node_name in node_names:
         print ("node_name", node_name)
-        if node_name != "chart_generation": recent_answer[node_name] = st.session_state["ai_results"][node_name]["text"]
-        else: recent_answer[node_name] = io.BytesIO(st.session_state["ai_results"][node_name])
+        if node_name != "chart_generation": recent_answer[node_name] = st.session_state["ai_results"][node_name].get("text", "None")
+        else:
+            if st.session_state["ai_results"][node_name] != {}:
+                recent_answer[node_name] = io.BytesIO(st.session_state["ai_results"][node_name])
+            else: recent_answer[node_name] = "None"
+        st.session_state["ai_results"][node_name] = {} ## reset
     st.session_state["history_answer"].append(recent_answer)
 
     for user, assistant in zip(st.session_state["history_ask"], st.session_state["history_answer"]):
@@ -101,31 +101,9 @@ def display_chat_history():
         with st.chat_message("assistant"):
             for tab, node_name in zip(tabs, node_names):
                 with tab:
-                    if node_name == "chart_generation": st.image(assistant[node_name])
+                    if node_name == "chart_generation" and assistant[node_name] != "None": st.image(assistant[node_name])
                     else: st.write(assistant[node_name])
             
-def display_results():
-
-    tab_category = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
-    tabs = st.tabs(tab_category)
-    for tab, node_name in zip(tabs, tab_category):
-        with tab:
-            if node_name == "chart_generation":
-                image_stream = io.BytesIO(st.session_state["ai_results"][node_name])
-                st.image(image_stream)
-            else:
-                st.write(st.session_state["ai_results"][node_name]["text"])
-
-
-
-####################### Application ###############################
-st.set_page_config(page_title="GenAI-driven Analytics 💬", page_icon="💬", layout="centered") ## layout [centered or wide]
-st.title("GenAI-driven Analytics 💬")
-st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v3.5 Sonnet.''')
-st.markdown('''
-            - You can find the source code in 
-            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui)
-            ''')
 
 ####################### Initialization ###############################
 df, column_info = get_dataset()
@@ -144,7 +122,7 @@ if "analyzer" not in st.session_state:
     )
 if "ai_results" not in st.session_state:
     node_names = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
-    st.session_state["ai_results"] = {node_name:[] for node_name in node_names}
+    st.session_state["ai_results"] = {node_name:{} for node_name in node_names}
 
 if "recent_ask" not in st.session_state:
     st.session_state["recent_ask"] = ""
@@ -158,6 +136,14 @@ if "history_answer" not in st.session_state:
 if "current_node" not in st.session_state:
     st.session_state["current_node"] = ""
         
+####################### Application ###############################
+st.set_page_config(page_title="GenAI-driven Analytics 💬", page_icon="💬", layout="centered") ## layout [centered or wide]
+st.title("GenAI-driven Analytics 💬")
+st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v3.5 Sonnet.''')
+st.markdown('''
+            - You can find the source code in 
+            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui)
+            ''')
 
 if len(st.session_state["messages"]) > 0: display_chat_history()
     
