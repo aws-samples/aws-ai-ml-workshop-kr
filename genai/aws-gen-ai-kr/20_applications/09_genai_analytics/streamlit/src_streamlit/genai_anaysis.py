@@ -65,11 +65,13 @@ class llm_call():
 
         response["node_name"] = node_name
         ai_message = self._message_format(role="assistant", message=response_completed["text"])
+
+        print ("response_completed", response_completed)
+        print ("ai_message", ai_message)
+        
         st.session_state["ai_results"][node_name] = response_completed # show previous results in app
         messages.append(ai_message)
         return response_completed, messages
-
-
 
 class GraphState(TypedDict):
     ask: list[str]
