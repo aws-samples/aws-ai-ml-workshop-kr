@@ -1,7 +1,27 @@
-#  AWS Inferentia2 EC2 기반 위에 한국어 파인 튜닝 모델을 서빙하기
-- Keyword: Hugging Face Text Generation Inferene (HF TGI), TGI Docker Serving, Gradio, Register HF Model, 
-
+#  Amazon EC2 Inferentia2 기반 위에 한국어 파인 튜닝 모델을 서빙하기
 Last Update: Aug 19, 2024
+
+---
+
+이 문서는 AWS Inferentia2 EC2 기반에서 한국어 파인 튜닝 모델을 서빙하는 과정을 설명합니다. 주요 단계는 다음과 같습니다:
+
+1. Amazon EC2 Inferentia2 인스턴스 설치 (inf2.8xlarge와 inf2.xlarge)
+2. 모델 컴파일: inf2.8xlarge에서 TGI Docker 이미지를 사용하여 한국어 모델 컴파일
+3. 컴파일된 모델을 Hugging Face Hub에 업로드
+4. 모델 서빙: inf2.xlarge에서 TGI Docker를 사용하여 모델 서빙
+5. 추론 테스트: Completion API와 Message API를 사용한 curl 명령어로 테스트
+6. Gradio를 통한 웹 인터페이스 구현 및 테스트
+
+주요 도구 및 기술:
+- Hugging Face Text Generation Inference (HF TGI)
+- Optimum Cli 로 파인 튜닝 모델을 AWS Neuron Model 로 컴파일
+- TGI Docker Serving
+- Gradio
+
+이 과정을 통해 사용자는 AWS EC2 Inferentia2  활용하여 효율적으로 한국어 LLM 모델을 서빙하고 테스트할 수 있습니다. 문서는 각 단계별 상세한 명령어와 설정 방법, 그리고 결과 확인 방법을 제공합니다.
+
+
+
 
 ---
 
