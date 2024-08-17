@@ -1,6 +1,7 @@
-#  AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모
+#  AWS Inferentia2 EC2 기반 위에 한국어 파인 튜닝 모델을 서빙하기
+- Keyword: Hugging Face Text Generation Inferene (HF TGI), TGI Docker Serving, Gradio, Register HF Model, 
 
-Last Update: Feb 25, 2024
+Last Update: Aug 19, 2024
 
 ---
 
@@ -9,8 +10,9 @@ Last Update: Feb 25, 2024
 - 먼저 AWS 계정에 아래에 해당되는 기본적인 [Quota](https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html) 가 필요 합니다. inf2.xlarge 는 vCPUS 4개, inf2.8xlarge 32 개 필요 합니다. Running On-Demand Inf Instances 가 36 개 이상 있어야 합니다. 여기를 통해서 [inf2 spec](https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/inf2-arch.html) 확인 해보세요.
 - ![quota.jpg](../../tutorial/inference-Llama-2-13b/img/quota.jpg)
 
-# 2. Inf2 EC2 설치
-여기서는 2개의 INF2 가 필요합니다. 컴파일을 위해서 inf2.8xlarge, 모델 서빙을 위해서 inf2.xlarge 필요 합니다.
+# 2. Amazon EC2 Inferentia2  설치
+여기서는 2개의 [INF2](https://aws.amazon.com/ec2/instance-types/inf2/) 가 필요합니다. 컴파일을 위해서 inf2.8xlarge, 모델 서빙을 위해서 inf2.xlarge 필요 합니다.
+-  inf2.xlarge 는 메모리가 16 GB 이어서, 컴파일시 inf2.8xlarge 를 사용 합니다. 
 
 
 ##  2.1. Launch the Instance (inf2.2xlarge EC2 생성)
@@ -37,7 +39,7 @@ Last Update: Feb 25, 2024
 ## 3.1 환경 준비
 - 가상 환경 진입 및 버전 확인
     - 아래와 같이 명령어를 통하여 가상 환경 및 버전 확인 합니다.
-        - 현재 설치된 AMI 에는 neuronx-cc : 2.14.227 입니다.
+        - 현재 설치된 AMI 에는 neuronx-cc : 2.14.227 입니다. **[중요] 우리는 2.14.227 이 버전을 사용하지 않을 겁니다. TGI Docker Image 의 neuronx-cc 를 사용할 겁니다.**
             ```
             source  /opt/aws_neuronx_venv_pytorch_2_1/bin/activate
             dpkg -l | grep neuron
@@ -45,7 +47,7 @@ Last Update: Feb 25, 2024
             ```    
     - ![verify_version.png](img/verify_version.png)
 - 필요 프로그램 설치
-    - huggingface_hub 를 설치 합니다. 추후 모델 다운로드 및 업로시에 사용 합니다.
+    - huggingface_hub 를 설치 합니다. 추후 모델 다운로드 및 업로드시에 사용 합니다.
         ```
         pip install huggingface_hub
         ```
@@ -66,7 +68,9 @@ Last Update: Feb 25, 2024
     - ![docker_inside_neuronx_cc.png](img/docker_inside_neuronx_cc.png)
 
 ## 3.3 TGI Docker 의 optimum-cli 통한 파인 튜닝 모델 컴파일
-여기서는 MLP-KTLim/llama-3-Korean-Bllossom-8B](https://huggingface.co/MLP-KTLim/llama-3-Korean-Bllossom-8B) 한국어 모델을 optimum-cli 를 통해서 컴파일 하겠습니다. 자세한 사항은 [Exporting neuron models using NeuronX TGI](https://huggingface.co/docs/optimum-neuron/guides/export_model) 을 참고하세요.
+여기서는 [MLP-KTLim/llama-3-Korean-Bllossom-8B](https://huggingface.co/MLP-KTLim/llama-3-Korean-Bllossom-8B) 한국어 모델을 optimum-cli 를 통해서 컴파일 하겠습니다. 자세한 사항은 [Exporting neuron models using NeuronX TGI](https://huggingface.co/docs/optimum-neuron/guides/export_model) 을 참고하세요.
+- 블로그 [Task-specialized LLM을 위한 비용 효율적인 서빙 전략: AWS Inferentia2와 Hugging Face Optimum을 활용한 자체 개발 LLM 서빙하기](https://aws.amazon.com/ko/blogs/tech/task-specialized-llm-serving-aws-inferentia2-huggingface-optimum/) 에 다음과 내용으로 벤치마킹을 하였고, inf2.xlarge 사용시에 batch_size = 4 가 가장 성능이 좋았기에, 아래 컴파일시에도 동일한 설정을 사용 하였습니다. <br>
+    - "Amazon EC2 g5.xlarge와 Amazon EC2 inf2.xlarge의 추론 성능을 비교하기 위해 사용한 모델은 특정 task를 수행하기 위해 미세조정 학습을 한 7B 크기의 LLM입니다"
 
 ```
 time docker run --entrypoint optimum-cli \
@@ -98,12 +102,12 @@ data/llama-3-Korean-Bllossom-8B
     ```
     - 위의 명령어의 실행 화면 입니다. 
     - ![upload_model_hf.png](img/upload_model_hf.png)
-- Hugging Face Hub 에 등록된 모델 화면 입니다.
+- Hugging Face Hub 에 등록된 모델 화면 입니다.<br><br>
     - ![AWS-Neuron-llama-3-Korean-Bllossom-8B.png](img/AWS-Neuron-llama-3-Korean-Bllossom-8B.png)
 
 
 # 4. 모델 서빙하기
-- EC2: inf2.2xlarge 에서 합니다.
+- EC2: inf2.xlarge 에서 합니다.
 ## 4.1 환경 준비
 - 가상 환경 진입 및 버전 확인
     - 아래와 같이 명령어를 통하여 가상 환경 및 버전 확인 합니다.
@@ -128,7 +132,7 @@ data/llama-3-Korean-Bllossom-8B
         - ![pull_docker](img/pull_docker.png)
 
 ## 4.2. HF 에서 모델 다운로드 하기
-아래와 같이 Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B 에서 모델을 다운로드 받습니다. 현재 폴더에서 data 폴더를 생성후에 실행 합니다.
+아래와 같이 [Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B](https://huggingface.co/Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B) 에서 모델을 다운로드 받습니다. 현재 폴더에서 data 폴더를 생성후에 실행 합니다.
 ```
 huggingface-cli download Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B \
 --local-dir ./data/AWS-Neuron-llama-3-Korean-Bllossom-8B
@@ -136,7 +140,7 @@ huggingface-cli download Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B \
 ![download_model_from_hf.png](img/download_model_from_hf.png)
 
 ## 4.3. TGI 도커 실행하기
-- 로컬에 Neuron 모델은 /data/AWS-Neuron-llama-3-Korean-Bllossom-8B 에 있습니다. 아래와 같이 docker run 을 통해서 TGI docker container 를 실행합니다.
+- 로컬에 Neuron 모델은 ./data/AWS-Neuron-llama-3-Korean-Bllossom-8B 에 있습니다. 아래와 같이 docker run 을 통해서 TGI docker container 를 실행합니다.
 
     ```
     docker run \
@@ -152,6 +156,7 @@ huggingface-cli download Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B \
     - 컴파일시에 --batch_size 4 --sequence_length 4096 로 했기에, 최대 max batch total tokens 이 16,384 ( 4 * 4096) 으로 세팅 되었습니다. 
     - ![ready_for_inference.png](img/ready_for_inference.png)
 # 5.추론 테스트 하기 
+아래의 추론 명령서 형식은 [TGI Official Git Repo](https://github.com/huggingface/text-generation-inference) 를 참고 하세요.
 ## 5.1. Completion API 형태로 curl 실행
 - 아래 curl 명령어를 실행 합니다.
     ```
@@ -194,66 +199,34 @@ huggingface-cli download Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B \
 
 
 # 6. Gradio 를 통한 웹으로 접속해서 테스트 하기
-* Run Doc
+## 6.1 EC2 환경 설정 하기
+- EC2: inf2.2xlarge 에서 합니다.
+- 아래와 같이 EC2 의 inbound rules 에 8081 포트를 추가 합니다. 8081 는 [Gradio App](https://www.gradio.app/) 에서 사용할 포트 입니다.
+    - ![ec2_inbound_network.png](img/ec2_inbound_network.png)
 
----
-        * UI: Gradio
-            * create virtual env
-            * create notebook and run
-            * EC2 inbound 설정
-            * Web brower Test
-    * SageMake 배포
-        * notebook creation
+## 6.2 Gradio Chat Interface 생성하는 노트북 실행하기
+- 아래의 Git 을 EC2: inf2.xlarge 에 Clone 을 합니다. 01-Run-Gradio-Chat-UX.ipynb 노트북을 오픈 합니다. 아래의 그림을 참조 하세요.
+    - 아래의 노트북에서는 VS Code 의 예시이고, Jupyter, Python Extension 을 설치 후에 .venv Python Virtual Environment 를 설치 했습니다. 그리고  .venv 커널을 선택 하였습니다. 
+        ```
+        git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
+        ```
+    - ![clone_git_for_gradio.png](img/clone_git_for_gradio.png)
+- 노트북의 셀을 하나씩 모두 실행하고, 마지막 셀이 아래 처럼 실행해서 보이면 성공 입니다.
+    - ![gradio_last_cell.png](img/gradio_last_cell.png)
+## 6.3 Gradio Chat 테스트 하기
+- EC2: Inf2.xlarge 의 퍼블릭 IP 확인 하기
+    - 아래의 예시 그럼 처럼, EC2 Console 을 열고, Auto-assigned IP address 를 찾고, IP 를 카피 합니다. 
+    - ![EC2_IP.png](img/EC2_IP.png)
+- 브라우저 열고, http://Auto-assigned-IP-address:8081 을 입력 합니다. (예:http://54.224.3.4:8081/ )
+    - 아래와 같은 UI 가 보여야 합니다.
+        - ![gradio_chat_ui.png](img/gradio_chat_ui.png)
+- 드디어 테스트 시작
+    - "딥러닝에 대해서 알려 주세요" 라고 입력한 이후의 결과 입니다.
+    - ![gradio_ui_result.png](img/gradio_ui_result.png)    
 
+g/Llama-2-inference.png)    
 
-
-
-
-
-
-
-이 튜토리얼은 inf2.48xlarge 로 Llama-2-13b 모델을 로드하여 추론을 위한 가이드 입니다. 아래의 노트북을 실행 하기 위함 입니다. 
-- [Create your own chatbot with llama-2-13B on AWS Inferentia
-](https://github.com/huggingface/optimum-neuron/blob/main/notebooks/text-generation/llama2-13b-chatbot.ipynb)
-
-실행을 위해서 위의 해당 노트북을 참조 하시고, 여기서는 중요 가이드 및 일부 코드 실행 결과를 보여 드립니다. 
-
-참조:
-- [Create your own chatbot with llama-2-13B on AWS Inferentia](https://huggingface.co/docs/optimum-neuron/tutorials/llama2-13b-chatbot)
-<br>
-<p> 
-
-
-
-## 2.3 Start Jupyter Server and Select Kernel
-- (1) Optimum-neuron Git Clone 합니다. 
-    ```
-    git clone https://github.com/huggingface/optimum-neuron.git
-    ```
-- (2) 아래와 같이 VS Code 에서 Jupyter 를 설치 합니다.
-    - ![install_jupyter.png](img/install_jupyter.png)
-- (3) 아래와 같이 jupyter server 실행 합니다.
-    ```
-    python -m notebook --allow-root --port=8080
-    ```
-    - ![run_jupyter_server.png](img/run_jupyter_server.png)
-- (4) 아래의 화면 오른쪽 하단의 llama-2-13b-chat-neuron 노트북을 오픈합니다. 이후에 노트북 오른쪽 상단에 "Select Kernel" 읈 선택하고, Jupter Server 에서 제공한 경로(예: ```http://127.0.0.1:8080/tree?token=f607af8b9d2619a659bdbb5db0983d9f1e2ce50aeedab910```) 를 복사해서 --> "Existing Jupyter Server --> Enter Url of Jupter Serve --> 여기서 붙이기를 합니다. 이후에 아래와 같은 화면이 나옵니다.
-    - ![load_notebook.png](img/load_notebook.png)
-
-<p>
-
-# 3. 노트북 실행
-## 3.1. NeuronModelForCausalLM 통한 모델 컴파일 및 로딩
-- 아래와 같이 Huggingface format 의 모델을 컴파일 하여 NEFF(Neuron Executable File Format) 파일로 변환 후에 모델 로딩 합니다.이 시점에 24개의 Neuron 을 사용하여 로딩 합니다.
-    - ![load_model_NeuronModelForCausalLM.png](img/load_model_NeuronModelForCausalLM.png)
-- 아래는 모델 추론을 20개를 해보고 있고, Neuron 24개 모두 사용되고 있고, 각각이 약 80% 정도 사용을 하고 있습니다. 또한 Neuron Accelerator (2개의 neuron 있음) 는 32 GB GPU 메모리에서 약 6.1 GB 사용됨을 보여 주고 있습니다. 
-- ![inference_neuron.png](img/inference_neuron.png)
-
-## 3.2. 모델 추론을 통한 챗팅
-- 여러가지 질문을 해봅니다.
-    - ![Llama-2-inference.png](img/Llama-2-inference.png)    
-
-여기까지 오셨으면 성공 하셨습니다. 축하 드립니다. ^^
+**여기까지 오셨으면 성공 하셨습니다. 축하 드립니다. ^^**
 
 ---
 Contributor: 문곤수 (Gonsoo Moon)
