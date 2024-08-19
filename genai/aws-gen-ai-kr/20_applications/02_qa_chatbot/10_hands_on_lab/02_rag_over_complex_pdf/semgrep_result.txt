@@ -1,0 +1,65 @@
+┌────────────────┐
+│ Debugging Info │
+└────────────────┘
+                  
+  SCAN ENVIRONMENT
+  versions    - semgrep 1.79.0 on python 3.10.8                        
+  environment - running in environment git, triggering event is unknown
+            
+  CONNECTION
+  Initializing scan (deployment=aws-dongjinj, scan_id=30492972)  
+  Enabled products: Code, Supply Chain                                                                                                                                                   
+        
+        
+  ENGINE
+Semgrep Pro Engine will be installed in /home/ec2-user/anaconda3/envs/JupyterSystemEnv/lib/python3.10/site-packages/semgrep/bin/semgrep-core-proprietary
+Downloading... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 214.0/214.0 MB 346.2 MB/s 0:00:00                                                                                                                        
+
+Successfully installed Semgrep Pro Engine (version 1.78.0)!
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 232 files tracked by git with 1893 Code rules, 3050 Supply Chain rules:
+            
+            
+  CODE RULES
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      36     424          Community    1041                                                                
+  json              4      50          Pro rules     852                                                                
+  python          519      12                                                                                           
+  bash              4       1                                                                                           
+                                                                                                                        
+                    
+  SUPPLY CHAIN RULES
+                                                                                                                        
+  Ecosystem   Rules   Files   Lockfiles                                                                                 
+ ────────────────────────────────────────────────────────                                                               
+  Pypi         3050      24   04_web_ui/requirements.txt                                                                
+                                                                                                                        
+                                                                                                                        
+  Analysis       Rules                                                                                                  
+ ──────────────────────                                                                                                 
+  Basic           2761                                                                                                  
+  Reachability     289                                                                                        
+                                                                                                                        
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+Some files were skipped or only partially analyzed.
+  Scan was limited to files tracked by git.
+
+CI scan completed successfully.
+  Found 0 findings (0 blocking) from 21187 rules.
+  Uploading scan results  
+  Finalizing scan                                                                                                                                 
+  View results in Semgrep Cloud Platform:
+    https://semgrep.dev/orgs/aws-dongjinj/findings?repo=local_scan/aws-ai-ml-workshop-kr&ref=master
+    https://semgrep.dev/orgs/aws-dongjinj/supply-chain
+  No blocking findings so exiting with code 0
