@@ -1,9 +1,10 @@
 #  Amazon EC2 Inferentia2 기반 위에 한국어 파인 튜닝 모델을 서빙하기
-Last Update: Aug 19, 2024
+Last Update: Aug 21, 2024
 
 ---
 
-이 문서는 AWS Inferentia2 EC2 기반에서 한국어 파인 튜닝 모델을 서빙하는 과정을 설명합니다. 주요 단계는 다음과 같습니다:
+이 문서는 AWS Inferentia2 EC2 기반에서 한국어 파인 튜닝 모델을 서빙하는 과정을 설명합니다. 이 과정을 완료 하면 다음과 [데모 영상](https://youtu.be/ogwnmTC3tqc) 을 해볼 수 있습니다. 
+주요 단계는 다음과 같습니다:
 
 1. Amazon EC2 Inferentia2 인스턴스 설치 (inf2.8xlarge와 inf2.xlarge)
 2. 모델 컴파일: inf2.8xlarge에서 TGI Docker 이미지를 사용하여 한국어 모델 컴파일
