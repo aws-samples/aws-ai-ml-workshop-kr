@@ -180,6 +180,14 @@ huggingface-cli download Gonsoo/AWS-Neuron-llama-3-Korean-Bllossom-8B \
 - 도커 실행 명령어가 완료되어 TGI docker container 가 대기 중입니다.
     - 컴파일시에 --batch_size 4 --sequence_length 4096 로 했기에, 최대 max batch total tokens 이 16,384 ( 4 * 4096) 으로 세팅 되었습니다. 
     - ![ready_for_inference.png](img/ready_for_inference.png)
+
+## 4.4. 트러블 슈팅
+- 실행중인 도커 확인 하기
+```
+sudo ss -tuln 
+sudo ss -tuln | grep 8080
+```
+
 # 5.추론 테스트 하기 
 아래의 추론 명령서 형식은 [TGI Official Git Repo](https://github.com/huggingface/text-generation-inference) 를 참고 하세요.
 ## 5.1. Completion API 형태로 curl 실행
