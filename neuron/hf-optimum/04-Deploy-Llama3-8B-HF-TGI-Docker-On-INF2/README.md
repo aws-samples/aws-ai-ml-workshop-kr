@@ -259,6 +259,18 @@ sudo ss -tuln | grep 8080
 
 g/Llama-2-inference.png)    
 
+## 6.4 보안상의 이유로 퍼블릭하게 IP 를 접근 못할 경우
+- 로컬 노트북 (혹은 로컬 컴퓨터) 에서 아래와 같이 터미널을 열고, SSH 로 원격 머신에 SSH 로 연결 합니다. 
+```
+ ssh -i ~/.ssh/your_key.pem -L 8081:localhost:8081 ubuntu@public_ip
+```
+- 이후에 아래와 같이 로컬의 브라우저를 열고 입력 합니다.
+```
+http://localhost:8081/
+```
+- 다음과 같이 화면이 보이고, 프롬프트를 입력 하시면 됩니다.
+    - ![local_host.png](img/local_host.png)
+
 **여기까지 오셨으면 성공 하셨습니다. 축하 드립니다. ^^**
 
 ---
