@@ -70,7 +70,7 @@ def merge_and_save_model(model_id, adapter_dir, output_dir):
     '''
     from peft import PeftModel
 
-    print("Trying to load a Peft model. It might take a while without feedback")
+    print("## Trying to load a Peft model. It might take a while without feedback")
     base_model = AutoModelForCausalLM.from_pretrained(
         model_id,
         low_cpu_mem_usage=True,
@@ -79,9 +79,10 @@ def merge_and_save_model(model_id, adapter_dir, output_dir):
     model = peft_model.merge_and_unload()
 
     os.makedirs(output_dir, exist_ok=True)
-    print(f"Saving the newly created merged model to {output_dir}")
     model.save_pretrained(output_dir, safe_serialization=True)
     base_model.config.save_pretrained(output_dir)
+    print(f"\n## Saving the newly created merged model to {output_dir}")
+    os.system(f"find {output_dir}")
 
 
 def training_function(script_args, training_args):
@@ -296,6 +297,9 @@ if __name__ == "__main__":
     script_args, training_args = parser.parse_args_and_config()    
 
     if training_args.local_rank == 0:
+        import os
+        print("## storage info: \n")
+        os.system("df -h")    
         print("## SM_CURRENT_INSTANCE_TYPE: ", os.getenv('SM_CURRENT_INSTANCE_TYPE'))
         print("## script_args: \n", script_args)
         print("## training_args: \n", training_args)    
@@ -308,3 +312,9 @@ if __name__ == "__main__":
   
     # launch training
     training_function(script_args, training_args)
+
+
+    if training_args.local_rank == 0:
+        print("## storage info: \n")
+        os.system("df -h")    
+

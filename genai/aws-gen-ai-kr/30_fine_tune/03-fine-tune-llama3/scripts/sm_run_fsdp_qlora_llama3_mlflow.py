@@ -70,7 +70,7 @@ def merge_and_save_model(model_id, adapter_dir, output_dir):
     '''
     from peft import PeftModel
 
-    print("Trying to load a Peft model. It might take a while without feedback")
+    print("## Trying to load a Peft model. It might take a while without feedback")
     base_model = AutoModelForCausalLM.from_pretrained(
         model_id,
         low_cpu_mem_usage=True,
@@ -79,9 +79,10 @@ def merge_and_save_model(model_id, adapter_dir, output_dir):
     model = peft_model.merge_and_unload()
 
     os.makedirs(output_dir, exist_ok=True)
-    print(f"Saving the newly created merged model to {output_dir}")
     model.save_pretrained(output_dir, safe_serialization=True)
     base_model.config.save_pretrained(output_dir)
+    print(f"\n## Saving the newly created merged model to {output_dir}")
+    os.system(f"find {output_dir}")
 
 
 def training_function(script_args, training_args):
@@ -232,8 +233,6 @@ def training_function(script_args, training_args):
                 )
                 tokenizer.save_pretrained("/opt/ml/model")
 
-            log_model_to_mlflow(trainer, script_args, "model")
-
         else: # local mode
             print("## Because of local mode, we do not save model")
 
@@ -242,37 +241,6 @@ def training_function(script_args, training_args):
 
     training_args.distributed_state.wait_for_everyone()  # wait for all processes to print
 
-import tempfile
-
-def log_model_to_mlflow(trainer, script_args, artifact_path):
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        # 먼저 PEFT 모델 저장
-        trainer.save_model(tmp_dir)
-
-        # 기본 모델 로드
-        base_model = AutoModelForCausalLM.from_pretrained(
-            script_args.model_id,
-            low_cpu_mem_usage=True,
-        )
-
-        # PEFT 모델 로드 및 병합
-        peft_model = PeftModel.from_pretrained(base_model, tmp_dir)
-        merged_model = peft_model.merge_and_unload()
-
-        # 병합된 모델 저장
-        merged_model_path = os.path.join(tmp_dir, "merged_model")
-        os.makedirs(merged_model_path, exist_ok=True)
-        merged_model.save_pretrained(merged_model_path, safe_serialization=True)
-        
-        # 토크나이저 저장
-        tokenizer = AutoTokenizer.from_pretrained(script_args.model_id, use_fast=True)
-        tokenizer.save_pretrained(merged_model_path)
-
-        mlflow.transformers.log_model(
-            transformers_model=merged_model_path,
-            artifact_path=artifact_path,
-            task="text-generation"
-        )
 
 def log_extended_metrics(train_result, trainer):
     # 기본 메트릭 로깅
@@ -329,6 +297,9 @@ if __name__ == "__main__":
     script_args, training_args = parser.parse_args_and_config()    
 
     if training_args.local_rank == 0:
+        import os
+        print("## storage info: \n")
+        os.system("df -h")    
         print("## SM_CURRENT_INSTANCE_TYPE: ", os.getenv('SM_CURRENT_INSTANCE_TYPE'))
         print("## script_args: \n", script_args)
         print("## training_args: \n", training_args)    
@@ -341,3 +312,9 @@ if __name__ == "__main__":
   
     # launch training
     training_function(script_args, training_args)
+
+
+    if training_args.local_rank == 0:
+        print("## storage info: \n")
+        os.system("df -h")    
+
