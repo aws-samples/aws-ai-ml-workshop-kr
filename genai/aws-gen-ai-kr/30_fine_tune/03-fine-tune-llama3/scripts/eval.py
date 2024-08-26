@@ -44,9 +44,9 @@ def generate_response(messages, model, tokenizer, full_test_dataset, max_new_tok
         input_ids,
         max_new_tokens=max_new_tokens,
         eos_token_id= tokenizer.eos_token_id,
-        do_sample=True,
-        temperature=0.6,
-        top_p=0.9,
+        # do_sample=True,
+        temperature=0.1,
+        # top_p=0.9,
     )
     response = outputs[0][input_ids.shape[-1]:]
     generated_answer = tokenizer.decode(response,skip_special_tokens=True)
@@ -197,9 +197,9 @@ class SummaryEvaluationSystem:
                 input_ids,
                 max_new_tokens=256,
                 eos_token_id= tokenizer.eos_token_id,
-                do_sample=True,
-                temperature=0.6,
-                top_p=0.9,
+                # do_sample=True,
+                temperature=0.1,
+                # top_p=0.9,
             )
             response = outputs[0][input_ids.shape[-1]:]
             generated_answer = tokenizer.decode(response,skip_special_tokens=True)
@@ -295,7 +295,7 @@ class SummaryEvaluationSystem:
         df_export.to_csv(result_path, index=False)
 
         self.evaluation_results = result_path
-        print(f"평가 상세 결과가 {result_path} 파일로 저장되었습니다.")
+        print(f"\n평가 상세 결과가 {result_path} 파일로 저장되었습니다.")
     
     
     def evaluate_summaries(self, generated_summaries, original_summaries):
