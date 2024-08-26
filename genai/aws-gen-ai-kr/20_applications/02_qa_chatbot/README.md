@@ -15,11 +15,19 @@
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/reranker-kr">
         <img alt="Build" src="https://img.shields.io/badge/KoReranker-1.0-red">
     </a>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F20_applications%2F02_qa_chatbot&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
+    </a>
 </p>
+
+
 
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [24.3.18]
+    - [PDF Parser] RAG over Complex PDF based on Unstructured.io
+        - [sample codes - aws] [RAG over Complex PDF](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/9eead1c3df9ffcc2453096a1c2892ccd7c617936/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/10_hands_on_lab/02_rag_over_complex_pdf)
+
 - [24.2.22]
     - [PDF Parser] Llama-parser
         - [social](https://www.linkedin.com/posts/llamaindex_stack-for-advanced-rag-over-complex-pdfs-activity-7165863894459113472-2cgS/?utm_source=share&utm_medium=member_android) | [blog](https://blog.llamaindex.ai/introducing-llamacloud-and-llamaparse-af8cedf9006b) | [performance](https://drive.google.com/file/d/1fyQAg7nOtChQzhF2Ai7HEeKYYqdeWsdt/view)
@@ -176,6 +184,8 @@
         - [paper](https://arxiv.org/abs/2401.00908) | [blog](https://artgor.medium.com/paper-review-docllm-a-layout-aware-generative-language-model-for-multimodal-document-06b5833e976b)
 
 - #### <span style="#FF69B4;"> **PDF Parser**</span>
+    - RAG over Complex PDF based on Unstructured.io
+        - [sample codes - aws] [RAG over Complex PDF](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/9eead1c3df9ffcc2453096a1c2892ccd7c617936/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/10_hands_on_lab/02_rag_over_complex_pdf)
     - Llama-parser
         - [social](https://www.linkedin.com/posts/llamaindex_stack-for-advanced-rag-over-complex-pdfs-activity-7165863894459113472-2cgS/?utm_source=share&utm_medium=member_android) | [blog](https://blog.llamaindex.ai/introducing-llamacloud-and-llamaparse-af8cedf9006b) | [performance](https://drive.google.com/file/d/1fyQAg7nOtChQzhF2Ai7HEeKYYqdeWsdt/view)
 

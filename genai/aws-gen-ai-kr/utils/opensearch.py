@@ -1,3 +1,4 @@
+import copy
 from typing import List, Tuple
 from opensearchpy import OpenSearch, RequestsHttpConnection
 
@@ -121,6 +122,23 @@ class opensearch_utils():
             print('-' * 50)
 
     @classmethod
+    def get_document(cls, os_client, doc_id, index_name):
+        response = os_client.get(
+            id= doc_id,
+            index=index_name
+        )
+
+        return response
+
+    @classmethod
+    def get_count(cls, os_client, index_name):
+        response = os_client.count(
+            index=index_name
+        )
+
+        return response
+
+    @classmethod
     def get_query(cls, **kwargs):
 
         # Reference:
@@ -225,11 +243,15 @@ class opensearch_utils():
         '''
         OpenSearch 결과인 LIST 를 파싱하는 함수
         '''
-        for doc, score in response:
+        responses = copy.deepcopy(response)
+        for doc, score in responses:
             print(f'\nScore: {score}')
             # print(f'Document Number: {doc.metadata["row"]}')
             # Split the page content into lines
             lines = doc.page_content.split("\n")
             metadata = doc.metadata
+            if "image_base64" in metadata: metadata["image_base64"] = ""
+            if "orig_elements" in metadata: metadata["orig_elements"] = ""
+            
             print(lines)
             print(metadata)

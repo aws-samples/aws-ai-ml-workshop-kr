@@ -1,6 +1,14 @@
-langchain==0.1.5
+langchain==0.1.11
 opensearch-py==2.4.2
 faiss-cpu==1.7.4
 pdfplumber==0.10.3
 termcolor==2.4.0
 opensearch_dsl==2.1.0
+unstructured
+pdf2image
+opencv-python==4.9.0.80
+unstructured-inference==0.7.23
+pikepdf==8.12.0
+pypdf==4.0.1
+unstructured.pytesseract==0.3.12
+pytesseract

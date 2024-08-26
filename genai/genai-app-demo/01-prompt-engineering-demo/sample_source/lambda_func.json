@@ -1,0 +1,11 @@
+{
+    "prompt-func": "PromptFunc",
+    "summary-func": "SummaryFunc",
+    "identify-func": "IdentifyFunc",
+    "comment-func": "CommentFunc",
+    "shortform-func": "ShortformFunc",
+    "product-block": "ProductBlock",
+    "image-gen": "ImageGen",
+    "image-variation": "ImageVariation",
+    "image-replace": "ImageReplace"
+}

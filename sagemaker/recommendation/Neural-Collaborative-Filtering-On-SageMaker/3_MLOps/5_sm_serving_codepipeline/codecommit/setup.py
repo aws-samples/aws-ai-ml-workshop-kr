@@ -13,7 +13,7 @@ with open("README.md", "r") as f:
 
 
 # required_packages = ["sagemaker==2.93.0"]
-required_packages = ["sagemaker==2.117.0"]
+required_packages = ["sagemaker==2.221.1"]
 extras = {
     "test": [
         "black",

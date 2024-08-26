@@ -1,0 +1,5 @@
+{
+    "prompt_input": "### 명령어:\n{instruction}\n\n### 질문:\n{input}\n\n### 답변:\n",
+    "prompt_no_input": "### 명령어:\n{instruction}\n\n### 답변:\n",
+    "response_split": "### 답변:"
+}

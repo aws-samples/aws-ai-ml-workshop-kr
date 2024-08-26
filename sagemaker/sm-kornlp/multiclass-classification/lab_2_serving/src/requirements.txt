@@ -1,1 +1,2 @@
-transformers==4.30.0
+# transformers==4.30.0 # Becaause of Transformers Deserialization of Untrusted Data vulnerability, let me change to 4.38.0
+transformers==4.38.0

@@ -34,3 +34,6 @@ doc/labguide/Korean/~$S Korea AI ML Immersion Day Hands-on PilHoKim 23rd Novembe
 genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/dataset/msmarco/
 genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/dataset/translated/
 genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/model/
+
+genai/aws-gen-ai-kr/11_bedrock-with-opensearch/data/hanwhalife/
+genai/aws-gen-ai-kr/11_bedrock-with-opensearch/data/kt/
