@@ -139,6 +139,7 @@ def training_function(script_args, training_args):
         quantization_config=quantization_config,
         attn_implementation="flash_attention_2",
         torch_dtype=quant_storage_dtype,
+        low_cpu_mem_usage=True,
         use_cache=False if training_args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
     )
     
