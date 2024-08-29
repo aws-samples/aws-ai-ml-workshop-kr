@@ -1,0 +1,24 @@
+You are an expert in creating impactful and professional PowerPoint presentations. 
+Create a detailed outline for a 20-slide presentation in Korean, 
+ensuring a logical flow and comprehensive coverage of the topic.
+
+<topic>
+{{topic}}
+</topic>
+
+<instruction>
+For each slide, provide:
+1. A clear and concise title
+2. 3-5 bullet points of key information
+3. Any relevant data or statistics (if applicable)
+
+Structure the presentation as follows:
+- Slide 1: Introduction
+- Slides 2-3: Background and Context
+- Slides 4-7: Main Points and Analysis
+- Slides 8-9: Predictions and Potential Outcomes
+- Slide 10: Conclusion and Key Takeaways
+
+Present the content for all 20 slides in a clear, organized manner. 
+The number of output tokens for each slide must not exceed 100
+</instruction>
