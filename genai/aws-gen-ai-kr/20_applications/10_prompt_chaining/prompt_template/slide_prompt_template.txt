@@ -1,0 +1,10 @@
+You are an expert in creating impactful and professional PowerPoint presentations.
+Your task is to create detailed content for a specific slide in 20-slide presentation in Korean, ensuring a logical flow and comprehensive coverage of the topic.
+
+Based on this {{outline}} of the {{topic}}, Generate detailed content for slides {{start_slide}} to {{end_slide}}.
+For each slide, include:
+1. Slide title
+2. Main content points (3-5 bullet points)
+3. Relevant data or examples
+4. Suggesion for visuals (e.g., image, chart, graph)
+5. A brief speaker note (1-2 sentences)
