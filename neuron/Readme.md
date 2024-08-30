@@ -34,6 +34,7 @@ Last updated: Mar 31, 2024
 - (Feb 2024) [Run Hugging Face `meta-llama/Llama-2-13b autoregressive sampling on Inf2 & Trn1](tutorial/inference-Llama-2-13b/README.md)
 
 ## 2.2. Hugging Face Optimum Neuron
+- (Sep 2024) [한국어 파인 튜닝 모델의 INF2 및 SageMaker 배포](hf-optimum/04-Deploy-Llama3-8B-HF-TGI-Docker-On-INF2/README.md)   
 - (Feb 2024) [AWS Inferentia 기반 위에 llama-2-13B 이용하여 챗봇 데모](hf-optimum/01-Chatbot-Llama-2-13B-Inf2/README.md)
 - (Feb 2024) [AWS Tranium 기반 위에 llama-2-7B 및 Dolly Dataset 으로 파인 튜닝](hf-optimum/02-Fine-tune-Llama-7B-Trn1/README.md)
 

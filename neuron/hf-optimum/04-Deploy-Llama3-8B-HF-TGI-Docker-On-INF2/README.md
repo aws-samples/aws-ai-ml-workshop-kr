@@ -1,5 +1,8 @@
 #  Amazon EC2 Inferentia2 기반 위에 한국어 파인 튜닝 모델을 서빙하기
-Last Update: Aug 21, 2024
+Last Update: Aug 30, 2024 
+
+- 이 가이드는 AWS Neuron-CC 버전 2.13 기반의 가이드 입니다.
+- Aug 23, 2024 에 AWS Neuron-CC 버전 2.14 를 탑재한 [v1.0-hf-tgi-0.0.24-pt-2.1.2-inf-neuronx-py310](https://github.com/aws/deep-learning-containers/releases?q=tgi+AND+neuronx&expanded=true)가 퍼블리시 되었습니다. 이 버전 기반하의 가이드는 [README-NeuronCC-2-14](README-NeuronCC-2-14.md) 를 보세요. 하지만, 아래의 내용을 확인한 후에 보시기를 권장 합니다. 이유는 많은 내용이 생략이 되어 있고, 필요한 부분만이 기술 되어 있습니다.
 
 ---
 
