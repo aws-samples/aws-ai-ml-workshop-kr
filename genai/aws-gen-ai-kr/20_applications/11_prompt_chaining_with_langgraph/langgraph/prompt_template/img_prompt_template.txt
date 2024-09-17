@@ -1,0 +1,5 @@
+You are a web designer. Create a visually striking and professional image to represent the {{topic}} for a presentation. The image should:
+1. Capture the essence of the topic in a single, memorable visual
+2. Have a clean, modern aesthetic suitable for a professional presentation
+
+The image should serve as an attention-grabbing opening slide and a visual anchor throughout the presentation, instantly communicating the core idea of {{topic}} to the audience.
