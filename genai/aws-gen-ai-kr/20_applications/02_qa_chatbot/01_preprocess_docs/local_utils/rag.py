@@ -280,9 +280,9 @@ class OpenSearchLexicalSearchRetriever(BaseRetriever):
 
     os_client: Any
     index_name: str
-    k = 3
-    minimum_should_match = 0
-    filter = []
+    k: int = 3
+    minimum_should_match: float = 0
+    filter: list = []
 
     def normalize_search_results(self, search_results):
 
@@ -350,12 +350,12 @@ class OpenSearchHybridSearchRetriever(BaseRetriever):
     os_client: Any
     vector_db: Any
     index_name: str
-    k = 3
-    minimum_should_match = 0
-    filter = []
+    k: int = 3
+    minimum_should_match: float = 0
+    filter: list = []
     fusion_algorithm: str
     ensemble_weights: List
-    verbose = False
+    verbose: bool = False
 
     def update_search_params(self, **kwargs):
 

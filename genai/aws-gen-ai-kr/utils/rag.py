@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 from copy import deepcopy
 from pprint import pprint
+from textwrap import dedent
 from operator import itemgetter
 from itertools import chain as ch
 from typing import Any, Dict, List, Optional, List, Tuple
@@ -23,6 +24,7 @@ import matplotlib.pyplot as plt
 
 from utils import print_ww
 from utils.chat import chat_utils
+from utils.bedrock import bedrock_utils
 from utils.common_utils import print_html
 from utils.opensearch import opensearch_utils
 
@@ -139,111 +141,6 @@ class prompt_repo():
 
         return human_prompt
 
-#     @classmethod
-#     def get_qa(cls, prompt_type="answer_only"):
-        
-#         assert prompt_type in cls.prompt_types, "Check your prompt_type"
-        
-#         if prompt_type == "answer_only":
-            
-#             prompt = """
-#             \n\nHuman:
-#             You are a master answer bot designed to answer software developer's questions.
-#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-#             Here is the context: <context>{context}</context>
-            
-#             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
-#             Then, answer the question as much as you can.
-
-#             Skip the preamble and go straight into the answer.
-#             Don't insert any XML tag such as <context> and </context> when answering.
-            
-#             Here is the question: <question>{question}</question>
-
-#             If the question cannot be answered by the context, say "No relevant context".
-#             \n\nAssistant: Here is the answer. """
-
-#         elif prompt_type == "answer_with_ref":
-            
-#             prompt = """
-#             \n\nHuman:
-#             You are a master answer bot designed to answer software developer's questions.
-#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-#             Here is the context: <context>{context}</context>
-
-#             First, find the paragraphs or sentences from the context that are most relevant to answering the question, and then print them in numbered order.
-#             The format of paragraphs or sentences to the question should look like what's shown between the <references></references> tags.
-#             Make sure to follow the formatting and spacing exactly.
-
-#             <references>
-#             [Examples of question + answer pairs using parts of the given context, with answers written exactly like how Claude’s output should be structured]
-#             </references>
-
-#             If there are no relevant paragraphs or sentences, write "No relevant context" instead.
-
-#             Then, answer the question within <answer></answer> XML tags.
-#             Answer as much as you can.
-#             Skip the preamble and go straight into the answer.
-#             Don't say "According to context" when answering.
-#             Don't insert XML tag such as <context> and </context> when answering.
-#             If needed, answer using bulleted format.
-#             If relevant paragraphs or sentences have code block, please show us that as code block.
-
-#             Here is the question: <question>{question}</question>
-
-#             If the question cannot be answered by the context, say "No relevant context".
-
-#             \n\nAssistant: Here is the most relevant sentence in the context:"""
-
-#         elif prompt_type == "original":
-#             prompt = """
-#             \n\nHuman: Here is the context, inside <context></context> XML tags.
-
-#             <context>
-#             {context}
-#             </context>
-
-#             Only using the context as above, answer the following question with the rules as below:
-#                 - Don't insert XML tag such as <context> and </context> when answering.
-#                 - Write as much as you can
-#                 - Be courteous and polite
-#                 - Only answer the question if you can find the answer in the context with certainty.
-
-#             Question:
-#             {question}
-
-#             If the answer is not in the context, just say "I don't know"
-#             \n\nAssistant:"""
-        
-#         if prompt_type == "ko_answer_only":
-            
-#             prompt = """
-#             \n\nHuman:
-#             You are a master answer bot designed to answer software developer's questions.
-#             I'm going to give you a context. Read the context carefully, because I'm going to ask you a question about it.
-
-#             Here is the context: <context>{context}</context>
-            
-#             First, find a few paragraphs or sentences from the context that are most relevant to answering the question.
-#             Then, answer the question as much as you can.
-
-#             Skip the preamble and go straight into the answer.
-#             Don't insert any XML tag such as <context> and </context> when answering.
-            
-#             Here is the question: <question>{question}</question>
-
-#             Answer in Korean.
-#             If the question cannot be answered by the context, say "No relevant context".
-#             \n\nAssistant: Here is the answer. """
-
-#         prompt_template = PromptTemplate(
-#             template=prompt, input_variables=["context", "question"]
-#         )
-        
-#         return prompt_template
-
     @staticmethod
     def get_rag_fusion():
 
@@ -302,7 +199,139 @@ class prompt_repo():
 # RetrievalQA (Langchain)
 ############################################################
 
-class qa_chain():
+# class rag_chain():
+    
+#     def __init__(self, **kwargs):
+
+#         system_prompt = kwargs["system_prompt"]
+#         system_prompt = bedrock_utils.get_message_from_string(role="system", string=system_prompt)
+#         self.user_prompt=kwargs["user_prompt"]
+        
+#         self.llm_text = kwargs["llm_text"]
+#         self.retriever = kwargs["retriever"]
+#         self.return_context = kwargs.get("return_context", False)
+#         self.verbose = kwargs.get("verbose", False)
+#         self.callback = kwargs["callback"]
+#         self.multi_turn=kwargs.get("multi_turn", False)
+        
+#         self.messages = []
+#         self.messages.append(system_prompt)
+        
+#         self.chain = self.llm_text | StrOutputParser()
+        
+        
+#     def invoke(self, **kwargs):
+        
+#         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
+#         tables, images = None, None
+        
+#         retrieval = self.retriever.invoke(query)
+#         invoke_args = {
+#             "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
+#             "question": query
+#         }
+#         user_prompt = self.user_prompt.format(**invoke_args)
+#         message = bedrock_utils.get_message_from_string(role="user", string=user_prompt)
+#         self.messages.append(message)
+        
+#         response = ""
+#         for chunk in self.chain.stream(self.messages):
+#             response += chunk
+#             self.callback.on_llm_new_token(chunk)
+        
+#         if self.multi_turn:
+#             message = bedrock_utils.get_message_from_string(role="assistant", string=response)
+#             self.messages.append(message)
+#         else:
+#             self.messages = self.messages[0]        
+        
+#         return response, retrieval if self.return_context else response
+
+class rag_chain():
+    
+    def __init__(self, **kwargs):
+
+        system_prompt = kwargs["system_prompt"]
+        system_prompt = self._get_message_from_string(role="system", string=system_prompt)
+        
+        human_prompt=kwargs["human_prompt"]
+        user_prompt = self._get_message_from_string(role="human", string=human_prompt)
+        
+        
+        self.llm_text = kwargs["llm_text"]        
+        self.retriever = kwargs["retriever"]
+        
+        self.return_context = kwargs.get("return_context", False)
+        self.verbose = kwargs.get("verbose", False)
+        
+        self.multi_turn=kwargs.get("multi_turn", False)
+        
+        if self.multi_turn:
+            prompt = ChatPromptTemplate([
+                system_prompt,
+                ("placeholder", "{chat_history}"),
+                user_prompt
+                
+            ])
+            self.chat_history = []
+            
+        else:
+            prompt = ChatPromptTemplate([
+                system_prompt,
+                user_prompt
+                
+            ])
+            
+        self.chain = prompt | self.llm_text | StrOutputParser()
+        self.chat_history = []
+             
+    def _get_message_from_string(self, role, string):
+        
+        if role in ["system", "ai"]:
+            message = (role, string)
+            
+        elif role == "human":
+            contents = [
+                {
+                    "type": "text",
+                    "text": dedent(string)
+                }
+            ]
+            message = (role, contents)
+            
+        return message
+        
+        
+    def invoke(self, **kwargs):
+        
+        query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
+        tables, images = None, None
+        
+        retrieval = self.retriever.invoke(query)     
+        print (retrieval)
+
+        # Invoke the chain
+        stream = self.chain.stream(
+            {
+                "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
+                "question": query
+            },
+            config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
+        )
+            
+        response = ""
+        for chunk in stream: response += chunk
+
+        if self.multi_turn:
+            message = self._get_message_from_string(role="human", string=query)
+            self.chat_history.append(message)
+
+            message = self._get_message_from_string(role="ai", string=response)
+            self.chat_history.append(message)
+        
+        return response, retrieval if self.return_context else response
+    
+class qa_chain(): ## will be deprecated
     
     def __init__(self, **kwargs):
 
@@ -318,7 +347,6 @@ class qa_chain():
         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
         if self.retriever.complex_doc:
-            #retrieval, tables, images = self.retriever.get_relevant_documents(query)
             retrieval, tables, images = self.retriever.invoke(query)
 
             invoke_args = {
@@ -345,12 +373,16 @@ class qa_chain():
         )
 
         chain = prompt | self.llm_text | StrOutputParser()
-        
         self.verbose = verbose
-        response = chain.invoke(
+        response = chain.stream(
             invoke_args,
             config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
         )
+        
+        res = ""
+        for chunk in response:
+            res += chunk
+            #print(chunk, end="")
 
         return response, retrieval if self.return_context else response
 
@@ -959,7 +991,7 @@ class retriever_utils():
                     boolean_filter=search_filter,
                     hybrid=True
                 )
-
+                
             similar_docs_keyword = cls.get_lexical_similar_docs(
                 index_name=kwargs["index_name"],
                 os_client=kwargs["os_client"],
@@ -1219,9 +1251,9 @@ class OpenSearchLexicalSearchRetriever(BaseRetriever):
 
     os_client: Any
     index_name: str
-    k = 3
-    minimum_should_match = 0
-    filter = []
+    k: int = 3
+    minimum_should_match: int = 0
+    filter: list = []
 
     def normalize_search_results(self, search_results):
 
@@ -1256,8 +1288,8 @@ class OpenSearchLexicalSearchRetriever(BaseRetriever):
         )
         query["size"] = self.k
 
-        print ("lexical search query: ")
-        pprint(query)
+        #print ("lexical search query: ")
+        #pprint(query)
 
         search_results = opensearch_utils.search_document(
             os_client=self.os_client,
@@ -1287,27 +1319,31 @@ class OpenSearchLexicalSearchRetriever(BaseRetriever):
 class OpenSearchHybridSearchRetriever(BaseRetriever):
 
     os_client: Any
-    vector_db: Any
+    #vector_db: Any
     index_name: str
-    k = 3
-    minimum_should_match = 0
-    filter = []
+    k: int = 3
+    minimum_should_match: int = 0
+    filter: list = []
     fusion_algorithm: str
-    ensemble_weights = [0.51, 0.49]
-    verbose = False
-    async_mode = True
-    reranker = False
-    reranker_endpoint_name = ""
-    rag_fusion = False
-    query_augmentation_size: Any
+    ensemble_weights: list = [0.51, 0.49]
+    verbose: bool = False
+    async_mode: bool = True
+    reranker: bool = False
+    reranker_endpoint_name: str = ""
+    rag_fusion: bool = False
+    query_augmentation_size: Optional[Any] = None
     rag_fusion_prompt = prompt_repo.get_rag_fusion()
     llm_text: Any
     llm_emb: Any
-    hyde = False
-    hyde_query: Any
-    parent_document = False
-    complex_doc = False
-    hybrid_search_debugger = "None"
+    hyde: bool = False
+    hyde_query: Optional[Any] = None
+    parent_document: bool = False
+    complex_doc: bool = False
+    hybrid_search_debugger: str = "None"
+    
+    model_config = {
+        "ignored_types": (type(rag_fusion_prompt),)
+    }
 
     def update_search_params(self, **kwargs):
 
