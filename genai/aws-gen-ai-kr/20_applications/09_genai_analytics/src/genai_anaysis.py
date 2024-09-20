@@ -22,7 +22,7 @@ class llm_call():
             
             message_format = {
                 "role": "assistant",
-                'content': [{'text': message}]
+                'content': [{'text': dedent(message)}]
             }
 
         return message_format
