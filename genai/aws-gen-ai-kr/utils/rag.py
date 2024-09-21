@@ -42,6 +42,8 @@ from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate, MessagesPlaceholder
 
+from langchain_core.messages.ai import AIMessage
+
 import threading
 from functools import partial
 from multiprocessing.pool import ThreadPool
@@ -199,63 +201,15 @@ class prompt_repo():
 # RetrievalQA (Langchain)
 ############################################################
 
-# class rag_chain():
-    
-#     def __init__(self, **kwargs):
-
-#         system_prompt = kwargs["system_prompt"]
-#         system_prompt = bedrock_utils.get_message_from_string(role="system", string=system_prompt)
-#         self.user_prompt=kwargs["user_prompt"]
-        
-#         self.llm_text = kwargs["llm_text"]
-#         self.retriever = kwargs["retriever"]
-#         self.return_context = kwargs.get("return_context", False)
-#         self.verbose = kwargs.get("verbose", False)
-#         self.callback = kwargs["callback"]
-#         self.multi_turn=kwargs.get("multi_turn", False)
-        
-#         self.messages = []
-#         self.messages.append(system_prompt)
-        
-#         self.chain = self.llm_text | StrOutputParser()
-        
-        
-#     def invoke(self, **kwargs):
-        
-#         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
-#         tables, images = None, None
-        
-#         retrieval = self.retriever.invoke(query)
-#         invoke_args = {
-#             "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
-#             "question": query
-#         }
-#         user_prompt = self.user_prompt.format(**invoke_args)
-#         message = bedrock_utils.get_message_from_string(role="user", string=user_prompt)
-#         self.messages.append(message)
-        
-#         response = ""
-#         for chunk in self.chain.stream(self.messages):
-#             response += chunk
-#             self.callback.on_llm_new_token(chunk)
-        
-#         if self.multi_turn:
-#             message = bedrock_utils.get_message_from_string(role="assistant", string=response)
-#             self.messages.append(message)
-#         else:
-#             self.messages = self.messages[0]        
-        
-#         return response, retrieval if self.return_context else response
-
 class rag_chain():
     
     def __init__(self, **kwargs):
 
         system_prompt = kwargs["system_prompt"]
-        system_prompt = self._get_message_from_string(role="system", string=system_prompt)
+        self.system_prompt = self._get_message_from_string(role="system", string=system_prompt)
         
         human_prompt=kwargs["human_prompt"]
-        user_prompt = self._get_message_from_string(role="human", string=human_prompt)
+        self.human_prompt = self._get_message_from_string(role="human", string=human_prompt)
         
         
         self.llm_text = kwargs["llm_text"]        
@@ -263,71 +217,56 @@ class rag_chain():
         
         self.return_context = kwargs.get("return_context", False)
         self.verbose = kwargs.get("verbose", False)
-        
-        self.multi_turn=kwargs.get("multi_turn", False)
-        
-        if self.multi_turn:
-            prompt = ChatPromptTemplate([
-                system_prompt,
-                ("placeholder", "{chat_history}"),
-                user_prompt
-                
-            ])
-            self.chat_history = []
-            
-        else:
-            prompt = ChatPromptTemplate([
-                system_prompt,
-                user_prompt
-                
-            ])
-            
-        self.chain = prompt | self.llm_text | StrOutputParser()
-        self.chat_history = []
-             
+                     
     def _get_message_from_string(self, role, string):
         
-        if role in ["system", "ai"]:
-            message = (role, string)
-            
-        elif role == "human":
-            contents = [
-                {
-                    "type": "text",
-                    "text": dedent(string)
-                }
-            ]
-            message = (role, contents)
+        if role == "system": message= SystemMessagePromptTemplate.from_template(string)
+        elif role == "human": message= HumanMessagePromptTemplate.from_template(string)
+        elif role == "ai": message = AIMessage(content=string)
             
         return message
         
         
     def invoke(self, **kwargs):
-        
+               
         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
         
-        retrieval = self.retriever.invoke(query)     
-        print (retrieval)
+        print ("verbose", verbose)
+        
+        if self.retriever.complex_doc:
+            retrieval, tables, images = self.retriever.invoke(query)
 
-        # Invoke the chain
-        stream = self.chain.stream(
-            {
+            invoke_args = {
+                "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
+                "tables_text": "\n\n".join([doc.page_content for doc in tables]),
+                "tables_html": "\n\n".join([doc.metadata["text_as_html"] if "text_as_html" in doc.metadata else "" for doc in tables]),
+                "question": query
+            }
+            human_prompt_complex_doc = prompt_repo.get_human_prompt(images=images, tables=tables)
+            human_prompt_complex_doc = self._get_message_from_string(role="human", string=human_prompt_complex_doc)
+            prompt = ChatPromptTemplate([self.system_prompt, human_prompt_complex_doc])
+                
+            self.chain = prompt | self.llm_text | StrOutputParser()
+            
+        else:
+            retrieval = self.retriever.invoke(query)
+            invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "question": query
-            },
-            config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
+            }
+            prompt = ChatPromptTemplate([self.system_prompt, self.human_prompt])
+            self.chain = prompt | self.llm_text | StrOutputParser()
+            
+        # Invoke the chain
+        stream = self.chain.stream(
+            invoke_args,
+            config={'callbacks': [ConsoleCallbackHandler()]} if verbose else {}
         )
             
         response = ""
         for chunk in stream: response += chunk
 
-        if self.multi_turn:
-            message = self._get_message_from_string(role="human", string=query)
-            self.chat_history.append(message)
-
-            message = self._get_message_from_string(role="ai", string=response)
-            self.chat_history.append(message)
         
         return response, retrieval if self.return_context else response
     
@@ -376,7 +315,7 @@ class qa_chain(): ## will be deprecated
         self.verbose = verbose
         response = chain.stream(
             invoke_args,
-            config={'callbacks': [ConsoleCallbackHandler()]} if self.verbose else {}
+            config={'callbacks': [ConsoleCallbackHandler()]} if verbose else {}
         )
         
         res = ""
