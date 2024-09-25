@@ -100,10 +100,8 @@ def training_function(script_args, training_args):
             print(train_dataset[index]["text"])
 
     # Model    
-    #torch_dtype = torch.bfloat16
-    #quant_storage_dtype = torch.bfloat16
-    torch_dtype = "bfloat16"
-    quant_storage_dtype = "bfloat16"
+    torch_dtype = torch.bfloat16
+    quant_storage_dtype = torch.bfloat16
 
     quantization_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -119,10 +117,14 @@ def training_function(script_args, training_args):
         attn_implementation="sdpa", # use sdpa, alternatively use "flash_attention_2"
         torch_dtype=quant_storage_dtype,
         use_cache=False if training_args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
+        device_map="auto",
+        #use_cache=False if training_args.activation_checkpointing else True,  # this is needed for gradient checkpointing
     )
     
     if training_args.gradient_checkpointing:
         model.gradient_checkpointing_enable()
+    #if training_args.activation_checkpointing:
+    #    model.activation_checkpointing_enable()
 
     ################
     # PEFT
@@ -157,6 +159,7 @@ def training_function(script_args, training_args):
             "append_concat_token": False,  # No need to add additional separator token
         },
     )
+        
     if trainer.accelerator.is_main_process:
         trainer.model.print_trainable_parameters()
 
@@ -187,7 +190,9 @@ if __name__ == "__main__":
     
     # set use reentrant to False
     if training_args.gradient_checkpointing:
-        training_args.gradient_checkpointing_kwargs = {"use_reentrant": True}
+        training_args.gradient_checkpointing_kwargs = {"use_reentrant": False}
+    #if training_args.activation_checkpointing:
+    #    training_args.activation_checkpointing_kwargs = {"use_reentrant": True}
     # set seed
     set_seed(training_args.seed)
   
