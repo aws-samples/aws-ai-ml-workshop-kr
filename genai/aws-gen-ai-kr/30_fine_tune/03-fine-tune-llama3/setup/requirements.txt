@@ -1,5 +1,9 @@
 huggingface_hub==0.25.1
 datasets==3.0.0
 transformers==4.44.2
+trl==0.11.1
+peft==0.12.0
+bitsandbytes==0.44.0
+tensorboard==2.17.1
 
 
