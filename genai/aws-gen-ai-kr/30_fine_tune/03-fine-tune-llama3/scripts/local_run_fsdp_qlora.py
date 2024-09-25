@@ -17,8 +17,7 @@ from trl import setup_chat_format
 from peft import LoraConfig
 
 
-from trl import (
-   SFTTrainer)
+from trl import (SFTTrainer)
 
 # Comment in if you want to use the Llama 3 instruct template but make sure to add modules_to_save
 # LLAMA_3_CHAT_TEMPLATE="{% set loop_messages = messages %}{% for message in loop_messages %}{% set content = '<|start_header_id|>' + message['role'] + '<|end_header_id|>\n\n'+ message['content'] | trim + '<|eot_id|>' %}{% if loop.index0 == 0 %}{% set content = bos_token + content %}{% endif %}{{ content }}{% endfor %}{% if add_generation_prompt %}{{ '<|start_header_id|>assistant<|end_header_id|>\n\n' }}{% endif %}"
@@ -101,8 +100,10 @@ def training_function(script_args, training_args):
             print(train_dataset[index]["text"])
 
     # Model    
-    torch_dtype = torch.bfloat16
-    quant_storage_dtype = torch.bfloat16
+    #torch_dtype = torch.bfloat16
+    #quant_storage_dtype = torch.bfloat16
+    torch_dtype = "bfloat16"
+    quant_storage_dtype = "bfloat16"
 
     quantization_config = BitsAndBytesConfig(
             load_in_4bit=True,
@@ -178,7 +179,7 @@ def training_function(script_args, training_args):
     
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, TrainingArguments))
-    script_args, training_args = parser.parse_args_and_config()    
+    script_args, training_args = parser.parse_args_and_config()
 
     if training_args.local_rank == 0:
         print("## script_args: \n", script_args)
