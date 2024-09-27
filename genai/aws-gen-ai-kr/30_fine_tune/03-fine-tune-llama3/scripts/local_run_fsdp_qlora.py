@@ -114,11 +114,9 @@ def training_function(script_args, training_args):
     model = AutoModelForCausalLM.from_pretrained(
         script_args.model_id,
         quantization_config=quantization_config,
-        attn_implementation="sdpa", # use sdpa, alternatively use "flash_attention_2"
+        attn_implementation="flash_attention_2", # use sdpa, alternatively use "flash_attention_2"
         torch_dtype=quant_storage_dtype,
         use_cache=False if training_args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
-        device_map="auto",
-        #use_cache=False if training_args.activation_checkpointing else True,  # this is needed for gradient checkpointing
     )
     
     if training_args.gradient_checkpointing:
@@ -190,7 +188,7 @@ if __name__ == "__main__":
     
     # set use reentrant to False
     if training_args.gradient_checkpointing:
-        training_args.gradient_checkpointing_kwargs = {"use_reentrant": False}
+        training_args.gradient_checkpointing_kwargs = {"use_reentrant":True}
     #if training_args.activation_checkpointing:
     #    training_args.activation_checkpointing_kwargs = {"use_reentrant": True}
     # set seed
