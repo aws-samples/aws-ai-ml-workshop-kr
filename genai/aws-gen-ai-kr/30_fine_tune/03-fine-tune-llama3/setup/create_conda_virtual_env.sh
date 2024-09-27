@@ -49,10 +49,12 @@ sleep 5
 # Install Python package and Create ipykernel to show Kernel in Jupyter Notebook
 #####################################
 
+rm -rf ~/.cache/pip/*
 pip install --upgrade pip
 pip install ipykernel
 python -m ipykernel install --user --name=$VirtualEnv --display-name "$VirtualEnv"
 
+pip install --no-cache-dir -r requirements.txt
 pip install --no-cache-dir -r requirements.txt
 
 # wait for  seconds
