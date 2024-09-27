@@ -53,7 +53,7 @@ pip install --upgrade pip
 pip install ipykernel
 python -m ipykernel install --user --name=$VirtualEnv --display-name "$VirtualEnv"
 
-pip install -r requirements.txt
+pip install --no-cache-dir -r requirements.txt
 
 # wait for  seconds
 echo "## Wait for seconds to proceed with next step"
