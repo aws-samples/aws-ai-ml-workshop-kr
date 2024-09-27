@@ -6,3 +6,5 @@ anthropic
 langchain_aws
 IPython
 matplotlib
+langchain-community
+ipywidgets
