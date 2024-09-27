@@ -115,7 +115,7 @@ def training_function(script_args, training_args):
         script_args.model_id,
         quantization_config=quantization_config,
         attn_implementation="flash_attention_2", # use sdpa, alternatively use "flash_attention_2"
-        torch_dtype=quant_storage_dtype,
+        torch_dtype="auto",
         use_cache=False if training_args.gradient_checkpointing else True,  # this is needed for gradient checkpointing
     )
     

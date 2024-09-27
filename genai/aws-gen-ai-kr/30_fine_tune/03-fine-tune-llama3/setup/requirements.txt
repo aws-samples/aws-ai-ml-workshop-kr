@@ -18,4 +18,3 @@ pickleshare==0.7.5
 matplotlib==3.9.2
 transformers==4.40.2
 torch==2.4.1
-flash-attn==2.6.3

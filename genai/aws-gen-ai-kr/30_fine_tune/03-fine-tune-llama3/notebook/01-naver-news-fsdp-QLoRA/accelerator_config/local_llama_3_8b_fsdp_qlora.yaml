@@ -38,7 +38,7 @@ evaluation_strategy: epoch             # evaluate every epoch
 max_grad_norm: 0.3                     # max gradient norm
 warmup_ratio: 0.03                     # warmup ratio
 bf16: true                             # use bfloat16 precision
-tf32: true                             # use tf32 precision
+#tf32: true                             # use tf32 precision
 gradient_checkpointing: true          # use gradient checkpointing to save memory
 #activation_checkpointing: true         # use gradient checkpointing to save memory in FSDP config
 
