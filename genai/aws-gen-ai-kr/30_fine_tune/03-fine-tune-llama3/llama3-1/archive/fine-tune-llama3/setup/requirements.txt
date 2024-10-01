@@ -1,0 +1,14 @@
+python-dotenv==1.0.1
+torch==2.2.2
+tensorboard==2.17.0
+transformers==4.40.0
+datasets==2.18.0
+accelerate==0.29.3
+evaluate==0.4.1
+bitsandbytes==0.43.1
+huggingface_hub==0.22.2
+trl==0.8.6
+peft==0.10.0
+sagemaker==2.224.2
+matplotlib==3.8.3
+pickleshare==0.7.5
