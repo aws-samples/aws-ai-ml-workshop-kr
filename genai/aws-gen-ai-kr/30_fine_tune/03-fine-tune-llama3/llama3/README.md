@@ -1,12 +1,24 @@
-# SageMaker 에서 Llama3-8B 파인 튜닝, 모델 배포 및 추론 하기
+<h1 align="left"><b>SageMaker 에서 Llama3-8B 파인 튜닝, 모델 배포 및 추론 하기</b></h1>
+<p align="center">
+    <a href="https://github.com/aws-samples">
+            <img alt="Build" src="https://img.shields.io/badge/Contribution-Welcome-blue">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
+    </a>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Fblob%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F30_fine_tune%2F03-fine-tune-llama3%2Fllama3%2FREADME.md&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
+    </a>
+</p>
 
-Updated: July 29, 2024
+
+Updated: Oct. 1, 2024
  
 ---
 
 SageMaker 에서 Llama3-8B 파인 튜닝 및 모델 배포 및 추론을 소개 합니다.<br>
-- PyTorch FSDP (Fully Sharded Distributed Training) 및 QLoRA 를 사용하여 파인 튜닝을 합니다. 동일 훈련 코드로 SageMaker Training 을 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge, ml.g5.48xlarge, ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
-- 또한 로컬 머신에서 파인 튜닝된 모델을 SageMaker Endpoint 에 추론을 하기 위해서, 로컬에서 Hugging Face TGI 도커 컨테이너로 모델을 서빙하는 테스트 및 SageMaker Endpoint 에 [Inference Component](https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/) 로 추론을 실습 할 수 있습니다.
+- **FSDP (Fully Sharded Distributed Training)** 및 **QLoRA** 를 사용하여 파인 튜닝을 합니다.
+    - 동일 훈련 코드로 SageMaker Training 을 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge, ml.g5.48xlarge, ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
+- 파인 튜닝된 모델을 **SageMaker Endpoint에서 추론**을 하기 위해서, Amazon Large Model Inference (LMI) Containers 기반 [서빙 및 추론 실습](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/03-fine-tune-llama3/llama3/notebook/20-inference)도 준비되어 있습니다.
 <br><br>
 이 실습 과정은 제한된 GPU 리소스로 인해서, <u>모델의 품질 보다는 "코드가 동작" 되는 관점에서 준비 했습니다. </u><br>
 - 충분한 GPU 리소스가 있으신 환경에서는, 코드 수정 없이 파라미터인 인스턴스 타입, 인스턴스 개수, 데이터 셋 사이즈 수정, Epoch 조정 등의 코드를 수정하여 모델을 최적화 할 수 있습니다. 
@@ -37,7 +49,6 @@ Assistant: KOTRA 코트라 는 한국벤처투자 BMW와 스타트업 개러지 
 - huggingface Acess Key 준비 하기 : [User access tokens](https://huggingface.co/docs/hub/en/security-tokens)
 - Llama-3-8B 모델 엑세스 권한 얻기: [meta-llama/Meta-Llama-3-8B](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
 
-
 ## 3. 실습 환경
 아래 설치 하기를 클릭하시고, 가이드를 따라가 주세요.
 - [setup/README.md](setup/README.md)
@@ -45,37 +56,24 @@ Assistant: KOTRA 코트라 는 한국벤처투자 BMW와 스타트업 개러지 
 ## 4. 노트북 실행 순서
 ### 4.1. 기본 End-to-End (데이터 준비, 파인 튜닝, 모델 배포 및 추론)
 아래와 같은 노트북을 차례로 실행 하시면 됩니다. notebook/01-naver-news-fsdp-QLoRA 하위의 노트북 입니다.
-- 01-Prepare-Dataset-KR-News.ipynb  
+- 01-prepare-dataset-kr-news.ipynb  
     - 두가지 종류의 데이터 셋 준비 합니다.
         - Full dataset : 전체 데이터 셋 입니다. (Training: 22,194, Validation: 2466, Test: 27840)
         - Sample dataset for rapid experiment : 전체 데이터 셋 입니다. (Training: 10, Validation: 10, Test: 10)        
-- 02-Train-Local-KR-News.ipynb
+- 02-train-fsdp-qlora-local-kr-news.ipynb
     - 로컬 머신에서 훈련을 합니다. 
     - 사용하자 하는 로컬 머신이 GPU 1개이면 혹은 4개, 8 개 이면, 실행시 파라미터인 --nproc_per_node=4 만 수정하시면 됩니다.
-- 03-SageMaker-Training.ipynb
+- 03-train-fsdp-qlora-sm-kr-news.ipynb
     - SageMaker Local Mode 로  훈련이 가능합니다. 이렇게 테스트 후에 SageMaker Cloud 에서 훈련하시면 됩니다. USE_LOCAL_MODE = True 변수로 조절 하시면 됩니다.
     - run_debug_sample = True 에 따라서 전체 데이터셋으로 훈련을 할지, 일부 샘플 데이터로 빠르게 훈련 코드를 테스트 할 수 있습니다.
-- [Option] 아래는 옵션 입니다. 이 노트북은 최적의 성능을 내기 위해서 One ml.g5.48xlarge 를 사용, 전체 훈련 데이터 셋 사용, Epoch=3 으로 훈련을 합니다. 전체 훈련 시간은 약 3시간 입니다.
-    - 03-1-Option-SageMaker-Training.ipynb    
-- 04-SageMaker-Inference.ipynb
-    - SageMaker Endpoint 에서 추론을 하며, 실제 Test 데이터 셋의 뉴스 기사로 요약을 해봅니다. 
 
 ### 4.2. 모델 배포 및 추론 심화 ( Bring Your Own Model )
-notebook/02-naver-news-llama3-inference 하위의 노트북 입니다.
-- 01-SageMaker-Inference-Local-Test.ipynb
-    - 이 노트북은 Hugging Face TGI 도커 이미지를 다운로드 받고, 로컬 머신에서 모델 아티펙터를 컨테이너로 올려 보는 과정을 합니다. 아래는 컨테이너가 올라와서 추론 준비 상태의 화면 입니다.
-    - ![ tgi_container_ready.png](notebook/02-naver-news-llama3-inference/img/tgi_container_ready.png)
-- 02-SageMaker-Inference-Component.ipynb
+notebook/20-inference 하위의 노트북 입니다.
+- sagemaker-infernece.ipynb
     - 파인 튜닝한 모델을 [SageMaker Inference Component](https://aws.amazon.com/blogs/machine-learning/reduce-model-deployment-costs-by-50-on-average-using-sagemakers-latest-features/) 로 직접 배포하고, 추론을 하는 예시 입니다.
 
-## 5. 추론 예시 화면
-- 아래는 notebook/04-SageMaker-Inference.ipynb 노트북의 마지막을 실행 했습니다. (참고로 아래의 예시는 Sample 부분 데이터 셋 보다는 22K 전체 데이터 셋과 Epoc: 3 및 ml.p4d.24xlarge 에서 예시 추론 결과 입니다.)
-<br><br>
-- ![inference_example.png](img/inference_example.png)
-
-## 6. 리소스 정리
+## 5. 리소스 정리
 - 실습을 완료 후에 반드시 사용하신 리소스를 정리 해야 합니다. 추가적인 요금이 불필요하게 발생할 수 있습니다. SageMaker Endpoint, SageMaker Notebook Instance 가 반드시 삭제가 되었는지 확인 해야 합니다.
-
 
 ## A. Reference
 - [Fine-tune Llama 3 with PyTorch FSDP and Q-Lora on Amazon SageMaker](https://www.philschmid.de/sagemaker-train-deploy-llama3)
@@ -84,4 +82,9 @@ notebook/02-naver-news-llama3-inference 하위의 노트북 입니다.
 - [LLM-based summarization: A case study of human, Llama 2 70b and GPT-4 summarization quality](https://www.anyscale.com/blog/llm-based-summarization-a-case-study-of-human-llama-2-70b-and-gpt-4-summarization-quality)
 - [LoRA Land: 310 Fine-tuned LLMs that Rival GPT-4, A Technical Report](https://arxiv.org/pdf/2405.00732)
 - [Fine Tune LLM for Text Summary](https://www.kaggle.com/code/mitanshuchakrawarty/fine-tune-llm-for-text-summary)
-- 
+
+## <div id="Contributors">**Contributors**</div>
+- <span style="#FF69B4;"> **Gonsoo Moon** (AWS Sr. AI/ML Specislist Solutions Architect) | [Mail](mailto:moongons@amazon.com) | [Linkedin](https://www.linkedin.com/in/gonsoomoon/) | [Git](https://github.com/gonsoomoon-ml) | </span>
+- <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr) | </span>
+- <span style="#FF69B4;"> **Youngjin Kim** (AWS Sr. Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/comeddy) | </span>
+- - -
