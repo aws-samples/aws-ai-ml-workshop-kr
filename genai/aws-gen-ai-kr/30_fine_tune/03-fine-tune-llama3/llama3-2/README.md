@@ -1,4 +1,15 @@
-# SageMaker 에서 Llama3.2 3B 파인 튜닝, 모델 배포 및 추론 하기
+<h1 align="left"><b>SageMaker 에서 Llama3.2 3B 파인 튜닝, 모델 배포 및 추론 하기</b></h1>
+<p align="center">
+    <a href="https://github.com/aws-samples">
+            <img alt="Build" src="https://img.shields.io/badge/Contribution-Welcome-blue">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
+    </a>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F30_fine_tune%2F03-fine-tune-llama3%2Fllama3-2&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
+    </a>
+</p>
+
 
 Updated: Oct. 1, 2024
  
