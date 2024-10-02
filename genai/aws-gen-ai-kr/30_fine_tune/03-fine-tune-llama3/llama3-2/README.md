@@ -5,7 +5,7 @@ Updated: Oct. 1, 2024
 ---
 
 SageMaker 에서 Llama3.1 8B 파인 튜닝 및 모델 배포 및 추론을 소개 합니다.<br>
-- **FSDP (Fully Sharded Distributed Training)** 및 **QLoRA** 를 사용하여 파인 튜닝을 합니다.
+- **QLoRA** 를 사용하여 파인 튜닝을 합니다.
     - 동일 훈련 코드로 SageMaker Training 을 최소 ml.g5.4xlarge 에서 동작 테스트가 되었고, ml.g5.12xlarge, ml.g5.24xlarge, ml.g5.48xlarge, ml.p4d.24xlarge 의 단일 머신 뿐만 아니라 2개의 머신에서도 동작 테스트 되었습니다.
 - 파인 튜닝된 모델을 **SageMaker Endpoint에서 추론**을 하기 위해서, Amazon Large Model Inference (LMI) Containers 기반 [서빙 및 추론 실습](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/03-fine-tune-llama3/llama3-2/notebook/20-inference)도 준비되어 있습니다.
 <br><br>
