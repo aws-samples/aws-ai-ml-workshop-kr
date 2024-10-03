@@ -4,30 +4,32 @@
 
 1. `bedrock.py`
 
-- Amazon Bedrock 및 Reranker, Hybrid search, parent-document 등의 RAG 기술 구현 파일
+- This file implements RAG techniques such as Amazon Bedrock, Reranker, Hybrid search, and parent-document.
 
 2. `streamlit.py`
 
-- 애플리케이션의 front-end 파일, 실행 시 `bedrock.py`을 import해서 사용
+- This is the front-end file of the application. When running, it imports `bedrock.py` and uses it.
 
 ## Start
-1. web_ui 폴더 접근
+
+1. Access the web_ui folder
+
 ```
-cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui/
+cd ~/SageMaker/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/chatbot_eng/04_web_ui/
 ```
 
-2. Python 종속 라이브러리 설치
+2. Install Python dependency libraries
 
 ```
 pip install -r requirements.txt
 ```
 
-3. Streamlit 애플리케이션 작동
+3. Run the Streamlit application
 
 ```
-streamlit run streamlit.py --server.port 8080
+streamlit run streamlit.py --server.baseUrlPath="/proxy/absolute/8501"
 ```
 
-3. 접속하기
+3. Access the application
 
-- Streamlit 작동 시 표시되는 External link로 접속
+- To access the application using the SageMaker Notebook domain, append /proxy/absolute/8501 to the domain.
