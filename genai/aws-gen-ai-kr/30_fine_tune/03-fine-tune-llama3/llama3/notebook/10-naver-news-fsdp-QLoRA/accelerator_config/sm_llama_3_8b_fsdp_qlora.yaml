@@ -1,5 +1,6 @@
 # script parameters
-model_id:  "meta-llama/Meta-Llama-3-8B" # Hugging Face model id
+#model_id:  "meta-llama/Meta-Llama-3-8B" # Hugging Face model id
+model_id: "MLP-KTLim/llama-3-Korean-Bllossom-8B"
 max_seq_length:  2048              # max sequence length for model and packing of the dataset
 # sagemaker specific parameters
 train_dataset_path: "/opt/ml/input/data/train/" # path to where SageMaker saves train dataset
