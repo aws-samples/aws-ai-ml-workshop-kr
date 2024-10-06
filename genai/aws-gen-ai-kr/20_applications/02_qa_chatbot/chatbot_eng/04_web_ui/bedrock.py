@@ -29,6 +29,7 @@ def get_llm(streaming_callback):
     model_kwargs={
         "max_tokens": 1024,
         "stop_sequences": ["\n\nHuman"],
+        "temperature" : 0
     },
     callbacks=[streaming_callback],
     )
