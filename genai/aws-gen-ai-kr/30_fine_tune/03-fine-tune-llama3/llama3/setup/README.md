@@ -23,6 +23,7 @@
     - ![create_llama3.png](img/create_llama3.png)
 - shell 을 아래의 명령어를 넣어서 실행 합니다. 위의 그림을 참조 하세요.
 - 가상 환경 이름은 원하는 이름으로 하셔도 좋습니다. 여기서는 lfinetune_fsdp_image 으로 했습니다.
+- 만약 fsdp가 아닌 qlora만 사용할 경우 아래 2번으로 실행시켜 주세요.
     ```
     1. [FSDP with QLoRA] ./create_conda_virtual_env_fsdp.sh finetune_fsdp_image 
     or
