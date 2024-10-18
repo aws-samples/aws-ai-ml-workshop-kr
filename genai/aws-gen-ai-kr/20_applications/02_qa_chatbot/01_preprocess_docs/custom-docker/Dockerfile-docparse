@@ -1,0 +1,24 @@
+
+FROM 246618743249.dkr.ecr.us-west-2.amazonaws.com/sagemaker-scikit-learn:1.2-1-cpu-py3
+
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+RUN apt-get update
+RUN apt-get install -y libgl1-mesa-glx
+RUN apt-get install -y libglib2.0-0
+RUN apt-get install -y poppler-utils
+
+RUN pip install -U pip
+RUN pip install botocore==1.35.40
+RUN pip install boto3==1.35.40
+RUN pip install sagemaker==2.232.2
+RUN pip install langchain==0.3.3
+RUN pip install langchain_aws==0.2.2
+RUN pip install langchain_community==0.3.2
+RUN pip install requests_toolbelt==1.0.0
+RUN pip install pdf2image==1.17.0
+RUN pip install numpy==1.26.4
+RUN pip install opencv-python==4.10.0.84
+RUN pip install ipython==8.18.1
+RUN pip install opensearch-py==2.7.1
+
+ENV PYTHONUNBUFFERED=TRUE
