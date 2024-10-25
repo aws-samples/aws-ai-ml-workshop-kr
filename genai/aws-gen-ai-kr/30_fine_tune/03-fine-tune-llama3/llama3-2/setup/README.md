@@ -18,7 +18,7 @@
 - 가상 환경을 구성 합니다.
 - setup 폴더로 이동을 합니다. 아래의 그림의 왼쪽 처럼, 탐색기로 setup 폴더까지 이동 합니다. 아래의 경로를 따라가 보세요.
     ```
-    cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/30_fine_tune/03-fine-tune-llama3/setup
+    cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/30_fine_tune/03-fine-tune-llama3/llama3-2/setup
     ```
     - ![create_llama3.png](img/create_llama3.png)
 - shell 을 아래의 명령어를 넣어서 실행 합니다. 위의 그림을 참조 하세요.
