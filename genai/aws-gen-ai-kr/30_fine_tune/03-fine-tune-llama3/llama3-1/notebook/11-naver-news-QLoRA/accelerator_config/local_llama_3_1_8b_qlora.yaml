@@ -1,5 +1,5 @@
 # script parameters
-model_id: "meta-llama/Llama-3.1-8B-Instruct"
+model_id: "Qwen/Qwen2.5-7B-Instruct"
 ###########################
 # small samples for Debug
 ###########################
@@ -23,9 +23,9 @@ max_seq_length:  2048              # max sequence length for model and packing o
 
 
 # training parameters
-output_dir: "/home/ec2-user/SageMaker/models/llama-3-1-8b-qlora-naver-news" # Temporary output directory for model checkpoints
+output_dir: "/home/ec2-user/SageMaker/models/qwen-2-5-7b-qlora-naver-news" # Temporary output directory for model checkpoints
 report_to: "tensorboard"               # report metrics to tensorboard
-logging_dir: "/home/ec2-user/SageMaker/logs/llama-3-1-8b-qlora-naver-news" # log folder for tensorboard
+logging_dir: "/home/ec2-user/SageMaker/logs/qwen-2-5-7b-qlora-naver-news" # log folder for tensorboard
 learning_rate: 0.0002                  # learning rate 2e-4
 lr_scheduler_type: "constant"          # learning rate scheduler
 num_train_epochs: 1                    # number of training epochs
