@@ -1,0 +1,315 @@
+[
+    {
+        "Album": {
+            "table_desc": "Stores album data with unique ID, title, and links to artist via artist ID.",
+            "cols": [
+                {
+                    "col": "AlbumId",
+                    "col_desc": "Primary key, unique identifier for the album."
+                },
+                {
+                    "col": "Title",
+                    "col_desc": "Title of the album."
+                },
+                {
+                    "col": "ArtistId",
+                    "col_desc": "Foreign key that references the artist of the album."
+                }
+            ]
+        },
+        "Artist": {
+            "table_desc": "Holds artist information with an ID and name.",
+            "cols": [
+                {
+                    "col": "ArtistId",
+                    "col_desc": "Primary key, unique identifier for the artist."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "Name of the artist."
+                }
+            ]
+        },
+        "Customer": {
+            "table_desc": "Contains customer details and links to their support representative.",
+            "cols": [
+                {
+                    "col": "CustomerId",
+                    "col_desc": "Primary key, unique customer identifier."
+                },
+                {
+                    "col": "FirstName",
+                    "col_desc": "First name of the customer."
+                },
+                {
+                    "col": "LastName",
+                    "col_desc": "Last name of the customer."
+                },
+                {
+                    "col": "Company",
+                    "col_desc": "Company of the customer."
+                },
+                {
+                    "col": "Address",
+                    "col_desc": "Address of the customer."
+                },
+                {
+                    "col": "City",
+                    "col_desc": "City of the customer."
+                },
+                {
+                    "col": "State",
+                    "col_desc": "State of the customer."
+                },
+                {
+                    "col": "Country",
+                    "col_desc": "Country of the customer."
+                },
+                {
+                    "col": "PostalCode",
+                    "col_desc": "Postal code of the customer."
+                },
+                {
+                    "col": "Phone",
+                    "col_desc": "Phone number of the customer."
+                },
+                {
+                    "col": "Fax",
+                    "col_desc": "Fax number of the customer."
+                },
+                {
+                    "col": "Email",
+                    "col_desc": "Email address of the customer."
+                },
+                {
+                    "col": "SupportRepId",
+                    "col_desc": "Foreign key that references the employee who supports this customer."
+                }
+            ]
+        },
+        "Employee": {
+            "table_desc": "Stores employee details, including their supervisory chain.",
+            "cols": [
+                {
+                    "col": "EmployeeId",
+                    "col_desc": "Primary key, unique identifier for the employee."
+                },
+                {
+                    "col": "LastName",
+                    "col_desc": "Last name of the employee."
+                },
+                {
+                    "col": "FirstName",
+                    "col_desc": "First name of the employee."
+                },
+                {
+                    "col": "Title",
+                    "col_desc": "Job title of the employee."
+                },
+                {
+                    "col": "ReportsTo",
+                    "col_desc": "Foreign key that references the supervisor of the employee."
+                },
+                {
+                    "col": "BirthDate",
+                    "col_desc": "Birth date of the employee."
+                },
+                {
+                    "col": "HireDate",
+                    "col_desc": "Hire date of the employee."
+                },
+                {
+                    "col": "Address",
+                    "col_desc": "Address of the employee."
+                },
+                {
+                    "col": "City",
+                    "col_desc": "City of the employee."
+                },
+                {
+                    "col": "State",
+                    "col_desc": "State of the employee."
+                },
+                {
+                    "col": "Country",
+                    "col_desc": "Country of the employee."
+                },
+                {
+                    "col": "PostalCode",
+                    "col_desc": "Postal code of the employee."
+                },
+                {
+                    "col": "Phone",
+                    "col_desc": "Phone number of the employee."
+                },
+                {
+                    "col": "Fax",
+                    "col_desc": "Fax number of the employee."
+                },
+                {
+                    "col": "Email",
+                    "col_desc": "Email address of the employee."
+                }
+            ]
+        },
+        "Genre": {
+            "table_desc": "Catalogs music genres with a unique identifier and name.",
+            "cols": [
+                {
+                    "col": "GenreId",
+                    "col_desc": "Primary key, unique identifier for the genre."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "Name of the genre."
+                }
+            ]
+        },
+        "Invoice": {
+            "table_desc": "Records details of transactions, linked to customers.",
+            "cols": [
+                {
+                    "col": "InvoiceId",
+                    "col_desc": "Primary key, unique identifier for the invoice."
+                },
+                {
+                    "col": "CustomerId",
+                    "col_desc": "Foreign key that references the customer associated with this invoice."
+                },
+                {
+                    "col": "InvoiceDate",
+                    "col_desc": "Date when the invoice was issued."
+                },
+                {
+                    "col": "BillingAddress",
+                    "col_desc": "Billing address on the invoice."
+                },
+                {
+                    "col": "BillingCity",
+                    "col_desc": "Billing city on the invoice."
+                },
+                {
+                    "col": "BillingState",
+                    "col_desc": "Billing state on the invoice."
+                },
+                {
+                    "col": "BillingCountry",
+                    "col_desc": "Billing country on the invoice."
+                },
+                {
+                    "col": "BillingPostalCode",
+                    "col_desc": "Billing postal code on the invoice."
+                },
+                {
+                    "col": "Total",
+                    "col_desc": "Total amount of the invoice."
+                }
+            ]
+        },
+        "InvoiceLine": {
+            "table_desc": "Details each line item on an invoice, linked to tracks and invoices.",
+            "cols": [
+                {
+                    "col": "InvoiceLineId",
+                    "col_desc": "Primary key, unique identifier for the invoice line."
+                },
+                {
+                    "col": "InvoiceId",
+                    "col_desc": "Foreign key that references the associated invoice."
+                },
+                {
+                    "col": "TrackId",
+                    "col_desc": "Foreign key that references the track sold in this invoice line."
+                },
+                {
+                    "col": "UnitPrice",
+                    "col_desc": "Price per unit of the track."
+                },
+                {
+                    "col": "Quantity",
+                    "col_desc": "Quantity of the track sold in this invoice line."
+                }
+            ]
+        },
+        "MediaType": {
+            "table_desc": "Defines types of media for tracks.",
+            "cols": [
+                {
+                    "col": "MediaTypeId",
+                    "col_desc": "Primary key, unique identifier for the media type."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "Name of the media type."
+                }
+            ]
+        },
+        "Playlist": {
+            "table_desc": "Organizes tracks into playlists.",
+            "cols": [
+                {
+                    "col": "PlaylistId",
+                    "col_desc": "Primary key, unique identifier for the playlist."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "Name of the playlist."
+                }
+            ]
+        },
+        "PlaylistTrack": {
+            "table_desc": "Links tracks to playlists.",
+            "cols": [
+                {
+                    "col": "PlaylistId",
+                    "col_desc": "Foreign key that identifies the playlist."
+                },
+                {
+                    "col": "TrackId",
+                    "col_desc": "Foreign key that identifies the track on the playlist."
+                }
+            ]
+        },
+        "Track": {
+            "table_desc": "Stores detailed information about music tracks, linked to albums, genres, and media types.",
+            "cols": [
+                {
+                    "col": "TrackId",
+                    "col_desc": "Primary key, unique identifier for the track."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "Name of the track."
+                },
+                {
+                    "col": "AlbumId",
+                    "col_desc": "Foreign key that references the album containing this track."
+                },
+                {
+                    "col": "MediaTypeId",
+                    "col_desc": "Foreign key that references the type of media for this track."
+                },
+                {
+                    "col": "GenreId",
+                    "col_desc": "Optional foreign key that references the genre of this track."
+                },
+                {
+                    "col": "Composer",
+                    "col_desc": "Composer of the track."
+                },
+                {
+                    "col": "Milliseconds",
+                    "col_desc": "Duration of the track in milliseconds."
+                },
+                {
+                    "col": "Bytes",
+                    "col_desc": "Size of the track file in bytes."
+                },
+                {
+                    "col": "UnitPrice",
+                    "col_desc": "Price per unit of this track."
+                }
+            ]
+        }
+    }
+]
