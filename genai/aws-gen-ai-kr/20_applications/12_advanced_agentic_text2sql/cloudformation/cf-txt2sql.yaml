@@ -1,0 +1,742 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  This CloudFormation template configures SageMaker Studio with minimal VPC requirements and public internet access for non-EFS traffic.
+
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  Route:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties:
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  SubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref RouteTable
+
+  Cloud9Environment:
+    Type: AWS::Cloud9::EnvironmentEC2
+    Properties:
+      Name: Text2SQLClient
+      InstanceType: t3.small
+      SubnetId: !Ref PublicSubnet
+      ImageId: amazonlinux-2023-x86_64
+      AutomaticStopTimeMinutes: 240
+
+  Cloud9Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: AdministratorAccessPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: "*"
+                Resource: "*"
+
+  Cloud9InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref Cloud9Role
+
+  WorkshopS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-${AWS::Region}-${AWS::AccountId}-workshop
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+            - "*"
+            AllowedMethods:
+            - POST
+            - PUT
+            - GET
+            - HEAD
+            - DELETE
+            AllowedOrigins:
+            - "*"
+            ExposedHeaders:
+            - ETag
+            - x-amz-delete-marker
+            - x-amz-id-2
+            - x-amz-request-id
+            - x-amz-server-side-encryption
+            - x-amz-version-id
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+
+  AthenaWorkGroup:
+    Type: AWS::Athena::WorkGroup
+    Properties:
+      Description: workgroup for workshop
+      Name: !Sub "${AWS::StackName}-workgroup"
+      RecursiveDeleteOption: True
+      State: ENABLED
+      WorkGroupConfiguration: 
+        EnforceWorkGroupConfiguration: True
+        PublishCloudWatchMetricsEnabled: True
+        RequesterPaysEnabled: False
+        ResultConfiguration: 
+          EncryptionConfiguration: 
+            EncryptionOption: SSE_S3
+          OutputLocation: !Sub s3://${WorkshopS3Bucket}/athena_results/
+
+  AthenaCustomDataSource:
+    Type: AWS::Athena::DataCatalog
+    Properties:
+      Name: !Sub ${AWS::StackName}-tpc_ds
+      Type: LAMBDA
+      Description: TPC DS custom data source
+      Parameters:
+        function: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${AWS::StackName}-tpc_ds
+
+  CreateAthenaDataConnectorLambdaRole: 
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaENIManagementAccess
+      Policies:
+        - PolicyName: allow_serverless_app_create
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - serverlessrepo:CreateCloudFormationChangeSet
+                  - serverlessrepo:DeleteApplication
+                Resource: arn:aws:serverlessrepo:us-east-1:292517598671:applications/AthenaTPCDSConnector
+              - Effect: Allow
+                Action:
+                  - cloudformation:DescribeStacks
+                  - cloudformation:CreateChangeSet
+                Resource: 
+                  - "arn:aws:cloudformation:*:aws:transform/*"
+              - Effect: Allow
+                Action:
+                  - cloudformation:DescribeStacks
+                Resource: 
+                  - !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/*"
+              - Effect: Allow
+                Action:
+                  - cloudformation:DescribeStacks
+                  - cloudformation:CreateChangeSet
+                  - cloudformation:DeleteStack
+                  - cloudformation:ExecuteChangeSet
+                  - cloudformation:DescribeChangeSet
+                Resource: 
+                  - !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/serverlessrepo-${AWS::StackName}-tpc*"
+                  - !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/serverlessrepo-${AWS::StackName}-tpc/*"
+              - Effect: Allow
+                Action:
+                  - lambda:DeleteFunction
+                  - lambda:CreateFunction
+                  - lambda:GetFunction
+                  - lambda:TagResource
+                  - lambda:GetRuntimeManagementConfig
+                  - lambda:GetFunctionCodeSigningConfig
+                Resource: 
+                  - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${AWS::StackName}-tpc_ds" 
+              - Effect: Allow
+                Action:
+                  - iam:DeleteRole
+                  - iam:DeleteRolePolicy
+                  - iam:CreateRole
+                  - iam:DetachRolePolicy
+                  - iam:PutRolePolicy
+                  - iam:AttachRolePolicy
+                  - iam:GetRole
+                  - iam:GetRolePolicy
+                  - iam:PassRole
+                  - iam:TagRole
+                  - iam:ListAttachedRolePolicies
+                  - iam:ListRolePolicies
+                Resource: 
+                  - !Sub "arn:aws:iam::${AWS::AccountId}:role/serverlessrepo-*"
+              - Effect: Allow # commenting out for testing
+                Action:
+                  - s3:GetObject
+                Resource: 
+                  - "arn:aws:s3:::awsserverlessrepo-*"
+
+  CreateAthenaDataConnector:
+    Type: Custom::CreateAthenaDataConnector
+    Properties:
+      ServiceToken: !GetAtt CreateAthenaDataConnectorFunction.Arn
+      Region: !Ref AWS::Region
+
+  CreateAthenaDataConnectorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: >
+        Creates the TPC Athena Data Source connector
+      Handler: index.handler
+      Environment:
+        Variables:
+          APP_ID: arn:aws:serverlessrepo:us-east-1:292517598671:applications/AthenaTPCDSConnector
+          SPILL_BUCKET: !Ref WorkshopS3Bucket
+          ATHENA_CATALOG_NAME: !Sub "${AWS::StackName}-tpc_ds" 
+          STACK_NAME: !Sub "${AWS::StackName}-tpc"
+      Runtime: python3.11
+      ReservedConcurrentExecutions: 5
+      TracingConfig:
+        Mode: Active
+      Role: !GetAtt CreateAthenaDataConnectorLambdaRole.Arn
+      Timeout: 300
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          from botocore import exceptions
+          import logging
+          import sys
+          import os
+          import cfnresponse
+          import time
+
+          # initialize logger
+          logger = logging.getLogger(__name__)
+          logger.setLevel(logging.DEBUG)
+          formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+          handler = logging.StreamHandler(sys.stdout)
+          logger.addHandler(handler)
+
+          SERVERLESS_APP_CLIENT = boto3.client('serverlessrepo')
+          CFN_CLIENT = boto3.client('cloudformation')
+          APP_ID = os.environ['APP_ID']
+          SPILL_BUCKET = os.environ['SPILL_BUCKET']
+          ATHENA_CATALOG_NAME = os.environ['ATHENA_CATALOG_NAME']
+          STACK_NAME = os.environ['STACK_NAME']
+
+          def handler(event, context):
+              logger.info(event)
+              if event['RequestType'] == 'Delete':
+                  logger.info(f"Request type was {event['RequestType']}. Deleting serverless app stack id serverlessrepo-{STACK_NAME}.")
+                  try:
+                      response = CFN_CLIENT.delete_stack(StackName=f"serverlessrepo-{STACK_NAME}")
+                      logger.info(f"delete stack response: {response}")
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, response)
+                      return {
+                          'statusCode': 200,
+                          'body': 'Success'
+                      }
+                  except exceptions.ClientError as e:
+                      if e.response['Error']['Code'] == 'ResourceNotFound':
+                          logger.info("resource not found, skipping")
+                          cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                      else:
+                        logger.error(f"{e}")
+                        cfnresponse.send(event, context, cfnresponse.FAILED, e.response)
+                        return {
+                            'statusCode': e.response['ResponseMetadata']['HTTPStatusCode'],
+                            'body': json.dumps(e['Error']['Code'])
+                        }
+              elif event['RequestType'] == 'Update':
+                  logger.info(f"Request type was {event['RequestType']}. Doing nothing.")
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                  return {
+                      'statusCode': 200,
+                      'body': 'Function will update'
+                  }
+              else:
+                  try:
+                      response = SERVERLESS_APP_CLIENT.create_cloud_formation_change_set(
+                          ApplicationId=APP_ID,
+                          StackName=STACK_NAME,
+                          ParameterOverrides=[
+                              {
+                                  'Name': 'AthenaCatalogName',
+                                  'Value': ATHENA_CATALOG_NAME
+                              },
+                              {
+                                  'Name': 'SpillBucket',
+                                  'Value': SPILL_BUCKET
+                              },
+                          ],
+                          Capabilities=['CAPABILITY_IAM'],
+                      )
+                      logger.info(f"CFN changeset submitted successfully: {response}. Checking change set status before executing")
+                      changeset_status = None
+                      while changeset_status != 'CREATE_COMPLETE':
+                          time.sleep(3)
+                          desc_change_set = CFN_CLIENT.describe_change_set(
+                              ChangeSetName=response['ChangeSetId']
+                              )
+                          changeset_status = desc_change_set['Status']
+                          logger.info(f"CFN changeset status: {changeset_status}")
+                      
+                      exec_changeset = CFN_CLIENT.execute_change_set(
+                          ChangeSetName=response['ChangeSetId'],
+                      )
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                      return {
+                          'statusCode': 200,
+                          'body': 'Success'
+                      }
+                  except exceptions.ClientError as e:
+                      logger.error(f"{e}")
+                      cfnresponse.send(event, context, cfnresponse.FAILED, e)
+                      return {
+                          'statusCode': e.response['ResponseMetadata']['HTTPStatusCode'],
+                          'body': json.dumps(e['Error']['Code'])
+                      }
+
+  DeleteEfs:
+    Type: Custom::DeleteEfs
+    Properties:
+      ServiceToken: !GetAtt DeleteEfsFunction.Arn
+      Region: !Ref AWS::Region
+
+  DeleteEfsFunction:
+    Type: AWS::Lambda::Function
+    DependsOn: 
+      - PublicSubnet
+    Properties:
+      Description: >
+        Deletes the underlying EFS mount for the sagemaker domain
+      Handler: index.handler
+      Environment:
+        Variables:
+          EFS_ID: !GetAtt StudioDomain.HomeEfsFileSystemId
+      Runtime: python3.11
+      ReservedConcurrentExecutions: 5
+      TracingConfig:
+        Mode: Active
+      Role:
+        Fn::GetAtt: DeleteEfsFunctionRole.Arn
+      Timeout: 900
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          from botocore import exceptions
+          import logging
+          import sys
+          import os
+          import cfnresponse
+          import time
+
+          # initialize logger
+          logger = logging.getLogger(__name__)
+          logger.setLevel(logging.DEBUG)
+          formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+          handler = logging.StreamHandler(sys.stdout)
+          logger.addHandler(handler)
+
+          EFS_CLIENT = boto3.client('efs')
+          EFS_ID = os.environ['EFS_ID']
+          EC2_CLIENT = boto3.client('ec2')
+
+          def handler(event, context):
+              logger.info(event)
+              if event['RequestType'] == 'Delete':
+                  logger.info(f"Request type was {event['RequestType']}. Deleting EFS file system id {EFS_ID} starting with mounts.")
+                  try:
+                      response = EFS_CLIENT.describe_mount_targets(
+                          FileSystemId=EFS_ID
+                      )
+                      logger.info(f"Found mounts: {response['MountTargets']}")
+                      mount_target_sgs_list = []
+                      logger.info("Grabbing list of SGs to delete later.")
+                      for mount in response['MountTargets']:
+                          logger.info(f"Get mount target security group for mount target {mount['MountTargetId']}.")
+                          mount_target_sgs = EFS_CLIENT.describe_mount_target_security_groups(
+                              MountTargetId=mount['MountTargetId']
+                          )
+                          mount_target_sgs = mount_target_sgs['SecurityGroups']
+                          logger.info(f"Found security groups: {mount_target_sgs}")
+                          mount_target_sgs_list = mount_target_sgs_list + mount_target_sgs
+
+                      logger.info("Deleting mount targets")
+                      for mount in response['MountTargets']:
+                          logger.info(f"Deleting mount target {mount['MountTargetId']} from filesystem {EFS_ID}")
+                          EFS_CLIENT.delete_mount_target(
+                              MountTargetId=mount['MountTargetId']
+                          )
+                          mount_status = None
+                          while mount_status != 'deleted':
+                              logger.info(f"Waiting for mount target {mount['MountTargetId']} to be deleted")
+                              time.sleep(3)
+                              try:
+                                  mount_status = EFS_CLIENT.describe_mount_targets(
+                                      MountTargetId=mount['MountTargetId']
+                                  )
+                                  mount_status = mount_status['MountTargets'][0]['LifeCycleState']
+                              except exceptions.ClientError as e:
+                                  if e.response['Error']['Code'] == 'MountTargetNotFound':
+                                      mount_status = 'deleted'
+                          logger.info(f"mount target deleted: {mount['MountTargetId']}")
+                          
+                      logger.info(f"Deleting mount target security groups for mounts.")
+                      delete_security_groups(mount_target_sgs_list)
+
+                      logger.info(f"Mount targets deleted. Deleting filesystem {EFS_ID}")
+                      delete_response = EFS_CLIENT.delete_file_system(FileSystemId=EFS_ID)
+
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, delete_response)
+                      return {
+                          'statusCode': 200,
+                          'body': 'Success'
+                      }
+                  except exceptions.ClientError as e:
+                      if e.response['Error']['Code'] == 'ResourceNotFound':
+                          logger.info("file system not found, skipping")
+                          cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                          return {
+                              'statusCode': 200,
+                              'body': 'Success'
+                          }
+                      if e.response['Error']['Code'] == 'FileSystemNotFound':
+                          logger.info("file system not found, skipping")
+                          cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                          return {
+                              'statusCode': 200,
+                              'body': 'Success'
+                          }
+                      else:
+                          logger.error(f"{e}")
+                          cfnresponse.send(event, context, cfnresponse.FAILED, e.response)
+                          return {
+                              'statusCode': e.response['ResponseMetadata']['HTTPStatusCode'],
+                              'body': json.dumps(e['Error']['Code'])
+                          }
+              else:
+                  logger.info(f"Request type was {event['RequestType']}. Doing nothing.")
+                  cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                  return {
+                      'statusCode': 200,
+                      'body': 'Success'
+                  }
+              
+          def delete_security_groups(sg_list):
+              sg_rules = EC2_CLIENT.describe_security_group_rules(
+                  Filters=[
+                      {
+                          'Name': 'group-id',
+                          'Values': sg_list
+                      },
+                  ]
+              )
+              sg_rules = sg_rules['SecurityGroupRules']
+              for sgr in sg_rules:
+                  if sgr['IsEgress']:
+                      EC2_CLIENT.revoke_security_group_egress(
+                          GroupId=sgr['GroupId'],
+                          SecurityGroupRuleIds=[sgr['SecurityGroupRuleId']]
+                      )
+                  else:
+                      EC2_CLIENT.revoke_security_group_ingress(
+                          GroupId=sgr['GroupId'],
+                          SecurityGroupRuleIds=[sgr['SecurityGroupRuleId']]
+                      )
+                  logger.info(f"Security group rule id {sgr['SecurityGroupRuleId']} deleted from security group {sgr['GroupId']}.")
+              logger.info(f"Security group rules revoked. Deleting security groups.")
+              for sg in sg_list:
+                  logger.info(f"Deleting security group {sg}")
+                  try:
+                      EC2_CLIENT.delete_security_group(
+                          GroupId=sg
+                      )
+                      logger.info(f"Security group {sg} deleted.")
+                  except exceptions.ClientError as e:
+                      if e.response['Error']['Code'] == 'DependencyViolation':
+                          logger.info("security group not ready to be deleted. Waiting to try one last time...")
+                          time.sleep(5)
+                          EC2_CLIENT.delete_security_group(
+                              GroupId=sg
+                          )
+                          logger.info(f"Security group {sg} deleted.") 
+                      else:
+                          # throw exception
+                          logger.error(e)
+                          raise Exception(e)
+
+  DeleteEfsFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaENIManagementAccess
+      Policies:
+        - PolicyName: allow_delete_efs
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - elasticfilesystem:DeleteFileSystem
+                  - elasticfilesystem:DescribeMountTargets
+                Resource: !Sub arn:aws:elasticfilesystem:${AWS::Region}:${AWS::AccountId}:file-system/${StudioDomain.HomeEfsFileSystemId}
+              - Effect: Allow
+                Action:
+                  - elasticfilesystem:DeleteMountTarget
+                  - elasticfilesystem:DescribeMountTargets
+                  - elasticfilesystem:DescribeMountTargetSecurityGroups
+                Resource: !Sub arn:aws:elasticfilesystem:${AWS::Region}:${AWS::AccountId}:file-system/${StudioDomain.HomeEfsFileSystemId}
+              - Effect: Allow
+                Action: 
+                  - ec2:DescribeNetworkInterfaceAttribute # requires *
+                  - ec2:DescribeSecurityGroupRules # requires *
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - ec2:DeleteSecurityGroup
+                  - ec2:RevokeSecurityGroupIngress
+                  - ec2:RevokeSecurityGroupEgress
+                Resource: !Sub arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:security-group/*
+
+
+  SageMakerExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - sagemaker.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+
+  OpenSearchDomain:
+    Type: "AWS::OpenSearchService::Domain"
+    Properties:
+      DomainName: !Sub "chatbot-${AWS::StackName}"
+      EngineVersion: "OpenSearch_2.11"
+      ClusterConfig:
+        InstanceType: "r6g.large.search"
+        InstanceCount: 1
+        DedicatedMasterEnabled: false
+        ZoneAwarenessEnabled: false
+      EBSOptions:
+        EBSEnabled: true
+        VolumeType: "gp3"
+        VolumeSize: 100
+      NodeToNodeEncryptionOptions:
+        Enabled: true
+      EncryptionAtRestOptions:
+        Enabled: true
+      AdvancedSecurityOptions:
+        Enabled: true
+        InternalUserDatabaseEnabled: true
+        MasterUserOptions:
+          MasterUserName: "raguser"
+          MasterUserPassword: "MarsEarth1!"
+      DomainEndpointOptions:
+        EnforceHTTPS: true
+        TLSSecurityPolicy: "Policy-Min-TLS-1-2-2019-07"
+      AccessPolicies:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: "*"
+            Action: "es:*"
+            Resource: "*"
+        
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [lambda.amazonaws.com]
+            Action: ["sts:AssumeRole"]
+      Policies:
+        - PolicyName: OpenSearchAndLogsAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "es:AssociatePackage"
+                  - "es:DescribePackages"
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+
+  OpenSearchNoriFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Timeout: 300
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import os
+          import cfnresponse
+
+          def lambda_handler(event, context):
+              client = boto3.client('opensearch')
+              domain_name = f"chatbot-{os.environ['AWS_STACK_NAME']}"
+              try:
+                  if event['RequestType'] == 'Delete':
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, {})
+                  elif event['RequestType'] == 'Create' or event['RequestType'] == 'Update':
+                      response = client.associate_package(
+                          PackageID='G79602591',  # Nori plugin Package ID for us-west-2 and version 2.11
+                          DomainName=domain_name
+                      )
+                      filtered_response = {
+                          key: value for key, value in response.items() if key in ['Status', 'PackageID']
+                      }
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, {'Data': filtered_response})
+              except Exception as e:
+                  cfnresponse.send(event, context, cfnresponse.FAILED, {'Message': str(e)})
+      Runtime: python3.11
+      Environment:
+        Variables:
+          AWS_STACK_NAME: !Ref "AWS::StackName"
+
+  OpenSearchPackageAssociation:
+    Type: Custom::OpenSearchNoriPlugin
+    Properties:
+      ServiceToken: !GetAtt OpenSearchNoriFunction.Arn
+      DomainName: !Ref OpenSearchDomain
+    DependsOn: OpenSearchDomain
+
+  OpenSearchDomainEndpointParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+      Name: "chatbot-opensearch_domain_endpoint"
+      Type: "String"
+      Value: !GetAtt OpenSearchDomain.DomainEndpoint
+
+  OpenSearchUserIDParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+      Name: "chatbot-opensearch_user_id"
+      Type: "String"
+      Value: "raguser"
+
+  OpenSearchUserPasswordParameter:
+    Type: "AWS::SSM::Parameter"
+    Properties:
+      Name: "chatbot-opensearch_user_password"
+      Type: "String"
+      Value: "MarsEarth1!"
+
+  StudioDomain:
+    Type: AWS::SageMaker::Domain
+    Properties:
+      DomainName: 'SageMakerDomain'
+      AuthMode: IAM
+      VpcId: !Ref VPC
+      SubnetIds: 
+        - !Ref PublicSubnet
+      AppNetworkAccessType: PublicInternetOnly
+      DefaultUserSettings:
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+
+  StudioUserProfile:
+    Type: AWS::SageMaker::UserProfile
+    DependsOn: 
+      - StudioDomain
+    Properties:
+      DomainId: !Ref StudioDomain
+      UserProfileName: WorkshopUser
+      UserSettings: 
+        ExecutionRole: !GetAtt SageMakerExecutionRole.Arn
+
+Outputs:
+  SageMakerConsoleLink:
+    Description: SageMaker Studio console link
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/sagemaker/home?region=${AWS::Region}#/studio/
+  
+  AthenaResultsS3Location:
+    Description: S3 location of Athena results
+    Value: !Sub ${WorkshopS3Bucket}/athena_results/
+
+  AthenaCatalogName:
+    Description: Athena catalog connected to TPC data source
+    Value: !Ref AthenaCustomDataSource
+
+  SageMakerExecutionRoleArn:
+    Description: SageMaker Execution Role ARN
+    Value: !GetAtt SageMakerExecutionRole.Arn
+
+  DomainEndpoint:
+    Description: "Endpoint for the OpenSearch domain."
+    Value: !Sub "https://${OpenSearchDomain.DomainEndpoint}"
+
+  DashboardURL:
+    Description: "URL to access the OpenSearch Dashboards."
+    Value: !Sub "https://${OpenSearchDomain.DomainEndpoint}:443/app/opensearch_dashboards"
+
+  UserID:
+    Description: "User ID for OpenSearch domain."
+    Value: "raguser"
+
+  UserPassword:
+    Description: "Password for OpenSearch domain."
+    Value: "MarsEarth1!"
