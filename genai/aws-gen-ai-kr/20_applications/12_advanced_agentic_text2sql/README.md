@@ -1,6 +1,6 @@
 # Text-to-SQL Bedrock
 
-This repository was based on the content from [here](https://github.com/kevmyung/text-to-sql-bedrock). This repository contains multiple labs focused on implementing Text-to-SQL using various tools and techniques. Below are the details for each lab included in this repository.
+This repository was based on the content from [here](https://github.com/kevmyung/text-to-sql-bedrock). This repository contains multiple labs focused on implementing Text-to-SQL using various tools and techniques. Below are the details for each lab included in this repository. 
 
 ## Lab 1: Text-to-SQL Schema Preparation
 
