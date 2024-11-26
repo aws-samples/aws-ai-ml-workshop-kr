@@ -15,7 +15,7 @@
 
 ### 목표
 
-![Architecture](/dataset/images/workshop_overview.ko.png)
+![Architecture](./dataset/images/workshop_overview.ko.png)
 
 1. **[Bedrock 기능 및 패턴](bedrock_basic_workshop/README.md)** : Bedrock의 기본 기능을 이해하고 간단한 애플리케이션을 실습합니다.
 2. **[프롬프트 엔지니어링](aicc_prompting_workshop/README.md)** : 자동차 보험 센터(AICC)를 기준으로 프롬프트 엔지니어링 방법을 배우고 실습합니다.
@@ -57,7 +57,7 @@ It is suitable for those with basic knowledge and includes in-depth content for 
 
 ### Objectives
 
-![Architecture](/dataset/images/workshop_overview.en.png)
+![Architecture](./dataset/images/workshop_overview.en.png)
 
 1. **[Bedrock Features and Patterns](bedrock_basic_workshop/README.md)**: Understand the basic functions of Bedrock and practice simple applications.
 2. **[Prompt Engineering](aicc_prompting_workshop/README.md)**: Learn and practice prompt engineering methods based on the Automotive Insurance Contact Center (AICC).
