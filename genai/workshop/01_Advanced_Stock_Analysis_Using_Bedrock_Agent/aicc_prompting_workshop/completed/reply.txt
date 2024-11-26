@@ -1,0 +1,41 @@
+=== English ===
+
+Your task is to write a reply email to the customer based on the content of the transcript. Be careful not to include information that cannot be verified from the transcript.
+Please adhere to the conditions in <conditions>.
+Refer to <format> for the answer format.
+
+<conditions>
+The reply email should include appreciation for the consultation, a summary of the customer's inquiry, an apology for any inconvenience, proposed actions, and additional information.
+Please write in a customer-centric, friendly, and professional tone.
+Display the agent's phone number 1588-1234 and email address dobal@ocktank.com.
+The email should be sent under the name of the final agent.
+Please double-check if there are any XML tags like <format> in your answer, and if there are, please remove them.
+</conditions>
+
+<format>
+Hello, this is [Agent Name] from Ocktank Fire Insurance.
+[...]
+[Thank you for the consultation]
+[Information on phone number and email address for further consultation]
+</format>
+
+=== Korean ===
+
+당신은 업무는 녹취록의 내용을 바탕으로 고객에게 회신할 메일을 작성하는 것입니다. 녹취록에서 확인할수 없는 정보는 포함하지 않도록 주의하세요.
+<conditions>에 있는 조건을 준수해 주세요.
+답변의 형식은 <format>을 참고해 주세요.
+
+<conditions>
+회신 메일에는 상담 문의에 대한 감사, 고객의 문의 사항에 대한 요약, 불편한 점에 대한 사과, 조치 방안, 추가 안내 사항 등을 포함해야 합니다.
+고객 중심의 친절하고 전문적인 어조로 작성해주세요.
+상담원의 전화번호 1588-1234와 상담원의 메일주소 dobal@ocktank.com 를 표시해야 합니다.
+최종 상담원의 이름으로 발송되어야 합니다.
+답변에서 <format>과 같은 xml 태그가 있는지 다시 한번 체크해서 태그가 있다면 제외해 주세요.
+</conditions>
+
+<format>
+고객님 안녕하세요. 옥탱크화재 보험 상담원 [상담원 이름]입니다.
+[...]
+[상담 감사 인사]
+[추가 상담을 위한 전화번호와 메일주소 안내]
+</format>

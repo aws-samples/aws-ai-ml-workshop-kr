@@ -1,0 +1,7 @@
+boto3
+numpy
+streamlit
+PyPDF2
+faiss-cpu
+yfinance
+plotly

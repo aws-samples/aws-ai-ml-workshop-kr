@@ -1,0 +1,32 @@
+{
+    "en": {
+        "title": "Bedrock Agent Stock Analysis",
+        "input_prompt": "Enter stock name (✅company name allowed, ⚠️cryptocurrency search restricted)",
+        "analyze_button": "Start Analysis",
+        "today_date": "Today's Date",
+        "company_profile": "Company Profile",
+        "candlestick_chart": "Candlestick Chart",
+        "financial_statement": "Financial Statement",
+        "analyst_recommendations": "Analyst Recommendations",
+        "bedrock_reasoning": "Bedrock Reasoning",
+        "analysis_report": "Analysis Report",
+        "generating_response": "Generating response...",
+        "chart_date": "Date",
+        "chart_price": "Price"
+    },
+    "ko": {
+        "title": "Bedrock Agent 주식 분석",
+        "input_prompt": "종목명을 입력하세요 (✅ 기업명 입력 가능 / ⚠️ 암호화폐 관련 검색 제한)",
+        "analyze_button": "분석 시작",
+        "today_date": "오늘의 날짜",
+        "company_profile": "회사 프로필",
+        "candlestick_chart": "캔들 차트",
+        "financial_statement": "재무 제표",
+        "analyst_recommendations": "애널리스트 추천 정보",
+        "bedrock_reasoning": "Bedrock 추론",
+        "analysis_report": "분석 리포트",
+        "generating_response": "응답 생성 중...",
+        "chart_date": "날짜",
+        "chart_price": "가격"
+    }
+}
