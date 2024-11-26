@@ -12,7 +12,7 @@ Amazon Bedrock Agent는 사용자 요청을 이해하고, 데이터를 처리하
 
 ## 아키텍처
 
-![Architecture](./dataset/images/stock_architecture.png)
+![Architecture](../dataset/images/stock_architecture.png)
 
 1. **Streamlit**: 사용자 인터페이스를 제공하여 주식 분석 결과를 시각적으로 표시합니다.
 2. **Amazon Bedrock Agent**: 다양한 AI 모델과 통합되어 주식 데이터를 분석하고, Knowledge Base와 Action Group을 통해 데이터를 처리합니다.
@@ -50,7 +50,7 @@ Amazon Bedrock Agent understands user requests, processes data, and automaticall
 
 ## Architecture
 
-![Architecture](./dataset/images/stock_architecture.png)
+![Architecture](../dataset/images/stock_architecture.png)
 
 1. **Streamlit**: Provides a user interface to visually display stock analysis results.
 2. **Amazon Bedrock Agent**: Integrates with various AI models to analyze stock data and process information through Knowledge Base and Action Group.
