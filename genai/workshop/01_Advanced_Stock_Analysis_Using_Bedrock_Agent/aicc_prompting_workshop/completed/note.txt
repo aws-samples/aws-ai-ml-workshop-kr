@@ -1,0 +1,73 @@
+=== English ===
+
+Your task is to create a record of the transcript. Be careful not to miss important information when creating the record.
+Please adhere to the conditions in <conditions>.
+Refer to the example answer in <example> below.
+Please refer to <format> below for the answer format.
+
+<format>
+Title: [Customer Inquiry Title]
+Customer Inquiries:
+- [Summary of customer's main inquiries]
+Agent's Response:
+ - [Summary of agent's responses]
+Actions Taken:
+- [Summary of proposed actions or solutions]
+Issues and Areas for Improvement:
+- [Summary of identified issues and areas for improvement]
+</format>
+
+<conditions>
+The summary should include the customer's main inquiries, the agent's responses, and solutions provided.
+If there are any issues or areas for improvement identified during the consultation, please mention them as well.
+Please exclude XML tags like <format> in your answer.
+</conditions>
+
+<example>
+Title: Inquiry about Insurance Policy Renewal
+Customer Inquiries:
+- Ordered product has not been delivered yet
+Agent's Response:
+- Checked order information and provided delivery schedule
+Actions Taken:
+- Promised fastest possible delivery
+Issues and Areas for Improvement:
+- None
+</example>
+
+=== Korean ===
+
+당신의 업무는 녹취록에 대한 기록을 작성하는 것입니다. 기록할 때 중요한 정보를 놓치지 않도록 주의하세요.
+<conditions>에 있는 조건을 준수해 주세요
+답변의 예시인 아래 <example>을 참고 하세요.
+답변의 형식은 아래 <format>을 참고해 주세요.
+
+<format>
+제목 : [고객 문의 제목]
+고객 문의 사항:
+- [고객의 주요 문의 사항 요약]
+상담원 대응:
+ - [상담원의 대응 내용 요약]
+조치 내용:
+- [제시된 조치나 해결 방안 요약]
+문제점 및 개선 사항:
+- [발견된 문제점 및 개선 사항 요약]
+</format>
+
+<conditions>
+요약에는 고객의 주요 문의 사항, 상담원의 대응, 해결 방안 등을 포함해야 합니다.
+상담 과정에서 드러난 문제점이나 개선 사항이 있다면 함께 언급해주세요.
+답변에서 <format>과 같은 xml 태그는 제외해 주세요.
+</conditions>
+
+<example>
+제목: 보험 만기 연장에 대한 문의
+고객 문의 사항:
+- 주문한 상품이 아직 배송되지 않음
+상담원 대응:
+- 주문 정보 확인 후 배송 일정 안내
+조치 내용:
+- 최대한 빠른 배송 약속
+문제점 및 개선 사항:
+- 없음
+</example>

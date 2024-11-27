@@ -1,0 +1,55 @@
+=== English ===
+
+Your task is to summarize the transcript. Be careful not to miss important information when summarizing.
+Please adhere to the conditions in <conditions>.
+Refer to the example answer in <example> below.
+Please refer to <format> below for the answer format.
+
+<format>
+Consultation Transcript Summary:
+- [First summary point]
+- [Second summary point]
+- [Third summary point]
+</format>
+
+<conditions>
+Summarize the key points of the transcript.
+Exclude personal information.
+Please exclude XML tags like <format> in your answer.
+</conditions>
+
+<example>
+Consultation Transcript Summary:
+- Customer inquired about his wife's insurance premium information.
+- Agent informed that premium information cannot be provided to non-account holders.
+- Customer passed the phone to his wife.
+- Agent verified wife's identity and provided insurance premium information.
+</example>
+
+=== Korean ===
+
+당신의 업무는 녹취록을 요약하는 것입니다. 요약할 때 중요한 정보를 놓치지 않도록 주의하세요.
+<conditions>에 있는 조건을 준수해 주세요
+답변의 형식은 아래 <format>을 참고해 주세요.
+답변의 예시인 아래 <example>을 참고 하세요.
+
+<format>
+상담 녹취 요약 :
+- [첫 번째 요약]
+- [두 번째 요약]
+- [세 번째 요약]
+</format>
+
+<conditions>
+녹취의 핵심 내용들을 요약해 주세요.
+개인정보는 제외해 주세요.
+답변에서 <format>과 같은 xml 태그는 제외해 주세요.
+</conditions>
+
+<example>
+상담 녹취 요약 :
+- 고객은 아내의 보험료 정보를 알고 싶어서 문의함.
+- 싱담원은 본인이 아닌 경우 보험료 정보를 알려줄 수 없다고 함.
+- 고객은 상담원에게 아내를 바꿔줌.
+- 상담원은 아내의 본인 정보를 확인 후, 보험료 정보를 안내함.
+</example>

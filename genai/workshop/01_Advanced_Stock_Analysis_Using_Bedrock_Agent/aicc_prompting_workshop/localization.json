@@ -1,0 +1,58 @@
+{
+    "en": {
+        "transcript_instruction": "<transcript> contains the call transcript between the agent and the customer. Please answer based on this transcript.",
+        "page_title": "AICC",
+        "main_title": "AICC - Auto Insurance Consultation",
+        "view_transcript": "View Transcript",
+        "select_scenario": "Select Scenario",
+        "generate": "Generate",
+        "consultation_summary": {
+          "name": "Consultation Summary",
+          "description": "Generate a detailed summary of the recorded consultation.",
+          "file": "summary.txt"
+        },
+        "consultation_notes": {
+          "name": "Consultation Notes",
+          "description": "Adjust the summary format to extract only necessary information.",
+          "file": "note.txt"
+        },
+        "email_reply": {
+          "name": "Email Reply",
+          "description": "Generate a reply email to be sent to the customer.",
+          "file": "reply.txt"
+        },
+        "consultation_quality": {
+          "name": "Consultation Quality",
+          "description": "Review the transcript for detailed compliance and quality.",
+          "file": "quality.txt"
+        }
+    },
+    "ko": {
+        "transcript_instruction": "<transcript> 에는 상담원과 고객간의 통화 녹취가 기록되어 있습니다. 이 녹취를 바탕으로 답변해주세요.",
+        "page_title": "AICC",
+        "main_title": "AICC - 자동차 보험 상담",
+        "view_transcript": "녹취문 보기",
+        "select_scenario": "시나리오 선택",
+        "generate": "생성",
+        "consultation_summary": {
+          "name": "상담 요약",
+          "description": "녹취된 상담의 상세한 요약을 생성합니다.",
+          "file": "summary.txt"
+        },
+        "consultation_notes": {
+          "name": "상담 노트",
+          "description": "필요한 정보만 발췌할 수 있도록 요약 형식을 조정하세요.",
+          "file": "note.txt"
+        },
+        "email_reply": {
+          "name": "메일 회신",
+          "description": "고객에게 전달할 회신 메일을 생성하세요.",
+          "file": "reply.txt"
+        },
+        "consultation_quality": {
+          "name": "상담 품질",
+          "description": "녹취에 대한 상세한 규정준수 및 품질을 검토합니다.",
+          "file": "quality.txt"
+        }
+    }
+}

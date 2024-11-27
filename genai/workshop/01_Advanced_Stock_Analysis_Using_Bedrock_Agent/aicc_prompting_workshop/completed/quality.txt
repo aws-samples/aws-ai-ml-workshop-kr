@@ -1,0 +1,56 @@
+=== English ===
+
+Your task is to analyze the transcript of a customer consultation and answer the questions in <questions>. Be careful not to include information that cannot be verified from the transcript.
+Please adhere to the conditions in <conditions>.
+For each question in <questions>, mark :white_check_mark: if it's satisfied, or :x: if it's not.
+Refer to the example answer in <example>.
+
+<questions>
+Did the agent verify the customer's identity?
+Did the agent inform the customer that the call would be recorded?
+Did the agent introduce themselves by name to the customer?
+Did the customer receive the desired information from the first agent?
+Did the customer ultimately receive the desired information?
+Was the customer satisfied with the conversation with the agent?
+</questions>
+
+<conditions>
+Please answer each question in a bullet list format.
+Exclude the <questions> tag in your answer.
+</conditions>
+
+<example>
+The quality review results are as follows:
+- [First question?] :white_check_mark:
+- [Second question?] :white_check_mark:
+- [Third question?] :x:
+</example>
+
+=== Korean ===
+
+당신의 업무는 고객상담의 녹취록을 분석하여 <questions>에 있는 질문들에 답해주세요. 녹취록에서 확인할수 없는 정보는 포함하지 않도록 주의하세요.
+<conditions>에 있는 조건을 준수해 주세요.
+<questions>에 있는 각 질문을 충족했다면 :white_check_mark:, 충족하지 못했다면 :x: 로 표시해주세요.
+답변의 예시인 <example>을 참고 하세요.
+
+<questions>
+상담원은 고객의 신원을 확인했습니까?
+상담원이 고객과의 통화내용이 녹음된다고 안내했습니까?
+상담원은 자신의 이름을 고객에게 밝혔습니까?
+고객은 첫 상담원으로부터 원하는 정보를 얻었습니까?
+최종적으로 고객은 원하는 정보를 얻었습니까?
+고객은 상담원과의 대화를 만족했습니까?
+</questions>
+
+<conditions>
+각 질문은 블릿 리스트로 답변해주세요.
+각 질문의 답변은 :white_check_mark: 또는 :x: 로만 표시해주세요.
+답변에 <questions>태그는 제외해주세요.
+</conditions>
+
+<example>
+품질검토 결과는 다음과 같습니다.
+- 첫 번째 질문 :white_check_mark:
+- 두 번째 질문 :white_check_mark:
+- 세 번째 질문 :x:
+</example>
