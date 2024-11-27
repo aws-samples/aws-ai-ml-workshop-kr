@@ -241,6 +241,11 @@ class bedrock_utils():
                     print(f"Output tokens:  {token_usage['outputTokens']}")
                     print(f"Total tokens:  {token_usage['totalTokens']}")
                     print(f"Stop reason: {response['stopReason']}")
+                    output["token_usage"] = {
+                        "inputTokens": token_usage['inputTokens'],
+                        "outputTokens": token_usage['outputTokens'],
+                        "totalTokens": token_usage['totalTokens']
+                    }
 
             except ClientError as err:
                 message = err.response['Error']['Message']
@@ -294,9 +299,15 @@ class bedrock_utils():
                             print(
                                 f"Output tokens: {metadata['usage']['outputTokens']}")
                             print(f"Total tokens: {metadata['usage']['totalTokens']}")
+                            output["token_usage"] = {
+                                "inputTokens": metadata['usage']['inputTokens'],
+                                "outputTokens": metadata['usage']['outputTokens'],
+                                "totalTokens": metadata['usage']['totalTokens']
+                            }
                         if 'metrics' in event['metadata']:
                             print(
                                 f"Latency: {metadata['metrics']['latencyMs']} milliseconds")
+                            output["latency"] = metadata['metrics']['latencyMs']
             except ClientError as err:
                 message = err.response['Error']['Message']
                 print("A client error occurred: %s", message)
