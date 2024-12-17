@@ -110,7 +110,12 @@ class bedrock_info():
         "Titan-Text-G1-Light": "amazon.titan-text-lite-v1",
         "Titan-Text-G1-Premier": "amazon.titan-text-premier-v1:0",
         "Titan-Text-G1-Express": "amazon.titan-text-express-v1",
-        "Llama2-13b-Chat": "meta.llama2-13b-chat-v1"
+        "Llama2-13b-Chat": "meta.llama2-13b-chat-v1",
+        "Nova-Canvas": "amazon.nova-canvas-v1:0",
+        "Nova-Reel": "amazon.nova-reel-v1:0",
+        "Nova-Micro": "amazon.nova-micro-v1:0",
+        "Nova-Lite": "amazon.nova-lite-v1:0",
+        "Nova-Pro": "amazon.nova-pro-v1:0"
     }
 
     @classmethod
