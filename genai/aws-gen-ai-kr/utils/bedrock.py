@@ -116,7 +116,8 @@ class bedrock_info():
         "Nova-Reel": "amazon.nova-reel-v1:0",
         "Nova-Micro": "amazon.nova-micro-v1:0",
         "Nova-Lite": "amazon.nova-lite-v1:0",
-        "Nova-Pro": "amazon.nova-pro-v1:0"
+        "Nova-Pro": "amazon.nova-pro-v1:0",
+        "Nova-Pro-CRI": "us.amazon.nova-pro-v1:0"
     }
 
     @classmethod
