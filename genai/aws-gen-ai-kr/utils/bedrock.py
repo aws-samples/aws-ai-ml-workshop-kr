@@ -54,7 +54,7 @@ def get_bedrock_client(
     retry_config = Config(
         region_name=target_region,
         retries={
-            "max_attempts": 20,
+            "max_attempts": 5,
             "mode": "standard",
         },
     )
@@ -98,6 +98,7 @@ class bedrock_info():
         "Claude-V3-Opus": "anthropic.claude-3-sonnet-20240229-v1:0",
         "Claude-V3-5-Sonnet": "anthropic.claude-3-5-sonnet-20240620-v1:0",
         "Claude-V3-5-V-2-Sonnet": "anthropic.claude-3-5-sonnet-20241022-v2:0",
+        "Claude-V3-5-V-2-Sonnet-CRI": "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",
