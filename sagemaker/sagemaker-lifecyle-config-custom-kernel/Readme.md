@@ -119,8 +119,9 @@
 ---
 - #### SageMaker notebook을 시작합니다.
 <img src="./imgs/llc-7.png" width="1000">
+
 ---
-## <div id="Contributors">**Contributors**</div>
+## Contributors
 - <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)</span>
 
 
