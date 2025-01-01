@@ -5,6 +5,10 @@
 ---
 ## 1. SageMaker 를 이용한 ML/DL 모델 개발과 추론
 
+#### 1-0. 온프레미스 노트북의 훈련 코드를 SageMaker 훈련 코드로 바꾸기
+
+- [SageMaker 시작하기](01-sagemaker-101/README.md) - 일반적인 Python 훈련 코드를 SageMaker 훈련 코드로 바꾸는 것을 배웁니다. 
+
 #### 1-1. 빌트인 알고리즘 활용하기
 
 - [XGBoost 시작하기](xgboost/Readme.md) - SageMaker Built-in XGBoost 알고리즘을 마케팅응답을 예측하는 이진분류 문제에 적용해봅니다. [바로가기](xgboost/Readme.md)
