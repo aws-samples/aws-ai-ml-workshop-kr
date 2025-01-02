@@ -1,26 +1,28 @@
-# AWS AI/ML Workshop - Korea
+# AWS Generative AI/Machine Learning Samples - Korea
 
-AWS AIML 한글 워크샵 & 예제 모음 
-
----
+<p align="left">
+    <a href="https://github.com/aws-samples">
+            <img alt="Build" src="https://img.shields.io/badge/Contribution-Welcome-blue">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
+    </a>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</p>
 
 ## 디렉토리 구조
 
-본 리포지토리의 예제 코드는 아래 4가지 카테고리로 나뉘어 있습니다. 각 디렉토리별 Readme 파일을 참고하십시오.
+AWS AIML 코드 및 워크샵 예제가 있습니다.
+본 리포지토리의 대표 코드를 아래 3가지 카테고리를 보시면 됩니다. 각 디렉토리별 Readme 파일을 참고하십시오.
 
-- [AI services](aiservices/Readme.md) : Amazon Rekognition, Amazon Textract 등 학습없이 사용 가능한 AIML 서비스 활용 예제
-- [Applied AI](appliedai/Readme.md) : Amazon Personalize, Amazon Forecast 등 사용자 데이터를 이용한 커스텀 ML 모델 생성/추론 서비스
-- [SageMaker](sagemaker/Readme.md) : End-to-end 머신러닝/딥러닝 플랫폼 SageMaker 활용 예제
-- [Integration](integration/Readme.md) : Greengrass, EMR 등 다른 서비스와의 융합 및 응용사례
-- [Generative AI](genai/Readme.md) : Generative AI와 관련된 예제 및 관련 서비스 응용사례
+- [Generative AI](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications) : Generative AI와 관련된 예제 및 관련 서비스 응용사례
+    - [AWS Generative AI Applications](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications)
+    - [AWS Generative AI Model Deployment (Inference)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/40_inference)
+    - [AWS Generative AI Model Fine-tuning (Training)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune)
+- [SageMaker AI](sagemaker/Readme.md) : End-to-end 머신러닝/딥러닝 플랫폼 SageMaker 활용 예제
+    - [SageMaker AI 101 - SageMaker 훈련 시작하기 (입문)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/sagemaker/01-sagemaker-101)
 - [AWS Neuron](neuron/Readme.md) : AWS Neuron (Inferentia, Inferentia2, Tranium )의 관련된 예제 및 활용
----
 
-## SageMaker 셀프스터디
-
-다음은 SageMaker를 Self study로 학습하고자 할 때 유용한 정보들입니다.
-
-- [문곤수님 gihtub](https://github.com/gonsoomoon-ml/Self-Study-On-SageMaker/blob/main/README.md)
 
 ---
 
