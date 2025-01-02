@@ -10,7 +10,7 @@
     <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 </p>
 
-## 디렉토리 구조
+## 디렉토리 구조 
 
 AWS AIML 코드 및 워크샵 예제가 있습니다.
 본 리포지토리의 대표 코드를 아래 3가지 카테고리를 보시면 됩니다. 각 디렉토리별 Readme 파일을 참고하십시오.
