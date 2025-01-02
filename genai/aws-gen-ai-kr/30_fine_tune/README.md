@@ -18,7 +18,7 @@
     - 05-fine-tune-llama3: [SageMaker 에서 Llama3.2 3B 파인 튜닝, 모델 배포 및 추론 하기)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/05-fine-tune-llama3)
     - 04-amazon-bedrock-imported-models-finetuning-llama3-text2sql-korean: [llama3-text2sql-korean)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/04-amazon-bedrock-imported-models-finetuning-llama3-text2sql-korean)    
     - 03-deepspeed-on-sagemaker: [SageMaker 에서 DeepSpeed 사용하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/03-deepspeed-on-sagemaker)        
-    - 02-tutorial-huggingface-peft-basic-lora: [EFT-Huggingface-LoRA-Korean-Data](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/02-tutorial-huggingface-peft-basic-lora)        
+    - 02-tutorial-huggingface-peft-basic-lora: [PEFT-Huggingface-LoRA-Korean-Data](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/02-tutorial-huggingface-peft-basic-lora)        
     - 01-instruction-tuning-peft-qlora: [QLORA: Efficient Finetuning of Quantized LLMs](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/01-instruction-tuning-peft-qlora)            
     - 00-reranker-kr: [Korean Reranker on AWS](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/00-reranker-kr)                
 
