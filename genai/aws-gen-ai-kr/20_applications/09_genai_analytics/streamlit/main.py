@@ -25,6 +25,7 @@ def get_dataset():
     return df, column_info
     
 
+# set bedrock
 def get_bedrock_model():
 
     boto3_bedrock = bedrock.get_bedrock_client(
@@ -34,7 +35,7 @@ def get_bedrock_model():
     )
 
     llm_sonnet = bedrock_model(
-        model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-Sonnet"),
+        model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-V-2-Sonnet-CRI"),
         #model_id=bedrock_info.get_model_id(model_name="Claude-V3-Haiku"),
         bedrock_client=boto3_bedrock,
         stream=True,
@@ -48,7 +49,7 @@ def get_bedrock_model():
     )
 
     llm_haiku = bedrock_model(
-        model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-Sonnet"),
+        model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-V-2-Sonnet-CRI"),
         #model_id=bedrock_info.get_model_id(model_name="Claude-V3-Haiku"),
         bedrock_client=boto3_bedrock,
         stream=True,
@@ -63,6 +64,7 @@ def get_bedrock_model():
 
     return llm_sonnet, llm_haiku
 
+# chat_history
 def add_history(role, content):
 
     message = bedrock_utils.get_message_from_string(
@@ -71,6 +73,7 @@ def add_history(role, content):
     )
     st.session_state["messages"].append(message)
 
+# callback - streaming (if not use this, you may see only one token generated at that moment by llm)
 T = TypeVar("T")
 def get_streamlit_cb(parent_container: DeltaGenerator):
     
@@ -91,6 +94,7 @@ def get_streamlit_cb(parent_container: DeltaGenerator):
 
     return st_cb
 
+# persist chat history between user and assiatant in streamlit contatiner
 def display_chat_history():
 
     node_names = ["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"]
@@ -124,7 +128,7 @@ def display_chat_history():
 df, column_info = get_dataset()
 llm_sonnet, llm_haiku = get_bedrock_model()
 
-# Store the initial value of widgets in session state
+# Store the initial value of widgets in session state, (session_state: global var.)
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
@@ -163,11 +167,12 @@ st.markdown('''
 
 if len(st.session_state["messages"]) > 0: display_chat_history()
     
-if user_input := st.chat_input():
+if user_input := st.chat_input(): # block below will begin when user inputs their ask in contatiner
     
     st.chat_message("user").write(user_input)
     st.session_state["recent_ask"] = user_input
-
+    
+    ## Use tab 
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"])
     tabs = {
         "agent": tab1,

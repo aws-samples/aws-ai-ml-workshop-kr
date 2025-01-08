@@ -350,8 +350,9 @@ class genai_analyzer():
             node_name="code_generation_for_chart"
             st.session_state["current_node"] = node_name
             ask_reformulation = state["ask_refo"]
-            previous_node = state["prev_node"]
-            code_error = state["code_err"]
+            previous_node = state["prev_node"]    
+            code_error = state.get("code_err", "None")
+            #code_error = state["code_err"]
 
             system_prompts = dedent(
                 '''

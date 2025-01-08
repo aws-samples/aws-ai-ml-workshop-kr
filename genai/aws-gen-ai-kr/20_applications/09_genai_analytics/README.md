@@ -39,7 +39,7 @@
       - ##### <span style="#FF69B4;"> 1. web_ui 폴더 접근</span>
           - cd streamlit
       - ##### <span style="#FF69B4;"> 2. Streamlit 애플리케이션 작동</span>
-          - streamlit run streamlit.py --server.port 8080
+          - streamlit run main.py --server.port 8080
       - ##### <span style="#FF69B4;"> 2. Streamlit 애플리케이션 작동</span>
           - Streamlit 작동 시 표시되는 External link로 접속
           - (SageMaker Studio 사용 시) Jupyter: [[VOD] Using Streamlit in Amazon SageMaker (Notebooks, Studio, JupyterLab)](https://www.youtube.com/watch?v=ClQdxXPgv6o)
