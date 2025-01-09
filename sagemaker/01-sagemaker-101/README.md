@@ -15,8 +15,8 @@
 
 ## <div id="Contents">**Updated**</div>
 - [25.1.1]
-    - sklearn_reg: [Scikit-Learn 랜덤 포레스트 개발, 훈련, 최적화 및 배포)](https://github.com/gonsoomoon-ml/sagemaker-101-workshop/blob/main/custom_script_demos/sklearn_reg/Sklearn_on_SageMaker_end2end.ipynb)
-    - huggingface_nlp: [뉴스 헤드라인 분류하기](https://github.com/gonsoomoon-ml/sagemaker-101-workshop/tree/main/custom_script_demos/huggingface_nlp)
+    - sklearn_reg: [Scikit-Learn 랜덤 포레스트 개발, 훈련, 최적화 및 배포)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/01-sagemaker-101/sklearn_reg/Sklearn_on_SageMaker_end2end.ipynb)
+    - huggingface_nlp: [뉴스 헤드라인 분류하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/sagemaker/01-sagemaker-101/huggingface_nlp)
     
 
 - - -
