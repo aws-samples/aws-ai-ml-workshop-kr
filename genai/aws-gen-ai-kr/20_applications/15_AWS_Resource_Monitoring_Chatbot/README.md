@@ -30,7 +30,7 @@ AWS resource 현황에 대한 monitoring 및 Q&A를 자연어 인터페이스에
 - Plotly: 인터랙티브 데이터 시각화
 
 ### AI/LLM Integration
-- Amazon Bedrock: Claude Sonnet 3.5
+- Anthropic: Claude AI 모델 통합 on Amazon Bedrock
 
 ### 개발 환경
 - Python 3.8+
@@ -38,7 +38,7 @@ AWS resource 현황에 대한 monitoring 및 Q&A를 자연어 인터페이스에
 - JupyterLab
 
 ## 🔍 주요 기능
-1. 자연어 인터페이스 기반 Resource 현황 제공 (EC2, S3, RDS, Lambda만 적용아였으나 필요에 따라 서비스 및 region 추가 가능)
+1. 자연어 인터페이스 기반 Resource 현황 제공 (EC2, S3, RDS, Lambda만 적용아였으나 필요에 따라 서비스 추가 가능)
 2. 비용 Dashboard 제공
 3. 비용 최적화 방안 제시
 4. AWS Expert Chat을 통한 AI AWS 전문가의 조언 및 질의 가능
