@@ -39,8 +39,8 @@ AWS resource 현황에 대한 monitoring 및 Q&A를 자연어 인터페이스에
 3. 비용 최적화 방안 제시
 4. AWS Expert Chat을 통한 AI AWS 전문가의 조언 및 질의 가능
 
-## 🚀 설치 방법
-git clone https://github.com/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/15_AWS_Resource_Monitoring_Chatbot
+## 🚀 설치/실행 방법
+- main.ipynb 파일 내 가이드를 따라 주세요
 
 ## 👥 Contributors
 - Kyutae Park, Ph.D (AWS Solutions Architect) | [Email](mailto:kyutae@amazon.com) | [LinkedIn](www.linkedin.com/in/ren-ai-ssance) 
