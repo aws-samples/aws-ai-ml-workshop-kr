@@ -2,7 +2,7 @@
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fren-ai-ssance%2FAWS_Resource_Monitoring_Chatbot&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-## 📝 프로젝트 소개
+## 📝 Overview
 AWS resource 현황에 대한 monitoring 및 Q&A를 자연어 인터페이스에서 구현한 Chatbot 구축 프로젝트입니다. 
 자원에 관한 문의를 받는 조직 혹은 개인 모두 활용할 수 있습니다.
 로그인, 권한, Text2sql, AWS document RAG 활용이 포함 된 추가 버전은 시간을 두고 업데이트 할 예정입니다.
