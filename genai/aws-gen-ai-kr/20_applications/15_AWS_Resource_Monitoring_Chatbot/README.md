@@ -43,7 +43,7 @@ AWS resource 현황에 대한 monitoring 및 Q&A를 자연어 인터페이스에
 - main.ipynb 파일 내 가이드를 따라 주세요
 - - -
 ## 👥 Contributors
-- Kyutae Park, Ph.D (AWS Solutions Architect) | [Email](mailto:kyutae@amazon.com) | [LinkedIn](www.linkedin.com/in/ren-ai-ssance) 
+- Kyutae Park, Ph.D (AWS Solutions Architect) | [Mail](mailto:kyutae@amazon.com) | [Linkedin](https://www.linkedin.com/in/ren-ai-ssance/) | [Git](https://github.com/ren-ai-ssance) |
 - - -
 ## 🔑 License
 - This is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE).
