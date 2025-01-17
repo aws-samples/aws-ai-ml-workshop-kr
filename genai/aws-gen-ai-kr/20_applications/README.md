@@ -47,7 +47,7 @@
 - <span style="#FF69B4;"> **Youngjin Kim** (AWS Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/comeddy) | </span>
 - <span style="#FF69B4;"> **Jesam Kim** (AWS Solutions Architect) | [Mail](mailto:jesamkim@amazon.com) | </span>
 - <span style="#FF69B4;"> **Seungwon Choi** (AWS Solutions Architect) | [Mail](mailto:piepiesw@amazon.com) | [Linkedin](https://www.linkedin.com/in/seungwon-choi-8a74a6210/) | [Git](https://github.com/seungwon2) | </span>
-- <span style="#FF69B4;"> **Kyutae Park, Ph.D** (AWS Solutions Architect) | [Mail](mailto:kyutae@amazon.com) | [Linkedin](www.linkedin.com/in/ren-ai-ssance) | [Git](https://github.com/ren-ai-ssance) | </span>
+- <span style="#FF69B4;"> **Kyutae Park, Ph.D** (AWS Solutions Architect) | [Mail](mailto:kyutae@amazon.com) | [Linkedin](www.linkedin.com/in/ren-ai-ssance) | [Git](https://github.com/ren-ai-ssance) | </span>
 - - -
 
 ## <div id="License">**License**</div>
