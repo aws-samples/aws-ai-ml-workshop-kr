@@ -14,8 +14,10 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
-- [25.1.17]
+
+- [25.1.20]
     - 15_AWS_Resource_Monitoring_Chatbot: [AWS 리소스 모니터링 챗봇](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/15_AWS_Resource_Monitoring_Chatbot)
+- [25.1.1]
     - 14_video_analysis: [Video Description Generator using Amazon Bedrock (Nova and Claude)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/14_video_analysis)
     - 13_tool_use_stock_analysis: [프롬프트 엔지니어링과 Tool Use를 활용한 미국 주식 분석 서비스](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/13_tool_use_stock_analysis)
     - 12_advanced_agentic_text2sql: [Text-to-SQL Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/12_advanced_agentic_text2sql)    
