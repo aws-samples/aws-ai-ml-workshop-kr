@@ -16,22 +16,22 @@
 ## <div id="Contents">**Updated**</div>
 
 - [25.1.20]
-    - 15_AWS_Resource_Monitoring_Chatbot: [AWS 리소스 모니터링 챗봇](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/15_AWS_Resource_Monitoring_Chatbot)
+    - 15_AWS_Resource_Monitoring_Chatbot, Kyutae Park: [AWS 리소스 모니터링 챗봇](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/15_AWS_Resource_Monitoring_Chatbot)
 - [25.1.1]
-    - 14_video_analysis: [Video Description Generator using Amazon Bedrock (Nova and Claude)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/14_video_analysis)
-    - 13_tool_use_stock_analysis: [프롬프트 엔지니어링과 Tool Use를 활용한 미국 주식 분석 서비스](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/13_tool_use_stock_analysis)
-    - 12_advanced_agentic_text2sql: [Text-to-SQL Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/12_advanced_agentic_text2sql)    
-    - 11_prompt_chaining_with_langgraph/langgraph: [AI-Powered 프레젠테이션 생성 with Prompt Chaining, LangGrpah](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/11_prompt_chaining_with_langgraph/langgraph)        
-    - 10_prompt_chaining: [AI-Powered 프레젠테이션 생성 with Prompt Chaining](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/10_prompt_chaining)            
-    - 09_genai_analytics: [GenAI-driven Analytics using Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/09_genai_analytics)                
-    - 08_insight_extraction: [Insight extraction (Text2Insight)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_insight_extraction)                    
-    - 07_image_to_image: [image-to-image](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/07_image_to_image)                        
-    - 06_multi_modal_image_search: [멀티 모달 이미지 서치](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/06_multi_modal_image_search)    
-    - 05_image_styling_recommendation_with_prompt_engineering: [Image styling recommendation with prompte engineering](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/05_image_styling_recommendation_with_prompt_engineering)    
-    - 04_rag_finance_opensearch_sllm_workshop: [rag-fsi-data-workshop](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/04_rag_finance_opensearch_sllm_workshop)    
-    - 03_reranker_hybrid_search: [The Hybrid Re-Ranker Search 시스템](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/03_reranker_hybrid_search)    
-    - 02_qa_chatbot: [Retrieval-Augmented Generation (RAG) for Large Language Models on AWS](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot)        
-    - 01_post_call_analytics: [Post Call Analytics (PCA) Using Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/01_post_call_analytics/01_post-call-analytics-ko-with-stt.ipynb)            
+    - 14_video_analysis, Dongjin Jang: [Video Description Generator using Amazon Bedrock (Nova and Claude)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/14_video_analysis)
+    - 13_tool_use_stock_analysis, Hyeryeong Joo: [프롬프트 엔지니어링과 Tool Use를 활용한 미국 주식 분석 서비스](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/13_tool_use_stock_analysis)
+    - 12_advanced_agentic_text2sql, Hannah Uh: [Text-to-SQL Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/12_advanced_agentic_text2sql)    
+    - 11_prompt_chaining_with_langgraph, Hyeryeong Joo, Gonsoo Moon: [AI-Powered 프레젠테이션 생성 with Prompt Chaining, LangGrpah](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/11_prompt_chaining_with_langgraph/langgraph)        
+    - 10_prompt_chaining, Hyeryeong Joo, Gonsoo Moon: [AI-Powered 프레젠테이션 생성 with Prompt Chaining](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/10_prompt_chaining)            
+    - 09_genai_analytics, Dongjin Jang: [GenAI-driven Analytics using Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/09_genai_analytics)                
+    - 08_insight_extraction, Dongjin Jang: [Insight extraction (Text2Insight)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_insight_extraction)                    
+    - 07_image_to_image, Jesam Kim: [image-to-image](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/07_image_to_image)                        
+    - 06_multi_modal_image_search, Gonsoo Moon: [멀티 모달 이미지 서치](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/06_multi_modal_image_search)    
+    - 05_image_styling_recommendation_with_prompt_engineering, Suji Lee, Gonsoo Moon: [Image styling recommendation with prompte engineering](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/05_image_styling_recommendation_with_prompt_engineering)    
+    - 04_rag_finance_opensearch_sllm_workshop, HyeonSang Jeon: [rag-fsi-data-workshop](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/04_rag_finance_opensearch_sllm_workshop)    
+    - 03_reranker_hybrid_search, Gonsoo Moon: [The Hybrid Re-Ranker Search 시스템](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/03_reranker_hybrid_search)    
+    - 02_qa_chatbot, Dongjin Jang, Gonsoo Moon, Seungwon Choi, Youngjin Kim: [Retrieval-Augmented Generation (RAG) for Large Language Models on AWS](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot)        
+    - 01_post_call_analytics, Dongjin Jang: [Post Call Analytics (PCA) Using Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/01_post_call_analytics/01_post-call-analytics-ko-with-stt.ipynb)            
 
 - - -
 
@@ -50,6 +50,7 @@
 - <span style="#FF69B4;"> **Jesam Kim** (AWS Solutions Architect) | [Mail](mailto:jesamkim@amazon.com) | </span>
 - <span style="#FF69B4;"> **Seungwon Choi** (AWS Solutions Architect) | [Mail](mailto:piepiesw@amazon.com) | [Linkedin](https://www.linkedin.com/in/seungwon-choi-8a74a6210/) | [Git](https://github.com/seungwon2) | </span>
 - <span style="#FF69B4;"> **Kyutae Park, Ph.D** (AWS Solutions Architect) | [Mail](mailto:kyutae@amazon.com) | [Linkedin](https://www.linkedin.com/in/ren-ai-ssance/) | [Git](https://github.com/ren-ai-ssance) | </span>
+- <span style="#FF69B4;"> **Suji Lee** (AWS Solutions Architect) | [Mail](mailto:awsjlee@amazon.com)| </span>
 - - -
 
 ## <div id="License">**License**</div>
