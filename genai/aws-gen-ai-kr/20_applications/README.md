@@ -30,7 +30,7 @@
     - 05_image_styling_recommendation_with_prompt_engineering, Suji Lee, Gonsoo Moon: [Image styling recommendation with prompte engineering](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/05_image_styling_recommendation_with_prompt_engineering)    
     - 04_rag_finance_opensearch_sllm_workshop, HyeonSang Jeon: [rag-fsi-data-workshop](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/04_rag_finance_opensearch_sllm_workshop)    
     - 03_reranker_hybrid_search, Gonsoo Moon: [The Hybrid Re-Ranker Search 시스템](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/03_reranker_hybrid_search)    
-    - 02_qa_chatbot, Dongjin Jang, Gonsoo Moon, Seungwon Choi, Youngjin Kim: [Retrieval-Augmented Generation (RAG) for Large Language Models on AWS](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot)        
+    - 02_qa_chatbot, Dongjin Jang, Youngjin Kim, Seungwon Choi, Gonsoo Moon: [Retrieval-Augmented Generation (RAG) for Large Language Models on AWS](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot)        
     - 01_post_call_analytics, Dongjin Jang: [Post Call Analytics (PCA) Using Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/genai/aws-gen-ai-kr/20_applications/01_post_call_analytics/01_post-call-analytics-ko-with-stt.ipynb)            
 
 - - -
