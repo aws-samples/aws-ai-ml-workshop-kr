@@ -39,6 +39,9 @@ AWS resource 현황에 대한 monitoring 및 Q&A를 자연어 인터페이스에
 3. 비용 최적화 방안 제시
 4. AWS Expert Chat을 통한 AI AWS 전문가의 답변 제공
 - - -
+## 🎥 Demo
+[Video](https://youtu.be/iLyWY-Il_B0?si=-94prlLyPpwP9r1s)
+- - -
 ## 🚀 설치/실행 방법
 - main.ipynb 파일 내 가이드를 따라 주세요
 - - -
