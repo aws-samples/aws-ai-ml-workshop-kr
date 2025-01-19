@@ -14,6 +14,9 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+
+- [25.1.20]
+    - 15_AWS_Resource_Monitoring_Chatbot: [AWS 리소스 모니터링 챗봇](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/15_AWS_Resource_Monitoring_Chatbot)
 - [25.1.1]
     - 14_video_analysis: [Video Description Generator using Amazon Bedrock (Nova and Claude)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/14_video_analysis)
     - 13_tool_use_stock_analysis: [프롬프트 엔지니어링과 Tool Use를 활용한 미국 주식 분석 서비스](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/13_tool_use_stock_analysis)
@@ -46,6 +49,7 @@
 - <span style="#FF69B4;"> **Youngjin Kim** (AWS Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/comeddy) | </span>
 - <span style="#FF69B4;"> **Jesam Kim** (AWS Solutions Architect) | [Mail](mailto:jesamkim@amazon.com) | </span>
 - <span style="#FF69B4;"> **Seungwon Choi** (AWS Solutions Architect) | [Mail](mailto:piepiesw@amazon.com) | [Linkedin](https://www.linkedin.com/in/seungwon-choi-8a74a6210/) | [Git](https://github.com/seungwon2) | </span>
+- <span style="#FF69B4;"> **Kyutae Park, Ph.D** (AWS Solutions Architect) | [Mail](mailto:kyutae@amazon.com) | [Linkedin](https://www.linkedin.com/in/ren-ai-ssance/) | [Git](https://github.com/ren-ai-ssance) | </span>
 - - -
 
 ## <div id="License">**License**</div>
