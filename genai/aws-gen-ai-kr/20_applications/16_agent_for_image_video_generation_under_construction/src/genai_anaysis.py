@@ -30,7 +30,7 @@ class llm_call():
 
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
-   
+           
         response = self.chain( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
             llm=self.llm,
             system_prompts=system_prompts,

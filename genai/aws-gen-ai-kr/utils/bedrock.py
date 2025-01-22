@@ -144,7 +144,7 @@ class bedrock_model():
         self.model_id = kwargs["model_id"] 
         self.bedrock_client = kwargs["bedrock_client"]
         self.stream = kwargs.get("stream", False)
-        self.callbacks = kwargs["callbacks"]
+        self.callbacks = kwargs.get("callbacks", None)
         self.inference_config = kwargs.get("inference_config", None)
         self.additional_model_request_fields = kwargs.get("additional_model_request_fields", None)
 
