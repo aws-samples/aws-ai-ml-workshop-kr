@@ -39,6 +39,6 @@ class llm_call():
         )
         
         ai_message = self._message_format(role="assistant", message=response["text"])
-        messages.append(ai_message)
-        return response, messages
+        #messages.append(ai_message)
+        return response, ai_message
 
