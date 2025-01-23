@@ -54,7 +54,7 @@ def get_bedrock_client(
     retry_config = Config(
         region_name=target_region,
         retries={
-            "max_attempts": 20,
+            "max_attempts": 50,
             "mode": "standard",
         },
     )
