@@ -53,7 +53,7 @@ def convert_to_list(example):
         contexts = ast.literal_eval(cleaned_context)
     except (ValueError, SyntaxError) as e:
         contexts = cleaned_context
-        print(f"Error: {str(e)}")
+        # print(f"Error: {str(e)}")
     return {"contexts": contexts}
 
 

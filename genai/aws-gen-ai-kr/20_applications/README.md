@@ -15,6 +15,10 @@
 
 ## <div id="Contents">**Updated**</div>
 
+- [25.2.1]
+    - 17_rag_evaluation_ragas_on_bedrock, Gonsoo Moon: [워크샵: RAG Evaluation Using RAGAS and Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/17_rag_evaluation_ragas_on_bedrock)
+- [25.1.31]
+    - 16_agent_for_image_video_generation_under_construction, Dongjin Jang: [GenAI-driven Analytics using Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/16_agent_for_image_video_generation_under_construction)
 - [25.1.20]
     - 15_AWS_Resource_Monitoring_Chatbot, Kyutae Park: [AWS 리소스 모니터링 챗봇](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/15_AWS_Resource_Monitoring_Chatbot)
 - [25.1.1]

@@ -1,4 +1,16 @@
 # 워크샵: RAG Evaluation Using RAGAS and Amazon Bedrock 
+Last Updated: Feb 1, 2025
+
+<p align="left">
+    <a href="https://github.com/aws-samples">
+            <img alt="Build" src="https://img.shields.io/badge/Contribution-Welcome-blue">
+    </a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
+        <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
+    </a>
+    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F20_applications%2F17_rag_evaluation_ragas_on_bedrock&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+</p>
+
 
 이 워크샵은 검색 증강 생성 (RAG, Retrieval Augmented Generation) 시스템을 만든 후에, 얼마나 질문에 답변을 정확히 하는지를 평가하는 것을 배우게 됩니다. <br>
 워크샵을 통해 배울 수 있는 것은 아래와 같습니다. 
@@ -9,16 +21,22 @@
 - Amazon Bedrock 를 사용한 RAGAS Metrics 사용 방법
 - Custom RAG Metrics 를 정의하여 평가 방법
 
-# 1. 문제 정의
-주로 RAG 시스템을 만들고 나서, 질문/답변의 쌍으로 구성된 Test 셋을 구성하여 RAG 시스템에 실행하고 어느 정도 답변이 정확하게 나왔는지를 비체계적으로 수행 합니다. <br>
-"RAG 시스넴을 체계적으로 평가 및 검증 (Evaluation)할 수 있을까?" 라는 질문을 많이 합니다. <br>이 워크샵은 아래의 솔루션의 방향으로 이 문제를 해결하고자 합니다.
+---
 
+# 1. 문제 정의
+일반적으로 RAG 시스템을 구축한 후에는 질문과 답변 쌍으로 구성된 테스트 세트를 만들어 시스템을 평가합니다. 하지만 이러한 평가는 대부분 체계적이지 않은 방식으로 이루어지고 있습니다.<br>
+이에 따라 **"RAG 시스템을 어떻게 체계적으로 평가하고 검증할 수 있을까?"** 라는 질문이 자주 제기됩니다.<br>
+이 워크샵에서는 이러한 문제를 해결하기 위한 다양한 방안을 제시하고자 합니다.
 # 2. 솔루션
 ## 2.1. RAG Evaluation 방법론
- RAG 시스템을 만들면서, 비체계적으로 평가 및 검증을 합니다.이를 어떻게 체계적으로 할까 고민을 했고, 업계에서 가장 많이 사용하는 것 중의 하나인 오픈 소스 평가 프레임워크인 [RAGAS](https://docs.ragas.io/en/stable/) 를 사용을 합니다. <br>
- 또한 평가를 위한 테스트용의 RAG 시스템은 [Amazon Bedrock Knowledge Base](https://aws.amazon.com/ko/bedrock/knowledge-bases/?nc1=h_ls) 을 선택 했습니다. 이유는 UI 로 쉽게 클릭, 클릭 해서 빠르게 만드는 것이 가능해서 였습니다. 만드는 방법은 이 블로그 [Amazon Bedrock Knowledge base로 30분 만에 멀티모달 RAG 챗봇 구축하기 실전 가이드](https://aws.amazon.com/ko/blogs/tech/practical-guide-for-bedrock-kb-multimodal-chatbot/) 를 참조 히시면 됩니다. <br>
- 평가할 원본 문서 (데이터) 도 많은 사람이 직관적으로 이해할 수 있고, 흥미가 있는 데이터가 필요 했고, Claude Sonnet3.5 모델에게 "전 세계의 음식 레서피를 만들어줘" 라고 프폼프트를 주고 답변을 받은 것을 pdf 문서로 변환하여 사용을 하였습니다. <br> 
- 기본 코드 베이스는 Kihyeon Myung 님의 RAG Evaluation Using Bedrock[4] 를 참조 했습니다. 
+
+RAG 시스템을 구축할 때 일반적으로 비체계적인 방식으로 평가와 검증이 이루어집니다. 이를 체계화하기 위해 업계에서 널리 사용되는 오픈 소스 평가 프레임워크인 [RAGAS](https://docs.ragas.io/en/stable/)를 활용하기로 했습니다.
+
+평가를 위한 테스트용 RAG 시스템으로는 [Amazon Bedrock Knowledge Base](https://aws.amazon.com/ko/bedrock/knowledge-bases/?nc1=h_ls)를 선택했습니다. UI를 통해 몇 번의 클릭만으로 빠르게 시스템을 구축할 수 있다는 점이 주된 이유였습니다. 구축 방법에 대한 자세한 내용은 [Amazon Bedrock Knowledge base로 30분 만에 멀티모달 RAG 챗봇 구축하기 실전 가이드](https://aws.amazon.com/ko/blogs/tech/practical-guide-for-bedrock-kb-multimodal-chatbot/) 블로그를 참고하시면 됩니다.
+
+평가에 사용할 원본 데이터는 많은 사람들이 직관적으로 이해하고 흥미를 가질 수 있는 내용이 필요했습니다. 이를 위해 Claude Sonnet 3.5 모델에 "전 세계의 음식 레시피를 만들어줘"라는 프롬프트를 입력하여 받은 답변을 PDF 문서로 변환해 사용했습니다.
+
+기본 코드는 Kihyeon Myung 님의 RAG Evaluation Using Bedrock[4]을 참조했습니다.
 
 ## 2.2. RAGAS RAG Evaluation Metrics
 RAG 애플리케이션에서 RAGAS는 RAG 시스템의 검색(retrieval) 및 생성(generation) 구성 요소를 모두 평가할 수 있습니다 [1].<br>
@@ -104,8 +122,8 @@ RAG 평가 합성 데이터 셋을 생성하기 위해서 원본 문서 [241231-
 ```
 ## 2.4 Test RAG 생성: Amazon Bedrock Knowledge Base
 또한 평가를 위한 테스트용의 RAG 시스템은 [Amazon Bedrock Knowledge Base](https://aws.amazon.com/ko/bedrock/knowledge-bases/?nc1=h_ls) 을 선택 했습니다.만드는 방법은 이 블로그 [Amazon Bedrock Knowledge base로 30분 만에 멀티모달 RAG 챗봇 구축하기 실전 가이드](https://aws.amazon.com/ko/blogs/tech/practical-guide-for-bedrock-kb-multimodal-chatbot/) 를 참조 히시면 됩니다. <br>
-아래는 이 워크샵의 코드 실행을 위해서, 생성한 Amazon Bedrock Knowledge Base 의 예시 화면 입니다. 여기서 Knowledge Base ID 를 API retrieve 에 인자로 제공해서 검색 결과를 가져 옵니다.
-[amazon_kb](img/amazon_kb.png)
+아래는 이 워크샵의 코드 실행을 위해서, 생성한 Amazon Bedrock Knowledge Base (RAG 시스템) 의 예시 화면 입니다. 워크샵 코드에서는 여기서 Knowledge Base ID 를 API retrieve 에 인자로 제공해서 검색 결과를 가져 옵니다.
+![amazon_kb](img/amazon_kb.png)
  
 ## 2.5 Amazon Bedrock 를 사용한 RAGAS Metrics 사용
 RAGAS Metrics를 Amazon Bedrock 으로 사용하기 위해서, ragas.llms.LangchainLLMWrapper 을 사용을 해야 합니다 [3]. <br>
@@ -183,100 +201,19 @@ Context Recall은 ground truth에서 언급된 중요한 정보들이 생성된 
 그러나 주목할 점은 Context Recall이 1.0임에도 불구하고 다른 지표들(AnswerRelevancy: 0.44, Faithfulness: 0.42, ContextPrecision: 0.5)은 상대적으로 낮습니다. 이는 생성된 답변이 ground truth의 정보는 모두 포함하고 있지만, 추가적인 정보를 더 포함하거나 다른 방식으로 표현하여 정확성과 관련성이 떨어졌을 수 있다는 것을 의미합니다.
 ```
 
-# 4.4.워크샵 실행 방법
+# 4.워크샵 실행 
+# 4.1 워크샵 사전 설정
 - 워크샵의 실행 방법은 여기 [워크샵 실행 방법](setup/README.md) 을 참조 해주세요.
-<p>
+# 4.2.워크샵 실행
+아래의 두개의 노트북을 순서대로 실행 하시면 됩니다.
+
+- 01-kr-test-dataset-generation.ipynb
+- 02-kr-ragas-evaluation.ipynb
+
+<br>
 
 # A. 참조 사항
 [1] Okan Yenigün, RAGAS: A Framework for Accurate and Faithful RAG Model Evaluation, https://medium.com/ai-mind-labs/ragas-a-framework-for-accurate-and-faithful-rag-model-evaluation-5380b73d45b5 <br>
-[2] ragas, List of available metrics, https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/
-[3] ragas, Testset Generation for RAG, https://docs.ragas.io/en/stable/getstarted/rag_testset_generation/
-[4] Kihyeon Myung, RAG Evaluation Using Bedrock, https://github.com/kevmyung/rag-evaluation-bedrock
-
-
-
-
-
-
-
-
-This repository demonstrates how to evaluate the quality of a RAG (Retrieval-Augmented Generation) pipeline using the Bedrock API.
-
-## 01-test-dataset-generation.ipynb
-
-To evaluate RAG quality, we need to create an evaluation dataset. While it's possible to create datasets manually, it's time-consuming. Therefore, using LLMs to generate synthetic datasets is a popular approach. Here's how we generate the desired number of synthetic Q&A pairs:
-
-1. Load a PDF document
-2. Split the document into chunks of a specified length
-3. Randomly select a chunk and generate a complex/simple question and its corresponding answer (ground truth) based on that chunk
-4. Repeat the chunk selection and Q&A generation process N times
-
-The completed test dataset is structured as follows:
-```
-{
-    "quesiton": "{generated question}",
-    "ground_truth": "{generated answer}",
-    "question_type": "complex | simple",
-    "contexts": "{randomly selected context used for Q&A generation}
-}
-```
-
-## 02-ragas-evaluation.ipynb
-
-This notebook uses the test dataset to evaluate RAG quality. It supports evaluation of RAGAS metrics including AnswerRelevancy, Faithfulness, ContextRecall, and ContextPrecision. 
-
-While relying on existing RAGAS evaluation metrics and calculation methods, the following modifications have been made:
-
-- Uses Bedrock's converse API instead of LangChain or LlamaIndex frameworks
-- Employs tool use prompting techniques to ensure accurate JSON parsing of LLM outputs
-- Changes asynchronous LLM calls to synchronous to avoid API throttling when dealing with large Q&A test sets
-- Modifies segment separation for Faithfulness and Recall calculations from sentence-based (`.endswith(".")`) to paragraph-based (`'\n\n'`) for better context continuity
-- Simplifies the Faithfulness calculation by removing the statement simplification and reason generation steps to reduce token usage and processing time
-- The `libs/custom_ragas.py` file contains the custom implementation of the RAGAS evaluation metrics. It includes the modifications mentioned above.
-
-Here's a brief overview of what each metric measures:
-
-### AnswerRelevancy
-Evaluates how well the generated answer fits the given prompt. It generates virtual questions based on the context and answer, calculates vector similarity between generated and user questions, and averages the scores. Higher scores indicate better performance.
-
-### Faithfulness
-Measures the factual consistency of the generated answer compared to the given context. It segments the answer and classifies each segment as either model-generated (0) or context-based (1). The final score is the average of these classifications. Higher scores indicate better performance.
-
-### ContextRecall
-Assesses how well the retrieved context matches the LLM-generated answer. It segments the ground truth and determines if each segment can be attributed to the retrieved context. The score is the average of these attributions. Higher scores indicate better performance.
-
-### ContextPrecision
-Evaluates how relevant documents are ranked in the retrieved context. It uses an LLM to judge the usefulness of each context in the list for answer generation, with higher weights given to useful contexts appearing earlier in the list.
-
-These modifications aim to improve evaluation accuracy, reduce processing time, and optimize resource usage while maintaining the core principles of the RAGAS evaluation framework.
-
-## 03-llm-as-a-judge.ipynb
-
-This notebook demonstrates the concept of using an LLM as a judge for evaluating RAG quality. 
-It imports and utilizes the custom implementation from `libs/custom_llm_as_a_judge.py`.
-
-### LLM-as-a-Judge Approach
-
-The LLM-as-a-Judge method allows for automated evaluation of RAG outputs based on predefined criteria. This approach can be particularly useful for:
-
-1. Rapid iteration in LLM application development
-2. Reducing the need for extensive human evaluation
-3. Providing consistent evaluation across large datasets
-
-### Evaluation Criteria
-
-The notebook showcases how to evaluate the quality of Q&A based on criteria such as:
-
-- Conciseness
-- Relevance
-- Correctness
-- Coherence
-- Helpfulness
-...
-
-
-## 📚 Reference
-
-- [RAGAS] (https://github.com/explodinggradients/ragas)
-- [langchain-ai](https://github.com/langchain-ai/langchain) 
-- [langchain-kr](https://github.com/teddylee777/langchain-kr) 
+[2] ragas, List of available metrics, https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/ <br>
+[3] ragas, Testset Generation for RAG, https://docs.ragas.io/en/stable/getstarted/rag_testset_generation/ <br>
+[4] Kihyeon Myung, RAG Evaluation Using Bedrock, https://github.com/kevmyung/rag-evaluation-bedrock <br>
