@@ -1,5 +1,4 @@
 # 워크샵: RAG Evaluation Using RAGAS and Amazon Bedrock 
-Last Updated: Feb 1, 2025
 
 <p align="left">
     <a href="https://github.com/aws-samples">
@@ -11,6 +10,7 @@ Last Updated: Feb 1, 2025
     <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F20_applications%2F17_rag_evaluation_ragas_on_bedrock&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 </p>
 
+Last Updated: Feb 1, 2025
 
 이 워크샵은 검색 증강 생성 (RAG, Retrieval Augmented Generation) 시스템을 만든 후에, 얼마나 질문에 답변을 정확히 하는지를 평가하는 것을 배우게 됩니다. <br>
 워크샵을 통해 배울 수 있는 것은 아래와 같습니다. 
