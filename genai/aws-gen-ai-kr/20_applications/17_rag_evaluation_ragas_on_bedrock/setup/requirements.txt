@@ -1,5 +1,6 @@
 boto3==1.36.9
 botocore==1.36.9
+datacompy==0.16.0
 datasets==3.2.0
 langchain==0.3.17
 langchain-aws==0.2.11

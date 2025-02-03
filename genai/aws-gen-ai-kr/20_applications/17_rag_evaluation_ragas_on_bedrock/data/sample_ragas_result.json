@@ -1,15 +1,15 @@
 {
     "average_scores": {
-        "AnswerRelevancy": 0.6524738872702531,
-        "Faithfulness": 0.7595238095238096,
+        "AnswerRelevancy": 0.5844779049114943,
+        "Faithfulness": 0.7666666666666666,
         "ContextRecall": 0.7980952380952381,
         "ContextPrecision": 0.79999999993
     },
     "detailed_results": [
         {
             "row": 1,
-            "AnswerRelevancy": 0.37285672252121715,
-            "Faithfulness": 0.7142857142857143,
+            "AnswerRelevancy": 0.39223574395530947,
+            "Faithfulness": 0.3333333333333333,
             "ContextRecall": 0.8571428571428571,
             "ContextPrecision": 0.99999999995
         },
@@ -22,8 +22,8 @@
         },
         {
             "row": 3,
-            "AnswerRelevancy": 0.5731028605102555,
-            "Faithfulness": 0.8333333333333334,
+            "AnswerRelevancy": 0.46601507931996994,
+            "Faithfulness": 1.0,
             "ContextRecall": 0.8,
             "ContextPrecision": 0.9999999999
         },
@@ -36,8 +36,8 @@
         },
         {
             "row": 5,
-            "AnswerRelevancy": 0.46876036070287563,
-            "Faithfulness": 0.25,
+            "AnswerRelevancy": 0.21648920866527507,
+            "Faithfulness": 0.5,
             "ContextRecall": 1.0,
             "ContextPrecision": 0.49999999995
         }
