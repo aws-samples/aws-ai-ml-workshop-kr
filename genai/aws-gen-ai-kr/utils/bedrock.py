@@ -117,7 +117,10 @@ class bedrock_info():
         "Nova-Micro": "amazon.nova-micro-v1:0",
         "Nova-Lite": "amazon.nova-lite-v1:0",
         "Nova-Pro": "amazon.nova-pro-v1:0",
-        "Nova-Pro-CRI": "us.amazon.nova-pro-v1:0"
+        "Nova-Pro-CRI": "us.amazon.nova-pro-v1:0",
+        "SD-3-5-Large": "stability.sd3-5-large-v1:0",
+        "SD-Ultra": "stability.stable-image-ultra-v1:1",
+        "SD-3-Large": "stability.sd3-large-v1:0"
     }
 
     @classmethod
