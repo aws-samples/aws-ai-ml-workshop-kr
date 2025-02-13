@@ -14,7 +14,8 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
-
+- [25.2.13]
+    - 18_anomaly_detection_on_video_under_construction, Dongjin Jang: [워크샵: Anomaly Detection on CCTV video](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/18_anomaly_detection_on_video_under_construction)
 - [25.2.1]
     - 17_rag_evaluation_ragas_on_bedrock, Gonsoo Moon: [워크샵: RAG Evaluation Using RAGAS and Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/17_rag_evaluation_ragas_on_bedrock)
 - [25.1.31]
