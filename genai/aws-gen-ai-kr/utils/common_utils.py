@@ -9,6 +9,33 @@ logging.basicConfig()
 logger = logging.getLogger('retry-bedrock-invocation')
 logger.setLevel(logging.INFO)
 
+def retry_with_exponential_backoff(max_retries=5, initial_delay=2, exponential_base=2, jitter=True):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            num_retries = 0
+            delay = initial_delay
+
+            while True:
+                try:
+                    logger.info(f"trying {func.__name__}() [{cnt+1}/{total_try_cnt}]")
+                    return func(*args, **kwargs)
+
+                except Exception as e:
+                    num_retries += 1
+                    if num_retries > max_retries:
+                        raise e
+
+                    delay *= exponential_base
+                    if jitter:
+                        delay *= (0.5 + random.random())
+
+                    time.sleep(delay)
+                    logger.info(f"Retrying {func.__name__} after {delay:.2f} seconds...")
+
+        return wrapper
+    return decorator
+    
 def retry(total_try_cnt=5, sleep_in_sec=5, retryable_exceptions=()):
     def decorator(func):
         @functools.wraps(func)
@@ -26,7 +53,8 @@ def retry(total_try_cnt=5, sleep_in_sec=5, retryable_exceptions=()):
                     pass
                 except Exception as e:
                     logger.info(f"in retry(), {func.__name__}() raised {e}")
-                    raise e
+                    pass
+                    #raise e
 
                 time.sleep(sleep_in_sec)
             logger.info(f"{func.__name__} finally has been failed")
