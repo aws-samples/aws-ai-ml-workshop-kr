@@ -12,6 +12,8 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [25.2.15]
+    - [Upgrade] 06-Deepseek-v2-Inference: [Deploy DeepSeek-Coder-V2 with vLLM on SageMaker Endpoint using LMI container from DJL](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/40_inference/06-Deepseek-v2-Inference)
 - [25.1.2]
     - 07-qwen-Inference/2.5: [Deploy Qwen 2.5 through vLLM on SageMaker Endpoint using LMI container from DJL)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/40_inference/07-qwen-Inference/2.5)
     - 06-Deepseek-v2-Inference: [Deploy DeepSeek-Coder-V2 with vLLM on SageMaker Endpoint using LMI container from DJL](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/40_inference/06-Deepseek-v2-Inference)

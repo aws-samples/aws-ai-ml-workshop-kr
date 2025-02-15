@@ -2,14 +2,14 @@
 
 최신 [vLLM](https://github.com/vllm-project/vllm) 추론 서빙과 [SageMaker AI Endpoint](https://docs.aws.amazon.com/prescriptive-guidance/latest/image-classification/sagemaker.html) 를 통해서 [DeepSeek-Coder-V2](https://huggingface.co/deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct) 모델 호스팅을 아래와 같은 내용으로 배우게 됩니다.
 
-##### 1. 최신 vLLM 버전 (0.7.1 , Feb 1, 25 릴리이즈) 사용
-##### 2. DeepSeek-Coder-V2 모델 (16B 파라미터) 을 Hugging Face 에서 다운로드 하여 SageMaker Endpoint 에 배포 
-##### 3. DeepSeek-Coder-V2 모델을 S3 에 업로드 후에 S3 에서 다운로드 하여 SageMaker Endpoint 에 배포 (ml.g5.12xlarge, ml.p4d.24xlarge 사용 가능)
+- 최신 vLLM 버전 (0.7.1 , Feb 1, 25 릴리이즈) 사용
+- DeepSeek-Coder-V2 모델 (16B 파라미터) 을 Hugging Face 에서 다운로드 하여 SageMaker Endpoint 에 배포 
+- DeepSeek-Coder-V2 모델을 S3 에 업로드 후에 S3 에서 다운로드 하여 SageMaker Endpoint 에 배포 (ml.g5.12xlarge, ml.p4d.24xlarge 사용 가능)
     - 자체 파인 튜닝 모델을 이러한 방식으로 S3 에 업로드 후에 사용할 수 있음.
-##### 4. Message Prompt 형식으로 invoke_endpoint_with_response_stream Boto3 API 통한   추론
-##### 5. 모델 배포 및 추론의 로그에 대하여 상세 분석 ( CloudWatch 사용 )
-- 중요 환경 변수 및 GPU 메모리 사용량 (i.e. KV Cache) 등 확인 가능
-##### 6. Real-time Inference Autoscaling 
+- Message Prompt 형식으로 invoke_endpoint_with_response_stream Boto3 API 통한   추론
+- 모델 배포 및 추론의 로그에 대하여 상세 분석 ( CloudWatch 사용 )
+    - 중요 환경 변수 및 GPU 메모리 사용량 (i.e. KV Cache) 등 확인 가능
+- Real-time Inference Autoscaling 
 
 <p>
     
