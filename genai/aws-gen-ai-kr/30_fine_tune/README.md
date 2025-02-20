@@ -16,7 +16,7 @@
 
 ## <div id="Contents">**Updated**</div>
 - [25.2.20]
-    - 06-llama3-sagemaker-hyperpod, Gonsoo Moon: [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기)](/home/sagemaker-user/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/30_fine_tune/06-llama3-sagemaker-hyperpod]
+    - 06-llama3-sagemaker-hyperpod, Gonsoo Moon: [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/06-llama3-sagemaker-hyperpod)
 - [25.1.2]
     - 05-fine-tune-llama3: [SageMaker 에서 Llama3.2 3B 파인 튜닝, 모델 배포 및 추론 하기)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/05-fine-tune-llama3)
     - 04-amazon-bedrock-imported-models-finetuning-llama3-text2sql-korean: [llama3-text2sql-korean)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/04-amazon-bedrock-imported-models-finetuning-llama3-text2sql-korean)    
