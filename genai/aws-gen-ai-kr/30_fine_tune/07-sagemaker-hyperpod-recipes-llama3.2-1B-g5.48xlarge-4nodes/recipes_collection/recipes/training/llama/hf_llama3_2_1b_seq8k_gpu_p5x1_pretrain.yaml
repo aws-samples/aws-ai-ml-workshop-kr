@@ -1,0 +1,146 @@
+# Original Copyright (c), NVIDIA CORPORATION. Modifications © Amazon.com
+
+# Basic run information configs
+run:
+  name: llama3-2-1b
+  results_dir: ${base_results_dir}/${.name}
+  time_limit: "6-00:00:00"
+  model_type: hf # huggingface for our recipes
+
+# Basic pytorch lightning trainer config
+trainer:
+  devices: 8
+  num_nodes: 1
+  accelerator: gpu
+  precision: bf16
+  max_steps: 50
+  log_every_n_steps: 1
+  val_check_interval: 1
+  limit_val_batches: 0 # Number of batches per each validation run, set to 0 to disable validation.
+
+# Basic pytorch lightning experiment config
+# Config for checkpoint/tensorboard etc
+exp_manager:
+  exp_dir: null
+  name: experiment
+  create_tensorboard_logger: True
+  create_checkpoint_callback: True
+  # Configs to save checkpoint with a fixed interval
+  # Note: These config will not work with auto checkpoint mode
+  checkpoint_callback_params:
+    # Set save_top_k = 0 to disable sharded checkpointing
+    save_top_k: 0
+    every_n_train_steps: 10
+    monitor: "step"
+    mode: "max"
+    save_last: False
+  checkpoint_dir: ${recipes.exp_manager.exp_dir}/checkpoints/
+  resume_from_checkpoint: null
+  # Enable auto_checkpoint to automatically calculate the checkpoint interval and resume from checkpoint
+  auto_checkpoint:
+    enabled: False
+  export_full_model:
+    # Set every_n_train_steps = 0 to disable full checkpointing
+    every_n_train_steps: 0
+    save_last: True
+
+################# Predefined configs ##########################
+use_smp_model: True # Enable sagemaker model parallelism
+distributed_backend: nccl
+
+
+# Model training configs
+model:
+  model_type: llama_v3
+  # Base configs
+  train_batch_size: 2
+  val_batch_size: 1
+  seed: 12345
+  grad_clip: 1.0
+  log_reduced_training_loss: True
+
+  # Memory saving /distributed training configs
+  tensor_model_parallel_degree: 1
+  expert_model_parallel_degree: 1
+  context_parallel_degree: 1
+  moe: False
+  activation_checkpointing: False
+  activation_loading_horizon: 1
+  delayed_param: True
+  offload_activations: False
+
+  # FSDP Configs
+  sharding_strategy: hybrid_shard
+  forward_prefetch: True
+  shard_degree: 8
+  backward_fetch_policy: backward_pre
+  auto_wrap_policy: transformer_auto_wrap_policy
+  limit_all_gathers: False
+  use_orig_param: True
+
+  # FP8 config
+  fp8: True
+  fp8_amax_history_len: 1024
+  fp8_amax_compute_algo: max
+
+  # Model architecture
+  max_context_width: 8192
+  max_position_embeddings: ${.max_context_width}
+  num_hidden_layers: 16
+  hidden_size: 2048
+  num_attention_heads: 32
+  intermediate_size: 8192
+  initializer_range: 0.02
+  layernorm_epsilon: 1e-5
+  vocab_size: 128256
+  num_key_value_heads: 8
+  use_flash_attention: True
+  rope_theta: 500000.0
+  # rope scaling for llama3
+  rope_scaling:
+    rope_type: llama3
+    factor: 32.0
+    high_freq_factor: 4.0
+    low_freq_factor: 1.0
+    original_max_position_embeddings: 8192
+
+  tie_word_embeddings: true
+
+  # Finetuning config
+  do_finetune: False
+  # The path to resume from, needs to be HF compatible
+  hf_model_name_or_path: null
+  # PEFT config
+  peft:
+    peft_type: null # lora
+
+  precision: ${recipes.trainer.precision}
+  ################# End of Predefined configs ##########################
+
+  # Learning rate and optimizer configs
+  lr_decay_iters: ${recipes.trainer.max_steps}
+  # Optimizer
+  optim:
+    name: adamw
+    lr: 0.0001
+    weight_decay: 0.01
+    betas:
+    - 0.9
+    - 0.95
+    sched:
+      name: CosineAnnealing
+      warmup_steps: 0
+      constant_steps: 0
+      min_lr: 0.000001
+
+  # Data configs
+  data:
+    train_dir: null
+    val_dir: null
+    dataset_type: hf
+    use_synthetic_data: False
+
+  # Profiling configs
+  # Viztracer profiling options
+  viztracer:
+    enabled: false

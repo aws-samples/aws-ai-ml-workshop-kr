@@ -1,0 +1,31 @@
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License"). You
+# may not use this file except in compliance with the License. A copy of
+# the License is located at
+#
+#     http://aws.amazon.com/apache2.0/
+#
+# or in the "license" file accompanying this file. This file is
+# distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+# ANY KIND, either express or implied. See the License for the specific
+# language governing permissions and limitations under the License.
+
+sm_jobs_config:
+  output_path: null  # S3 output path to output artifacts
+  tensorboard_config:
+    output_path: null  # Output path for tensorboard logs
+    container_logs_path: null  # Path to logs on the container
+  wait: True  # Whether to wait for training job to finish
+  inputs:  # Inputs to call fit with. Set either s3 or file_system, not both.
+    s3:  # Dictionary of channel names and s3 URIs. For GPUs, use channels for train and validation.
+        train: null
+        val: null
+    file_system:  # If using file system input, please pass VPC params in additional_estimator_kwargs.
+        id: null
+        type: null
+        directory_path: null
+  additional_estimator_kwargs:  # All other additional args to pass to estimator. Must be int, float or string.
+    max_run: 1800
+    enable_remote_debug: True
+  recipe_overrides: null

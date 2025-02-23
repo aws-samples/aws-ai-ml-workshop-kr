@@ -1,0 +1,8 @@
+/fsx/ubuntu/sagemaker-hyperpod-recipes/main.py \
+  recipes=training/llama/gonsoo_hf_llama3_2_1b_seq8k_gpu_p5x1_pretrain \
+  base_results_dir=/fsx/ubuntu/sagemaker-hyperpod-recipes/results \
+  recipes.run.name=hf-llama3-2-1b \
+  recipes.exp_manager.exp_dir= \
+  recipes.model.data.train_dir= \
+  recipes.model.data.val_dir= \
+  recipes.model.data.use_synthetic_data=true
