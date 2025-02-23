@@ -1,0 +1,67 @@
+# Original Copyright (c), NVIDIA CORPORATION. Modifications © Amazon.com
+
+pullPolicy: Always # policy to pull container, can be Always, IfNotPresent and Never
+restartPolicy: Never # restart policy
+namespace: default # the namespace to submit job
+# create customized labels for the PytorchJob and Pods deployed jobs.
+# Example:
+#   custom_labels:
+#     label-key-1: label-value-1
+#     label-key-2: label-value-2
+custom_labels: null
+# create customized annotations for the jobs.
+# Example:
+#   annotations:
+#     annotation-key-1: annotation-value-1
+#     annotation-key-2: annotation-value-2
+annotations: null
+# add service account to job pods
+# Example:
+#  serviceAccountName: service_account
+service_account_name: null
+# priorityClassName for Kueue scheduler to decide jobs priority
+priority_class_name: null
+
+# temp volume, usually used to mount temp directory
+# Example:
+#  volumes:
+#    - volumeName: data1
+#      hostPath: "/data"
+#      mountPath: "/data"
+
+volumes: null
+
+# persistent volume, usually used to mount FSx
+# Example:
+# persistent_volume_claims:
+#       - claimName: null
+#         mountPath: null
+#       - claimName: null
+#         mountPath: null
+
+# persistent volumes, usually used to mount FSx
+persistent_volume_claims:
+  - null
+  # This claim should be created before running. Example:
+  # - claimName: fsx-claim
+  #   mountPath: data
+
+# Create k8s NodeAffinity to select nodes to deploy jobs which matches required and preferred labels
+# Structure:
+#   label_selector:
+#     required: <required label key-values pair>
+#     preferred: <preferred label key-values pair>
+#     weights: <weights list used by preferred labels to get nodes priority>
+# Example:
+#   label_selector:
+#     required:
+#       example-label-key:
+#         - expected-label-value-1
+#         - expected-label-value-2
+#     preferred:
+#       preferred-label-key:
+#         - preferred-label-value-1
+#         - preferred-label-value-2
+#     weights:
+#       - 100
+label_selector: null

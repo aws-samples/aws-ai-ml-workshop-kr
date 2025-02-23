@@ -1,0 +1,15 @@
+# Original Copyright (c), NVIDIA CORPORATION. Modifications © Amazon.com
+
+exclusive: True
+mem: 0
+job_name_prefix: 'sagemaker-'
+slurm_create_submission_file_only: False # Setting to True if just want to create submission file
+stderr_to_stdout: True # Setting to False to split the stderr and stdout logs
+srun_args:
+  # - "--no-container-mount-home"
+slurm_docker_cfg:
+  docker_args:
+    # - "--runtime=nvidia" # this is required if the docker runtime version is low
+  post_launch_commands: # commands will run after launching the docker container using bash
+container_mounts: # List of additional paths to mount to container. They will be mounted to same path.
+  - null

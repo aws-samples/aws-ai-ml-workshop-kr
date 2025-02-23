@@ -1,0 +1,890 @@
++ export NCCL_DEBUG=WARN
++ NCCL_DEBUG=WARN
++ export FI_PROVIDER=efa
++ FI_PROVIDER=efa
++ export 'NCCL_SOCKET_IFNAME=^lo,docker0,veth_def_agent'
++ NCCL_SOCKET_IFNAME='^lo,docker0,veth_def_agent'
++ export NCCL_IGNORE_DISABLED_P2P=1
++ NCCL_IGNORE_DISABLED_P2P=1
++ export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ export TORCH_DIST_INIT_BARRIER=1
++ TORCH_DIST_INIT_BARRIER=1
++ export CUDA_DEVICE_MAX_CONNECTIONS=1
++ CUDA_DEVICE_MAX_CONNECTIONS=1
+++ head -n 1 /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ MASTER_ADDR=ip-10-1-107-242
+++ cut -d : -f 1
++++ hostname
+++ grep -nx -o '\bip-10-1-97-113\b' /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ NODEID=3
++ NNODES=4
++ PROCESSES_PER_NODE=8
++ MASTER_PORT=41000
++ DISTRIBUTED_ARGS='--nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d'
+++ hostname
++ LAUNCHER_HOSTNAME=ip-10-1-97-113
++ mkdir -p /fsx/ubuntu/tmp
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-97-113
++ [[ -d /fsx/ubuntu/tmp/ip-10-1-97-113 ]]
++ git clone https://github.com/aws/sagemaker-hyperpod-training-adapter-for-nemo.git /fsx/ubuntu/tmp/ip-10-1-97-113
+Cloning into '/fsx/ubuntu/tmp/ip-10-1-97-113'...
++ export NCCL_DEBUG=WARN
++ NCCL_DEBUG=WARN
++ export FI_PROVIDER=efa
++ FI_PROVIDER=efa
++ export 'NCCL_SOCKET_IFNAME=^lo,docker0,veth_def_agent'
++ NCCL_SOCKET_IFNAME='^lo,docker0,veth_def_agent'
++ export NCCL_IGNORE_DISABLED_P2P=1
++ NCCL_IGNORE_DISABLED_P2P=1
++ export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ export TORCH_DIST_INIT_BARRIER=1
++ TORCH_DIST_INIT_BARRIER=1
++ export CUDA_DEVICE_MAX_CONNECTIONS=1
++ CUDA_DEVICE_MAX_CONNECTIONS=1
+++ head -n 1 /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ export NCCL_DEBUG=WARN
++ NCCL_DEBUG=WARN
++ export FI_PROVIDER=efa
++ FI_PROVIDER=efa
++ export 'NCCL_SOCKET_IFNAME=^lo,docker0,veth_def_agent'
++ NCCL_SOCKET_IFNAME='^lo,docker0,veth_def_agent'
++ export NCCL_IGNORE_DISABLED_P2P=1
++ NCCL_IGNORE_DISABLED_P2P=1
++ export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ export TORCH_DIST_INIT_BARRIER=1
++ TORCH_DIST_INIT_BARRIER=1
++ export CUDA_DEVICE_MAX_CONNECTIONS=1
++ CUDA_DEVICE_MAX_CONNECTIONS=1
+++ head -n 1 /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ MASTER_ADDR=ip-10-1-107-242
+++ cut -d : -f 1
++++ hostname
++ MASTER_ADDR=ip-10-1-107-242
+++ grep -nx -o '\bip-10-1-24-129\b' /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ export NCCL_DEBUG=WARN
++ NCCL_DEBUG=WARN
++ export FI_PROVIDER=efa
++ FI_PROVIDER=efa
++ export 'NCCL_SOCKET_IFNAME=^lo,docker0,veth_def_agent'
++ NCCL_SOCKET_IFNAME='^lo,docker0,veth_def_agent'
++ export NCCL_IGNORE_DISABLED_P2P=1
++ NCCL_IGNORE_DISABLED_P2P=1
++ export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ TORCH_NCCL_ASYNC_ERROR_HANDLING=1
++ export TORCH_DIST_INIT_BARRIER=1
++ TORCH_DIST_INIT_BARRIER=1
+++ cut -d : -f 1
++ export CUDA_DEVICE_MAX_CONNECTIONS=1
++ CUDA_DEVICE_MAX_CONNECTIONS=1
++++ hostname
+++ head -n 1 /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
+++ grep -nx -o '\bip-10-1-107-242\b' /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ NODEID=1
++ NNODES=4
++ MASTER_ADDR=ip-10-1-107-242
++ PROCESSES_PER_NODE=8
++ MASTER_PORT=41000
++ DISTRIBUTED_ARGS='--nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d'
+++ hostname
+++ cut -d : -f 1
++ NODEID=0
++ NNODES=4
++ PROCESSES_PER_NODE=8
++ MASTER_PORT=41000
++ DISTRIBUTED_ARGS='--nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d'
++++ hostname
+++ hostname
++ LAUNCHER_HOSTNAME=ip-10-1-24-129
++ mkdir -p /fsx/ubuntu/tmp
+++ grep -nx -o '\bip-10-1-67-233\b' /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b/hostname
++ LAUNCHER_HOSTNAME=ip-10-1-107-242
++ mkdir -p /fsx/ubuntu/tmp
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-24-129
++ [[ -d /fsx/ubuntu/tmp/ip-10-1-24-129 ]]
++ git clone https://github.com/aws/sagemaker-hyperpod-training-adapter-for-nemo.git /fsx/ubuntu/tmp/ip-10-1-24-129
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-107-242
++ [[ -d /fsx/ubuntu/tmp/ip-10-1-107-242 ]]
++ git clone https://github.com/aws/sagemaker-hyperpod-training-adapter-for-nemo.git /fsx/ubuntu/tmp/ip-10-1-107-242
++ NODEID=2
++ NNODES=4
++ PROCESSES_PER_NODE=8
++ MASTER_PORT=41000
++ DISTRIBUTED_ARGS='--nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d'
+++ hostname
+Cloning into '/fsx/ubuntu/tmp/ip-10-1-24-129'...
+Cloning into '/fsx/ubuntu/tmp/ip-10-1-107-242'...
++ LAUNCHER_HOSTNAME=ip-10-1-67-233
++ mkdir -p /fsx/ubuntu/tmp
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-67-233
++ [[ -d /fsx/ubuntu/tmp/ip-10-1-67-233 ]]
++ git clone https://github.com/aws/sagemaker-hyperpod-training-adapter-for-nemo.git /fsx/ubuntu/tmp/ip-10-1-67-233
+Cloning into '/fsx/ubuntu/tmp/ip-10-1-67-233'...
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-97-113/
++ cd /fsx/ubuntu/tmp/ip-10-1-97-113/
++ rm -rf __pycache__
++ unset SLURM_NTASKS
++ torchrun --nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d examples/llama/llama_pretrain.py --config-path=/fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b --config-name=hf-llama3-2-1b_hydra.yaml
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-107-242/
++ cd /fsx/ubuntu/tmp/ip-10-1-107-242/
++ rm -rf __pycache__
++ unset SLURM_NTASKS
++ torchrun --nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d examples/llama/llama_pretrain.py --config-path=/fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b --config-name=hf-llama3-2-1b_hydra.yaml
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-67-233/
++ cd /fsx/ubuntu/tmp/ip-10-1-67-233/
++ rm -rf __pycache__
++ unset SLURM_NTASKS
++ torchrun --nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d examples/llama/llama_pretrain.py --config-path=/fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b --config-name=hf-llama3-2-1b_hydra.yaml
++ GIT_CLONE_DIR=/fsx/ubuntu/tmp/ip-10-1-24-129/
++ cd /fsx/ubuntu/tmp/ip-10-1-24-129/
++ rm -rf __pycache__
++ unset SLURM_NTASKS
++ torchrun --nproc_per_node 8 --nnodes 4 --rdzv_endpoint=ip-10-1-107-242 --rdzv_id=100 --rdzv_backend=c10d examples/llama/llama_pretrain.py --config-path=/fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b --config-name=hf-llama3-2-1b_hydra.yaml
+W0223 06:08:34.624000 140238927328512 torch/distributed/run.py:779] 
+W0223 06:08:34.624000 140238927328512 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.624000 140238927328512 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0223 06:08:34.624000 140238927328512 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.633000 140368094496000 torch/distributed/run.py:779] 
+W0223 06:08:34.633000 140368094496000 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.633000 140368094496000 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0223 06:08:34.633000 140368094496000 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.634000 140394769011968 torch/distributed/run.py:779] 
+W0223 06:08:34.634000 140394769011968 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.634000 140394769011968 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0223 06:08:34.634000 140394769011968 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.660000 140394432656640 torch/distributed/run.py:779] 
+W0223 06:08:34.660000 140394432656640 torch/distributed/run.py:779] *****************************************
+W0223 06:08:34.660000 140394432656640 torch/distributed/run.py:779] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0223 06:08:34.660000 140394432656640 torch/distributed/run.py:779] *****************************************
+[2025-02-23 06:08:39.389: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.420: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.421: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.442: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.466: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.493: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.511: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.530: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:473: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:497: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:521: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:527: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:536: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:542: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:549: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:558: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:565: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:570: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:581: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:39 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/utils.py:600: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[2025-02-23 06:08:39.556: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.556: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.569: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.570: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.589: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.612: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.613: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.645: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.686: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.699: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.701: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.710: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.727: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.778: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.779: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.785: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.786: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.792: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.801: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.850: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.875: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.892: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.973: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[2025-02-23 06:08:39.987: W torch/sagemaker/state_handler.py:46] Disabling Torch compile for using torch.sagemaker
+[NeMo W 2025-02-23 06:08:51 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/tensor_parallel/layers.py:278: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:51 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/tensor_parallel/layers.py:294: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:51 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/tensor_parallel/layers.py:389: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:51 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/tensor_parallel/layers.py:428: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+      @custom_bwd
+    
+[NeMo W 2025-02-23 06:08:51 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/embedding.py:193: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+[NeMo W 2025-02-23 06:08:51 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/sagemaker/tensor_parallel/embedding.py:258: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+      @custom_fwd
+    
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+[NeMo W 2025-02-23 06:08:52 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/dist_checkpointing/strategies/torch.py:22: DeprecationWarning: `torch.distributed._sharded_tensor` will be deprecated, use `torch.distributed._shard.sharded_tensor` instead
+      from torch.distributed._sharded_tensor import ShardedTensor as TorchShardedTensor
+    
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+[NeMo W 2025-02-23 06:08:53 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/models/gpt/gpt_layer_specs.py:41: UserWarning: Apex is not installed. Falling back to Torch LayerNorm
+      warnings.warn(f'Apex is not installed. Falling back to Torch LayerNorm')
+    
+[NeMo W 2025-02-23 06:08:53 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/models/retro/encoder_spec.py:47: UserWarning: Apex is not installed. Falling back to Torch LayerNorm
+      warnings.warn(f'Apex is not installed. Falling back to Torch LayerNorm')
+    
+[NeMo W 2025-02-23 06:08:53 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/models/retro/decoder_spec.py:39: UserWarning: Apex is not installed. Falling back to Torch LayerNorm
+      warnings.warn(f'Apex is not installed. Falling back to Torch LayerNorm')
+    
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+[NeMo W 2025-02-23 06:08:53 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/megatron/core/models/T5/t5_spec.py:46: UserWarning: Apex is not installed. Falling back to Torch LayerNorm
+      warnings.warn(f'Apex is not installed. Falling back to Torch LayerNorm')
+    
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+`zarr` distributed checkpoint backend is deprecated. Please switch to PyTorch Distributed format (`torch_dist`).
+[NeMo I 2025-02-23 06:08:57 nemo_logging:381] 
+    
+    ************** Experiment configuration ***********
+[NeMo I 2025-02-23 06:08:57 nemo_logging:381] 
+    name:
+    - hf_llama_8b
+    use_smp_model: true
+    distributed_backend: nccl
+    log_perf_metrics: false
+    model:
+      model_type: llama_v3
+      train_batch_size: 2
+      val_batch_size: 1
+      fsdp: true
+      moe: false
+      activation_checkpointing: false
+      activation_loading_horizon: 1
+      delayed_param: true
+      offload_activations: false
+      seed: 12345
+      grad_clip: 1.0
+      sharding_strategy: hybrid_shard
+      forward_prefetch: true
+      shard_degree: 8
+      backward_fetch_policy: backward_pre
+      auto_wrap_policy: transformer_auto_wrap_policy
+      limit_all_gathers: false
+      use_orig_param: true
+      context_parallel_degree: 1
+      tensor_model_parallel_degree: 4
+      expert_model_parallel_degree: 1
+      max_context_width: 8192
+      max_position_embeddings: 8192
+      num_hidden_layers: 16
+      hidden_size: 2048
+      num_attention_heads: 32
+      intermediate_size: 8192
+      initializer_range: 0.02
+      layernorm_epsilon: 1.0e-05
+      vocab_size: 128256
+      num_key_value_heads: 8
+      use_flash_attention: true
+      sliding_window: null
+      use_sliding_window: null
+      max_window_layers: null
+      rms_norm_eps: null
+      rope_theta: 500000.0
+      multi_modal: false
+      tie_word_embeddings: true
+      num_experts_per_tok: null
+      num_local_experts: null
+      moe_load_balancing: sinkhorn
+      global_token_shuffle: null
+      moe_all_to_all_dispatcher: null
+      fp8: false
+      fp8_amax_history_len: 1024
+      fp8_amax_compute_algo: max
+      do_finetune: false
+      hf_model_name_or_path: null
+      hf_access_token: null
+      precision: bf16
+      lr_decay_iters: 40
+      log_reduced_training_loss: true
+      optim:
+        name: adamw
+        lr: 0.0001
+        weight_decay: 0.01
+        betas:
+        - 0.9
+        - 0.95
+        sched:
+          name: CosineAnnealing
+          warmup_steps: 0
+          constant_steps: 0
+          min_lr: 1.0e-06
+      data:
+        train_dir: ''
+        val_dir: ''
+        dataset_type: hf
+        use_synthetic_data: true
+      gpu_affinity:
+        enabled: true
+      nsys_profile:
+        enabled: false
+        start_step: 10
+        end_step: 10
+        ranks:
+        - 0
+        gen_shape: false
+      viztracer:
+        enabled: false
+        ranks:
+        - 0
+        tracer_entries: 1000000
+        verbose: 1
+        max_stack_depth: -1
+        ignore_c_function: true
+        ignore_frozen: true
+        log_func_retval: false
+        log_func_args: false
+        log_print: false
+        log_gc: false
+        log_sparse: false
+        log_async: false
+        log_audit: null
+        pid_suffix: false
+        file_info: true
+        register_global: true
+        trace_self: false
+        min_duration: 200
+        minimize_memory: false
+        dump_raw: false
+        sanitize_function_name: false
+        output_file: null
+      peft:
+        peft_type: null
+        rank: 32
+        alpha: 16.0
+        dropout: 0.1
+        target_modules: null
+      rope_scaling:
+        rope_type: llama3
+        factor: 32.0
+        high_freq_factor: 4.0
+        low_freq_factor: 1.0
+        original_max_position_embeddings: 8192
+      nvte_attn_backend: null
+    trainer:
+      devices: 8
+      num_nodes: 4
+      accelerator: gpu
+      precision: bf16
+      max_steps: 40
+      log_every_n_steps: 1
+      val_check_interval: 1
+      limit_val_batches: 0
+    exp_manager:
+      exp_dir: /fsx/ubuntu/sagemaker-hyperpod-recipes
+      name: experiment
+      explicit_log_dir: null
+      create_tensorboard_logger: true
+      create_checkpoint_callback: true
+      checkpoint_callback_params:
+        save_top_k: 1
+        every_n_train_steps: 20
+        monitor: step
+        mode: max
+        save_last: true
+      export_full_model:
+        every_n_train_steps: 20
+        save_last: true
+        final_export_dir: null
+      checkpoint_dir: /fsx/ubuntu/sagemaker-hyperpod-recipes/checkpoints/
+      resume_from_checkpoint: null
+      auto_checkpoint:
+        enabled: false
+        warmup_steps: 12
+        drop_n_warmup_steps: 3
+    run:
+      name: hf-llama3-2-1b
+      results_dir: /fsx/ubuntu/sagemaker-hyperpod-recipes/results/hf-llama3-2-1b
+      time_limit: 6-00:00:00
+    
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+HPU available: False, using: 0 HPUs
+`Trainer(val_check_interval=1)` was configured so validation will run after every batch.
+[NeMo I 2025-02-23 06:08:57 nemo_logging:381] Experiments will be logged at /fsx/ubuntu/sagemaker-hyperpod-recipes/experiment/2025-02-23_06-08-57
+[NeMo I 2025-02-23 06:08:57 nemo_logging:381] TensorboardLogger has been set up
+You are using a CUDA device ('NVIDIA A10G') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+Initializing distributed: GLOBAL_RANK: 0, MEMBER: 1/32
+Initializing distributed: GLOBAL_RANK: 2, MEMBER: 3/32
+[W223 06:09:02.587012796 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 10, MEMBER: 11/32
+[W223 06:09:02.939796521 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 23, MEMBER: 24/32
+Initializing distributed: GLOBAL_RANK: 28, MEMBER: 29/32
+[W223 06:09:03.891072695 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:03.390952026 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 5, MEMBER: 6/32
+[W223 06:09:03.952951006 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 14, MEMBER: 15/32
+[W223 06:09:03.460282727 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 29, MEMBER: 30/32
+[W223 06:09:03.830279748 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 19, MEMBER: 20/32
+[W223 06:09:03.434795357 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 22, MEMBER: 23/32
+[W223 06:09:03.544998711 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 30, MEMBER: 31/32
+[W223 06:09:03.227921135 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 12, MEMBER: 13/32
+Initializing distributed: GLOBAL_RANK: 26, MEMBER: 27/32
+[W223 06:09:04.156789574 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:04.465550871 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 18, MEMBER: 19/32
+[W223 06:09:04.110098652 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 20, MEMBER: 21/32
+[W223 06:09:04.194229069 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 6, MEMBER: 7/32
+[W223 06:09:04.285832965 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 31, MEMBER: 32/32
+[W223 06:09:04.912737395 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 16, MEMBER: 17/32
+[W223 06:09:04.478524627 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 17, MEMBER: 18/32
+[W223 06:09:04.538618977 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 13, MEMBER: 14/32
+[W223 06:09:04.899221408 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 9, MEMBER: 10/32
+[W223 06:09:05.040152794 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 7, MEMBER: 8/32
+[W223 06:09:05.842125861 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 24, MEMBER: 25/32
+[W223 06:09:05.385529809 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 1, MEMBER: 2/32
+Initializing distributed: GLOBAL_RANK: 11, MEMBER: 12/32
+[W223 06:09:05.900542677 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:05.150388635 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 4, MEMBER: 5/32
+Initializing distributed: GLOBAL_RANK: 27, MEMBER: 28/32
+Initializing distributed: GLOBAL_RANK: 3, MEMBER: 4/32
+[W223 06:09:05.009827326 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 21, MEMBER: 22/32
+[W223 06:09:05.014361930 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:05.546870454 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:05.073489815 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 25, MEMBER: 26/32
+[W223 06:09:05.621451685 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Initializing distributed: GLOBAL_RANK: 8, MEMBER: 9/32
+Initializing distributed: GLOBAL_RANK: 15, MEMBER: 16/32
+[W223 06:09:05.419351748 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:05.424188145 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+[W223 06:09:05.196765126 Utils.hpp:135] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+----------------------------------------------------------------------------------------------------
+distributed_backend=nccl
+All distributed processes registered. Starting with 32 processes
+----------------------------------------------------------------------------------------------------
+
+[2025-02-23 06:09:05.875: I torch/sagemaker/state_handler.py:223] Sizes (pp, rep, sdp, tp, ep, cp, world) = (1, None, 8, 4, 1, 1, 32).
+NCCL version 2.21.5+cuda12.1
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+[2025-02-23 06:09:07.519: I hyperpod_nemo_adapter/collections/model/sagemaker_base_model.py:132] Overriding model config with {'vocab_size': 128256, 'hidden_size': 2048, 'intermediate_size': 8192, 'num_hidden_layers': 16, 'num_attention_heads': 32, 'max_position_embeddings': 8192, 'initializer_range': 0.02, 'num_key_value_heads': 8, 'rms_norm_eps': 1e-05, 'rope_theta': 500000.0, 'delayed_param': True, 'rope_scaling': {'rope_type': 'llama3', 'factor': 32.0, 'high_freq_factor': 4.0, 'low_freq_factor': 1.0, 'original_max_position_embeddings': 8192}}
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+`rope_scaling`'s original_max_position_embeddings field must be less than max_position_embeddings, got 8192 and max_position_embeddings=8192
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1NCCL version 2.21.5+cuda12.1
+
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1NCCL version 2.21.5+cuda12.1
+
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1
+NCCL version 2.21.5+cuda12.1NCCL version 2.21.5+cuda12.1
+
+NCCL version 2.21.5+cuda12.1
+[2025-02-23 06:09:08.943: I torch/sagemaker/tensor_parallel/parallelize.py:82] Created transformed model
+LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 1 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 2 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 6 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 7 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 3 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 4 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+LOCAL_RANK: 5 - CUDA_VISIBLE_DEVICES: [0,1,2,3,4,5,6,7]
+[NeMo I 2025-02-23 06:09:09 nemo_logging:381] Using FSDP plugin with auto_wrap_policy: functools.partial(<function transformer_auto_wrap_policy at 0x7f2401a3f7e0>, transformer_layer_cls=(<class 'torch.sagemaker.tensor_parallel.transformer.TransformerLayer'>,))
+[2025-02-23 06:09:09.032: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.032: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.033: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.034: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.035: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.035: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.035: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.035: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.035: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.035: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.039: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.040: I torch/sagemaker/utils/process_group_utils.py:107] Shard groups: `[[0, 4, 8, 12, 16, 20, 24, 28], [1, 5, 9, 13, 17, 21, 25, 29], [2, 6, 10, 14, 18, 22, 26, 30], [3, 7, 11, 15, 19, 23, 27, 31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.045: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.046: I torch/sagemaker/utils/process_group_utils.py:100] Repli groups: `[[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31]]`.
+[2025-02-23 06:09:09.227: I torch/sagemaker/utils/utils.py:52] [ 0] Runtime is      0.197 seconds: FSDP constructor.
+[NeMo I 2025-02-23 06:09:09 nemo_logging:381] Optimizer config = AdamW (
+    Parameter Group 0
+        amsgrad: False
+        betas: [0.9, 0.95]
+        capturable: False
+        differentiable: False
+        eps: 1e-08
+        foreach: None
+        fused: None
+        lr: 0.0001
+        maximize: False
+        weight_decay: 0.01
+    )
+[NeMo I 2025-02-23 06:09:09 nemo_logging:381] Scheduler "<nemo.core.optim.lr_scheduler.CosineAnnealing object at 0x7f2348642150>" 
+    will be used during training (effective maximum steps = 40) - 
+    Parameters : 
+    (warmup_steps: 0
+    constant_steps: 0
+    min_lr: 1.0e-06
+    max_steps: 40
+    )
+[NeMo I 2025-02-23 06:09:09 nemo_logging:381] Training Model:
+    FullyShardedDataParallel(
+      (_fsdp_wrapped_module): TransformerLMHead(
+        (word_embedding): DistributedEmbedding(32064, 2048)
+        (dropout): Dropout(p=0.0, inplace=False)
+        (transformer): Transformer(
+          (seq_layers): ModuleList(
+            (0-15): 16 x FullyShardedDataParallel(
+              (_fsdp_wrapped_module): TransformerLayer(
+                (layer): TransformerLayer(
+                  (self_attention): MultiheadAttention(
+                    (layernorm_qkv): LayerNormLinear()
+                    (core_attention): DotProductAttention(
+                      (flash_attention): FlashAttention()
+                      (fused_attention): FusedAttention()
+                      (unfused_attention): UnfusedDotProductAttention(
+                        (scale_mask_softmax): FusedScaleMaskSoftmax()
+                        (attention_dropout): Dropout(p=0.0, inplace=False)
+                      )
+                    )
+                    (proj): Linear()
+                  )
+                  (layernorm_mlp): LayerNormMLP()
+                )
+                (rotary): PatchedRotaryPositionEmbedding()
+              )
+            )
+          )
+        )
+        (layernorm): RMSNorm()
+        (ce_loss): DistributedCrossEntropy()
+        (lm_head): Linear(in_features=2048, out_features=32064, bias=False)
+      )
+    )
+
+  | Name  | Type                     | Params | Mode 
+-----------------------------------------------------------
+0 | model | FullyShardedDataParallel | 46.8 M | train
+-----------------------------------------------------------
+46.8 M    Trainable params
+0         Non-trainable params
+46.8 M    Total params
+187.336   Total estimated model params size (MB)
+[NeMo W 2025-02-23 06:09:10 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/pytorch_lightning/trainer/connectors/data_connector.py:424: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=2` in the `DataLoader` to improve performance.
+    
+[NeMo W 2025-02-23 06:09:14 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/distributed/c10d_logger.py:79: FutureWarning: `torch.distributed._all_gather_base` is a private function and will be deprecated. Please use `torch.distributed.all_gather_into_tensor` instead.
+      return func(*args, **kwargs)
+    
+[NeMo W 2025-02-23 06:09:18 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/nemo/core/optim/lr_scheduler.py:284: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+      warnings.warn(
+    
+Training: |          | 0/? [00:00<?, ?it/s]Training:   0%|          | 0/6250 [00:00<?, ?it/s]Epoch 0:   0%|          | 0/6250 [00:00<?, ?it/s] Epoch 0:   0%|          | 1/6250 [00:07<13:47:06,  0.13it/s]Epoch 0:   0%|          | 1/6250 [00:07<13:47:10,  0.13it/s, v_num=8-57]Epoch 0:   0%|          | 2/6250 [00:13<11:41:18,  0.15it/s, v_num=8-57]Epoch 0:   0%|          | 2/6250 [00:13<11:41:40,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.560, LR/learning_rate=9.98e-5]Epoch 0:   0%|          | 3/6250 [00:18<10:36:56,  0.16it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.560, LR/learning_rate=9.98e-5]Epoch 0:   0%|          | 3/6250 [00:18<10:37:09,  0.16it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.570, LR/learning_rate=9.94e-5]Epoch 0:   0%|          | 4/6250 [00:23<10:04:47,  0.17it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.570, LR/learning_rate=9.94e-5]Epoch 0:   0%|          | 4/6250 [00:23<10:04:58,  0.17it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=9.86e-5]Epoch 0:   0%|          | 5/6250 [00:28<9:45:30,  0.18it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=9.86e-5] Epoch 0:   0%|          | 5/6250 [00:28<9:45:38,  0.18it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.560, LR/learning_rate=9.76e-5]Epoch 0:   0%|          | 6/6250 [00:33<9:32:41,  0.18it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.560, LR/learning_rate=9.76e-5]Epoch 0:   0%|          | 6/6250 [00:33<9:32:48,  0.18it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.560, LR/learning_rate=9.62e-5]Epoch 0:   0%|          | 7/6250 [00:37<9:23:28,  0.18it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.560, LR/learning_rate=9.62e-5]Epoch 0:   0%|          | 7/6250 [00:37<9:23:34,  0.18it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.520, LR/learning_rate=9.46e-5]Epoch 0:   0%|          | 8/6250 [00:42<9:16:29,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.520, LR/learning_rate=9.46e-5]Epoch 0:   0%|          | 8/6250 [00:42<9:16:35,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.580, LR/learning_rate=9.27e-5]Epoch 0:   0%|          | 9/6250 [00:47<9:11:04,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.580, LR/learning_rate=9.27e-5]Epoch 0:   0%|          | 9/6250 [00:47<9:11:09,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=9.05e-5]Epoch 0:   0%|          | 10/6250 [00:52<9:06:38,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=9.05e-5]Epoch 0:   0%|          | 10/6250 [00:52<9:06:43,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.510, LR/learning_rate=8.81e-5]Epoch 0:   0%|          | 11/6250 [00:57<9:03:01,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.510, LR/learning_rate=8.81e-5]Epoch 0:   0%|          | 11/6250 [00:57<9:03:06,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.580, LR/learning_rate=8.55e-5]Epoch 0:   0%|          | 12/6250 [01:02<9:00:03,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.580, LR/learning_rate=8.55e-5]Epoch 0:   0%|          | 12/6250 [01:02<9:00:06,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.500, LR/learning_rate=8.26e-5]Epoch 0:   0%|          | 13/6250 [01:07<8:57:25,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.500, LR/learning_rate=8.26e-5]Epoch 0:   0%|          | 13/6250 [01:07<8:57:29,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=7.96e-5]Epoch 0:   0%|          | 14/6250 [01:12<8:55:13,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=7.96e-5]Epoch 0:   0%|          | 14/6250 [01:12<8:55:16,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=7.64e-5]Epoch 0:   0%|          | 15/6250 [01:16<8:53:17,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=7.64e-5]Epoch 0:   0%|          | 15/6250 [01:16<8:53:20,  0.19it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.550, LR/learning_rate=7.3e-5] Epoch 0:   0%|          | 16/6250 [01:21<8:51:37,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.550, LR/learning_rate=7.3e-5]Epoch 0:   0%|          | 16/6250 [01:21<8:51:40,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.470, LR/learning_rate=6.94e-5]Epoch 0:   0%|          | 17/6250 [01:26<8:50:10,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.470, LR/learning_rate=6.94e-5]Epoch 0:   0%|          | 17/6250 [01:26<8:50:13,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.540, LR/learning_rate=6.58e-5]Epoch 0:   0%|          | 18/6250 [01:32<8:50:56,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.540, LR/learning_rate=6.58e-5]Epoch 0:   0%|          | 18/6250 [01:32<8:50:59,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.460, LR/learning_rate=6.21e-5]Epoch 0:   0%|          | 19/6250 [01:37<8:50:37,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.460, LR/learning_rate=6.21e-5]Epoch 0:   0%|  [NeMo W 2025-02-23 06:10:52 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py:700: FutureWarning: FSDP.state_dict_type() and FSDP.set_state_dict_type() are being deprecated. Please use APIs, get_state_dict() and set_state_dict(), which can support different parallelisms, FSDP1, FSDP2, DDP. API doc: https://pytorch.org/docs/stable/distributed.checkpoint.html#torch.distributed.checkpoint.state_dict.get_state_dict .Tutorial: https://pytorch.org/tutorials/recipes/distributed_checkpoint_recipe.html .
+      warnings.warn(
+    
+[NeMo W 2025-02-23 06:10:52 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/distributed/fsdp/_state_dict_utils.py:753: FutureWarning: Please use DTensor instead and we are deprecating ShardedTensor.
+      local_shape = tensor.shape
+    
+[NeMo W 2025-02-23 06:10:52 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/distributed/fsdp/_state_dict_utils.py:765: FutureWarning: Please use DTensor instead and we are deprecating ShardedTensor.
+      tensor.shape,
+    
+[NeMo W 2025-02-23 06:10:52 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/distributed/fsdp/_state_dict_utils.py:767: FutureWarning: Please use DTensor instead and we are deprecating ShardedTensor.
+      tensor.dtype,
+    
+[NeMo W 2025-02-23 06:10:52 nemo_logging:393] /opt/conda/lib/python3.11/site-packages/torch/distributed/fsdp/_state_dict_utils.py:768: FutureWarning: Please use DTensor instead and we are deprecating ShardedTensor.
+      tensor.device,
+    
+        | 19/6250 [01:37<8:50:39,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.510, LR/learning_rate=5.82e-5]Epoch 0:   0%|          | 20/6250 [01:41<8:49:23,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.510, LR/learning_rate=5.82e-5]Epoch 0:   0%|          | 20/6250 [01:41<8:49:25,  0.20it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=5.44e-5][NeMo I 2025-02-23 06:10:54 nemo_logging:381] save SageMakerCheckpointType.SHARDED checkpoint: /fsx/ubuntu/sagemaker-hyperpod-recipes/checkpoints/sharded/step_20/tp0_ep0
+[2025-02-23 06:10:57.656: I torch/sagemaker/tensor_parallel/transform_policy.py:152] Gathering tensor parallel shards of parameters to merge them for full state dict
+[2025-02-23 06:11:41.952: I torch/sagemaker/tensor_parallel/transform_policy.py:160] Finished gathering tensor parallel shards of parameters
+[NeMo I 2025-02-23 06:11:45 nemo_logging:381] save SageMakerCheckpointType.FULL checkpoint: /fsx/ubuntu/sagemaker-hyperpod-recipes/checkpoints/full/steps_20
+Epoch 0:   0%|          | 21/6250 [02:53<14:19:25,  0.12it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=5.44e-5]Epoch 0:   0%|          | 21/6250 [02:53<14:19:27,  0.12it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=5.05e-5]Epoch 0:   0%|          | 22/6250 [02:58<14:03:20,  0.12it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=5.05e-5]Epoch 0:   0%|          | 22/6250 [02:58<14:03:22,  0.12it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=4.66e-5]Epoch 0:   0%|          | 23/6250 [03:03<13:48:44,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=4.66e-5]Epoch 0:   0%|          | 23/6250 [03:03<13:48:46,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.500, LR/learning_rate=4.28e-5]Epoch 0:   0%|          | 24/6250 [03:08<13:35:12,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.500, LR/learning_rate=4.28e-5]Epoch 0:   0%|          | 24/6250 [03:08<13:35:13,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.510, LR/learning_rate=3.89e-5]Epoch 0:   0%|          | 25/6250 [03:13<13:22:42,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.510, LR/learning_rate=3.89e-5]Epoch 0:   0%|          | 25/6250 [03:13<13:22:44,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=3.52e-5]Epoch 0:   0%|          | 26/6250 [03:18<13:11:11,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=3.52e-5]Epoch 0:   0%|          | 26/6250 [03:18<13:11:13,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.570, LR/learning_rate=3.16e-5]Epoch 0:   0%|          | 27/6250 [03:23<13:00:29,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.570, LR/learning_rate=3.16e-5]Epoch 0:   0%|          | 27/6250 [03:23<13:00:31,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.450, LR/learning_rate=2.8e-5] Epoch 0:   0%|          | 28/6250 [03:28<12:50:34,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.450, LR/learning_rate=2.8e-5]Epoch 0:   0%|          | 28/6250 [03:28<12:50:35,  0.13it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=2.46e-5]Epoch 0:   0%|          | 29/6250 [03:32<12:41:20,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=2.46e-5]Epoch 0:   0%|          | 29/6250 [03:32<12:41:22,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=2.14e-5]Epoch 0:   0%|          | 30/6250 [03:37<12:32:43,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.490, LR/learning_rate=2.14e-5]Epoch 0:   0%|          | 30/6250 [03:37<12:32:45,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.400, LR/learning_rate=1.84e-5]Epoch 0:   0%|          | 31/6250 [03:42<12:24:39,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.400, LR/learning_rate=1.84e-5]Epoch 0:   0%|          | 31/6250 [03:42<12:24:40,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.460, LR/learning_rate=1.55e-5]Epoch 0:   1%|          | 32/6250 [03:47<12:17:05,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.460, LR/learning_rate=1.55e-5]Epoch 0:   1%|          | 32/6250 [03:47<12:17:06,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.500, LR/learning_rate=1.29e-5]Epoch 0:   1%|          | 33/6250 [03:52<12:09:56,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.500, LR/learning_rate=1.29e-5]Epoch 0:   1%|          | 33/6250 [03:52<12:09:58,  0.14it/s, v_num=8-57, Loss/train=12.10, Norms/grad_norm=3.400, LR/learning_rate=1.05e-5]Epoch 0:   1%|          | 34/6250 [03:57<12:03:13,  0.14it/s, v_num=8-57, Loss/train=12.10, Norms/grad_norm=3.400, LR/learning_rate=1.05e-5]Epoch 0:   1%|          | 34/6250 [03:57<12:03:14,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=8.29e-6]Epoch 0:   1%|          | 35/6250 [04:02<11:56:53,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=8.29e-6]Epoch 0:   1%|          | 35/6250 [04:02<11:56:55,  0.14it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=6.4e-6] Epoch 0:   1%|          | 36/6250 [04:07<11:50:56,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.530, LR/learning_rate=6.4e-6]Epoch 0:   1%|          | 36/6250 [04:07<11:50:57,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.420, LR/learning_rate=4.77e-6]Epoch 0:   1%|          | 37/6250 [04:12<11:45:16,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.420, LR/learning_rate=4.77e-6]Epoch 0:   1%|          | 37/6250 [04:12<11:45:17,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.410, LR/learning_rate=3.42e-6]Epoch 0:   1%|          | 38/6250 [04:16<11:39:53,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.410, LR/learning_rate=3.42e-6]Epoch 0:   1%|          | 38/6250 [04:16<11:39:54,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=2.37e-6]Epoch 0:   1%|          | 39/6250 [04:21<11:34:47,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.440, LR/learning_rate=2.37e-6]Epoch 0:   1%|          | 39/6250 [04:21<11:34:48,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.480, LR/learning_rate=1.61e-6]Epoch 0:   1%|          | 40/6250 [04:26<11:29:56,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.480, LR/learning_rate=1.61e-6]Epoch 0:   1%|          | 40/6250 [04:26<11:29:57,  0.15it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.400, LR/learning_rate=1.15e-6][NeMo I 2025-02-23 06:13:40 nemo_logging:381] save SageMakerCheckpointType.SHARDED checkpoint: /fsx/ubuntu/sagemaker-hyperpod-recipes/checkpoints/sharded/step_40/tp0_ep0
+[2025-02-23 06:13:43.109: I torch/sagemaker/tensor_parallel/transform_policy.py:152] Gathering tensor parallel shards of parameters to merge them for full state dict
+[2025-02-23 06:14:24.826: I torch/sagemaker/tensor_parallel/transform_policy.py:160] Finished gathering tensor parallel shards of parameters
+[NeMo I 2025-02-23 06:14:27 nemo_logging:381] save SageMakerCheckpointType.FULL checkpoint: /fsx/ubuntu/sagemaker-hyperpod-recipes/checkpoints/full/steps_40
+`Trainer.fit` stopped: `max_steps=40` reached.
+Epoch 0:   1%|          | 40/6250 [05:31<14:16:50,  0.12it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.380, LR/learning_rate=1e-6]   Epoch 0:   1%|          | 40/6250 [05:31<14:16:50,  0.12it/s, v_num=8-57, Loss/train=12.20, Norms/grad_norm=3.380, LR/learning_rate=1e-6]

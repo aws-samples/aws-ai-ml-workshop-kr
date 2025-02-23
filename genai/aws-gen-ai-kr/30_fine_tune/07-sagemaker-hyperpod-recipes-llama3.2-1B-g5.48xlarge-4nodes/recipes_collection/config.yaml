@@ -1,0 +1,44 @@
+# Original Copyright (c), NVIDIA CORPORATION. Modifications © Amazon.com
+
+# defaults:
+#   - _self_
+#   - cluster: slurm  # set to `slurm`, `k8s` or `sm_jobs`, depending on the desired cluster
+#   - recipes: training/llama/hf_llama3_8b_seq16k_gpu_p5x16_pretrain # select desired config inside the training directory
+#   - override hydra/job_logging: stdout
+
+defaults:
+  - _self_
+  - cluster: slurm  # set to `slurm`, `k8s` or `sm_jobs`, depending on the desired cluster
+  - recipes: training/llama/hf_llama3_2_1b_seq8k_gpu_p5x1_pretrain.yaml # select desired config inside the training directory
+  - override hydra/job_logging: stdout
+
+cluster_type: slurm  # bcm, bcp, k8s or sm_jobs. If bcm, k8s or sm_jobs, it must match - cluster above.
+# If using sm_jobs cluster_type, set sm_jobs_config. See cluster/sm_jobs.yaml for example.
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+
+debug: False
+
+# instance_type: p5.48xlarge
+instance_type: g5.48xlarge
+# base_results_dir: null  # Location to store the results, checkpoints and logs.
+base_results_dir: /fsx/ubuntu/sagemaker-hyperpod-recipes
+
+# container: null
+container: /fsx/ubuntu/sagemaker-hyperpod-recipes/smdistributed-modelparallel.sqsh
+git:
+  repo_url_or_path: null
+  branch: null
+  commit: null
+  entry_script: null
+  token: null
+  update_adapter: false # if true it will re-install the Adapter code but not its dependencies
+
+env_vars:
+  NCCL_DEBUG: WARN  # Logging level for NCCL. Set to "INFO" for debug information
+
+# Do not modify below, use the values above instead.
+training_config: ${hydra:runtime.choices.recipes}
