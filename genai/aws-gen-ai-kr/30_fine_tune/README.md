@@ -12,13 +12,13 @@
 
 
 - - -
-
+    - 07-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes, Gonsoo Moon: [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/07-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes)
 
 ## <div id="Contents">**Updated**</div>
 - [25.2.23]
-    - 07-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes, Gonsoo Moon: [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/07-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes)
+    - 07-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes, Gonsoo Moon: [Lab: SageMaker HyperPod Recipes 따라 해보기 - llama3_2_1b Pre-Training on g5.48xlarge 4대](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/07-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes)
 - [25.2.20]
-    - 06-llama3-sagemaker-hyperpod, Gonsoo Moon: [Lab: SageMaker HyperPod Recipes 따라 해보기 - llama3_2_1b Pre-Training on g5.48xlarge 4대](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/06-llama3-sagemaker-hyperpod)
+    - 06-llama3-sagemaker-hyperpod, Gonsoo Moon: [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/06-llama3-sagemaker-hyperpod)
 - [25.1.2]
     - 05-fine-tune-llama3, Dongjin Jang, Gonsoo Moon: [SageMaker 에서 Llama3.2 3B 파인 튜닝, 모델 배포 및 추론 하기)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/05-fine-tune-llama3)
     - 04-amazon-bedrock-imported-models-finetuning-llama3-text2sql-korean, Seungwon Choi: [llama3-text2sql-korean)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/04-amazon-bedrock-imported-models-finetuning-llama3-text2sql-korean)    
