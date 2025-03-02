@@ -1,0 +1,47 @@
+# Training configuration
+output_dir: "./output"
+num_train_epochs: 1
+log_level: "error"
+report_to: "none"
+
+# Default training parameters
+num_epochs: 2
+per_device_train_batch_size: 5
+learning_rate: 2e-5
+weight_decay: 0.01
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_epsilon: 1e-8
+
+# Dataset parameters
+max_seq_length: 512
+
+# Optimization flags
+use_8bit_adam: false
+use_adafactor: false
+
+# Data preloading
+num_workers: 4
+pin_memory: true
+dataloader_prefetch_cuda_steam: true
+prefetch_factor: 2
+dataloader_cache: true # dataloader cache
+
+# Graident trick
+gradient_checkpointing: true
+gradient_accumulation_steps: 3 # > 1 then enalble, ==1 then disable
+
+# Mixed precision
+mixed_precision: "fp16" # "fp16", "bf16" or "no"
+
+# Tensor Float 32 (32bit, 연산 속도 증가, mixed precision는 32, 16이 혼합되어 있는 형태, 따라서 32비트의 경우 해당 옵션으로 연산속도 개선 가능)
+# torch.backends.cuda.matmul.allow_tf32 = True if tf32 else False
+# torch.backends.cudnn.allow_tf32 = True if tf32 else False
+tf32: true
+
+# Storage
+storage_type: "lustre" # "lustre", "s3"
+
+# Heavy usage params
+cpu_iterations: 3000 # CPU 연산량 조절용 파라미터
+gpu_iterations: 2 # CPU 연산량 조절용 파라미터

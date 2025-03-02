@@ -1,0 +1,101 @@
+# Training configuration
+output_dir: "./output"
+num_train_epochs: 1
+log_level: "error"
+report_to: "none"
+
+# Default training parameters
+num_epochs: 2
+per_device_train_batch_size: 5
+learning_rate: 2e-5
+weight_decay: 0.01
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_epsilon: 1e-8
+
+# Dataset parameters
+max_seq_length: 512
+
+# Optimization flags
+use_8bit_adam: false
+use_adafactor: false
+
+# Data preloading
+num_workers: 4
+pin_memory: true
+dataloader_prefetch_cuda_steam: false
+prefetch_factor: 2
+dataloader_cache: false # dataloader cache
+
+# Graident trick
+gradient_checkpointing: false
+gradient_accumulation_steps: 1 # > 1 then enalble, ==1 then disable
+
+# Mixed precision
+mixed_precision: "no" # "fp16", "bf16" or "no"
+
+# Tensor Float 32 (32bit, 연산 속도 증가, mixed precision는 32, 16이 혼합되어 있는 형태, 따라서 32비트의 경우 해당 옵션으로 연산속도 개선 가능)
+# torch.backends.cuda.matmul.allow_tf32 = True if tf32 else False
+# torch.backends.cudnn.allow_tf32 = True if tf32 else False
+tf32: false
+
+# Storage
+storage_type: "lustre" # "lustre", "s3"
+
+# Heavy usage params
+cpu_iterations: 3000 # CPU 연산량 조절용 파라미터
+gpu_iterations: 2 # CPU 연산량 조절용 파라미터
+
+# output_dir: "./output"
+# log_level: "error"
+# report_to: "none"
+
+# num_train_epochs: 10                    # number of training epochs
+# per_device_train_batch_size: 2         # batch size per device during training
+# mixed_precision: "fp16"               # mixed precision in Accelerator
+# fp16: true                            # Use mixed precision
+# #fp16_opt_level="02",                   # mixed precision mode
+# gradient_accumulation_steps: 1         # number of steps before performing a backward/update pass
+
+# # ###########################
+# # small samples for Debug
+# ###########################
+# train_dataset_path: "/fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod/data/naver-news-summarization-ko/train"
+# validation_dataset_path: "/fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod/data/naver-news-summarization-ko/validation"
+# test_dataset_path: "/fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod/data/naver-news-summarization-ko/test"
+# per_device_train_batch_size: 1         # batch size per device during training
+# per_device_eval_batch_size: 1          # batch size for evaluation
+# gradient_accumulation_steps: 2         # number of steps before performing a backward/update pass
+# ###########################
+# # large samples for evaluation
+# ###########################
+# # train_dataset_path: "/fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod/data/naver-news-summarization-ko/full_train"
+# # validation_dataset_path: "/fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod/data/naver-news-summarization-ko/full_validation"
+# # test_dataset_path: "/fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod/data/naver-news-summarization-ko/full_test"
+# # per_device_train_batch_size: 16         # batch size per device during training
+# # per_device_eval_batch_size: 1          # batch size for evaluation
+# # gradient_accumulation_steps: 2         # number of steps before performing a backward/update pass
+# ###########################
+# max_seq_len:  2048              # max sequence length for model and packing of the dataset
+# # training parameters
+# output_dir: "./outputs" # Temporary output directory for model checkpoints
+# # report_to: "tensorboard"               # report metrics to tensorboard
+# # logging_dir: "/home/ec2-user/SageMaker/logs/llama-3-8b-naver-news" # log folder for tensorboard
+# learning_rate: 0.0002                  # learning rate 2e-4
+# lr_scheduler_type: "constant"          # learning rate scheduler
+#num_train_epochs: 1                    # number of training epochs
+# optim: adamw_torch                     # use torch adamw optimizer
+# logging_steps: 10                      # log every 10 steps
+# save_strategy: epoch                   # save checkpoint every epoch
+# evaluation_strategy: epoch             # evaluate every epoch
+# max_grad_norm: 0.3                     # max gradient norm
+# warmup_ratio: 0.03                     # warmup ratio
+# bf16: true                             # use bfloat16 precision
+# tf32: true                             # use tf32 precision
+# gradient_checkpointing: true           # use gradient checkpointing to save memory
+# # FSDP parameters: https://huggingface.co/docs/transformers/main/en/fsdp
+# fsdp: "full_shard auto_wrap offload" # remove offload if enough GPU memory
+# fsdp_config:
+#   backward_prefetch: "backward_pre"
+#   forward_prefetch: "false"
+#   use_orig_params: "false"
