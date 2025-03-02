@@ -5,7 +5,7 @@ Last Update: Feb 23, 2025
 이 랩은 Workshop: [Amazon SageMaker HyperPod](https://catalog.workshops.aws/sagemaker-hyperpod/en-US) 의 "7. SageMaker HyperPod recipes (p5/trn)" 의 내용입니다. 이 가이드는 p5.48xlarge 1 대에 기반해서 작성되어 있습니다. llama3_2_1b 를 g5.48xlarge 4대로 설정 파일 등을 수정해서 실행하는 랩 입니다. 또한 기존의 가이드의 설명이 부족한 부분의 정보를 추가해서 조금 더 쉽게 따라하게 만든 랩 입니다. 
 -  SageMaker HyperPod Recipes 뿐만 아니라, 본인이 가지고 있는 "기존 코드 변경 없이" SageMaker HyperPod 을 사용하는 것은 [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/30_fine_tune/06-llama3-sagemaker-hyperpod) 를 참고 하세요.
 
-## 1 선수 네용
+## 1 선수 내용
 [Workshop: Amazon SageMaker HyperPod](https://catalog.workshops.aws/sagemaker-hyperpod/en-US) 의 0. Prerequisites, 1. Cluster Setup, 3. FSDP (p4/p5) 의 단계를 완료 해 주세요. Cluster Setup - Computing node 로서 ml.g5.48xlarge 4대로 클러스터 노드를 구성 하시면 됩니다.
 
 
