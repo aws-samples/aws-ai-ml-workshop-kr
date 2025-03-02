@@ -16,6 +16,8 @@
 
 ## <div id="Contents">**Updated**</div>
 - [25.3.2]
+    - 04-efficient-gpu-training, Dongjin Jang: [Lab: Methods and tools for efficient training on GPU](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/README.md)
+- [25.3.2]
     - 03-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes, Gonsoo Moon: [Lab: SageMaker HyperPod Recipes 따라 해보기 - llama3_2_1b Pre-Training on g5.48xlarge 4대](03-sagemaker-hyperpod-recipes-llama3.2-1B-g5.48xlarge-4nodes/README.md)
     - 02-llama3-sagemaker-hyperpod-from-on-premise, Gonsoo Moon: [기존 모델 훈련 스크립트를 SageMaker HyperPod 에서 실행하기](02-llama3-sagemaker-hyperpod-from-on-premise/README.md)    
 - [24.2.1]
