@@ -36,7 +36,7 @@
     cd aws-ai-ml-workshop-kr/sagemaker/hyperpod/04-efficient-gpu-training/
     ```
 ## 2. 콘다 가상 환경 설치 및 실행 (Head Node)
-- 0.create_conda_env.sh 수행 (efficient_gpu_training 가상 작업환경 생성)
+- [0.create_conda_env.sh](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/0.create_conda_env.sh) 수행 (efficient_gpu_training 가상 작업환경 생성)
   
     ```
     bash 0.create_conda_env.sh
@@ -44,7 +44,7 @@
 
 ## 3. 데이터셋 준비
 - Synthetic dataset 생성
-    - src/generate_sample_dataset.py 수행 (dataset dir 내 1,000개 파일 생성)
+    - [src/generate_sample_dataset.py](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/generate_sample_dataset.py) 수행 (dataset dir 내 1,000개 파일 생성)
       
         ```
         ./efficient_gpu_training/bin/python ./src/generate_sample_dataset.py
@@ -53,47 +53,31 @@
 - S3 data upload (S3 File System 테스트 용)
     - Step 1. S3 bucket 생성: efficient-gpu-training
     - (local vs code 활용 시) Step 2. aws configure 셋팅 
-    - Step 3. upload 코드 수행
+    - Step 3. [upload](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/upload_data_to_s3.sh) 코드 수행
       
         ```
         bash ./src/upload_data_to_s3.sh
         ```  
-
-
+        
 ## 4. Job 수행 (Slum 기반 스케쥴링)
-- 1. Data pre-loading
-    - sbatch | script | yaml [1.data_preloading.sbatch]
-- [2.gradient_trick.sbatch]
-- [3.mixed_precision.sbatch]
-- [4.storage.sbatch]
-- [5.put_it_all_together.sbatch]
-- [6.multi_node_multi_gpu.sbatch]
+- **1. Data pre-loading**
+    - [sbatch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/1.data_preloading.sbatch) | [script](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/1.data_preloading.py) | [yaml](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/1.config_data_preloading.yaml)
+- **2. Gradient trick**
+    - [sbatch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/2.gradient_trick.sbatch) | [script](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/2.gradient_trick.py) | [yaml](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/2.config_gradient_trick.yaml) 
+- **3. Mixed precision**
+    - [sbatch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/3.mixed_precision.sbatch) | [script](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/3.mixed_precision.py) | [yaml](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/3.config_mixed_precision.yaml)
+- **4. Storage**
+    - [sbatch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/4.storage.sbatch) | [script](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/4.storage.py) | [yaml](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/4.config_storage.yaml)
+- **5. Put it all together**
+    - [sbatch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/5.put_it_all_together.sbatch) | [script](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/5.put_it_all_together.py) | [yaml](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/5.config_put_it_all_together.yaml)
+- **6. Multi node Multi gpu**
+    - [sbatch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/6.multi_node_multi_gpu.sbatch) | [script](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/6.multi_node_multi_gpu.py) | [yaml](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/sagemaker/hyperpod/04-efficient-gpu-training/src/6.config_multi_node_multi_gpu.yaml)
 
 
 ## 5. 실행 및 결과
 - 아래와 같이 명령어로 실행
     ```
-    ubuntu@ip-10-1-92-35:~/lab/07-llama3-korean-news-summary-lora-hyperpod$ pwd
-    /fsx/ubuntu/lab/07-llama3-korean-news-summary-lora-hyperpod
-    ubuntu@ip-10-1-92-35:~/lab/07-llama3-korean-news-summary-lora-hyperpod$ sbatch 1.distributed-training-llama3-qLora.sbatch 
+    sbatch 1.data_preloading.sbatch
     ```
 - 실행 결과
-    - 실행 로그
-        ```
-        ubuntu@ip-10-1-92-35:~/lab/07-llama3-korean-news-summary-lora-hyperpod/logs$ ls -al
-        -rw-rw-r--  1 ubuntu ubuntu 11976 Feb 16 12:05 FSDP_60.err
-        -rw-rw-r--  1 ubuntu ubuntu 43633 Feb 16 12:05 FSDP_60.out
-        ```
-    - checkpoint file
-        ```
-        ubuntu@ip-10-1-92-35:~/lab/07-llama3-korean-news-summary-lora-hyperpod/outputs$ ls -al
-        drwxrwxr-x  2 ubuntu ubuntu    33280 Feb 16 09:03 checkpoint-1
-        drwxrwxr-x  2 ubuntu ubuntu    33280 Feb 16 09:03 checkpoint-2
-        drwxrwxr-x  2 ubuntu ubuntu    33280 Feb 16 09:04 checkpoint-3
-        drwxrwxr-x  2 ubuntu ubuntu    33280 Feb 16 09:05 checkpoint-4
-        drwxrwxr-x  2 ubuntu ubuntu    33280 Feb 16 09:05 checkpoint-5
-        drwxrwxr-x 30 ubuntu ubuntu    33280 Feb 16 12:02 runs
-        ```
-- 작업 디렉토리 기준으로 생성된 파일 및 결과
-    - 아래는 위이 결과를 실행하고 나온 최종 작업 디렉토리 입니다.
-    - ![hyperpod_working_directory.png](img/hyperpod_working_directory.png)        
+    - 실행 로그 (`log` 디렉토리 확인)
