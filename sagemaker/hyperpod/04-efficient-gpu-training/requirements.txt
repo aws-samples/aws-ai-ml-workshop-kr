@@ -1,0 +1,17 @@
+torch==2.6.0
+transformers==4.49.0
+datasets==3.3.2
+accelerate==1.4.0
+bitsandbytes==0.45.2
+huggingface_hub==0.29.0
+peft==0.14.0
+matplotlib==3.10.0
+pynvml==12.0.0
+trl==0.15.1
+numpy==2.0.0
+scipy==1.15.2
+scikit-learn==1.6.1
+fsspec==2025.2.0
+s3fs==2025.2.0
+sagemaker==2.239.3
+torchaudio
