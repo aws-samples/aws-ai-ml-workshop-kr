@@ -1,0 +1,14 @@
+boto3==1.37.9
+bs4==0.0.2
+langchain==0.3.20
+langchain-aws==0.2.15
+langchain_openai==0.3.8
+langfuse==2.59.7
+langgraph==0.3.5
+langsmith==0.3.13
+langchain_anthropic==0.3.9
+langchain-community==0.3.19
+numpy==1.26.4
+tavily-python==0.5.1
+python-dotenv==1.0.1
+termcolor==2.5.0
