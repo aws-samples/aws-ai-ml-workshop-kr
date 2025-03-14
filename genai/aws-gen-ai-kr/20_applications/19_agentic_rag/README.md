@@ -16,7 +16,11 @@ Last Updated: Feb 1, 2025
 이 워크샵은 [SageMaker AI Studio Jupyterlab](https://docs.aws.amazon.com/ko_kr/sagemaker/latest/dg/studio-updated-jl.html) 및 [SageMaker AI Studio Code Editor](https://docs.aws.amazon.com/sagemaker/latest/dg/code-editor.html)에서 테스트 완료 되었습니다.
 아래 링크를 클릭해서 워크샵 환경 준비를 해주세요.
 - [워크샵 가상 환경 준비 ](01_setup/README.md)
-- [Langfuse 설치 ](01_setup/LAGNFUSE_README.md)
+- Langfuse 설치 혹은 사용
+    - 관지자 용
+        - [Langfuse 설치 ](01_setup/LAGNFUSE_ADMIN_README.md)
+    - 일반 사용자 용 : <-- 위에 관리자가 Langfuse 설치 되었을시에 가능합니다.   
+        - [Langfuse 사용 ](01_setup/LAGNFUSE_END_USER_README.md)
 
 ## 2. 워크샵 실행
 ### 2.1 COT Prompt Engineering
