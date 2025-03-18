@@ -1,4 +1,4 @@
-     ############################################################    
+############################################################    
 ############################################################    
 # RAG 관련 함수들
 ############################################################    
@@ -23,7 +23,6 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 
 from utils import print_ww
-from utils.chat import chat_utils
 from utils.bedrock import bedrock_utils
 from utils.common_utils import print_html
 from utils.opensearch import opensearch_utils
@@ -251,6 +250,10 @@ class rag_chain():
             
         else:
             retrieval = self.retriever.invoke(query)
+
+            print (retrieval)
+
+            
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "question": query
