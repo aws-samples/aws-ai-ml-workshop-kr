@@ -99,6 +99,7 @@ class bedrock_info():
         "Claude-V3-5-Sonnet": "anthropic.claude-3-5-sonnet-20240620-v1:0",
         "Claude-V3-5-V-2-Sonnet": "anthropic.claude-3-5-sonnet-20241022-v2:0",
         "Claude-V3-5-V-2-Sonnet-CRI": "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
+        "Claude-V3-7-Sonnet-CRI": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",
@@ -187,7 +188,6 @@ class bedrock_utils():
         
     @staticmethod
     def get_system_prompt(system_prompts):
-
         return [{"text": system_prompts}]
 
     @staticmethod
@@ -279,6 +279,13 @@ class bedrock_utils():
 
                     elif 'contentBlockDelta' in event:
                         delta = event['contentBlockDelta']['delta']
+                        
+                        if "reasoningContent" in delta:
+                            if "text" in delta["reasoningContent"]:
+                                reasoning_text = delta["reasoningContent"]["text"]
+                                print("\033[92m" + reasoning_text + "\033[0m", end="")
+                            else:
+                                print("") 
                         if 'toolUse' in delta:
                             if 'input' not in tool_use:
                                 tool_use['input'] = ''
@@ -286,7 +293,7 @@ class bedrock_utils():
                         elif 'text' in delta:
                             output["text"] += delta['text']
                             callback.on_llm_new_token(delta['text'])
-
+                        
                     elif 'contentBlockStop' in event:
                         if 'input' in tool_use:
                             tool_use['input'] = json.loads(tool_use['input'])
@@ -326,7 +333,3 @@ class bedrock_utils():
         #print (output)
         
         return output
-
-
-
-
