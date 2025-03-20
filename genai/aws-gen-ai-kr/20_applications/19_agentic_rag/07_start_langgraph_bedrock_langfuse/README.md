@@ -10,7 +10,7 @@
 ## 1.2. 워크샵 노트북
 - [01-get-started-langchain-bedrock.ipynb](warmming-up/langchain/01-get-started-langchain-bedrock.ipynb)
 - [01-get-started-langfuse-bedrock.ipynb](warmming-up/langfuse/01-get-started-langfuse-bedrock.ipynb)
-- 옵션
-    - [01-get-started-langsmith-bedrock.ipynb](warmming-up/langsmith/01-get-started-langsmith-bedrock.ipynb)
+- [01-get-started-langgraph-bedrock.ipynb](warmming-up/langgraph/01-get-started-langgraph-bedrock.ipynb)
+
 - 
 
