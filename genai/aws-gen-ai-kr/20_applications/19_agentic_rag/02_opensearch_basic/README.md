@@ -1080,12 +1080,18 @@ GET my-index/_search
 자 여기까지 기본 OpenSearch의 사용방법을 알아봤습니다. 벡터 검색에 대한 더 깊은 내용은 세션자료와 이후 Lab에서 심화학습 합니다.
 
 ## 기타 주제
-### 1. ML 플러그인 활용
+### 1. 플러그인 활용
 
 ML 플러그인을 활용하면, 외부에서 임베딩 파이프라인을 구현하지 않아도 OpenSearch에 데이터를 저장하는 시점에 한번에 임베딩 데이터를 만들고 인덱싱할 수 있습니다.
 
 - Amazon OpenSearch Service의 AI/ML 커넥터로 Neural 검색 강화
   - https://aws.amazon.com/ko/blogs/tech/power-neural-search-with-ai-ml-connectors-in-amazon-opensearch-service/
+
+OpenSearch에 내장된 하이브리드 검색을 활용할 수 있습니다.
+- https://opensearch.org/docs/latest/vector-search/ai-search/hybrid-search/index/
+  
+OpenSearch에 내장된 검색 파이프라인을 이용해서 rerank를 구현할 수 있습니다.
+- https://opensearch.org/docs/latest/search-plugins/search-pipelines/rerank-processor/
 
 
 ### 2. ANN 알고리즘의 파라메터와 라이브러리
