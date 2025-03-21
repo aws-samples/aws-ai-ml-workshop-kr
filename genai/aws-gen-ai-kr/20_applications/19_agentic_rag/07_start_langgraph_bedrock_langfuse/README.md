@@ -8,9 +8,9 @@
 - [워크샵 환경 준비 ](../01_setup/README.md)
 
 ## 1.2. 워크샵 노트북
-- [01-get-started-langchain-bedrock.ipynb](warmming-up/langchain/01-get-started-langchain-bedrock.ipynb)
-- [01-get-started-langfuse-bedrock.ipynb](warmming-up/langfuse/01-get-started-langfuse-bedrock.ipynb)
-- [01-get-started-langgraph-bedrock.ipynb](warmming-up/langgraph/01-get-started-langgraph-bedrock.ipynb)
+- [01-get-started-langchain-bedrock.ipynb](01_langchain/01-get-started-langchain-bedrock.ipynb)
+- [01-get-started-langfuse-bedrock.ipynb](02_langfuse/01-get-started-langfuse-bedrock.ipynb)
+- [01-get-started-langgraph-bedrock.ipynb](03_langgraph/01-get-started-langgraph-bedrock.ipynb)
 
 - 
 
