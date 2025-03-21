@@ -1077,3 +1077,32 @@ GET my-index/_search
 }
 ```
 
+자 여기까지 기본 OpenSearch의 사용방법을 알아봤습니다. 벡터 검색에 대한 더 깊은 내용은 세션자료와 이후 Lab에서 심화학습 합니다.
+
+## 기타 주제
+### 1. ML 플러그인 활용
+
+ML 플러그인을 활용하면, 외부에서 임베딩 파이프라인을 구현하지 않아도 OpenSearch에 데이터를 저장하는 시점에 한번에 임베딩 데이터를 만들고 인덱싱할 수 있습니다.
+
+- Amazon OpenSearch Service의 AI/ML 커넥터로 Neural 검색 강화
+  - https://aws.amazon.com/ko/blogs/tech/power-neural-search-with-ai-ml-connectors-in-amazon-opensearch-service/
+
+
+### 2. ANN 알고리즘의 파라메터와 라이브러리
+
+- Methods and engines
+  - https://opensearch.org/docs/latest/field-types/supported-field-types/knn-methods-engines/
+- 파라미터의 수치별 성능, 메모리 사용량, recall의 상관관계에 대한 테스트는 아래의 블로그를 참조하세요
+  - https://aws.amazon.com/ko/blogs/tech/choose-the-k-nn-algorithm-for-your-billion-scale-use-case-with-opensearch/
+
+### 3. 벡터 검색시 메모리 사용량
+
+- ANN으로 벡터를 생성 후 warm up API를 이용해서 오프힙에 벡터와 관련된 데이터를 모두 올려놓는 것을 추천드립니다.
+  - https://opensearch.org/docs/latest/vector-search/api/#warmup-operation
+- 메모리 사용량의 계산은 데이터 노드 인스턴스 메모리의 * 0.5 * 0.5가 가용 가능한 최대 메모리 입니다.
+  - https://docs.aws.amazon.com/ko_kr/opensearch-service/latest/developerguide/knn.html#knn-settings
+- Stat API를 이용해서, 현재 오프힙 메모리에 벡터가 얼마나 올라와 있는지, 디스크 I/O 발생량은 얼마인지, 메모리 증설이 필요한지 예측할 수 있습니다.
+  - https://opensearch.org/docs/latest/vector-search/api/#stats
+- 수억건 이상의 데이터에 벡터검색이 필요한 경우 비용 절감을 위해 Disk-based search도 고려할 수 있습니다.
+  - https://opensearch.org/docs/latest/vector-search/optimizing-storage/disk-based-vector-search/
+
