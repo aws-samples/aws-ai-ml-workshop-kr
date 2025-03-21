@@ -2,6 +2,8 @@
 
 ## 1. 설치
 
+[OpenSearch 설치](01_setup/setup_opensearch_simple_kr.ipynb) 를 참고합니다.
+
 ## 2. Dev tools
 이 워크샵은 주로 파이썬 코드와 langchain을 이용하여 OpenSearch와 통신하게 됩니다. 하지만 그 전에 Lab2에서는 순수한 OpenSearch API만을 사용하여 기본적인 이해를 돕습니다. langchain의 경우도 함수로 wrapping 되어 있지만, 그 속에는 OpenSearch API를 사용하고 있습니다.
 
