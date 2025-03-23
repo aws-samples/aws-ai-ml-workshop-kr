@@ -7,6 +7,7 @@ class llm_call():
 
         self.llm=kwargs["llm"]
         self.verbose = kwargs.get("verbose", False)
+        self.tracking = kwargs.get("tracking", False)
         self.chain = bedrock_chain(bedrock_utils.converse_api) | bedrock_chain(bedrock_utils.outputparser)
 
         self.origin_max_tokens = self.llm.inference_config["maxTokens"]

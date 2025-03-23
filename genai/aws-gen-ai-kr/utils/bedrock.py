@@ -15,7 +15,8 @@ from botocore.exceptions import ClientError
 # Langchain
 from langchain.callbacks.base import BaseCallbackHandler
 
-
+# LangFuse
+from langfuse.decorators import observe, langfuse_context
 
 def get_bedrock_client(
     assumed_role: Optional[str] = None,
@@ -191,6 +192,7 @@ class bedrock_utils():
         return [{"text": system_prompts}]
 
     @staticmethod
+    @observe(as_type="generation", name="ConverseAPI")
     def converse_api(**kwargs):
 
         llm = kwargs["llm"]
@@ -204,20 +206,48 @@ class bedrock_utils():
         system_prompts = kwargs.get("system_prompts", None)
         tool_config = kwargs.get("tool_config", None)
         verbose = kwargs.get("verbose", False)
+        tracking = kwargs.get("tracking", False)
         args = {}
 
         if system_prompts != None: args["system"] = system_prompts
         if inference_config != None: args["inferenceConfig"] = inference_config
         if additional_model_request_fields != None: args["additionalModelRequestFields"] = additional_model_request_fields
+        else: args["additionalModelRequestFields"] = {}
         if tool_config != None:
             args["toolConfig"] = tool_config
             print ('args["toolConfig"]', args["toolConfig"])
         args["messages"], args["modelId"] = messages, model_id
 
+        if tracking:
+            # Langfuse 관측 컨텍스트에 입력, 모델 ID, 파라미터, 기타 메타데이터를 업데이트합니다.
+            langfuse_context.update_current_observation(
+                input=args["messages"],
+                model=args["modelId"],
+                model_parameters={**args["inferenceConfig"], **args["additionalModelRequestFields"]},
+                metadata=args.copy()
+            )
+            
         if stream:
-            response = bedrock_client.converse_stream(**args)
+            try:
+                response = bedrock_client.converse_stream(**args)
+            except (ClientError, Exception) as e:
+                error_message = f"ERROR: Can't invoke '{modelId}'. Reason: {e}"
+                if tracking: langfuse_context.update_current_observation(level="ERROR", status_message=error_message)
+                print(error_message)
         else:
-            response = bedrock_client.converse(**args)
+            try:
+                response = bedrock_client.converse(**args)
+            except (ClientError, Exception) as e:
+                error_message = f"ERROR: Can't invoke '{modelId}'. Reason: {e}"
+                if tracking: langfuse_context.update_current_observation(level="ERROR", status_message=error_message)
+                print(error_message)
+                
+
+        # if stream:
+        #     response = bedrock_client.converse_stream(**args)
+        # else:
+        #     response = bedrock_client.converse(**args)
+
             
         return {"response": response, "verbose": verbose, "stream": stream, "callback": llm.callbacks[0]}
 
