@@ -23,12 +23,12 @@ Last Updated: Feb 1, 2025
         - [Langfuse 사용 ](01_setup/LAGNFUSE_END_USER_README.md)
 
 ## 2. 워크샵 실행
-### 2.1 COT Prompt Engineering
-### 2.2 TBD
-### 2.3 TBD
-### 2.4 TBD
-### 2.5 build RAG evaluation framework
-### 2.6 start langgraph on amazon bedrock and langfuse
-### 2.7 TBD
+### 2.1 LLM 프롬프팅 기법의 진화: Chain-of-Thought에서 Chain-of-Draft까지 
+### 2.2 OpenSearch의 기본과 활용
+### 2.3 RAG 성능 향상을 위한 데이터 전처리와 Contextual Retrieval 실습
+### 2.4 LangGraph와 Amazon Bedrock 최적의 통합: Agentic AI 워크플로우 패턴 실습과 Langfuse 모니터링 시작하기
+### 2.5 Advanced RAG로 환각 줄여보기
+### 2.6 RAG 시스템을 체계적으로 평가하는 방법: Amazon Bedrock과 RAGAS 메트릭스를 활용한 검증 프레임워크
+### 2.7 생성형 AI 새로운 패러다임: Agent AI 
 
 
