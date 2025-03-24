@@ -37,3 +37,4 @@ genai/aws-gen-ai-kr/30_fine_tune/reranker-kr/model/
 
 genai/aws-gen-ai-kr/11_bedrock-with-opensearch/data/hanwhalife/
 genai/aws-gen-ai-kr/11_bedrock-with-opensearch/data/kt/
+genai/aws-gen-ai-kr/20_applications/19_agentic_rag/.env
