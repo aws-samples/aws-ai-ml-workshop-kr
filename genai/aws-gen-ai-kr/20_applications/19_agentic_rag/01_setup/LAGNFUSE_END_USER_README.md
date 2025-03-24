@@ -27,11 +27,12 @@
 
 ## 2. 가상 환경 생성
 - [가상환결 설치](README.md) 를 클릭해서 가이드에 따라 가상 환경을 설치 합니다.
+    - 이미 가상 환경이 설치 되었으면 이 과정은 지나 갑니다.
 
 
 ## 3. 샘플 노트북 실행하기
 - 아래의 노트북을 열고, 노트북 커널을 위에서 생성한 "가상 환경(에: Agentic-RAG)" 를 선택 합니다. 이후에 아래의 노트북을 열고 실행 합니다. 노트북의 가이드에 따라서, 19_agentic_rag 폴더 아래에 .env 파일을 만드세요. 이때 API Keys 에서 Secret Key, Public Key, Host 가 필요 합니다. 아래 실행 후에 Endpoint URL(LoadBalancerDNS) 로 접근을 하면, 자동 로그인이 될 겁니다. 만약 그렇지 않다면 위에서 계정 생성한 로그인 정보를 가지고 로그인 합니다. 이후에 왼쪽 메뉴의 Tracing-->Traces 를 보시면 Traces 가 나오고 결과를 확인 할 수 있습니다. 
-  - [01-get-started-langfuse-langchain-bedrock.ipynb 실행](../06_start_langgraph_bedrock_langfuse/02_langfuse/01-get-started-langfuse-langchain-bedrock.ipynb)
+  - [01-get-started-langfuse-langchain-bedrock.ipynb 실행](../05_start_agentic_workflow_langgraph_bedrock_langfuse/02_langfuse/01-get-started-langfuse-langchain-bedrock.ipynb)
 
 
 ## 축하합니다. 이제 사용 준비가 완료 되었습니다.
