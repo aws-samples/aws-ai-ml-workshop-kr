@@ -231,14 +231,14 @@ class bedrock_utils():
             try:
                 response = bedrock_client.converse_stream(**args)
             except (ClientError, Exception) as e:
-                error_message = f"ERROR: Can't invoke '{modelId}'. Reason: {e}"
+                error_message = f"ERROR: Can't invoke '{model_id}'. Reason: {e}"
                 if tracking: langfuse_context.update_current_observation(level="ERROR", status_message=error_message)
                 print(error_message)
         else:
             try:
                 response = bedrock_client.converse(**args)
             except (ClientError, Exception) as e:
-                error_message = f"ERROR: Can't invoke '{modelId}'. Reason: {e}"
+                error_message = f"ERROR: Can't invoke '{model_id}'. Reason: {e}"
                 if tracking: langfuse_context.update_current_observation(level="ERROR", status_message=error_message)
                 print(error_message)
                 

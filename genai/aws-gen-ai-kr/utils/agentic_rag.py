@@ -220,7 +220,7 @@ class retriever_utils():
 
     ## For reranker
     client = ChatAnthropic(model_name="claude-3-haiku-20240307")
-    reranker_token_limit = 300
+    reranker_token_limit = 3000
 
     @classmethod
     def get_num_tokens(cls, text):
