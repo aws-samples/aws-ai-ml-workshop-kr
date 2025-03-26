@@ -1,0 +1,17 @@
+/node_modules
+/cdk.out
+cdk.context.json
+
+# DS_store
+.DS_Store
+**/.DS_Store
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# TypeScript compiled output
+*.js
+*.d.ts
