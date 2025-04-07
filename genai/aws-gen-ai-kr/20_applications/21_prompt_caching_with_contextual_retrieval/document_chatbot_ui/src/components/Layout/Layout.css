@@ -1,0 +1,158 @@
+.app-container {
+  display: flex;
+  height: calc(100vh - 64px); /* Account for AppBar height */
+  width: 100%;
+  overflow: hidden;
+}
+
+.chat-panel {
+  flex: 1;
+  height: 100%;
+  border-right: 1px solid var(--border-color);
+  max-width: 50%;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  background-color: white;
+  position: relative;
+}
+
+.document-panel {
+  flex: 1;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.connecting-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.document-navigation {
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1;
+}
+
+/* Make DocumentViewer take remaining space */
+.document-panel > div:last-child {
+  flex: 1;
+  overflow: auto;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .chat-panel {
+    max-width: 100%;
+    height: 50vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .document-panel {
+    height: 50vh;
+  }
+
+  .document-navigation {
+    display: none; /* Hide the navigation on mobile, we'll use the one in DocumentViewer */
+  }
+
+  /* For mobile, ensure buttons are big enough for touch */
+  .MuiButtonGroup-root .MuiButton-root {
+    padding: 6px 12px;
+  }
+}
+
+/* Sidebar transition styles */
+.sidebar-shift {
+  transition: margin-left 0.3s ease;
+}
+
+/* Document upload styles */
+.upload-dropzone {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.status-chip {
+  margin-left: 8px;
+  font-size: 0.75rem;
+}
+
+/* Document list item styles */
+.document-list-item {
+  transition: background-color 0.2s ease;
+}
+
+.document-list-item:hover {
+  background-color: rgba(37, 99, 235, 0.05);
+}
+
+.processing-document {
+  background-color: rgba(255, 152, 0, 0.08);
+}
+
+/* Document navigation footer */
+.document-navigation {
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+  padding: 8px 0;
+  margin-top: auto; /* Push to bottom */
+}
+
+/* Make buttons more visible */
+.MuiButtonGroup-root .MuiButton-root {
+  min-width: 64px;
+}
+
+/* Fix for sidebar spacing issue */
+.MuiDrawer-root .MuiDrawer-paper {
+  box-sizing: border-box;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.MuiDrawer-docked {
+  flex: 0 0 auto;
+}
+
+/* Ensure no double scrollbars */
+body, html {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure content touches sidebar with no gap */
+.MuiDrawer-docked + .app-container {
+  margin-left: 0; /* Remove automatic margin */
+}

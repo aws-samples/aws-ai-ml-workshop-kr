@@ -1,0 +1,5 @@
+{
+  "websocketUrl": "PLACEHOLDER_WEBSOCKET_URL",
+  "cloudfrontDomain": "PLACEHOLDER_CLOUDFRONT_DOMAIN",
+  "upload_api_url": "PLACEHOLDER_UPLOAD_API_URL"
+}
