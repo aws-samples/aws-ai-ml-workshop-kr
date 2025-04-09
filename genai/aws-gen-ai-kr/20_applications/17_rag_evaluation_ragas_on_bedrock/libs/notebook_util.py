@@ -121,10 +121,40 @@ def merge_dataset_and_results(dataset: Dataset, results_path: str) -> pd.DataFra
 
 
 def show_sample_row_eval(df, row):
-    print("## Question: \n", df.iloc[row].user_input)
-    print("## Ground_truth: \n", df.iloc[row].reference)
-    print("## Generated Answer: \n", df.iloc[row].response)
-    print("## AnswerRelevancy: ", df.iloc[row].answer_relevancy)
-    print("## Faithfulness: ", df.iloc[row].faithfulness)
-    print("## ContextRecall: ", df.iloc[row].context_recall)
-    print("## ContextPrecision: ", df.iloc[row].context_precision)
+    user_input = df.iloc[row].user_input
+    reference = df.iloc[row].reference
+    response = df.iloc[row].response
+    answer_relevancy = df.iloc[row].answer_relevancy
+    faithfulness = df.iloc[row].faithfulness
+    context_recall = df.iloc[row].context_recall
+    context_precision = df.iloc[row].context_precision
+
+    print("## Question: \n", user_input)
+    print("## Ground_truth: \n", reference)
+    print("## Generated Answer: \n", response)
+    print("## AnswerRelevancy: ", answer_relevancy)
+    print("## Faithfulness: ", faithfulness)
+    print("## ContextRecall: ", context_recall)
+    print("## ContextPrecision: ", context_precision)
+
+    all_response = list()
+    all_response.append("## Question: " + user_input)
+    all_response.append("## Ground_truth: " + reference)
+    all_response.append("## Generated Answer: " + response)
+    all_response.append("## AnswerRelevancy: " + str(answer_relevancy))    
+    all_response.append("## Faithfulness: " + str(faithfulness))        
+    all_response.append("## ContextRecall: " + str(context_recall))            
+    all_response.append("## ContextPrecision: " + str(context_precision))   
+
+    return all_response              
+
+
+
+
+    # print("## Question: \n", df.iloc[row].user_input)
+    # print("## Ground_truth: \n", df.iloc[row].reference)
+    # print("## Generated Answer: \n", df.iloc[row].response)
+    # print("## AnswerRelevancy: ", df.iloc[row].answer_relevancy)
+    # print("## Faithfulness: ", df.iloc[row].faithfulness)
+    # print("## ContextRecall: ", df.iloc[row].context_recall)
+    # print("## ContextPrecision: ", df.iloc[row].context_precision)
