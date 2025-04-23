@@ -91,9 +91,6 @@ class llm_call():
             verbose=self.verbose
         )
         
-        #ai_message = self._message_format(role="assistant", message=response["text"])
-        #messages.append(ai_message)
-
         # Reset
         if enable_reasoning:
             self.llm.additional_model_request_fields = None
@@ -106,9 +103,7 @@ def get_llm_by_type(llm_type: LLMType):
     """
     Get LLM instance by type. Returns cached instance if available.
     """
-    #if llm_type in _llm_cache:
-    #    return _llm_cache[llm_type]
-    
+
     boto3_bedrock = bedrock.get_bedrock_client(
         assumed_role=os.environ.get("BEDROCK_ASSUME_ROLE", None),
         endpoint_url=os.environ.get("BEDROCK_ENDPOINT_URL", None),

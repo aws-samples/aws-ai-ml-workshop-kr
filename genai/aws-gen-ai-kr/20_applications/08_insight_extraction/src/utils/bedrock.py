@@ -8,6 +8,7 @@ from typing import Optional
 # External Dependencies:
 import json
 import boto3
+import logging
 from textwrap import dedent
 from botocore.config import Config
 from botocore.exceptions import ClientError
@@ -15,6 +16,26 @@ from botocore.exceptions import ClientError
 # Langchain
 from langchain.callbacks.base import BaseCallbackHandler
 
+# 새 핸들러와 포맷터 설정
+logger = logging.getLogger(__name__)
+logger.propagate = False  # 상위 로거로 메시지 전파 중지
+for handler in logger.handlers[:]:
+    logger.removeHandler(handler)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+# DEBUG와 INFO 중 원하는 레벨로 설정
+logger.setLevel(logging.DEBUG)  # DEBUG 이상 모든 로그 표시
+
+class Colors:
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
 
 
 def get_bedrock_client(
@@ -41,14 +62,16 @@ def get_bedrock_client(
     else:
         target_region = region
 
-    print(f"Create new client\n  Using region: {target_region}")
+    #print(f"Create new client\n  Using region: {target_region}")
+    logger.debug(f"{Colors.RED}Create new client, Using region: {target_region}{Colors.END}")
     session_kwargs = {"region_name": target_region}
     client_kwargs = {**session_kwargs}
 
     profile_name = os.environ.get("AWS_PROFILE")
-    print(f"  Using profile: {profile_name}")
+    #print(f"  Using profile: {profile_name}")
+    logger.debug(f"{Colors.RED}Using profile: {profile_name}{Colors.END}")
     if profile_name:
-        print(f"  Using profile: {profile_name}")
+        #print(f"  Using profile: {profile_name}")
         session_kwargs["profile_name"] = profile_name
 
     retry_config = Config(
@@ -82,6 +105,7 @@ def get_bedrock_client(
     )
 
     print("boto3 Bedrock client successfully created!")
+    logger.debug(f"{Colors.RED}boto3 Bedrock client successfully created!{Colors.END}")
     print(bedrock_client._endpoint)
     return bedrock_client
 
