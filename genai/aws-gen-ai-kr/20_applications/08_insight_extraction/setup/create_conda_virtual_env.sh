@@ -62,6 +62,7 @@ pwd
 ls
 
 pip install -r requirements.txt
+sh install_korean_font.sh 
 
 # wait for  seconds
 echo "## Finish installing requirements.txt"

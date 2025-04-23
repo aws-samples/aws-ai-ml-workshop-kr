@@ -113,6 +113,7 @@ except Exception as e:
 - 모든 import 문은 각각 별도의 줄에 작성합니다.
 - 값의 출력을 보고 싶다면 print(...)로 출력해야 합니다.
 - 항상 Python만 사용하여 수학 연산을 수행하세요.
+- Report를 생성하지 않습니다. Report는 Reporter 에이전트가 담당합니다.
 - 항상 한국어를 사용하세요.
 - 금융 시장 데이터에는 항상 yfinance를 사용하세요:
   - yf.download()로 과거 데이터 가져오기

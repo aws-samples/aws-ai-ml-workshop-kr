@@ -58,7 +58,7 @@ def run_agent_workflow(user_input: str, debug: bool = False):
             #"messages": [{"role": "user", "content": user_input}],
             "messages": messages,
             "deep_thinking_mode": True,
-            "search_before_planning": True,
+            "search_before_planning": False,
             "request": user_input
         },
         {"recursion_limit": 100}
