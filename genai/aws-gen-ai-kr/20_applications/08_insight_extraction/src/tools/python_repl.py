@@ -1,3 +1,4 @@
+import time
 import logging
 from typing import Annotated
 from langchain_core.tools import tool
@@ -6,6 +7,7 @@ from .decorators import log_io
 
 # Initialize REPL and logger
 repl = PythonREPL()
+
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
 logger.propagate = False  # 상위 로거로 메시지 전파 중지
@@ -16,7 +18,7 @@ formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로�
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 # DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.DEBUG)  # DEBUG 이상 모든 로그 표시
+logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 
 class Colors:
     BLUE = '\033[94m'
@@ -33,18 +35,15 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
     Use this to execute python code and do data analysis or calculation. If you want to see the output of a value,
     you should print it out with `print(...)`. This is visible to the user.
     """
-
-    #logger.info("Executing Python code")
     logger.info(f"{Colors.GREEN}===== Executing Python code ====={Colors.END}")
     try:
         result = repl.run(code)
-        #logger.info("Code execution successful")
-        logger.info(f"{Colors.GREEN}===== Code execution successful ====={Colors.END}")
     except BaseException as e:
         error_msg = f"Failed to execute. Error: {repr(e)}"
         #logger.error(error_msg)
-        logger.error(f"{Colors.REF}Failed to execute. Error: {repr(e)}{Colors.END}")
+        logger.debug(f"{Colors.RED}Failed to execute. Error: {repr(e)}{Colors.END}")
         return error_msg
-    result_str = f"Successfully executed:\n```python\n{code}\n```\nStdout: {result}"
+    result_str = f"Successfully executed:\n||```python\n{code}\n```\n||Stdout: {result}"
+    logger.info(f"{Colors.GREEN}===== Code execution successful ====={Colors.END}")
     return result_str
 

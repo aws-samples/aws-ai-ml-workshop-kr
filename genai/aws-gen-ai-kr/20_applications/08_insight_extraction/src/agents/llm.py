@@ -1,7 +1,10 @@
 import os
+from textwrap import dedent
 from typing import Optional
 from src.utils import bedrock
 from src.utils.bedrock import bedrock_info, bedrock_model
+from src.config.agents import LLMType
+from src.utils.bedrock import bedrock_utils, bedrock_chain
 from langchain_aws import ChatBedrock
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
@@ -16,10 +19,6 @@ from src.config import (
     VL_BASE_URL,
     VL_API_KEY,
 )
-from src.config.agents import LLMType
-
-from textwrap import dedent
-from src.utils.bedrock import bedrock_utils, bedrock_chain
 
 class llm_call():
 
@@ -40,8 +39,7 @@ class llm_call():
         reasoning_budget_tokens = kwargs.get("reasoning_budget_tokens", 1024)
         tool_config = kwargs.get("tool_config", None)
         efficient_token = kwargs.get("efficient_token", False)
-
-        print ("enable_reasoning", enable_reasoning)
+        #print ("enable_reasoning", enable_reasoning)
         
         if efficient_token:
             additional_model_request_fields = self.llm.additional_model_request_fields
@@ -80,8 +78,8 @@ class llm_call():
             self.llm.additional_model_request_fields = reasoning_config
             self.llm.inference_config["temperature"] = 1.0
 
-        print ("self.llm.additional_model_request_fields", self.llm.additional_model_request_fields)
-        print ("self.llm.inference_config", self.llm.inference_config)
+        #print ("self.llm.additional_model_request_fields", self.llm.additional_model_request_fields)
+        #print ("self.llm.inference_config", self.llm.inference_config)
            
         response, ai_message = self.chain( ## pipeline의 제일 처음 func의 argument를 입력으로 한다. 여기서는 converse_api의 arg를 쓴다.
             llm=self.llm,
@@ -163,8 +161,7 @@ def get_llm_by_type(llm_type: LLMType):
         )
     else:
         raise ValueError(f"Unknown LLM type: {llm_type}")
-
-    #_llm_cache[llm_type] = llm
+        
     return llm
 
 

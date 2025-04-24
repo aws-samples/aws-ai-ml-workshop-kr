@@ -29,7 +29,7 @@ formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로�
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 # DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.DEBUG)  # DEBUG 이상 모든 로그 표시
+logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
 FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
@@ -164,7 +164,7 @@ def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     goto = full_response["next"]
 
     logger.debug(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Supervisor response:{pprint.pformat(full_response, indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Supervisor response:{full_response}{Colors.END}")
 
     if goto == "FINISH":
         goto = "__end__"
@@ -190,6 +190,7 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     logger.info(f"{Colors.GREEN}===== Planner generating full plan ====={Colors.END}")
     logger.info(f"{Colors.BLUE}===== Planner - Deep thinking mode: {state.get("deep_thinking_mode")} ====={Colors.END}")
     logger.info(f"{Colors.BLUE}===== Planner - Search before planning: {state.get("search_before_planning")} ====={Colors.END}")
+    logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
     system_prompts, messages = apply_prompt_template("planner", state)
     # whether to enable deep thinking mode
        
@@ -211,19 +212,14 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
         reasoning_budget_tokens=8192
     )
     full_response = response["text"]
-    
-    logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(full_response, indent=2, width=100)}{Colors.END}")
 
-    if full_response.startswith("```json"): full_response = full_response.removeprefix("```json")
-    if full_response.endswith("```"): full_response = full_response.removesuffix("```")
-
     goto = "supervisor"
-    try:
-        json.loads(full_response)
-    except json.JSONDecodeError:
-        logger.warning("Planner response is not a valid JSON")
-        goto = "__end__"
+    # try:
+    #     json.loads(full_response)
+    # except json.JSONDecodeError:
+    #     logger.warning("Planner response is not a valid JSON")
+    #     goto = "__end__"
         
     history = state.get("history", [])
     history.append({"agent":"planner", "message": full_response})
@@ -296,11 +292,14 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     #messages[-1]["content"][-1]["text"] = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
     #state["messages"] = messages
     
-    logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-
+    #logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    
     reporter_agent = create_react_agent(agent_name="reporter")
     result = reporter_agent.invoke(state=state)
     full_response = result["content"][-1]["text"]
+
+    clues = state.get("clues", "")
+    clues = '\n\n'.join([clues, CLUES_FORMAT.format("browser", result["content"][-1]["text"])])
 
     logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(full_response, indent=2, width=100)}{Colors.END}")
@@ -312,7 +311,8 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
         update={
             "messages": [get_message_from_string(role="user", string=full_response, imgs=[])],
             "messages_name": "reporter",
-            "history": history
+            "history": history,
+            "clues": clues
         },
         goto="supervisor"
     )

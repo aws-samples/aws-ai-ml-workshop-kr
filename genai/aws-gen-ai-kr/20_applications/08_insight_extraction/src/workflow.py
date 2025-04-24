@@ -10,13 +10,31 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
-
 def enable_debug_logging():
     """Enable debug level logging for more detailed execution information."""
-    logging.getLogger("src").setLevel(logging.DEBUG)
+    logging.getLogger(__name__).setLevel(logging.DEBUG)
+    #logger.setLevel(logging.DEBUG)  # 전역 logger 객체의 레벨 변경
 
-
+# 로거 설정을 전역으로 한 번만 수행
 logger = logging.getLogger(__name__)
+logger.propagate = False
+for handler in logger.handlers[:]:
+    logger.removeHandler(handler)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+
+class Colors:
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
 
 # Create the graph
 graph = build_graph()
@@ -38,8 +56,9 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     if debug:
         enable_debug_logging()
 
-    logger.info(f"Starting workflow with user input: {user_input}")
-    
+    #logger.info(f"Starting workflow with user input: {user_input}")
+    logger.info(f"{Colors.GREEN}===== Starting workflow ====={Colors.END}")
+    logger.info(f"{Colors.GREEN}\nuser input: {user_input}{Colors.END}")
     
     user_prompts = dedent(
         '''
@@ -63,8 +82,8 @@ def run_agent_workflow(user_input: str, debug: bool = False):
         },
         {"recursion_limit": 100}
     )
-    logger.debug(f"Final workflow state: {result}")
-    logger.info("Workflow completed successfully")
+    logger.debug(f"{Colors.RED}Final workflow state: {result}{Colors.END}")
+    logger.info(f"{Colors.GREEN}===== Workflow completed successfully ====={Colors.END}")
     return result
 
 
