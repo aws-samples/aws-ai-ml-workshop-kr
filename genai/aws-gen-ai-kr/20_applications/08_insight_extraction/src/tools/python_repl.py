@@ -2,11 +2,11 @@ import time
 import logging
 from typing import Annotated
 from langchain_core.tools import tool
-from langchain_experimental.utilities import PythonREPL
+#from langchain_experimental.utilities import PythonREPL
 from .decorators import log_io
 
 # Initialize REPL and logger
-repl = PythonREPL()
+#repl = PythonREPL()
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -28,6 +28,34 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
+
+
+import subprocess
+import sys
+
+class PythonREPL:
+    def __init__(self):
+        pass
+        
+    def run(self, command):
+        try:
+            # 입력된 명령어 실행
+            result = subprocess.run(
+                [sys.executable, "-c", command],
+                capture_output=True,
+                text=True,
+                timeout=600  # 타임아웃 설정
+            )
+            
+            # 결과 반환
+            if result.returncode == 0:
+                return result.stdout
+            else:
+                return f"Error: {result.stderr}"
+        except Exception as e:
+            return f"Exception: {str(e)}"
+
+repl = PythonREPL()
 
 @log_io
 def handle_python_repl_tool(code: Annotated[str, "The python code to execute to do further analysis or calculation."]):
