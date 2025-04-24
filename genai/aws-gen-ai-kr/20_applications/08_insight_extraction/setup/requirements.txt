@@ -1,7 +1,7 @@
-boto3==1.37.34
-langgraph==0.3.30
-langchain==0.3.23
-langchain-community==0.3.21
+boto3==1.38.2
+langgraph==0.3.34
+langchain==0.3.24
+langchain-community==0.3.22
 langchain-experimental==0.3.4
 langfuse==2.60.2
 tavily-python==0.5.4
