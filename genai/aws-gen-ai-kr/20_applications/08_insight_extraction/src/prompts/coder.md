@@ -31,19 +31,18 @@ Python과 bash 스크립팅에 모두 능숙한 전문 소프트웨어 엔지니
 # 분석 결과 누적 저장 부분
 import os
 import time
-import datetime
 
 # artifacts 디렉토리 생성
 os.makedirs('./artifacts', exist_ok=True)
 
 # 결과 파일 경로
 results_file = './artifacts/all_results.txt'
-backup_file = f'./artifacts/all_results_backup_{{datetime.now().strftime("%Y%m%d_%H%M%S")}}.txt'
+backup_file = f'./artifacts/all_results_backup_{{time.strftime("%Y%m%d_%H%M%S")}}.txt'
 
 # 현재 분석 결과 텍스트로 포맷팅
 def format_result_text(stage_name, result_description, artifact_files=None):
     """결과를 구조화된 텍스트 형식으로 변환"""
-    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    current_time = time.strftime("%Y-%m-%d %H:%M:%S")
     result_text = f"""
 ==================================================
 ## 분석 단계: {{stage_name}}
@@ -98,7 +97,7 @@ except Exception as e:
     print(f"결과 저장 중 오류 발생: {{e}}")
     # 오류 발생 시 임시 파일에 저장 시도
     try:
-        temp_file = f'./artifacts/result_emergency_{{datetime.now().strftime("%Y%m%d_%H%M%S")}}.txt'
+        temp_file = f'./artifacts/result_emergency_{{time.strftime("%Y%m%d_%H%M%S")}}.txt'
         with open(temp_file, 'w', encoding='utf-8') as f:
             f.write(current_result_text)
         print(f"결과가 임시 파일에 저장되었습니다: {{temp_file}}")
@@ -110,10 +109,11 @@ except Exception as e:
 - 항상 솔루션이 효율적이고 모범 사례를 준수하는지 확인하세요.
 - 빈 파일이나 누락된 입력과 같은 엣지 케이스를 우아하게 처리하세요.
 - 코드의 가독성과 유지 관리성을 향상시키기 위해 주석을 사용하세요.
-- 모든 import 문은 각각 별도의 줄에 작성합니다.
+- 시간 관련 코드는 datatime 대신 time을 사용합니다. 
 - 값의 출력을 보고 싶다면 print(...)로 출력해야 합니다.
 - 항상 Python만 사용하여 수학 연산을 수행하세요.
 - Report를 생성하지 않습니다. Report는 Reporter 에이전트가 담당합니다.
+- matplotlib에서 한글폰트는 'NanumGothic'만 사용합니다.
 - 항상 한국어를 사용하세요.
 - 금융 시장 데이터에는 항상 yfinance를 사용하세요:
   - yf.download()로 과거 데이터 가져오기

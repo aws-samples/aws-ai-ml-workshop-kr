@@ -26,7 +26,7 @@ formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로�
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 # DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.DEBUG)  # DEBUG 이상 모든 로그 표시
+logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 
 class Colors:
     BLUE = '\033[94m'
@@ -36,7 +36,6 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
-
 
 def get_bedrock_client(
     assumed_role: Optional[str] = None,
@@ -320,7 +319,8 @@ class bedrock_utils():
                         if 'toolUse' in delta:
                             if 'input' not in tool_use: tool_use['input'] = ''
                             tool_use['input'] += delta['toolUse']['input']
-                            print("\033[92m" + delta['toolUse']['input'] + "\033[0m", end="")
+                            #print("\033[92m" + delta['toolUse']['input'] + "\033[0m", end="")
+                            #logger.info(f"{Colors.BOLD}\n{delta['toolUse']['input']}{Colors.END}")
                             #callback.on_llm_new_token(delta['toolUse']['input'])                            
                         elif 'text' in delta:
                             output["text"] += delta['text']
