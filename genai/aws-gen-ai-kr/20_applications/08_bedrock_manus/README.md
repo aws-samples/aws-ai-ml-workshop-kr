@@ -1,4 +1,4 @@
-# Bedrock-Manus: Based on Amazon Bedrock
+# Bedrock-Manus: AI Automation Framework Based on Amazon Bedrock
 
 <p align="left">
     <a href="https://github.com/aws-samples">
@@ -26,7 +26,6 @@ BedrockManus is based on the open-source project [LangManus](https://github.com/
 [![Demo](./assets/demo.gif)]
 
 - [View on YouTube](https://www.youtube.com/watch?v=diaK4dp7J6o)
-- [Download Video](https://github.com/langmanus/langmanus/blob/main/assets/demo.mp4)
 
 ## Table of Contents
 - [Quick Start](#quick-start)
