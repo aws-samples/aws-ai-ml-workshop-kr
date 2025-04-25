@@ -25,7 +25,7 @@ BedrockManus is based on the open-source project [LangManus](https://github.com/
 
 [![Demo](./assets/demo.gif)]
 
-- [View on YouTube](https://www.youtube.com/watch?v=diaK4dp7J6o)
+- [View on YouTube](https://youtu.be/DwWICGLEv14)
 - Dataset in Demo is [Amazon Sale Report](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
 ## Table of Contents
