@@ -1,0 +1,190 @@
+
+==================================================
+## Analysis Stage: Initial_Data_Loading_and_Inspection
+## Execution Time: 2025-04-25 22:53:55
+--------------------------------------------------
+Result Description: 
+
+Dataset Shape: (128975, 24)
+Number of Columns: 24
+Column Names: index, Order ID, Date, Status, Fulfilment, Sales Channel , ship-service-level, Style, SKU, Category, Size, ASIN, Courier Status, Qty, currency, Amount, ship-city, ship-state, ship-postal-code, ship-country, promotion-ids, B2B, fulfilled-by, Unnamed: 22
+Data Types:
+index                   int64
+Order ID               object
+Date                   object
+Status                 object
+Fulfilment             object
+Sales Channel          object
+ship-service-level     object
+Style                  object
+SKU                    object
+Category               object
+Size                   object
+ASIN                   object
+Courier Status         object
+Qty                     int64
+currency               object
+Amount                float64
+ship-city              object
+ship-state             object
+ship-postal-code      float64
+ship-country           object
+promotion-ids          object
+B2B                      bool
+fulfilled-by           object
+Unnamed: 22            object
+
+Basic Statistics Summary:
+               index            Qty         Amount  ship-postal-code
+count  128975.000000  128975.000000  121180.000000     128942.000000
+mean    64487.000000       0.904431     648.561465     463966.236509
+std     37232.019822       0.313354     281.211687     191476.764941
+min         0.000000       0.000000       0.000000     110001.000000
+25%     32243.500000       1.000000     449.000000     382421.000000
+50%     64487.000000       1.000000     605.000000     500033.000000
+75%     96730.500000       1.000000     788.000000     600024.000000
+max    128974.000000      15.000000    5584.000000     989898.000000
+
+==================================================
+
+==================================================
+## Analysis Stage: Data_Cleaning_and_Basic_Analysis
+## Execution Time: 2025-04-25 22:54:33
+--------------------------------------------------
+Result Description: 
+
+1. Data Cleaning Steps:
+   - Converted Date column to datetime format
+   - Filled missing values in Courier Status, fulfilled-by, and promotion-ids
+   
+2. Monthly Sales Summary:
+      Date  Order ID       Amount    Qty
+0  2022-03       171    101683.85    156
+1  2022-04     49067  28838708.32  44206
+2  2022-05     42040  26226476.75  38011
+3  2022-06     37697  23425809.38  34276
+
+3. Category-wise Sales Summary:
+               Order ID       Amount    Qty
+Category                                   
+Set               50284  39204124.03  45289
+kurta             49877  21299546.70  45045
+Western Dress     15500  11216072.69  13943
+Top               10622   5347792.30   9903
+Ethnic Dress       1159    791217.66   1053
+Blouse              926    458408.18    863
+Bottom              440    150667.98    398
+Saree               164    123933.76    152
+Dupatta               3       915.00      3
+
+4. Key Statistics:
+   - Total Orders: 120,378
+   - Total Sales Amount: 78,592,678.30
+   - Total Quantity Sold: 116,649
+   - Average Order Value: 648.56
+
+==================================================
+
+==================================================
+## Analysis Stage: Sales_Visualization_and_Fulfillment_Analysis
+## Execution Time: 2025-04-25 22:55:27
+--------------------------------------------------
+Result Description: 
+
+Created four key visualizations and analyzed fulfillment patterns:
+
+1. Monthly Sales Trend Analysis:
+   - Highest sales observed in April 2022: ₹28,838,708.32
+   - Lowest sales observed in March 2022: ₹101,683.85
+
+2. Category-wise Sales Distribution:
+   - Top performing category: Set (₹39,204,124.03)
+   - Second best category: kurta (₹21,299,546.70)
+   - Lowest performing category: Dupatta (₹915.00)
+
+3. Daily Order Volume Analysis:
+   - Average daily orders: 1,417.31
+   - Maximum daily orders: 2,085
+   - Minimum daily orders: 171
+
+4. Size Distribution Analysis:
+   - Most common size: M (22,711 orders)
+   - Second most common size: L (22,132 orders)
+   - Least common size: Free (378 orders)
+
+5. Fulfillment Analysis:
+            Order ID      Amount    Qty
+Fulfilment                             
+Amazon         89698  54322151.0  84087
+Merchant       39277  24270527.3  32562
+
+Generated visualization files:
+- ./artifacts/monthly_sales_trend.png
+- ./artifacts/category_sales_distribution.png
+- ./artifacts/daily_order_volume.png
+- ./artifacts/size_distribution.png
+
+==================================================
+
+==================================================
+## Analysis Stage: Geographical_and_Business_Type_Analysis
+## Execution Time: 2025-04-25 22:55:55
+--------------------------------------------------
+Result Description: 
+
+Analyzed geographical distribution and business type breakdown:
+
+1. Top 10 States by Sales:
+                Order ID       Amount    Qty
+ship-state                                  
+MAHARASHTRA        22260  13335534.14  20328
+KARNATAKA          17326  10481114.37  15901
+TELANGANA          11330   6916615.65  10253
+UTTAR PRADESH      10638   6816642.08   9499
+TAMIL NADU         11483   6515650.11  10412
+DELHI               6782   4235215.97   6156
+KERALA              6585   3830227.58   5813
+WEST BENGAL         5963   3507880.44   5318
+ANDHRA PRADESH      5430   3219831.72   4819
+HARYANA             4415   2882092.99   4066
+
+2. B2B vs B2C Analysis:
+       Order ID       Amount     Qty
+B2B                                 
+False    128104  78001457.51  115809
+True        871    591220.79     840
+
+3. Top 10 Cities by Sales:
+           Order ID      Amount    Qty
+ship-city                             
+BENGALURU     11217  6849664.99  10422
+HYDERABAD      8074  4946032.82   7333
+MUMBAI         6126  3704461.80   5650
+NEW DELHI      5795  3613874.78   5252
+CHENNAI        5421  3098745.74   4937
+PUNE           3857  2338518.18   3533
+KOLKATA        2381  1414978.87   2166
+GURUGRAM       1868  1221618.74   1734
+THANE          1701  1004355.29   1539
+LUCKNOW        1458   933926.34   1283
+
+Key Insights:
+1. State-wise Distribution:
+   - Top state by sales: MAHARASHTRA (₹13,335,534.14)
+   - Second highest: KARNATAKA (₹10,481,114.37)
+   - Third highest: TELANGANA (₹6,916,615.65)
+
+2. B2B vs B2C:
+   - B2B Sales: ₹591,220.79 (871 orders)
+   - B2C Sales: ₹78,001,457.51 (128,104 orders)
+
+3. City-wise Distribution:
+   - Top city by sales: BENGALURU (₹6,849,664.99)
+   - Second highest: HYDERABAD (₹4,946,032.82)
+   - Third highest: MUMBAI (₹3,704,461.80)
+
+Generated visualization files:
+- ./artifacts/top_10_states_sales.png
+- ./artifacts/b2b_b2c_distribution.png
+
+==================================================
