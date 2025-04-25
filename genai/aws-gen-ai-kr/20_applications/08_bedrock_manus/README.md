@@ -26,6 +26,7 @@ BedrockManus is based on the open-source project [LangManus](https://github.com/
 [![Demo](./assets/demo.gif)]
 
 - [View on YouTube](https://www.youtube.com/watch?v=diaK4dp7J6o)
+- Dataset in Demo is [Amazon Sale Report](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
 ## Table of Contents
 - [Quick Start](#quick-start)
@@ -55,8 +56,6 @@ cd setup/
 conda activate bedrock-manus
 python main.py
 ```
-### Dataset
-[Amazon Sale Report](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
 ## Architecture
 
