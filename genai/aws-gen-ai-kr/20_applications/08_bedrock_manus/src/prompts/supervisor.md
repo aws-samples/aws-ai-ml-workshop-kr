@@ -31,9 +31,9 @@ or
 
 # Decision Logic
 - Consider the provided **`full_plan`** and **`clues`** to determine the next step
-- 처음에는 요청을 분석하여 가장 적합한 작업자 선택
-- 작업자가 작업 완료 후, 다음 작업자가 필요한지 평가:
-  - 계산이나 코딩이 필요하면 coder로 전환
-  - 최종 보고서 작성이 필요하면 reporter로 전환
-  - 모든 필요한 작업이 완료되었으면 "FINISH" 반환
-- reporter가 최종 보고서를 작성한 후에는 항상 "FINISH" 반환
+- Initially, analyze the request to select the most appropriate worker
+- After a worker completes a task, evaluate if another worker is needed:
+  - Switch to coder if calculations or coding is required
+  - Switch to reporter if a final report needs to be written
+  - Return "FINISH" if all necessary tasks have been completed
+- Always return "FINISH" after reporter has written the final report

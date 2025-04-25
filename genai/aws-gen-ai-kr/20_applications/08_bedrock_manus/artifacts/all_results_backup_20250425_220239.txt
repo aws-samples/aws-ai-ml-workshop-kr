@@ -1,0 +1,321 @@
+
+==================================================
+## Analysis Stage: Initial Data Exploration
+## Execution Time: 2025-04-25 21:47:04
+--------------------------------------------------
+Result Description: 
+
+데이터셋 기본 정보 분석 결과:
+1. 데이터 크기: 128975행 x 24열
+2. 컬럼 수: 24
+3. 데이터 타입 분포:
+object     19
+int64       2
+float64     2
+bool        1
+4. 결측치 현황:
+index                     0
+Order ID                  0
+Date                      0
+Status                    0
+Fulfilment                0
+Sales Channel             0
+ship-service-level        0
+Style                     0
+SKU                       0
+Category                  0
+Size                      0
+ASIN                      0
+Courier Status         6872
+Qty                       0
+currency               7795
+Amount                 7795
+ship-city                33
+ship-state               33
+ship-postal-code         33
+ship-country             33
+promotion-ids         49153
+B2B                       0
+fulfilled-by          89698
+Unnamed: 22           49050
+
+==================================================
+
+==================================================
+## Analysis Stage: Data Preprocessing
+## Execution Time: 2025-04-25 21:47:56
+--------------------------------------------------
+Result Description: 
+
+데이터 전처리 결과:
+1. 최종 데이터 크기: 121149행 x 22열
+2. 전처리 작업 내용:
+   - 날짜 데이터를 datetime 형식으로 변환
+   - 불필요한 컬럼(Unnamed: 22, index) 제거
+   - fulfilled-by 결측치를 'Unknown'으로 대체
+   - promotion-ids 결측치를 'No Promotion'으로 대체
+   - Courier Status 결측치를 'Not Available'로 대체
+   - Amount와 currency 결측치가 있는 행 제거
+   - 배송 관련 정보 결측치가 있는 행 제거
+   - ship-postal-code를 정수형으로 변환
+
+3. 결측치 처리 후 현황:
+Order ID              0
+Date                  0
+Status                0
+Fulfilment            0
+Sales Channel         0
+ship-service-level    0
+Style                 0
+SKU                   0
+Category              0
+Size                  0
+ASIN                  0
+Courier Status        0
+Qty                   0
+currency              0
+Amount                0
+ship-city             0
+ship-state            0
+ship-postal-code      0
+ship-country          0
+promotion-ids         0
+B2B                   0
+fulfilled-by          0
+
+4. 데이터 타입 변환 결과:
+Order ID                      object
+Date                  datetime64[ns]
+Status                        object
+Fulfilment                    object
+Sales Channel                 object
+ship-service-level            object
+Style                         object
+SKU                           object
+Category                      object
+Size                          object
+ASIN                          object
+Courier Status                object
+Qty                            int64
+currency                      object
+Amount                       float64
+ship-city                     object
+ship-state                    object
+ship-postal-code               int64
+ship-country                  object
+promotion-ids                 object
+B2B                             bool
+fulfilled-by                  object
+
+5. 데이터 날짜 범위:
+   - 시작일: 2022-03-31 00:00:00
+   - 종료일: 2022-06-29 00:00:00
+
+==================================================
+
+==================================================
+## Analysis Stage: Basic Statistical Analysis
+## Execution Time: 2025-04-25 21:49:18
+--------------------------------------------------
+Result Description: 
+
+기본 통계 분석 결과:
+
+1. 판매량 및 매출 분석
+일별 판매 통계:
+                      Date          Qty        Amount
+count                   91    91.000000  9.100000e+01
+mean   2022-05-15 00:00:00  1279.714286  8.634506e+05
+min    2022-03-31 00:00:00   156.000000  1.016839e+05
+25%    2022-04-22 12:00:00  1104.000000  7.701287e+05
+50%    2022-05-15 00:00:00  1282.000000  8.820592e+05
+75%    2022-06-06 12:00:00  1437.500000  9.590632e+05
+max    2022-06-29 00:00:00  1889.000000  1.208509e+06
+std                    NaN   259.294397  1.565776e+05
+
+2. 카테고리별 분석 (상위 5개):
+        Category    Qty       Amount  Order_Count  Average_Order_Value
+5            Set  45214  39195176.03        47031           833.390233
+8          kurta  44956  21291538.70        46700           455.921600
+7  Western Dress  13938  11215337.69        14703           762.792470
+6            Top   9897   5346812.30        10163           526.105707
+3   Ethnic Dress   1053    791217.66         1093           723.895389
+
+3. 지역별 분석 (상위 5개 주):
+       ship-state    Qty       Amount  Order_Count  Average_Order_Value
+27    MAHARASHTRA  20328  13335534.14        21073           632.825613
+22      KARNATAKA  15901  10481114.37        16394           639.326239
+56      TELANGANA  10253   6916615.65        10637           650.241201
+58  UTTAR PRADESH   9499   6816642.08         9947           685.296278
+55     TAMIL NADU  10412   6515650.11        10809           602.798604
+
+4. 월별 트렌드:
+  Year_Month    Qty       Amount  Order ID
+0    2022-03    156    101683.85       162
+1    2022-04  44101  28831249.32     46055
+2    2022-05  37959  26219850.75     39525
+3    2022-06  34238  23421223.38     35407
+
+5. B2B vs B2C 분석:
+     B2B       Amount  Order ID  Average_Order_Value
+0  False  77982786.51    120306           648.203635
+1   True    591220.79       843           701.329526
+
+주요 발견사항:
+1. 일별 평균 매출: 863450.63 INR
+2. 최고 매출 카테고리: Blouse (458408.18 INR)
+3. 최고 매출 지역: ANDAMAN & NICOBAR  (158723.62 INR)
+4. B2B 거래 비중: 0.75%
+
+생성된 시각화 파일:
+- 일별 매출 트렌드: ./artifacts/daily_sales_trend.png
+- 카테고리별 매출: ./artifacts/category_sales.png
+- 상위 10개 주별 매출: ./artifacts/top_10_states_sales.png
+
+==================================================
+
+==================================================
+## Analysis Stage: 변수_간_상관관계_분석
+## Execution Time: 2025-04-25 21:52:12
+--------------------------------------------------
+Result Description: 
+주요 변수 간 상관관계 분석 결과:
+
+- Amount vs Category_Code: -0.463
+
+주요 발견사항:
+1. 가장 강한 상관관계:
+   - Amount - Category_Code: -0.463
+
+2. 금액(Amount)과의 주요 상관관계:
+   - Amount - Category_Code: -0.463
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/correlation_heatmap.png : 변수 간 상관관계 히트맵
+==================================================
+
+==================================================
+## Analysis Stage: 수익성_분석
+## Execution Time: 2025-04-25 21:54:02
+--------------------------------------------------
+Result Description: 
+
+1. 전체 수익성 분석:
+   - 총 매출: 78,592,678.30 INR
+   - 총 마진: 18,640,171.79 INR
+   - 전체 마진율: 23.72%
+
+2. 카테고리별 수익성:
+   - 최고 마진 카테고리: Set
+   - 최고 ROI 카테고리: Saree
+
+3. 카테고리별 상세 분석:
+     Category      Amount  Margin_Amount  Order ID       ROI
+       Blouse   458408.18   1.008498e+05       926 28.205128
+       Bottom   150667.98   3.766700e+04       440 33.333333
+      Dupatta      915.00   0.000000e+00         3  0.000000
+ Ethnic Dress   791217.66   2.531897e+05      1159 47.058824
+        Saree   123933.76   4.957350e+04       164 66.666667
+          Set 39204124.03   1.372144e+07     50284 53.846154
+          Top  5347792.30   1.336948e+06     10622 33.333333
+Western Dress 11216072.69   3.140500e+06     15500 38.888889
+        kurta 21299546.70   0.000000e+00     49877  0.000000
+
+4. 주요 발견사항:
+   - 카테고리별로 마진율이 22%~40% 범위로 다양하게 분포
+   - 높은 마진율 제품이 반드시 높은 총 마진을 보장하지는 않음
+   - 일별 마진의 변동성이 매출의 변동성과 유사한 패턴을 보임
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/profitability_analysis.png : 수익성 분석 시각화 (카테고리별 마진, ROI, 추이 분석)
+==================================================
+
+==================================================
+## Analysis Stage: 고객_행동_패턴_분석
+## Execution Time: 2025-04-25 21:55:39
+--------------------------------------------------
+Result Description: 
+
+1. 지역별 구매 행동:
+   - 최다 구매 지역: MAHARASHTRA (22260회 주문)
+   - 최고 매출 지역: MAHARASHTRA (13335534.14 INR)
+   - 지역별 구매 패턴의 뚜렷한 차이가 존재
+
+2. 시간대별 구매 패턴:
+   - 피크 시간대: 0시
+   - 주문의 시간대별 분포가 비교적 고르게 나타남
+
+3. 카테고리 선호도:
+   - 최다 구매 카테고리: Set
+   - 카테고리별 구매 빈도의 차이가 큼
+
+4. 구매 규모:
+   - 평균 주문 금액: 648.56 INR
+   - 지역별 평균 구매금액의 차이가 존재
+
+5. 주요 발견사항:
+   - 지역별로 뚜렷한 구매 패턴 차이가 있음
+   - 시간대별 구매 패턴이 비교적 안정적
+   - 특정 카테고리에 구매가 집중됨
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/customer_behavior_analysis.png : 고객 행동 패턴 분석 시각화 (지역별, 시간대별, 카테고리별)
+==================================================
+
+==================================================
+## Analysis Stage: RFM_분석
+## Execution Time: 2025-04-25 22:01:49
+--------------------------------------------------
+Result Description: 
+
+1. 고객 세그먼트 분포:
+Customer_Segment
+Low Value     33
+At Risk       19
+Mid Value     12
+High Value     5
+
+2. 세그먼트별 평균 지표:
+                  Recency  Frequency    Monetary  RFM_Score
+Customer_Segment                                           
+At Risk             48.89       2.11     1160.33       1.11
+High Value           0.00   14607.40  8813111.27       4.00
+Low Value            2.45     281.48   176015.87       2.00
+Mid Value            0.00    3881.33  2389823.41       2.89
+
+3. 상위 5개 지역:
+            State  RFM_Score Customer_Segment
+23      KARNATAKA        4.0       High Value
+28    MAHARASHTRA        4.0       High Value
+56     TAMIL NADU        4.0       High Value
+57      TELANGANA        4.0       High Value
+59  UTTAR PRADESH        4.0       High Value
+
+4. 주요 발견사항:
+   - High Value 고객은 전체의 7.2%를 차지
+   - Mid Value 고객의 평균 구매금액: 2,389,823.41 INR
+   - At Risk 고객의 평균 최근성: 48.9일
+
+5. 세그먼트별 특징:
+   - High Value: 높은 구매빈도(14607.4회)와 금액
+   - Mid Value: 중간 수준의 구매 패턴
+   - Low Value: 개선 가능성이 있는 그룹
+   - At Risk: 재활성화가 필요한 그룹
+
+6. 마케팅 시사점:
+   - High Value 고객을 위한 VIP 프로그램 운영
+   - Mid Value 고객의 구매 빈도 증대를 위한 프로모션
+   - Low Value 고객의 구매 금액 증대 전략
+   - At Risk 고객 대상 재활성화 캠페인
+
+7. 지역별 특성:
+   - 최고 성과 지역: KARNATAKA (RFM 점수: 4.00)
+   - 상위 지역들의 평균 RFM 점수: 4.00
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/rfm_analysis.png : RFM 분석 결과 시각화 (세그먼트 분포, 구매 패턴)
+==================================================
