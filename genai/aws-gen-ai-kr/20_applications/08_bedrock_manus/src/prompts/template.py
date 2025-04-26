@@ -9,11 +9,16 @@ def get_prompt_template(prompt_name: str) -> str:
     template = open(os.path.join(os.path.dirname(__file__), f"{prompt_name}.md")).read()
     return template
 
-def apply_prompt_template(prompt_name: str, state: AgentState) -> list:
+def apply_prompt_template(prompt_name: str, state: AgentState, prompt_cache=False, cache_type="default") -> list:
     
-    system_prompts = get_prompt_template(prompt_name)   
-    context = {"CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z")}
-    system_prompts = system_prompts.format(**context)    
-    system_prompts = bedrock_utils.get_system_prompt(system_prompts=system_prompts)
+    system_prompts = get_prompt_template(prompt_name)
+    if prompt_name in ["coder", "reporter"]:
+        context = {
+            "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
+            "USER_REQUEST": state["request"]
+        }
+    else: context = {"CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z")}
+    system_prompts = system_prompts.format(**context)
+    system_prompts = bedrock_utils.get_system_prompt(system_prompts=system_prompts, prompt_cache=prompt_cache, cache_type=cache_type) 
         
     return system_prompts, state["messages"]

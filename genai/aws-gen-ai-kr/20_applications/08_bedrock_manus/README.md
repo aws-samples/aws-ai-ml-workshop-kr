@@ -26,7 +26,7 @@ BedrockManus is based on the open-source project [LangManus](https://github.com/
 [![Demo](./assets/demo.gif)]
 
 - [View on YouTube](https://youtu.be/DwWICGLEv14)
-- Output in Demo is [Report.pdf (12 pages)](./assets/report.pdf)
+- Output in Demo is [English- Report.pdf (6 pages)](./assets/report_en.pdf) | [Korean - Report.pdf (12 pages)](./assets/report.pdf)
 - Dataset in Demo is [Amazon Sale Report](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
 ## Table of Contents
@@ -47,7 +47,7 @@ BedrockManus is based on the open-source project [LangManus](https://github.com/
 ```bash
 # Clone the repository
 git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
-cd cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_ai_automation/
+cd cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/
 
 # Create and activate virtual environment
 cd setup/
@@ -106,7 +106,7 @@ Follow the steps below to set up a virtual environment and install the necessary
 ```bash
 # Step 1: Create and activate a virtual environment through uv
 cd setup/
-./create_conda_virtual_env.sh ai-automation
+./create_conda_virtual_env.sh bedrock-manus
 ```
 
 By completing these steps, you'll ensure your environment is properly configured and ready for development.
