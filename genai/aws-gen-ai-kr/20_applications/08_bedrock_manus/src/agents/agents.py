@@ -1,8 +1,8 @@
 import logging
 from .llm import get_llm_by_type
-from src.config.agents import AGENT_LLM_MAP
 from src.prompts.template import apply_prompt_template
 from src.agents.llm import get_llm_by_type, llm_call
+from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.tools.research_tools import research_tool_config, process_search_tool
 from src.tools.coder_tools import coder_tool_config, process_coder_tool
 from src.tools.browser_tools import browser_tool_config, process_browser_tool
@@ -42,7 +42,6 @@ class create_react_agent():
         if self.agent_name == "researcher": self.tool_config = research_tool_config
         elif self.agent_name == "coder": self.tool_config = coder_tool_config
         elif self.agent_name == "browser": self.tool_config = browser_tool_config
-        elif self.agent_name == "task_tracker": self.tool_config = task_tracker_tool_config
         elif self.agent_name == "reporter":
             self.tool_config = reporter_tool_config
             self.enable_reasoning = False
@@ -55,7 +54,8 @@ class create_react_agent():
     def invoke(self, **kwargs):
 
         state = kwargs.get("state", None)
-        system_prompts, messages = apply_prompt_template(self.agent_name, state)
+        prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP[self.agent_name]
+        system_prompts, messages = apply_prompt_template(self.agent_name, state, prompt_cache=prompt_cache, cache_type=cache_type)    
         
         # 도구 사용이 종료될 때까지 반복
         while not self.final_response and self.turn < self.MAX_TURNS:
@@ -85,7 +85,6 @@ class create_react_agent():
                         if self.agent_name == "researcher": tool_result_message = process_search_tool(tool)
                         elif self.agent_name == "coder": tool_result_message = process_coder_tool(tool)
                         elif self.agent_name == "browser": tool_result_message = process_browser_tool(tool)
-                        elif self.agent_name == "task_tracker": tool_result_message = process_task_tracker_tool(tool)
                         elif self.agent_name == "reporter": tool_result_message = process_reporter_tool(tool)
 
                         messages.append(tool_result_message)
@@ -108,7 +107,6 @@ class create_react_agent():
         
         return ai_message
 
-        
 research_agent = None
 coder_agent = None
 browser_agent = None

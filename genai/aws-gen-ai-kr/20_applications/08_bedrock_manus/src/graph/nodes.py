@@ -10,7 +10,7 @@ from langgraph.graph import END
 from src.agents.agents import create_react_agent
 from src.agents.llm import get_llm_by_type, llm_call
 from src.config import TEAM_MEMBERS
-from src.config.agents import AGENT_LLM_MAP
+from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.prompts.template import apply_prompt_template
 from src.tools.search import tavily_tool
 from .types import State, Router
@@ -119,8 +119,11 @@ def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     """Supervisor node that decides which agent should act next."""
     logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
     
-    system_prompts, messages = apply_prompt_template("supervisor", state)    
-    llm = get_llm_by_type(AGENT_LLM_MAP["supervisor"])    
+    prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["supervisor"]
+    if prompt_cache: logger.debug(f"{Colors.GREEN}Supervisor - Prompt Cache Enabled{Colors.END}")
+    else: logger.debug(f"{Colors.GREEN}Supervisor - Prompt Cache Disabled{Colors.END}")
+    system_prompts, messages = apply_prompt_template("supervisor", state, prompt_cache=prompt_cache, cache_type=cache_type)    
+    llm = get_llm_by_type(AGENT_LLM_MAP["supervisor"])
     llm.stream = True
     llm_caller = llm_call(llm=llm, verbose=False, tracking=False)
     
@@ -169,7 +172,10 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     logger.info(f"{Colors.BLUE}===== Planner - Deep thinking mode: {state.get("deep_thinking_mode")} ====={Colors.END}")
     logger.info(f"{Colors.BLUE}===== Planner - Search before planning: {state.get("search_before_planning")} ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    system_prompts, messages = apply_prompt_template("planner", state)
+    prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["planner"]
+    if prompt_cache: logger.debug(f"{Colors.GREEN}Planner - Prompt Cache Enabled{Colors.END}")
+    else: logger.debug(f"{Colors.GREEN}Planner - Prompt Cache Disabled{Colors.END}")
+    system_prompts, messages = apply_prompt_template("planner", state, prompt_cache=prompt_cache, cache_type=cache_type)
     # whether to enable deep thinking mode
        
     llm = get_llm_by_type(AGENT_LLM_MAP["planner"])    
@@ -210,7 +216,10 @@ def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     """Coordinator node that communicate with customers."""
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
     
-    system_prompts, messages = apply_prompt_template("coordinator", state)
+    prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["coordinator"]
+    if prompt_cache: logger.debug(f"{Colors.GREEN}Coordinator - Prompt Cache Enabled{Colors.END}")
+    else: logger.debug(f"{Colors.GREEN}Coordinator - Prompt Cache Disabled{Colors.END}")
+    system_prompts, messages = apply_prompt_template("coordinator", state, prompt_cache=prompt_cache, cache_type=cache_type)
     llm = get_llm_by_type(AGENT_LLM_MAP["coordinator"])    
     llm.stream = True
     llm_caller = llm_call(llm=llm, verbose=False, tracking=False)

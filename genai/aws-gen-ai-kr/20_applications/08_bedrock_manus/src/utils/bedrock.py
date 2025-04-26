@@ -74,6 +74,7 @@ def get_bedrock_client(
         session_kwargs["profile_name"] = profile_name
 
     retry_config = Config(
+        read_timeout=300,
         region_name=target_region,
         retries={
             "max_attempts": 50,
