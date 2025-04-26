@@ -17,7 +17,7 @@ Bedrock-Manus is an AI automation framework optimized for Amazon Bedrock and bus
 
 > Come From Open Source, Back to Open Source
 
-BedrockManus is based on the open-source project [LangManus](https://github.com/Darwin-lfl/langmanus).
+Bedrock-Manus is based on the open-source project [LangManus](https://github.com/Darwin-lfl/langmanus).
 
 ## Demo Video
 
