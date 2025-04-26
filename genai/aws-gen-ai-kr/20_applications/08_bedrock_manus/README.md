@@ -125,12 +125,12 @@ or use `main.ipynb`
 
 ### Advanced Configuration
 
-BedrockManus can be customized through various configuration files in the `src/config` directory:
-- `agents.py`: Modify team composition and agent system prompts
+Bedrock-Manus can be customized through various configuration files in the `src/config` directory:
+- `agents.py`: Modify team composition, agent system prompts, and `prompt caching` enablement
 
 ### Agent Prompts System
 
-BedrockManus uses a sophisticated prompting system in the `src/prompts` directory to define agent behaviors and responsibilities:
+Bedrock-Manus uses a sophisticated prompting system in the `src/prompts` directory to define agent behaviors and responsibilities:
 
 #### Core Agent Roles
 

@@ -1,0 +1,243 @@
+
+==================================================
+## Analysis Stage: Initial Data Exploration
+## Execution Time: 2025-04-26 23:43:02
+--------------------------------------------------
+Result Description: 
+
+데이터셋 기본 정보:
+- 데이터 크기: (128975, 24)
+- 컬럼 수: 24
+- 결측값 현황:
+index                     0
+Order ID                  0
+Date                      0
+Status                    0
+Fulfilment                0
+Sales Channel             0
+ship-service-level        0
+Style                     0
+SKU                       0
+Category                  0
+Size                      0
+ASIN                      0
+Courier Status         6872
+Qty                       0
+currency               7795
+Amount                 7795
+ship-city                33
+ship-state               33
+ship-postal-code         33
+ship-country             33
+promotion-ids         49153
+B2B                       0
+fulfilled-by          89698
+Unnamed: 22           49050
+
+데이터 타입:
+index                   int64
+Order ID               object
+Date                   object
+Status                 object
+Fulfilment             object
+Sales Channel          object
+ship-service-level     object
+Style                  object
+SKU                    object
+Category               object
+Size                   object
+ASIN                   object
+Courier Status         object
+Qty                     int64
+currency               object
+Amount                float64
+ship-city              object
+ship-state             object
+ship-postal-code      float64
+ship-country           object
+promotion-ids          object
+B2B                      bool
+fulfilled-by           object
+Unnamed: 22            object
+
+==================================================
+
+==================================================
+## Analysis Stage: Sales Distribution Analysis
+## Execution Time: 2025-04-26 23:43:37
+--------------------------------------------------
+Result Description: 
+
+수치형 데이터 통계 요약:
+               index            Qty         Amount  ship-postal-code
+count  128975.000000  128975.000000  121180.000000     128942.000000
+mean    64487.000000       0.904431     648.561465     463966.236509
+std     37232.019822       0.313354     281.211687     191476.764941
+min         0.000000       0.000000       0.000000     110001.000000
+25%     32243.500000       1.000000     449.000000     382421.000000
+50%     64487.000000       1.000000     605.000000     500033.000000
+75%     96730.500000       1.000000     788.000000     600024.000000
+max    128974.000000      15.000000    5584.000000     989898.000000
+
+주문 상태 분포:
+Status
+Shipped                          77804
+Shipped - Delivered to Buyer     28769
+Cancelled                        18332
+Shipped - Returned to Seller      1953
+Shipped - Picked Up                973
+Pending                            658
+Pending - Waiting for Pick Up      281
+Shipped - Returning to Seller      145
+Shipped - Out for Delivery          35
+Shipped - Rejected by Buyer         11
+Shipping                             8
+Shipped - Lost in Transit            5
+Shipped - Damaged                    1
+
+상위 10개 카테고리 분포:
+Category
+Set              50284
+kurta            49877
+Western Dress    15500
+Top              10622
+Ethnic Dress      1159
+Blouse             926
+Bottom             440
+Saree              164
+Dupatta              3
+
+판매 채널 분포:
+Sales Channel 
+Amazon.in     128851
+Non-Amazon       124
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/sales_distribution.png : 카테고리별 판매량 및 판매 채널 분포 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Time Series Analysis
+## Execution Time: 2025-04-26 23:44:02
+--------------------------------------------------
+Result Description: 
+
+월별 판매 통계:
+     Month  Order ID       Amount    Qty
+0  2022-03       171    101683.85    156
+1  2022-04     49067  28838708.32  44206
+2  2022-05     42040  26226476.75  38011
+3  2022-06     37697  23425809.38  34276
+
+요일별 판매 통계:
+     Weekday  Order ID      Amount
+0     Friday     17718  651.084273
+1     Monday     18568  648.658441
+2   Saturday     18524  649.447742
+3     Sunday     19619  650.380693
+4   Thursday     17069  645.717134
+5    Tuesday     18883  648.951100
+6  Wednesday     18594  645.465796
+
+주요 발견사항:
+1. 전체 기간 동안의 일별 평균 주문 건수: 1417.31
+2. 최대 일일 주문 건수: 2085 (날짜: 2022-05-03)
+3. 최소 일일 주문 건수: 171 (날짜: 2022-03-31)
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/sales_trend.png : 일별 주문 건수 및 판매 금액 추이 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Category and Price Analysis
+## Execution Time: 2025-04-26 23:44:27
+--------------------------------------------------
+Result Description: 
+
+카테고리별 성과 분석:
+                 주문수          총매출    평균단가    총수량
+Category                                        
+Blouse           926    458408.18  520.33    863
+Bottom           440    150667.98  358.73    398
+Dupatta            3       915.00  305.00      3
+Ethnic Dress    1159    791217.66  723.90   1053
+Saree            164    123933.76  799.57    152
+Set            50284  39204124.03  833.39  45289
+Top            10622   5347792.30  526.10   9903
+Western Dress  15500  11216072.69  762.79  13943
+kurta          49877  21299546.70  455.93  45045
+
+가격대별 판매 분석:
+               주문수     평균가격          총매출    총수량
+Price_Range                                    
+매우낮음         24365   322.58   7859621.96  23280
+낮음           24325   475.15  11558053.56  23330
+중간           24553   610.82  14997527.12  23462
+높음           23769   757.05  17994297.93  22765
+매우높음         24168  1083.38  26183177.73  23645
+
+주요 발견사항:
+1. 최고 매출 카테고리: Set (총매출: 39,204,124.03)
+2. 최고 평균단가 카테고리: Set (평균단가: 833.39)
+3. 최다 판매수량 카테고리: Set (총수량: 45,289개)
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/category_price_analysis.png : 카테고리별 성과 및 가격대별 분석 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Regional and Delivery Analysis
+## Execution Time: 2025-04-26 23:44:55
+--------------------------------------------------
+Result Description: 
+
+상위 10개 주(state)별 판매 분석:
+                  주문수          총매출    평균단가    총수량
+ship-state                                       
+MAHARASHTRA     22260  13335534.14  632.83  20328
+KARNATAKA       17326  10481114.37  639.33  15901
+TELANGANA       11330   6916615.65  650.24  10253
+UTTAR PRADESH   10638   6816642.08  685.30   9499
+TAMIL NADU      11483   6515650.11  602.80  10412
+DELHI            6782   4235215.97  662.48   6156
+KERALA           6585   3830227.58  622.70   5813
+WEST BENGAL      5963   3507880.44  632.39   5318
+ANDHRA PRADESH   5430   3219831.72  636.96   4819
+HARYANA          4415   2882092.99  688.18   4066
+
+배송 서비스별 분석:
+                      주문수         총매출    평균단가    총수량
+ship-service-level                                  
+Expedited           88615  54285183.0  656.23  83004
+Standard            40360  24307495.3  632.07  33645
+
+배송 상태별 분석:
+                               Order ID      Amount   주문비율
+Status                                                    
+Cancelled                         18332   6919284.3  14.21
+Pending                             658    430271.0   0.51
+Pending - Waiting for Pick Up       281    192138.0   0.22
+Shipped                           77804  50324255.0  60.32
+Shipped - Damaged                     1      1136.0   0.00
+Shipped - Delivered to Buyer      28769  18650815.0  22.31
+Shipped - Lost in Transit             5      1997.0   0.00
+Shipped - Out for Delivery           35     26971.0   0.03
+Shipped - Picked Up                 973    661252.0   0.75
+Shipped - Rejected by Buyer          11      7295.0   0.01
+Shipped - Returned to Seller       1953   1269644.0   1.51
+Shipped - Returning to Seller       145    107620.0   0.11
+Shipping                              8         0.0   0.01
+
+주요 발견사항:
+1. 최다 주문 지역: MAHARASHTRA (주문수: 22,260건)
+2. 최고 매출 지역: MAHARASHTRA (총매출: 13,335,534.14)
+3. 가장 많이 사용된 배송 서비스: Expedited (주문수: 88,615건)
+4. 배송 성공률: 22.3%
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/regional_delivery_analysis.png : 지역별 판매 및 배송 서비스 분석 시각화
+==================================================
