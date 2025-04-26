@@ -21,7 +21,7 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 
 ## Demo Video
 
-> **Task**: I would like to analyze Amazon product sales data. The target for analysis is the './data/Amazon_Sale_Report.csv' file. Please conduct an analysis to extract marketing insights based on this data. The analysis should start with basic data property exploration, then move on to product sales trends, variable relationships, variable combinations, and various other analytical techniques. If there are any additional analyses needed to extract insights after the initial data analysis, please perform those as well. Please include detailed analysis along with supporting images and charts in the analysis report..
+> **Task**: I would like to analyze Amazon product sales data. The target for analysis is the './data/Amazon_Sale_Report.csv' file. Please conduct an analysis to extract marketing insights based on this data. Please perform various analytical techniques starting from basic data attribute exploration, product sales trends, variable relationships, variable combinations, etc. If there are any additional analyses needed to extract insights after the data analysis, please perform those as well. Please include detailed analysis in the report along with supporting images and charts. Please save the final report in PDF format.
 
 [![Demo](./assets/demo.gif)]
 
