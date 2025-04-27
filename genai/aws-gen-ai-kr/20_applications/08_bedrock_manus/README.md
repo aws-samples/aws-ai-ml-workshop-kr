@@ -37,7 +37,6 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [Contributors](#contributors)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
@@ -60,7 +59,7 @@ python main.py
 
 ## Architecture
 
-LangManus implements a hierarchical multi-agent system where a supervisor coordinates specialized agents to accomplish complex tasks:
+Bedrock-Manus implements a hierarchical multi-agent system where a supervisor coordinates specialized agents to accomplish complex tasks:
 
 ![Bedrock-Manus Architecture](./assets/architecture.png)
 
@@ -100,23 +99,22 @@ The system consists of the following agents working together:
 
 ### Installation
 
-LangManus leverages [uv](https://github.com/astral-sh/uv) as its package manager to streamline dependency management.
+Bedrock-Manus leverages `conda environment`
 Follow the steps below to set up a virtual environment and install the necessary dependencies:
 
 ```bash
-# Step 1: Create and activate a virtual environment through uv
+# Step 1: Create and activate a virtual environment through conda
 cd setup/
 ./create_conda_virtual_env.sh bedrock-manus
 ```
 
 By completing these steps, you'll ensure your environment is properly configured and ready for development.
 
-
 ## Usage
 
 ### Basic Execution
 
-To run BedrockManus with default settings:
+To run Bedrock-Manus with default settings:
 
 ```bash
 python main.py
@@ -156,14 +154,6 @@ The prompts system uses a template engine ([`src/prompts/template.py`](src/promp
 - Formats system prompts for each agent
 
 Each agent's prompt is defined in a separate markdown file, making it easy to modify behavior and responsibilities without changing the underlying code.
-
-## Contributing
-
-We welcome contributions of all kinds! Whether you're fixing a typo, improving documentation, or adding a new feature, your help is appreciated. Please see our [Contributing Guide](CONTRIBUTING.md) for details on how to get started.
-
-## Citation
-
-- <span style="#FF69B4;"> If you find this repository useful, please consider giving a star ⭐ and citation</span>
 
 ## Contributors
 
