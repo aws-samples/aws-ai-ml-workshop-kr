@@ -162,7 +162,7 @@ st.title("GenAI-driven Analytics 💬")
 st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v3.5 Sonnet.''')
 st.markdown('''
             - You can find the source code in 
-            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/02_qa_chatbot/04_web_ui)
+            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/09_genai_analytics)
             ''')
 
 if len(st.session_state["messages"]) > 0: display_chat_history()
