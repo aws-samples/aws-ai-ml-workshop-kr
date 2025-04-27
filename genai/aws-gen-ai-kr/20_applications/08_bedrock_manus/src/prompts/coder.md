@@ -153,6 +153,35 @@ except Exception as e:
 ```
 </cumulative_result_storage_requirements>
 
+<code_saving_requirements>
+- [CRITICAL] When the user requests "write code", "generate code", or similar:
+  - All generated code files must be saved to the "./artifacts/" directory
+  - Always include code to check if the directory exists and create it if necessary
+  - Always use clearly defined file paths that start with "./artifacts/"
+  - Always include the actual code to save the file
+
+- Example:
+```python
+import os
+
+# Create artifacts directory
+os.makedirs("./artifacts", exist_ok=True)
+
+# Save code file
+with open("./artifacts/solution.py", "w") as f:
+    f.write("""
+# Generated code content here
+def main():
+    print("Hello, world!")
+
+if __name__ == "__main__":
+    main()
+""")
+
+print("Code has been saved to ./artifacts/solution.py")
+```
+</code_saving_requirements>
+
 <note>
 
 - Always ensure that your solution is efficient and follows best practices.
