@@ -1,0 +1,91 @@
+
+==================================================
+## Analysis Stage: 1. 데이터 로드 및 기본 구조 확인
+## Execution Time: 2025-04-27 08:22:08
+--------------------------------------------------
+Result Description: 
+
+데이터셋 기본 정보:
+- 데이터 크기: 128975행 × 24열
+- 컬럼 목록: index, Order ID, Date, Status, Fulfilment, Sales Channel , ship-service-level, Style, SKU, Category, Size, ASIN, Courier Status, Qty, currency, Amount, ship-city, ship-state, ship-postal-code, ship-country, promotion-ids, B2B, fulfilled-by, Unnamed: 22
+- 데이터 타입 정보:
+index                   int64
+Order ID               object
+Date                   object
+Status                 object
+Fulfilment             object
+Sales Channel          object
+ship-service-level     object
+Style                  object
+SKU                    object
+Category               object
+Size                   object
+ASIN                   object
+Courier Status         object
+Qty                     int64
+currency               object
+Amount                float64
+ship-city              object
+ship-state             object
+ship-postal-code      float64
+ship-country           object
+promotion-ids          object
+B2B                      bool
+fulfilled-by           object
+Unnamed: 22            object
+- 결측치 현황:
+index                     0
+Order ID                  0
+Date                      0
+Status                    0
+Fulfilment                0
+Sales Channel             0
+ship-service-level        0
+Style                     0
+SKU                       0
+Category                  0
+Size                      0
+ASIN                      0
+Courier Status         6872
+Qty                       0
+currency               7795
+Amount                 7795
+ship-city                33
+ship-state               33
+ship-postal-code         33
+ship-country             33
+promotion-ids         49153
+B2B                       0
+fulfilled-by          89698
+Unnamed: 22           49050
+
+==================================================
+
+==================================================
+## Analysis Stage: 2. 데이터 전처리 및 클렌징
+## Execution Time: 2025-04-27 08:22:38
+--------------------------------------------------
+Result Description: 
+
+전처리 작업 내용:
+1. Date 컬럼을 datetime 형식으로 변환
+2. 불필요한 컬럼(index, Unnamed: 22) 제거
+3. 결측치 처리:
+   - Courier Status: 'Not Available'로 대체
+   - currency & Amount: 결측치 행 제거
+   - 배송 정보: 결측치 행 제거
+   - promotion-ids & fulfilled-by: 'None'으로 대체
+
+전처리 결과:
+- 최종 데이터 크기: 121149행 × 22열
+- Amount 통계:
+count    121149.000000
+mean        648.573305
+std         281.222115
+min           0.000000
+25%         449.000000
+50%         605.000000
+75%         788.000000
+max        5584.000000
+
+==================================================
