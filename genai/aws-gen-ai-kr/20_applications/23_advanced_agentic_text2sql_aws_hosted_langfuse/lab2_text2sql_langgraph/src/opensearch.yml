@@ -1,0 +1,72 @@
+settings:
+  index.knn: true
+  index.knn.algo_param.ef_search: 512
+
+mappings-sql:
+  properties:
+    metadata:
+      properties:
+        type:
+          type: keyword
+        timestamp:
+          type: date
+    input:
+      type: text
+      analyzer: nori
+    query:      
+      type: keyword
+    input_v:
+      type: knn_vector
+      dimension: 1024
+      method:
+        engine: nmslib
+        name: hnsw
+        parameters:
+          ef_construction: 512
+          m: 16
+        space_type: l2
+
+mappings-schema:
+  properties:
+    table_name:
+      type: keyword
+    table_desc:
+      type: text
+      analyzer: nori
+    columns:      
+      type: nested
+      properties:
+        col_name:
+          type: keyword
+        col_desc:
+          type: text
+          analyzer: nori
+
+mappings-detailed-schema:
+  properties:
+    table_name:
+      type: keyword
+    table_desc:
+      type: text
+      analyzer: nori
+    columns:      
+      type: nested
+      properties:
+        col_name:
+          type: keyword
+        col_desc:
+          type: text
+          analyzer: nori
+    table_summary:
+      type: text
+      analyzer: nori
+    table_summary_v:
+      type: knn_vector
+      dimension: 1024
+      method:
+        engine: nmslib
+        name: hnsw
+        parameters:
+          ef_construction: 512
+          m: 16
+        space_type: l2

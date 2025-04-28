@@ -1,0 +1,11 @@
+# pip list | grep -E "opensearch-py|langchain-aws|langchain-community|langgraph|sqlalchemy|streamlit|langchain_core|langchain"
+boto3==1.37.34
+langchain==0.3.20
+langchain-core==0.3.41
+langchain-aws==0.2.10
+langchain-community==0.3.19
+langfuse==2.59.7
+langgraph==0.3.27
+opensearch-py==2.8.0
+streamlit==1.44.1
+# sqlalchemy
