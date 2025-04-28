@@ -1,0 +1,315 @@
+[
+    {
+        "Album": {
+            "table_desc": "고유 ID, 제목 및 아티스트 ID를 통한 아티스트 링크가 있는 앨범 데이터를 저장합니다.",
+            "cols": [
+                {
+                    "col": "AlbumId",
+                    "col_desc": "기본 키, 앨범의 고유 식별자입니다."
+                },
+                {
+                    "col": "Title",
+                    "col_desc": "앨범의 제목입니다."
+                },
+                {
+                    "col": "ArtistId",
+                    "col_desc": "앨범의 아티스트를 참조하는 외래 키입니다."
+                }
+            ]
+        },
+        "Artist": {
+            "table_desc": "ID와 이름이 있는 아티스트 정보를 보유합니다.",
+            "cols": [
+                {
+                    "col": "ArtistId",
+                    "col_desc": "기본 키, 아티스트의 고유 식별자입니다."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "아티스트의 이름입니다."
+                }
+            ]
+        },
+        "Customer": {
+            "table_desc": "고객 세부 정보를 포함하고 지원 담당자에게 연결합니다.",
+            "cols": [
+                {
+                    "col": "CustomerId",
+                    "col_desc": "기본 키, 고유한 고객 식별자입니다."
+                },
+                {
+                    "col": "FirstName",
+                    "col_desc": "고객의 이름입니다."
+                },
+                {
+                    "col": "LastName",
+                    "col_desc": "고객의 성입니다."
+                },
+                {
+                    "col": "Company",
+                    "col_desc": "고객의 회사입니다."
+                },
+                {
+                    "col": "Address",
+                    "col_desc": "고객의 주소입니다."
+                },
+                {
+                    "col": "City",
+                    "col_desc": "고객의 도시입니다."
+                },
+                {
+                    "col": "State",
+                    "col_desc": "고객의 주/도입니다."
+                },
+                {
+                    "col": "Country",
+                    "col_desc": "고객의 국가입니다."
+                },
+                {
+                    "col": "PostalCode",
+                    "col_desc": "고객의 우편번호입니다."
+                },
+                {
+                    "col": "Phone",
+                    "col_desc": "고객의 전화번호입니다."
+                },
+                {
+                    "col": "Fax",
+                    "col_desc": "고객의 팩스번호입니다."
+                },
+                {
+                    "col": "Email",
+                    "col_desc": "고객의 이메일 주소입니다."
+                },
+                {
+                    "col": "SupportRepId",
+                    "col_desc": "이 고객을 지원하는 직원을 참조하는 외래 키입니다."
+                }
+            ]
+        },
+        "Employee": {
+            "table_desc": "감독 체계를 포함한 직원 세부 정보를 저장합니다.",
+            "cols": [
+                {
+                    "col": "EmployeeId",
+                    "col_desc": "기본 키, 직원의 고유 식별자입니다."
+                },
+                {
+                    "col": "LastName",
+                    "col_desc": "직원의 성입니다."
+                },
+                {
+                    "col": "FirstName",
+                    "col_desc": "직원의 이름입니다."
+                },
+                {
+                    "col": "Title",
+                    "col_desc": "직원의 직책입니다."
+                },
+                {
+                    "col": "ReportsTo",
+                    "col_desc": "직원의 상사를 참조하는 외래 키입니다."
+                },
+                {
+                    "col": "BirthDate",
+                    "col_desc": "직원의 생년월일입니다."
+                },
+                {
+                    "col": "HireDate",
+                    "col_desc": "직원의 채용일입니다."
+                },
+                {
+                    "col": "Address",
+                    "col_desc": "직원의 주소입니다."
+                },
+                {
+                    "col": "City",
+                    "col_desc": "직원의 도시입니다."
+                },
+                {
+                    "col": "State",
+                    "col_desc": "직원의 주/도입니다."
+                },
+                {
+                    "col": "Country",
+                    "col_desc": "직원의 국가입니다."
+                },
+                {
+                    "col": "PostalCode",
+                    "col_desc": "직원의 우편번호입니다."
+                },
+                {
+                    "col": "Phone",
+                    "col_desc": "직원의 전화번호입니다."
+                },
+                {
+                    "col": "Fax",
+                    "col_desc": "직원의 팩스번호입니다."
+                },
+                {
+                    "col": "Email",
+                    "col_desc": "직원의 이메일 주소입니다."
+                }
+            ]
+        },
+        "Genre": {
+            "table_desc": "고유 식별자와 이름이 있는 음악 장르를 카탈로그화합니다.",
+            "cols": [
+                {
+                    "col": "GenreId",
+                    "col_desc": "기본 키, 장르의 고유 식별자입니다."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "장르의 이름입니다."
+                }
+            ]
+        },
+        "Invoice": {
+            "table_desc": "고객과 연결된 거래 세부 정보를 기록합니다.",
+            "cols": [
+                {
+                    "col": "InvoiceId",
+                    "col_desc": "기본 키, 인보이스의 고유 식별자입니다."
+                },
+                {
+                    "col": "CustomerId",
+                    "col_desc": "이 인보이스와 관련된 고객을 참조하는 외래 키입니다."
+                },
+                {
+                    "col": "InvoiceDate",
+                    "col_desc": "인보이스가 발행된 날짜입니다."
+                },
+                {
+                    "col": "BillingAddress",
+                    "col_desc": "인보이스의 청구 주소입니다."
+                },
+                {
+                    "col": "BillingCity",
+                    "col_desc": "인보이스의 청구 도시입니다."
+                },
+                {
+                    "col": "BillingState",
+                    "col_desc": "인보이스의 청구 주/도입니다."
+                },
+                {
+                    "col": "BillingCountry",
+                    "col_desc": "인보이스의 청구 국가입니다."
+                },
+                {
+                    "col": "BillingPostalCode",
+                    "col_desc": "인보이스의 청구 우편번호입니다."
+                },
+                {
+                    "col": "Total",
+                    "col_desc": "인보이스의 총 금액입니다."
+                }
+            ]
+        },
+        "InvoiceLine": {
+            "table_desc": "인보이스의 각 품목 세부 정보를 트랙 및 인보이스와 연결합니다.",
+            "cols": [
+                {
+                    "col": "InvoiceLineId",
+                    "col_desc": "기본 키, 인보이스 라인의 고유 식별자입니다."
+                },
+                {
+                    "col": "InvoiceId",
+                    "col_desc": "관련 인보이스를 참조하는 외래 키입니다."
+                },
+                {
+                    "col": "TrackId",
+                    "col_desc": "이 인보이스 라인에서 판매된 트랙을 참조하는 외래 키입니다."
+                },
+                {
+                    "col": "UnitPrice",
+                    "col_desc": "트랙의 단가입니다."
+                },
+                {
+                    "col": "Quantity",
+                    "col_desc": "이 인보이스 라인에서 판매된 트랙의 수량입니다."
+                }
+            ]
+        },
+        "MediaType": {
+            "table_desc": "트랙의 미디어 유형을 정의합니다.",
+            "cols": [
+                {
+                    "col": "MediaTypeId",
+                    "col_desc": "기본 키, 미디어 타입의 고유 식별자입니다."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "미디어 타입의 이름입니다."
+                }
+            ]
+        },
+        "Playlist": {
+            "table_desc": "트랙을 플레이리스트로 구성합니다.",
+            "cols": [
+                {
+                    "col": "PlaylistId",
+                    "col_desc": "기본 키, 플레이리스트의 고유 식별자입니다."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "플레이리스트의 이름입니다."
+                }
+            ]
+        },
+        "PlaylistTrack": {
+            "table_desc": "트랙을 플레이리스트에 연결합니다.",
+            "cols": [
+                {
+                    "col": "PlaylistId",
+                    "col_desc": "플레이리스트를 식별하는 외래 키입니다."
+                },
+                {
+                    "col": "TrackId",
+                    "col_desc": "플레이리스트의 트랙을 식별하는 외래 키입니다."
+                }
+            ]
+        },
+        "Track": {
+            "table_desc": "앨범, 장르 및 미디어 타입과 연결된 음악 트랙에 대한 자세한 정보를 저장합니다.",
+            "cols": [
+                {
+                    "col": "TrackId",
+                    "col_desc": "기본 키, 트랙의 고유 식별자입니다."
+                },
+                {
+                    "col": "Name",
+                    "col_desc": "트랙의 이름입니다."
+                },
+                {
+                    "col": "AlbumId",
+                    "col_desc": "이 트랙이 포함된 앨범을 참조하는 외래 키입니다."
+                },
+                {
+                    "col": "MediaTypeId",
+                    "col_desc": "이 트랙의 미디어 타입을 참조하는 외래 키입니다."
+                },
+                {
+                    "col": "GenreId",
+                    "col_desc": "이 트랙의 장르를 참조하는 선택적 외래 키입니다."
+                },
+                {
+                    "col": "Composer",
+                    "col_desc": "트랙의 작곡가입니다."
+                },
+                {
+                    "col": "Milliseconds",
+                    "col_desc": "밀리초 단위의 트랙 지속 시간입니다."
+                },
+                {
+                    "col": "Bytes",
+                    "col_desc": "바이트 단위의 트랙 파일 크기입니다."
+                },
+                {
+                    "col": "UnitPrice",
+                    "col_desc": "이 트랙의 단가입니다."
+                }
+            ]
+        }
+    }
+]
