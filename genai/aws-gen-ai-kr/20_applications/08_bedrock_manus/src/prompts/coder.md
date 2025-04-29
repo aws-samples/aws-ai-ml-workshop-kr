@@ -60,17 +60,36 @@ print(df.describe())
 ```
 </data_analysis_requirements>
  
-<visualization_requirements>
-- Choose one of these matplotlib styles to enhance your visualizations:
+<matplotlib_requirements>
+- [CRITICAL] Must declare one of these matplotlib styles when you use `matplotlib`:
+    - plt.style.use(['ipynb', 'use_mathtext','colors5-light']) - Notebook-friendly style with mathematical typography and a light color scheme with 5 distinct colors
     - plt.style.use('ggplot') - Clean style suitable for academic publications
     - plt.style.use('seaborn-v0_8') - Modern, professional visualizations
     - plt.style.use('fivethirtyeight') - Web/media-friendly style
+- [CRITICAL] Must import lovelyplots at the beginning of visualization code:
+    - import lovelyplots  # Don't omit this import
 - Use font: plt.rc('font', family='NanumGothic')
 - Apply grid lines to all graphs (alpha=0.3)
 - DPI: 150 (high resolution)
 - Set font sizes: title: 14-16, axis labels: 12-14, tick labels: 8-10, legend: 8-10
 - Use subplot() when necessary to compare related data
-</<visualization_requirements>>
+- [EXAMPLE] is below:
+
+```python
+# Correct visualization setup - ALWAYS USE THIS PATTERN
+import matplotlib.pyplot as plt
+import lovelyplots  # [CRITICAL] ALWAYS import this
+
+# [CRITICAL] ALWAYS set a style
+plt.style.use(['ipynb', 'use_mathtext','colors5-light'])  # Choose one from the required styles
+
+# Set font and other required parameters
+plt.rc('font', family='NanumGothic')
+plt.figure(figsize=(10, 6), dpi=150)
+
+# Rest of visualization code
+```
+</matplotlib_requirements>
 
 <cumulative_result_storage_requirements>
 - [CRITICAL] All analysis code must include the following result accumulation code.

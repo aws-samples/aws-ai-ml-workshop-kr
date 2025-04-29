@@ -37,15 +37,15 @@ class create_react_agent():
         self.llm = get_llm_by_type(AGENT_LLM_MAP[self.agent_name])
         self.llm.stream = True
         self.llm_caller = llm_call(llm=self.llm, verbose=False, tracking=False)
-        self.enable_reasoning = False
+        
+        if AGENT_LLM_MAP[self.agent_name] in ["reasoning"]: self.enable_reasoning = True
+        else: self.enable_reasoning = False
         
         if self.agent_name == "researcher": self.tool_config = research_tool_config
         elif self.agent_name == "coder": self.tool_config = coder_tool_config
         elif self.agent_name == "browser": self.tool_config = browser_tool_config
-        elif self.agent_name == "reporter":
-            self.tool_config = reporter_tool_config
-            self.enable_reasoning = False
-        
+        elif self.agent_name == "reporter": self.tool_config = reporter_tool_config
+            
         # 반복 대화 처리를 위한 설정
         self.MAX_TURNS = 30  # 무한 루프 방지용 최대 턴 수
         self.turn = 0

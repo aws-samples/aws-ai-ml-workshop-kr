@@ -13,7 +13,6 @@ logging.basicConfig(
 def enable_debug_logging():
     """Enable debug level logging for more detailed execution information."""
     logging.getLogger(__name__).setLevel(logging.DEBUG)
-    #logger.setLevel(logging.DEBUG)  # 전역 logger 객체의 레벨 변경
 
 # 로거 설정을 전역으로 한 번만 수행
 logger = logging.getLogger(__name__)
@@ -34,7 +33,6 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
     END = '\033[0m'
-
 
 # Create the graph
 graph = build_graph()
