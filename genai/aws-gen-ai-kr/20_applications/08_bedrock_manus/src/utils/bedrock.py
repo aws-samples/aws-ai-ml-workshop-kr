@@ -195,6 +195,10 @@ class bedrock_utils():
 
     @staticmethod
     def get_message_from_string(role, string, img=None):
+        
+        if not string or string.strip() == "":
+            string = "Default message"  # 또는 에러 처리
+
         message = {
             "role": role,
             "content": [{"text": dedent(string)}]
@@ -254,7 +258,7 @@ class bedrock_utils():
         stream = kwargs["stream"]
         callback = kwargs["callback"]
         
-        output = {"text": "", "toolUse": None}
+        output = {"text": "","reasoning": "", "signature": "", "toolUse": None}
         message = {"content": []}
                 
         if not stream:
@@ -314,15 +318,19 @@ class bedrock_utils():
                         delta = event['contentBlockDelta']['delta']
                         if "reasoningContent" in delta:
                             if "text" in delta["reasoningContent"]:
-                                reasoning_text = delta["reasoningContent"]["text"]
-                                print("\033[94m" + reasoning_text + "\033[0m", end="")
-                            else: print("") 
+                                output["reasoning"] += delta["reasoningContent"]["text"]
+                                #print("\033[94m" + reasoning_text + "\033[0m", end="")
+                                print("\033[94m" + delta["reasoningContent"]["text"] + "\033[0m", end="")
+                            elif 'signature' in delta["reasoningContent"]:
+                                output["signature"] += delta["reasoningContent"]["signature"]
+                            else:
+                                print("") 
                         if 'toolUse' in delta:
                             if 'input' not in tool_use: tool_use['input'] = ''
                             tool_use['input'] += delta['toolUse']['input']
                             #print("\033[92m" + delta['toolUse']['input'] + "\033[0m", end="")
                             #logger.info(f"{Colors.BOLD}\n{delta['toolUse']['input']}{Colors.END}")
-                            #callback.on_llm_new_token(delta['toolUse']['input'])                            
+                            #callback.on_llm_new_token(delta['toolUse']['input'])                           
                         elif 'text' in delta:
                             output["text"] += delta['text']
                             callback.on_llm_new_token(delta['text'])                            
@@ -333,13 +341,14 @@ class bedrock_utils():
                             output["toolUse"] = {'toolUse': tool_use}
                             tool_use = {}
                         else:
-                            message['content'].append({'text': output["text"]})
-                            #output["text"] = ''
+                            if output["text"] != "":
+                                message['content'].append({'text': output["text"]})
+                            if output["reasoning"] != "":
+                                message['content'].append({'reasoningContent': {"reasoningText": {"text": output["reasoning"], "signature": output["signature"]}}})
                     elif 'messageStop' in event:
                         stop_reason = event['messageStop']['stopReason']
                         output["stop_reason"] = stop_reason
                         #print(f"\nStop reason: {event['messageStop']['stopReason']}")
-
                 if verbose:
                     if 'metadata' in event:
                         metadata = event['metadata']

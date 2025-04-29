@@ -28,7 +28,7 @@ formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로�
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 # DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+#logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
 FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
@@ -187,11 +187,13 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
         searched_content = tavily_tool.invoke({"query": state["request"]})
         messages = deepcopy(messages)
         messages[-1]["content"][-1]["text"] += f"\n\n# Relative Search Results\n\n{json.dumps([{'title': elem['title'], 'content': elem['content']} for elem in searched_content], ensure_ascii=False)}"
-        
+    if AGENT_LLM_MAP["planner"] in ["reasoning"]: enable_reasoning = True
+    else: enable_reasoning = False
+
     response, ai_message = llm_caller.invoke(
         messages=messages,
         system_prompts=system_prompts,
-        enable_reasoning=True,
+        enable_reasoning=enable_reasoning,
         reasoning_budget_tokens=8192
     )
     full_response = response["text"]
@@ -223,6 +225,7 @@ def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     llm = get_llm_by_type(AGENT_LLM_MAP["coordinator"])    
     llm.stream = True
     llm_caller = llm_call(llm=llm, verbose=False, tracking=False)
+    if AGENT_LLM_MAP["planner"] in ["reasoning"]: enable_reasoning = True
     
     response, ai_message = llm_caller.invoke(
         messages=messages,
@@ -250,6 +253,11 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     """Reporter node that write a final report."""
     logger.info(f"{Colors.GREEN}===== Reporter write final report ====={Colors.END}")
     
+    print ("ssdddddfdfdfdfdf")
+    print (state['messages'])
+
+    logger.debug(f"\n{Colors.RED}Reporter11 - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+
     reporter_agent = create_react_agent(agent_name="reporter")
     result = reporter_agent.invoke(state=state)
     full_response = result["content"][-1]["text"]
