@@ -9,10 +9,18 @@ from streamlit.delta_generator import DeltaGenerator
 from langchain_community.callbacks.streamlit import StreamlitCallbackHandler
 from streamlit.runtime.scriptrunner import add_script_run_ctx, get_script_run_ctx
 
+##################### Title ########################
+st.set_page_config(page_title="GenAI-driven Analytics 💬", page_icon="💬", layout="centered") ## layout [centered or wide]
+st.title("GenAI-driven Analytics 💬")
+st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v3.5 Sonnet.''')
+st.markdown('''
+            - You can find the source code in 
+            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/09_genai_analytics)
+            ''')
+
+
 
 from main import execution
-
-
 import io
 
 ##################### Functions ########################
@@ -66,50 +74,30 @@ def get_streamlit_cb(parent_container: DeltaGenerator):
 
 ####################### Initialization ###############################
 # Store the initial value of widgets in session state, (session_state: global var.)
-if "messages" not in st.session_state:
-    st.session_state["messages"] = []
+if "messages" not in st.session_state: st.session_state["messages"] = []
+if "history_ask" not in st.session_state: st.session_state["history_ask"] = []
 
-if "placeholder" not in st.session_state:
-    st.session_state["placeholder"] = ""
+for i in range(10):
+    if f"ph{i}" not in st.session_state: st.session_state[f"ph{i}"] = st.empty()
     
 ####################### Application ###############################
-st.set_page_config(page_title="GenAI-driven Analytics 💬", page_icon="💬", layout="centered") ## layout [centered or wide]
-st.title("GenAI-driven Analytics 💬")
-st.markdown('''- This chatbot is implemented using Amazon Bedrock Claude v3.5 Sonnet.''')
-st.markdown('''
-            - You can find the source code in 
-            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/09_genai_analytics)
-            ''')
-
 if len(st.session_state["messages"]) > 0: display_chat_history()
-    
-if user_input := st.chat_input(): # block below will begin when user inputs their ask in contatiner
-    
+
+if user_input := st.chat_input(): # block below will begin when user inputs their ask in contatiner    
     st.chat_message("user").write(user_input)
     st.session_state["recent_ask"] = user_input
     
-    ## Use tab 
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"])
-    tabs = {
-        "agent": tab1,
-        "ask_reformulation": tab2,
-        "code_generation_for_chart": tab3,
-        "chart_generation": tab4,
-        "chart_description": tab5
-    }
+    # ## Use tab 
+    # tab1, tab2, tab3, tab4, tab5 = st.tabs(["agent", "ask_reformulation", "code_generation_for_chart", "chart_generation", "chart_description"])
+    # tabs = {
+    #     "agent": tab1,
+    #     "ask_reformulation": tab2,
+    #     "code_generation_for_chart": tab3,
+    #     "chart_generation": tab4,
+    #     "chart_description": tab5
+    # }
     
     with st.chat_message("assistant"):
         with st.spinner(f'Thinking...'):
-            #placeholder = st.empty()
-            placeholder = st.session_state["placeholder"] = st.empty()
-            #st_callback = get_streamlit_cb(st.container())
-            #st.session_state["tabs"] = tabs
-            execution(
-                user_query=user_input
-            )
-            
-            # st.session_state["analyzer"].invoke(
-            #     ask=user_input,
-            #     st_callback=st_callback
-            # )
+            execution(user_query=user_input)
             st.write("Done")

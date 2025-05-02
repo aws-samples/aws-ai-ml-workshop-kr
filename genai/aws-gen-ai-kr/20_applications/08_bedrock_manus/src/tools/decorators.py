@@ -1,6 +1,7 @@
 import logging
 import functools
 from typing import Any, Callable, Type, TypeVar
+import streamlit as st
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -51,9 +52,12 @@ def log_io(func: Callable) -> Callable:
             status, code, stdout = result.split("||")
             logger.info(f"{Colors.RED}Coder - {status}\n{code}{Colors.END}")
             logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
+
+            if "ph0" in st.session_state: st.session_state["ph0"].markdown(f"{Colors.RED}Coder - {status}\n{code}{Colors.END}")
+            if "ph0" in st.session_state: st.session_state["ph0"].markdown(f"{Colors.BLUE}\n{stdout}{Colors.END}")
         else:
             logger.info(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
-        
+            if "ph0" in st.session_state: st.session_state["ph0"].markdown(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
         return result
 
     return wrapper
