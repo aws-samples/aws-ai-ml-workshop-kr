@@ -68,9 +68,10 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     context = {"user_request": user_input}
     user_prompts = user_prompts.format(**context)
     messages = [get_message_from_string(role="user", string=user_prompts, imgs=[])]
+
         
     result = graph.invoke(
-        {
+        input={
             # Constants
             "TEAM_MEMBERS": TEAM_MEMBERS,
             # Runtime Variables
@@ -80,7 +81,9 @@ def run_agent_workflow(user_input: str, debug: bool = False):
             "search_before_planning": False,
             "request": user_input
         },
-        {"recursion_limit": 100}
+        config={
+            "recursion_limit": 100
+        }
     )
     logger.debug(f"{Colors.RED}Final workflow state: {result}{Colors.END}")
     logger.info(f"{Colors.GREEN}===== Workflow completed successfully ====={Colors.END}")
