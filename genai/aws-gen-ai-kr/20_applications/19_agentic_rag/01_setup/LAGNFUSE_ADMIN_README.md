@@ -46,16 +46,16 @@
   "langfuse_worker_desired_count": 1,
   "langfuse_worker_env": {
     "NODE_ENV": "production",
-    "SALT": "a58f71a26b8d4101610e09699a0203ec1a1a696876ef5ce1664e525ca7ade9c9",
-    "ENCRYPTION_KEY": "6ad972bc9214f5fde0cfbedcffe674eed6b2d1c73a33fe83a3c76f7caf42f44e",
+    "SALT": "a58f71a26b8d4101610e09699a0203ec1a1a696876ef5ce1664e525ca7ade9c9", <--  openssl rand -base64 32 결과로 교체 필요
+    "ENCRYPTION_KEY": "6ad972bc9214f5fde0cfbedcffe674eed6b2d1c73a33fe83a3c76f7caf42f44e", <--  openssl rand -base64 32 결과로 교체 필요
     "TELEMETRY_ENABLED": "true",
     "LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES": "true"
   },
   "langfuse_web_env": {
     "NODE_ENV": "production",
-    "NEXTAUTH_SECRET": "46cffa5b17451b659b4739deed9588abb1d0631a65f1258abb77e2a8113047fe",
-    "SALT": "c610826bc9ab97a9b83fe0e29cf4ca3402b22189dac036e9d02b4da507baa111",
-    "ENCRYPTION_KEY": "f309b76fc599b62c53defd67646980def9aff4dfbef94427b26f9e4a6e95fd95",
+    "NEXTAUTH_SECRET": "46cffa5b17451b659b4739deed9588abb1d0631a65f1258abb77e2a8113047fe", <--  openssl rand -base64 32 결과로 교체 필요
+    "SALT": "c610826bc9ab97a9b83fe0e29cf4ca3402b22189dac036e9d02b4da507baa111", <--  openssl rand -base64 32 결과로 교체 필요
+    "ENCRYPTION_KEY": "f309b76fc599b62c53defd67646980def9aff4dfbef94427b26f9e4a6e95fd95", <--  openssl rand -base64 32 결과로 교체 필요
     "HOSTNAME": "0.0.0.0",
     "LANGFUSE_S3_MEDIA_DOWNLOAD_URL_EXPIRY_SECONDS": "604800",
     "TELEMETRY_ENABLED": "true",
