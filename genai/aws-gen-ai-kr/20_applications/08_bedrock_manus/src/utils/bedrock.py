@@ -348,7 +348,7 @@ class bedrock_utils():
                     elif 'messageStop' in event:
                         stop_reason = event['messageStop']['stopReason']
                         output["stop_reason"] = stop_reason
-                        #print(f"\nStop reason: {event['messageStop']['stopReason']}")
+                        print(f"\nStop reason: {event['messageStop']['stopReason']}")
                 if verbose:
                     if 'metadata' in event:
                         metadata = event['metadata']
