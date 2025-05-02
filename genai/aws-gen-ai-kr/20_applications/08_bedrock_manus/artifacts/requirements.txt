@@ -1,0 +1,4 @@
+streamlit>=1.22.0
+python-dotenv>=1.0.0
+langchain>=0.0.267
+langgraph>=0.0.10
