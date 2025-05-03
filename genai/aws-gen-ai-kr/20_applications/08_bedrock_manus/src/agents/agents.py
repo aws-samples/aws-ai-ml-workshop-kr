@@ -62,12 +62,15 @@ class create_react_agent():
             self.turn += 1
             print(f"--- 대화 턴 {self.turn} ---")
             response, ai_message = self.llm_caller.invoke(
+                agent_name=self.agent_name,
                 messages=messages,
                 system_prompts=system_prompts,
                 tool_config=self.tool_config,
                 enable_reasoning=self.enable_reasoning,
                 reasoning_budget_tokens=8192
             )
+
+            print ("ai_message", ai_message)
             messages.append(ai_message)    
 
             # 도구 사용 요청 확인
@@ -75,6 +78,8 @@ class create_react_agent():
                 tool_requests_found = False
 
                 # 응답에서 모든 도구 사용 요청 처리
+                print ("ai_message['content']", ai_message['content'])
+                
                 for content in ai_message['content']:
                     if 'toolUse' in content:
                         tool = content['toolUse']
