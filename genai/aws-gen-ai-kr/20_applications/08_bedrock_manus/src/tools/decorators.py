@@ -52,12 +52,11 @@ def log_io(func: Callable) -> Callable:
             status, code, stdout = result.split("||")
             logger.info(f"{Colors.RED}Coder - {status}\n{code}{Colors.END}")
             logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
-
-            if "ph0" in st.session_state: st.session_state["ph0"].markdown(f"{Colors.RED}Coder - {status}\n{code}{Colors.END}")
-            if "ph0" in st.session_state: st.session_state["ph0"].markdown(f"{Colors.BLUE}\n{stdout}{Colors.END}")
+            #st.session_state["tool_containers"]["coder"]["input"].markdown(f"Coder - {status}\n{code}")
+            #st.session_state["tool_containers"]["coder"]["output"].markdown(f"{stdout}")
         else:
             logger.info(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
-            if "ph0" in st.session_state: st.session_state["ph0"].markdown(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
+            #st.session_state["tool_containers"]["coder"]["output"].markdown(f"Coder - Tool {func_name} returned:\n{result}")
         return result
 
     return wrapper

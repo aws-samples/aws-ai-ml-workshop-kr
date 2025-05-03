@@ -1,0 +1,131 @@
+
+==================================================
+## Analysis Stage: Initial Data Loading and Structure Analysis
+## Execution Time: 2025-05-03 23:35:57
+--------------------------------------------------
+Result Description: 
+
+데이터셋 기본 정보:
+- 데이터 크기: (128975, 24)
+- 컬럼 수: 24
+- 결측치가 있는 컬럼: ['Courier Status', 'currency', 'Amount', 'ship-city', 'ship-state', 'ship-postal-code', 'ship-country', 'promotion-ids', 'fulfilled-by', 'Unnamed: 22']
+- 데이터 기간: 03-31-22 ~ 06-29-22
+
+주요 특징:
+1. 총 128975개의 거래 데이터
+2. 24개의 특성(컬럼) 보유
+3. 주요 컬럼: index, Order ID, Date, Status, Fulfilment, Sales Channel , ship-service-level, Style, SKU, Category, Size, ASIN, Courier Status, Qty, currency, Amount, ship-city, ship-state, ship-postal-code, ship-country, promotion-ids, B2B, fulfilled-by, Unnamed: 22
+
+==================================================
+
+==================================================
+## Analysis Stage: Basic Statistical Analysis
+## Execution Time: 2025-05-03 23:36:20
+--------------------------------------------------
+Result Description: 
+
+기초 통계 분석 결과:
+
+1. 주문 수량(Qty) 및 금액(Amount) 통계:
+                 Qty         Amount
+count  128975.000000  121180.000000
+mean        0.904431     648.561465
+std         0.313354     281.211687
+min         0.000000       0.000000
+25%         1.000000     449.000000
+50%         1.000000     605.000000
+75%         1.000000     788.000000
+max        15.000000    5584.000000
+
+2. 상위 5개 카테고리 주문 수:
+Category
+Set              50284
+kurta            49877
+Western Dress    15500
+Top              10622
+Ethnic Dress      1159
+
+3. 주문 상태별 분포:
+Status
+Shipped                          77804
+Shipped - Delivered to Buyer     28769
+Cancelled                        18332
+Shipped - Returned to Seller      1953
+Shipped - Picked Up                973
+Pending                            658
+Pending - Waiting for Pick Up      281
+Shipped - Returning to Seller      145
+Shipped - Out for Delivery          35
+Shipped - Rejected by Buyer         11
+Shipping                             8
+Shipped - Lost in Transit            5
+Shipped - Damaged                    1
+
+4. 판매 채널별 분포:
+Sales Channel 
+Amazon.in     128851
+Non-Amazon       124
+
+주요 발견사항:
+1. 평균 주문 수량: 0.90개
+2. 평균 주문 금액: 648.56
+3. 가장 많은 주문이 있는 카테고리: Set
+4. 전체 카테고리 수: 9개
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/category_orders.png : 상위 10개 카테고리별 주문 수 차트
+- ./artifacts/monthly_orders.png : 월별 주문 추이 차트
+==================================================
+
+==================================================
+## Analysis Stage: Sales Performance Analysis
+## Execution Time: 2025-05-03 23:36:48
+--------------------------------------------------
+Result Description: 
+
+판매 실적 분석 결과:
+
+1. 월별 매출 분석:
+- 전체 기간 총 매출: 78,592,678.30
+- 월평균 매출: 19,648,169.57
+- 최고 매출 월: 2022-04
+- 최저 매출 월: 2022-03
+
+2. 카테고리별 매출 분석 (상위 5개):
+                       sum  count    mean
+Category                                 
+Set            39204124.03  47042  833.39
+kurta          21299546.70  46717  455.93
+Western Dress  11216072.69  14704  762.79
+Top             5347792.30  10165  526.10
+Ethnic Dress     791217.66   1093  723.90
+
+3. 지역별 매출 분석 (상위 5개 주):
+                       sum  count    mean
+ship-state                               
+MAHARASHTRA    13335534.14  21073  632.83
+KARNATAKA      10481114.37  16394  639.33
+TELANGANA       6916615.65  10637  650.24
+UTTAR PRADESH   6816642.08   9947  685.30
+TAMIL NADU      6515650.11  10809  602.80
+
+4. B2B vs B2C 분석:
+               sum   count    mean
+B2B                               
+False  78001457.51  120337  648.19
+True     591220.79     843  701.33
+
+주요 발견사항:
+1. 최대 매출 카테고리: Set
+2. 최대 매출 지역: MAHARASHTRA
+3. B2B 거래 비중: 0.7%
+4. 평균 거래 금액: 648.56
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/monthly_sales.png : 월별 매출 추이 차트
+- ./artifacts/category_sales.png : 상위 10개 카테고리별 총 매출 차트
+- ./artifacts/state_sales.png : 상위 10개 주별 총 매출 차트
+- ./artifacts/b2b_vs_b2c.png : B2B vs B2C 매출 비중 차트
+==================================================

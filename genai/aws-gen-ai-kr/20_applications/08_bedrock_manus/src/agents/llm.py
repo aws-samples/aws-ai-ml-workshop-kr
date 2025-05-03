@@ -69,6 +69,7 @@ class llm_call():
             
     def invoke(self, **kwargs):
 
+        agent_name = kwargs.get("agent_name", None)
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
         enable_reasoning = kwargs.get("enable_reasoning", False)

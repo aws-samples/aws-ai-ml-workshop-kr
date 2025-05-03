@@ -131,6 +131,7 @@ def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     messages[-1]["content"][-1]["text"] = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
     
     response, ai_message = llm_caller.invoke(
+        agent_name="supervisor",
         messages=messages,
         system_prompts=system_prompts,
         enable_reasoning=False,
@@ -191,6 +192,7 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     else: enable_reasoning = False
 
     response, ai_message = llm_caller.invoke(
+        agent_name="planner",
         messages=messages,
         system_prompts=system_prompts,
         enable_reasoning=enable_reasoning,
@@ -228,6 +230,7 @@ def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     if AGENT_LLM_MAP["planner"] in ["reasoning"]: enable_reasoning = True
     
     response, ai_message = llm_caller.invoke(
+        agent_name="coordinator",
         messages=messages,
         system_prompts=system_prompts,
         enable_reasoning=False,

@@ -88,6 +88,7 @@ class llm_call():
             
     def invoke(self, **kwargs):
 
+        agent_name = kwargs.get("agent_name", None)
         system_prompts = kwargs.get("system_prompts", None)
         messages = kwargs["messages"]
         enable_reasoning = kwargs.get("enable_reasoning", False)
@@ -146,7 +147,9 @@ class llm_call():
         message = {"content": []}
         
         for event in response["response"]["stream"]:
-            if 'contentBlockStart' in event:
+            if 'messageStart' in event:
+                message['role'] = event['messageStart']['role']
+            elif 'contentBlockStart' in event:
                 if 'toolUse' in event['contentBlockStart']['start']:
                     tool = event['contentBlockStart']['start']['toolUse']
                     tool_use['toolUseId'] = tool['toolUseId']
@@ -158,7 +161,7 @@ class llm_call():
                         reasoning_text = delta["reasoningContent"]["text"]
                         output["reasoning"] += reasoning_text
                         print("\033[94m" + reasoning_text + "\033[0m", end="")
-                        if "ph0" in st.session_state: st.session_state["ph0"].markdown(output["reasoning"] + "▌")
+                        st.session_state["process_containers"][agent_name].markdown(output["reasoning"] + "▌")
                     elif 'signature' in delta["reasoningContent"]:
                         output["signature"] += delta["reasoningContent"]["signature"]
                     else:
@@ -167,11 +170,12 @@ class llm_call():
                     if 'input' not in tool_use: tool_use['input'] = ''
                     tool_use['input'] += delta['toolUse']['input']
                     print("\033[92m" + delta['toolUse']['input'] + "\033[0m", end="")
-                    if "ph0" in st.session_state: st.session_state["ph0"].markdown(tool_use['input'] + "▌")
+                    #st.session_state["tool_containers"][agent_name]["input"].markdown(tool_use["input"] + "▌")
+                    
                 elif 'text' in delta:
                     delta_text = delta['text']
                     output["text"] += delta_text
-                    if "ph0" in st.session_state: st.session_state["ph0"].markdown(output["text"] + "▌")
+                    st.session_state["process_containers"][agent_name].markdown(output["text"] + "▌")
                          
             elif 'contentBlockStop' in event:
                 if 'input' in tool_use:
@@ -190,10 +194,10 @@ class llm_call():
                 output["stop_reason"] = stop_reason
 
         #st.session_state["ph1"].markdown(output["text"])
-        #st.session_state["ph2"].markdown(output["text"])
+        st.session_state["process_containers"][agent_name].markdown(output["text"])
         st.session_state.messages.append({"role": "assistant", "content": output["text"]})
         
-        ai_message = self._message_format(role="assistant", message=output["text"])
+        #ai_message = self._message_format(role="assistant", message=output["text"])
 
         # Reset
         if enable_reasoning:
@@ -201,7 +205,7 @@ class llm_call():
             self.llm.inference_config["maxTokens"] = self.origin_max_tokens
             self.llm.inference_config["temperature"] = self.origin_temperature
             
-        return output, ai_message
+        return output, message
 
 def get_llm_by_type(llm_type: LLMType):
     """
