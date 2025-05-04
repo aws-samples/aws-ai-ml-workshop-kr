@@ -1,12 +1,15 @@
+import os
 import logging
-from .llm import get_llm_by_type
 from src.prompts.template import apply_prompt_template
-from src.agents.llm import get_llm_by_type, llm_call
 from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.tools.research_tools import research_tool_config, process_search_tool
 from src.tools.coder_tools import coder_tool_config, process_coder_tool
 from src.tools.browser_tools import browser_tool_config, process_browser_tool
 from src.tools.reporter_tools import reporter_tool_config, process_reporter_tool
+
+llm_module = os.environ.get('LLM_MODULE', 'src.agents.llm')
+if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type, llm_call
+else: from src.agents.llm import get_llm_by_type, llm_call
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)

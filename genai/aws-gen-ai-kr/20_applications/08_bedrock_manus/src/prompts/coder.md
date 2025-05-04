@@ -208,7 +208,7 @@ print("Code has been saved to ./artifacts/solution.py")
 - Use comments to improve readability and maintainability of your code.
 - If you want to see the output of a value, you must output it with print(...).
 - Always use Python for mathematical operations.
-- Do not generate Reports. Reports are the responsibility of the Reporter agent.
+- [CRITICAL] Do not generate Reports. Reports are the responsibility of the Reporter agent.
 - Always use yfinance for financial market data:
   - Use yf.download() to get historical data
   - Access company information with Ticker objects

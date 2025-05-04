@@ -55,7 +55,15 @@ cd setup/
 # Run the project
 conda activate bedrock-manus
 python main.py
+
+# (optional) Run this with UI (Streamlit)
+cd app/
+streamlit run app.py
 ```
+
+## UI (Application)
+![Bedrock-Manus Application](./assets/streamlit.png)
+![Bedrock-Manus Application](./assets/streamlit_2.png)
 
 ## Architecture
 
@@ -120,6 +128,12 @@ To run Bedrock-Manus with default settings:
 python main.py
 ```
 or use `main.ipynb`
+
+To run Bedrock-Manus with UI (Streamlit):
+```bash
+cd app/
+streamlit run app.py
+```
 
 ### Advanced Configuration
 
