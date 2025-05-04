@@ -62,7 +62,12 @@ pwd
 ls
 
 pip install -r requirements.txt
-sh install_korean_font.sh 
+sh install_korean_font.sh
+pip install browser-use==0.1.45
+sudo apt-get install pandoc -y
+sudo apt-get install texlive -y
+sudo apt-get install texlive-xetex -y
+
 
 # wait for  seconds
 echo "## Finish installing requirements.txt"

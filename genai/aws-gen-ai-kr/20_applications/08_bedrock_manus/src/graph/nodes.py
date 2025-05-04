@@ -1,6 +1,7 @@
-import logging
+import os
 import json
 import pprint
+import logging
 from copy import deepcopy
 from typing import Literal
 from langchain_core.messages import HumanMessage
@@ -8,7 +9,7 @@ from langgraph.types import Command
 from langgraph.graph import END
 
 from src.agents.agents import create_react_agent
-from src.agents.llm import get_llm_by_type, llm_call
+#from src.agents.llm import get_llm_by_type, llm_call
 from src.config import TEAM_MEMBERS
 from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.prompts.template import apply_prompt_template
@@ -17,6 +18,10 @@ from .types import State, Router
 
 from textwrap import dedent
 from src.utils.common_utils import get_message_from_string
+
+llm_module = os.environ.get('LLM_MODULE', 'src.agents.llm')
+if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type, llm_call
+else: from src.agents.llm import get_llm_by_type, llm_call
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -255,10 +260,6 @@ def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
 def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     """Reporter node that write a final report."""
     logger.info(f"{Colors.GREEN}===== Reporter write final report ====={Colors.END}")
-    
-    print ("ssdddddfdfdfdfdf")
-    print (state['messages'])
-
     logger.debug(f"\n{Colors.RED}Reporter11 - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
 
     reporter_agent = create_react_agent(agent_name="reporter")
@@ -266,7 +267,7 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     full_response = result["content"][-1]["text"]
 
     clues = state.get("clues", "")
-    clues = '\n\n'.join([clues, CLUES_FORMAT.format("browser", result["content"][-1]["text"])])
+    clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", result["content"][-1]["text"])])
 
     logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(full_response, indent=2, width=100)}{Colors.END}")
