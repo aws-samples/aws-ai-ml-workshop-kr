@@ -1,131 +1,120 @@
-
 ==================================================
-## Analysis Stage: Initial Data Loading and Structure Analysis
-## Execution Time: 2025-05-03 23:35:57
+## Analysis Stage: 카테고리별 판매 분석
+## Execution Time: 2025-05-04 03:19:56
 --------------------------------------------------
-Result Description: 
+Result Description: 카테고리별 총 판매액, 평균 주문 금액, 주문 건수를 분석하여 핵심 카테고리와 수익성을 파악
 
-데이터셋 기본 정보:
-- 데이터 크기: (128975, 24)
-- 컬럼 수: 24
-- 결측치가 있는 컬럼: ['Courier Status', 'currency', 'Amount', 'ship-city', 'ship-state', 'ship-postal-code', 'ship-country', 'promotion-ids', 'fulfilled-by', 'Unnamed: 22']
-- 데이터 기간: 03-31-22 ~ 06-29-22
+카테고리별 판매 분석 결과:
+        Category  Total_Sales  Average_Order  Order_Count
+5            Set  39204124.03     833.385571        47042
+8          kurta  21299546.70     455.927108        46717
+7  Western Dress  11216072.69     762.790580        14704
+6            Top   5347792.30     526.098603        10165
+3   Ethnic Dress    791217.66     723.895389         1093
+0         Blouse    458408.18     520.327106          881
+1         Bottom    150667.98     358.733286          420
+4          Saree    123933.76     799.572645          155
+2        Dupatta       915.00     305.000000            3
 
-주요 특징:
-1. 총 128975개의 거래 데이터
-2. 24개의 특성(컬럼) 보유
-3. 주요 컬럼: index, Order ID, Date, Status, Fulfilment, Sales Channel , ship-service-level, Style, SKU, Category, Size, ASIN, Courier Status, Qty, currency, Amount, ship-city, ship-state, ship-postal-code, ship-country, promotion-ids, B2B, fulfilled-by, Unnamed: 22
-
-==================================================
-
-==================================================
-## Analysis Stage: Basic Statistical Analysis
-## Execution Time: 2025-05-03 23:36:20
---------------------------------------------------
-Result Description: 
-
-기초 통계 분석 결과:
-
-1. 주문 수량(Qty) 및 금액(Amount) 통계:
-                 Qty         Amount
-count  128975.000000  121180.000000
-mean        0.904431     648.561465
-std         0.313354     281.211687
-min         0.000000       0.000000
-25%         1.000000     449.000000
-50%         1.000000     605.000000
-75%         1.000000     788.000000
-max        15.000000    5584.000000
-
-2. 상위 5개 카테고리 주문 수:
-Category
-Set              50284
-kurta            49877
-Western Dress    15500
-Top              10622
-Ethnic Dress      1159
-
-3. 주문 상태별 분포:
-Status
-Shipped                          77804
-Shipped - Delivered to Buyer     28769
-Cancelled                        18332
-Shipped - Returned to Seller      1953
-Shipped - Picked Up                973
-Pending                            658
-Pending - Waiting for Pick Up      281
-Shipped - Returning to Seller      145
-Shipped - Out for Delivery          35
-Shipped - Rejected by Buyer         11
-Shipping                             8
-Shipped - Lost in Transit            5
-Shipped - Damaged                    1
-
-4. 판매 채널별 분포:
-Sales Channel 
-Amazon.in     128851
-Non-Amazon       124
-
-주요 발견사항:
-1. 평균 주문 수량: 0.90개
-2. 평균 주문 금액: 648.56
-3. 가장 많은 주문이 있는 카테고리: Set
-4. 전체 카테고리 수: 9개
-
---------------------------------------------------
 Generated Files:
-- ./artifacts/category_orders.png : 상위 10개 카테고리별 주문 수 차트
-- ./artifacts/monthly_orders.png : 월별 주문 추이 차트
+- ./artifacts/category_total_sales.png : 카테고리별 총 판매액 차트
+- ./artifacts/category_avg_order.png : 카테고리별 평균 주문금액 차트
+- ./artifacts/category_order_count.png : 카테고리별 주문 건수 차트
 ==================================================
-
-==================================================
-## Analysis Stage: Sales Performance Analysis
-## Execution Time: 2025-05-03 23:36:48
+## Analysis Stage: 시간별 판매 추이 분석
+## Execution Time: 2025-05-04 03:19:56
 --------------------------------------------------
-Result Description: 
+Result Description: 월별 판매액과 주문 건수 추이를 분석하여 판매 패턴과 성장세를 확인
 
-판매 실적 분석 결과:
+월별 판매 추이 분석 결과:
+     Month  Total_Sales  Order_Count  Unique_Orders
+0  2022-03    101683.85          162            158
+1  2022-04  28838708.32        46068          45858
+2  2022-05  26226476.75        39536          39221
+3  2022-06  23425809.38        35414          35141
 
-1. 월별 매출 분석:
-- 전체 기간 총 매출: 78,592,678.30
-- 월평균 매출: 19,648,169.57
-- 최고 매출 월: 2022-04
-- 최저 매출 월: 2022-03
-
-2. 카테고리별 매출 분석 (상위 5개):
-                       sum  count    mean
-Category                                 
-Set            39204124.03  47042  833.39
-kurta          21299546.70  46717  455.93
-Western Dress  11216072.69  14704  762.79
-Top             5347792.30  10165  526.10
-Ethnic Dress     791217.66   1093  723.90
-
-3. 지역별 매출 분석 (상위 5개 주):
-                       sum  count    mean
-ship-state                               
-MAHARASHTRA    13335534.14  21073  632.83
-KARNATAKA      10481114.37  16394  639.33
-TELANGANA       6916615.65  10637  650.24
-UTTAR PRADESH   6816642.08   9947  685.30
-TAMIL NADU      6515650.11  10809  602.80
-
-4. B2B vs B2C 분석:
-               sum   count    mean
-B2B                               
-False  78001457.51  120337  648.19
-True     591220.79     843  701.33
-
-주요 발견사항:
-1. 최대 매출 카테고리: Set
-2. 최대 매출 지역: MAHARASHTRA
-3. B2B 거래 비중: 0.7%
-4. 평균 거래 금액: 648.56
-
---------------------------------------------------
 Generated Files:
-- ./artifacts/monthly_sales.png : 월별 매출 추이 차트
-- ./artifacts/category_sales.png : 상위 10개 카테고리별 총 매출 차트
-- ./artifacts/state_sales.png : 상위 10개 주별 총 매출 차트
-- ./artifacts/b2b_vs_b2c.png : B2B vs B2C 매출 비중 차트
+- ./artifacts/monthly_sales_trend.png : 월별 판매액 추이 차트
+- ./artifacts/monthly_order_trend.png : 월별 주문 건수 추이 차트
+==================================================
+## Analysis Stage: 지역별 판매 분석
+## Execution Time: 2025-05-04 03:19:56
+--------------------------------------------------
+Result Description: 인도 내 주(State)별 매출 분포를 분석하여 핵심 시장과 성장 가능 지역을 파악
+
+주요 지역별 판매 분석 결과 (상위 10개 주):
+             State  Total_Sales  Order_Count  Unique_Orders
+28     MAHARASHTRA  13335534.14        21073          20780
+23       KARNATAKA  10481114.37        16394          16182
+57       TELANGANA   6916615.65        10637          10405
+59   UTTAR PRADESH   6816642.08         9947          10062
+56      TAMIL NADU   6515650.11        10809          10519
+14           DELHI   4235215.97         6393           6359
+24          KERALA   3830227.58         6151           6105
+61     WEST BENGAL   3507880.44         5547           5653
+1   ANDHRA PRADESH   3219831.72         5055           4979
+19         HARYANA   2882092.99         4188           4142
+
+Generated Files:
+- ./artifacts/state_total_sales.png : 지역별 판매액 차트
+==================================================
+## Analysis Stage: 판매 채널 및 주문 상태 분석
+## Execution Time: 2025-05-04 03:19:56
+--------------------------------------------------
+Result Description: 판매 채널 비중, 주문 상태 분포, B2B/B2C 주문 비율 등을 분석하여 유통 전략과 서비스 품질 개선 포인트 도출
+
+판매 채널 분석 결과:
+  Sales_Channel   Count
+0     Amazon.in  128851
+1    Non-Amazon     124
+
+주문 상태 분석 결과 (상위 5개):
+                         Status  Count
+0                       Shipped  77804
+1  Shipped - Delivered to Buyer  28769
+2                     Cancelled  18332
+3  Shipped - Returned to Seller   1953
+4           Shipped - Picked Up    973
+
+B2B vs B2C 주문 비율:
+     B2B   Count
+0  False  128104
+1   True     871
+
+Generated Files:
+- ./artifacts/sales_channel_pie.png : 판매 채널별 주문 비율 차트
+- ./artifacts/order_status_counts.png : 주문 상태별 건수 차트
+- ./artifacts/b2b_vs_b2c_pie.png : B2B vs B2C 주문 비율 차트
+- ./artifacts/fulfillment_counts.png : 배송 방식별 주문 건수 차트
+==================================================
+## Analysis Stage: 마케팅 인사이트 도출
+## Execution Time: 2025-05-04 03:19:56
+--------------------------------------------------
+Result Description: 앞선 분석을 종합하여 3가지 주요 마케팅 인사이트를 도출 및 시각화
+
+주요 마케팅 인사이트:
+
+1. 카테고리별 매출 분포:
+   - Set 카테고리가 약 3,920만의 매출액으로 전체 매출의 가장 큰 비중을 차지
+   - Kurta가 약 2,130만으로 두 번째로 높은 매출 기록
+   - Western Dress가 약 1,122만으로 세 번째 순위
+
+2. 평균 주문금액:
+   - Set 카테고리가 833.39로 가장 높은 평균 주문금액을 보임
+   - Saree(799.57)와 Western Dress(762.79)가 그 뒤를 이어 높은 단가를 보임
+   - Bottom(358.73)과 Dupatta(305.00)는 상대적으로 낮은 단가를 보임
+
+3. 주문 빈도:
+   - Set(47,042건)과 Kurta(46,717건)가 압도적으로 많은 주문 건수를 기록
+   - Western Dress가 14,704건으로 세 번째로 많은 주문량을 보임
+   - Dupatta, Saree 등은 매우 낮은 주문 빈도를 보임
+
+마케팅 인사이트:
+1. Set 카테고리는 높은 단가와 많은 주문량을 동시에 보유하고 있어, 핵심 상품군으로서 지속적인 프로모션과 재고 관리가 필요합니다.
+2. Kurta는 상대적으로 낮은 단가에도 불구하고 높은 주문량을 보이고 있어, 대중적인 상품군으로서의 가치가 있습니다.
+3. Western Dress는 중간 정도의 주문량에 비해 높은 단가를 유지하고 있어, 프리미엄 상품군으로의 포지셔닝이 가능합니다.
+
+Generated Files:
+- ./artifacts/marketing_insights.json : 마케팅 인사이트 데이터
+- ./artifacts/marketing_strategy_matrix.png : 카테고리별 마케팅 전략 매트릭스
 ==================================================

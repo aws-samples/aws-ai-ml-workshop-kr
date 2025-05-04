@@ -4,6 +4,7 @@ Entry point script for the LangGraph Demo.
 import os
 import sys
 import shutil
+import streamlit as st
 from src.workflow import run_agent_workflow
 
 def remove_artifact_folder(folder_path="./artifacts/"):
@@ -40,6 +41,8 @@ def execution(user_query):
         print ("===")
         print (f'agent: {history["agent"]}')
         print (f'message: {history["message"]}')
+
+    return result
     
 
 if __name__ == "__main__":
