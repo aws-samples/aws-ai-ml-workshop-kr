@@ -1,0 +1,53 @@
+{
+    "summary": "\uc544\ub9c8\uc874 \uc778\ub3c4 \ud310\ub9e4 \ub370\uc774\ud130 \ubd84\uc11d \uacb0\uacfc, 'Set' \uce74\ud14c\uace0\ub9ac\uac00 \ub9e4\ucd9c\uacfc \uc218\uc775\uc131 \uce21\uba74\uc5d0\uc11c \uac00\uc7a5 \ub192\uc740 \uc131\uacfc\ub97c \ubcf4\uc784. \uc9c0\uc5ed\ubcc4\ub85c\ub294 \ub9c8\ud558\ub77c\uc288\ud2b8\ub77c, \uce74\ub974\ub098\ud0c0\uce74, \ud154\ub791\uac00\ub098 \uc8fc\uac00 \ud575\uc2ec \uc2dc\uc7a5\uc73c\ub85c \ud655\uc778\ub418\uc5c8\uc73c\uba70, \ud604\uc7ac Amazon.in\uc5d0 \ub192\uc740 \uc758\uc874\ub3c4\ub97c \ubcf4\uc774\uace0 \uc788\uc5b4 \ucc44\ub110 \ub2e4\uac01\ud654 \uc804\ub7b5\uc774 \ud544\uc694\ud568.",
+    "insights": [
+        {
+            "key_finding": "Set \uce74\ud14c\uace0\ub9ac\uac00 \uac00\uc7a5 \ub192\uc740 \ub9e4\ucd9c\uacfc \ud3c9\uade0 \uc8fc\ubb38 \uae08\uc561\uc744 \ubcf4\uc784",
+            "details": {
+                "top_category": "Set",
+                "total_sales": 39204124.03,
+                "avg_order_value": 833.3855709791251,
+                "order_count": 47845
+            },
+            "recommendations": [
+                "Set \uce74\ud14c\uace0\ub9ac\uc5d0 \ub300\ud55c \uc7ac\uace0 \ud655\ubcf4 \ubc0f \ub2e4\uc591\uc131 \ud655\ub300",
+                "\ub192\uc740 \ud3c9\uade0 \ub2e8\uac00\ub97c \ud65c\uc6a9\ud55c \ud504\ub9ac\ubbf8\uc5c4 \ub9c8\ucf00\ud305 \uc804\ub7b5",
+                "Set \uad6c\ub9e4\uc790 \ub300\uc0c1 \ucd94\uac00 \ud310\ub9e4 \ubc0f \uad50\ucc28 \ud310\ub9e4 \uae30\ud68c \ubc1c\uad74"
+            ]
+        },
+        {
+            "key_finding": "\ub9c8\ud558\ub77c\uc288\ud2b8\ub77c, \uce74\ub974\ub098\ud0c0\uce74, \ud154\ub791\uac00\ub098 \uc8fc\uac00 \ucd5c\uace0 \ub9e4\ucd9c \uc9c0\uc5ed",
+            "details": {
+                "top_states": [
+                    "MAHARASHTRA",
+                    "KARNATAKA",
+                    "TELANGANA"
+                ],
+                "sales_distribution": {
+                    "MAHARASHTRA": 13335534.14,
+                    "KARNATAKA": 10481114.37,
+                    "TELANGANA": 6916615.65,
+                    "UTTAR PRADESH": 6816642.08,
+                    "TAMIL NADU": 6515650.11
+                }
+            },
+            "recommendations": [
+                "\uc0c1\uc704 \ub9e4\ucd9c \uc9c0\uc5ed \ud0c0\uac9f \ub9c8\ucf00\ud305 \ucea0\ud398\uc778 \ud655\ub300",
+                "\uc9c0\uc5ed\ubcc4 \uc120\ud638 \uc0c1\ud488 \ubd84\uc11d\uc744 \ud1b5\ud55c \ub9de\ucda4\ud615 \uc7ac\uace0 \uad00\ub9ac",
+                "\uc800\uc131\uacfc \uc9c0\uc5ed\uc5d0 \ub300\ud55c \ud2b9\ubcc4 \ud504\ub85c\ubaa8\uc158 \ubc0f \uc778\uc9c0\ub3c4 \ud5a5\uc0c1 \uc804\ub7b5"
+            ]
+        },
+        {
+            "key_finding": "Amazon.in\uc774 \uc8fc\uc694 \ud310\ub9e4 \ucc44\ub110\uc774\uba70 \ucd9c\uad6c \uc804\ub7b5 \ud544\uc694",
+            "details": {
+                "amazon_dependency": 99.90385733669316,
+                "non_amazon_sales": 0.0
+            },
+            "recommendations": [
+                "Amazon \uc678 \ucd94\uac00 \uc720\ud1b5 \ucc44\ub110 \uac1c\ubc1c",
+                "\uc790\uccb4 \uc628\ub77c\uc778 \uc2a4\ud1a0\uc5b4 \uad6c\ucd95 \uace0\ub824",
+                "\ud310\ub9e4 \ucc44\ub110 \ub2e4\uac01\ud654\ub97c \ud1b5\ud55c \ub9ac\uc2a4\ud06c \ubd84\uc0b0"
+            ]
+        }
+    ]
+}

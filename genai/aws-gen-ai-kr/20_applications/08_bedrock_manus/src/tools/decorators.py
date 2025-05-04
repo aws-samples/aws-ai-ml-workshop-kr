@@ -52,11 +52,20 @@ def log_io(func: Callable) -> Callable:
             status, code, stdout = result.split("||")
             logger.info(f"{Colors.RED}Coder - {status}\n{code}{Colors.END}")
             logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
-            #st.session_state["tool_containers"]["coder"]["input"].markdown(f"Coder - {status}\n{code}")
-            #st.session_state["tool_containers"]["coder"]["output"].markdown(f"{stdout}")
+            
+            if "current_agent" in st.session_state:
+                current_agent = st.session_state["current_agent"]
+                st.session_state["tool_containers"][current_agent]["input"].markdown(f"Coder - {status}\n{code}")
+                st.session_state["tool_containers"][current_agent]["output"].markdown(f"{stdout}")
         else:
+            cmd = None
+            if len(result.split("||")) == 2: cmd, stdout = result.split("||")
             logger.info(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
-            #st.session_state["tool_containers"]["coder"]["output"].markdown(f"Coder - Tool {func_name} returned:\n{result}")
+            
+            if "current_agent" in st.session_state:
+                current_agent = st.session_state["current_agent"]
+                if cmd != None: st.session_state["tool_containers"][current_agent]["input"].markdown(f"```bash\n{cmd}\n```")
+                st.session_state["tool_containers"][current_agent]["output"].code(f"Coder - Tool {func_name} returned:\n{result}")
         return result
 
     return wrapper

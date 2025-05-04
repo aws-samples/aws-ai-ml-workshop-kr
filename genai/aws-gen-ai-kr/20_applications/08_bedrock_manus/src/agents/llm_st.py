@@ -145,6 +145,7 @@ class llm_call():
         tool_use = {}   
         output = {"text": "","reasoning": "", "signature": "", "toolUse": None}
         message = {"content": []}
+        st.session_state["current_agent"] = agent_name
         
         for event in response["response"]["stream"]:
             if 'messageStart' in event:
@@ -161,7 +162,7 @@ class llm_call():
                         reasoning_text = delta["reasoningContent"]["text"]
                         output["reasoning"] += reasoning_text
                         print("\033[94m" + reasoning_text + "\033[0m", end="")
-                        st.session_state["process_containers"][agent_name].markdown(output["reasoning"] + "▌")
+                        st.session_state["reasoning_containers"][agent_name].markdown(output["reasoning"] + "▌")
                     elif 'signature' in delta["reasoningContent"]:
                         output["signature"] += delta["reasoningContent"]["signature"]
                     else:
