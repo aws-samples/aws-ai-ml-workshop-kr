@@ -184,7 +184,7 @@ Important: Variable states are not preserved between conversation turns. All cod
 - Reports can be saved in multiple formats based on user requests:
   1. HTML (default): Always provide the report in HTML format
   2. PDF: When explicitly requested by the user (e.g., "Save as PDF", "Provide in PDF format")
-  3. Markdown: When explicitly requested by the user (e.g., "Save as MarkDown", "Provide in MD format") (Save as "./final_report.html")
+  3. Markdown: When explicitly requested by the user (e.g., "Save as MarkDown", "Provide in MD format") (Save as "./final_report.md")
 
 - PDF Generation Process:
   1. First create a html report file

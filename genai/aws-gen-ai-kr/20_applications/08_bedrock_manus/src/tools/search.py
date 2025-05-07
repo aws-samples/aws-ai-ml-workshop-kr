@@ -16,8 +16,8 @@ def handle_tavily_tool(query):
     Use this tool to search the internet for real-time information, current events, or specific data. Provides relevant search results from Tavily's search engine API.
     '''
     searched_content = tavily_tool.invoke({"query": query})
-    results = f"\n\n# Relative Search Results\n\n{json.dumps([{'titile': elem['title'], 'content': elem['content']} for elem in searched_content], ensure_ascii=False)}"
-    print (f'Search Results: \n\n {[{'titile': elem['title'], 'content': elem['content']} for elem in searched_content]}')
+    results = f"\n\n# Relative Search Results\n\n{json.dumps([{'titile': elem['title'], 'url': elem['url'], 'content': elem['content']} for elem in searched_content], ensure_ascii=False)}"
+    print (f'Search Results: \n\n {[{'titile': elem['title'], 'url': elem['url'], 'content': elem['content']} for elem in searched_content]}')
     return results
     
     

@@ -37,6 +37,7 @@ def handle_crawl_tool(url: Annotated[str, "The url to crawl."]) -> str:
         String containing the crawled content in markdown format
     """
     #url = input_data['url']
+    url = url["url"]
     logger.info(f"Crawling URL: {url}")
     try:
         # Initialize the crawler

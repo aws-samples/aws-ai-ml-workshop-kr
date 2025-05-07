@@ -22,5 +22,3 @@ VL_API_KEY = os.getenv("VL_API_KEY")
 # Chrome Instance configuration
 CHROME_INSTANCE_PATH = os.getenv("CHROME_INSTANCE_PATH")
 BROWSER_HEADLESS = os.getenv("BROWSER_HEADLESS")
-
-print ("sdsdsd", "BROWSER_HEADLESS", BROWSER_HEADLESS)
