@@ -182,15 +182,200 @@ Important: Variable states are not preserved between conversation turns. All cod
 <report_output_formats>
 - [CRITICAL] When the user requests PDF output, you MUST generate the PDF file
 - Reports can be saved in multiple formats based on user requests:
-  1. Markdown (default): Always provide the report in markdown format
+  1. HTML (default): Always provide the report in HTML format
   2. PDF: When explicitly requested by the user (e.g., "Save as PDF", "Provide in PDF format")
-  3. HTML: When explicitly requested by the user (Save as "./final_report.html")
+  3. Markdown: When explicitly requested by the user (e.g., "Save as MarkDown", "Provide in MD format") (Save as "./final_report.html")
 
 - PDF Generation Process:
-  1. First create a markdown report file
-  2. Include all images and charts in the markdown
-  3. Convert markdown to PDF using Pandoc
+  1. First create a html report file
+  2. Include all images and charts in the html
+  3. Convert html to PDF using Pandoc
   4. Apply appropriate font settings based on language
+
+- HTML and PDF Generation Code Example:
+```python
+import os
+from weasyprint import HTML, CSS
+from weasyprint.text.fonts import FontConfiguration
+
+# 디렉토리 생성
+os.makedirs('./artifacts', exist_ok=True)
+
+# HTML 파일 경로와 PDF 파일 경로 설정
+html_file_path = './report.html'
+pdf_file_path = './artifacts/final_report.pdf'
+
+# HTML 파일 내용 생성 (직접 HTML 작성)
+html_content = """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>분석 보고서</title>
+    <style>
+        body {{
+            font-family: 'Nanum Gothic', sans-serif;
+            margin: 2cm;
+            line-height: 1.5;
+        }}
+        h1 {{
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }}
+        h2 {{
+            color: #3498db;
+            margin-top: 20px;
+        }}
+        .content {{
+            margin-top: 20px;
+        }}
+        img {{
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+        }}
+        .image-caption {{
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+        }}
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }}
+        table, th, td {{
+            border: 1px solid #ddd;
+        }}
+        th, td {{
+            padding: 8px;
+            text-align: left;
+        }}
+        th {{
+            background-color: #f2f2f2;
+        }}
+    </style>
+</head>
+<body>
+    <h1>분석 보고서</h1>
+    
+    <h2>개요</h2>
+    <p>이 보고서는 WeasyPrint를 이용한 PDF 생성 예시입니다.</p>
+    
+    <h2>주요 발견사항</h2>
+    <p>다음과 같은 중요한 사항들이 발견되었습니다:</p>
+    <ul>
+        <li>발견사항 1: 중요한 데이터 패턴이 확인되었습니다.</li>
+        <li>발견사항 2: 특이 케이스가 관찰되었습니다.</li>
+        <li>발견사항 3: 추가 분석이 필요한 영역이 식별되었습니다.</li>
+    </ul>
+    
+    <h2>데이터 분석 결과</h2>
+    <p>아래 표는 주요 분석 결과를 요약한 것입니다:</p>
+    <table>
+        <tr>
+            <th>항목</th>
+            <th>값</th>
+            <th>변화율</th>
+        </tr>
+        <tr>
+            <td>지표 A</td>
+            <td>82.5</td>
+            <td>+12.3%</td>
+        </tr>
+        <tr>
+            <td>지표 B</td>
+            <td>54.1</td>
+            <td>-7.8%</td>
+        </tr>
+        <tr>
+            <td>지표 C</td>
+            <td>96.3</td>
+            <td>+24.5%</td>
+        </tr>
+    </table>
+    
+    <h2>이미지 및 차트</h2>
+    <div class="chart-container">
+        <img src="charts/chart1.png" alt="월별 매출 추이">
+        <div class="image-caption">월별 매출 추이</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="charts/chart2.png" alt="지역별 고객 분포">
+        <div class="image-caption">지역별 고객 분포</div>
+    </div>
+    
+    <h2>결론</h2>
+    <p>분석 결과를 종합하면, 다음과 같은 결론을 내릴 수 있습니다:</p>
+    <ol>
+        <li>첫 번째 결론 내용</li>
+        <li>두 번째 결론 내용</li>
+        <li>세 번째 결론 내용</li>
+    </ol>
+</body>
+</html>
+"""
+
+# HTML 파일에 내용 쓰기
+with open(html_file_path, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+# 한국어 컨텐츠 확인 함수
+def is_korean_content(content):
+    # 한국어 Unicode 범위: AC00-D7A3 (가-힣)
+    korean_chars = sum(1 for char in content if '\uAC00' <= char <= '\uD7A3')
+    return korean_chars > len(content) * 0.1  # 10% 이상이 한국어면 한국어 문서로 간주
+
+# 언어에 따른 CSS 설정
+if is_korean_content(html_content):
+    css_text = '''
+    @font-face {{
+        font-family: 'Nanum Gothic';
+        src: url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+    }}
+    body {{
+        font-family: 'Nanum Gothic', sans-serif;
+    }}
+    @page {{
+        margin: 1cm;
+        size: A4;
+    }}
+    '''
+else:
+    css_text = '''
+    @font-face {{
+        font-family: 'Noto Sans';
+        src: url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+    }}
+    body {{
+        font-family: 'Noto Sans', sans-serif;
+    }}
+    @page {{
+        margin: 1cm;
+        size: A4;
+    }}
+    '''
+
+# WeasyPrint를 사용하여 HTML을 PDF로 변환
+try:
+    # 폰트 설정
+    font_config = FontConfiguration()
+    css = CSS(string=css_text)
+    
+    # HTML 파일을 PDF로 변환
+    html = HTML(filename=html_file_path)
+    html.write_pdf(pdf_file_path, stylesheets=[css], font_config=font_config)
+    
+    print(f"PDF 보고서가 성공적으로 생성되었습니다: {{pdf_file_path}}")
+except Exception as e:
+    print(f"PDF 생성 중 오류 발생: {{e}}")
+    print("HTML 파일은 생성되었지만 PDF 변환에 실패했습니다.")
+```
 
 - Markdown and PDF Generation Code Example:
 ```python

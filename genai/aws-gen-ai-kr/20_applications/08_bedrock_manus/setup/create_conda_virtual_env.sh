@@ -68,7 +68,6 @@ sudo apt-get install pandoc -y
 sudo apt-get install texlive -y
 sudo apt-get install texlive-xetex -y
 
-
 # wait for  seconds
 echo "## Finish installing requirements.txt"
 sleep 5
