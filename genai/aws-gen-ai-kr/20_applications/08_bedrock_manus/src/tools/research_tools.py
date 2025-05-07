@@ -1,6 +1,8 @@
 from typing import Dict, Any, List
-from src.tools.search import handle_tavily_tool
 from src.tools.crawl import handle_crawl_tool
+from src.tools.search import handle_tavily_tool
+from src.tools.bash_tool import handle_bash_tool
+from src.tools.python_repl import handle_python_repl_tool
 
 tool_list = [
     {
@@ -35,6 +37,42 @@ tool_list = [
                         }
                     },
                     "required": ["query"]
+                }
+            }
+        }
+    },
+     {
+        "toolSpec": {
+            "name": "python_repl_tool",
+            "description": "Use this to execute python code and do data analysis or calculation. If you want to see the output of a value, you should print it out with `print(...)`. This is visible to the user.",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "code": {
+                            "type": "string",
+                            "description": "The python code to execute to do further analysis or calculation."
+                        }
+                    },
+                    "required": ["code"]
+                }
+            }
+        }
+    },
+    {
+        "toolSpec": {
+            "name": "bash_tool",
+            "description": "Use this to execute bash command and do necessary operations.",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "cmd": {
+                            "type": "string",
+                            "description": "The bash command to be executed."
+                        }
+                    },
+                    "required": ["cmd"]
                 }
             }
         }
@@ -73,6 +111,20 @@ def process_search_tool(tool) -> str:
         #return response
     elif tool_name == "crawl_tool":
         results = handle_crawl_tool(tool_input)
+        tool_result = {
+            "toolUseId": tool['toolUseId'],
+            "content": [{"json": {"text": results}}]
+        }
+    elif tool_name == "python_repl_tool":
+        # Create a new instance of the Tavily search tool
+        results = handle_python_repl_tool(code=tool_input["code"])
+        tool_result = {
+            "toolUseId": tool['toolUseId'],
+            "content": [{"json": {"text": results}}]
+        }
+        #return response
+    elif tool_name == "bash_tool":
+        results = handle_bash_tool(cmd=tool_input["cmd"])
         tool_result = {
             "toolUseId": tool['toolUseId'],
             "content": [{"json": {"text": results}}]
