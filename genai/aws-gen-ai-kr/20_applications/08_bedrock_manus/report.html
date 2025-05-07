@@ -3,22 +3,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>아마존 판매 데이터 분석 보고서</title>
+    <title>Amazon Product Sales Data Analysis</title>
     <style>
         body {
-            font-family: 'Nanum Gothic', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 2cm;
             line-height: 1.5;
         }
         h1 {
-            color: #2c3e50;
+            color: #232F3E;
             text-align: center;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid #FF9900;
             padding-bottom: 10px;
         }
         h2 {
-            color: #3498db;
+            color: #232F3E;
             margin-top: 20px;
+            border-left: 4px solid #FF9900;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #232F3E;
         }
         .content {
             margin-top: 20px;
@@ -50,72 +55,414 @@
         th {
             background-color: #f2f2f2;
         }
+        .executive-summary {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #FF9900;
+        }
+        .key-finding {
+            margin-bottom: 10px;
+            padding-left: 15px;
+            border-left: 2px solid #FF9900;
+        }
+        .conclusion {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1>아마존 판매 데이터 분석 보고서</h1>
+    <h1>Amazon Product Sales Data Analysis and Marketing Insights</h1>
+    <p style="text-align: right;"><em>Report generated on: May 07, 2025</em></p>
     
-    <h2>분석 개요</h2>
-    <p>본 보고서는 아마존 판매 데이터를 분석하여 마케팅 인사이트 도출을 목적으로 수행되었습니다. 판매 데이터를 기반으로 카테고리별 판매량과 매출, 가격 탄력성, 지역별 판매 특성 등을 분석하여 효과적인 마케팅 전략 수립을 위한 기초 자료를 제공합니다.</p>
+    <h2>Executive Summary</h2>
+    <div class="executive-summary">
+        <p>This comprehensive analysis of Amazon sales data examines product performance, sales trends, and customer behavior patterns across various dimensions. The dataset contains 128,975 records spanning 24 columns of sales information. The analysis provides valuable insights into top-performing products, regional sales distribution, fulfillment methods, and order patterns that can inform marketing strategies and business decisions.</p>
+        <p>With total sales of ₹78,592,678.30 across the analyzed period, the data reveals significant opportunities for growth in specific product categories and regions. Key insights include the dominance of "Set" and "kurta" categories, the importance of Maharashtra and Karnataka markets, and higher average order values in B2B transactions compared to B2C.</p>
+    </div>
     
-    <h2>주요 발견사항</h2>
+    <h2>Key Findings</h2>
+    
+    <div class="key-finding">
+        <h3>1. Product Category Performance</h3>
+        <p>The "Set" category leads sales with ₹39,204,124, followed by "kurta" with ₹21,299,547. Together, these two categories represent approximately 77% of total sales, indicating their crucial importance to the business.</p>
+    </div>
+    
+    <div class="key-finding">
+        <h3>2. Regional Sales Distribution</h3>
+        <p>Maharashtra leads with ₹13,335,534 in sales, followed by Karnataka (₹10,481,114). These two states account for approximately 30% of total sales, suggesting strong market presence in these regions.</p>
+    </div>
+    
+    <div class="key-finding">
+        <h3>3. Fulfillment Analysis</h3>
+        <p>Amazon fulfillment handles 69% of orders (₹54,322,151), while merchant fulfillment accounts for 31% (₹24,270,527). Amazon-fulfilled orders have a slightly higher average order value (₹649.48 vs ₹646.51).</p>
+    </div>
+    
+    <div class="key-finding">
+        <h3>4. B2B vs B2C Sales</h3>
+        <p>B2C dominates with 99.2% of sales volume, but B2B transactions have a higher average order value (₹701.33 vs ₹648.19), indicating potential for targeted B2B growth strategies.</p>
+    </div>
+    
+    <div class="key-finding">
+        <h3>5. Order Status and Cancellations</h3>
+        <p>The cancellation rate is 14.21% (18,332 out of 128,975 orders), which represents a significant portion of potential revenue. Reducing cancellations could substantially improve overall sales performance.</p>
+    </div>
+    
+    <h2>Detailed Analysis</h2>
+    
+    <h3>1. Initial Data Exploration</h3>
+    <p>The analysis is based on 128,975 records of Amazon sales data spanning 24 columns. Initial data exploration revealed several important data quality considerations:</p>
     <ul>
-        <li>Set과 kurta 카테고리가 전체 매출의 대부분(약 60%)을 차지하고 있습니다.</li>
-        <li>Set 카테고리는 가장 높은 매출($39.2M)과 함께 높은 평균 가격($866.87)을 기록했습니다.</li>
-        <li>kurta 카테고리는 Set과 비슷한 판매량을 보이지만 평균 가격이 낮아($473.64) 매출 차이가 발생했습니다.</li>
-        <li>주요 판매 도시는 BENGALURU, HYDERABAD, CHENNAI, MUMBAI, NEW DELHI 등으로, 이들 지역에 집중된 마케팅 전략이 필요합니다.</li>
+        <li>Missing values in several key columns, including Courier Status (6,872), Currency and Amount (7,795 each), and fulfilled-by (89,698)</li>
+        <li>Data types include integers, floats, objects (strings), and boolean values</li>
+        <li>The dataset contains order information like IDs, dates, status, fulfillment details, product categories, and shipping information</li>
     </ul>
     
-    <h2>카테고리별 판매 분석</h2>
-    <div class="content">
-        <img src="./artifacts/category_sales.png" alt="카테고리별 매출">
-        <div class="image-caption">카테고리별 매출 (백만 단위)</div>
-        
-        <p>위 그래프에서 볼 수 있듯이, Set 카테고리가 약 $39.2M로 가장 높은 매출을 기록했으며, 그 뒤를 kurta($21.3M), Western Dress($11.2M) 순으로 이어가고 있습니다. 특히 상위 2개 카테고리(Set, kurta)가 전체 매출의 약 60%를 차지하고 있어, 이들 카테고리에 마케팅 자원을 집중할 필요가 있습니다.</p>
-        
-        <img src="./artifacts/category_quantity.png" alt="카테고리별 판매량">
-        <div class="image-caption">카테고리별 판매량</div>
-        
-        <p>판매량 측면에서는 Set(45,225개)과 kurta(44,970개)가 거의 비슷한 수준을 보이고 있지만, 매출액에서는 상당한 차이가 있습니다. 이는 두 카테고리의 평균 판매 가격 차이에서 비롯된 것으로 분석됩니다.</p>
-    </div>
+    <h3>2. Sales Analysis and Visualization</h3>
     
-    <h2>가격 분석 및 마케팅 효율성</h2>
-    <div class="content">
-        <img src="./artifacts/category_avg_price.png" alt="카테고리별 평균 판매 가격">
-        <div class="image-caption">카테고리별 평균 판매 가격</div>
-        
-        <p>카테고리별 평균 판매 가격을 살펴보면, Set($866.87)이 가장 높고, Saree($815.35), Western Dress($804.65) 순으로 높은 가격을 보이고 있습니다. 반면 kurta 카테고리는 판매량이 높음에도 상대적으로 낮은 평균 가격($473.64)을 보이고 있어, 가격 인상을 통한 수익성 개선의 여지가 있습니다.</p>
-        
-        <img src="./artifacts/category_efficiency.png" alt="카테고리별 판매량 vs 매출">
-        <div class="image-caption">카테고리별 판매량 vs 매출 (마케팅 효율성)</div>
-        
-        <p>판매량과 매출의 관계를 분석한 그래프를 보면, Set 카테고리가 가장 효율적인 마케팅 성과를 보이고 있으며, kurta는 판매량 대비 매출이 상대적으로 낮은 편입니다. Western Dress는 중간 정도의 효율성을 보이고 있습니다.</p>
-        
-        <img src="./artifacts/price_elasticity.png" alt="카테고리별 평균 가격 vs 판매량">
-        <div class="image-caption">카테고리별 평균 가격 vs 판매량 (가격 탄력성)</div>
-        
-        <p>가격 탄력성 분석 결과, kurta 카테고리는 상대적으로 낮은 가격에도 불구하고 높은 판매량을 기록하고 있어, 가격에 민감한 특성을 보이고 있습니다. 반면 Set 카테고리는 높은 가격에도 불구하고 높은 판매량을 유지하고 있어, 프리미엄 전략이 효과적일 수 있습니다.</p>
-    </div>
+    <h4>2.1 Daily Sales Trends</h4>
+    <p>The analysis covered 91 days of sales data with the following metrics:</p>
+    <ul>
+        <li>Average daily sales: ₹863,655.81</li>
+        <li>Highest daily sales: ₹1,209,364.17</li>
+        <li>Lowest daily sales: ₹101,683.85</li>
+    </ul>
+    <img src="./artifacts/daily_sales_trend.png" alt="Daily Sales Trend">
+    <div class="image-caption">Figure 1: Daily sales trend over the analyzed period</div>
     
-    <h2>판매 추이 분석</h2>
-    <div class="content">
-        <img src="./artifacts/monthly_sales_trend.png" alt="상위 카테고리의 월별 매출 추이">
-        <div class="image-caption">상위 카테고리의 월별 매출 추이</div>
-        
-        <p>월별 매출 추이를 살펴보면, Set과 kurta 카테고리 모두 일정한 패턴을 보이고 있으며, 특정 달에 매출이 집중되는 경향이 있습니다. 이는 계절적 요인이나 특정 프로모션의 영향일 수 있으며, 이러한 패턴을 활용하여 시즌별 마케팅 전략을 구상할 수 있습니다.</p>
-    </div>
+    <h4>2.2 Category Analysis</h4>
+    <p>The top 5 categories by sales are:</p>
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Total Sales (₹)</th>
+            <th>Order Count</th>
+        </tr>
+        <tr>
+            <td>Set</td>
+            <td>39,204,124.03</td>
+            <td>47,042</td>
+        </tr>
+        <tr>
+            <td>kurta</td>
+            <td>21,299,546.70</td>
+            <td>46,717</td>
+        </tr>
+        <tr>
+            <td>Western Dress</td>
+            <td>11,216,072.69</td>
+            <td>14,704</td>
+        </tr>
+        <tr>
+            <td>Top</td>
+            <td>5,347,792.30</td>
+            <td>10,165</td>
+        </tr>
+        <tr>
+            <td>Ethnic Dress</td>
+            <td>791,217.66</td>
+            <td>1,093</td>
+        </tr>
+    </table>
     
-    <h2>결론 및 마케팅 제안</h2>
-    <div class="content">
-        <p>아마존 판매 데이터 분석을 통해 다음과 같은 마케팅 인사이트 및 제안을 도출할 수 있습니다:</p>
+    <img src="./artifacts/top_10_categories.png" alt="Top 10 Categories by Sales">
+    <div class="image-caption">Figure 2: Top 10 product categories by sales amount</div>
+    
+    <h4>2.3 Regional Analysis</h4>
+    <p>The top 5 states by sales volume are:</p>
+    <table>
+        <tr>
+            <th>State</th>
+            <th>Total Sales (₹)</th>
+        </tr>
+        <tr>
+            <td>Maharashtra</td>
+            <td>13,335,534.14</td>
+        </tr>
+        <tr>
+            <td>Karnataka</td>
+            <td>10,481,114.37</td>
+        </tr>
+        <tr>
+            <td>Telangana</td>
+            <td>6,916,615.65</td>
+        </tr>
+        <tr>
+            <td>Uttar Pradesh</td>
+            <td>6,816,642.08</td>
+        </tr>
+        <tr>
+            <td>Tamil Nadu</td>
+            <td>6,515,650.11</td>
+        </tr>
+    </table>
+    
+    <img src="./artifacts/top_10_states.png" alt="Top 10 States by Sales">
+    <div class="image-caption">Figure 3: Top 10 states by sales amount</div>
+    
+    <h4>2.4 Order Status Distribution</h4>
+    <p>The distribution of order statuses in the dataset reveals:</p>
+    <ul>
+        <li>Shipped: 77,804 orders (60.3%)</li>
+        <li>Shipped - Delivered to Buyer: 28,769 orders (22.3%)</li>
+        <li>Cancelled: 18,332 orders (14.2%)</li>
+        <li>Other statuses (Returned, Pending, etc.): 4,070 orders (3.2%)</li>
+    </ul>
+    
+    <img src="./artifacts/order_status_distribution.png" alt="Order Status Distribution">
+    <div class="image-caption">Figure 4: Distribution of order statuses</div>
+    
+    <h3>3. Additional Sales Analysis</h3>
+    
+    <h4>3.1 Overall Sales Metrics</h4>
+    <ul>
+        <li>Total Sales: ₹78,592,678.30</li>
+        <li>Total Orders: 128,975</li>
+        <li>Average Order Value: ₹648.56</li>
+        <li>Median Order Value: ₹605.00</li>
+        <li>Standard Deviation of Order Values: ₹281.21</li>
+    </ul>
+    
+    <h4>3.2 Fulfillment Analysis</h4>
+    <table>
+        <tr>
+            <th>Fulfillment Type</th>
+            <th>Total Sales (₹)</th>
+            <th>Order Count</th>
+            <th>Average Order Value (₹)</th>
+        </tr>
+        <tr>
+            <td>Amazon</td>
+            <td>54,322,151.00</td>
+            <td>83,639</td>
+            <td>649.48</td>
+        </tr>
+        <tr>
+            <td>Merchant</td>
+            <td>24,270,527.30</td>
+            <td>37,541</td>
+            <td>646.51</td>
+        </tr>
+    </table>
+    
+    <img src="./artifacts/fulfillment_sales.png" alt="Sales by Fulfillment Type">
+    <div class="image-caption">Figure 5: Sales by fulfillment type visualization</div>
+    
+    <h4>3.3 B2B vs B2C Sales</h4>
+    <table>
+        <tr>
+            <th>Sales Type</th>
+            <th>Total Sales (₹)</th>
+            <th>Order Count</th>
+            <th>Average Order Value (₹)</th>
+        </tr>
+        <tr>
+            <td>B2C (False)</td>
+            <td>78,001,457.51</td>
+            <td>120,337</td>
+            <td>648.19</td>
+        </tr>
+        <tr>
+            <td>B2B (True)</td>
+            <td>591,220.79</td>
+            <td>843</td>
+            <td>701.33</td>
+        </tr>
+    </table>
+    
+    <img src="./artifacts/b2b_vs_b2c_sales.png" alt="B2B vs B2C Sales Comparison">
+    <div class="image-caption">Figure 6: Comparison of B2B and B2C sales</div>
+    
+    <h4>3.4 Order Value Distribution</h4>
+    <img src="./artifacts/order_value_distribution.png" alt="Distribution of Order Values">
+    <div class="image-caption">Figure 7: Distribution of order values</div>
+    
+    <h4>3.5 Sales Channel Analysis</h4>
+    <p>All sales analyzed occurred through the Amazon.in channel, with total sales of ₹78,592,678.30 across 121,180 orders. The average order value through this channel is ₹648.56.</p>
+    
+    <img src="./artifacts/channel_sales.png" alt="Sales by Channel">
+    <div class="image-caption">Figure 8: Sales by channel visualization</div>
+    
+    <h3>4. Product and Service Analysis</h3>
+    
+    <h4>4.1 Top Product Performance</h4>
+    <p>The top 5 products by sales volume:</p>
+    <table>
+        <tr>
+            <th>Style</th>
+            <th>Total Sales (₹)</th>
+            <th>Order Count</th>
+            <th>Average Order Value (₹)</th>
+            <th>Quantity Sold</th>
+        </tr>
+        <tr>
+            <td>JNE3797</td>
+            <td>2,933,482.00</td>
+            <td>3,995</td>
+            <td>734.29</td>
+            <td>3,692</td>
+        </tr>
+        <tr>
+            <td>J0230</td>
+            <td>1,944,948.48</td>
+            <td>1,733</td>
+            <td>1,122.30</td>
+            <td>1,710</td>
+        </tr>
+        <tr>
+            <td>SET268</td>
+            <td>1,303,923.56</td>
+            <td>1,732</td>
+            <td>752.84</td>
+            <td>1,731</td>
+        </tr>
+        <tr>
+            <td>J0341</td>
+            <td>1,275,322.87</td>
+            <td>1,538</td>
+            <td>829.21</td>
+            <td>1,471</td>
+        </tr>
+        <tr>
+            <td>J0003</td>
+            <td>981,973.75</td>
+            <td>1,491</td>
+            <td>658.60</td>
+            <td>1,390</td>
+        </tr>
+    </table>
+    
+    <img src="./artifacts/top_10_products.png" alt="Top 10 Products by Sales">
+    <div class="image-caption">Figure 9: Top 10 products by sales amount</div>
+    
+    <h4>4.2 Size Distribution</h4>
+    <p>The distribution of sales by product size:</p>
+    <table>
+        <tr>
+            <th>Size</th>
+            <th>Total Sales (₹)</th>
+            <th>Order Count</th>
+        </tr>
+        <tr>
+            <td>M</td>
+            <td>13,906,754.37</td>
+            <td>21,292</td>
+        </tr>
+        <tr>
+            <td>L</td>
+            <td>13,234,886.19</td>
+            <td>20,800</td>
+        </tr>
+        <tr>
+            <td>XL</td>
+            <td>12,464,965.86</td>
+            <td>19,726</td>
+        </tr>
+        <tr>
+            <td>XXL</td>
+            <td>10,636,288.45</td>
+            <td>17,066</td>
+        </tr>
+        <tr>
+            <td>S</td>
+            <td>10,629,210.18</td>
+            <td>15,953</td>
+        </tr>
+    </table>
+    
+    <img src="./artifacts/size_distribution.png" alt="Sales Distribution by Size">
+    <div class="image-caption">Figure 10: Sales distribution by product size</div>
+    
+    <h4>4.3 Shipping Service Level Analysis</h4>
+    <table>
+        <tr>
+            <th>Shipping Service Level</th>
+            <th>Total Sales (₹)</th>
+            <th>Order Count</th>
+            <th>Average Order Value (₹)</th>
+        </tr>
+        <tr>
+            <td>Expedited</td>
+            <td>54,285,183.00</td>
+            <td>82,723</td>
+            <td>656.23</td>
+        </tr>
+        <tr>
+            <td>Standard</td>
+            <td>24,307,495.30</td>
+            <td>38,457</td>
+            <td>632.07</td>
+        </tr>
+    </table>
+    
+    <img src="./artifacts/shipping_service_analysis.png" alt="Analysis of Shipping Service Levels">
+    <div class="image-caption">Figure 11: Analysis of shipping service levels</div>
+    
+    <h4>4.4 Order Status Analysis</h4>
+    <p>The analysis of order statuses revealed:</p>
+    <ul>
+        <li>Total Orders: 128,975</li>
+        <li>Cancelled Orders: 18,332</li>
+        <li>Cancellation Rate: 14.21%</li>
+    </ul>
+    
+    <img src="./artifacts/order_status_analysis.png" alt="Order Status Distribution Analysis">
+    <div class="image-caption">Figure 12: Detailed order status distribution analysis</div>
+    
+    <h2>Conclusions and Recommendations</h2>
+    <div class="conclusion">
+        <h3>Conclusions:</h3>
         <ol>
-            <li><strong>카테고리 집중 전략:</strong> Set과 kurta 카테고리에 마케팅 자원을 집중 투입하되, 각 카테고리의 특성을 고려한 차별화된 접근이 필요합니다.</li>
-            <li><strong>가격 전략:</strong> Set 카테고리는 프리미엄 이미지를 강화하고, kurta 카테고리는 가격 인상을 통한 수익성 개선을 고려해볼 수 있습니다.</li>
-            <li><strong>지역별 맞춤 전략:</strong> BENGALURU, HYDERABAD 등 주요 판매 도시를 중심으로 지역 맞춤형 프로모션을 강화해야 합니다.</li>
-            <li><strong>시즌별 마케팅:</strong> 월별 매출 추이를 분석하여 성수기에 맞춘 집중적인 마케팅 캠페인을 전개할 필요가 있습니다.</li>
-            <li><strong>신규 카테고리 개발:</strong> Western Dress와 Top 같은 중간 규모의 카테고리를 성장시키기 위한 전략적 투자를 검토해볼 수 있습니다.</li>
+            <li><strong>Product Focus:</strong> The "Set" and "kurta" categories dominate sales, suggesting these are the core product lines. These two categories account for approximately 77% of total sales.</li>
+            <li><strong>Regional Strength:</strong> Maharashtra and Karnataka are the strongest markets, accounting for approximately 30% of total sales. This indicates regional preferences or stronger market penetration in these areas.</li>
+            <li><strong>Size Preferences:</strong> Medium (M) and Large (L) sizes are the most popular, suggesting the target demographic preferences. The top three sizes (M, L, XL) account for 51% of orders.</li>
+            <li><strong>Fulfillment Performance:</strong> Amazon fulfillment handles the majority (69%) of orders with slightly better average order values than merchant fulfillment.</li>
+            <li><strong>B2B Potential:</strong> While B2B sales represent only a small portion of overall business (0.8%), they show a higher average order value (₹701.33 vs ₹648.19), indicating potential for growth in this segment.</li>
+            <li><strong>Cancellation Impact:</strong> The 14.21% cancellation rate represents a significant potential revenue loss and area for operational improvement.</li>
         </ol>
-        <p>이러한 인사이트를 바탕으로 실행 가능한 마케팅 전략을 수립하고, 지속적인 데이터 모니터링을 통해 전략의 효과를 검증하고 개선해 나가는 것이 중요합니다.</p>
+        
+        <h3>Recommendations:</h3>
+        <ol>
+            <li><strong>Product Strategy:</strong>
+                <ul>
+                    <li>Focus marketing efforts on the high-performing "Set" and "kurta" categories while exploring opportunities to grow the "Western Dress" category.</li>
+                    <li>Analyze the top-selling products (especially JNE3797 and J0230) to identify common characteristics that can be replicated in new product development.</li>
+                    <li>Consider expanding the size range for popular products, focusing on the most demanded sizes (M, L, XL).</li>
+                </ul>
+            </li>
+            
+            <li><strong>Regional Marketing:</strong>
+                <ul>
+                    <li>Develop targeted marketing campaigns for Maharashtra and Karnataka to reinforce market leadership.</li>
+                    <li>Create specific strategies to increase market share in high-potential states like Telangana, Uttar Pradesh, and Tamil Nadu.</li>
+                    <li>Consider regional preferences in product design and marketing messaging to better connect with local customers.</li>
+                </ul>
+            </li>
+            
+            <li><strong>Operational Improvements:</strong>
+                <ul>
+                    <li>Investigate the causes of the 14.21% cancellation rate and implement measures to reduce it, potentially focusing on product accuracy, delivery timeframes, or customer communication.</li>
+                    <li>Expand the use of Amazon fulfillment given its slightly better performance in terms of average order value.</li>
+                    <li>Optimize inventory based on size distribution data to prevent stockouts of popular sizes.</li>
+                </ul>
+            </li>
+            
+            <li><strong>Business Development:</strong>
+                <ul>
+                    <li>Develop a dedicated B2B strategy to capitalize on the higher average order values in this segment.</li>
+                    <li>Consider bundle offers for top-performing products to increase average order value.</li>
+                    <li>Explore the potential of expedited shipping as a premium service, given its higher average order value compared to standard shipping.</li>
+                </ul>
+            </li>
+            
+            <li><strong>Data-Driven Decision Making:</strong>
+                <ul>
+                    <li>Implement regular monitoring of daily sales trends to identify patterns, seasonality, or anomalies that can inform inventory and marketing decisions.</li>
+                    <li>Set up tracking for key performance indicators like cancellation rate, regional sales distribution, and category performance to measure improvement over time.</li>
+                </ul>
+            </li>
+        </ol>
     </div>
 </body>
 </html>
