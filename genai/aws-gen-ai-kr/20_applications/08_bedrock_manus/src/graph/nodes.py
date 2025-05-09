@@ -56,6 +56,8 @@ def research_node(state: State) -> Command[Literal["supervisor"]]:
     
     clues = state.get("clues", "")
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("researcher", result["content"][-1]["text"])])
+    
+
     logger.info("Research agent completed task")
     logger.debug(f"Research agent response: {result["content"][-1]["text"]}")
 
@@ -184,6 +186,9 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     system_prompts, messages = apply_prompt_template("planner", state, prompt_cache=prompt_cache, cache_type=cache_type)
     # whether to enable deep thinking mode
        
+    full_plan = state.get("full_plan", "")
+    messages[-1]["content"][-1]["text"] = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    
     llm = get_llm_by_type(AGENT_LLM_MAP["planner"])    
     llm.stream = True
     llm_caller = llm_call(llm=llm, verbose=False, tracking=False)
@@ -232,7 +237,7 @@ def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     llm = get_llm_by_type(AGENT_LLM_MAP["coordinator"])    
     llm.stream = True
     llm_caller = llm_call(llm=llm, verbose=False, tracking=False)
-    if AGENT_LLM_MAP["planner"] in ["reasoning"]: enable_reasoning = True
+    if AGENT_LLM_MAP["coordinator"] in ["reasoning"]: enable_reasoning = True
     
     response, ai_message = llm_caller.invoke(
         agent_name="coordinator",
