@@ -1,573 +1,393 @@
 
-    <!DOCTYPE html>
-    <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>아마존 판매 데이터 분석 리포트</title>
-        <style>
-            body {
-                font-family: 'Nanum Gothic', Arial, sans-serif;
-                line-height: 1.6;
-                color: #333;
-                margin: 0;
-                padding: 20px;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-            h1, h2, h3, h4 {
-                color: #0066cc;
-                margin-top: 20px;
-                border-bottom: 1px solid #ddd;
-                padding-bottom: 5px;
-            }
-            h1 {
-                text-align: center;
-                font-size: 28px;
-                border-bottom: 2px solid #0066cc;
-                padding-bottom: 10px;
-                margin-bottom: 30px;
-            }
-            h2 {
-                font-size: 24px;
-                margin-top: 30px;
-            }
-            h3 {
-                font-size: 20px;
-                margin-top: 25px;
-            }
-            img {
-                max-width: 100%;
-                height: auto;
-                display: block;
-                margin: 20px auto;
-                border: 1px solid #ddd;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-            .img-caption {
-                text-align: center;
-                font-style: italic;
-                color: #666;
-                margin-bottom: 20px;
-            }
-            table {
-                border-collapse: collapse;
-                width: 100%;
-                margin: 20px 0;
-            }
-            th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: left;
-            }
-            th {
-                background-color: #f2f2f2;
-            }
-            .insight-box {
-                background-color: #f8f9fa;
-                border-left: 4px solid #0066cc;
-                padding: 10px 15px;
-                margin: 20px 0;
-            }
-            .recommendation-box {
-                background-color: #e8f4ff;
-                border-left: 4px solid #00cc66;
-                padding: 10px 15px;
-                margin: 20px 0;
-            }
-            .flex-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-            .col-2 {
-                width: 48%;
-            }
-            @media (max-width: 768px) {
-                .col-2 {
-                    width: 100%;
-                }
-            }
-            .section {
-                margin-bottom: 40px;
-            }
-            footer {
-                text-align: center;
-                margin-top: 50px;
-                padding-top: 20px;
-                border-top: 1px solid #ddd;
-                color: #777;
-                font-size: 12px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>아마존 판매 데이터 분석 리포트</h1>
-        
-        <div class="section">
-            <h2>1. 요약</h2>
-            <p>본 보고서는 아마존 판매 데이터를 분석하여 판매 트렌드, 고객 세그먼트, 제품 카테고리 성과 등을 파악하고 마케팅 인사이트를 도출하는 것을 목적으로 합니다. 전체 128,975건의 주문 데이터를 분석한 결과, 고객 세그먼트별 구매 특성, 카테고리별 성과 차이, 판매 채널 효율성, 그리고 구매 패턴 등에 관한 중요한 인사이트를 도출할 수 있었습니다.</p>
-            
-            <div class="insight-box">
-                <h3>주요 발견사항</h3>
-                <ul>
-                    <li><strong>고객 세그먼트:</strong> Premium 세그먼트(상위 33%)가 전체 매출의 48%를 차지하며, 평균 구매액은 967.53입니다.</li>
-                    <li><strong>제품 카테고리:</strong> Set과 kurta 카테고리가 전체 주문의 약 78%를 차지합니다.</li>
-                    <li><strong>판매 채널:</strong> Amazon.in이 전체 판매의 99.9%를 차지하며, Amazon 배송이 전체의 69%를 차지합니다.</li>
-                    <li><strong>구매 패턴:</strong> 주말(토,일)에 주문량이 증가하는 경향이 있습니다.</li>
-                    <li><strong>가격대:</strong> 가격대별로 구매 행동에 뚜렷한 차이가 있으며, Premium 세그먼트는 Set 카테고리를 선호합니다.</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>2. 데이터 개요</h2>
-            <p>분석에 사용된 데이터는 아마존 판매 보고서로, 총 128,975행의 주문 기록과 24개의 변수로 구성되어 있습니다.</p>
-            
-            <h3>2.1. 데이터 구조</h3>
-            <p>데이터는 주문 ID, 날짜, 상태, 배송 방식, 판매 채널, 제품 스타일, 카테고리, 수량, 금액, 배송지 등의 정보를 포함하고 있습니다.</p>
-            
-            <h3>2.2. 기본 통계량</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>통계량</th>
-                        <th>수량(Qty)</th>
-                        <th>금액(Amount)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>평균</td>
-                        <td>0.90</td>
-                        <td>609.36</td>
-                    </tr>
-                    <tr>
-                        <td>표준편차</td>
-                        <td>0.31</td>
-                        <td>313.35</td>
-                    </tr>
-                    <tr>
-                        <td>최소값</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                    <tr>
-                        <td>25% 백분위수</td>
-                        <td>1.00</td>
-                        <td>413.00</td>
-                    </tr>
-                    <tr>
-                        <td>중앙값</td>
-                        <td>1.00</td>
-                        <td>583.00</td>
-                    </tr>
-                    <tr>
-                        <td>75% 백분위수</td>
-                        <td>1.00</td>
-                        <td>771.00</td>
-                    </tr>
-                    <tr>
-                        <td>최대값</td>
-                        <td>15.00</td>
-                        <td>5,584.00</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <h3>2.3. 주요 범주형 변수 분포</h3>
-            
-            <div class="flex-container">
-                <div class="col-2">
-                    <h4>주문 상태</h4>
-                    <ul>
-                        <li>Shipped: 77,804건 (60.3%)</li>
-                        <li>Shipped - Delivered to Buyer: 28,769건 (22.3%)</li>
-                        <li>Cancelled: 18,332건 (14.2%)</li>
-                        <li>Shipped - Returned to Seller: 1,953건 (1.5%)</li>
-                        <li>Shipped - Picked Up: 973건 (0.8%)</li>
-                    </ul>
-                </div>
-                <div class="col-2">
-                    <h4>배송 방식</h4>
-                    <ul>
-                        <li>Amazon: 89,698건 (69.5%)</li>
-                        <li>Merchant: 39,277건 (30.5%)</li>
-                    </ul>
-                    
-                    <h4>판매 채널</h4>
-                    <ul>
-                        <li>Amazon.in: 128,851건 (99.9%)</li>
-                        <li>Non-Amazon: 124건 (0.1%)</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <h4>제품 카테고리</h4>
-            <img src="./artifacts/category_distribution.png" alt="카테고리별 주문 분포">
-            <div class="img-caption">그림 1: 카테고리별 주문 분포</div>
-            
-            <p>Set과 kurta 카테고리가 전체 주문의 약 78%를 차지하며, Western Dress와 Top이 그 뒤를 잇고 있습니다.</p>
-        </div>
-        
-        <div class="section">
-            <h2>3. 판매 트렌드 분석</h2>
-            
-            <h3>3.1. 시간별 판매 추이</h3>
-            <img src="./artifacts/daily_orders_trend.png" alt="일별 주문량 추이">
-            <div class="img-caption">그림 2: 일별 주문량 추이</div>
-            
-            <img src="./artifacts/weekday_orders.png" alt="요일별 주문량">
-            <div class="img-caption">그림 3: 요일별 주문량</div>
-            
-            <p>일별 주문량에는 상당한 변동성이 관찰되며, 요일별로는 주말(토요일, 일요일)에 주문량이 증가하는 경향이 있습니다. 일요일의 주문이 가장 많으며(19,619건), 목요일의 주문이 가장 적은 것으로 나타났습니다(17,069건).</p>
-            
-            <h3>3.2. 카테고리별 월간 판매 트렌드</h3>
-            <img src="./artifacts/monthly_category_sales.png" alt="카테고리별 월간 판매액 추이">
-            <div class="img-caption">그림 4: 카테고리별 월간 판매액 추이</div>
-            
-            <p>대부분의 카테고리에서 월별 판매액의 변동성이 관찰됩니다. Set 카테고리가 전반적으로 가장 높은 판매액을 기록하고 있으며, 특정 월에는 판매량이 크게 증가하는 시즌 효과도 볼 수 있습니다.</p>
-            
-            <h3>3.3. 주문 금액 분포</h3>
-            <img src="./artifacts/amount_distribution.png" alt="주문 금액 분포">
-            <div class="img-caption">그림 5: 주문 금액 분포</div>
-            
-            <p>주문 금액은 대체로 오른쪽으로 치우친 분포를 보이며, 대다수의 주문은 300에서 900 사이의 금액대에 집중되어 있습니다. 평균 주문 금액은 609.36이며, 중앙값은 583.00입니다.</p>
-        </div>
-        
-        <div class="section">
-            <h2>4. 세그먼트 분석</h2>
-            
-            <h3>4.1. 고객 세그먼트별 특징</h3>
-            <p>고객을 구매 금액에 따라 3개 세그먼트로 나누어 분석했습니다:</p>
-            <ul>
-                <li><strong>Premium 세그먼트(상위 33%):</strong> 평균 구매액 967.53, 전체 매출의 48% 차지</li>
-                <li><strong>Mid-range 세그먼트(중간 33%):</strong> 평균 구매액 613.73, 전체 매출의 33% 차지</li>
-                <li><strong>Budget 세그먼트(하위 33%):</strong> 평균 구매액 376.13, 전체 매출의 19% 차지</li>
-            </ul>
-            
-            <img src="./artifacts/segment_sales_distribution.png" alt="고객 세그먼트별 매출 비중">
-            <div class="img-caption">그림 6: 고객 세그먼트별 매출 비중</div>
-            
-            <h3>4.2. 세그먼트별 선호 카테고리</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>세그먼트/카테고리</th>
-                        <th>Set</th>
-                        <th>kurta</th>
-                        <th>Western Dress</th>
-                        <th>Top</th>
-                        <th>기타</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Premium</td>
-                        <td>27,004</td>
-                        <td>2,347</td>
-                        <td>8,135</td>
-                        <td>789</td>
-                        <td>852</td>
-                    </tr>
-                    <tr>
-                        <td>Mid-range</td>
-                        <td>17,823</td>
-                        <td>11,153</td>
-                        <td>5,969</td>
-                        <td>5,884</td>
-                        <td>726</td>
-                    </tr>
-                    <tr>
-                        <td>Budget</td>
-                        <td>2,215</td>
-                        <td>33,217</td>
-                        <td>600</td>
-                        <td>3,492</td>
-                        <td>974</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p>Premium 세그먼트는 Set과 Western Dress 카테고리를 주로 구매하는 반면, Budget 세그먼트는 kurta를 압도적으로 선호하는 경향을 보입니다.</p>
-            
-            <h3>4.3. 세그먼트별 배송 방식 선호도</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>세그먼트</th>
-                        <th>배송 방식</th>
-                        <th>주문 수</th>
-                        <th>총 금액</th>
-                        <th>평균 금액</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td rowspan="2">Premium</td>
-                        <td>Amazon</td>
-                        <td>27,627</td>
-                        <td>26,766,245.00</td>
-                        <td>968.84</td>
-                    </tr>
-                    <tr>
-                        <td>Merchant</td>
-                        <td>11,500</td>
-                        <td>11,090,202.63</td>
-                        <td>964.37</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">Mid-range</td>
-                        <td>Amazon</td>
-                        <td>27,447</td>
-                        <td>16,664,645.00</td>
-                        <td>607.16</td>
-                    </tr>
-                    <tr>
-                        <td>Merchant</td>
-                        <td>14,108</td>
-                        <td>8,838,881.60</td>
-                        <td>626.52</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">Budget</td>
-                        <td>Amazon</td>
-                        <td>28,565</td>
-                        <td>10,891,261.00</td>
-                        <td>381.28</td>
-                    </tr>
-                    <tr>
-                        <td>Merchant</td>
-                        <td>11,933</td>
-                        <td>4,341,443.07</td>
-                        <td>363.82</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p>Premium 세그먼트와 Budget 세그먼트는 Amazon 배송을 더 선호하는 경향이 있으며, Premium 세그먼트에서는 배송 방식에 따른 평균 구매 금액의 차이가 크지 않습니다.</p>
-        </div>
-        
-        <div class="section">
-            <h2>5. 상품 및 지역 분석</h2>
-            
-            <h3>5.1. 카테고리별 주요 지표</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>카테고리</th>
-                        <th>평균 금액</th>
-                        <th>주문 수</th>
-                        <th>총 금액</th>
-                        <th>취소율(%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Set</td>
-                        <td>779.65</td>
-                        <td>50,284</td>
-                        <td>39,204,124.03</td>
-                        <td>14.59</td>
-                    </tr>
-                    <tr>
-                        <td>kurta</td>
-                        <td>427.04</td>
-                        <td>49,877</td>
-                        <td>21,299,546.70</td>
-                        <td>14.55</td>
-                    </tr>
-                    <tr>
-                        <td>Western Dress</td>
-                        <td>723.62</td>
-                        <td>15,500</td>
-                        <td>11,216,072.69</td>
-                        <td>13.69</td>
-                    </tr>
-                    <tr>
-                        <td>Top</td>
-                        <td>503.46</td>
-                        <td>10,622</td>
-                        <td>5,347,792.30</td>
-                        <td>12.01</td>
-                    </tr>
-                    <tr>
-                        <td>Ethnic Dress</td>
-                        <td>682.67</td>
-                        <td>1,159</td>
-                        <td>791,217.66</td>
-                        <td>12.51</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p>Set 카테고리는 가장 높은 총 매출과 평균 판매가를 기록한 반면, kurta는 두 번째로 많은 주문 수를 기록했지만 평균 판매가는 상대적으로 낮습니다.</p>
-            
-            <h3>5.2. 카테고리별 구매 수량</h3>
-            <img src="./artifacts/category_avg_quantity.png" alt="카테고리별 평균 구매 수량">
-            <div class="img-caption">그림 7: 카테고리별 평균 구매 수량</div>
-            
-            <p>대부분의 카테고리에서 평균 구매 수량은 0.9~1.0개 범위에 있으며, 이는 대부분의 고객이 한 번에 하나의 상품을 구매하는 경향이 있음을 보여줍니다.</p>
-            
-            <h3>5.3. 카테고리별 취소율</h3>
-            <img src="./artifacts/category_cancellation_rate.png" alt="카테고리별 주문 취소율">
-            <div class="img-caption">그림 8: 카테고리별 주문 취소율</div>
-            
-            <p>Set과 kurta 카테고리는 다른 카테고리에 비해 상대적으로 높은 취소율을 보이고 있습니다. 반면 Dupatta 카테고리는 취소율이 0%로 나타났지만, 이는 주문 수가 매우 적기 때문일 수 있습니다.</p>
-            
-            <h3>5.4. 상위 판매 지역</h3>
-            <img src="./artifacts/top_cities_sales.png" alt="상위 10개 도시별 판매액">
-            <div class="img-caption">그림 9: 상위 10개 도시별 판매액</div>
-            
-            <p>BENGALURU, HYDERABAD, MUMBAI, NEW DELHI, CHENNAI가 매출 기준 상위 5개 도시로 나타났습니다. 특히 BENGALURU는 약 685만의 매출로 가장 큰 시장을 형성하고 있습니다.</p>
-        </div>
-        
-        <div class="section">
-            <h2>6. 주문 상태 및 배송 분석</h2>
-            
-            <h3>6.1. 주문 상태 분포</h3>
-            <img src="./artifacts/order_status_distribution.png" alt="주문 상태 분포">
-            <div class="img-caption">그림 10: 주문 상태 분포</div>
-            
-            <p>전체 주문 중 약 83%가 성공적으로 배송(Shipped)되었으며, 14.2%는 취소(Cancelled)되었습니다. 배송 후 반품(Shipped - Returned to Seller)은 1.5%로 비교적 낮은 수준을 유지하고 있습니다.</p>
-            
-            <h3>6.2. 배송 방식 분석</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>배송 방식</th>
-                        <th>주문 수</th>
-                        <th>총 금액</th>
-                        <th>평균 금액</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Amazon</td>
-                        <td>83,639</td>
-                        <td>54,322,151.0</td>
-                        <td>649.48</td>
-                    </tr>
-                    <tr>
-                        <td>Merchant</td>
-                        <td>37,541</td>
-                        <td>24,270,527.3</td>
-                        <td>646.51</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p>Amazon 배송이 전체 주문의 69%를 차지하고 있으며, 평균 주문 금액은 Amazon 배송과 Merchant 배송이 유사한 수준을 보이고 있습니다.</p>
-        </div>
-        
-        <div class="section">
-            <h2>7. 가격대별 분석</h2>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>가격대</th>
-                        <th>주문 수</th>
-                        <th>총 금액</th>
-                        <th>평균 금액</th>
-                        <th>총 수량</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Very High</td>
-                        <td>24,168</td>
-                        <td>26,183,177.73</td>
-                        <td>1,083.38</td>
-                        <td>23,645</td>
-                    </tr>
-                    <tr>
-                        <td>High</td>
-                        <td>23,769</td>
-                        <td>17,994,297.93</td>
-                        <td>757.05</td>
-                        <td>22,765</td>
-                    </tr>
-                    <tr>
-                        <td>Medium</td>
-                        <td>24,553</td>
-                        <td>14,997,527.12</td>
-                        <td>610.82</td>
-                        <td>23,462</td>
-                    </tr>
-                    <tr>
-                        <td>Low</td>
-                        <td>24,325</td>
-                        <td>11,558,053.56</td>
-                        <td>475.15</td>
-                        <td>23,330</td>
-                    </tr>
-                    <tr>
-                        <td>Very Low</td>
-                        <td>24,365</td>
-                        <td>7,859,621.96</td>
-                        <td>322.58</td>
-                        <td>23,280</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p>가격대를 5개 구간으로 나누어 분석한 결과, Very High 가격대가 전체 매출의 가장 큰 비중을 차지하고 있습니다. 주목할 점은 모든 가격대에서 주문 수와 구매 수량이 비슷한 분포를 보이고 있다는 것입니다.</p>
-        </div>
-        
-        <div class="section">
-            <h2>8. 마케팅 인사이트 및 제안</h2>
-            
-            <div class="recommendation-box">
-                <h3>세그먼트별 차별화 전략</h3>
-                <ul>
-                    <li><strong>Premium 세그먼트:</strong> Set 카테고리와 Western Dress를 중심으로 고가 제품 마케팅에 집중. 구매 금액 기준 가장 큰 비중을 차지하므로 충성도 프로그램 강화 필요.</li>
-                    <li><strong>Mid-range 세그먼트:</strong> 다양한 카테고리에 고르게 분산된 구매 패턴을 보이므로, 교차 판매(cross-selling) 전략 적용. Western Dress와 Top 카테고리 프로모션 효과적.</li>
-                    <li><strong>Budget 세그먼트:</strong> kurta 중심의 가격 프로모션 전략. 구매 빈도는 높지만 평균 구매액이 낮으므로, 가격 민감도를 고려한 할인 프로모션 필요.</li>
-                </ul>
-            </div>
-            
-            <div class="recommendation-box">
-                <h3>카테고리 전략</h3>
-                <ul>
-                    <li><strong>Set과 kurta 카테고리:</strong> 전체 주문의 78%를 차지하는 핵심 카테고리로, 재고 관리 최적화 및 다양한 스타일/디자인 확대 필요.</li>
-                    <li><strong>Western Dress 카테고리:</strong> 평균 판매가가 높은 카테고리로 Premium 라인 확대 및 타겟 마케팅 강화.</li>
-                    <li><strong>Dupatta, Saree 등 판매 저조 카테고리:</strong> 제품 라인 재검토 또는 번들 상품으로 제공하는 전략 검토.</li>
-                    <li><strong>취소율 관리:</strong> Set과 kurta의 상대적으로 높은 취소율(14.5% 이상)을 낮추기 위한 상품 정보 개선 및 고객 기대치 관리 필요.</li>
-                </ul>
-            </div>
-            
-            <div class="recommendation-box">
-                <h3>판매 채널 및 배송 최적화</h3>
-                <ul>
-                    <li><strong>Amazon 배송 서비스 강화:</strong> 전체 주문의 69%를 차지하는 Amazon 배송 서비스의 품질 유지 및 개선 필요.</li>
-                    <li><strong>Premium 세그먼트 배송 경험:</strong> Premium 세그먼트가 Amazon 배송을 더 선호하는 경향이 있으므로, 고급 배송 옵션 제공.</li>
-                    <li><strong>지역별 배송 전략:</strong> BENGALURU, HYDERABAD 등 상위 판매 도시에 물류 최적화 및 빠른 배송 서비스 제공.</li>
-                </ul>
-            </div>
-            
-            <div class="recommendation-box">
-                <h3>시간 기반 프로모션 전략</h3>
-                <ul>
-                    <li><strong>주말 특별 프로모션:</strong> 주말(토,일)에 주문량이 증가하는 패턴을 활용한 주말 특별 할인 이벤트 기획.</li>
-                    <li><strong>월별 시즌 프로모션:</strong> 카테고리별 월간 판매 트렌드를 활용하여 시즌성 프로모션 계획.</li>
-                    <li><strong>타임 세일:</strong> 주문량이 상대적으로 적은 평일(목요일 등)에 한정 시간 특별 할인을 통한 판매 촉진.</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>9. 결론</h2>
-            <p>아마존 판매 데이터 분석을 통해 고객 세그먼트별 구매 특성, 제품 카테고리별 성과, 지역별 판매 현황, 시간대별 구매 패턴 등 다양한 측면에서의 인사이트를 도출할 수 있었습니다.</p>
-            
-            <p>특히 Premium 세그먼트가 전체 매출의 48%를 차지하며, Set과 kurta 카테고리가 전체 주문의 약 78%를 차지한다는 점은 마케팅 자원 배분에 있어 중요한 지표가 됩니다. 또한 세그먼트별로 선호하는 제품 카테고리의 차이가 뚜렷하게 나타나, 세그먼트별 맞춤형 마케팅 전략의 필요성을 강조합니다.</p>
-            
-            <p>앞서 제시한 마케팅 인사이트와 제안사항을 바탕으로 타겟 마케팅을 강화하고 카테고리별 포지셔닝을 최적화한다면, 매출 증대와 고객 만족도 향상에 기여할 수 있을 것으로 기대됩니다.</p>
-        </div>
-        
-        <footer>
-            <p>아마존 판매 데이터 분석 리포트 | 작성일: 2025년 05월 09일</p>
-        </footer>
-    </body>
-    </html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>아마존 판매 데이터 분석 및 마케팅 인사이트 보고서</title>
+    <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            margin: 2cm;
+            line-height: 1.5;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 8px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 25px;
+            border-bottom: none;
+        }
+        .content {
+            margin: 20px 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .executive-summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+        }
+        .key-insights {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-left: 5px solid #16a085;
+            margin: 20px 0;
+        }
+        .recommendation {
+            background-color: #f0fff0;
+            padding: 15px;
+            border-left: 5px solid #27ae60;
+            margin: 20px 0;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        .toc ul li {
+            margin-bottom: 8px;
+        }
+        .toc-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1>아마존 판매 데이터 분석 및 마케팅 인사이트 보고서</h1>
     
+    <div class="toc">
+        <div class="toc-header">목차</div>
+        <ul>
+            <li>1. 보고서 개요</li>
+            <li>2. 주요 발견사항</li>
+            <li>3. 데이터 구조 및 전처리</li>
+            <li>4. 기본 데이터 분석</li>
+            <li>5. 변수 관계 분석</li>
+            <li>6. 마케팅 인사이트 분석</li>
+            <li>7. 결론 및 마케팅 전략 제안</li>
+        </ul>
+    </div>
+    
+    <h2>1. 보고서 개요</h2>
+    <div class="executive-summary">
+        <p>본 보고서는 아마존 판매 데이터를 분석하여 마케팅 인사이트를 도출하고 전략적 제안을 제시하는 것을 목적으로 합니다. 
+        분석 대상은 아마존의 판매 데이터로, 약 128,975개의 주문 기록과 24개의 변수를 포함하고 있습니다. 
+        데이터 분석은 기본 구조 파악, 전처리, 기본 데이터 분석, 변수 간 관계 분석, 마케팅 인사이트 도출 등 5개 단계로 진행되었습니다.</p>
+        
+        <p>분석 기간은 2022년 3월 31일부터 2022년 6월 29일까지의 약 3개월간의 판매 데이터를 대상으로 하였으며, 
+        주문 ID, 날짜, 상태, 판매 채널, 카테고리, 배송 지역, 금액 등 다양한 변수를 활용하여 판매 패턴, 고객 행동, 
+        프로모션 효과 등에 대한 인사이트를 도출하였습니다.</p>
+    </div>
+    
+    <h2>2. 주요 발견사항</h2>
+    <div class="key-insights">
+        <p>아마존 판매 데이터 분석을 통해 다음과 같은 주요 인사이트를 발견하였습니다:</p>
+        <ul>
+            <li><strong>판매 채널 및 카테고리:</strong> Set, Saree, Western Dress가 가장 높은 평균 주문금액을 보이며, Amazon.in이 주요 판매 채널로 높은 평균 주문금액을 유지하고 있습니다.</li>
+            <li><strong>B2B vs B2C:</strong> B2B 주문의 평균 금액(701.33)이 B2C(648.19)보다 높으나, 전체 주문 중 B2B 비중은 상대적으로 낮습니다(0.68%).</li>
+            <li><strong>지역별 판매:</strong> MAHARASHTRA, KARNATAKA, TELANGANA가 상위 판매 지역이며, 주요 지역의 평균 주문금액은 645.32입니다.</li>
+            <li><strong>프로모션 효과:</strong> 전체 주문의 61.89%가 프로모션이 적용되었으며, 프로모션 주문의 평균 금액(674.22)이 일반 주문(599.65)보다 높게 나타났습니다.</li>
+            <li><strong>배송 서비스:</strong> 서비스 레벨별 주문 분포와 평균 금액에 차이가 있으며, 평균 주문금액은 644.15입니다.</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h2>3. 데이터 구조 및 전처리</h2>
+
+        <h3>3.1 데이터셋 기본 구조</h3>
+        <div class="content">
+            <p>분석에 사용된 아마존 판매 데이터는 다음과 같은 구조를 가지고 있습니다:</p>
+            <ul>
+                <li>총 데이터 크기: 128,975개 행, 24개 열</li>
+                <li>주요 컬럼: Order ID, Date, Status, Sales Channel, Category, Amount 등</li>
+            </ul>
+            <p>데이터에는 주문 ID, 날짜, 상태, 판매 채널, 제품 카테고리, 금액, 배송 정보 등 판매와 관련된 다양한 정보가 포함되어 있습니다.</p>
+        </div>
+        
+        <h3>3.2 데이터 전처리</h3>
+        <div class="content">
+            <p>원시 데이터의 품질 향상과 분석 준비를 위해 다음과 같은 전처리 작업을 수행했습니다:</p>
+            <ul>
+                <li>결측치 처리: Courier Status('Not Available'), promotion-ids('No Promotion') 등으로 대체</li>
+                <li>날짜 형식 변환: 'Date' 컬럼을 datetime 형식으로 변환</li>
+                <li>불필요한 컬럼 제거: 'index', 'Unnamed: 22' 등</li>
+                <li>데이터 타입 변환 및 정리</li>
+            </ul>
+            <p>전처리 후, 데이터에는 약 7,195개의 제품(SKU)과 9개의 카테고리가 포함되어 있으며, 평균 주문금액은 약 648.72입니다.</p>
+        </div>
+        
+    <div class="page-break"></div>
+    
+    <h2>4. 기본 데이터 분석</h2>
+
+        <h3>4.1 기본 통계</h3>
+        <div class="content">
+            <p>아마존 판매 데이터의 기본 통계는 다음과 같습니다:</p>
+            <ul>
+                <li>총 주문 수: 128,975개</li>
+                <li>총 제품 수: 7,195개</li>
+                <li>평균 주문 금액: 648.56</li>
+                <li>최대 주문 금액: 5584.00</li>
+                <li>최소 주문 금액: 0.00</li>
+                <li>B2B 주문 비율: 0.68%</li>
+            </ul>
+        </div>
+        
+        <h3>4.2 카테고리별 판매량</h3>
+        <div class="content">
+            <img src="./artifacts/category_sales.png" alt="카테고리별 판매량 차트">
+            <p class="image-caption">그림 1: 카테고리별 판매량 분포</p>
+            <p>카테고리별 판매량 분석 결과, 특정 카테고리가 판매의 주요 부분을 차지하고 있음을 확인할 수 있습니다. 
+            이는 제품 카테고리별 마케팅 전략 수립에 중요한 정보를 제공합니다.</p>
+        </div>
+        
+        <h3>4.3 일별 판매 추이</h3>
+        <div class="content">
+            <img src="./artifacts/daily_sales_trend.png" alt="일별 판매량 추이 그래프">
+            <p class="image-caption">그림 2: 일별 판매량 추이</p>
+            <p>일별 판매량 추이를 분석한 결과, 특정 날짜에 판매 피크가 발생함을 확인할 수 있습니다. 
+            이러한 판매 패턴은 프로모션, 시즌 효과 또는 특별 이벤트의 영향을 반영할 수 있습니다.</p>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <h3>4.4 판매 채널 분석</h3>
+        <div class="content">
+            <img src="./artifacts/sales_channel_dist.png" alt="판매 채널별 분포 파이 차트">
+            <p class="image-caption">그림 3: 판매 채널별 분포</p>
+            <p>판매 채널 분석 결과, Amazon.in이 주요 판매 채널임을 확인할 수 있습니다. 
+            이는 아마존 자체 플랫폼이 판매의 핵심 채널임을 나타내며, 
+            채널별 최적화 전략을 수립하는 데 중요한 정보를 제공합니다.</p>
+        </div>
+        
+        <h3>4.5 주요 판매 도시</h3>
+        <div class="content">
+            <img src="./artifacts/top_cities_sales.png" alt="상위 10개 도시별 판매량 차트">
+            <p class="image-caption">그림 4: 상위 10개 도시별 판매량</p>
+            <p>지역별 판매량 분석 결과, 특정 도시에서의 판매가 두드러짐을 확인할 수 있습니다. 
+            이러한 지역 분포는 지역 맞춤형 마케팅 전략을 수립하는 데 유용한 정보를 제공합니다.</p>
+        </div>
+        
+    <div class="page-break"></div>
+    
+    <h2>5. 변수 관계 분석</h2>
+
+        <h3>5.1 B2B vs B2C 분석</h3>
+        <div class="content">
+            <img src="./artifacts/b2b_amount_dist.png" alt="B2B vs B2C 주문 금액 분포도">
+            <p class="image-caption">그림 5: B2B vs B2C 주문 금액 분포</p>
+            <p>B2B와 B2C 주문을 비교 분석한 결과, B2B 평균 주문금액(701.33)이 B2C 평균 주문금액(648.19)보다 높게 나타났습니다. 
+            그러나 전체 주문 중 B2B 비중은 0.68%로 상대적으로 낮습니다. 
+            이는 B2B 고객이 주문당 더 높은 금액을 지출하지만, 고객 수는 적다는 것을 의미합니다.</p>
+        </div>
+        
+        <h3>5.2 카테고리별 평균 주문 금액</h3>
+        <div class="content">
+            <img src="./artifacts/category_avg_amount.png" alt="카테고리별 평균 주문 금액 차트">
+            <p class="image-caption">그림 6: 카테고리별 평균 주문 금액</p>
+            <p>카테고리별 평균 주문금액 분석 결과, Set(833.39), Saree(799.57), Western Dress(762.79) 등의 카테고리가 
+            상대적으로 높은 평균 주문금액을 기록했습니다. 이는 이러한 카테고리의 제품이 더 높은 수익성을 가질 가능성을 시사합니다.</p>
+        </div>
+        
+        <h3>5.3 판매 채널별 평균 주문 금액</h3>
+        <div class="content">
+            <img src="./artifacts/channel_avg_amount.png" alt="판매 채널별 평균 주문 금액 차트">
+            <p class="image-caption">그림 7: 판매 채널별 평균 주문 금액</p>
+            <p>판매 채널별 평균 주문금액 분석 결과, Amazon.in이 주요 판매 채널로서 중요한 역할을 하고 있음을 확인할 수 있습니다. 
+            Amazon.in의 평균 주문금액은 648.56으로 나타났습니다.</p>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <h3>5.4 주간 판매 트렌드</h3>
+        <div class="content">
+            <img src="./artifacts/weekly_sales_trend.png" alt="주간별 판매 트렌드 그래프">
+            <p class="image-caption">그림 8: 주간별 판매 트렌드</p>
+            <p>주간별 판매 트렌드 분석 결과, 판매량에 주기적인 패턴이 있음을 확인할 수 있습니다. 
+            이는 특정 요일이나 주간에 판매가 증가하는 경향을 나타내며, 
+            이러한 패턴을 활용하여 프로모션 시기 조정 등의 전략을 수립할 수 있습니다.</p>
+        </div>
+        
+        <h3>5.5 변수 간 상관관계</h3>
+        <div class="content">
+            <img src="./artifacts/correlation_matrix.png" alt="변수 간 상관관계 매트릭스">
+            <p class="image-caption">그림 9: 변수 간 상관관계 매트릭스</p>
+            <p>변수 간 상관관계 분석을 통해 주요 변수들 간의 관계를 파악할 수 있습니다. 
+            이 정보는 변수 간 인과관계 이해와 예측 모델 개발에 유용하게 활용될 수 있습니다.</p>
+        </div>
+        
+    <div class="page-break"></div>
+    
+    <h2>6. 마케팅 인사이트 분석</h2>
+
+        <h3>6.1 배송 서비스 레벨 분석</h3>
+        <div class="content">
+            <img src="./artifacts/service_level_analysis.png" alt="배송 서비스 레벨별 분석 차트">
+            <p class="image-caption">그림 10: 배송 서비스 레벨별 분석</p>
+            <p>배송 서비스 레벨 분석 결과, 서비스 레벨별 주문 분포와 평균 금액에 차이가 있음을 확인했습니다. 
+            평균 주문금액은 644.15로 나타났으며, 서비스 레벨이 고객 만족도와 주문금액에 영향을 미칠 수 있음을 시사합니다.</p>
+        </div>
+        
+        <h3>6.2 지역별 판매 분석</h3>
+        <div class="content">
+            <img src="./artifacts/state_sales_analysis.png" alt="지역별 판매 분석 차트">
+            <p class="image-caption">그림 11: 지역별 판매 분석</p>
+            <p>지역별 판매 분석 결과, MAHARASHTRA, KARNATAKA, TELANGANA 등이 상위 판매 지역으로 나타났습니다. 
+            주요 지역의 평균 주문금액은 645.32로, 이러한 지역 정보는 지역 맞춤형 마케팅 전략을 수립하는 데 중요한 정보를 제공합니다.</p>
+        </div>
+        
+        <h3>6.3 프로모션 효과 분석</h3>
+        <div class="content">
+            <img src="./artifacts/promotion_analysis.png" alt="프로모션 효과 분석 차트">
+            <p class="image-caption">그림 12: 프로모션 효과 분석</p>
+            <p>프로모션 효과 분석 결과, 전체 주문의 61.89%가 프로모션이 적용되었으며, 
+            프로모션 주문의 평균 금액(674.22)이 일반 주문(599.65)보다 높게 나타났습니다. 
+            이는 프로모션이 고객의 구매 결정과 주문 금액 증가에 긍정적인 영향을 미치고 있음을 시사합니다.</p>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <h3>6.4 시간대별 판매 패턴</h3>
+        <div class="content">
+            <img src="./artifacts/hourly_sales_pattern.png" alt="시간대별 판매 패턴 차트">
+            <p class="image-caption">그림 13: 시간대별 판매 패턴</p>
+            <p>시간대별 판매 패턴 분석 결과, 특정 시간대에 주문이 집중되는 경향이 있음을 확인할 수 있습니다. 
+            이러한 패턴 정보는 광고 집행 시간, 프로모션 시작 시간 등 마케팅 활동의 타이밍을 최적화하는 데 활용될 수 있습니다.</p>
+        </div>
+        
+    <h2>7. 결론 및 마케팅 전략 제안</h2>
+    
+    <div class="content">
+        <p>아마존 판매 데이터 분석을 통해 얻은 인사이트를 바탕으로 다음과 같은 마케팅 전략을 제안합니다:</p>
+    </div>
+    
+    <h3>7.1 지역 타겟팅 전략</h3>
+    <div class="recommendation">
+        <p><strong>전략:</strong> 상위 판매 지역(MAHARASHTRA, KARNATAKA, TELANGANA)에 대한 마케팅 투자 강화 및 성과가 낮은 지역에 대한 맞춤형 프로모션 개발</p>
+        <p><strong>근거:</strong> 지역별 판매 분석 결과, 특정 지역에서의 판매 성과가 월등히 높게 나타났습니다. 이는 지역별로 차별화된 마케팅 전략이 필요함을 시사합니다.</p>
+        <p><strong>실행 방안:</strong></p>
+        <ul>
+            <li>상위 판매 지역에 대한 마케팅 예산 우선 배정</li>
+            <li>지역별 소비자 선호도를 반영한 맞춤형 프로모션 설계</li>
+            <li>판매 실적이 저조한 지역에 대한 집중적인 시장 조사 및 인지도 제고 활동 전개</li>
+        </ul>
+    </div>
+    
+    <h3>7.2 프로모션 최적화 전략</h3>
+    <div class="recommendation">
+        <p><strong>전략:</strong> 프로모션 유형별 효과성 분석 및 최적화를 통한 ROI 향상</p>
+        <p><strong>근거:</strong> 프로모션이 적용된 주문(61.89%)이 더 높은 평균 금액(674.22 vs 599.65)을 기록하고 있어, 프로모션이 판매 증가에 효과적임을 확인하였습니다.</p>
+        <p><strong>실행 방안:</strong></p>
+        <ul>
+            <li>고수익 카테고리(Set, Saree, Western Dress)에 대한 프로모션 확대</li>
+            <li>시간대별 판매 패턴을 고려한 프로모션 일정 조정</li>
+            <li>프로모션 유형별 효과성 측정 시스템 구축</li>
+            <li>고객 세그먼트별 맞춤형 프로모션 설계</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <h3>7.3 B2B 마케팅 강화 전략</h3>
+    <div class="recommendation">
+        <p><strong>전략:</strong> B2B 고객 확대를 위한 전용 프로그램 개발 및 B2B 특화 상품 구성</p>
+        <p><strong>근거:</strong> B2B 주문의 평균 금액(701.33)이 B2C(648.19)보다 높으나, 전체 주문 중 비중은 낮은(0.68%) 것으로 나타났습니다.</p>
+        <p><strong>실행 방안:</strong></p>
+        <ul>
+            <li>B2B 전용 할인 및 로열티 프로그램 개발</li>
+            <li>B2B 고객을 위한 대량 구매 옵션 및 맞춤형 서비스 제공</li>
+            <li>B2B 고객 유치를 위한 타겟 마케팅 강화</li>
+            <li>B2B 거래 전문 영업팀 구성 및 운영</li>
+        </ul>
+    </div>
+    
+    <h3>7.4 카테고리 최적화 전략</h3>
+    <div class="recommendation">
+        <p><strong>전략:</strong> 고수익 카테고리(Set, Saree, Western Dress) 중심의 마케팅 및 카테고리별 차별화된 프로모션 설계</p>
+        <p><strong>근거:</strong> 카테고리별 평균 주문금액 분석 결과, Set(833.39), Saree(799.57), Western Dress(762.79) 등의 카테고리가 상대적으로 높은 수익성을 보였습니다.</p>
+        <p><strong>실행 방안:</strong></p>
+        <ul>
+            <li>고수익 카테고리에 대한 광고 및 홍보 투자 확대</li>
+            <li>카테고리별 판매량과 수익성을 고려한 재고 관리 최적화</li>
+            <li>카테고리별 고객 세그먼트 분석 및 타겟 마케팅</li>
+            <li>신규 트렌드를 반영한 제품 라인 확장</li>
+        </ul>
+    </div>
+    
+    <h3>7.5 배송 서비스 최적화 전략</h3>
+    <div class="recommendation">
+        <p><strong>전략:</strong> 서비스 레벨별 성과 차이를 고려한 배송 옵션 제공 및 지역별 배송 서비스 수준 조정</p>
+        <p><strong>근거:</strong> 서비스 레벨별 주문 분포와 평균 금액에 차이가 있으며, 이는 배송 서비스가 고객 경험과 구매 결정에 영향을 미치고 있음을 시사합니다.</p>
+        <p><strong>실행 방안:</strong></p>
+        <ul>
+            <li>고객 선호도가 높은 배송 서비스 옵션 강화</li>
+            <li>주요 판매 지역에 대한 배송 인프라 최적화</li>
+            <li>특정 카테고리 또는 고액 구매에 대한 프리미엄 배송 서비스 제공</li>
+            <li>배송 서비스 수준과 고객 만족도 간의 상관관계 지속 모니터링</li>
+        </ul>
+    </div>
+    
+    <div class="footer">
+        <p>© 2025 아마존 판매 데이터 분석 보고서 | 작성일: 2025년 05월 09일</p>
+    </div>
+</body>
+</html>
