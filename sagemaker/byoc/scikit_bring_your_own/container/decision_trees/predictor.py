@@ -20,6 +20,38 @@ model_path = os.path.join(prefix, "model")
 # A singleton for holding the model. This simply loads the model and holds it.
 # It has a predict function that does a prediction based on the model and the input data.
 
+import logging
+import time
+from datetime import datetime
+
+# 로깅 설정
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
+# 기존 핸들러 제거 (중복 방지)
+for handler in logger.handlers[:]:
+    logger.removeHandler(handler)
+
+# 커스텀 로그 포맷 생성
+class GunicornStyleFormatter(logging.Formatter):
+    def format(self, record):
+        # 현재 UTC 시간을 Gunicorn 형식으로 포맷팅 (+0000은 UTC 타임존)
+        timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000')
+        # 현재 프로세스 ID
+        process_id = os.getpid()
+        # 로그 레벨
+        level = record.levelname
+        # 로그 메시지
+        message = record.getMessage()
+        
+        # Gunicorn 스타일 포맷 적용
+        return f"[{timestamp}] [{process_id}] [{level}] {message}"
+
+# 로그 핸들러 추가
+handler = logging.StreamHandler(sys.stdout)
+handler.setFormatter(GunicornStyleFormatter())
+logger.addHandler(handler)
+
 
 class ScoringService(object):
     model = None  # Where we keep the model when it's loaded
@@ -27,9 +59,15 @@ class ScoringService(object):
     @classmethod
     def get_model(cls):
         """Get the model object for this instance, loading it if it's not already loaded."""
+        logger.info("get_model")
         if cls.model == None:
-            with open(os.path.join(model_path, "decision-tree-model.pkl"), "rb") as inp:
-                cls.model = pickle.load(inp)
+            try:
+                with open(os.path.join(model_path, "decision-tree-model.pkl"), "rb") as inp:
+                    cls.model = pickle.load(inp)
+                logger.info("Model loaded successfully")
+            except Exception as e:
+                logger.error(f"Error loading model: {e}")
+                raise
         return cls.model
 
     @classmethod
@@ -38,8 +76,15 @@ class ScoringService(object):
         Args:
             input (a pandas dataframe): The data on which to do the predictions. There will be
                 one prediction per row in the dataframe"""
-        clf = cls.get_model()
-        return clf.predict(input)
+        logger.info("predict start")
+        try:
+            clf = cls.get_model()
+            predictions = clf.predict(input)
+            logger.info(f"Prediction complete, generated {len(predictions)} predictions")
+            return predictions
+        except Exception as e:
+            logger.error(f"Error during prediction: {e}")
+            raise
 
 
 # The flask app for serving predictions
@@ -48,6 +93,7 @@ app = flask.Flask(__name__)
 
 @app.route("/ping", methods=["GET"])
 def ping():
+    logger.info("ping start")    
     """Determine if the container is working and healthy. In this sample container, we declare
     it healthy if we can load the model successfully."""
     health = ScoringService.get_model() is not None  # You can insert a health check here
