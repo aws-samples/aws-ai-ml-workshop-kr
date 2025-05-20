@@ -37,7 +37,7 @@ def handle_bash_tool(cmd: Annotated[str, "The bash command to be executed."],):
         )
         # Return stdout as the result
         results = "||".join([cmd, result.stdout])
-        return results
+        return results + "\n"
         #return result.stdout
     except subprocess.CalledProcessError as e:
         # If command fails, return error information
