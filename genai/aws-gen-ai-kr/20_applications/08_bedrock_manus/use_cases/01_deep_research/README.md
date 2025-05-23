@@ -30,7 +30,7 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 
 [![Demo](./assets/demo.gif)]
 
-- [View on YouTube](https://youtu.be/DwWICGLEv14)
+- [View on YouTube](https://www.youtube.com/watch?v=Pb1lJTSLI98)
 - Output in Demo is [English- Report.pdf (6 pages)](./assets/final_report_deep_resrarch.pdf))
 
 ## Table of Contents
