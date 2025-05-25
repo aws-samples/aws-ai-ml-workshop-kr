@@ -66,7 +66,7 @@ AWS Neuron 기반 Optimum-neuron 0.0.28을 사용하여 Llama3 한국어 파인�
 ## 2.1 SageMaker Notebook Instance 생성하기
 생성은 여기 [SageMaker AI Notebook instance](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html) 가이드를 확인 해주시고, 아래는 중요 내용만 기술 하겠습니다.
 아래와 같이 SageMaker Notebook Instance 를 생성시에, instance type 을 ml.inf2.xlarge, 스토리지는 128 GB 지정 합니다.
-- [sm_notebook.png](img/sm_notebook.png)
+- ![sm_notebook.png](img/sm_notebook.png)
 role은 기존 것 혹은 새로운 role 을 생성하십시오. 그리고 role 은 AmazonSageMakerFullAccess, AmazonS3FullAccess 이 필요하고, SageMakr 의 신뢰 관계도 필요 합니다.
 - ![sm_role](img/sm_role.png)
 - ![trust_r](img/trust_r.png)
