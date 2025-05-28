@@ -6,7 +6,6 @@
     <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
         <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
     </a>
-    <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Faws-samples%2Faws-ai-ml-workshop-kr%2Ftree%2Fmaster%2Fgenai%2Faws-gen-ai-kr%2F20_applications&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
 </p>
 
 
@@ -14,6 +13,18 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [25.5.20]
+    - 08_bedrock_manus, Dongjin Jang: [Bedrock-Manus: AI Automation Framework Based on Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus)
+- [25.4.30]
+    - 23_Agentic Text-to-SQL Workflow with AWS-hosted Langfuse and Amazon Bedrock, Gonsoo Moon: [Agentic Text-to-SQL Workflow with AWS-hosted Langfuse and Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/23_advanced_agentic_text2sql_aws_hosted_langfuse)
+- [25.4.25]
+    - 22_EKS_natural_language_assistant, Chanho Soh: [EKS Natural Language Assistant](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/22_EKS_natural_language_assistant)
+- [25.4.20]
+    - 21_prompt_caching_with_contextual_retrieval, Chanho Soh: [Test out prompt caching with contextual retrieval and compare RAG search methods](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/21_prompt_caching_with_contextual_retrieval)
+- [25.3.29]
+    - 20_contextual_rag, Bailey Cho: [Contextual RAG with Amazon Bedrock and OpenSearch](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/20_contextual_rag)
+- [25.3.28]
+    - 19_agentic_rag, Dongjin Jang, Gonsoo Moon, Yeunuk Lim, Hochal Yang: [AWS Agentic AI Workshop: 실전 응용을 위한 Agentic RAG 배우기](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/19_agentic_rag)
 - [25.2.13]
     - 18_anomaly_detection_on_video_under_construction, Dongjin Jang: [워크샵: Anomaly Detection on CCTV video](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/18_anomaly_detection_on_video_under_construction)
 - [25.2.1]
