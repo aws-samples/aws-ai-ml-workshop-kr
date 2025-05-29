@@ -1,0 +1,14 @@
+Reserved Instance (RI) Policy Information:
+1. Commitment Options:
+   - 1-month commitment
+   - 6-month commitment (deeper discounts)
+
+2. Key Features:
+   - Charged by the hour
+   - Required for custom models and fine-tuned models
+   - Pricing varies by region and model type
+
+3. Additional Cost Optimization:
+   - Prompt Caching: Up to 90% discount on cached tokens
+   - Intelligent Prompt Routing: Up to 30% cost reduction
+   - Batch Processing: Up to 50% discount compared to on-demand pricing

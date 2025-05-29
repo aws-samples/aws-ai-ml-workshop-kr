@@ -1,0 +1,194 @@
+
+==================================================
+# Research Findings - 2025-05-29 07:53:52
+--------------------------------------------------
+
+## Problem Statement
+Research requested information about Amazon Bedrock foundation models including Nova series (Micro, Lite, Pro) and Claude series (3.5 Sonnet, 3.5 Sonnet v2, 3 Haiku, 3.7 Sonnet) regarding their features, pricing, context length, multimodal capabilities, and regional availability.
+
+## Research Findings
+
+### Topic 1: Model Names and Versions
+- Nova Series [1][2]:
+  * Nova Micro: Text-only model optimized for speed and low cost
+  * Nova Lite: Multimodal model for image, video, and text processing
+  * Nova Pro: Advanced multimodal model with best accuracy-speed-cost balance
+  
+- Claude Series [3][4]:
+  * Claude 3.5 Sonnet
+  * Claude 3.5 Sonnet v2
+  * Claude 3 Haiku
+  * Claude 3.7 Sonnet
+
+### Topic 2: Key Features and Capabilities
+- Nova Micro [1][2]:
+  * Text-only model
+  * Fastest response times
+  * Supports 200+ languages
+  * Best for: text summarization, translation, content classification, chat, math reasoning
+
+- Nova Lite [1][2]:
+  * Multimodal (text, image, video)
+  * Very low cost
+  * Lightning fast processing
+  * Supports 200+ languages
+  * Document support: PDF, CSV, DOC, DOCX, XLS, XLSX, HTML, TXT, MD
+
+- Nova Pro [1][2]:
+  * Advanced multimodal capabilities
+  * Best balance of accuracy, speed, and cost
+  * Supports 200+ languages
+  * Document support: PDF, CSV, DOC, DOCX, XLS, XLSX, HTML, TXT, MD
+  * Excel at agentic workflows and function calling
+
+- Claude Models [3][4]:
+  * Claude 3.5 Sonnet v2: Double output capacity (8K tokens) compared to v1
+  * Claude 3.5 Sonnet: High performance, balanced model
+  * Claude 3 Haiku: Fastest and most compact model
+  * Claude 3.7 Sonnet: Latest model with enhanced capabilities
+
+### Topic 3: Context Length Information
+- Nova Series [1][2]:
+  * Nova Micro: 128K tokens
+  * Nova Lite: 300K tokens
+  * Nova Pro: 300K tokens
+  * All models support 5K max output tokens
+
+- Claude Series [3][4]:
+  * Claude 3.5 Sonnet v2: 200K tokens
+  * Claude 3.5 Sonnet: 200K tokens
+  * Claude 3 Haiku: Context window optimized for speed
+  * Claude 3.7 Sonnet: Enhanced context processing
+
+### Topic 4: Multimodal Capabilities
+- Nova Series [1][2]:
+  * Nova Micro: Text only
+  * Nova Lite: Text, Image, Video input → Text output
+  * Nova Pro: Text, Image, Video input → Text output
+  * Advanced document processing capabilities for Lite and Pro
+
+- Claude Series [3][4]:
+  * All models support text processing
+  * Advanced language understanding
+  * Document analysis capabilities
+  * Image analysis capabilities (varies by model)
+
+### Topic 5: Regional Availability
+- Nova Series [1][2]:
+  * Primary regions: US East (N. Virginia), Asia Pacific (Tokyo)
+  * Cross-region inference available in:
+    - US East (Ohio)
+    - US West (Oregon)
+    - Europe (Stockholm, Ireland, Frankfurt, Paris)
+    - Asia Pacific (Tokyo, Singapore, Sydney, Seoul, Mumbai)
+
+- Claude Series [3][4]:
+  * Claude 3.5 Sonnet and Haiku available in:
+    - US East/West
+    - Europe (Frankfurt)
+    - Asia Pacific (Tokyo, Singapore)
+  * Claude 3.7 Sonnet: Initially US East/West regions
+  * AP-Northeast-2 (Seoul) availability: Expected but dates not confirmed
+
+## Original full text
+[1]: [Amazon Nova is a new generation of foundation models that deliver frontier intelligence and industry leading price performance, available on Amazon Bedrock. Amazon Nova models include three understanding models: Micro (text-only, lowest latency), Lite (multimodal, low cost), and Pro (highly capable multimodal).]
+
+[2]: [Nova models support 200+ languages, with context windows of 128K for Micro and 300K for Lite/Pro. Available in US East (N. Virginia) and Asia Pacific (Tokyo) with cross-region inference support.]
+
+[3]: [Claude 3.5 Sonnet v2 doubles output limit to 8K tokens on Bedrock at the same price. The model maintains high performance while offering increased capacity.]
+
+[4]: [Claude models are available across multiple regions including US East/West, Europe (Frankfurt), and Asia Pacific (Tokyo, Singapore). Claude 3.7 Sonnet represents the latest advancement in the series.]
+
+## References
+[1]: [What is Amazon Nova?](https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html)
+[2]: [Introducing Amazon Nova](https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws)
+[3]: [Claude 3.5 Sonnet v2: Double Output Tokens on AWS Bedrock](https://community.aws/content/2uun3vJOQHdwN9l4ZEqbkbnyUFG/claude-3-5-sonnet-v2-double-output-tokens-on-aws-bedrock)
+[4]: [AWS Bedrock Pricing](https://www.metaltoad.com/blog/aws-bedrock-pricing)
+==================================================
+
+==================================================
+# Research Findings - 2025-05-29 07:58:09
+--------------------------------------------------
+
+## Problem Statement
+Research requested information about Amazon Bedrock foundation models including Nova series (Micro, Lite, Pro) and Claude series (3.5 Sonnet, 3.5 Sonnet v2, 3 Haiku, 3.7 Sonnet) regarding their pricing, RI policies, and related cost information.
+
+## Research Findings
+
+### Topic 6: Pricing Information
+- Nova Series [5]:
+  * Nova Micro:
+    - Input: $0.04 per 1M tokens
+    - Output: $0.14 per 1M tokens
+    - Batch mode: $0.02/1M input, $0.07/1M output tokens
+  * Nova Lite:
+    - Input: $0.06 per 1M tokens
+    - Output: $0.24 per 1M tokens
+    - Batch mode: $0.03/1M input, $0.12/1M output tokens
+  * Nova Pro:
+    - Input: $0.80 per 1M tokens
+    - Output: $3.20 per 1M tokens
+    - Batch mode: $0.40/1M input, $1.60/1M output tokens
+
+- Claude Series [5]:
+  * Claude 3.7 Sonnet (US regions):
+    - Input: $3.00 per 1M tokens
+    - Output: $15.00 per 1M tokens
+    - Batch mode: Not available
+  * Claude 3.5 Sonnet:
+    - Input: $3.00 per 1M tokens
+    - Output: $15.00 per 1M tokens
+    - Batch mode: $1.50/1M input, $7.50/1M output tokens
+  * Claude 3.5 Haiku:
+    - Input: $0.80 per 1M tokens
+    - Output: $4.00 per 1M tokens
+    - Batch mode: $0.50/1M input, $2.50/1M output tokens
+
+### Topic 7: Reserved Instance (RI) and Provisioned Throughput Policies
+- Provisioned Throughput [5][6]:
+  * Available for consistent, high-volume workloads
+  * Two commitment options:
+    - 1-month commitment
+    - 6-month commitment (offers deeper discounts)
+  * Charged by the hour
+  * Required for custom models and fine-tuned models
+  * Pricing varies by region and model type
+
+- Batch Processing [5][6]:
+  * Offers up to 50% discount compared to on-demand pricing
+  * Available for select foundation models from:
+    - Anthropic
+    - Meta
+    - Mistral AI
+    - Amazon
+  * Ideal for large-scale, non-time-sensitive predictions
+  * Results stored in S3 bucket for later access
+
+### Topic 8: Additional Cost Optimization Features
+- Prompt Caching [5]:
+  * Up to 90% discount on cached tokens
+  * Up to 85% latency improvement
+  * Cache duration: 5 minutes
+  * Isolated per AWS account
+  * Available for repeated context/prefixes
+
+- Intelligent Prompt Routing [5]:
+  * Automatically selects most cost-effective model
+  * Can reduce costs by up to 30%
+  * Routes based on prompt complexity
+  * Available within same model family
+  * No additional charge for the routing service
+
+## Original full text
+[5]: [Amazon Bedrock offers two pricing plans for inference: 1. On-Demand and Batch mode with pay-as-you-go pricing and no commitments, and 2. Provisioned Throughput mode for consistent workloads with 1-month or 6-month commitments. Batch mode offers up to 50% lower costs compared to on-demand pricing for select foundation models.]
+
+[6]: [Provisioned Throughput mode allows you to reserve model units for specific base or custom models, designed for large consistent inference workloads needing guaranteed throughput. Custom models can only be accessed using Provisioned Throughput. Pricing is charged hourly with 1-month or 6-month commitment terms available.]
+
+## References
+[5]: [AWS Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/)
+[6]: [AWS Bedrock Service Terms](https://aws.amazon.com/service-terms/)
+
+## Conclusion
+The research has identified comprehensive pricing information for both Nova and Claude series models, including on-demand, batch, and provisioned throughput options. Cost optimization features like prompt caching and intelligent routing are available to help reduce costs. The RI policy is implemented through Provisioned Throughput with 1-month or 6-month commitments, offering guaranteed performance for consistent workloads.
+
+==================================================

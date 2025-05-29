@@ -26,3 +26,4 @@ playwright==1.52.0
 lovelyplots==1.0.2
 weasyprint==65.1
 streamlit==1.45.0
+seaborn==0.13.2
