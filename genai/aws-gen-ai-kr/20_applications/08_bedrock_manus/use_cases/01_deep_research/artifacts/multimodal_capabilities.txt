@@ -1,0 +1,5 @@
+           Model Text Image Video Document Processing
+0     Nova Micro    ✓     ✗     ✗                   ✗
+1      Nova Lite    ✓     ✓     ✓                   ✓
+2       Nova Pro    ✓     ✓     ✓                   ✓
+3  Claude Series    ✓     ✓     ✗                   ✓
