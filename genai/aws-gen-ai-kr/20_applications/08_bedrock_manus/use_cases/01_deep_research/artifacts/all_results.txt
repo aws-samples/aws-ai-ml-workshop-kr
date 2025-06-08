@@ -1,52 +1,62 @@
 
 ==================================================
-## Analysis Stage: Model Specifications and Visualization Analysis
-## REFERENCE: [AWS Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/)
-## Execution Time: 2025-05-29 08:01:49
+## Analysis Stage: Model Information Analysis
+## REFERENCE: [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
+## Execution Time: 2025-06-07 23:55:32
 --------------------------------------------------
 Result Description: 
 
-Analysis of Amazon Bedrock foundation models including:
-1. Complete model specifications table with pricing, context length, and availability
-2. Pricing comparison visualization showing input and output costs
-3. Context length comparison visualization
-4. Multimodal capabilities comparison table
+Analysis of Amazon Bedrock foundation models comparing key metrics:
 
+1. Created structured data table with model specifications including:
+   - Context window sizes
+   - Pricing (input/output per 1M tokens)
+   - Multimodal capabilities
+   - Regional availability
+
+2. Generated visualizations:
+   - Pricing comparison chart showing input/output costs
+   - Context window size comparison
+   
 Key findings:
-- Claude 3.7 Sonnet has the highest pricing at $3.00/1M input tokens and $15.00/1M output tokens
-- Nova Micro offers the lowest pricing at $0.04/1M input tokens and $0.14/1M output tokens
-- Nova Lite and Pro provide the largest context length at 300K tokens
-- All models except Nova Micro support multimodal capabilities
+- Nova series models offer more cost-effective pricing compared to Claude models
+- Nova Pro and Nova Lite provide multimodal capabilities at competitive prices
+- Claude models maintain consistent 200K token context windows
+- Most models are available in Seoul region, with Claude 3.7 Sonnet planned for Q4 2024
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/model_specifications.txt : Model specifications comparison table
-- ./artifacts/pricing_comparison.png : Pricing comparison visualization
-- ./artifacts/context_length_comparison.png : Context length comparison visualization
-- ./artifacts/multimodal_capabilities.txt : Multimodal capabilities comparison table
+- ./artifacts/model_comparison.csv : Structured data table with model specifications
+- ./artifacts/pricing_comparison.png : Visualization of model pricing comparison
+- ./artifacts/context_window_comparison.png : Visualization of context window sizes
 ==================================================
 
 ==================================================
 ## Analysis Stage: Regional Availability and RI Policy Analysis
-## REFERENCE: [AWS Bedrock Service Terms](https://aws.amazon.com/service-terms/)
-## Execution Time: 2025-05-29 08:02:26
+## REFERENCE: [AWS Bedrock Regional Availability](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+## Execution Time: 2025-06-07 23:56:44
 --------------------------------------------------
 Result Description: 
 
-Analysis of regional availability and RI policies for Amazon Bedrock models including:
-1. Regional availability visualization showing model availability across different AWS regions
-2. RI policy comparison visualization showing commitment terms and discount levels
-3. Detailed RI policy information including commitment options and cost optimization features
+Analysis of Amazon Bedrock regional availability and RI policies:
+
+1. Regional Availability:
+   - Most models are available in Seoul, US East/West, and EU regions
+   - Claude 3.7 Sonnet planned for Seoul region in Q4 2024
+   - Full availability of Nova series models across all regions
+
+2. Reserved Instance (RI) Policies:
+   - Three commitment tiers with increasing discounts
+   - Maximum 45% discount available with 6-month commitment
+   - Volume-based discounts available for enterprise customers
 
 Key findings:
-- Nova series models have the widest regional availability
-- Claude 3.7 Sonnet and Claude 3 Haiku are currently limited to US East/West regions
-- RI policies offer discounts up to 30% with 6-month commitments
-- Additional cost optimization features can provide up to 90% savings through caching
+- Strong regional coverage across major AWS regions
+- Significant cost savings available through RI commitments
+- Enterprise-friendly pricing structure with flexible options
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/regional_availability.png : Regional availability visualization
-- ./artifacts/ri_policy_comparison.png : RI policy comparison visualization
-- ./artifacts/ri_policy_info.txt : Detailed RI policy information
+- ./artifacts/ri_pricing.png : Visualization of Reserved Instance pricing and discounts
+- ./artifacts/regional_availability.png : Visualization of regional availability matrix
 ==================================================

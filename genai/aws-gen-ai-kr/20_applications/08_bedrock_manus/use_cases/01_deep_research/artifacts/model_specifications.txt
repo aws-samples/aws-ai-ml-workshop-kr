@@ -1,8 +1,0 @@
-                  Model  Input Price (per 1M tokens)  Output Price (per 1M tokens)  Context Length (K tokens) Multimodal Seoul Region Available
-0            Nova Micro                         0.04                          0.14                        128         No                    Yes
-1             Nova Lite                         0.06                          0.24                        300        Yes                    Yes
-2              Nova Pro                         0.80                          3.20                        300        Yes                    Yes
-3     Claude 3.7 Sonnet                         3.00                         15.00                        200        Yes                     No
-4  Claude 3.5 Sonnet v2                         3.00                         15.00                        200        Yes                    Yes
-5     Claude 3.5 Sonnet                         3.00                         15.00                        200        Yes                    Yes
-6        Claude 3 Haiku                         0.80                          4.00                        200        Yes                     No
