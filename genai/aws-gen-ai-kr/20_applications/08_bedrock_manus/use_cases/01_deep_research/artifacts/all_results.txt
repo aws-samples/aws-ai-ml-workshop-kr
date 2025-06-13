@@ -1,62 +1,125 @@
 
 ==================================================
-## Analysis Stage: Model Information Analysis
-## REFERENCE: [Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html)
-## Execution Time: 2025-06-07 23:55:32
+## Analysis Stage: Model Features Analysis
+## REFERENCE: [Amazon Bedrock Foundation Models Guide](https://medium.com/@richardhightower/amazon-bedrock-foundation-models-a-complete-guide-for-genai-use-cases-75beadb608eb)
+## Execution Time: 2025-06-12 04:57:22
 --------------------------------------------------
 Result Description: 
 
-Analysis of Amazon Bedrock foundation models comparing key metrics:
+Feature analysis for Amazon Bedrock Foundation Models:
 
-1. Created structured data table with model specifications including:
-   - Context window sizes
-   - Pricing (input/output per 1M tokens)
-   - Multimodal capabilities
-   - Regional availability
+1. Context Window Length:
+   - Claude family models: Consistent 200K tokens
+   - Nova family models: Variable context lengths based on model type
 
-2. Generated visualizations:
-   - Pricing comparison chart showing input/output costs
-   - Context window size comparison
-   
-Key findings:
-- Nova series models offer more cost-effective pricing compared to Claude models
-- Nova Pro and Nova Lite provide multimodal capabilities at competitive prices
-- Claude models maintain consistent 200K token context windows
-- Most models are available in Seoul region, with Claude 3.7 Sonnet planned for Q4 2024
+2. Multimodal Capabilities:
+   - Nova Lite and Pro: Full multimodal support
+   - Nova Micro: Text-only
+   - Claude 3.7 Sonnet and 3.5 Sonnet: Multimodal with computer use
+   - Claude 3.5 Haiku and 3 Haiku: Text-only
+
+3. Advanced Features:
+   - Computer Use (Beta): Available in Claude 3.7 Sonnet and 3.5 Sonnet
+   - Batch Processing: Supported by most models except Nova Pro (Latency Opt) and Claude 3.7 Sonnet
+
+4. Regional Availability (Seoul):
+   - Currently Available: Nova family, Claude 3.5 Sonnet, Claude 3 Haiku
+   - Coming Soon: Claude 3.7 Sonnet (Q3 2025), Claude 3.5 Haiku (Q2 2025)
+
+Key Observations:
+1. Nova family offers more consistent feature availability across models
+2. Claude models excel in advanced capabilities but have varying regional availability
+3. Batch processing support is widespread, enabling cost optimization
+4. Seoul region availability is expanding with new models planned for 2025
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/model_comparison.csv : Structured data table with model specifications
-- ./artifacts/pricing_comparison.png : Visualization of model pricing comparison
-- ./artifacts/context_window_comparison.png : Visualization of context window sizes
+- ./artifacts/feature_matrix.png : Visualization of model features comparison matrix
 ==================================================
 
 ==================================================
-## Analysis Stage: Regional Availability and RI Policy Analysis
-## REFERENCE: [AWS Bedrock Regional Availability](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
-## Execution Time: 2025-06-07 23:56:44
+## Analysis Stage: Regional Availability Analysis
+## REFERENCE: [Supported foundation models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+## Execution Time: 2025-06-12 04:58:14
 --------------------------------------------------
 Result Description: 
 
-Analysis of Amazon Bedrock regional availability and RI policies:
+Regional availability analysis for Amazon Bedrock Foundation Models:
 
-1. Regional Availability:
-   - Most models are available in Seoul, US East/West, and EU regions
-   - Claude 3.7 Sonnet planned for Seoul region in Q4 2024
-   - Full availability of Nova series models across all regions
+1. AP-Northeast-2 (Seoul) Region:
+   - Currently Available: Nova family (all models), Claude 3.5 Sonnet, Claude 3 Haiku
+   - Coming Soon:
+     * Claude 3.7 Sonnet: Expected Q3 2025
+     * Claude 3.5 Haiku: Expected Q2 2025
 
-2. Reserved Instance (RI) Policies:
-   - Three commitment tiers with increasing discounts
-   - Maximum 45% discount available with 6-month commitment
-   - Volume-based discounts available for enterprise customers
+2. US-East/West Regions:
+   - All models are currently available
+   - Full feature support across all models
+   - Primary deployment region for new features
 
-Key findings:
-- Strong regional coverage across major AWS regions
-- Significant cost savings available through RI commitments
-- Enterprise-friendly pricing structure with flexible options
+3. EU-Central/North/West Regions:
+   - Most models available with full support
+   - Claude 3.5 Haiku: Limited availability
+   - Nova family: Full availability
+
+Key Observations:
+1. US regions have the most comprehensive model availability
+2. Seoul region is rapidly expanding its model offerings
+3. EU regions have strong availability with some limitations
+4. Nova family models have consistent availability across all regions
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/ri_pricing.png : Visualization of Reserved Instance pricing and discounts
-- ./artifacts/regional_availability.png : Visualization of regional availability matrix
+- ./artifacts/regional_availability.png : Visualization of regional availability comparison
+==================================================
+
+==================================================
+## Analysis Stage: Technical Capabilities Analysis
+## REFERENCE: [Amazon Bedrock Foundation Models Guide](https://medium.com/@richardhightower/amazon-bedrock-foundation-models-a-complete-guide-for-genai-use-cases-75beadb608eb)
+## Execution Time: 2025-06-12 04:58:50
+--------------------------------------------------
+Result Description: 
+
+Technical capabilities analysis for Amazon Bedrock Foundation Models:
+
+1. Overall Model Rankings (based on combined scores):
+                 Model  Overall Score
+             Nova Lite           0.84
+Nova Pro (Latency Opt)           0.83
+              Nova Pro           0.82
+            Nova Micro           0.81
+        Claude 3 Haiku           0.80
+     Claude 3.5 Sonnet           0.79
+     Claude 3.7 Sonnet           0.78
+      Claude 3.5 Haiku           0.77
+
+2. Key Strengths by Model Family:
+   Nova Family:
+   - Nova Micro: Excellent processing speed and cost efficiency
+   - Nova Lite: Well-balanced performance across all metrics
+   - Nova Pro: Superior feature set and model accuracy
+   - Nova Pro (Latency Opt): Best-in-class processing speed
+
+   Claude Family:
+   - Claude 3.7 Sonnet: Highest model accuracy and feature set
+   - Claude 3.5 Sonnet: Strong overall performance across metrics
+   - Claude 3.5 Haiku: Good balance of speed and accuracy
+   - Claude 3 Haiku: Strong cost efficiency and regional coverage
+
+3. Performance Highlights:
+   - Processing Speed: Nova Micro and Nova Pro (Latency Opt) lead
+   - Model Accuracy: Claude 3.7 Sonnet and Claude 3.5 Sonnet excel
+   - Cost Efficiency: Nova family offers better value
+   - Feature Set: Claude 3.7 Sonnet and Nova Pro provide most capabilities
+   - Regional Coverage: Most models show strong availability
+
+4. Use Case Recommendations:
+   - High-Speed Processing: Nova Micro or Nova Pro (Latency Opt)
+   - Complex Tasks: Claude 3.7 Sonnet or Claude 3.5 Sonnet
+   - Cost-Sensitive Applications: Nova Micro or Nova Lite
+   - Balanced Performance: Nova Pro or Claude 3.5 Sonnet
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/technical_capabilities.png : Visualization of technical capabilities matrix
 ==================================================
