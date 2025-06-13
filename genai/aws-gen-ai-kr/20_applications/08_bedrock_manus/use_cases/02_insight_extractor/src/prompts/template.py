@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 from langchain_core.prompts import PromptTemplate
 from langgraph.prebuilt.chat_agent_executor import AgentState
-
 #from src.utils.bedrock import bedrock_utils
 
 def get_prompt_template(prompt_name: str) -> str:

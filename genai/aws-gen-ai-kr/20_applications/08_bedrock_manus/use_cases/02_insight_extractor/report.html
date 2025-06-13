@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>아마존 상품판매 데이터 분석 및 마케팅 인사이트 도출</title>
+    <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            margin: 2cm;
+            line-height: 1.5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 15px;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+        }
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .insight {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .recommendations {
+            background-color: #e8f4f8;
+            border-left: 4px solid #27ae60;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .executive-summary {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>아마존 상품판매 데이터 분석 및 마케팅 인사이트 도출</h1>
+    
+    <h2>1. 개요</h2>
+    <div class="executive-summary">
+        <p>본 보고서는 아마존 상품판매 데이터를 분석하여 마케팅 인사이트를 도출하는 것을 목표로 합니다. 분석 대상은 "./data/Amazon_Sale_Report.csv" 파일이며, 데이터 탐색, 판매 트렌드 분석, 변수 관계 분석, 고객 세그먼트 분석 등 다양한 분석 기법을 적용하였습니다.</p>
+        
+        <p>분석 결과, 총 121,180개의 주문 데이터를 바탕으로 판매 트렌드, 카테고리별 성과, 고객 세그먼테이션, 프로모션 효과 등에 대한 인사이트를 도출하였습니다. 이를 통해 매출 증대 및 고객 경험 향상을 위한 실행 가능한 전략을 제안합니다.</p>
+    </div>
+    
+    <h2>2. 주요 발견 사항</h2>
+    <div class="content">
+        <ul>
+            <li><strong>카테고리 성과</strong>: 'Set' 카테고리가 약 3,920만의 최고 매출을 기록하였으며, 총 9개의 카테고리 중 가장 높은 실적을 보였습니다.</li>
+            <li><strong>판매 채널</strong>: 모든 판매는 Amazon.in 채널을 통해 이루어졌으며, 총 매출액은 약 7,859만입니다.</li>
+            <li><strong>배송 방식</strong>: Amazon 배송이 83,639건으로 전체 주문의 약 69%를 차지하며, 매출액은 약 5,432만입니다.</li>
+            <li><strong>고객 세그먼트</strong>: RFM 분석 결과, 'Lost VIP' 세그먼트가 2,950명으로 가장 많고, 'VIP' 세그먼트가 1,444명으로 나타났습니다.</li>
+            <li><strong>월별 성장률</strong>: 평균 월간 성장률이 약 9,414%로 매우 높게 나타났으며, 최대 28,261%까지 성장한 시기도 있습니다.</li>
+        </ul>
+    </div>
+
+    <h2>3. 상세 분석 결과</h2>
+
+    <h3>3.1. 데이터 로드 및 기본 구조 파악</h3>
+    <div class="content">
+        <p>아마존 판매 데이터의 기본 구조를 파악한 결과, 원본 데이터는 (128975, 24) 크기로 구성되어 있으며, 
+        다음과 같은 주요 컬럼을 포함하고 있습니다:</p>
+        <ul>
+            <li>주문 정보: Order ID, Date, Status</li>
+            <li>제품 정보: Style, SKU, Category, Size, ASIN</li>
+            <li>배송 정보: Fulfilment, ship-service-level, ship-city, ship-state, ship-postal-code, ship-country</li>
+            <li>가격 정보: Qty, currency, Amount</li>
+            <li>추가 정보: Sales Channel, promotion-ids, B2B, fulfilled-by</li>
+        </ul>
+    </div>
+    
+    <h3>3.2. 데이터 전처리</h3>
+    <div class="content">
+        <p>데이터 품질 향상을 위해 다음과 같은 전처리 작업을 수행하였습니다:</p>
+        <ul>
+            <li>불필요한 컬럼(index, Unnamed: 22) 제거</li>
+            <li>날짜 데이터를 datetime 형식으로 변환</li>
+            <li>결측치 처리:
+                <ul>
+                    <li>Courier Status: 'Not Available'로 대체</li>
+                    <li>currency, Amount: 결측치가 있는 행 제거</li>
+                    <li>배송 정보: 'Unknown'으로 대체</li>
+                    <li>promotion-ids: 'No Promotion'으로 대체</li>
+                    <li>fulfilled-by: 'Not Specified'로 대체</li>
+                </ul>
+            </li>
+            <li>Amount를 float 타입으로 변환</li>
+        </ul>
+        <p>전처리 후 최종 데이터셋 크기는 (121180, 22) 입니다.</p>
+        
+        <div class="insight">
+            <p><strong>인사이트:</strong> 원본 데이터에서 약 7,795개의 행이 제거되었으며(약 6%), 이는 주로 금액 정보가 누락된 데이터였습니다. 이러한 데이터 품질 문제는 판매 프로세스 개선을 통해 해결할 수 있을 것입니다.</p>
+        </div>
+    </div>
+    
+    <h3>3.3. 기본 통계 분석 및 시각화</h3>
+    <div class="content">
+        <h4>3.3.1. 월별 판매 트렌드</h4>
+        <p>월별 판매 트렌드를 분석한 결과, 월 평균 30,295건의 주문과 약 19,648,170의 매출이 발생했습니다.</p>
+        <img src="./artifacts/monthly_sales_trend.png" alt="월별 판매 트렌드 그래프">
+        <div class="image-caption">월별 판매 트렌드 그래프</div>
+        
+        <h4>3.3.2. 카테고리별 매출</h4>
+        <p>카테고리별 매출 분석 결과, 'Set' 카테고리가 약 39204124.03의 매출로 가장 높은 실적을 보였습니다. 총 9개의 카테고리가 있습니다.</p>
+        <img src="./artifacts/category_sales.png" alt="카테고리별 매출액 그래프">
+        <div class="image-caption">카테고리별 매출액 그래프</div>
+        
+        <h4>3.3.3. 판매 채널 분석</h4>
+        <p>판매 채널 분석 결과, 모든 판매는 Amazon.in 채널을 통해 이루어졌으며, 총 매출액은 약 78,592,678입니다.</p>
+        <img src="./artifacts/sales_channel_distribution.png" alt="판매 채널별 매출 비중 그래프">
+        <div class="image-caption">판매 채널별 매출 비중 그래프</div>
+        
+        <h4>3.3.4. 배송 방식 분석</h4>
+        <p>배송 방식 분석 결과, Amazon 배송이 83,639건으로 전체 주문의 약 69%를 차지하며, 매출액은 약 54,322,151입니다. Merchant 배송은 37,541건으로 나머지 31%를 차지하며, 매출액은 약 24,270,527입니다.</p>
+        <img src="./artifacts/fulfillment_analysis.png" alt="배송 방식별 주문 건수 그래프">
+        <div class="image-caption">배송 방식별 주문 건수 그래프</div>
+        
+        <h4>3.3.5. 상위 제품 분석</h4>
+        <p>상위 제품 분석 결과, JNE3797 스타일이 3,995건의 주문과 약 2,933,482의 매출로 가장 인기 있는 제품으로 나타났습니다.</p>
+        <img src="./artifacts/top_products.png" alt="상위 10개 제품 매출액 그래프">
+        <div class="image-caption">상위 10개 제품 매출액 그래프</div>
+        
+        <h4>3.3.6. 지역별 판매 분석</h4>
+        <p>지역별 판매 분석을 통해 상위 주(state)별 매출액을 확인하였습니다.</p>
+        <img src="./artifacts/top_states.png" alt="상위 10개 주(state) 매출액 그래프">
+        <div class="image-caption">상위 10개 주(state) 매출액 그래프</div>
+        
+        <div class="insight">
+            <p><strong>인사이트:</strong> 'Set' 카테고리가 전체 매출의 상당 부분을 차지하므로, 이 카테고리의 제품 라인업을 확장하고 마케팅 노력을 집중할 필요가 있습니다. 또한, Amazon 배송이 선호되는 것으로 보아 물류 관련 파트너십을 강화하면 고객 만족도를 더욱 높일 수 있을 것입니다.</p>
+        </div>
+    </div>
+    
+    <h3>3.4. 고급 분석 (RFM, 상관관계, 분포)</h3>
+    <div class="content">
+        <h4>3.4.1. RFM 고객 세그먼테이션</h4>
+        <p>RFM(Recency, Frequency, Monetary) 분석을 통해 고객을 다음과 같이 세그먼트화하였습니다:</p>
+        <pre>Lost VIP            2950
+Recent Customers    2478
+Lost Customers      1469
+VIP                 1444
+Loyal Customers      614</pre>
+        <img src="./artifacts/customer_segments.png" alt="고객 세그먼트 분포 그래프">
+        <div class="image-caption">고객 세그먼트 분포 그래프</div>
+        
+        <h4>3.4.2. 변수 간 상관관계</h4>
+        <p>주요 변수 간의 상관관계를 분석하여 판매 패턴을 파악하였습니다.</p>
+        <img src="./artifacts/correlation_matrix.png" alt="변수 간 상관관계 히트맵">
+        <div class="image-caption">변수 간 상관관계 히트맵</div>
+        
+        <h4>3.4.3. 주문 금액 분포</h4>
+        <p>주문 금액의 분포를 분석하여 가격 전략에 활용할 수 있는 인사이트를 도출하였습니다.</p>
+        <img src="./artifacts/amount_distribution.png" alt="주문 금액 분포 그래프">
+        <div class="image-caption">주문 금액 분포 그래프</div>
+        
+        <h4>3.4.4. 요일별 주문 패턴</h4>
+        <p>요일별 주문 패턴을 분석하여 고객의 구매 행동을 이해하였습니다.</p>
+        <img src="./artifacts/weekday_orders.png" alt="요일별 주문 건수 그래프">
+        <div class="image-caption">요일별 주문 건수 그래프</div>
+        
+        <h4>3.4.5. 카테고리별 평균 주문 금액</h4>
+        <p>카테고리별 평균 주문 금액을 분석하여 상품 가격 전략에 활용할 수 있는 정보를 수집하였습니다.</p>
+        <img src="./artifacts/category_avg_amount.png" alt="카테고리별 평균 주문 금액 그래프">
+        <div class="image-caption">카테고리별 평균 주문 금액 그래프</div>
+        
+        <h4>3.4.6. 프로모션 효과 분석</h4>
+        <p>프로모션이 판매에 미치는 영향을 분석하였습니다.</p>
+        <img src="./artifacts/promotion_effect.png" alt="프로모션 효과 분석 그래프">
+        <div class="image-caption">프로모션 효과 분석 그래프</div>
+        
+        <h4>3.4.7. 배송 서비스 레벨 분석</h4>
+        <p>배송 서비스 레벨별 분포를 분석하여 고객의 선호도를 파악하였습니다.</p>
+        <img src="./artifacts/service_level_distribution.png" alt="배송 서비스 레벨 분포 그래프">
+        <div class="image-caption">배송 서비스 레벨 분포 그래프</div>
+        
+        <div class="insight">
+            <p><strong>인사이트:</strong> 'Lost VIP' 세그먼트가 가장 큰 비중을 차지하는 것은 과거 고가치 고객들의 이탈이 심각하다는 것을 의미합니다. 이들을 다시 확보하기 위한 타겟 캠페인이 필요합니다. 또한, 프로모션의 효과가 뚜렷하게 나타나므로, 적절한 프로모션 전략을 통해 매출 증대를 도모할 수 있습니다.</p>
+        </div>
+    </div>
+    
+    <h3>3.5. 시계열 분석</h3>
+    <div class="content">
+        <h4>3.5.1. 일별 판매 트렌드</h4>
+        <p>일별 판매 트렌드를 분석한 결과, 평균 일일 매출은 약 863655.81이며, 
+        최대 일일 매출은 1209364.17, 
+        최소 일일 매출은 101683.85입니다.</p>
+        <img src="./artifacts/daily_sales_trend.png" alt="일별 매출액 추이 그래프">
+        <div class="image-caption">일별 매출액 추이 그래프</div>
+        
+        <h4>3.5.2. 월별 성장률</h4>
+        <p>월별 성장률을 분석한 결과, 평균 월간 성장률은 9413.80%이며, 
+        최대 성장률은 28261.15%, 
+        최소 성장률은 -10.68%입니다.</p>
+        <img src="./artifacts/monthly_growth_rate.png" alt="월별 매출 성장률 그래프">
+        <div class="image-caption">월별 매출 성장률 그래프</div>
+        
+        <h4>3.5.3. 월별 평균 매출</h4>
+        <p>월별 평균 매출을 분석하여 계절성 패턴을 파악하였습니다.</p>
+        <img src="./artifacts/monthly_seasonality.png" alt="월별 평균 매출액 그래프">
+        <div class="image-caption">월별 평균 매출액 그래프</div>
+        
+        <h4>3.5.4. 분기별 매출</h4>
+        <p>분기별 매출을 분석하여 중장기 판매 패턴을 파악하였습니다.</p>
+        <img src="./artifacts/quarterly_sales.png" alt="분기별 총 매출액 그래프">
+        <div class="image-caption">분기별 총 매출액 그래프</div>
+        
+        <div class="insight">
+            <p><strong>인사이트:</strong> 월별 성장률이 매우 높게 나타나는 것은 사업이 빠르게 성장하고 있다는 신호입니다. 그러나 성장률의 변동성이 크기 때문에, 안정적인 성장을 위한 전략이 필요합니다. 또한, 월별 평균 매출에 계절성이 나타나므로, 이를 고려한 재고 및 마케팅 계획을 수립해야 합니다.</p>
+        </div>
+    </div>
+    
+    <h2>4. 결론 및 제안</h2>
+    <div class="content">
+        <h3>4.1. 주요 결론</h3>
+        <ol>
+            <li>'Set' 카테고리가 가장 높은 매출을 기록하고 있으며, 전체 매출의 상당 부분을 차지합니다.</li>
+            <li>Amazon 배송이 주문의 약 69%를 차지하여 고객들이 선호하는 배송 방식입니다.</li>
+            <li>'Lost VIP' 세그먼트가 가장 큰 비중을 차지하는 것은 과거 고가치 고객들의 이탈이 심각하다는 것을 의미합니다.</li>
+            <li>월별 성장률이 매우 높아 사업이 빠르게 성장하고 있으나, 그 변동성도 큽니다.</li>
+            <li>특정 상위 제품(JNE3797, J0230 등)이 매출에 큰 기여를 하고 있습니다.</li>
+        </ol>
+        
+        <h3>4.2. 마케팅 전략 제안</h3>
+        <div class="recommendations">
+            <ol>
+                <li><strong>고객 이탈 방지 전략</strong>: 'Lost VIP' 세그먼트를 대상으로 한 리인게이지먼트 캠페인을 실시하여 고가치 고객을 다시 확보합니다. 개인화된 특별 할인이나 로열티 프로그램을 제공할 수 있습니다.</li>
+                <li><strong>카테고리 특화 전략</strong>: 'Set' 카테고리의 제품 라인업을 확장하고, 이 카테고리에 대한 마케팅 투자를 증가시킵니다.</li>
+                <li><strong>배송 서비스 향상</strong>: Amazon 배송의 장점을 활용하고, 고객 만족도를 높이기 위해 배송 속도와 품질을 더욱 향상시킵니다.</li>
+                <li><strong>프로모션 최적화</strong>: 분석 결과를 바탕으로 가장 효과적인 프로모션 전략을 수립하고, 타겟 고객에게 적절한 시기에 제공합니다.</li>
+                <li><strong>계절별 마케팅 계획</strong>: 월별 및 분기별 판매 패턴을 고려하여 시즌에 맞는 마케팅 캠페인과 재고 관리 전략을 수립합니다.</li>
+                <li><strong>상위 제품 레버리징</strong>: 인기 제품을 중심으로 한 번들 상품이나 관련 제품 추천을 통해 객단가를 높입니다.</li>
+                <li><strong>데이터 품질 개선</strong>: 데이터 전처리 과정에서 발견된 결측치 문제를 해결하기 위해 판매 및 데이터 수집 프로세스를 개선합니다.</li>
+            </ol>
+        </div>
+        
+        <h3>4.3. 후속 분석 제안</h3>
+        <ul>
+            <li>고객 생애 가치(CLV) 분석을 통한 마케팅 ROI 최적화</li>
+            <li>경쟁사 데이터와 비교 분석을 통한 시장 포지셔닝 전략 수립</li>
+            <li>더 상세한 제품 속성 분석을 통한 제품 개발 방향 설정</li>
+            <li>고객 피드백 및 리뷰 분석을 통한 제품 및 서비스 개선</li>
+        </ul>
+    </div>
+</body>
+</html>
