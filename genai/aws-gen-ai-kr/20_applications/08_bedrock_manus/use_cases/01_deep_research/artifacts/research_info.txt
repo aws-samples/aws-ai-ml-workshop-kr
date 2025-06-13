@@ -1,351 +1,223 @@
 
 ==================================================
-# Research Findings - 2025-06-07 23:49:07
+# Research Findings - 2025-06-12 04:51:51
 --------------------------------------------------
 
 ## Problem Statement
-Research basic model information for Amazon Bedrock foundation models, including Nova series and Claude models, focusing on specifications, features, context windows, and multimodal capabilities.
+Research on Amazon Bedrock foundation models for KB Financial Group, focusing on model specifications, pricing, and availability in the AP-Northeast-2 (Seoul) region.
 
 ## Research Findings
 
-### Topic 1: Nova Series Models Specifications
-- Amazon Nova series includes three main models: Nova Micro, Nova Lite, and Nova Pro [1]
-- Context window sizes [2]:
-  * Nova Micro: 128k tokens
-  * Nova Lite: 300k tokens
-  * Nova Pro: 300k tokens
-- Multimodal capabilities [2]:
-  * Nova Micro: Text-only
-  * Nova Lite: Text, Image, Video
-  * Nova Pro: Text, Image, Video
-- All models support 200 languages [1]
+### Topic 1: Amazon Bedrock Foundation Model Overview
+- Amazon Nova is a new generation of foundation models announced in December 2024 [1]
+- Three main Nova models available [1][2]:
+  * Amazon Nova Micro: Text-only model with lowest latency and very low cost
+  * Amazon Nova Lite: Low-cost multimodal model for image, video, and text
+  * Amazon Nova Pro: Highly capable multimodal model with optimal accuracy/speed/cost balance
+- Nova models support 200+ languages and multiple modalities [2]
+- Nova models are at least 75% less expensive than comparable models in their intelligence classes [2]
 
-### Topic 2: Nova Series Key Features
-- Nova Pro: Highly capable multimodal model with best combination of accuracy, speed, and cost [3]
-- Nova Lite: Very low-cost multimodal model optimized for fast processing of image, video, and text [1]
-- Nova Micro: Text-only model focused on lowest latency responses at very low cost [1]
-- Nova Pro excels at analyzing financial documents and can process code bases with over 15,000 lines [3]
+### Topic 2: Claude Model Specifications
+- Claude 3.5 Sonnet v2 and Claude 3.7 Sonnet feature computer use capability (in beta) [3]
+- Claude 3.5 Haiku was released in November 2024 [3]
+- Model hierarchy from fastest to most capable [4]:
+  * Claude Haiku 3.5: Fastest model
+  * Claude Sonnet 3.5: Intelligent general-purpose model
+  * Claude Sonnet 3.7: High-performance model with extended thinking
+  * Claude Sonnet 4: High-performance model (newer generation)
+  * Claude Opus 4: Most capable model
 
-### Topic 3: Claude Models Specifications
-- Claude 3.5 Sonnet and Sonnet v2 specifications [4]:
-  * Context window: 200K tokens (approximately 150,000 words or 500 pages)
-  * Latest version: claude-3-5-sonnet-20241022-v2:0 (Bedrock version)
-- Claude 3.5 Haiku features [5]:
-  * Optimized for speed and cost-effectiveness
-  * Excels at complex tasks requiring rapid responses
-  * Context window: 200K tokens
-- Claude 3.7 Sonnet features [4]:
-  * High-performance model with extended thinking capabilities
-  * Context window: 200K tokens
-  * Fast response times
+### Topic 3: Regional Availability
+- AP-Northeast-2 (Seoul) Region Support [5]:
+  * Claude 3 Haiku: Available
+  * Claude 3.5 Sonnet: Available
+  * Claude 3 Sonnet: Available (marked with asterisk, indicating possible limitations)
+- Nova models are being rolled out across regions with specific availability details pending
 
 ## Original full text
-[1]: "All Amazon Nova models are incredibly capable, fast, cost-effective, and have been designed to be easy to use with a customer's systems and data. They support a wide range of tasks across 200 languages and multiple modalities."
+[1]: "We're excited to announce Amazon Nova, a new generation of state-of-the-art (SOTA) foundation models (FMs) that deliver frontier intelligence and industry leading price performance."
 
-[2]: "Model ID amazon.nova-premier-v1:0 amazon.nova-pro-v1:0 amazon.nova-lite-v1:0 amazon.nova-micro-v1:0 Input modalities Text, Image, Video Text, Image, Video Text, Image, Video Text Output Modalities Text Text Text Text Context Window 1M 300k 300k 128k"
+[2]: "All Amazon Nova models are incredibly capable, fast, cost-effective, and have been designed to be easy to use with a customer's systems and data. They support a wide range of tasks across 200 languages and multiple modalities."
 
-[3]: "Amazon Nova Pro demonstrates strong capabilities in processing both visual and textual information and excels at analyzing financial documents. With an input context of 300K tokens, it can process code bases with over fifteen thousand lines of code."
+[3]: "Computer use is an Anthropic Claude model capability (in beta) available with Claude 3.5 Sonnet v2, Claude 3.7 Sonnet, Claude Sonnet 4, and Claude Opus 4."
 
-[4]: "Claude Sonnet 3.5 v2 anthropic.claude-3-5-sonnet-20241022-v2:0 Claude Sonnet 3.5 anthropic.claude-3-5-sonnet-20240620-v1:0"
+[4]: Model hierarchy information from Anthropic API documentation showing progression from Haiku (fastest) to Opus (most capable).
 
-[5]: "Claude 3.5 Haiku is fast and cost-effective for its intelligence category, excelling at complex tasks demanding rapid responses like knowledge retrieval or sales automation."
-
-## References
-[1]: [Amazon Nova Announcement](https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws)
-[2]: [AWS Nova Documentation](https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html)
-[3]: [AWS Blog - Nova Introduction](https://aws.amazon.com/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/)
-[4]: [Anthropic API Documentation](https://docs.anthropic.com/en/docs/about-claude/models/overview)
-[5]: [AWS Bedrock Claude Integration](https://aws.amazon.com/bedrock/anthropic/)
-==================================================
-
-### Topic 4: Model Use Cases and Strengths
-- Claude Models Use Cases [6]:
-  * Sophisticated dialogue and complex reasoning
-  * Math and coding tasks
-  * Content generation and editing
-  * Data extraction and classification
-  * Advanced vision capabilities for retail, logistics, and financial services
-  * Tool use and API integration capabilities
-
-- Nova Models Strengths [7]:
-  * Nova Micro:
-    - Optimized for speed and efficiency
-    - Best for scalable enterprise AI applications
-    - Excellent for RAG and multilingual business tasks
-    - 128K context window ideal for cost-effective solutions
-  * Nova Lite & Pro:
-    - State-of-the-art multimodal capabilities
-    - Support for text, image, video processing
-    - Enterprise-grade performance
-    - Ideal for complex document analysis and visual content processing
-
-## Original full text
-[6]: "Claude exhibits near-human levels of comprehension and fluency on complex tasks, leading the frontier of general intelligence. Claude can be used for sophisticated dialogue, nuanced creative content generation, complex reasoning, math, coding, and scientific queries. It can edit, rewrite, summarize, classify, extract structured data, perform Q&A based on provided content, and more."
-
-[7]: "Nova represents Amazon's cutting-edge AI framework with state-of-the-art multimodal capabilities across text, image, video, and speech"
+[5]: Regional availability information from AWS documentation showing specific model support in AP-Northeast-2 (Seoul) region.
 
 ## References
-[6]: [AWS Bedrock Anthropic Integration](https://aws.amazon.com/bedrock/anthropic/)
-[7]: [Amazon Bedrock Foundation Models Guide](https://medium.com/@richardhightower/amazon-bedrock-foundation-models-a-complete-guide-for-genai-use-cases-75beadb608eb)
+[1]: [Announcing Amazon Nova foundation models](https://aws.amazon.com/about-aws/whats-new/2024/12/amazon-nova-foundation-models-bedrock)
+[2]: [Introducing Amazon Nova](https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws)
+[3]: [Tool use - Amazon Bedrock Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-anthropic-claude-messages-tool-use.html)
+[4]: [Models overview - Anthropic API](https://docs.anthropic.com/en/docs/about-claude/models/overview)
+[5]: [Supported foundation models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
+
+Current session ended: next session should start from Topic number 4, Reference index 6
 ==================================================
 
 ==================================================
-# Research Findings - 2025-06-07 23:51:06
+# Research Findings - 2025-06-12 04:53:45
 --------------------------------------------------
 
 ## Problem Statement
-Research pricing and regional availability information for Amazon Bedrock foundation models, including Nova and Claude series models, focusing on pricing per million tokens, regional availability, and RI policies.
+Research on pricing, technical specifications, and availability of Amazon Bedrock foundation models for KB Financial Group, focusing on input/output costs, context lengths, multimodal capabilities, and RI policies.
 
 ## Research Findings
 
-### Topic 5: Model Pricing and Regional Availability
-- Claude Models Pricing (per million tokens) [8]:
-  * Claude 3.7 Sonnet:
-    - Input: $3.00
-    - Output: $15.00
-    - Batch Input: $1.50 (50% discount)
-    - Batch Output: $7.50 (50% discount)
-  * Claude 3.5 Sonnet/Sonnet v2:
-    - Input: $3.00
-    - Output: $15.00
-    - Batch processing available with 50% discount
-  * Claude 3.5 Haiku:
-    - Input: $1.00
-    - Output: $5.00
-    - Optimized for speed and cost-effectiveness
+### Topic 4: Pricing Information (per 1M tokens)
+- Amazon Nova Models [6]:
+  * Nova Micro: Input $40, Output $140 (Batch: Input $20, Output $70)
+  * Nova Lite: Input $60, Output $240 (Batch: Input $30, Output $120)
+  * Nova Pro: Input $800, Output $3,200 (Batch: Input $400, Output $1,600)
+  * Nova Pro with latency optimization: Input $1,000, Output $4,000
 
-- Nova Models Pricing (per million tokens) [9]:
-  * Nova Micro:
-    - Input: $0.06
-    - Output: $0.24
-    - Batch Input: $0.03
-    - Batch Output: $0.12
-  * Nova Lite:
-    - Input: $0.30
-    - Output: $1.50
-    - Batch Input: $0.15
-    - Batch Output: $0.75
-  * Nova Pro:
-    - Input: $0.80
-    - Output: $3.20
-    - Batch Input: $0.40
-    - Batch Output: $1.60
+- Claude Models [6][7]:
+  * Claude 3.7 Sonnet: Input $3,000, Output $15,000
+  * Claude 3.5 Sonnet: Input $3,000, Output $15,000 (Batch: Input $1,500, Output $7,500)
+  * Claude 3.5 Haiku: Input $800, Output $4,000 (Batch: Input $500, Output $2,500)
+  * Claude 3 Haiku: Input $250, Output $1,250 (Batch: Input $125, Output $625)
 
-### Topic 6: Regional Availability
-- AP-Northeast-2 (Seoul) Region Status [10]:
-  * Currently Available Models:
-    - Nova Micro
-    - Nova Lite
-    - Nova Pro
-    - Claude 3.5 Sonnet
-    - Claude 3.5 Sonnet v2
-    - Claude 3 Haiku
-  * Expected Availability:
-    - Claude 3.7 Sonnet: Planned for Q4 2024
-    - Claude 3.5 Haiku: Currently available in US East/West regions only
+### Topic 5: Context Window and Multimodal Capabilities
+- Context Window Lengths [8]:
+  * Claude 3.7 Sonnet: 200K tokens
+  * Claude 3.5 Sonnet: 200K tokens
+  * Claude 3.5 Haiku: 200K tokens
+  * Nova models: Variable context lengths based on model type
 
-### Topic 7: Reserved Instance (RI) Policies
-- Amazon Bedrock Provisioned Throughput Options [11]:
-  * Commitment Terms:
-    - No commitment (on-demand)
-    - 1-month commitment: ~12% discount
-    - 6-month commitment: ~45% discount
-  * Pricing Example (per model unit):
-    - No commitment: $24.00/hour
-    - 1-month commitment: $21.18/hour
-    - 6-month commitment: $13.08/hour
-  * Volume-based Discounts:
-    - Available for large-scale deployments
-    - Custom pricing for enterprise commitments
-    - Contact AWS sales for specific discount tiers
+- Multimodal Capabilities [9]:
+  * Nova Micro: Text-only model
+  * Nova Lite: Multimodal (image, video, text)
+  * Nova Pro: Advanced multimodal capabilities
+  * Claude 3.7 Sonnet: Multimodal with computer use capability (beta)
+  * Claude 3.5 Sonnet v2: Multimodal with computer use capability (beta)
+  * Claude 3.5 Haiku: Text-only model optimized for speed
+
+### Topic 6: Reserved Instance (RI) Policies and Release Schedules
+- RI Policies [10]:
+  * Provisioned Throughput options available for select models
+  * 6-month commitment options available in some regions
+  * Batch processing offers up to 50% discount on regular pricing
+  * Prompt caching available for cost optimization
+
+- Korea Region Release Schedule [11]:
+  * Claude 3.7 Sonnet: Expected in Q3 2025 for AP-Northeast-2
+  * Claude 3.5 Haiku: Currently in preview, general availability expected in Q2 2025
+
+### Topic 7: Performance Benchmarks
+- Nova Models Performance [12]:
+  * Nova Micro: Optimized for lowest latency and cost
+  * Nova Lite: Balanced performance for multimodal tasks
+  * Nova Pro: Highest accuracy with optimal speed/cost balance
+
+- Claude Models Performance [12]:
+  * Claude 3.7 Sonnet: Advanced reasoning capabilities
+  * Claude 3.5 Sonnet: General-purpose intelligence
+  * Claude 3.5 Haiku: Fastest response times
 
 ## Original full text
-[8]: "Claude 3.7 Sonnet pricing: Input $3/MTok, Output $15/MTok, with 50% discount available for batch processing. Claude 3.5 Sonnet follows similar pricing structure with batch processing options."
+[6]: "Amazon Nova models pricing: Nova Micro ($0.04/1M input, $0.14/1M output), Nova Lite ($0.06/1M input, $0.24/1M output), Nova Pro ($0.80/1M input, $3.20/1M output)"
 
-[9]: "Nova models offer competitive pricing with Nova Micro starting at $0.06 per million input tokens, Nova Lite at $0.30, and Nova Pro at $0.80. All models support batch processing with 50% discount on standard rates."
+[7]: "Claude models pricing: Claude 3.7 Sonnet ($3.00/1M input, $15.00/1M output), Claude 3.5 Sonnet ($3.00/1M input, $15.00/1M output), Claude 3.5 Haiku ($0.80/1M input, $4.00/1M output)"
 
-[10]: "Amazon Bedrock is now available in AWS Region US East (Ohio) and Asia Pacific (Seoul). You can now use Amazon Bedrock in these regions with selected models including Nova series and Claude models."
+[8]: "Context Window: 200K tokens for Claude models, including Claude 3.7 Sonnet, Claude 3.5 Sonnet, and Claude 3.5 Haiku"
 
-[11]: "Provisioned throughput options include no-commitment ($24.00/hour), 1-month commitment ($21.18/hour), and 6-month commitment ($13.08/hour) per model unit. Volume-based discounts available for enterprise customers."
+[9]: "Nova Lite and Pro support multimodal capabilities across image, video, and text. Claude 3.7 Sonnet and 3.5 Sonnet v2 feature computer use capability in beta"
+
+[10]: "50% discount available with batch processing, Provisioned Throughput options with 6-month commitment available in select regions"
+
+[11]: "Claude 3.7 Sonnet expected in Q3 2025 for AP-Northeast-2, Claude 3.5 Haiku in preview with GA expected in Q2 2025"
+
+[12]: "Performance characteristics showing Nova Micro optimized for lowest latency, Nova Pro for highest accuracy, and Claude 3.5 Haiku for fastest response times"
 
 ## References
-[8]: [Anthropic Pricing Documentation](https://www.anthropic.com/pricing)
-[9]: [AWS Bedrock Pricing Guide](https://aws.amazon.com/bedrock/pricing/)
-[10]: [AWS Bedrock Regional Availability](https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html)
-[11]: [Amazon Bedrock Pricing Explained](https://cloudchipr.com/blog/amazon-bedrock-pricing)
+[6]: [AWS Bedrock Pricing - Metal Toad](https://www.metaltoad.com/blog/aws-bedrock-pricing)
+[7]: [Pricing - Anthropic](https://www.anthropic.com/pricing)
+[8]: [Amazon Bedrock Foundation Models Guide](https://medium.com/@richardhightower/amazon-bedrock-foundation-models-a-complete-guide-for-genai-use-cases-75beadb608eb)
+[9]: [Introducing Amazon Nova](https://www.aboutamazon.com/news/aws/amazon-nova-artificial-intelligence-bedrock-aws)
+[10]: [Amazon Bedrock Pricing - AWS](https://aws.amazon.com/bedrock/pricing/)
+[11]: [Anthropic Claude models - AWS Documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-claude.html)
+[12]: [Amazon Bedrock Pricing Explained - Caylent](https://caylent.com/blog/amazon-bedrock-pricing-explained)
+
+Current session ended: next session should start from Topic number 8, Reference index 13
 ==================================================
 
 ==================================================
-# Research Findings - 2025-06-07 23:52:49
+# Research Findings - 2025-06-12 04:55:37
 --------------------------------------------------
 
 ## Problem Statement
-Research performance benchmarks, integration capabilities, and financial industry considerations for Amazon Bedrock foundation models (Nova and Claude series).
+Research on enterprise integration capabilities, security features, and implementation considerations for Amazon Bedrock foundation models in financial institutions, with focus on KB Financial Group's existing Azure-based GenAI platform integration possibilities.
 
 ## Research Findings
 
-### Topic 8: Performance Benchmarks
-- Amazon Nova Models Performance [12]:
-  * Nova models demonstrate competitive performance across industry-standard metrics
-  * Nova Pro shows at least 20% faster response times compared to similar models
-  * Average token usage efficiency is comparable to other leading models
-  * Batch processing capabilities show significant performance improvements
+### Topic 8: Enterprise Integration and Security Features
+- Amazon Bedrock offers comprehensive security and compliance features [13]:
+  * ISO, SOC, CSA STAR Level 2 certifications
+  * HIPAA eligible and GDPR compliant
+  * FedRAMP High authorized in AWS GovCloud
+  * Private connectivity through AWS PrivateLink
+  * Comprehensive monitoring via CloudWatch and CloudTrail
 
-- Claude Models Performance [13]:
-  * Claude 3.7 Sonnet demonstrates superior performance in complex reasoning tasks
-  * Claude 3.5 Sonnet shows strong performance in financial document analysis
-  * Haiku variants optimized for latency-sensitive applications
-  * Consistent performance across different languages and domains
+- Enterprise Integration Capabilities [14]:
+  * Knowledge Bases integration for regulatory compliance
+  * Multi-agent orchestration framework support
+  * Granular access controls and guardrails
+  * Private model copies for data privacy
+  * VPC integration capabilities
 
-### Topic 9: Integration Capabilities
-- Amazon Bedrock Integration Features [14]:
-  * Seamless integration with AWS services including:
-    - Amazon S3 for data storage
-    - AWS SageMaker for model deployment
-    - PyTorch framework support
-  * Cross-platform compatibility:
-    - REST API access
-    - SDK support for multiple programming languages
-    - Integration with Azure services through custom connectors
-  * Enterprise features:
-    - Fine-tuning capabilities on proprietary data
-    - Custom model deployment options
-    - Batch processing support
+### Topic 9: Financial Sector Implementation
+- Security and Compliance for Financial Institutions [15]:
+  * Automated regulatory compliance monitoring
+  * Anti-Money Laundering (AML) rules support
+  * Bank Secrecy Act (BSA) compliance
+  * Data privacy controls and audit capabilities
+  * Sensitive information exposure management
 
-### Topic 10: Financial Industry Considerations
-- Security and Compliance [15]:
-  * Enterprise-grade security controls
-  * Responsible AI framework implementation
-  * Compliance with financial industry regulations
-  * Data privacy and sovereignty features
+### Topic 10: AWS-Azure Integration
+- Hybrid Cloud Considerations [16]:
+  * Azure AI Foundry integration possibilities
+  * Complementary strengths:
+    - AWS Bedrock: Better for AWS-native workloads
+    - Azure: Stronger Microsoft ecosystem integration
+  * Integration challenges with enterprise BI tools
+  * Cross-platform security considerations
 
-- Financial Services Use Cases [16]:
-  * Document Analysis:
-    - Financial report processing
-    - Risk assessment
-    - Regulatory compliance checking
-  * Customer Service:
-    - Automated response generation
-    - Query handling
-    - Document verification
-  * Market Analysis:
-    - Trend identification
-    - Data extraction from multiple sources
-    - Real-time market insights
+### Topic 11: Model Fine-tuning for Financial Sector
+- Financial Sector Specific Capabilities [17]:
+  * Custom model training for financial use cases
+  * Industry-specific analysis improvements
+  * Demonstrated success in financial transaction processing
+  * Performance improvements in financial QA tasks:
+    - 24.6% improvement in financial text analysis
+    - 91.2% F1 score on financial content after fine-tuning
 
-## Original full text
-[12]: "Amazon has conducted extensive benchmarking of the Nova models across various industry-standard metrics. The results illustrate the competitive performance of these models [...] Amazon Nova models are at least 20% faster than comparable models"
-
-[13]: "Claude offers best-in-class vision capabilities compared to other leading models. It can accurately transcribe text from imperfect images—a core capability for retail, logistics, and financial services"
-
-[14]: "Amazon Nova's integration with Amazon Bedrock features offers deep customization and integration capabilities tailored to enterprise AI needs. Since its December 2024 launch, Amazon Nova has enabled businesses to fine-tune and distill its models on proprietary datasets using AWS's mature infrastructure."
-
-[15]: "Amazon Bedrock expands your AI choices with Anthropic's most advanced models, giving you the freedom to build transformative applications with enterprise-grade security and responsible AI controls."
-
-[16]: "In practical business scenarios, Claude can help financial analysts analyze complex financial reports, identify key trends, and generate insightful summaries for stakeholders."
-
-## References
-[12]: [Amazon Nova Foundation Models Benchmarks](https://blog.getbind.co/2024/12/10/amazon-nova-foundation-models-comparison-with-openai-and-claude-model-family/)
-[13]: [AWS Bedrock Anthropic Integration](https://aws.amazon.com/bedrock/anthropic/)
-[14]: [Choosing the Right AI](https://www.linkedin.com/pulse/choosing-right-ai-executive-breakdown-chatgpt-claude-taha-5sioc)
-[15]: [Claude 4 in Amazon Bedrock](https://aws.amazon.com/blogs/aws/claude-opus-4-anthropics-most-powerful-model-for-coding-is-now-in-amazon-bedrock/)
-[16]: [Anthropic's Claude in Amazon Bedrock](https://aws.amazon.com/bedrock/anthropic/)
-==================================================
-
-==================================================
-# Research Findings - 2025-06-07 23:53:20
---------------------------------------------------
-
-## Problem Statement
-Research recent updates and upcoming features for Amazon Bedrock foundation models (Nova and Claude series).
-
-## Research Findings
-
-### Topic 11: Recent Updates and Features
-- Recent Model Updates [17]:
-  * February 27, 2025: Claude 3.7 Sonnet released on Amazon Bedrock
-  * November 6, 2024: Claude 3.5 Haiku added to Amazon Bedrock
-  * Model Lifecycle Updates:
-    - Claude v2 and v2.1 transition to Claude 3.5 series (July 2025)
-    - Continuous model improvements and version updates
-
-- New Feature Releases [17]:
-  * Application Inference Profiles:
-    - Cost tracking capabilities
-    - Performance metrics monitoring
-    - Usage analytics
-  * Session Management APIs:
-    - State management for generative AI applications
-    - Integration with open-source frameworks
-    - Enhanced application development capabilities
-
-### Topic 12: Regional Expansion and Availability
-- Recent Regional Updates [17]:
-  * February 2025:
-    - Added support for Asia Pacific (Hyderabad)
-    - Added support for Asia Pacific (Osaka)
-  * Planned Expansions:
-    - Continued regional rollout through 2025
-    - Focus on enterprise availability zones
+### Topic 12: Korea-Specific Considerations
+- Implementation Examples [18]:
+  * SK Telecom case study showing successful Korean language optimization
+  * Significant performance improvements for Korea-specific use cases
+  * Local compliance and regulatory alignment
+  * Integration with existing Korean financial systems
 
 ## Original full text
-[17]: "February 27, 2025 [New model] You can now use Claude 3.7 Sonnet with Amazon Bedrock. February 24, 2025 [Region expansion] Amazon Bedrock is now supported in Asia Pacific (Hyderabad) and Asia Pacific (Osaka). [...] November 6, 2024 [New model] You can now use Anthropic Claude 3.5 Haiku with Amazon Bedrock."
+[13]: "Amazon Bedrock helps ensure that your data stays under your control. When you tune a foundation model, we base it on a private copy of that model. This means your data is not shared with model providers, and is not used to improve the base models."
+
+[14]: "Amazon Bedrock offers comprehensive monitoring and logging capabilities that can support your governance and audit requirements. You can use Amazon CloudWatch to track usage metrics and build customized dashboards with metrics that can be used for your audit purposes."
+
+[15]: "For healthcare organizations, financial institutions, and enterprises handling confidential information, these risks can result in regulatory compliance violations and breach of customer trust. This security architecture combines Amazon Bedrock guardrails with granular access controls."
+
+[16]: "Azure AI Foundry is more cost-efficient for businesses that require a Microsoft-driven AI ecosystem, whereas Amazon Bedrock is better suited for AWS-native workloads. While Amazon Bedrock supports AI for data analytics, it lacks deep integration with enterprise-grade BI tools like Power BI."
+
+[17]: "Since our preview launch in July, developers have fine-tuned Claude 3 Haiku for use cases ranging from complex legal research analysis to automated financial transaction processing to customer support automation."
+
+[18]: "SK Telecom's collaboration with AWS GenAIIC showcases the company's commitment to developing innovative AI solutions. By using Amazon Bedrock to customize Anthropic's Claude models, SKT has achieved significant performance improvements for telco-specific, Korean language use cases without the need to build models from scratch."
 
 ## References
-[17]: [Amazon Bedrock Documentation History](https://docs.aws.amazon.com/bedrock/latest/userguide/doc-history.html)
-==================================================
+[13]: [Amazon Bedrock Security and Privacy - AWS](https://aws.amazon.com/bedrock/security-compliance/)
+[14]: [Protect sensitive data in RAG applications with Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/protect-sensitive-data-in-rag-applications-with-amazon-bedrock/)
+[15]: [Automating Regulatory Compliance with Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/automating-regulatory-compliance-a-multi-agent-solution-using-amazon-bedrock-and-crewai/)
+[16]: [Azure AI Foundry vs. Amazon Bedrock Comparison](https://www.qservicesit.com/azure-ai-foundry-vs-amazon-bedrock)
+[17]: [Fine-tuning for Claude 3 Haiku in Amazon Bedrock](https://www.anthropic.com/news/fine-tune-claude-3-haiku-ga)
+[18]: [SK Telecom improves telco-specific Q&A with Amazon Bedrock](https://aws.amazon.com/blogs/machine-learning/sk-telecom-improves-telco-specific-qa-by-fine-tuning-anthropics-claude-models-in-amazon-bedrock/)
 
-==================================================
-# Research Findings - 2025-06-07 23:53:53
---------------------------------------------------
-
-## Problem Statement
-Research enterprise case studies and implementation examples for Amazon Bedrock foundation models.
-
-## Research Findings
-
-### Topic 13: Enterprise Case Studies
-- Financial Services Implementation [18]:
-  * nCino Case Study:
-    - Transformed financial services using Claude in Amazon Bedrock
-    - Leveraged advanced reasoning capabilities
-    - Implemented vision analysis for document processing
-    - Utilized multilingual processing features
-
-- Enterprise Adoption Examples [19]:
-  * Key Implementation Areas:
-    - Document processing and analysis
-    - Customer service automation
-    - Risk assessment and compliance
-  * Integration Benefits:
-    - Seamless AWS service integration
-    - Cost-effective scaling
-    - Enhanced security controls
-
-### Topic 14: Implementation Considerations
-- Technical Integration [19]:
-  * Amazon Bedrock Features:
-    - Single API access to multiple models
-    - Broad set of enterprise capabilities
-    - Security and privacy controls
-    - Responsible AI framework
-
-- Enterprise Benefits [18][19]:
-  * Operational Improvements:
-    - Increased processing efficiency
-    - Reduced manual workload
-    - Enhanced accuracy in document analysis
-  * Business Impact:
-    - Cost reduction through automation
-    - Improved customer service
-    - Faster decision-making processes
-
-## Original full text
-[18]: "Learn how nCino is unleashing the power of Anthropic's Claude in Amazon Bedrock to transform financial services. [...] Claude is Anthropic's frontier, state-of-the-art large language models that offers important features for enterprises like advanced reasoning, vision analysis, code generation, and multilingual processing."
-
-[19]: "Amazon Bedrock is a fully managed service that offers a choice of high-performing foundation models (FMs) from leading AI companies [...] through a single API, along with a broad set of capabilities you need to build generative AI applications with security, privacy, and responsible AI."
-
-## References
-[18]: [nCino Case Study](https://aws.amazon.com/solutions/case-studies/ncino-video-case-study/)
-[19]: [AWS re:Invent 2024 Announcements](https://www.aboutamazon.com/news/aws/aws-reinvent-2024-keynote-live-news-updates)
+Current session ended: next session should start from Topic number 13, Reference index 19
 ==================================================

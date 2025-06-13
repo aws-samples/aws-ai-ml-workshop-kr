@@ -1,8 +1,0 @@
-Model,Context Window (tokens),Input Price ($/1M tokens),Output Price ($/1M tokens),Multimodal,Seoul Region Available
-Nova Micro,128000,0.06,0.24,Text-only,Yes
-Nova Lite,300000,0.3,1.5,"Text, Image, Video",Yes
-Nova Pro,300000,0.8,3.2,"Text, Image, Video",Yes
-Claude 3.5 Sonnet,200000,3.0,15.0,Yes,Yes
-Claude 3.5 Sonnet v2,200000,3.0,15.0,Yes,Yes
-Claude 3 Haiku,200000,1.0,5.0,Yes,Yes
-Claude 3.7 Sonnet,200000,3.0,15.0,Yes,Q4 2024
