@@ -6,6 +6,18 @@ from typing import Any, Annotated
 from strands.types.tools import ToolResult, ToolUse
 from src.tools.decorators import log_io
 
+# 새 핸들러와 포맷터 설정
+logger = logging.getLogger(__name__)
+logger.propagate = False  # 상위 로거로 메시지 전파 중지
+for handler in logger.handlers[:]:
+    logger.removeHandler(handler)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+# DEBUG와 INFO 중 원하는 레벨로 설정
+logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+
 TOOL_SPEC = {
     "name": "python_repl_tool",
     "description": "Use this to execute python code and do data analysis or calculation. If you want to see the output of a value, you should print it out with `print(...)`. This is visible to the user.",
@@ -22,18 +34,6 @@ TOOL_SPEC = {
         }
     }
 }
-
-# 새 핸들러와 포맷터 설정
-logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]:
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 
 class Colors:
     BLUE = '\033[94m'

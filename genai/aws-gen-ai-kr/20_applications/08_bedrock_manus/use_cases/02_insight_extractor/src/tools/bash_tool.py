@@ -4,6 +4,18 @@ from typing import Any, Annotated
 from strands.types.tools import ToolResult, ToolUse
 from src.tools.decorators import log_io
 
+# Initialize logger
+logger = logging.getLogger(__name__)
+logger.propagate = False  # 상위 로거로 메시지 전파 중지
+for handler in logger.handlers[:]: 
+    logger.removeHandler(handler)
+handler = logging.StreamHandler()
+formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+# DEBUG와 INFO 중 원하는 레벨로 설정
+logger.setLevel(logging.INFO)  # DEBUG 이상 모든 로그 표시
+
 TOOL_SPEC = {
     "name": "bash_tool",
     "description": "Use this to execute bash command and do necessary operations.",
@@ -20,18 +32,6 @@ TOOL_SPEC = {
         }
     }
 }
-
-# Initialize logger
-logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]: 
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # DEBUG 이상 모든 로그 표시
 
 class Colors:
     BLUE = '\033[94m'
@@ -56,17 +56,15 @@ def handle_bash_tool(cmd: Annotated[str, "The bash command to be executed."]):
         # Return stdout as the result
         results = "||".join([cmd, result.stdout])
         return results + "\n"
-        #return result.stdout
+        
     except subprocess.CalledProcessError as e:
         # If command fails, return error information
         error_message = f"Command failed with exit code {e.returncode}.\nStdout: {e.stdout}\nStderr: {e.stderr}"
-        #logger.error(error_message)
         logger.error(f"{Colors.RED}Command failed with exit code {e.returncode}.\nStdout: {e.stdout}\nStderr: {e.stderr}{Colors.END}")
         return error_message
     except Exception as e:
         # Catch any other exceptions
         error_message = f"Error executing command: {str(e)}"
-        #logger.error(error_message)
         logger.error(f"{Colors.RED}{error_message}{Colors.END}")
         return error_message
 

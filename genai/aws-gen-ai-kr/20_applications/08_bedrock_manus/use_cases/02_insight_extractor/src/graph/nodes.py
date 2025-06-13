@@ -2,19 +2,14 @@ import os
 import json
 import pprint
 import logging
-from copy import deepcopy
 from typing import Literal
-from langchain_core.messages import HumanMessage
 from langgraph.types import Command
 from langgraph.graph import END
 
-from src.agents.agents import create_react_agent
-#from src.agents.llm import get_llm_by_type, llm_call
 from src.config import TEAM_MEMBERS
 from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.prompts.template import apply_prompt_template
-#from src.tools.search import tavily_tool
-from .types import State, Router
+from .types import State
 
 from textwrap import dedent
 from src.utils.common_utils import get_message_from_string
@@ -24,8 +19,8 @@ from src.utils.strands_sdk_utils import strands_utils
 from src.tools import python_repl_tool, bash_tool
 
 llm_module = os.environ.get('LLM_MODULE', 'src.agents.llm')
-if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type#, llm_call
-else: from src.agents.llm import get_llm_by_type#, llm_call
+if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type
+else: from src.agents.llm import get_llm_by_type
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -37,7 +32,7 @@ formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로�
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 # DEBUG와 INFO 중 원하는 레벨로 설정
-#logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
 FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
@@ -77,14 +72,11 @@ def code_node(state: State) -> Command[Literal["supervisor"]]:
         tools=[python_repl_tool, bash_tool]
     )
 
-    clues, full_plan, messages = state.get("clues", ""), state.get("full_plan", ""), state["messages"] 
-
-    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+    clues, messages = state.get("clues", ""), state["messages"] 
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
     response = agent(message)
     response = strands_utils.parsing_text_from_response(response)
 
-    print ("response", response)
-    
     clues = state.get("clues", "")
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("coder", response["text"])])
 
@@ -92,7 +84,6 @@ def code_node(state: State) -> Command[Literal["supervisor"]]:
     logger.debug(f"\n{Colors.RED}Coder response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
     history = state.get("history", [])
-    #history.append({"agent":"coder", "message": result["content"][-1]["text"]})
     history.append({"agent":"coder", "message": response["text"]})
 
     logger.info(f"{Colors.GREEN}===== Coder completed task ====={Colors.END}")
@@ -106,7 +97,7 @@ def code_node(state: State) -> Command[Literal["supervisor"]]:
         goto="supervisor",
     )
 
-def supervisor_node(state: State): #-> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
+def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     """Supervisor node that decides which agent should act next."""
     logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
     
@@ -138,8 +129,8 @@ def supervisor_node(state: State): #-> Command[Literal[*TEAM_MEMBERS, "__end__"]
     full_response = json.loads(full_response)   
     goto = full_response["next"]
 
-    logger.info(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    logger.info(f"\n{Colors.RED}Supervisor response:{full_response}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Supervisor response:{full_response}{Colors.END}")
 
     if goto == "FINISH":
         goto = "__end__"
@@ -250,22 +241,45 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     logger.info(f"{Colors.GREEN}===== Reporter write final report ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Reporter11 - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
 
-    reporter_agent = create_react_agent(agent_name="reporter")
-    result = reporter_agent.invoke(state=state)
-    full_response = result["content"][-1]["text"]
+    
+    
+    #reporter_agent = create_react_agent(agent_name="reporter")
+    #result = reporter_agent.invoke(state=state)
+    #full_response = result["content"][-1]["text"]
 
-    clues = state.get("clues", "")
-    clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", result["content"][-1]["text"])])
+    prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["reporter"]
+    if prompt_cache: logger.debug(f"{Colors.GREEN}Reporter - Prompt Cache Enabled{Colors.END}")
+    else: logger.debug(f"{Colors.GREEN}Reporter - Prompt Cache Disabled{Colors.END}")
 
+    if "reasoning" in AGENT_LLM_MAP["reporter"]: enable_reasoning = True
+    else: enable_reasoning = False
+
+    system_prompts = apply_prompt_template("reporter", state)
+
+    llm = get_llm_by_type(AGENT_LLM_MAP["reporter"], cache_type, enable_reasoning)    
+    llm.config["streaming"] = True
+
+    agent = Agent(
+        model=llm,
+        system_prompt=system_prompts,
+        tools=[python_repl_tool, bash_tool]
+    )
+
+    clues, messages = state.get("clues", ""), state["messages"] 
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
+    response = agent(message)
+    response = strands_utils.parsing_text_from_response(response)
+
+    clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", response["text"])])
     logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(full_response, indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
     history = state.get("history", [])
-    history.append({"agent":"reporter", "message": full_response})
+    history.append({"agent":"reporter", "message": response["text"]})
     logger.info(f"{Colors.GREEN}===== Reporter completed task ====={Colors.END}")
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=full_response, imgs=[])],
+            "messages": [get_message_from_string(role="user", string=response["text"], imgs=[])],
             "messages_name": "reporter",
             "history": history,
             "clues": clues
