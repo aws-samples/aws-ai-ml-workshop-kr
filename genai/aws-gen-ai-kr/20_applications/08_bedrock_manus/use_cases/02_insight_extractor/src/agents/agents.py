@@ -2,10 +2,10 @@ import os
 import logging
 from src.prompts.template import apply_prompt_template
 from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
-from src.tools.research_tools import research_tool_config, process_search_tool
-from src.tools.coder_tools import coder_tool_config, process_coder_tool
+#from src.tools.research_tools import research_tool_config, process_search_tool
+#from src.tools.coder_tools import coder_tool_config, process_coder_tool
 #from src.tools.browser_tools import browser_tool_config, process_browser_tool
-from src.tools.reporter_tools import reporter_tool_config, process_reporter_tool
+#from src.tools.reporter_tools import reporter_tool_config, process_reporter_tool
 
 llm_module = os.environ.get('LLM_MODULE', 'src.agents.llm')
 if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type, llm_call
@@ -38,16 +38,32 @@ class create_react_agent():
 
         self.agent_name = kwargs["agent_name"]
         self.llm = get_llm_by_type(AGENT_LLM_MAP[self.agent_name])
-        self.llm.stream = True
-        self.llm_caller = llm_call(llm=self.llm, verbose=False, tracking=False)
+        llm.config["streaming"] = True
+        #self.llm_caller = llm_call(llm=self.llm, verbose=False, tracking=False)
         
-        if AGENT_LLM_MAP[self.agent_name] in ["reasoning"]: self.enable_reasoning = True
-        else: self.enable_reasoning = False
+        #if AGENT_LLM_MAP[self.agent_name] in ["reasoning"]: self.enable_reasoning = True
+        #else: self.enable_reasoning = False
+        if "reasoning" in AGENT_LLM_MAP[self.agent_name]: enable_reasoning = True
+        else: enable_reasoning = False
         
-        if self.agent_name == "researcher": self.tool_config = research_tool_config
-        elif self.agent_name == "coder": self.tool_config = coder_tool_config
-        elif self.agent_name == "browser": self.tool_config = browser_tool_config
-        elif self.agent_name == "reporter": self.tool_config = reporter_tool_config
+        # if self.agent_name == "researcher": self.tool_config = research_tool_config
+        # elif self.agent_name == "coder": self.tool_config = coder_tool_config
+        # elif self.agent_name == "browser": self.tool_config = browser_tool_config
+        # elif self.agent_name == "reporter": self.tool_config = reporter_tool_config
+
+        if self.agent_name == "researcher": self.tool_list = []
+        elif self.agent_name == "coder": self.tool_list = [python_repl_tool, bash_tool]
+        elif self.agent_name == "browser": self.tool_list = browser_tool_config
+        elif self.agent_name == "reporter": self.tool_list = reporter_tool_config
+
+        
+        system_prompts = apply_prompt_template(self.agent_name, state)    
+
+        self.agent = Agent(
+            model=llm,
+            system_prompt=system_prompts,
+            tools=self.tool_config
+        )
             
         # 반복 대화 처리를 위한 설정
         self.MAX_TURNS = 30  # 무한 루프 방지용 최대 턴 수
@@ -57,8 +73,8 @@ class create_react_agent():
     def invoke(self, **kwargs):
 
         state = kwargs.get("state", None)
-        prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP[self.agent_name]
-        system_prompts, messages = apply_prompt_template(self.agent_name, state, prompt_cache=prompt_cache, cache_type=cache_type)    
+        #prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP[self.agent_name]
+        #system_prompts, messages = apply_prompt_template(self.agent_name, state, prompt_cache=prompt_cache, cache_type=cache_type)    
         
         # 도구 사용이 종료될 때까지 반복
         while not self.final_response and self.turn < self.MAX_TURNS:
@@ -88,7 +104,6 @@ class create_react_agent():
 
                         if self.agent_name == "researcher": tool_result_message = process_search_tool(tool)
                         elif self.agent_name == "coder": tool_result_message = process_coder_tool(tool)
-                        #elif self.agent_name == "browser": tool_result_message = process_browser_tool(tool)
                         elif self.agent_name == "reporter": tool_result_message = process_reporter_tool(tool)
 
                         messages.append(tool_result_message)

@@ -13,7 +13,7 @@ from src.agents.agents import create_react_agent
 from src.config import TEAM_MEMBERS
 from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.prompts.template import apply_prompt_template
-from src.tools.search import tavily_tool
+#from src.tools.search import tavily_tool
 from .types import State, Router
 
 from textwrap import dedent
@@ -21,11 +21,11 @@ from src.utils.common_utils import get_message_from_string
 
 from strands import Agent, tool
 from src.utils.strands_sdk_utils import strands_utils
+from src.tools import python_repl_tool, bash_tool
 
 llm_module = os.environ.get('LLM_MODULE', 'src.agents.llm')
-if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type, llm_call
-else: from src.agents.llm import get_llm_by_type, llm_call
-
+if llm_module == 'src.agents.llm_st': from src.agents.llm_st import get_llm_by_type#, llm_call
+else: from src.agents.llm import get_llm_by_type#, llm_call
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -52,50 +52,53 @@ class Colors:
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
-def research_node(state: State) -> Command[Literal["supervisor"]]:
-    """Node for the researcher agent that performs research tasks."""
-    logger.info(f"{Colors.GREEN}===== Research agent starting task ====={Colors.END}")
-    research_agent = create_react_agent(agent_name="researcher")
-    result = research_agent.invoke(state=state)
-    
-    clues = state.get("clues", "")
-    clues = '\n\n'.join([clues, CLUES_FORMAT.format("researcher", result["content"][-1]["text"])])
-    
-
-    logger.info("Research agent completed task")
-    logger.debug(f"Research agent response: {result["content"][-1]["text"]}")
-
-    history = state.get("history", [])
-    history.append({"agent":"researcher", "message": result["content"][-1]["text"]})
-    return Command(
-        update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("researcher", result["content"][-1]["text"]), imgs=[])],
-            "messages_name": "researcher",
-            "clues": clues,
-            "history": history
-        },
-        goto="supervisor",
-    )
-
 def code_node(state: State) -> Command[Literal["supervisor"]]:
     """Node for the coder agent that executes Python code."""
     logger.info(f"{Colors.GREEN}===== Code agent starting task ====={Colors.END}")
-    coder_agent = create_react_agent(agent_name="coder")
-    result = coder_agent.invoke(state=state)
+    
+    #coder_agent = create_react_agent(agent_name="coder")
+    #result = coder_agent.invoke(state=state)
 
+    prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["coder"]
+    if prompt_cache: logger.debug(f"{Colors.GREEN}Coder - Prompt Cache Enabled{Colors.END}")
+    else: logger.debug(f"{Colors.GREEN}Coder - Prompt Cache Disabled{Colors.END}")
+
+    if "reasoning" in AGENT_LLM_MAP["coder"]: enable_reasoning = True
+    else: enable_reasoning = False
+
+    system_prompts = apply_prompt_template("coder", state)
+
+    llm = get_llm_by_type(AGENT_LLM_MAP["coder"], cache_type, enable_reasoning)    
+    llm.config["streaming"] = True
+
+    agent = Agent(
+        model=llm,
+        system_prompt=system_prompts,
+        tools=[python_repl_tool, bash_tool]
+    )
+
+    clues, full_plan, messages = state.get("clues", ""), state.get("full_plan", ""), state["messages"] 
+
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+    response = agent(message)
+    response = strands_utils.parsing_text_from_response(response)
+
+    print ("response", response)
+    
     clues = state.get("clues", "")
-    clues = '\n\n'.join([clues, CLUES_FORMAT.format("coder", result["content"][-1]["text"])])
+    clues = '\n\n'.join([clues, CLUES_FORMAT.format("coder", response["text"])])
 
     logger.debug(f"\n{Colors.RED}Coder - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Coder response:\n{pprint.pformat(result["content"][-1]["text"], indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Coder response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
     history = state.get("history", [])
-    history.append({"agent":"coder", "message": result["content"][-1]["text"]})
+    #history.append({"agent":"coder", "message": result["content"][-1]["text"]})
+    history.append({"agent":"coder", "message": response["text"]})
 
     logger.info(f"{Colors.GREEN}===== Coder completed task ====={Colors.END}")
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("coder", result["content"][-1]["text"]), imgs=[])],
+            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("coder", response["text"]), imgs=[])],
             "messages_name": "coder",
             "clues": clues,
             "history": history
@@ -103,51 +106,30 @@ def code_node(state: State) -> Command[Literal["supervisor"]]:
         goto="supervisor",
     )
 
-def browser_node(state: State) -> Command[Literal["supervisor"]]:
-    """Node for the browser agent that performs web browsing tasks."""
-    logger.info("Browser agent starting task")
-    browser_agent = create_react_agent(agent_name="browser")
-    result = browser_agent.invoke(state=state)
-    
-    clues = state.get("clues", "")
-    clues = '\n\n'.join([clues, CLUES_FORMAT.format("browser", result["content"][-1]["text"])])
-    logger.info("Browser agent completed task")
-    logger.debug(f"Browser agent response: {result['content'][-1]["text"]}")
-
-    history = state.get("history", [])
-    history.append({"agent":"browser", "message": result["content"][-1]["text"]})
-    return Command(
-        update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("browser", result["content"][-1]["text"]), imgs=[])],
-            "messages_name": "browser",
-            "clues": clues,
-            "history": history
-        },
-        goto="supervisor"
-    )
-
-def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
+def supervisor_node(state: State): #-> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     """Supervisor node that decides which agent should act next."""
     logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
     
     prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["supervisor"]
     if prompt_cache: logger.debug(f"{Colors.GREEN}Supervisor - Prompt Cache Enabled{Colors.END}")
     else: logger.debug(f"{Colors.GREEN}Supervisor - Prompt Cache Disabled{Colors.END}")
-    system_prompts, messages = apply_prompt_template("supervisor", state, prompt_cache=prompt_cache, cache_type=cache_type)    
-    llm = get_llm_by_type(AGENT_LLM_MAP["supervisor"])
-    llm.stream = True
-    llm_caller = llm_call(llm=llm, verbose=False, tracking=False)
-    
-    clues, full_plan = state.get("clues", ""), state.get("full_plan", "")       
-    messages[-1]["content"][-1]["text"] = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
-    
-    response, ai_message = llm_caller.invoke(
-        agent_name="supervisor",
-        messages=messages,
-        system_prompts=system_prompts,
-        enable_reasoning=False,
-        reasoning_budget_tokens=8192
+
+    system_prompts = apply_prompt_template("supervisor", state)
+    enable_reasoning = False
+
+    llm = get_llm_by_type(AGENT_LLM_MAP["supervisor"], cache_type, enable_reasoning)    
+    llm.config["streaming"] = True
+
+    agent = Agent(
+        model=llm,
+        system_prompt=system_prompts
     )
+
+    clues, full_plan, messages = state.get("clues", ""), state.get("full_plan", ""), state["messages"]    
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+    response = agent(message)
+    response = strands_utils.parsing_text_from_response(response)
+
     full_response = response["text"]
 
     if full_response.startswith("```json"): full_response = full_response.removeprefix("```json")
@@ -156,15 +138,13 @@ def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     full_response = json.loads(full_response)   
     goto = full_response["next"]
 
-    logger.debug(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Supervisor response:{full_response}{Colors.END}")
+    logger.info(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    logger.info(f"\n{Colors.RED}Supervisor response:{full_response}{Colors.END}")
 
     if goto == "FINISH":
         goto = "__end__"
-        #logger.info("Workflow completed")
         logger.info(f"\n{Colors.GREEN}===== Workflow completed ====={Colors.END}")
     else:
-        #logger.info(f"Supervisor delegating to: {goto}")
         logger.info(f"{Colors.GREEN}Supervisor delegating to: {goto}{Colors.END}")
 
     history = state.get("history", [])
@@ -180,38 +160,32 @@ def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
 
 def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     """Planner node that generate the full plan."""
+    
     logger.info(f"{Colors.GREEN}===== Planner generating full plan ====={Colors.END}")
-    logger.info(f"{Colors.BLUE}===== Planner - Deep thinking mode: {state.get("deep_thinking_mode")} ====={Colors.END}")
-    logger.info(f"{Colors.BLUE}===== Planner - Search before planning: {state.get("search_before_planning")} ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    
+    if "reasoning" in AGENT_LLM_MAP["planner"]: enable_reasoning = True
+    else: enable_reasoning = False
+
     prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP["planner"]
     if prompt_cache: logger.debug(f"{Colors.GREEN}Planner - Prompt Cache Enabled{Colors.END}")
     else: logger.debug(f"{Colors.GREEN}Planner - Prompt Cache Disabled{Colors.END}")
-    system_prompts, messages = apply_prompt_template("planner", state, prompt_cache=prompt_cache, cache_type=cache_type)
-    # whether to enable deep thinking mode
-       
-    full_plan = state.get("full_plan", "")
-    messages[-1]["content"][-1]["text"] = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    system_prompts = apply_prompt_template("planner", state)   
     
-    llm = get_llm_by_type(AGENT_LLM_MAP["planner"])    
-    llm.stream = True
-    llm_caller = llm_call(llm=llm, verbose=False, tracking=False)
-        
-    if state.get("deep_thinking_mode"): llm = get_llm_by_type("reasoning")
-    if state.get("search_before_planning"):
-        searched_content = tavily_tool.invoke({"query": state["request"]})
-        messages = deepcopy(messages)
-        messages[-1]["content"][-1]["text"] += f"\n\n# Relative Search Results\n\n{json.dumps([{'title': elem['title'], 'content': elem['content']} for elem in searched_content], ensure_ascii=False)}"
-    if AGENT_LLM_MAP["planner"] in ["reasoning"]: enable_reasoning = True
-    else: enable_reasoning = False
+    full_plan, messages = state.get("full_plan", ""), state["messages"]
+    
+    llm = get_llm_by_type(AGENT_LLM_MAP["planner"], cache_type, enable_reasoning)    
+    llm.config["streaming"] = True
 
-    response, ai_message = llm_caller.invoke(
-        agent_name="planner",
-        messages=messages,
-        system_prompts=system_prompts,
-        enable_reasoning=enable_reasoning,
-        reasoning_budget_tokens=8192
+    agent = Agent(
+        model=llm,
+        system_prompt=system_prompts
     )
+
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    response = agent(message)
+    response = strands_utils.parsing_text_from_response(response)
+
     full_response = response["text"]
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(full_response, indent=2, width=100)}{Colors.END}")
 
@@ -230,7 +204,7 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
         goto=goto,
     )
 
-def coordinator_node(state: State): #-> Command[Literal["planner", "__end__"]]:
+def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     """Coordinator node that communicate with customers."""
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
     
@@ -250,11 +224,11 @@ def coordinator_node(state: State): #-> Command[Literal["planner", "__end__"]]:
         system_prompt=system_prompts
     )
 
-    state["messages"], message = agent.messages, state["request_prompt"]
-
+    message = state["request_prompt"]
     response = agent(message)
     response = strands_utils.parsing_text_from_response(response)
 
+    state["messages"] = agent.messages
     logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(state['messages'][:-1], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Coordinator response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
@@ -265,6 +239,7 @@ def coordinator_node(state: State): #-> Command[Literal["planner", "__end__"]]:
     history.append({"agent":"coordinator", "message": response["text"]})
 
     logger.info(f"{Colors.GREEN}===== Coordinator completed task ====={Colors.END}")
+
     return Command(
         update={"history": history},
         goto=goto,
