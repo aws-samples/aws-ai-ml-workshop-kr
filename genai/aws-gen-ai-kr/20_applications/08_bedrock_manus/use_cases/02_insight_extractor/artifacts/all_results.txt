@@ -1,0 +1,231 @@
+
+==================================================
+## Analysis Stage: Initial Data Analysis
+## Execution Time: 2025-06-13 15:31:43
+--------------------------------------------------
+Result Description: 
+
+데이터셋 기본 분석 결과:
+1. 데이터 크기: (128975, 24)
+2. 컬럼 수: 24
+3. 결측치 현황:
+index                     0
+Order ID                  0
+Date                      0
+Status                    0
+Fulfilment                0
+Sales Channel             0
+ship-service-level        0
+Style                     0
+SKU                       0
+Category                  0
+Size                      0
+ASIN                      0
+Courier Status         6872
+Qty                       0
+currency               7795
+Amount                 7795
+ship-city                33
+ship-state               33
+ship-postal-code         33
+ship-country             33
+promotion-ids         49153
+B2B                       0
+fulfilled-by          89698
+Unnamed: 22           49050
+4. 기술 통계:
+               index            Qty         Amount  ship-postal-code
+count  128975.000000  128975.000000  121180.000000     128942.000000
+mean    64487.000000       0.904431     648.561465     463966.236509
+std     37232.019822       0.313354     281.211687     191476.764941
+min         0.000000       0.000000       0.000000     110001.000000
+25%     32243.500000       1.000000     449.000000     382421.000000
+50%     64487.000000       1.000000     605.000000     500033.000000
+75%     96730.500000       1.000000     788.000000     600024.000000
+max    128974.000000      15.000000    5584.000000     989898.000000
+
+==================================================
+
+==================================================
+## Analysis Stage: Data Preprocessing and Basic Analysis
+## Execution Time: 2025-06-13 15:32:40
+--------------------------------------------------
+Result Description: 
+
+전처리 및 기본 분석 결과:
+1. 전처리 후 데이터 크기: (121180, 22)
+2. 주요 통계:
+   - 총 판매 금액: 78,592,678.30
+   - 평균 판매 금액: 648.56
+   - 최대 판매 금액: 5,584.00
+   - 최소 판매 금액: 0.00
+3. 카테고리별 판매 현황:
+        Category          sum  count
+5            Set  39204124.03  47042
+8          kurta  21299546.70  46717
+7  Western Dress  11216072.69  14704
+6            Top   5347792.30  10165
+3   Ethnic Dress    791217.66   1093
+0         Blouse    458408.18    881
+1         Bottom    150667.98    420
+4          Saree    123933.76    155
+2        Dupatta       915.00      3
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/amount_distribution.png : 판매 금액 분포 그래프
+- ./artifacts/monthly_sales_trend.png : 월별 판매 금액 추이 그래프
+- ./artifacts/category_sales.png : 카테고리별 총 판매 금액 그래프
+==================================================
+
+==================================================
+## Analysis Stage: Advanced Sales Pattern Analysis
+## Execution Time: 2025-06-13 15:33:15
+--------------------------------------------------
+Result Description: 
+
+추가 분석 결과:
+
+1. 지역별 판매 현황 (상위 5개 주):
+       ship-state          sum  count
+27    MAHARASHTRA  13335534.14  21073
+22      KARNATAKA  10481114.37  16394
+56      TELANGANA   6916615.65  10637
+58  UTTAR PRADESH   6816642.08   9947
+55     TAMIL NADU   6515650.11  10809
+
+2. 주문 상태별 분석:
+                           Status         sum  count         mean
+3                         Shipped  50324255.0  77596   648.541871
+5    Shipped - Delivered to Buyer  18650815.0  28761   648.475887
+0                       Cancelled   6919284.3  10766   642.697780
+10   Shipped - Returned to Seller   1269644.0   1950   651.099487
+8             Shipped - Picked Up    661252.0    973   679.601233
+1                         Pending    430271.0    656   655.900915
+2   Pending - Waiting for Pick Up    192138.0    281   683.765125
+11  Shipped - Returning to Seller    107620.0    145   742.206897
+7      Shipped - Out for Delivery     26971.0     35   770.600000
+9     Shipped - Rejected by Buyer      7295.0     11   663.181818
+6       Shipped - Lost in Transit      1997.0      5   399.400000
+4               Shipped - Damaged      1136.0      1  1136.000000
+
+3. B2B vs B2C 분석:
+     B2B          sum   count        mean
+0  False  78001457.51  120337  648.191807
+1   True    591220.79     843  701.329526
+
+4. 주요 발견사항:
+- 가장 많은 판매가 이루어진 주: MAHARASHTRA (총 13,335,534.14)
+- 평균 주문 건수(월별): 30,295.00
+- B2B 거래 비중: 0.70%
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/state_sales.png : 상위 10개 주별 총 판매 금액 그래프
+- ./artifacts/order_status_count.png : 주문 상태별 건수 그래프
+- ./artifacts/monthly_order_count.png : 월별 주문 건수 추이 그래프
+- ./artifacts/b2b_sales.png : B2B vs B2C 총 판매 금액 그래프
+==================================================
+
+==================================================
+## Analysis Stage: Product Characteristics and Sales Performance Analysis
+## Execution Time: 2025-06-13 15:34:50
+--------------------------------------------------
+Result Description: 
+
+상품 특성 및 판매 성과 분석 결과:
+
+1. 판매 채널별 분석:
+  Sales Channel          sum   count        mean
+0      Amazon.in  78592678.3  121180  648.561465
+
+2. Fulfillment 방식별 분석:
+  Fulfilment         sum  count        mean
+0     Amazon  54322151.0  83639  649.483506
+1   Merchant  24270527.3  37541  646.507213
+
+3. 상위 5개 사이즈별 판매 현황:
+   Size          sum  count        mean
+6     M  13906754.37  21292  653.144579
+5     L  13234886.19  20800  636.292605
+8    XL  12464965.86  19726  631.905397
+10  XXL  10636288.45  17066  623.244372
+7     S  10629210.18  15953  666.282842
+
+4. 프로모션 효과 분석:
+  has_promotion         sum  count        mean
+0            No  25004243.3  41698  599.650902
+1           Yes  53588435.0  79482  674.221019
+
+5. 주요 발견사항:
+- 가장 효과적인 판매 채널: Amazon.in (총 판매액: 78,592,678.30)
+- 가장 높은 평균 주문 금액의 Fulfillment 방식: Amazon (평균: 649.48)
+- 프로모션 적용 시 평균 주문 금액: 674.22
+- 프로모션 미적용 시 평균 주문 금액: 599.65
+- 주문 수량과 판매 금액의 상관계수: 0.067
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/sales_channel_analysis.png : 판매 채널별 총 판매 금액 그래프
+- ./artifacts/fulfillment_analysis.png : Fulfillment 방식별 평균 주문 금액 그래프
+- ./artifacts/size_analysis.png : 상위 10개 사이즈별 총 판매 금액 그래프
+- ./artifacts/promotion_analysis.png : 프로모션 유무별 평균 주문 금액 그래프
+- ./artifacts/qty_amount_correlation.png : 주문 수량과 판매 금액의 관계 그래프
+- ./artifacts/correlation_matrix.png : 변수 간 상관관계 히트맵
+==================================================
+
+==================================================
+## Analysis Stage: Comprehensive Sales Analysis
+## Execution Time: 2025-06-13 15:35:53
+--------------------------------------------------
+Result Description: 
+
+종합 판매 분석 결과:
+
+1. 판매 채널별 분석:
+  Sales Channel          sum   count        mean
+0      Amazon.in  78592678.3  121180  648.561465
+
+2. Fulfillment 방식별 분석:
+  Fulfilment         sum  count        mean
+0     Amazon  54322151.0  83639  649.483506
+1   Merchant  24270527.3  37541  646.507213
+
+3. 상위 5개 사이즈별 판매 현황:
+   Size          sum  count        mean
+6     M  13906754.37  21292  653.144579
+5     L  13234886.19  20800  636.292605
+8    XL  12464965.86  19726  631.905397
+10  XXL  10636288.45  17066  623.244372
+7     S  10629210.18  15953  666.282842
+
+4. 프로모션 효과 분석:
+  has_promotion         sum  count        mean
+0            No  25004243.3  41698  599.650902
+1           Yes  53588435.0  79482  674.221019
+
+5. 월별 판매 패턴:
+   Month          sum  count        mean
+0      3    101683.85    162  627.678086
+1      4  28838708.32  46068  626.003046
+2      5  26226476.75  39536  663.356858
+3      6  23425809.38  35414  661.484424
+
+6. 주요 발견사항:
+- 가장 효과적인 판매 채널: Amazon.in (총 판매액: 78,592,678.30)
+- 가장 높은 평균 주문 금액의 Fulfillment 방식: Amazon (평균: 649.48)
+- 프로모션 적용 시 평균 주문 금액: 674.22
+- 프로모션 미적용 시 평균 주문 금액: 599.65
+- 주문 수량과 판매 금액의 상관계수: 0.067
+- 월별 평균 판매액: 19,648,169.57
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/sales_channel_analysis.png : 판매 채널별 총 판매 금액 그래프
+- ./artifacts/fulfillment_analysis.png : Fulfillment 방식별 평균 주문 금액 그래프
+- ./artifacts/size_analysis.png : 상위 10개 사이즈별 총 판매 금액 그래프
+- ./artifacts/promotion_analysis.png : 프로모션 유무별 평균 주문 금액 그래프
+- ./artifacts/qty_amount_correlation.png : 주문 수량과 판매 금액의 관계 그래프
+- ./artifacts/correlation_matrix.png : 변수 간 상관관계 히트맵
+- ./artifacts/monthly_sales_pattern.png : 월별 판매 패턴 그래프
+==================================================

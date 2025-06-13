@@ -1,13 +1,31 @@
 import logging
 import subprocess
-from typing import Annotated
-from langchain_core.tools import tool
-from .decorators import log_io
+from typing import Any, Annotated
+from strands.types.tools import ToolResult, ToolUse
+from src.tools.decorators import log_io
+
+TOOL_SPEC = {
+    "name": "bash_tool",
+    "description": "Use this to execute bash command and do necessary operations.",
+    "inputSchema": {
+        "json": {
+            "type": "object",
+            "properties": {
+                "cmd": {
+                    "type": "string",
+                    "description": "The bash command to be executed."
+                }
+            },
+            "required": ["cmd"]
+        }
+    }
+}
 
 # Initialize logger
 logger = logging.getLogger(__name__)
 logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]: logger.removeHandler(handler)
+for handler in logger.handlers[:]: 
+    logger.removeHandler(handler)
 handler = logging.StreamHandler()
 formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
 handler.setFormatter(formatter)
@@ -25,7 +43,7 @@ class Colors:
     END = '\033[0m'
 
 @log_io
-def handle_bash_tool(cmd: Annotated[str, "The bash command to be executed."],):
+def handle_bash_tool(cmd: Annotated[str, "The bash command to be executed."]):
     """Use this to execute bash command and do necessary operations."""
 
     logger.info(f"{Colors.GREEN}===== Executing Bash ====={Colors.END}")
@@ -49,8 +67,31 @@ def handle_bash_tool(cmd: Annotated[str, "The bash command to be executed."],):
         # Catch any other exceptions
         error_message = f"Error executing command: {str(e)}"
         #logger.error(error_message)
-        logger.error(f"{Colors.RED}error_message{Colors.END}")
+        logger.error(f"{Colors.RED}{error_message}{Colors.END}")
         return error_message
 
+# Function name must match tool name
+def bash_tool(tool: ToolUse, **kwargs: Any) -> ToolResult:
+    tool_use_id = tool["toolUseId"]
+    cmd = tool["input"]["cmd"]
+    
+    # Use the existing handle_bash_tool function
+    result = handle_bash_tool(cmd)
+    
+    # Check if execution was successful based on the result string
+    if "Command failed" in result or "Error executing command" in result:
+        return {
+            "toolUseId": tool_use_id,
+            "status": "error",
+            "content": [{"text": result}]
+        }
+    else:
+        return {
+            "toolUseId": tool_use_id,
+            "status": "success",
+            "content": [{"text": result}]
+        }
+
 if __name__ == "__main__":
-    print(bash_tool.invoke("ls -all"))
+    # Test example using the handle_bash_tool function directly
+    print(handle_bash_tool("ls -all"))

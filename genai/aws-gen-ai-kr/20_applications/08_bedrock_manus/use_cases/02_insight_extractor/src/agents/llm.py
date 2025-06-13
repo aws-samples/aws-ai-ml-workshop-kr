@@ -154,13 +154,13 @@ def get_llm_by_type(llm_type, cache_type=None, enable_reasoning=False):
         llm = BedrockModel(
             model_id=bedrock_info.get_model_id(model_name="Claude-V3-7-Sonnet-CRI"),
             streaming=True,
-            max_tokens=8192*3,
+            max_tokens=8192*5,
             stop_sequencesb=["\n\nHuman"],
             temperature=1 if enable_reasoning else 0.01, 
             additional_request_fields={
                 "thinking": {
                     "type": "enabled" if enable_reasoning else "disabled", 
-                    **({"budget_tokens": 2048} if enable_reasoning else {}),
+                    **({"budget_tokens": 8192} if enable_reasoning else {}),
                 }
             },
             cache_prompt=cache_type, # None/ephemeral/defalut

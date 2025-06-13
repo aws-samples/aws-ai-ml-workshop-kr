@@ -75,10 +75,9 @@ def run_agent_workflow(user_input: str, debug: bool = False):
             # Constants
             "TEAM_MEMBERS": TEAM_MEMBERS,
             # Runtime Variables
-            #"messages": [{"role": "user", "content": user_input}],
             "messages": messages,
-            "deep_thinking_mode": True,
-            "search_before_planning": False,
+            #"deep_thinking_mode": True,
+            #"search_before_planning": False,
             "request": user_input,
             "request_prompt": user_prompts
         },

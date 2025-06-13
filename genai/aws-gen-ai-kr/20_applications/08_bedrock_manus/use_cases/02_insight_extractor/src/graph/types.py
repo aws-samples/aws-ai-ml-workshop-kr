@@ -21,8 +21,8 @@ class State(TypedDict):
     # Runtime Variables
     next: str
     full_plan: str
-    deep_thinking_mode: bool
-    search_before_planning: bool
+    #deep_thinking_mode: bool
+    #search_before_planning: bool
     
     # Messages
     messages: list[dict]
@@ -32,7 +32,6 @@ class State(TypedDict):
     # Results
     artifacts: list[list]
     clues: str
-    #Intermediate results
     
     # Request
     request: str
