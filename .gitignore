@@ -4,6 +4,7 @@
 
 **/secrets.env
 **/.env
+**/*.env
 
 # DS_store
 .DS_Store
