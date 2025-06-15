@@ -1,0 +1,165 @@
+
+==================================================
+# Research Findings - 2025-06-15 08:08:13
+--------------------------------------------------
+
+## Problem Statement
+Research current AWS cloud market status and trends in Korea, focusing on market share, revenue, key industries, competitors, and growth projections for 2025-2030.
+
+## Research Findings
+
+### Topic 1: Current AWS Cloud Market Status in Korea
+- As of 2023, the overall Korean cloud market reached 7.39 trillion won, showing a 27% growth from 5.84 trillion won in 2022 [1]
+- AWS dominates the Korean cloud service market with approximately 60% market share [2]
+- In global context, AWS maintains 32-33% market share in Q2 2024 [3]
+- Infrastructure as a Service (IaaS) and Software as a Service (SaaS) account for 78% of total cloud market revenue in Korea [1]
+- IaaS segment showed 24% growth reaching 3.17 trillion won in 2023 [1]
+
+## Original full text
+[1]: The Korean cloud market size exceeded 7 trillion won. According to the '2024 Cloud Industry Survey Results Report' published by the Ministry of Science and ICT and NIPA, cloud industry sales in Korea reached 7.3954 trillion won in 2023, an increase of about 1.55 trillion won (27%) from 5.8410 trillion won in 2022. IaaS company sales increased by 24% from 2.5577 trillion won in 2022 to 3.1687 trillion won in 2023.
+
+[2]: According to the '2023 Value-Added Telecommunications Business Survey' released by the Ministry of Science and ICT last year, Amazon Web Services (AWS) has a 60% market share in the domestic cloud service market.
+
+[3]: In Q2 2024, Amazon AWS maintains about 32% of the cloud market share, continuing to maintain its position as market leader. This is followed by Microsoft Azure (23%) and Google.
+
+## References
+[1]: [국내 클라우드 시장 규모 7조원 넘었다…AI 확산 힘입어 급성장](https://www.etnews.com/20250205000208)
+[2]: [글로벌 빅테크, 국내 공공 클라우드 시장 진출](https://ceoscoredaily.com/page/view/2024120916361341877)
+[3]: [글로벌 클라우드 시장 2024년 2분기 분석](https://maily.so/untitled.labs/posts/knrj5j3wzld)
+==================================================
+
+
+### Topic 2: Market Competition and Key Players in Korea
+- Detailed market share breakdown in Korea (2023-2024) [4]:
+  * AWS: 47.6%
+  * Microsoft Azure: 21.2%
+  * Naver Cloud: 13.0%
+  * NHN Cloud: 7.6%
+  * KT Cloud: 4.7%
+  * Google Cloud: 2.7%
+- Global CSPs dominate 72% of the Korean market [4]
+- Korean providers are particularly strong in regulated industries like public sector, government, and finance [4]
+- The total IaaS, PaaS, and SaaS business size in Korea reached approximately 6.2 trillion won in 2023 [4]
+
+### Topic 3: Key Industry Sectors and Trends
+- Financial sector and public sector are leading cloud adoption with financial cloud market growing 32% in 2023 [5]
+- Multi-cloud and hybrid cloud strategies are increasing, with 20% growth compared to previous year [5]
+- Key growth drivers for 2024 [5]:
+  * AI infrastructure development
+  * Data sovereignty concerns
+  * Industry-specific specialized services
+  * Edge computing integration
+  * Cloud security solutions
+  * Cost optimization services
+
+## Original full text
+[4]: According to market data, global CSPs occupy 72% of the domestic market. Korean CSPs are performing well in regulated industries such as public, government, and financial sectors. Specifically, AWS has 47.6%, Microsoft has 21.2%, Naver Cloud has 13.0%, NHN Cloud has 7.6%, KT Cloud has 4.7%, and Google Cloud has 2.7%. Combining various research institutions' data, the IaaS, PaaS, and SaaS business scale in 2023 reached 6.2 trillion won.
+
+[5]: The Korean cloud market experienced 18.5% growth in 2023, reaching a total scale of 3.3 trillion won (Korea IDC). Financial sector and public sector cloud adoption is accelerating, with the financial cloud market growing 32% in 2023. Companies adopting multi-cloud and hybrid cloud strategies increased by 20% compared to 2023. Market growth in 2024 is expected to accelerate, focusing on AI infrastructure and data sovereignty.
+
+## References
+[4]: [인터뷰] "2024년은 프라이빗·퍼블릭 클라우드 사업 확대 원년 될 것"](https://www.comworld.co.kr/news/articleView.html?idxno=51011)
+[5]: [2024년 1분기 한국 클라우드 시장 동향 및 최근 성과 분석](https://fun-it-s.tistory.com/entry/2024%EB%85%84-1%EB%B6%84%EA%B8%B0-%ED%95%9C%EA%B5%AD-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%8B%9C%EC%9E%A5-%EB%8F%99%ED%96%A5-%EB%B0%8F-%EC%B5%9C%EA%B7%BC-%EC%84%B1%EA%B3%BC-%EB%B6%84%EC%84%9D)
+
+
+### Topic 4: Market Growth Projections and Forecasts
+- The Korean public cloud market is expected to reach 3.9 trillion won by 2025 [6]
+- The overall Korean cloud computing market is projected to grow from USD 18 Billion in 2024 to USD 42 Billion by 2033 [7]
+- Global cloud computing market expected to grow at 16.6% CAGR from 2025 to 2032 [8]
+- Cloud microservices market specifically projected to grow at 15.4% CAGR from 2024 to 2030 [9]
+- Global cloud infrastructure spending expected to grow 19% in 2025 according to Canalys [10]
+
+## Original full text
+[6]: The domestic public cloud market is expected to grow rapidly to reach 3.9 trillion won by 2025, which is significantly larger than the 2022 market estimate.
+
+[7]: South Korea Cloud Computing Market size was valued at USD 18 Billion in 2024 and is projected to reach USD 42 Billion by 2033.
+
+[8]: The cloud computing market is expected to grow at a CAGR of 16.6% from 2025 to 2032, reaching USD 2.4328 trillion by 2030.
+
+[9]: The global cloud microservices market is expected to show a compound annual growth rate (CAGR) of 15.4% from 2024 to 2030, reaching USD 3.5 billion by 2030.
+
+[10]: According to Canalys, global cloud infrastructure service spending is expected to grow 19% in 2025.
+
+## References
+[6]: [퍼블릭 클라우드 시장, 1조 달러 돌파할까](https://www.kcloudnews.co.kr/news/articleView.html?idxno=11777)
+[7]: [South Korea Cloud Computing Market Size, Emerging Trends](https://www.linkedin.com/pulse/south-korea-cloud-computing-market-size-emerging-mm5mf/)
+[8]: [클라우드 컴퓨팅 시장 규모, 점유율, 가치 및 성장 [2032]](https://www.fortunebusinessinsights.com/ko/cloud-computing-market-102697)
+[9]: [클라우드 마이크로서비스 시장 보고서](https://www.giikorea.co.kr/report/luci1356705-cloud-microservice-market-report-trends-forecast.html)
+[10]: [2025년 클라우드 시장 19% 성장](https://www.cio.com/article/3837080/2025%EB%85%84-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%8B%9C%EC%9E%A5-19-%EC%84%B1%EC%9E%A5%C2%B7%C2%B7%C2%B7-aws-%EC%98%AC%ED%95%B4-%ED%88%AC%EC%9E%90%EC%95%A1-1000%EC%96%B5-%EB%8B%AC%EB%9F%AC.html)
+
+Current session ended: next session should start from Topic number 5, Reference index 11
+==================================================
+
+==================================================
+# Research Findings - 2025-06-15 08:11:06
+--------------------------------------------------
+
+## Problem Statement
+Research AWS cloud market growth factors, challenges, regulatory environment, and partnerships in Korea for 2025-2030, focusing on the second step of the research plan.
+
+## Research Findings
+
+### Topic 5: Key Growth Drivers for AWS in Korean Market
+- AI adoption is the primary growth driver, with AWS investing heavily in AI infrastructure and services [11]
+- Cloud adoption acceleration in financial and public sectors, with financial cloud market growing 32% in 2023 [12]
+- Multi-cloud and hybrid cloud strategies increasing by 20% compared to previous year [12]
+- AWS plans massive investment in data center expansion, with significant portion of $100 billion capital expenditure planned for 2025 [13]
+
+### Topic 6: Challenges and Obstacles for AWS in Korea
+- Supply constraints limiting growth potential, with demand currently exceeding available capacity [14]
+- Intense competition from local providers in regulated industries (public sector, government, finance) [15]
+- Need for significant infrastructure investments to meet growing demand [14]
+- Competition from other global providers, particularly Microsoft Azure's rapid growth in AI services [11]
+
+### Topic 7: Regulatory Environment for Cloud Services
+- Cloud Computing Development and User Protection Act governs cloud services in Korea [16]
+- AWS maintains comprehensive compliance with Korean regulations through:
+  * Regular third-party validations for security and compliance standards [17]
+  * Shared responsibility model for security and compliance [18]
+  * Support for local data sovereignty requirements [17]
+- Financial sector regulations requiring special attention to data security and privacy [17]
+
+### Topic 8: AWS Partnerships and Initiatives in Korea
+- Strategic focus on AI infrastructure development through partnerships [19]
+- Integration of new AI models like DeepSeek R1 into AWS platform [11]
+- Expansion of data center capacity and infrastructure investments [13]
+- Partnerships with financial institutions and public sector organizations [12]
+
+### Topic 9: Expert Opinions on Future Prospects
+- Canalys analysts predict 19% growth in global cloud infrastructure spending for 2025 [11]
+- Experts anticipate exponential increase in cloud demand due to AI adoption [11]
+- Industry experts highlight AWS's strategic investment in AI capabilities as key to future growth [19]
+- Financial sector expected to lead cloud adoption in Korea through 2025 [12]
+
+## Original full text
+[11]: "AI가 더 효율적이고 널리 채택됨에 따라 클라우드 수요가 기하급수적으로 증가할 것으로 예상된다. 이에 대응하여 클라우드 하이퍼스케일러는 전 세계적으로 AI 모델 교육, 배포 및 클라우드 기반 애플리케이션을 성장시키기 위해 상당한 투자를 하고 있다."
+
+[12]: "The Korean cloud market experienced 18.5% growth in 2023, reaching a total scale of 3.3 trillion won. Financial sector and public sector cloud adoption is accelerating, with the financial cloud market growing 32% in 2023. Companies adopting multi-cloud and hybrid cloud strategies increased by 20% compared to 2023."
+
+[13]: "아마존(AWS)은 2025년 계획된 약 1,000억 달러 규모의 자본 지출 중 상당 부분을 데이터센터 구축 및 확장에 투자할 계획이라고 밝혔다."
+
+[14]: "수요가 공급을 앞지르는 상황에서 공급업체의 제한된 용량이 성장의 걸림돌로 작용하고 있다."
+
+[15]: "Korean CSPs are performing well in regulated industries such as public, government, and financial sectors."
+
+[16]: "클라우드컴퓨팅의 발전 및 이용을 촉진하고 클라우드컴퓨팅서비스를 안전하게 이용할 수 있는 환경을 조성함으로써 국민생활의 향상과 국민경제의 발전에 이바지함을 목적으로 한다."
+
+[17]: "AWS는 금융, 소매, 의료, 정부 등의 보안 및 규정 준수 표준을 충족하기 위해 지속적으로 모니터링하는 수천 가지의 글로벌 규정 준수 요구 사항에 대해 서드 파티 검증을 정기적으로 수행합니다."
+
+[18]: "AWS는 보안과 규정을 준수하는 것이 당사와 고객간 공동 책임이라는 원칙을 세워두고 있다."
+
+[19]: "작년은 인공지능(AI)의 시장 가능성을 점검하는 시기였다면, 올해는 AI의 기술적 이점이 실제 돈이 되는 사업 기회로 전환되는 한 해가 될 것"
+
+## References
+[11]: [Canalys 2025 Cloud Market Forecast](https://www.cio.com/article/3837080/2025년-클라우드-시장-19-성장···-aws-올해-투자액-1000억-달러.html)
+[12]: [Korean Cloud Market Analysis 2024](https://fun-it-s.tistory.com/entry/2024년-1분기-한국-클라우드-시장-동향-및-최근-성과-분석)
+[13]: [AWS Investment Plans 2025](https://assets.kpmg.com/content/dam/kpmg/kr/pdf/2025/issue-monitor/삼정KPMG-XR-20250321.pdf)
+[14]: [Cloud Market Supply Constraints](https://www.cio.com/article/3837080/)
+[15]: [Korean Cloud Service Provider Analysis](https://www.comworld.co.kr/news/articleView.html?idxno=51011)
+[16]: [Cloud Computing Development Act](https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=239303)
+[17]: [AWS Compliance Korea](https://aws.amazon.com/ko/compliance/)
+[18]: [AWS Public Summit 2024](https://m.ddaily.co.kr/page/view/2024062715015331664)
+[19]: [AWS Korea CEO Interview](https://www.mk.co.kr/news/it/11257029)
+
+Current session ended: next session should start from Topic number 10, Reference index 20
+==================================================
