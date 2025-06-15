@@ -1,14 +1,15 @@
 
 ==================================================
-## Analysis Stage: 1. 데이터 로드 및 기본 구조 확인
-## Execution Time: 2025-06-14 23:09:11
+## Analysis Stage: 데이터 로드 및 기본 구조 파악
+## Execution Time: 2025-06-15 01:46:32
 --------------------------------------------------
 Result Description: 
 
 데이터셋 기본 정보:
-- 데이터 크기: (128975, 24)
-- 컬럼 수: 24
-- 결측치 현황:
+- 행 수: 128975
+- 열 수: 24
+- 컬럼 목록: index, Order ID, Date, Status, Fulfilment, Sales Channel , ship-service-level, Style, SKU, Category, Size, ASIN, Courier Status, Qty, currency, Amount, ship-city, ship-state, ship-postal-code, ship-country, promotion-ids, B2B, fulfilled-by, Unnamed: 22
+- 결측치 현황: 
 index                     0
 Order ID                  0
 Date                      0
@@ -34,8 +35,231 @@ B2B                       0
 fulfilled-by          89698
 Unnamed: 22           49050
 
-주요 특징:
-- 총 128975개의 거래 데이터
-- 24개의 특성(컬럼) 보유
+==================================================
+
+==================================================
+## Analysis Stage: 데이터 전처리 및 기초 통계 분석
+## Execution Time: 2025-06-15 01:46:51
+--------------------------------------------------
+Result Description: 
+
+데이터 전처리 결과:
+1. 데이터 정제 후 크기: (121180, 22)
+
+2. 수치형 데이터 기술통계량:
+                 Qty         Amount
+count  121180.000000  121180.000000
+mean        0.961231     648.561465
+std         0.214354     281.211687
+min         0.000000       0.000000
+25%         1.000000     449.000000
+50%         1.000000     605.000000
+75%         1.000000     788.000000
+max         8.000000    5584.000000
+
+3. 주요 카테고리별 판매 건수:
+Category
+Set              47042
+kurta            46717
+Western Dress    14704
+Top              10165
+Ethnic Dress      1093
+
+4. 판매 상태별 건수:
+Status
+Shipped                          77596
+Shipped - Delivered to Buyer     28761
+Cancelled                        10766
+Shipped - Returned to Seller      1950
+Shipped - Picked Up                973
+Pending                            656
+Pending - Waiting for Pick Up      281
+Shipped - Returning to Seller      145
+Shipped - Out for Delivery          35
+Shipped - Rejected by Buyer         11
+Shipped - Lost in Transit            5
+Shipped - Damaged                    1
+
+==================================================
+
+==================================================
+## Analysis Stage: 시계열 기반 판매 트렌드 분석
+## Execution Time: 2025-06-15 01:47:23
+--------------------------------------------------
+Result Description: 
+
+시계열 판매 트렌드 분석 결과:
+
+1. 일별 판매 통계:
+- 평균 일별 주문 건수: 1331.65
+- 최대 일별 주문 건수: 1932.00
+- 평균 일별 매출액: 863655.81
+- 최대 일별 매출액: 1209364.17
+
+2. 요일별 판매 패턴:
+Weekday
+Monday       17449
+Tuesday      17708
+Wednesday    17429
+Thursday     16042
+Friday       16596
+Saturday     17460
+Sunday       18496
+
+3. 주요 시각화 자료:
+- 일별 판매 추이 그래프
+- 카테고리별 판매 추이 그래프
+- 요일별 판매 패턴 그래프
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/daily_sales_trend.png : 일별 판매량 및 매출액 추이 그래프
+- ./artifacts/category_sales_trend.png : 카테고리별 일별 판매량 추이 그래프
+- ./artifacts/weekday_sales_pattern.png : 요일별 주문 건수 그래프
+==================================================
+
+==================================================
+## Analysis Stage: 카테고리/제품별 판매 분석 및 변수 관계 분석
+## Execution Time: 2025-06-15 01:47:56
+--------------------------------------------------
+Result Description: 
+
+카테고리/제품별 판매 분석 결과:
+
+1. 카테고리별 분석:
+Top 5 카테고리 (매출액 기준):
+        Category       Amount  Order ID  Average_Order_Value
+5            Set  39204124.03     47042           833.385571
+8          kurta  21299546.70     46717           455.927108
+7  Western Dress  11216072.69     14704           762.790580
+6            Top   5347792.30     10165           526.098603
+3   Ethnic Dress    791217.66      1093           723.895389
+
+2. 판매 채널별 분석:
+     Channel  Order_Count  Total_Amount  Average_Amount
+0  Amazon.in       121180    78592678.3      648.561465
+
+3. 배송 방식별 분석:
+    fulfilled-by Order ID      Amount            
+                    count         sum        mean
+0      Easy Ship    37541  24270527.3  646.507213
+1  Not Specified    83639  54322151.0  649.483506
+
+4. 상관관계 분석:
+Qty와 Amount 간 상관계수: 0.0669
+
+5. 주문 수량 분포:
+- 평균 주문 수량: 0.96
+- 최대 주문 수량: 8.00
+- 주문 수량 중앙값: 1.00
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/category_revenue.png : 카테고리별 총 매출액 그래프
+- ./artifacts/channel_revenue.png : 판매 채널별 매출액 그래프
+- ./artifacts/fulfillment_revenue.png : 배송 방식별 매출액 그래프
+- ./artifacts/correlation_matrix.png : 변수 간 상관관계 히트맵
+- ./artifacts/quantity_distribution.png : 주문 수량별 분포 그래프
+==================================================
+
+==================================================
+## Analysis Stage: 마케팅 인사이트를 위한 세그먼트 분석
+## Execution Time: 2025-06-15 01:48:35
+--------------------------------------------------
+Result Description: 
+
+세그먼트 분석 결과:
+
+1. 지역별 분석 (상위 5개 지역):
+            State  Order_Count  Total_Amount  Average_Amount
+27    MAHARASHTRA        21073   13335534.14      632.825613
+22      KARNATAKA        16394   10481114.37      639.326239
+56      TELANGANA        10637    6916615.65      650.241201
+58  UTTAR PRADESH         9947    6816642.08      685.296278
+55     TAMIL NADU        10809    6515650.11      602.798604
+
+2. B2B vs B2C 분석:
+     B2B  Order_Count  Total_Amount  Average_Amount
+0  False       120337   78001457.51      648.191807
+1   True          843     591220.79      701.329526
+
+3. 프로모션 효과 분석 (상위 5개):
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               promotion-ids  count         sum        mean
+5766                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            IN Core Free Shipping 2015/04/08 23-48-5-108  45762  31815155.0  695.230868
+5777                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            No Promotion  41698  25004243.3  599.650902
+4979  Amazon PLCC Free-Financing Universal Merchant AAT-WNKTBO3K27EJC,Amazon PLCC Free-Financing Universal Merchant AAT-QX3UCCJESKPA2,Amazon PLCC Free-Financing Universal Merchant AAT-CXJHMC2YJUK76,Amazon PLCC Free-Financing Universal Merchant AAT-CC4FAVTYR4X7C,Amazon PLCC Free-Financing Universal Merchant AAT-XXRCW6NZEPZI4,Amazon PLCC Free-Financing Universal Merchant AAT-EOKPWFWYW7Y6I,Amazon PLCC Free-Financing Universal Merchant AAT-ZYL5UPUNW6T62,Amazon PLCC Free-Financing Universal Merchant AAT-G5ZRX4BZOIODU,Amazon PLCC Free-Financing Universal Merchant AAT-PZHUW6DZX4BPS,Amazon PLCC Free-Financing Universal Merchant AAT-XX7G3ZRJJJ5LG,Amazon PLCC Free-Financing Universal Merchant AAT-LEHCKNDBJG64E,Amazon PLCC Free-Financing Universal Merchant AAT-DJVHCEV7D7RQY,Amazon PLCC Free-Financing Universal Merchant AAT-BRSZZ45H6MHAO,Amazon PLCC Free-Financing Universal Merchant AAT-MKLXOOZWQL7GO,Amazon PLCC Free-Financing Universal Merchant AAT-CB7UNXEXGIJTC,Amazon PLCC Free-Financing Universal Merchant #MP-gzasho-1593152694811,Amazon PLCC Free-Financing Universal Merchant AAT-WLBA4GZ52EAH4    458    303792.0  663.301310
+4975                                                                                                                                                                                                  Amazon PLCC Free-Financing Universal Merchant AAT-WNKTBO3K27EJC,Amazon PLCC Free-Financing Universal Merchant AAT-QX3UCCJESKPA2,Amazon PLCC Free-Financing Universal Merchant AAT-CXJHMC2YJUK76,Amazon PLCC Free-Financing Universal Merchant AAT-CC4FAVTYR4X7C,Amazon PLCC Free-Financing Universal Merchant AAT-XXRCW6NZEPZI4,Amazon PLCC Free-Financing Universal Merchant AAT-EOKPWFWYW7Y6I,Amazon PLCC Free-Financing Universal Merchant AAT-ZYL5UPUNW6T62,Amazon PLCC Free-Financing Universal Merchant AAT-G5ZRX4BZOIODU,Amazon PLCC Free-Financing Universal Merchant AAT-PZHUW6DZX4BPS,Amazon PLCC Free-Financing Universal Merchant AAT-BRSZZ45H6MHAO,Amazon PLCC Free-Financing Universal Merchant AAT-MKLXOOZWQL7GO,Amazon PLCC Free-Financing Universal Merchant AAT-CB7UNXEXGIJTC,Amazon PLCC Free-Financing Universal Merchant #MP-gzasho-1593152694811,Amazon PLCC Free-Financing Universal Merchant AAT-WLBA4GZ52EAH4    305    228181.0  748.134426
+2201  Amazon PLCC Free-Financing Universal Merchant AAT-WNKTBO3K27EJC,Amazon PLCC Free-Financing Universal Merchant AAT-QX3UCCJESKPA2,Amazon PLCC Free-Financing Universal Merchant AAT-5QQ7BIYYQEDN2,Amazon PLCC Free-Financing Universal Merchant AAT-DSJ2QRXXWXVMQ,Amazon PLCC Free-Financing Universal Merchant AAT-CXJHMC2YJUK76,Amazon PLCC Free-Financing Universal Merchant AAT-CC4FAVTYR4X7C,Amazon PLCC Free-Financing Universal Merchant AAT-XXRCW6NZEPZI4,Amazon PLCC Free-Financing Universal Merchant AAT-EOKPWFWYW7Y6I,Amazon PLCC Free-Financing Universal Merchant AAT-ZYL5UPUNW6T62,Amazon PLCC Free-Financing Universal Merchant AAT-G5ZRX4BZOIODU,Amazon PLCC Free-Financing Universal Merchant AAT-PZHUW6DZX4BPS,Amazon PLCC Free-Financing Universal Merchant AAT-ETXQ3XXWMRXBG,Amazon PLCC Free-Financing Universal Merchant AAT-BRSZZ45H6MHAO,Amazon PLCC Free-Financing Universal Merchant AAT-MKLXOOZWQL7GO,Amazon PLCC Free-Financing Universal Merchant AAT-CB7UNXEXGIJTC,Amazon PLCC Free-Financing Universal Merchant #MP-gzasho-1593152694811,Amazon PLCC Free-Financing Universal Merchant AAT-WLBA4GZ52EAH4    316    218352.0  690.987342
+
+4. 주문 금액대별 세그먼트 분석:
+  Amount_Segment Order ID       Amount             
+                    count          sum         mean
+0       Very Low    24365   7859621.96   322.578369
+1            Low    24325  11558053.56   475.151225
+2         Medium    24553  14997527.12   610.822593
+3           High    23769  17994297.93   757.049010
+4      Very High    24168  26183177.73  1083.382064
+
+5. 상위 10개 스타일 선호도:
+Style
+JNE3797    3995
+JNE3405    2104
+J0230      1733
+SET268     1732
+J0341      1538
+J0003      1491
+SET324     1206
+SET345     1152
+JNE3373    1078
+JNE3440     993
+
+주요 마케팅 인사이트:
+1. 지역별 타겟팅: 상위 지역들에 대한 집중적인 마케팅 전략 수립 필요
+2. B2B/B2C 전략: 각 세그먼트별 차별화된 접근 전략 필요
+3. 프로모션 최적화: 효과가 높은 프로모션 유형 파악 및 확대
+4. 금액대별 타겟팅: 구매 금액대별 맞춤형 프로모션 설계
+5. 스타일 최적화: 인기 스타일을 중심으로 한 제품 라인업 강화
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/top_regions_revenue.png : 상위 10개 지역별 매출액 그래프
+- ./artifacts/b2b_vs_b2c_revenue.png : B2B vs B2C 매출액 비교 그래프
+- ./artifacts/top_promotions_revenue.png : 상위 10개 프로모션별 매출액 그래프
+- ./artifacts/amount_segment_analysis.png : 주문 금액대별 매출액 분포 그래프
+- ./artifacts/top_styles_frequency.png : 상위 10개 스타일별 주문 빈도 그래프
+==================================================
+
+==================================================
+## Analysis Stage: 최종 분석 보고서 생성
+## Execution Time: 2025-06-15 01:49:09
+--------------------------------------------------
+Result Description: 
+
+최종 분석 보고서가 생성되었습니다.
+보고서는 다음 섹션들을 포함하고 있습니다:
+1. 개요
+2. 데이터 기본 정보
+3. 주요 분석 결과
+4. 주요 마케팅 인사이트
+5. 결론 및 제언
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/amazon_sales_analysis_report.md : 최종 분석 보고서 (마크다운 형식)
+==================================================
+
+==================================================
+## Analysis Stage: PDF 변환 명령어 생성
+## Execution Time: 2025-06-15 01:49:22
+--------------------------------------------------
+Result Description: 
+
+PDF 변환을 위한 pandoc 명령어가 생성되었습니다:
+pandoc "./artifacts/amazon_sales_analysis_report.md" -o "./artifacts/amazon_sales_analysis_report.pdf" --pdf-engine=xelatex -V mainfont="NanumGothic" -V geometry:margin=1in
+
+주의: 실제 PDF 변환을 위해서는 시스템에 다음 요구사항이 필요합니다:
+1. pandoc 설치
+2. LaTeX 설치 (XeLaTeX 포함)
+3. NanumGothic 폰트 설치
 
 ==================================================

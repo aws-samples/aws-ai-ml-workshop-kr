@@ -7,7 +7,6 @@ import functools
 from textwrap import dedent
 from IPython.display import Markdown, HTML, display
 from botocore.exceptions import ClientError
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 logging.basicConfig()
 logger = logging.getLogger('retry-bedrock-invocation')
@@ -135,25 +134,4 @@ def _png_to_bytes(file_path):
         print ("Error: 파일을 찾을 수 없습니다.")
     except Exception as e:
         print (f"Error: {str(e)}")
-
-    
-class ColoredStreamingCallback(StreamingStdOutCallbackHandler):
-    COLORS = {
-        'blue': '\033[94m',
-        'green': '\033[92m',
-        'yellow': '\033[93m',
-        'red': '\033[91m',
-        'purple': '\033[95m',
-        'cyan': '\033[96m',
-        'white': '\033[97m',
-    }
-    
-    def __init__(self, color='blue'):
-        super().__init__()
-        self.color_code = self.COLORS.get(color, '\033[94m')
-        self.reset_code = '\033[0m'
-    
-    def on_llm_new_token(self, token: str, **kwargs) -> None:
-        print(f"{self.color_code}{token}{self.reset_code}", end="", flush=True)
-
 

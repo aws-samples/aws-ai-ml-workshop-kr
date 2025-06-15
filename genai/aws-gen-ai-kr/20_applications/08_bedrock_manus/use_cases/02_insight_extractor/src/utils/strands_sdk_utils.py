@@ -1,8 +1,9 @@
 import logging
 from strands import Agent, tool
 from src.agents.llm import get_llm_by_type
-from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from src.prompts.template import apply_prompt_template
+from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -25,6 +26,25 @@ class Colors:
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
+class ColoredStreamingCallback(StreamingStdOutCallbackHandler):
+    COLORS = {
+        'blue': '\033[94m',
+        'green': '\033[92m',
+        'yellow': '\033[93m',
+        'red': '\033[91m',
+        'purple': '\033[95m',
+        'cyan': '\033[96m',
+        'white': '\033[97m',
+    }
+    
+    def __init__(self, color='blue'):
+        super().__init__()
+        self.color_code = self.COLORS.get(color, '\033[94m')
+        self.reset_code = '\033[0m'
+    
+    def on_llm_new_token(self, token: str, **kwargs) -> None:
+        print(f"{self.color_code}{token}{self.reset_code}", end="", flush=True)
+
 class strands_utils():
 
     @staticmethod
@@ -36,6 +56,9 @@ class strands_utils():
 
         if "reasoning" in AGENT_LLM_MAP[agent_name]: enable_reasoning = True
         else: enable_reasoning = False
+
+        ## Use reasoning model but not use reasoning capability
+        if agent_name == "supervisor": enable_reasoning = False
 
         prompt_cache, cache_type = AGENT_PROMPT_CACHE_MAP[agent_name]
         if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
@@ -53,6 +76,34 @@ class strands_utils():
         )
 
         return agent
+
+    @staticmethod
+    async def process_streaming_response(agent, message, agent_name=None):
+        callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
+        response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
+        try:
+            agent_stream = agent.stream_async(message)
+            async for event in agent_stream:
+                if "reasoningText" in event:
+                    response["reasoning"] += event["reasoningText"]
+                    callback_reasoning.on_llm_new_token(event["reasoningText"])
+                elif "reasoning_signature" in event:
+                    response["signature"] += event["reasoning_signature"]
+                elif "data" in event:
+                    response["text"] += event["data"]
+                    callback_answer.on_llm_new_token(event["data"])
+                elif "current_tool_use" in event and event["current_tool_use"].get("name"):
+                    response["tool_use"] = event["current_tool_use"]["name"]
+                    if "event_loop_metrics" in event:
+                        if response["cycle"] != event["event_loop_metrics"].cycle_count:
+                            response["cycle"] = event["event_loop_metrics"].cycle_count
+                            callback_answer.on_llm_new_token(f' \n## Calling tool: {event["current_tool_use"]["name"]} - # Cycle: {event["event_loop_metrics"].cycle_count}')
+        except Exception as e:
+            logger.error(f"Error in streaming response: {e}")
+            #message_placeholder.markdown("Sorry, an error occurred while generating the response.")
+            logger.error(traceback.format_exc())  # Detailed error logging
+        
+        return agent, response
 
     @staticmethod
     def parsing_text_from_response(response):

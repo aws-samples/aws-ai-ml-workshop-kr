@@ -1,7 +1,7 @@
 import sys, os
 module_path = ".."
 sys.path.append(os.path.abspath(module_path))
-os.environ['LLM_MODULE'] = 'src.agents.llm_st'
+os.environ['APP'] = 'True'
 
 import streamlit as st
 from main import execution
@@ -13,7 +13,7 @@ st.title("AI Automation Framework Based on Amazon Bedrock 💬")
 st.markdown('''- This is multi-agent based AI Automation chatbot''')
 st.markdown('''
             - You can find the source code in 
-            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus)
+            [this Github](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/02_insight_extractor)
             ''')
 
 ####################### Initialization ###############################
