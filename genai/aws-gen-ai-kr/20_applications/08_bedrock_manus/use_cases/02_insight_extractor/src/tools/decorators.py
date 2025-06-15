@@ -55,7 +55,7 @@ def log_io(func: Callable) -> Callable:
             
             if "current_agent" in st.session_state:
                 current_agent = st.session_state["current_agent"]
-                st.session_state["tool_containers"][current_agent]["input"].markdown(f"Coder - {status}\n{code}")
+                st.session_state["tool_containers"][current_agent]["input"].markdown(f"TOOL - {status}\n{code}")
                 st.session_state["tool_containers"][current_agent]["output"].markdown(f"{stdout}")
         else:
             cmd = None
@@ -65,7 +65,7 @@ def log_io(func: Callable) -> Callable:
             if "current_agent" in st.session_state:
                 current_agent = st.session_state["current_agent"]
                 if cmd != None: st.session_state["tool_containers"][current_agent]["input"].markdown(f"```bash\n{cmd}\n```")
-                st.session_state["tool_containers"][current_agent]["output"].code(f"Coder - Tool {func_name} returned:\n{result}")
+                st.session_state["tool_containers"][current_agent]["output"].code(f"Tool {func_name} returned:\n{result}")
         return result
 
     return wrapper
