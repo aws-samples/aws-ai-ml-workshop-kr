@@ -50,7 +50,6 @@ class Colors:
 def code_node(state: State) -> Command[Literal["supervisor"]]:
     """Node for the coder agent that executes Python code."""
     logger.info(f"{Colors.GREEN}===== Code agent starting task ====={Colors.END}")
-    #if application == 'True': st.session_state["current_agent"] = "coder"
         
     agent = strands_utils.get_agent(
         agent_name="coder",
@@ -86,7 +85,6 @@ def code_node(state: State) -> Command[Literal["supervisor"]]:
 def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     """Supervisor node that decides which agent should act next."""
     logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
-    #if application == 'True': st.session_state["current_agent"] = "supervisor"
         
     agent = strands_utils.get_agent(
         agent_name="supervisor",
@@ -129,7 +127,6 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     """Planner node that generate the full plan."""
     logger.info(f"{Colors.GREEN}===== Planner generating full plan ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-    #if application == 'True': st.session_state["current_agent"] = "planner"
     
     agent = strands_utils.get_agent(
         agent_name="planner",
@@ -140,7 +137,6 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     full_plan, messages = state.get("full_plan", ""), state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="planner"))
-    #full_response = response["text"]
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
     goto = "supervisor"
@@ -161,7 +157,6 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
 def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     """Coordinator node that communicate with customers."""
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
-    #if application == 'True': st.session_state["current_agent"] = "coordinator"
 
     agent = strands_utils.get_agent(
         agent_name="coordinator",
@@ -206,9 +201,6 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="reporter"))
 
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", response["text"])])
-
-    print ("reporter", "clues", clues)
-    
     logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
