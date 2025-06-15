@@ -12,6 +12,9 @@
     </a>
 </p>
 
+# This will be deplicated.
+# Please Use **[THIS](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/01_deep_research_strands_sdk)**, which is based on **[Strands SDK](https://github.com/strands-agents)**
+
 [English](./README.md)
 
 > Amazon Bedrock-Optimized AI Automation Framework

@@ -1,0 +1,73 @@
+
+==================================================
+# Research Findings - 2025-06-15 15:09:05
+--------------------------------------------------
+
+## Problem Statement
+AWS Cloud Market Analysis: Growth Prospects in Korea (2025-2030)
+- Focus on current market share, growth projections, key industries, and competitive landscape
+- Analysis period: 2025-2030
+- Geographic scope: South Korea
+
+## Research Findings
+
+### Topic 1: AWS Market Share and Position in Korea
+- AWS currently holds dominant position with approximately 62% market share in Korean cloud market [1]
+- Major competitors include Microsoft Azure (12%) and Naver Cloud (7%) [1]
+- Local players like Naver Cloud, KT Cloud, and NHN Cloud are showing strong growth in the domestic market [1]
+
+### Topic 2: Growth Projections and Market Outlook
+- Global cloud infrastructure spending projected to grow 19% in 2025 [2]
+- Overall cloud computing market expected to grow at 16.6% CAGR from 2025 to 2032 [3]
+- Korean government plans to invest 830 billion won by 2030 to strengthen domestic AI semiconductor technology and cloud service competitiveness [1]
+
+## Original full text
+[1]: According to research, AWS leads the Korean cloud market with 62% market share, followed by Microsoft (12%) and Naver Cloud (7%). In Korea, Naver Cloud, KT Cloud, and NHN Cloud are leading the domestic market. As the domestic cloud industry grows, these companies' sales are rapidly expanding each year. The Korean government is preparing policies to revitalize domestic cloud companies, investing 830 billion won by 2030 to strengthen domestic AI semiconductor technology and enhance data center and cloud service competitiveness.
+
+[2]: Canalys forecasts that global cloud infrastructure service spending will increase by 19% in 2025. AI model expansion is acting as a key growth driver in accelerating cloud adoption, and investment by major cloud hyperscalers leading the market is expected to expand significantly to meet demand.
+
+[3]: The global cloud computing market was valued at 676.29 billion dollars in 2024. The market is expected to grow from 202.2 billion dollars in 2025 to 2,291.5 billion dollars by 2032, showing a CAGR of 16.6% during the forecast period.
+
+## References
+[1]: [클라우드 서비스의 현황 및 미래 전망 - LinkedIn](https://kr.linkedin.com/pulse/%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%84%9C%EB%B9%84%EC%8A%A4%EC%9D%98-%ED%98%84%ED%99%A9-%EB%B0%8F-%EB%AF%B8%EB%9E%98-%EC%A0%84%EB%A7%9D-lts-korea-1mtdc)
+[2]: [2025년 클라우드 시장 19% 성장 - CIO](https://www.cio.com/article/3837080/2025%EB%85%84-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%8B%9C%EC%9E%A5-19-%EC%84%B1%EC%9E%A5%C2%B7%C2%B7%C2%B7-aws-%EC%98%AC%ED%95%B4-%ED%88%AC%EC%9E%90%EC%95%A1-1000%EC%96%B5-%EB%8B%AC%EB%9F%AC.html)
+[3]: [클라우드 컴퓨팅 시장 규모, 점유율, 가치 및 성장 [2032]](https://www.fortunebusinessinsights.com/ko/cloud-computing-market-102697)
+==================================================
+
+==================================================
+# Additional Research Findings - 2025-06-15 15:09:40
+--------------------------------------------------
+
+### Topic 3: Key Industries Adopting AWS Cloud in Korea
+- Financial sector showing rapid cloud adoption with 32% growth in 2023 [4]
+- Major banks implementing cloud strategies:
+  * KB Bank: Transitioning non-core systems to cloud
+  * Toss Bank: Built infrastructure largely on cloud-native
+  * Shinhan Financial Group: Using multi-cloud strategy with AWS, Azure, and Naver Cloud
+  * Kakao Bank: Expanding cloud usage for data analysis and AI model development [4]
+- Manufacturing sector adopting cloud for smart factory implementation using IoT, AI, and big data analytics [5]
+- Public sector accelerating cloud adoption with government support and guidelines [4]
+
+### Topic 4: Factors Driving Cloud Adoption in Korean Market
+- Digital transformation and post-pandemic remote work environment driving cloud demand [6]
+- Government policies supporting cloud adoption:
+  * Public Cloud Adoption Guidelines for government agencies
+  * Cloud Security Assurance Program (CSAP) for security certification
+  * Support programs for SMEs' cloud adoption [5]
+- AI infrastructure and data sovereignty becoming key growth drivers in 2024 [4]
+- Multi-cloud and hybrid cloud strategies gaining popularity, showing 20% increase from 2023 [4]
+
+## Original full text
+[4]: The financial sector's cloud market grew by 32% compared to the previous year in 2023. This growth is attributed to the Financial Services Commission's 'Financial Cloud Activation Guidelines' (announced in October 2022) and the expansion of digital banking. Major banks are actively adopting cloud services, with KB Bank transitioning non-core systems, Toss Bank building cloud-native infrastructure, Shinhan Financial Group implementing a multi-cloud strategy, and Kakao Bank expanding cloud usage for data analysis and AI model development.
+
+[5]: In the manufacturing sector, companies are adopting cloud-based IoT, AI, and big data analytics technologies for smart factory implementation. The government has implemented various support policies including Public Cloud Adoption Guidelines for government agencies, the Cloud Security Assurance Program (CSAP) for security certification, and support programs to help SMEs with cloud adoption costs.
+
+[6]: Cloud demand has exploded due to digital transformation driven by the Fourth Industrial Revolution and forced remote work environments during the COVID-19 pandemic. AWS reported a 17% year-over-year revenue increase in Q1, while Microsoft Azure cloud saw a 33% revenue increase. Domestic cloud service providers like Naver Cloud, KT Cloud, and NHN Cloud also showed increased sales.
+
+## References
+[4]: [2024년 1분기 한국 클라우드 시장 동향 및 최근 성과 분석 - Fun-IT](https://fun-it-s.tistory.com/entry/2024%EB%85%84-1%EB%B6%84%EA%B8%B0-%ED%95%9C%EA%B5%AD-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%8B%9C%EC%9E%A5-%EB%8F%99%ED%96%A5-%EB%B0%8F-%EC%B5%9C%EA%B7%BC-%EC%84%B1%EA%B3%BC-%EB%B6%84%EC%84%9D)
+[5]: [9-2 국내 클라우드 서비스 사례 및 동향 - 위키독스](https://wikidocs.net/240058)
+[6]: [2024 클라우드 보안 리포트 - 보안뉴스](https://m.boannews.com/html/detail.html?idx=134745)
+==================================================
+
+Current session ended: next session should start from Topic number 5, Reference index 7

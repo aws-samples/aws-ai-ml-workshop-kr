@@ -282,7 +282,8 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     logger.info(f"{Colors.GREEN}===== Reporter completed task ====={Colors.END}")
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=full_response, imgs=[])],
+            #"messages": [get_message_from_string(role="user", string=full_response, imgs=[])],
+            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("reporter", full_response), imgs=[])],
             "messages_name": "reporter",
             "history": history,
             "clues": clues
