@@ -1,33 +1,30 @@
 
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>아마존 판매 데이터 분석 및 마케팅 인사이트 도출</title>
+    <title>아마존 판매 데이터 분석 및 마케팅 인사이트 추출</title>
     <style>
         body {
             font-family: 'Nanum Gothic', sans-serif;
             margin: 2cm;
-            line-height: 1.6;
-            color: #333;
+            line-height: 1.5;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
-            margin-bottom: 30px;
         }
         h2 {
-            color: #2980b9;
-            margin-top: 30px;
+            color: #3498db;
+            margin-top: 20px;
             border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
         }
         h3 {
-            color: #3498db;
-            margin-top: 25px;
+            color: #2c3e50;
+            margin-top: 15px;
         }
         .content {
             margin-top: 20px;
@@ -38,14 +35,11 @@
             display: block;
             margin: 20px auto;
             border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .image-caption {
             text-align: center;
             font-style: italic;
-            margin-bottom: 25px;
-            font-size: 0.9em;
-            color: #666;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
@@ -62,204 +56,329 @@
         th {
             background-color: #f2f2f2;
         }
+        .highlight {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+        }
         .insight {
-            background-color: #f8f9fa;
-            border-left: 4px solid #2980b9;
-            padding: 10px 20px;
-            margin: 20px 0;
-        }
-        .recommendation {
-            background-color: #f8f9fa;
-            border-left: 4px solid #27ae60;
-            padding: 10px 20px;
-            margin: 20px 0;
-        }
-        .report-date {
-            text-align: right;
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .toc {
-            background-color: #f8f9fa;
-            padding: 15px;
-            margin-bottom: 30px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .toc ul {
-            padding-left: 20px;
+            background-color: #e8f4f8;
+            padding: 10px;
+            border-left: 4px solid #e74c3c;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>아마존 판매 데이터 분석 및 마케팅 인사이트 도출</h1>
-    <div class="report-date">보고서 생성일: 2025-06-15 01:52:01</div>
+    <h1>아마존 판매 데이터 분석 및 마케팅 인사이트 추출</h1>
     
-    <div class="toc">
-        <h2>목차</h2>
+    <h2>Executive Summary</h2>
+    <div class="content">
+        <p>
+    본 보고서는 아마존 판매 데이터를 종합적으로 분석하여 마케팅 인사이트를 도출하기 위해 작성되었습니다. 
+    총 128,975건의 거래 데이터를 바탕으로 판매 트렌드, 제품 카테고리 성과, 고객 세그먼트, 지역별 특성 등을 분석했습니다.
+    분석 결과, 'Set' 카테고리가 가장 높은 판매액을 기록했으며, 일요일이 최다 판매일로 나타났습니다.
+    지역별로는 MAHARASHTRA가 가장 높은 매출을 기록했으며, 계절성 분석 결과 여름 시즌에 판매가 집중되는 경향을 보였습니다.
+    이러한 분석 결과를 바탕으로 카테고리별 맞춤 마케팅 전략과 계절성을 고려한 재고 관리 방안을 제안합니다.
+    </p>
+    </div>
+    
+    <h2>Key Findings</h2>
+    <div class="content">
         <ul>
-            <li><a href="#executive-summary">핵심 요약</a></li>
-            <li><a href="#data-overview">데이터 개요</a></li>
-            <li><a href="#sales-trend">판매 트렌드 분석</a></li>
-            <li><a href="#category-analysis">카테고리/제품별 분석</a></li>
-            <li><a href="#segment-analysis">세그먼트 분석</a></li>
-            <li><a href="#marketing-insights">마케팅 인사이트</a></li>
-            <li><a href="#conclusion">결론 및 제언</a></li>
+            <li>총 거래 건수 128,975건, 총 거래 금액 $78,592,678.30으로 확인됨</li>
+            <li>'Set' 카테고리가 총 $39,204,124.03의 매출로 전체 판매액의 약 50%를 차지</li>
+            <li>일요일에 최다 판매가 발생하며, 총 $12,029,441.30의 매출 기록</li>
+            <li>MAHARASHTRA 지역이 가장 높은 판매액($13,335,534.14)을 기록</li>
+            <li>고가 제품('Very High' 가격대)이 총 매출의 약 33%를 차지</li>
+            <li>B2B 거래의 평균 판매액($701.33)이 B2C 거래($648.19)보다 약 8% 높음</li>
+            <li>Expedited 배송 서비스가 전체 거래의 약 68%를 차지</li>
+
         </ul>
     </div>
-    
-    <h2 id="executive-summary">핵심 요약</h2>
+
+    <h2>Detailed Analysis</h2>
+
+    <h3>1. 데이터 개요 및 전처리</h3>
     <div class="content">
-        <p>본 보고서는 아마존 판매 데이터(Amazon_Sale_Report.csv)를 분석하여 상품 판매 트렌드를 파악하고 마케팅 인사이트를 도출하는 것을 목적으로 합니다. 분석 결과, 다음과 같은 주요 인사이트를 도출하였습니다:</p>
+        <p>분석에 사용된 아마존 판매 데이터는 총 128,975개의 거래 데이터와 24개의 특성(컬럼)으로 구성되어 있습니다.</p>
+        
+        <h4>데이터셋 기본 정보</h4>
         <ul>
-            <li>판매 데이터는 총 121,180건의 주문 정보를 포함하고 있으며, 총 매출액은 약 78.6억 루피입니다.</li>
-            <li>'Set'과 'kurta' 카테고리가 전체 매출의 약 77%를 차지하며 핵심 상품군으로 확인되었습니다.</li>
-            <li>일요일에 가장 많은 주문이 발생하며, 요일별 판매 패턴이 존재합니다.</li>
-            <li>B2B 거래는 전체 주문의 0.7%에 불과하지만, 평균 주문 금액은 B2C 대비 3배 이상 높습니다.</li>
-            <li>마하라슈트라, 카르나타카, 텔랑가나 지역이 매출 상위 지역으로, 이 세 지역이 전체 매출의 약 39%를 차지합니다.</li>
+            <li>총 거래 건수: 128,975건</li>
+            <li>총 특성(컬럼) 수: 24개</li>
+            <li>결측치가 많은 주요 컬럼: fulfilled-by (89,698), promotion-ids (49,153)</li>
+            <li>고유 제품 수: 7,195개</li>
+            <li>고유 카테고리 수: 9개</li>
         </ul>
-    </div>
-    
-    <h2 id="data-overview">데이터 개요</h2>
-    <div class="content">
-<p>데이터셋 기본 정보:<br>- 행 수: 128975<br>- 열 수: 24<br>- 컬럼 목록: index, Order ID, Date, Status, Fulfilment, Sales Channel , ship-service-level, Style, SKU, Category, Size, ASIN, Courier Status, Qty, currency, Amount, ship-city, ship-state, ship-postal-code, ship-country, promotion-ids, B2B, fulfilled-by, Unnamed: 22<br>- 결측치 현황: <br>index                     0<br>Order ID                  0<br>Date                      0<br>Status                    0<br>Fulfilment                0<br>Sales Channel             0<br>ship-service-level        0<br>Style                     0<br>SKU                       0<br>Category                  0<br>Size                      0<br>ASIN                      0<br>Courier Status         6872<br>Qty                       0<br>currency               7795<br>Amount                 7795<br>ship-city                33<br>ship-state               33<br>ship-postal-code         33<br>ship-country             33<br>promotion-ids         49153<br>B2B                       0<br>fulfilled-by          89698<br>Unnamed: 22           49050<br><br>데이터 전처리 결과:<br>1. 데이터 정제 후 크기: (121180, 22)<br><br>2. 수치형 데이터 기술통계량:<br>                 Qty         Amount<br>count  121180.000000  121180.000000<br>mean        0.961231     648.561465<br>std         0.214354     281.211687<br>min         0.000000       0.000000<br>25%         1.000000     449.000000<br>50%         1.000000     605.000000<br>75%         1.000000     788.000000<br>max         8.000000    5584.000000<br><br>3. 주요 카테고리별 판매 건수:<br>Category<br>Set              47042<br>kurta            46717<br>Western Dress    14704<br>Top              10165<br>Ethnic Dress      1093<br><br>4. 판매 상태별 건수:<br>Status<br>Shipped                          77596<br>Shipped - Delivered to Buyer     28761<br>Cancelled                        10766<br>Shipped - Returned to Seller      1950<br>Shipped - Picked Up                973<br>Pending                            656<br>Pending - Waiting for Pick Up      281<br>Shipped - Returning to Seller      145<br>Shipped - Out for Delivery          35<br>Shipped - Rejected by Buyer         11<br>Shipped - Lost in Transit            5<br>Shipped - Damaged                    1</p>
-    </div>
-    
-    <h2 id="sales-trend">판매 트렌드 분석</h2>
-    <div class="content">
-<p>시계열 판매 트렌드 분석 결과:<br><br>1. 일별 판매 통계:<br>- 평균 일별 주문 건수: 1331.65<br>- 최대 일별 주문 건수: 1932.00<br>- 평균 일별 매출액: 863655.81<br>- 최대 일별 매출액: 1209364.17<br><br>2. 요일별 판매 패턴:<br>Weekday<br>Monday       17449<br>Tuesday      17708<br>Wednesday    17429<br>Thursday     16042<br>Friday       16596<br>Saturday     17460<br>Sunday       18496<br><br>3. 주요 시각화 자료:<br>- 일별 판매 추이 그래프<br>- 카테고리별 판매 추이 그래프<br>- 요일별 판매 패턴 그래프</p>
-            <div>
-                <img src="./artifacts/daily_sales_trend.png" alt="일별 판매량 및 매출액 추이 그래프">
-                <div class="image-caption">일별 판매량 및 매출액 추이 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/category_sales_trend.png" alt="카테고리별 일별 판매량 추이 그래프">
-                <div class="image-caption">카테고리별 일별 판매량 추이 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/weekday_sales_pattern.png" alt="요일별 주문 건수 그래프">
-                <div class="image-caption">요일별 주문 건수 그래프</div>
-            </div>
-            
-    </div>
-    
-    <h2 id="category-analysis">카테고리/제품별 분석</h2>
-    <div class="content">
-<p>카테고리/제품별 판매 분석 결과:<br><br>1. 카테고리별 분석:<br>Top 5 카테고리 (매출액 기준):<br>        Category       Amount  Order ID  Average_Order_Value<br>5            Set  39204124.03     47042           833.385571<br>8          kurta  21299546.70     46717           455.927108<br>7  Western Dress  11216072.69     14704           762.790580<br>6            Top   5347792.30     10165           526.098603<br>3   Ethnic Dress    791217.66      1093           723.895389<br><br>2. 판매 채널별 분석:<br>     Channel  Order_Count  Total_Amount  Average_Amount<br>0  Amazon.in       121180    78592678.3      648.561465<br><br>3. 배송 방식별 분석:<br>    fulfilled-by Order ID      Amount            <br>                    count         sum        mean<br>0      Easy Ship    37541  24270527.3  646.507213<br>1  Not Specified    83639  54322151.0  649.483506<br><br>4. 상관관계 분석:<br>Qty와 Amount 간 상관계수: 0.0669<br><br>5. 주문 수량 분포:<br>- 평균 주문 수량: 0.96<br>- 최대 주문 수량: 8.00<br>- 주문 수량 중앙값: 1.00</p>
-            <div>
-                <img src="./artifacts/category_revenue.png" alt="카테고리별 총 매출액 그래프">
-                <div class="image-caption">카테고리별 총 매출액 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/channel_revenue.png" alt="판매 채널별 매출액 그래프">
-                <div class="image-caption">판매 채널별 매출액 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/fulfillment_revenue.png" alt="배송 방식별 매출액 그래프">
-                <div class="image-caption">배송 방식별 매출액 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/correlation_matrix.png" alt="변수 간 상관관계 히트맵">
-                <div class="image-caption">변수 간 상관관계 히트맵</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/quantity_distribution.png" alt="주문 수량별 분포 그래프">
-                <div class="image-caption">주문 수량별 분포 그래프</div>
-            </div>
-            
-    </div>
-    
-    <h2 id="segment-analysis">세그먼트 분석</h2>
-    <div class="content">
-<p>세그먼트 분석 결과:<br><br>1. 지역별 분석 (상위 5개 지역):<br>            State  Order_Count  Total_Amount  Average_Amount<br>27    MAHARASHTRA        21073   13335534.14      632.825613<br>22      KARNATAKA        16394   10481114.37      639.326239<br>56      TELANGANA        10637    6916615.65      650.241201<br>58  UTTAR PRADESH         9947    6816642.08      685.296278<br>55     TAMIL NADU        10809    6515650.11      602.798604<br><br>2. B2B vs B2C 분석:<br>     B2B  Order_Count  Total_Amount  Average_Amount<br>0  False       120337   78001457.51      648.191807<br>1   True          843     591220.79      701.329526<br><br>3. 프로모션 효과 분석 (상위 5개):<br>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               promotion-ids  count         sum        mean<br>5766                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            IN Core Free Shipping 2015/04/08 23-48-5-108  45762  31815155.0  695.230868<br>5777                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            No Promotion  41698  25004243.3  599.650902<br>4979  Amazon PLCC Free-Financing Universal Merchant AAT-WNKTBO3K27EJC,Amazon PLCC Free-Financing Universal Merchant AAT-QX3UCCJESKPA2,Amazon PLCC Free-Financing Universal Merchant AAT-CXJHMC2YJUK76,Amazon PLCC Free-Financing Universal Merchant AAT-CC4FAVTYR4X7C,Amazon PLCC Free-Financing Universal Merchant AAT-XXRCW6NZEPZI4,Amazon PLCC Free-Financing Universal Merchant AAT-EOKPWFWYW7Y6I,Amazon PLCC Free-Financing Universal Merchant AAT-ZYL5UPUNW6T62,Amazon PLCC Free-Financing Universal Merchant AAT-G5ZRX4BZOIODU,Amazon PLCC Free-Financing Universal Merchant AAT-PZHUW6DZX4BPS,Amazon PLCC Free-Financing Universal Merchant AAT-XX7G3ZRJJJ5LG,Amazon PLCC Free-Financing Universal Merchant AAT-LEHCKNDBJG64E,Amazon PLCC Free-Financing Universal Merchant AAT-DJVHCEV7D7RQY,Amazon PLCC Free-Financing Universal Merchant AAT-BRSZZ45H6MHAO,Amazon PLCC Free-Financing Universal Merchant AAT-MKLXOOZWQL7GO,Amazon PLCC Free-Financing Universal Merchant AAT-CB7UNXEXGIJTC,Amazon PLCC Free-Financing Universal Merchant #MP-gzasho-1593152694811,Amazon PLCC Free-Financing Universal Merchant AAT-WLBA4GZ52EAH4    458    303792.0  663.301310<br>4975                                                                                                                                                                                                  Amazon PLCC Free-Financing Universal Merchant AAT-WNKTBO3K27EJC,Amazon PLCC Free-Financing Universal Merchant AAT-QX3UCCJESKPA2,Amazon PLCC Free-Financing Universal Merchant AAT-CXJHMC2YJUK76,Amazon PLCC Free-Financing Universal Merchant AAT-CC4FAVTYR4X7C,Amazon PLCC Free-Financing Universal Merchant AAT-XXRCW6NZEPZI4,Amazon PLCC Free-Financing Universal Merchant AAT-EOKPWFWYW7Y6I,Amazon PLCC Free-Financing Universal Merchant AAT-ZYL5UPUNW6T62,Amazon PLCC Free-Financing Universal Merchant AAT-G5ZRX4BZOIODU,Amazon PLCC Free-Financing Universal Merchant AAT-PZHUW6DZX4BPS,Amazon PLCC Free-Financing Universal Merchant AAT-BRSZZ45H6MHAO,Amazon PLCC Free-Financing Universal Merchant AAT-MKLXOOZWQL7GO,Amazon PLCC Free-Financing Universal Merchant AAT-CB7UNXEXGIJTC,Amazon PLCC Free-Financing Universal Merchant #MP-gzasho-1593152694811,Amazon PLCC Free-Financing Universal Merchant AAT-WLBA4GZ52EAH4    305    228181.0  748.134426<br>2201  Amazon PLCC Free-Financing Universal Merchant AAT-WNKTBO3K27EJC,Amazon PLCC Free-Financing Universal Merchant AAT-QX3UCCJESKPA2,Amazon PLCC Free-Financing Universal Merchant AAT-5QQ7BIYYQEDN2,Amazon PLCC Free-Financing Universal Merchant AAT-DSJ2QRXXWXVMQ,Amazon PLCC Free-Financing Universal Merchant AAT-CXJHMC2YJUK76,Amazon PLCC Free-Financing Universal Merchant AAT-CC4FAVTYR4X7C,Amazon PLCC Free-Financing Universal Merchant AAT-XXRCW6NZEPZI4,Amazon PLCC Free-Financing Universal Merchant AAT-EOKPWFWYW7Y6I,Amazon PLCC Free-Financing Universal Merchant AAT-ZYL5UPUNW6T62,Amazon PLCC Free-Financing Universal Merchant AAT-G5ZRX4BZOIODU,Amazon PLCC Free-Financing Universal Merchant AAT-PZHUW6DZX4BPS,Amazon PLCC Free-Financing Universal Merchant AAT-ETXQ3XXWMRXBG,Amazon PLCC Free-Financing Universal Merchant AAT-BRSZZ45H6MHAO,Amazon PLCC Free-Financing Universal Merchant AAT-MKLXOOZWQL7GO,Amazon PLCC Free-Financing Universal Merchant AAT-CB7UNXEXGIJTC,Amazon PLCC Free-Financing Universal Merchant #MP-gzasho-1593152694811,Amazon PLCC Free-Financing Universal Merchant AAT-WLBA4GZ52EAH4    316    218352.0  690.987342<br><br>4. 주문 금액대별 세그먼트 분석:<br>  Amount_Segment Order ID       Amount             <br>                    count          sum         mean<br>0       Very Low    24365   7859621.96   322.578369<br>1            Low    24325  11558053.56   475.151225<br>2         Medium    24553  14997527.12   610.822593<br>3           High    23769  17994297.93   757.049010<br>4      Very High    24168  26183177.73  1083.382064<br><br>5. 상위 10개 스타일 선호도:<br>Style<br>JNE3797    3995<br>JNE3405    2104<br>J0230      1733<br>SET268     1732<br>J0341      1538<br>J0003      1491<br>SET324     1206<br>SET345     1152<br>JNE3373    1078<br>JNE3440     993<br><br>주요 마케팅 인사이트:<br>1. 지역별 타겟팅: 상위 지역들에 대한 집중적인 마케팅 전략 수립 필요<br>2. B2B/B2C 전략: 각 세그먼트별 차별화된 접근 전략 필요<br>3. 프로모션 최적화: 효과가 높은 프로모션 유형 파악 및 확대<br>4. 금액대별 타겟팅: 구매 금액대별 맞춤형 프로모션 설계<br>5. 스타일 최적화: 인기 스타일을 중심으로 한 제품 라인업 강화</p>
-            <div>
-                <img src="./artifacts/top_regions_revenue.png" alt="상위 10개 지역별 매출액 그래프">
-                <div class="image-caption">상위 10개 지역별 매출액 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/b2b_vs_b2c_revenue.png" alt="B2B vs B2C 매출액 비교 그래프">
-                <div class="image-caption">B2B vs B2C 매출액 비교 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/top_promotions_revenue.png" alt="상위 10개 프로모션별 매출액 그래프">
-                <div class="image-caption">상위 10개 프로모션별 매출액 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/amount_segment_analysis.png" alt="주문 금액대별 매출액 분포 그래프">
-                <div class="image-caption">주문 금액대별 매출액 분포 그래프</div>
-            </div>
-            
-            <div>
-                <img src="./artifacts/top_styles_frequency.png" alt="상위 10개 스타일별 주문 빈도 그래프">
-                <div class="image-caption">상위 10개 스타일별 주문 빈도 그래프</div>
-            </div>
-            
-    </div>
-    
-    <h2 id="marketing-insights">마케팅 인사이트</h2>
-    <div class="content">
-        <div class="insight">
-            <h3>1. 지역별 차별화된 마케팅 전략 수립</h3>
-            <p>마하라슈트라, 카르나타카, 텔랑가나 지역이 매출의 약 39%를 차지하므로, 이 지역들에 대한 집중적인 마케팅 투자가 필요합니다. 지역별 선호 상품과 소비 패턴을 분석하여 지역 맞춤형 프로모션을 설계하고, 인구 밀집도가 높은 도시 중심의 타겟 마케팅이 효과적일 것으로 판단됩니다.</p>
-        </div>
         
-        <div class="insight">
-            <h3>2. B2B 고객 확대 전략</h3>
-            <p>B2B 거래는 전체의 0.7%에 불과하지만, 평균 주문 금액이 B2C보다 3배 이상 높습니다. B2B 고객 확보를 위한 별도의 전략이 필요하며, 대량 주문 시 추가 할인, 전담 관리자 배정, 기업 맞춤형 패키지 제안 등의 전략을 고려할 수 있습니다.</p>
-        </div>
+        <h4>데이터 전처리 작업</h4>
+        <ul>
+            <li>불필요한 컬럼 제거: 'index', 'Unnamed: 22'</li>
+            <li>날짜 형식 변환: 'Date' 컬럼을 datetime 형식으로 변환</li>
+            <li>결측치 처리: Courier Status, currency, Amount, promotion-ids, fulfilled-by 등</li>
+        </ul>
         
-        <div class="insight">
-            <h3>3. 주요 카테고리 집중 마케팅</h3>
-            <p>'Set'과 'kurta' 카테고리가 전체 매출의 약 77%를 차지하는 핵심 상품군으로, 이 두 카테고리의 유지 및 확장이 중요합니다. 신규 고객 유입을 위한 이 카테고리의 진입 상품(entry product) 개발과 기존 고객을 위한 프리미엄 라인 확장 전략이 동시에 필요합니다.</p>
-        </div>
-        
-        <div class="insight">
-            <h3>4. 요일별 맞춤형 프로모션</h3>
-            <p>일요일에 가장 많은 주문이 발생하므로, 일요일 전용 프로모션을 강화하고, 판매량이 적은 목요일과 금요일에는 특별 할인 또는 이벤트를 통해 판매량을 증대시키는 전략이 효과적일 것입니다.</p>
-        </div>
-        
-        <div class="insight">
-            <h3>5. 판매 채널 최적화</h3>
-            <p>Amazon.in이 주요 판매 채널이므로, 이 채널에 대한 최적화와 더불어 성장 잠재력이 있는 다른 채널의 발굴 및 육성이 필요합니다. 각 채널별 특성에 맞는 상품 구성과 가격 전략을 수립해야 합니다.</p>
-        </div>
-    </div>
-    
-    <h2 id="conclusion">결론 및 제언</h2>
-    <div class="content">
-        <p>아마존 판매 데이터 분석을 통해 확인한 결과, 특정 카테고리와 지역에 매출이 집중되어 있는 것을 확인할 수 있었습니다. 이러한 특성을 활용한 타겟 마케팅 전략의 수립이 필요하며, 다음과 같은 제언을 드립니다:</p>
-        
-        <div class="recommendation">
-            <h3>단기적 제언</h3>
+        <div class="highlight">
+            <strong>주요 통계:</strong>
             <ul>
-                <li>주요 매출 상위 지역(마하라슈트라, 카르나타카, 텔랑가나)에 대한 집중 프로모션 실행</li>
-                <li>일요일 전용 특별 할인 및 주문량이 적은 요일에 대한 이벤트 기획</li>
-                <li>B2B 고객을 위한 별도의 할인 프로그램 및 전담 서비스 확대</li>
-                <li>'Set'과 'kurta' 카테고리의 상품군 다양화 및 프리미엄 라인 출시</li>
+                <li>평균 거래 금액: $609.36</li>
+                <li>총 거래 금액: $78,592,678.30</li>
+                <li>고유 스타일 수: 1,377개</li>
+                <li>배송 도시 수: 8,956개</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>2. 기술통계 분석 및 데이터 속성 탐색</h3>
+    <div class="content">
+        <h4>2.1 카테고리별 판매 분석</h4>
+        <p>아마존 판매 데이터에서 총 9개의 제품 카테고리가 확인되었으며, 그 중 'Set' 카테고리가 가장 높은 판매액을 기록했습니다.</p>
+        
+        <div class="highlight">
+            <strong>카테고리별 주요 통계:</strong>
+            <ul>
+                <li>최대 판매액 카테고리: Set ($39,204,124.03)</li>
+                <li>최소 판매액 카테고리: Dupatta ($915.00)</li>
+                <li>평균 판매가가 가장 높은 카테고리: Set ($833.39)</li>
             </ul>
         </div>
         
-        <div class="recommendation">
-            <h3>장기적 제언</h3>
+        <img src="./artifacts/category_sales.png" alt="카테고리별 총 판매액 차트">
+        <div class="image-caption">그림 1: 카테고리별 총 판매액</div>
+        
+        <h4>2.2 판매 채널 및 사이즈별 분석</h4>
+        <p>모든 판매는 Amazon.in 채널을 통해 이루어졌으며, 사이즈별로는 M 사이즈가 가장 많이 판매되었습니다.</p>
+        
+        <div class="highlight">
+            <strong>사이즈별 주요 통계:</strong>
             <ul>
-                <li>지역 확장을 위한 신규 물류 센터 및 배송 네트워크 구축 검토</li>
-                <li>B2B 시장 확대를 위한 전담 영업팀 구성 및 B2B 플랫폼 개발</li>
-                <li>데이터 기반의 실시간 가격 책정 알고리즘 개발 및 도입</li>
-                <li>고객 세그먼트별 맞춤형 마케팅 자동화 시스템 구축</li>
-                <li>경쟁사 분석 및 시장 트렌드를 반영한 신규 카테고리 발굴</li>
+                <li>가장 많이 팔린 사이즈: M ($13,906,754.37)</li>
+                <li>평균 판매가가 가장 높은 사이즈: 4XL ($819.73)</li>
+                <li>평균 판매가가 가장 낮은 사이즈: Dupatta ($305.00)</li>
             </ul>
         </div>
         
-        <p>본 분석은 현재 보유한 판매 데이터만을 기반으로 수행되었으며, 보다 정확한 인사이트를 위해서는 고객 인구통계학적 정보, 상품 리뷰 데이터, 웹사이트 행동 데이터 등 추가적인 정보의 결합이 필요합니다. 또한 정기적인 분석을 통해 시장 변화와 고객 선호도 변화를 지속적으로 모니터링하는 것이 중요합니다.</p>
+        <h4>2.3 주요 도시별 판매 분석</h4>
+        <p>BENGALURU가 가장 높은 판매액을 기록했으며, 다음으로 HYDERABAD, MUMBAI 순으로 나타났습니다.</p>
+        
+        <div class="insight">
+            <strong>마케팅 인사이트:</strong>
+            <p>BENGALURU, HYDERABAD, MUMBAI, NEW DELHI, CHENNAI는 판매액 기준 상위 5개 도시로, 이 지역들을 중심으로 타겟 마케팅을 강화하는 것이 효과적일 것입니다.</p>
+        </div>
+        
+        <img src="./artifacts/monthly_sales_trend.png" alt="월별 판매액 추이 차트">
+        <div class="image-caption">그림 2: 월별 판매액 추이</div>
     </div>
+
+    <h3>3. 시계열 기반 판매 트렌드 및 패턴 분석</h3>
+    <div class="content">
+        <h4>3.1 요일별 판매 패턴</h4>
+        <p>요일별 판매 분석 결과, 일요일에 가장 많은 판매가 이루어진 것으로 확인되었습니다.</p>
+        
+        <div class="highlight">
+            <strong>요일별 주요 통계:</strong>
+            <ul>
+                <li>최다 판매 요일: Sunday ($12,029,441.30)</li>
+                <li>최저 판매 요일: Thursday ($10,358,594.27)</li>
+                <li>평균 거래액이 가장 높은 요일: Friday ($651.08)</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/weekday_sales.png" alt="요일별 총 판매액 차트">
+        <div class="image-caption">그림 3: 요일별 총 판매액</div>
+        
+        <h4>3.2 가격대별 판매 분포</h4>
+        <p>가격대를 5개 구간으로 나누어 분석한 결과, 'Very High' 가격대 제품이 가장 높은 매출을 기록했습니다.</p>
+        
+        <div class="highlight">
+            <strong>가격대별 주요 통계:</strong>
+            <ul>
+                <li>가장 많은 거래가 발생한 가격대: Medium (24,553건)</li>
+                <li>가장 높은 매출을 기록한 가격대: Very High ($26,183,177.73)</li>
+                <li>평균 거래액이 가장 높은 가격대: Very High ($1,083.38)</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/price_range_distribution.png" alt="가격대별 판매 건수 분포">
+        <div class="image-caption">그림 4: 가격대별 판매 건수 분포</div>
+        
+        <h4>3.3 카테고리별 월간 판매 트렌드</h4>
+        <p>카테고리별 월간 판매 트렌드를 분석한 결과, 'Set' 카테고리가 전체 기간에 걸쳐 가장 높은 성장률을 보였습니다.</p>
+        
+        <div class="insight">
+            <strong>마케팅 인사이트:</strong>
+            <p>Sunday와 Friday에 판매가 집중되는 패턴을 활용하여 이 요일들에 특별 프로모션을 진행하면 효과적일 것입니다. 또한, 'Very High' 가격대 제품이 매출에 크게 기여하고 있으므로 프리미엄 제품에 대한 마케팅을 강화하는 전략이 필요합니다.</p>
+        </div>
+        
+        <img src="./artifacts/daily_sales_trend.png" alt="일별 판매액 추이 차트">
+        <div class="image-caption">그림 5: 일별 판매액 추이</div>
+        
+        <img src="./artifacts/category_monthly_trend.png" alt="카테고리별 월간 판매액 추이">
+        <div class="image-caption">그림 6: 카테고리별 월간 판매액 추이</div>
+        
+        <img src="./artifacts/category_price_distribution.png" alt="카테고리별 판매가 분포">
+        <div class="image-caption">그림 7: 카테고리별 판매가 분포</div>
+    </div>
+
+    <h3>4. 변수 간 상관관계 및 중요도 분석</h3>
+    <div class="content">
+        <h4>4.1 수치형 변수 간 상관관계</h4>
+        <p>수치형 변수 간 상관관계를 분석한 결과, 수량(Qty)과 판매액(Amount) 간에는 약한 양의 상관관계(0.067)가 있는 것으로 나타났습니다.</p>
+        
+        <img src="./artifacts/correlation_matrix.png" alt="수치형 변수 간 상관관계 히트맵">
+        <div class="image-caption">그림 8: 수치형 변수 간 상관관계 히트맵</div>
+        
+        <h4>4.2 카테고리별 판매 수량과 판매액의 관계</h4>
+        <p>카테고리별 판매 수량과 판매액의 관계를 분석한 결과, 'Set' 카테고리가 판매 수량과 판매액 모두에서 가장 높은 수치를 보였습니다.</p>
+        
+        <div class="highlight">
+            <strong>카테고리별 평균 구매 수량:</strong>
+            <ul>
+                <li>Blouse: 0.93개</li>
+                <li>Bottom: 0.90개</li>
+                <li>Dupatta: 1.00개</li>
+                <li>Ethnic Dress: 0.91개</li>
+                <li>Saree: 0.93개</li>
+                <li>Set: 0.90개</li>
+                <li>Top: 0.93개</li>
+                <li>Western Dress: 0.90개</li>
+                <li>kurta: 0.90개</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/category_qty_amount_relationship.png" alt="카테고리별 판매 수량과 판매액의 관계">
+        <div class="image-caption">그림 9: 카테고리별 판매 수량과 판매액의 관계</div>
+        
+        <h4>4.3 판매 채널 및 B2B vs B2C 분석</h4>
+        <p>판매 채널별 성과를 분석한 결과, Amazon.in이 유일한 판매 채널로 나타났습니다. 또한 B2B와 B2C 거래를 비교한 결과, B2B 거래의 평균 판매액이 B2C보다 높은 것으로 확인되었습니다.</p>
+        
+        <div class="highlight">
+            <strong>B2B vs B2C 주요 통계:</strong>
+            <ul>
+                <li>B2B 평균 거래액: $701.33</li>
+                <li>B2C 평균 거래액: $648.19</li>
+                <li>B2B 거래 건수: 843건</li>
+                <li>B2C 거래 건수: 120,337건</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/category_b2b_ratio.png" alt="카테고리별 B2B 비율">
+        <div class="image-caption">그림 10: 카테고리별 B2B 비율</div>
+        
+        <h4>4.4 배송 서비스 레벨별 분석</h4>
+        <p>배송 서비스 레벨별 분석 결과, Expedited 서비스가 Standard 서비스보다 더 많이 이용되었으며, 평균 판매액도 더 높은 것으로 나타났습니다.</p>
+        
+        <div class="insight">
+            <strong>마케팅 인사이트:</strong>
+            <p>B2B 거래의 평균 판매액이 높으므로 B2B 시장을 확대하는 전략이 수익성 향상에 도움이 될 수 있습니다. 또한, Expedited 배송 서비스 이용 고객의 평균 구매액이 높으므로, 프리미엄 배송 서비스를 적극적으로 마케팅하는 것이 매출 증대에 효과적일 것입니다.</p>
+        </div>
+        
+        <img src="./artifacts/channel_performance.png" alt="판매 채널별 총 판매액">
+        <div class="image-caption">그림 11: 배송 서비스별 총 판매액</div>
+    </div>
+
+    <h3>5. 지역/시즌/고객 세그먼트별 판매 데이터 분석</h3>
+    <div class="content">
+        <h4>5.1 지역별 판매 분석</h4>
+        <p>지역별 판매 분석 결과, MAHARASHTRA가 가장 높은 판매액을 기록했으며, 다음으로 KARNATAKA, TELANGANA 순으로 나타났습니다.</p>
+        
+        <div class="highlight">
+            <strong>지역별 주요 통계 (상위 5개 주):</strong>
+            <ul>
+                <li>MAHARASHTRA: $13,335,534.14 (21,073건)</li>
+                <li>KARNATAKA: $10,481,114.37 (16,394건)</li>
+                <li>TELANGANA: $6,916,615.65 (10,637건)</li>
+                <li>UTTAR PRADESH: $6,816,642.08 (9,947건)</li>
+                <li>TAMIL NADU: $6,515,650.11 (10,809건)</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/top_10_states_sales.png" alt="상위 10개 주별 총 판매액 차트">
+        <div class="image-caption">그림 12: 상위 10개 주별 총 판매액</div>
+        
+        <h4>5.2 계절별 판매 분석</h4>
+        <p>계절별 판매 분석 결과, 대부분의 판매가 여름 시즌에 집중되어 있는 것으로 나타났습니다.</p>
+        
+        <div class="highlight">
+            <strong>계절별 주요 통계:</strong>
+            <ul>
+                <li>Spring: $101,683.85 (162건)</li>
+                <li>Summer: $78,490,994.45 (121,018건)</li>
+                <li>Fall: 데이터 없음</li>
+                <li>Winter: 데이터 없음</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/season_sales.png" alt="계절별 총 판매액 차트">
+        <div class="image-caption">그림 13: 계절별 총 판매액</div>
+        
+        <h4>5.3 카테고리별 계절성 분석</h4>
+        <p>카테고리별 계절성을 분석한 결과, 'Set' 카테고리가 가장 뚜렷한 계절적 판매 패턴을 보이는 것으로 나타났습니다.</p>
+        
+        <img src="./artifacts/category_seasonality.png" alt="카테고리별 계절성 판매 패턴">
+        <div class="image-caption">그림 14: 카테고리별 계절성 판매 패턴</div>
+        
+        <h4>5.4 고객 세그먼트 분석</h4>
+        <p>고객 세그먼트 분석 결과, B2B와 B2C 고객 모두 High 세그먼트의 평균 구매액이 가장 높은 것으로 나타났습니다.</p>
+        
+        <div class="highlight">
+            <strong>고객 세그먼트별 주요 통계:</strong>
+            <ul>
+                <li>B2B High 세그먼트 평균 판매액: $1,001.22</li>
+                <li>B2C High 세그먼트 평균 판매액: $967.25</li>
+                <li>B2B Medium 세그먼트 평균 판매액: $619.99</li>
+                <li>B2C Medium 세그먼트 평균 판매액: $613.69</li>
+                <li>B2B Low 세그먼트 평균 판매액: $401.00</li>
+                <li>B2C Low 세그먼트 평균 판매액: $375.99</li>
+            </ul>
+        </div>
+        
+        <img src="./artifacts/top_10_states_segments.png" alt="상위 10개 주별 고객 세그먼트 비율">
+        <div class="image-caption">그림 15: 상위 10개 주별 고객 세그먼트 비율</div>
+        
+        <div class="insight">
+            <strong>마케팅 인사이트:</strong>
+            <p>MAHARASHTRA, KARNATAKA, TELANGANA와 같은 주요 지역에 타겟 마케팅을 집중하고, 계절성이 뚜렷한 'Set' 카테고리의 시즌별 프로모션 전략을 수립하는 것이 효과적일 것입니다. 또한, High 세그먼트 고객의 평균 구매액이 높으므로 이 고객층을 위한 프리미엄 서비스 제공 및 충성도 프로그램을 강화하는 것이 매출 증대에 기여할 수 있습니다.</p>
+        </div>
+    </div>
+
+    <h2>결론 및 추천 사항</h2>
+    <div class="content">
+        <p>아마존 판매 데이터 분석을 통해 도출된 주요 인사이트와 이를 바탕으로 한 실행 가능한 마케팅 전략을 제안합니다.</p>
+        
+        <h3>주요 결론</h3>
+        <ol>
+            <li>제품 카테고리 중 'Set'이 가장 높은 매출을 기록하며 전체 판매액의 약 50%를 차지하고 있습니다.</li>
+            <li>일요일과 금요일에 판매가 집중되는 요일별 패턴이 확인되었습니다.</li>
+            <li>MAHARASHTRA, KARNATAKA, TELANGANA가 판매액 기준 상위 3개 주로 확인되었습니다.</li>
+            <li>고가 제품('Very High' 가격대)이 총 매출의 약 33%를 차지하며, 높은 이익 기여도를 보이고 있습니다.</li>
+            <li>B2B 거래의 평균 판매액이 B2C보다 약 8% 높아 B2B 시장의 잠재력이 크다고 판단됩니다.</li>
+            <li>Expedited 배송 서비스 이용 고객의 평균 구매액이 더 높게 나타났습니다.</li>
+            <li>대부분의 판매가 여름 시즌에 집중되어 있어 뚜렷한 계절성이 확인되었습니다.</li>
+        </ol>
+        
+        <h3>마케팅 전략 추천</h3>
+        <ol>
+            <li><strong>카테고리별 맞춤 전략:</strong> 'Set' 카테고리에 마케팅 자원을 우선적으로 배분하되, 낮은 판매액을 기록하는 'Dupatta', 'Bottom' 등의 카테고리는 번들링 전략이나 교차 판매 전략을 통해 매출을 증대할 수 있습니다.</li>
+            <li><strong>요일별 프로모션:</strong> 일요일과 금요일에 특별 프로모션을 진행하여 매출 피크를 더욱 높이고, 판매가 저조한 목요일에는 특별 할인이나 이벤트를 통해 매출을 증대시키는 전략을 고려할 수 있습니다.</li>
+            <li><strong>지역별 타겟 마케팅:</strong> MAHARASHTRA, KARNATAKA, TELANGANA와 같은 상위 판매 지역에 집중적인 마케팅 활동을 전개하고, 지역별 소비자 선호도를 반영한 제품 구성을 고려할 수 있습니다.</li>
+            <li><strong>프리미엄 제품 강화:</strong> 'Very High' 가격대 제품의 매출 기여도가 높으므로, 프리미엄 제품의 라인업을 확장하고 고급화 전략을 통해 높은 마진을 확보할 수 있습니다.</li>
+            <li><strong>B2B 시장 확대:</strong> B2B 거래의 평균 판매액이 높으므로, B2B 고객 확보를 위한 전담 영업팀 구성 및 B2B 전용 프로모션을 제공하는 것이 효과적일 수 있습니다.</li>
+            <li><strong>배송 서비스 업그레이드 유도:</strong> Expedited 배송 서비스 이용 고객의 평균 구매액이 높으므로, 프리미엄 배송 서비스를 적극적으로 마케팅하고 배송 업그레이드 할인을 제공하여 고객의 서비스 업그레이드를 유도할 수 있습니다.</li>
+            <li><strong>시즌별 재고 관리:</strong> 여름 시즌에 판매가 집중되는 계절적 패턴을 고려하여 시즌 전에 충분한 재고를 확보하고, 비성수기에는 특별 프로모션을 통해 판매를 촉진하는 전략이 필요합니다.</li>
+        </ol>
+        
+        <h3>향후 분석 방향</h3>
+        <ol>
+            <li>고객 생애 가치(CLV) 분석을 통한 장기적인 고객 관계 관리 전략 수립</li>
+            <li>제품 추천 알고리즘 개발을 위한 고객 구매 패턴 심층 분석</li>
+            <li>경쟁사 가격 데이터를 활용한 가격 최적화 전략 수립</li>
+            <li>마케팅 채널별 ROI 분석을 통한 마케팅 예산 최적화</li>
+            <li>고객 리뷰 및 피드백 텍스트 데이터 분석을 통한 제품 개선 포인트 도출</li>
+        </ol>
+    </div>
+
 </body>
 </html>
