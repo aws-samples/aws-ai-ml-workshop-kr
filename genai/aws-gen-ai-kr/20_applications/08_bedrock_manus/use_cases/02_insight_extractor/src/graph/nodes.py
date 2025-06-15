@@ -4,6 +4,7 @@ import pprint
 import logging
 import asyncio
 import traceback
+import streamlit as st
 from typing import Literal
 from langgraph.types import Command
 from langgraph.graph import END
@@ -49,7 +50,8 @@ class Colors:
 def code_node(state: State) -> Command[Literal["supervisor"]]:
     """Node for the coder agent that executes Python code."""
     logger.info(f"{Colors.GREEN}===== Code agent starting task ====={Colors.END}")
-    
+    #if application == 'True': st.session_state["current_agent"] = "coder"
+        
     agent = strands_utils.get_agent(
         agent_name="coder",
         state=state,
@@ -84,7 +86,8 @@ def code_node(state: State) -> Command[Literal["supervisor"]]:
 def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
     """Supervisor node that decides which agent should act next."""
     logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
-    
+    #if application == 'True': st.session_state["current_agent"] = "supervisor"
+        
     agent = strands_utils.get_agent(
         agent_name="supervisor",
         state=state,
@@ -124,9 +127,9 @@ def supervisor_node(state: State) -> Command[Literal[*TEAM_MEMBERS, "__end__"]]:
 
 def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     """Planner node that generate the full plan."""
-    
     logger.info(f"{Colors.GREEN}===== Planner generating full plan ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    #if application == 'True': st.session_state["current_agent"] = "planner"
     
     agent = strands_utils.get_agent(
         agent_name="planner",
@@ -158,6 +161,7 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
 def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     """Coordinator node that communicate with customers."""
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
+    #if application == 'True': st.session_state["current_agent"] = "coordinator"
 
     agent = strands_utils.get_agent(
         agent_name="coordinator",
@@ -189,7 +193,7 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     """Reporter node that write a final report."""
     logger.info(f"{Colors.GREEN}===== Reporter write final report ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Reporter11 - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
-
+    
     agent = strands_utils.get_agent(
         agent_name="reporter",
         state=state,
@@ -202,6 +206,9 @@ def reporter_node(state: State) -> Command[Literal["supervisor"]]:
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="reporter"))
 
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", response["text"])])
+
+    print ("reporter", "clues", clues)
+    
     logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 

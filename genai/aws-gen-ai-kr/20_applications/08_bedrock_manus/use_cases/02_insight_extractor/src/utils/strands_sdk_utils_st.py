@@ -1,9 +1,12 @@
 import logging
+import traceback
+import streamlit as st
 from strands import Agent, tool
 from src.agents.llm import get_llm_by_type
 from src.prompts.template import apply_prompt_template
 from src.config.agents import AGENT_LLM_MAP, AGENT_PROMPT_CACHE_MAP
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -79,33 +82,46 @@ class strands_utils():
 
     @staticmethod
     async def process_streaming_response(agent, message, agent_name=None):
+
         callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
         response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
         try:
             agent_stream = agent.stream_async(message)
+            tool_name = None
             async for event in agent_stream:
                 if "reasoningText" in event:
                     response["reasoning"] += event["reasoningText"]
-                    #callback_reasoning.on_llm_new_token(event["reasoningText"])
+                    callback_reasoning.on_llm_new_token(event["reasoningText"])
                     st.session_state["reasoning_containers"][agent_name].markdown(response["reasoning"] + "▌")
                 elif "reasoning_signature" in event:
                     response["signature"] += event["reasoning_signature"]
                 elif "data" in event:
                     response["text"] += event["data"]
-                    #callback_answer.on_llm_new_token(event["data"])
-                    st.session_state["process_containers"][agent_name].markdown(output["text"] + "▌")
+                    callback_answer.on_llm_new_token(event["data"])
+                    st.session_state["process_containers"][agent_name].markdown(response["text"] + "▌")
                 elif "current_tool_use" in event and event["current_tool_use"].get("name"):
                     response["tool_use"] = event["current_tool_use"]["name"]
                     if "event_loop_metrics" in event:
                         if response["cycle"] != event["event_loop_metrics"].cycle_count:
                             response["cycle"] = event["event_loop_metrics"].cycle_count
                             callback_answer.on_llm_new_token(f' \n## Calling tool: {event["current_tool_use"]["name"]} - # Cycle: {event["event_loop_metrics"].cycle_count}')
-            st.session_state["process_containers"][agent_name].markdown(response["text"])
+                ## For tool_use
+                elif "message" in event and event["message"]["content"][0].get("toolResult"): 
+                    result = event["message"]["content"][0]["toolResult"]["content"][0]["text"]
+                    if len(result.split("||")) == 3:
+                        status, code, stdout = result.split("||")
+                        st.session_state["tool_containers"][agent_name]["input"].markdown(f"TOOL - {status}\n{code}")
+                        st.session_state["tool_containers"][agent_name]["output"].markdown(f"{stdout}")
+                    else:
+                        cmd = None
+                        if len(result.split("||")) == 2: cmd, stdout = result.split("||")
+                        if cmd != None: st.session_state["tool_containers"][agent_name]["input"].code(f"```bash\n{cmd}\n```")
+                        st.session_state["tool_containers"][agent_name]["output"].code(f"Tool {response["tool_use"]} returned:\n{result}")
+            #st.session_state["process_containers"][agent_name].markdown(response["text"])
         except Exception as e:
             logger.error(f"Error in streaming response: {e}")
-            #message_placeholder.markdown("Sorry, an error occurred while generating the response.")
+            st.session_state["process_containers"][agent_name].markdown("Sorry, an error occurred while generating the response.")
             logger.error(traceback.format_exc())  # Detailed error logging
-        
         return agent, response
 
     @staticmethod
