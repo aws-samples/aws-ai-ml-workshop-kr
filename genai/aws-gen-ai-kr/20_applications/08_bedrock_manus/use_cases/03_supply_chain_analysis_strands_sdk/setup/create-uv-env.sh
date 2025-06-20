@@ -59,6 +59,13 @@ print_info "환경 이름: $ENV_NAME"
 print_info "Python 버전: $PYTHON_VERSION"
 print_info "가상 환경 경로: $VENV_PATH"
 
+# 기존 가상환경 정리
+if [ -d "$VENV_PATH" ]; then
+    print_warning "기존 가상환경을 제거합니다: $VENV_PATH"
+    rm -rf .venv
+    print_success "기존 가상환경이 제거되었습니다."
+fi
+
 # UV 설치 확인 및 자동 설치
 install_uv() {
     print_info "UV를 설치합니다..."
