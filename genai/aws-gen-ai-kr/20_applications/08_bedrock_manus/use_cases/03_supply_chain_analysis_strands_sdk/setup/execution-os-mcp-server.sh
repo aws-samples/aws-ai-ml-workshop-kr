@@ -7,7 +7,11 @@ echo "OpenSearch 환경변수를 설정하고 있습니다..."
 # Python 스크립트를 통해 환경변수 값 가져오기
 eval $(python3 -c "
 import os
+import sys
 import boto3
+
+# 모듈 경로 추가
+sys.path.append('..')
 from utils.ssm import parameter_store
 
 region = boto3.Session().region_name

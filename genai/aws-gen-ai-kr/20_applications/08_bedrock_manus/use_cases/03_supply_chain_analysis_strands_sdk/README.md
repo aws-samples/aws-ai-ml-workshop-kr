@@ -16,7 +16,7 @@
 
 4. 오픈서치 mcp 서버 실행
     chmod +x execution-os-mcp-server.sh
-    ./execution-os-mcp-server.sh
+     
 
 
 
