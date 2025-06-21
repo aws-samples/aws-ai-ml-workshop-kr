@@ -2,8 +2,6 @@ from textwrap import dedent
 #from src.utils import bedrock
 from src.utils.bedrock import bedrock_info
 from src.config.agents import LLMType
-from langchain_aws import ChatBedrock
-
 from strands.models import BedrockModel
 from botocore.config import Config
 

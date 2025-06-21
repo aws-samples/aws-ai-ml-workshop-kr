@@ -15,16 +15,24 @@ def apply_prompt_template(prompt_name: str, state: AgentState) -> list:
         context = {
             "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
             "ORIGIANL_USER_REQUEST": state["request"],
-            "FOLLOW_UP_QUESTIONS": state["follow_up_questions"],
-            "USER_FEEDBACK": state["user_feedback"]
+            "FOLLOW_UP_QUESTIONS": state.get("follow_up_questions", ""),
+            "USER_FEEDBACK": state.get("user_feedback", "")
         }
     elif prompt_name in ["researcher", "coder", "reporter"]:
         context = {
             "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
             "USER_REQUEST": state["request"],
-            "FULL_PLAN": state["full_plan"]
+            "FULL_PLAN": state.get("full_plan", "")
         }
-    else: context = {"CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z")}
+    elif prompt_name in ["scm_researcher", "scm_insight_analyzer", "scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner"]:
+        context = {
+            "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
+            "ORIGINAL_USER_REQUEST": state.get("request", ""),
+            "FULL_PLAN": state.get("full_plan", ""),
+            "CLUES": state.get("clues", "")
+        }
+    else: 
+        context = {"CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z")}
 
     system_prompts = system_prompts.format(**context)
     return system_prompts

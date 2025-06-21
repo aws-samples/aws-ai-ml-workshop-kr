@@ -20,6 +20,9 @@ from .tools import TAVILY_MAX_RESULTS
 # Team configuration
 TEAM_MEMBERS = ["researcher", "coder", "reporter"]
 
+# SCM specialized team configuration
+SCM_TEAM_MEMBERS = ["scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner", "reporter"]
+
 __all__ = [
     # Reasoning LLM
     "REASONING_MODEL",
@@ -35,6 +38,7 @@ __all__ = [
     "VL_API_KEY",
     # Other configurations
     "TEAM_MEMBERS",
+    "SCM_TEAM_MEMBERS",
     "TAVILY_MAX_RESULTS",
     "CHROME_INSTANCE_PATH",
     "BROWSER_HEADLESS"

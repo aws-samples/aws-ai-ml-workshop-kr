@@ -144,6 +144,11 @@ else
     exit 1
 fi
 
+sh install_korean_font.sh
+sudo apt-get install pandoc -y
+sudo apt-get install texlive -y
+sudo apt-get install texlive-xetex -y
+
 # 5. Jupyter 커널 등록
 print_info "Jupyter 커널 등록 중..."
 DISPLAY_NAME="$ENV_NAME (UV)"
