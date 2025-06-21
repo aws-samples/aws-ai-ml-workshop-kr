@@ -1,7 +1,7 @@
 
 1. UV 환경셋팅 (sh | 환경이름 | 파이선 버젼)
     chmod +x create-uv-env.sh
-    ./create-uv-env.sh upply-chain-analysis 3.12
+    ./create-uv-env.sh supply-chain-analysis 3.12
     setup dir에서 source .venv/bin/activate
 
 
@@ -16,6 +16,7 @@
 
 4. 오픈서치 mcp 서버 실행
     chmod +x execution-os-mcp-server.sh
+    ./execution-os-mcp-server.sh
      
 
 

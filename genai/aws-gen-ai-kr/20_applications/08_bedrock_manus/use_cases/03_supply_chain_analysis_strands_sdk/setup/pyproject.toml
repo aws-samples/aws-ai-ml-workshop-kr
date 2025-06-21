@@ -42,4 +42,5 @@ dependencies = [
     "ipykernel>=6.29.5",
     "jupyter>=1.1.1",
     "opensearch-mcp>=0.0.1",
+    "awscli>=1.40.40",
 ]
