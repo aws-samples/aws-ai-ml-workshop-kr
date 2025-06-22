@@ -38,7 +38,7 @@ logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
 FEEDBACK_FORMAT = "Feedback from {}:\n\n<user_feedback>\n{}\n</user_feedback>\n\n"
 FULL_PLAN_FORMAT = "Here is current full plan:\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
-CLUES_FORMAT = "Here is clues form {}:\n\n<clues>\n{}\n</clues>\n\n"
+CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
 
 class Colors:
     BLUE = '\033[94m'

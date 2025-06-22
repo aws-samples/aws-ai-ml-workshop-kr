@@ -33,21 +33,23 @@ def build_graph():
     return builder.compile()
 
 
-def build_scm_graph():
+def build_graph():
+#def build_scm_graph():
     """Build and return the SCM specialized workflow graph."""
     builder = StateGraph(State)
     
     # Add all SCM nodes
     builder.add_node("scm_researcher", scm_researcher_node)
     builder.add_node("scm_insight_analyzer", scm_insight_analyzer_node)
-    builder.add_node("planner", planner_node)
-    builder.add_node("supervisor", supervisor_node)
-    builder.add_node("scm_impact_analyzer", scm_impact_analyzer_node)
-    builder.add_node("scm_correlation_analyzer", scm_correlation_analyzer_node)
-    builder.add_node("scm_mitigation_planner", scm_mitigation_planner_node)
-    builder.add_node("reporter", reporter_node)
+    #builder.add_node("planner", planner_node)
+    #builder.add_node("supervisor", supervisor_node)
+    #builder.add_node("scm_impact_analyzer", scm_impact_analyzer_node)
+    #builder.add_node("scm_correlation_analyzer", scm_correlation_analyzer_node)
+    #builder.add_node("scm_mitigation_planner", scm_mitigation_planner_node)
+    #builder.add_node("reporter", reporter_node)
     
     # SCM workflow: scm_researcher → scm_insight_analyzer → planner → supervisor → [scm analyzers] → reporter
     builder.add_edge(START, "scm_researcher")
+    builder.add_edge("scm_insight_analyzer", END)
     
     return builder.compile()

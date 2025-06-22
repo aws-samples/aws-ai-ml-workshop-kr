@@ -1,8 +1,3 @@
-"""
-SCM file utility functions for managing artifacts and previous results.
-Provides standardized methods for reading and writing analysis results.
-"""
-
 import os
 import json
 from datetime import datetime

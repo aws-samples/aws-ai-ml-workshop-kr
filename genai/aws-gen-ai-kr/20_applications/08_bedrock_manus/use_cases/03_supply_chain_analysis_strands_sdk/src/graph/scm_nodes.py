@@ -7,7 +7,6 @@ import os
 import json
 import logging
 import asyncio
-from datetime import datetime
 from typing import Literal
 from langgraph.types import Command
 
@@ -29,7 +28,16 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
-CLUES_FORMAT = "Here is clues form {}:\n\n<clues>\n{}\n</clues>\n\n"
+CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
+
+# SCM 에이전트 간 전달 메시지 포맷
+SCM_NEXT_STEP_MESSAGE = {
+    "scm_researcher": "SCM research completed. Please proceed with business insight analysis.",
+    "scm_insight_analyzer": "Business insights completed. Please proceed with analysis planning.", 
+    "scm_impact_analyzer": "Impact analysis completed. Please proceed with correlation analysis.",
+    "scm_correlation_analyzer": "Correlation analysis completed. Please proceed with mitigation planning.",
+    "scm_mitigation_planner": "Mitigation planning completed. All SCM analysis phases finished."
+}
 
 class Colors:
     BLUE = '\033[94m'
@@ -63,30 +71,17 @@ def scm_researcher_node(state: State) -> Command[Literal["scm_insight_analyzer"]
     message = state["request_prompt"]
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="scm_researcher"))
     
-    # Save research results to file
-    artifacts_path = ensure_artifacts_folder()
-    research_content = f"""=== SCM Research Results ===
-Generated: {datetime.now().isoformat()}
-Query: {state.get('request', 'Unknown')}
-
-{response["text"]}
-"""
-    
-    research_file = os.path.join(artifacts_path, "01_research_results.txt")
-    with open(research_file, 'w', encoding='utf-8') as f:
-        f.write(research_content)
-    
     clues = state.get("clues", "")
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("scm_researcher", response["text"])])
     
     history = state.get("history", [])
     history.append({"agent": "scm_researcher", "message": response["text"]})
     
-    logger.info(f"{Colors.GREEN}SCM Researcher completed task - saved to {research_file}{Colors.END}")
+    logger.info(f"{Colors.GREEN}SCM Researcher completed task{Colors.END}")
     
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("scm_researcher", response["text"]), imgs=[])],
+            "messages": [get_message_from_string(role="user", string=SCM_NEXT_STEP_MESSAGE["scm_researcher"], imgs=[])],
             "messages_name": "scm_researcher",
             "clues": clues,
             "history": history
@@ -119,7 +114,7 @@ def scm_insight_analyzer_node(state: State) -> Command[Literal["planner"]]:
     
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("scm_insight_analyzer", response["text"]), imgs=[])],
+            "messages": [get_message_from_string(role="user", string=SCM_NEXT_STEP_MESSAGE["scm_insight_analyzer"], imgs=[])],
             "messages_name": "scm_insight_analyzer", 
             "clues": clues,
             "history": history
@@ -152,7 +147,7 @@ def scm_impact_analyzer_node(state: State) -> Command[Literal["supervisor"]]:
     
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("scm_impact_analyzer", response["text"]), imgs=[])],
+            "messages": [get_message_from_string(role="user", string=SCM_NEXT_STEP_MESSAGE["scm_impact_analyzer"], imgs=[])],
             "messages_name": "scm_impact_analyzer",
             "clues": clues,
             "history": history
@@ -185,7 +180,7 @@ def scm_correlation_analyzer_node(state: State) -> Command[Literal["supervisor"]
     
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("scm_correlation_analyzer", response["text"]), imgs=[])],
+            "messages": [get_message_from_string(role="user", string=SCM_NEXT_STEP_MESSAGE["scm_correlation_analyzer"], imgs=[])],
             "messages_name": "scm_correlation_analyzer",
             "clues": clues,
             "history": history
@@ -218,7 +213,7 @@ def scm_mitigation_planner_node(state: State) -> Command[Literal["supervisor"]]:
     
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("scm_mitigation_planner", response["text"]), imgs=[])],
+            "messages": [get_message_from_string(role="user", string=SCM_NEXT_STEP_MESSAGE["scm_mitigation_planner"], imgs=[])],
             "messages_name": "scm_mitigation_planner",
             "clues": clues,
             "history": history

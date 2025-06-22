@@ -2,7 +2,7 @@ import logging
 from textwrap import dedent
 from src.config import TEAM_MEMBERS, SCM_TEAM_MEMBERS
 from src.graph import build_graph
-from src.graph.builder import build_scm_graph
+from src.graph.builder import build_graph
 from src.utils.common_utils import get_message_from_string
 
 # Configure logging
@@ -35,76 +35,13 @@ class Colors:
     UNDERLINE = '\033[4m'
     END = '\033[0m'
 
-# Build graphs when needed
-_graph = None
-_scm_graph = None
+# Create the graph
+graph = build_graph()
 
 def get_graph():
-    """Get the regular graph, building it if needed"""
-    global _graph
-    if _graph is None:
-        _graph = build_graph()
-    return _graph
-
-def get_scm_graph():
-    """Get the SCM specialized graph, building it if needed"""
-    global _scm_graph
-    if _scm_graph is None:
-        _scm_graph = build_scm_graph()
-    return _scm_graph
+    return graph
 
 def run_agent_workflow(user_input: str, debug: bool = False):
-    """Run the agent workflow with the given user input.
-
-    Args:
-        user_input: The user's query or request
-        debug: If True, enables debug level logging
-
-    Returns:
-        The final state after the workflow completes
-    """
-    if not user_input:
-        raise ValueError("Input could not be empty")
-
-    if debug:
-        enable_debug_logging()
-
-    #logger.info(f"Starting workflow with user input: {user_input}")
-    logger.info(f"{Colors.GREEN}===== Starting workflow ====={Colors.END}")
-    logger.info(f"{Colors.GREEN}\nuser input: {user_input}{Colors.END}")
-    
-    user_prompts = dedent(
-        '''
-        Here is a user request: <user_request>{user_request}</user_request>
-        '''
-    )
-    context = {"user_request": user_input}
-    user_prompts = user_prompts.format(**context)
-    messages = [get_message_from_string(role="user", string=user_prompts, imgs=[])]
-
-        
-    result = get_graph().invoke(
-        input={
-            # Constants
-            "TEAM_MEMBERS": TEAM_MEMBERS,
-            # Runtime Variables
-            #"messages": [{"role": "user", "content": user_input}],
-            "messages": messages,
-            #"deep_thinking_mode": True,
-            "search_before_planning": False,
-            "request": user_input,
-            "request_prompt": user_prompts
-        },
-        config={
-            "recursion_limit": 100
-        }
-    )
-    logger.debug(f"{Colors.RED}Final workflow state: {result}{Colors.END}")
-    logger.info(f"{Colors.GREEN}===== Workflow completed successfully ====={Colors.END}")
-    return result
-
-
-def run_scm_workflow(user_input: str, debug: bool = False):
     """Run the SCM specialized workflow with the given user input.
 
     Args:
@@ -114,6 +51,7 @@ def run_scm_workflow(user_input: str, debug: bool = False):
     Returns:
         The final state after the SCM workflow completes
     """
+
     if not user_input:
         raise ValueError("Input could not be empty")
 
@@ -127,20 +65,15 @@ def run_scm_workflow(user_input: str, debug: bool = False):
         '''
         Here is a SCM-related user request: <user_request>{user_request}</user_request>
         
-        This appears to be a supply chain management query. Please analyze this for supply chain disruptions, 
-        logistics issues, or other SCM-related impacts.
+        This appears to be a supply chain management query.
+        Please analyze this for supply chain disruptions, logistics issues, or other SCM-related impacts.
         '''
     )
     context = {"user_request": user_input}
     user_prompts = user_prompts.format(**context)
     messages = [get_message_from_string(role="user", string=user_prompts, imgs=[])]
-
-    # Clear artifacts folder before starting
-    from src.utils.scm_file_utils import cleanup_artifacts_folder
-    cleanup_artifacts_folder()
-    logger.info(f"{Colors.YELLOW}Cleared artifacts folder for new SCM analysis{Colors.END}")
-        
-    result = get_scm_graph().invoke(
+    
+    result = graph.invoke(
         input={
             # Constants
             "TEAM_MEMBERS": SCM_TEAM_MEMBERS,
@@ -167,6 +100,6 @@ def run_scm_workflow(user_input: str, debug: bool = False):
 
 if __name__ == "__main__":
     print("Regular workflow graph:")
-    print(get_graph().get_graph().draw_mermaid())
+    #print(get_graph().get_graph().draw_mermaid())
     print("\nSCM workflow graph:")
-    print(get_scm_graph().get_graph().draw_mermaid())
+    print(graph.get_graph().draw_mermaid())
