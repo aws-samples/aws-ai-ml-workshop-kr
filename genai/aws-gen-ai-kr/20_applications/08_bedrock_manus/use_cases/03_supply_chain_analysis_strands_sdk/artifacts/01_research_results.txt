@@ -1,64 +1,63 @@
 
 ==================================================
-# SCM Research Findings - 2025-06-22 03:14:04
+# SCM Research Findings - 2025-06-22 08:11:47
 --------------------------------------------------
 
 ## Problem Statement
-시카고 항만 파업이 공급망에 미치는 영향 분석 및 대응 전략 수립
-- 리드타임 증가 영향
-- 운송비 영향
-- 주문 이행률 영향
-- 물류 전략 조정 방안
-- 대체 경로 검토
+분석 요청된 SCM 이슈: 시카고 항만 파업이 공급망에 미치는 영향과 대응 방안
+- 주요 분석 영역: 리드타임 증가, 운송비 영향, 주문 이행률 영향
+- 요청 사항: 물류 전략 조정 방안 및 대체 경로 제안
 
 ## Research Findings
 
 ### Topic 1: 파업 현황 및 기본 영향
-- ILA(International Longshoremen's Association)와 USMX(United States Maritime Alliance) 간의 협상 진행 중 [1]
-- 2025년 1월 15일 계약 만료 예정으로, 파업 가능성 존재 [1][2]
-- 파업 발생 시 미국 경제에 주당 45억-75억 달러의 손실 예상 [4]
-- 파업 1일당 3-5일의 복구 시간 소요 예상 [4]
+- 2025년 1월 15일 계약 만료로 ILA(International Longshoremen's Association) 파업 위험 존재 [1]
+- 파업 발생 시 매일 회복에 7일씩 소요될 것으로 예상 [2]
+- 파업이 2주간 지속될 경우 정상화까지 2025년 말까지 소요될 수 있음 [3]
+- 하루 약 74,000 TEU의 컨테이너가 영향을 받을 것으로 예상 [3]
 
 ### Topic 2: 운송비 및 리드타임 영향
-- 서부 항만으로의 우회 시 FEU당 $1,000-1,500 추가 비용 발생 [5]
-- 서부 항만 운송비는 FEU당 약 $6,000, 동부 항만은 $7,000 수준 예상 [3]
-- 대체 경로 사용으로 인한 운송 시간 증가 및 물류 복잡성 증가 [2]
-- 파업 지속 시 매일마다 7일의 회복 기간 필요 [2]
+- 현재 아시아-미국 동부 해안 운임: $3,467/FEU [4]
+- 대체 경로 사용 시 약 12일의 추가 운송 시간 발생 [5]
+- 중국-북미 항공 운송 요금: $5.54/kg (2% 증가) [4]
+- 주요 환적항의 혼잡으로 인한 추가 지연 발생 중 [6]
 
-### Topic 3: 물류 전략 및 대체 경로
-- 멕시코 항구(Lázaro Cárdenas, Manzanillo) 활용 가능한 대체 경로로 부상 [6]
-- Just-in-Time에서 Just-in-Case 재고 전략으로의 전환 필요성 증가 [6]
-- 시카고 지역 Maersk Elwood Depot 활용 가능 (철도 연계) [7]
-- 항공 운송으로의 전환 고려 필요 (비용은 높지만 안정적인 대안) [1]
+### Topic 3: 한국 기업 영향 및 대응
+- 한국 수출기업들은 조기 선적을 통한 위험 최소화 전략 채택 [7]
+- 한국무역협회는 긴급 대응팀 운영 및 해상운송사업 지원 검토 중 [7]
+- 서부 항만으로의 물동량 이전으로 인한 추가적 혼잡 예상 [7]
+- 대미 수출의 약 15% 영향 받을 것으로 예상 [8]
 
-### Topic 4: 공급망 리스크 관리 전략
-- 재고 수준 상향 조정 필요 [2]
-- 복수의 운송 경로 확보 중요성 증가 [6]
-- 물류비용 상승에 대한 예산 조정 필요 [4]
-- 장기적 관점에서의 물류 네트워크 다변화 검토 [1]
+### Topic 4: 대체 경로 및 전략적 대응 방안
+- 서부 항만 우회 루트 활용 검토 필요 [7]
+- 항공 운송으로의 전환 고려 (비용 대비 효과 분석 필요) [1]
+- 재고 수준 상향 조정 검토 필요 [2]
+- 다양한 운송 모드 조합을 통한 리스크 분산 [6]
 
-## Conclusion
-1. 단기 대응 방안:
-   - 재고 수준 즉시 점검 및 상향 조정
-   - 대체 운송 경로 사전 확보 (서부항만, 멕시코 항만)
-   - 항공 운송 옵션 준비
-   
-2. 중장기 대응 방안:
-   - Just-in-Case 재고 전략으로 전환
-   - 물류 네트워크 다변화
-   - 예산 재조정 (운송비 상승 반영)
+## Original Full Text
+[1]: "Kempf added that demand will eventually stabilize as 'those few shippers revert back to ocean freight for more cost-effective transportation.' In the long term, he highlighted that the strike could have lasting effects, prompting some shippers to diversify their logistics strategies and rely more on air freight to mitigate future disruptions."
 
-3. 비용 영향:
-   - FEU당 $1,000-1,500의 추가 비용 예상
-   - 리드타임 30-50% 증가 가능성
-   - 재고 유지 비용 증가
+[2]: "Even if a strike is avoided, we anticipate disruptions leading up to January 15. If the strike occurs, recovery times could extend up to seven days for every day of the strike. As such, it is crucial to maintain sufficient materials on hand during this period to avoid interruptions."
+
+[3]: "덴마크 해운조사전문기관인 씨인텔리전스는 미국 동부 항만 파업이 2주 동안 지속된다면, 이 항만들이 정상화되기까지 2025년까지 걸릴 수 있다고 발표했습니다. 하루에 약 7만 4000TEU 의 컨테이너가 영향을 받는다고 것인데요."
+
+[4]: "Asia-US East Coast prices(FBX03 Weekly) fell 5% to $3,467/FEU... China – N. America weekly prices increased 2% to $5.54/kg."
+
+[5]: "This alternative adds approximately 12 days to transit times, escalating both operational costs and freight rates."
+
+[6]: "Port congestion is escalating due to vessel diversions from the Suez Canal situation, adverse weather in Asia and Latin America, and shifting schedules from carrier alliance reshuffles."
+
+[7]: "한국 기업들은 이번 파업에 대비하여 적극적인 조기 선적을 진행하고 있으며, 자국의 수출 물량 확보를 위해 사전에 여러 방안을 모색하고 있습니다. 한국무역협회는 이와 관련하여 긴급 대응팀을 운영하고 있으며, 조기선적 외에도 해상운송사업 지원 및 애로센터 운영 방안 등을 검토 중입니다."
+
+[8]: "미국은 한국의 2대 수출국으로, 2023년 기준 전체 수출의 약 15%를 차지한다. 따라서 항만 파업은 한국 수출기업에 상당한 영향을 미칠 수 있다."
 
 ## References
-[1]: [Flexport ILA Strike Updates](https://www.flexport.com/blog/ila-usmx-work-stoppage-updates/)
-[2]: [Rinchem Supply Chain Alert](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)
-[3]: [LinkedIn Shipping Insights 2025](https://www.linkedin.com/pulse/navigate-2025-confidence-key-shipping-trade-updates-you-gabbett-mdyse)
-[4]: [CNN Business Port Strike Impact](https://www.cnn.com/2024/10/04/business/port-strike-ends-whats-next)
-[5]: [GEODIS ILA Strike Challenges](https://geodis.com/us-en/blog/goods-transportation-integrated-logistics-solutions/ila-strike-challenges-dealing-port)
-[6]: [Chicago Industrial Real Estate Impact](https://www.vvco.com/how-the-east-coast-port-strike-could-impact-the-chicago-industrial-real-estate-market/amp/)
-[7]: [Maersk North America Market Update](https://www.maersk.com/news/articles/2025/04/02/north-america-market-update-april)
+[1]: [What Role Will Port Strikes Play in the Freight Market in 2025?](https://www.freightcenter.com/what-role-will-port-strikes-play-in-the-freight-market-in-2025/)
+[2]: [Supply Chain Alert: Potential 2025 Port Strike](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)
+[3]: [북미 노동자들의 항만·철도 파업, 글로벌 물류에 미칠 파장은?](https://www.seavantage.com/blog/strike)
+[4]: [Container Shipping Cost & Rates Calculator [2025]](https://www.freightos.com/freight-resources/container-shipping-cost-calculator-free-tool/)
+[5]: [Navigating Challenges and Strategic Rerouting in 2025](https://www.shipuniverse.com/news/global-shipping-routes-in-flux-navigating-challenges-and-strategic-rerouting-in-2025/)
+[6]: [Ocean Shipping Freight Market Update: March 2025](https://www.chrobinson.com/en-us/resources/insights-and-advisories/north-america-freight-insights/mar-2025-freight-market-update/key-freight-service-updates/ocean/)
+[7]: [미국 동부항만 50년 만의 파업과 물류 대란](https://seo.goover.ai/report/202504/go-public-report-ko-b8ed6360-16f5-4af1-b82d-fd8dd2ad901c-0-0.html)
+[8]: [美, 동부 항만 파업 위기...글로벌 경제 충격 우려](https://www.g-enews.com/article/Global-Biz/2024/08/202408160701478949fbbec65dfb_1)
 ==================================================
