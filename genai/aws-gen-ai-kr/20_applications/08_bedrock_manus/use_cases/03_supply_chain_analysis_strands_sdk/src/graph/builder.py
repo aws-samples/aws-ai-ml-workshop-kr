@@ -4,7 +4,7 @@ from .types import State
 from .nodes import (
     clarification_node,
     human_feedback_node,
-    planner_node,
+    #planner_node,
     supervisor_node,
     research_node,
     code_node,
@@ -14,6 +14,7 @@ from .nodes import (
 from .scm_nodes import (
     scm_researcher_node,
     scm_insight_analyzer_node,
+    planner_node,
     scm_impact_analyzer_node,
     scm_correlation_analyzer_node,
     scm_mitigation_planner_node,
@@ -41,7 +42,7 @@ def build_graph():
     # Add all SCM nodes
     builder.add_node("scm_researcher", scm_researcher_node)
     builder.add_node("scm_insight_analyzer", scm_insight_analyzer_node)
-    #builder.add_node("planner", planner_node)
+    builder.add_node("planner", planner_node)
     #builder.add_node("supervisor", supervisor_node)
     #builder.add_node("scm_impact_analyzer", scm_impact_analyzer_node)
     #builder.add_node("scm_correlation_analyzer", scm_correlation_analyzer_node)

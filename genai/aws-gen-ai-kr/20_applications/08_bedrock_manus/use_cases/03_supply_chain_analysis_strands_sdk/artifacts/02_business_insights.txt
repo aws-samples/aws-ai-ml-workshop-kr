@@ -1,0 +1,49 @@
+=== SCM Business Insights Analysis ===
+Generated: 2025-06-23 07:03:30
+Analysis Type: Supply Chain Management Business Impact Assessment
+
+=== Executive Summary ===
+1. 미국 동부/걸프 연안 항만 파업으로 인한 물류 지연 위험(고)
+2. 운송비용 상승 및 대체 운송수단 필요성 증가(중)
+3. 계절성 물량 피크 기간과 겹칠 경우 공급망 차질 심화 가능성(고)
+
+=== Business Impact Analysis ===
+**비용 영향**:
+- 대체 운송경로 사용으로 인한 물류비 상승 예상 [3]
+- 항공 운송 전환 시 비용 증가 불가피 [3]
+
+**운영 영향**:
+- 항만 적체로 인한 리드타임 증가 [1, 3]
+- 대체 경로 사용 시 추가 운송 시간 발생 [4]
+
+**고객 영향**:
+- 배송 지연으로 인한 고객 만족도 하락 가능성 [3]
+- 계절성 물량 피크 시기와 겹칠 경우 주문 이행률 하락 우려 [3]
+
+=== Strategic Considerations ===
+**공급망 회복력**:
+- 서부 항만 활용 우회 전략 검토 필요 [4]
+- 대체 운송수단 확보 및 다각화 전략 필수 [3, 4]
+
+**재고 전략**:
+- 일시적 재고 수준 상향 조정 검토 필요 [3]
+- 주요 품목 우선순위화 통한 핵심 상품 공급 유지 필요
+
+=== Risk Assessment Matrix ===
+| 위험 요소 | 발생가능성 | 영향도 | 시간범위 | 통제가능성 |
+|----------|-------------|-------|----------|------------|
+| 리드타임 증가 | 높음 | 높음 | 즉각 | 중간 |
+| 운송비 상승 | 높음 | 중간 | 즉각 | 낮음 |
+| 주문 이행률 저하 | 중간 | 높음 | 단기 | 중간 |
+
+=== Key Recommendations ===
+1. 서부 항만으로의 물류 경로 즉시 전환 검토 [4]
+2. 핵심 제품에 대한 임시 재고 수준 상향 조정 [3]
+3. 항공 운송 등 대체 운송수단 확보 계약 체결 [3, 4]
+4. 고객사에 잠재적 배송 지연 가능성 사전 커뮤니케이션
+
+=== References ===
+[1]: [ASI Industry News](https://members.asicentral.com/news/industry-news/january-2025/as-port-strike-looms-talks-to-resume-for-new-worker-contract/)
+[2]: [Crane Worldwide Logistics](https://craneww.com/knowledge-center/latest-news-and-info/potential-us-east-coast-port-strikes/)
+[3]: [Supply Chain Digital](https://supplychaindigital.com/operations/what-us-port-strike-means-for-global-supply-chains)
+[4]: [Rinchem Supply Chain Alert](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)

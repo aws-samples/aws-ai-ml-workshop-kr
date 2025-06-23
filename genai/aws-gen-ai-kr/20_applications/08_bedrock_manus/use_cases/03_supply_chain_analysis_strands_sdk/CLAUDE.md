@@ -51,13 +51,18 @@ The `State` TypedDict tracks:
 
 ### Environment Setup
 ```bash
-# 1. Create UV environment
-chmod +x setup/create-uv-env.sh
-./setup/create-uv-env.sh supply-chain-analysis 3.12
-cd setup && source .venv/bin/activate
+# 1. Create UV environment (from setup directory)
+cd setup
+chmod +x create-uv-env.sh
+./create-uv-env.sh supply-chain-analysis 3.12
 
-# 2. Install dependencies
+# 2. Activate environment and install dependencies
+source .venv/bin/activate
 uv pip install -r requirements.txt
+
+# 3. Install additional prerequisites (optional)
+chmod +x install-prerequisites.sh
+./install-prerequisites.sh
 ```
 
 ### OpenSearch Setup (Optional - for data analysis)
@@ -76,8 +81,11 @@ chmod +x setup/execution-os-mcp-server.sh
 
 ### Running the System
 ```bash
-# Command line execution
+# Command line execution (regular workflow)
 python main.py "Analyze Q4 supply chain performance trends"
+
+# SCM specialized workflow
+python main.py "Analyze Chicago port strike impact" --scm
 
 # Jupyter notebook (interactive)
 jupyter notebook main.ipynb
@@ -85,6 +93,17 @@ jupyter notebook main.ipynb
 # With debugging
 python main.py "Your query here" --debug
 ```
+
+### Testing
+```bash
+# Run SCM workflow test
+python test_scm_workflow.py
+
+# Test Korean font rendering (for charts)
+python setup/test_korean_font.py
+```
+
+**Note**: The project currently uses manual testing via direct script execution. No formal testing framework (pytest, unittest) is configured.
 
 ## Key Configuration
 
@@ -103,16 +122,27 @@ Defined in `src/config/agents.py`:
 - Prompt caching enabled for: `planner`, `reporter`
 
 ### Team Configuration
-`TEAM_MEMBERS = ["researcher", "coder", "reporter"]` - Agents available for supervisor routing
+- **Standard workflow**: `TEAM_MEMBERS = ["researcher", "coder", "reporter"]` - Agents available for supervisor routing
+- **SCM workflow**: Specialized agents including `scm_researcher`, `scm_insight_analyzer`, `scm_impact_analyzer`, `scm_correlation_analyzer`, `scm_mitigation_planner`
 
 ## Working with the Code
 
 ### Agent Workflow Execution
-The main workflow runs through `src/workflow.py`:
+Two main workflows are available:
+
+**Standard Workflow** (`src/workflow.py`):
 ```python
 from src.workflow import run_agent_workflow
 result = run_agent_workflow(user_input="Your query", debug=False)
 ```
+
+**SCM Specialized Workflow** (`src/workflow.py`):
+```python
+from src.workflow import run_scm_workflow
+result = run_scm_workflow(user_input="Supply chain query", debug=False)
+```
+
+The system auto-detects SCM-related queries using keywords: `["supply chain", "scm", "port", "shipping", "logistics", "disruption", "strike", "transportation"]`
 
 ### Strands SDK Integration
 Agents are created using `strands_utils.get_agent()` with:
@@ -143,10 +173,13 @@ The system automatically creates:
 ## Common Patterns
 
 ### Adding New Agents
-1. Create prompt template in `src/prompts/`
-2. Add agent function in `src/graph/nodes.py`
-3. Register in `src/config/agents.py` with LLM type
-4. Update `TEAM_MEMBERS` if supervisor-routable
+1. Create prompt template in `src/prompts/` (e.g., `new_agent.md`)
+2. Add agent function in `src/graph/nodes.py` (standard) or `src/graph/scm_nodes.py` (SCM-specific)
+3. Register in `src/config/agents.py`:
+   - Add to `AGENT_LLM_MAP` with LLM type (`basic`/`reasoning`/`vision`)
+   - Add to `AGENT_PROMPT_CACHE_MAP` with caching preference
+4. Update workflow routing logic in `src/graph/builder.py`
+5. Update `TEAM_MEMBERS` if supervisor-routable
 
 ### Custom Tools
 Tools are defined in `src/tools/` and can be:
@@ -160,3 +193,16 @@ Prompts use template system in `src/prompts/template.py`:
 - Context injection from current state
 - Dynamic content based on workflow stage
 - Structured output formatting
+
+**Available Prompt Templates**:
+- Standard agents: `clarifier.md`, `planner.md`, `supervisor.md`, `researcher.md`, `coder.md`, `reporter.md`
+- SCM agents: `scm_researcher.md`, `scm_insight_analyzer.md`, `scm_impact_analyzer.md`, `scm_correlation_analyzer.md`, `scm_mitigation_planner.md`
+- Utility prompts: `browser.md`, `human_feedback.md`, `coordinator.md`
+
+## Key Dependencies
+- **Strands SDK**: `strands-agents==0.1.7`, `strands-agents-tools==0.1.5`
+- **LangGraph**: `langgraph==0.4.8` for workflow orchestration
+- **AWS Services**: `boto3==1.38.36`, `langchain-aws==0.2.25`
+- **Research Tools**: `tavily-python==0.7.6` for web research
+- **Visualization**: `matplotlib==3.10.1`, `seaborn==0.13.2`, `lovelyplots==1.0.2`
+- **MCP Integration**: `mcp==1.9.4` for OpenSearch communication

@@ -5,6 +5,7 @@ Each agent uses template-based prompts and saves output to artifacts folder.
 
 import os
 import json
+import pprint
 import logging
 import asyncio
 from typing import Literal
@@ -29,11 +30,13 @@ logger.setLevel(logging.INFO)
 
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
 CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
+FULL_PLAN_FORMAT = "Here is current full plan:\n\n<full_plan>\n{}\n</full_plan>\n\n"
 
 # SCM 에이전트 간 전달 메시지 포맷
 SCM_NEXT_STEP_MESSAGE = {
     "scm_researcher": "SCM research completed. Please proceed with business insight analysis.",
     "scm_insight_analyzer": "Business insights completed. Please proceed with analysis planning.", 
+    "planner": "Insight analysis completed. Please proceed with supervision.", 
     "scm_impact_analyzer": "Impact analysis completed. Please proceed with correlation analysis.",
     "scm_correlation_analyzer": "Correlation analysis completed. Please proceed with mitigation planning.",
     "scm_mitigation_planner": "Mitigation planning completed. All SCM analysis phases finished."
@@ -120,6 +123,69 @@ def scm_insight_analyzer_node(state: State) -> Command[Literal["planner"]]:
             "history": history
         },
         goto="planner",
+    )
+
+def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
+    """Planner node that generate the full plan."""
+    logger.info(f"{Colors.GREEN}===== Planner generating full plan ====={Colors.END}")
+    logger.info(f"{Colors.BLUE}===== Planner - Search before planning: {state.get("search_before_planning")} ====={Colors.END}")
+    logger.debug(f"\n{Colors.RED}Planner - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    
+    # Import tools for planner
+    from strands_tools import file_read
+    from strands.tools.mcp import MCPClient
+    from mcp import stdio_client, StdioServerParameters
+    import boto3
+    from utils.ssm import parameter_store
+    
+    # Setup OpenSearch MCP client
+    region = boto3.Session().region_name
+    pm = parameter_store(region)
+    
+    os.environ["OPENSEARCH_URL"] = pm.get_params(key="opensearch_domain_endpoint", enc=False)
+    os.environ["OPENSEARCH_USERNAME"] = pm.get_params(key="opensearch_user_id", enc=False)
+    os.environ["OPENSEARCH_PASSWORD"] = pm.get_params(key="opensearch_user_password", enc=True)
+    
+    env_vars = os.environ.copy()
+    opensearch_mcp_client = MCPClient(
+        lambda: stdio_client(StdioServerParameters(
+            command="python",
+            args=["-m", "mcp_server_opensearch"],
+            env=env_vars
+        ))
+    )
+    
+    # Execute within MCP context manager
+    with opensearch_mcp_client:
+        opensearch_tools = opensearch_mcp_client.list_tools_sync()
+        all_tools = [file_read] + opensearch_tools
+        
+        agent = strands_utils.get_agent(
+            agent_name="planner",
+            state=state,
+            streaming=True,
+            tools=all_tools
+        )
+
+        full_plan, messages = state.get("full_plan", ""), state["messages"]
+        message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+         
+        agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="planner"))
+    logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
+
+    goto = "supervisor"
+        
+    history = state.get("history", [])
+    history.append({"agent":"planner", "message": response["text"]})
+    logger.info(f"{Colors.GREEN}===== Planner completed task ====={Colors.END}")
+    return Command(
+        update={
+            "messages": [get_message_from_string(role="user", string=response["text"], imgs=[])],
+            "messages_name": "planner",
+            "full_plan": response["text"],
+            "history": history
+        },
+        #goto=goto,
     )
 
 

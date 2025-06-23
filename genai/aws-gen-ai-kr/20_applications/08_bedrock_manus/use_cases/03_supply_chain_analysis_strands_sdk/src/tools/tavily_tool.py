@@ -53,7 +53,7 @@ tavily_search_instance = LoggedTavilySearch(
     include_raw_content=False,
     include_images=False,
     include_image_descriptions=False,
-    search_depth="advanced",  # "basic" 또는 "advanced" 설정 가능
+    search_depth="basic",  # "basic" 또는 "advanced" 설정 가능
 )
 
 @log_io

@@ -14,9 +14,10 @@ def apply_prompt_template(prompt_name: str, state: AgentState) -> list:
     if prompt_name in ["planner"]:
         context = {
             "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
-            "ORIGIANL_USER_REQUEST": state["request"],
-            "FOLLOW_UP_QUESTIONS": state.get("follow_up_questions", ""),
-            "USER_FEEDBACK": state.get("user_feedback", "")
+            "ORIGINAL_USER_REQUEST": state["request"],
+            #"FOLLOW_UP_QUESTIONS": state.get("follow_up_questions", ""),
+            "FULL_PLAN": state.get("full_plan", ""),
+            #"USER_FEEDBACK": state.get("user_feedback", "")
         }
     elif prompt_name in ["researcher", "coder", "reporter"]:
         context = {

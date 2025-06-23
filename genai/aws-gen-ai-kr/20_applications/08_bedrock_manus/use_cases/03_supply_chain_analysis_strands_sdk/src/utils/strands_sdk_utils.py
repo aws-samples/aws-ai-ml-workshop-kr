@@ -98,7 +98,7 @@ class strands_utils():
                     if "event_loop_metrics" in event:
                         if response["cycle"] != event["event_loop_metrics"].cycle_count:
                             response["cycle"] = event["event_loop_metrics"].cycle_count
-                            callback_answer.on_llm_new_token(f' \n## Calling tool: {event["current_tool_use"]["name"]} - # Cycle: {event["event_loop_metrics"].cycle_count}')
+                            callback_answer.on_llm_new_token(f' \n## Calling tool: {event["current_tool_use"]["name"]} - # Cycle: {event["event_loop_metrics"].cycle_count}\n')
         except Exception as e:
             logger.error(f"Error in streaming response: {e}")
             logger.error(traceback.format_exc())  # Detailed error logging

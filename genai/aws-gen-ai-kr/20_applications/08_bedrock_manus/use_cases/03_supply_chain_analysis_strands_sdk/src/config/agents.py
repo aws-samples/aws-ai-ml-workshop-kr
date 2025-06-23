@@ -33,7 +33,7 @@ AGENT_PROMPT_CACHE_MAP: dict[bool, CACHEType] = {
     "reporter": (True, "default"),
     # SCM specialized agents
     "scm_researcher": (False, None),
-    "scm_insight_analyzer": (True, "default"),
+    "scm_insight_analyzer": (False, None),
     "scm_impact_analyzer": (False, None),
     "scm_correlation_analyzer": (True, "default"),
     "scm_mitigation_planner": (True, "default")
