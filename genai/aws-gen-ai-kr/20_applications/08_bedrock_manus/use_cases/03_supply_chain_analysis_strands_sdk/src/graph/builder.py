@@ -13,7 +13,7 @@ from .nodes import (
 )
 from .scm_nodes import (
     scm_researcher_node,
-    scm_insight_analyzer_node,
+    scm_data_analyzer_node,
     planner_node,
     scm_impact_analyzer_node,
     scm_correlation_analyzer_node,
@@ -41,7 +41,7 @@ def build_graph():
     
     # Add all SCM nodes
     builder.add_node("scm_researcher", scm_researcher_node)
-    builder.add_node("scm_insight_analyzer", scm_insight_analyzer_node)
+    builder.add_node("scm_data_analyzer", scm_data_analyzer_node)
     builder.add_node("planner", planner_node)
     #builder.add_node("supervisor", supervisor_node)
     #builder.add_node("scm_impact_analyzer", scm_impact_analyzer_node)
@@ -51,6 +51,6 @@ def build_graph():
     
     # SCM workflow: scm_researcher → scm_insight_analyzer → planner → supervisor → [scm analyzers] → reporter
     builder.add_edge(START, "scm_researcher")
-    builder.add_edge("scm_insight_analyzer", END)
+    builder.add_edge("scm_data_analyzer", END)
     
     return builder.compile()

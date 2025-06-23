@@ -258,8 +258,10 @@ Analysis Type: Supply Chain Management Crisis Response and Mitigation Planning
 [Cost-benefit analysis, ROI projections, budget requirements, funding recommendations]
 
 === References ===
-[Research Sources - from 01_research_results.txt]
-[1]: [Original source citations that informed mitigation strategies]
+[Research Sources - from 01_research_results.txt with clickable markdown links]
+[1]: [Source 1 Title](https://actual-source-url.com)
+[2]: [Source 2 Title](https://actual-source-url.com)
+[etc.]: [Use actual titles and URLs from 01_research_results.txt that informed mitigation strategies]
 
 [Analysis Sources - from previous analysis files]
 [BI-1]: Business Insights from 02_business_insights.txt

@@ -260,8 +260,10 @@ Analysis Type: Supply Chain KPI Correlation and Chain Effects Analysis
 [Forecasted secondary impacts based on correlation patterns]
 
 === References ===
-[Research Sources - from 01_research_results.txt]
-[1]: [Original source citations referenced in correlation analysis]
+[Research Sources - from 01_research_results.txt with clickable markdown links]
+[1]: [Source 1 Title](https://actual-source-url.com)
+[2]: [Source 2 Title](https://actual-source-url.com)
+[etc.]: [Use actual titles and URLs from 01_research_results.txt that were referenced in correlation analysis]
 
 [Analysis Sources - from previous analysis files]
 [BI-1]: Business Insights from 02_business_insights.txt

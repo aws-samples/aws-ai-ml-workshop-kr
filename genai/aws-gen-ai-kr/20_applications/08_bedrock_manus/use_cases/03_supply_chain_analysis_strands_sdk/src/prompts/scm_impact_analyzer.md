@@ -215,9 +215,10 @@ Analysis Type: Supply Chain Management KPI Impact Assessment
 [Top impacted KPIs, severity rankings, urgency recommendations]
 
 === References ===
-[Research Sources - from 01_research_results.txt]
-[1]: [Source 1 Title and URL]
-[2]: [Source 2 Title and URL]
+[Research Sources - from 01_research_results.txt with clickable markdown links]
+[1]: [Source 1 Title](https://actual-source-url.com)
+[2]: [Source 2 Title](https://actual-source-url.com)
+[etc.]: [Use actual titles and URLs from 01_research_results.txt]
 [Continue with all research sources cited...]
 
 [Analysis Sources - from previous analysis files]

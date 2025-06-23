@@ -25,7 +25,12 @@ def apply_prompt_template(prompt_name: str, state: AgentState) -> list:
             "USER_REQUEST": state["request"],
             "FULL_PLAN": state.get("full_plan", "")
         }
-    elif prompt_name in ["scm_researcher", "scm_insight_analyzer", "scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner"]:
+    elif prompt_name in ["scm_researcher", "scm_data_analyzer"]:
+        context = {
+            "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
+            "ORIGINAL_USER_REQUEST": state.get("request", ""),
+        }
+    elif prompt_name in ["scm_correlation_analyzer", "scm_mitigation_planner"]:
         context = {
             "CURRENT_TIME": datetime.now().strftime("%a %b %d %Y %H:%M:%S %z"),
             "ORIGINAL_USER_REQUEST": state.get("request", ""),

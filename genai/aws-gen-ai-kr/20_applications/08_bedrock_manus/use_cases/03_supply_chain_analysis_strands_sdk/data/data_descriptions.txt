@@ -1,0 +1,68 @@
+1. supplier_performance_data.txt
+
+This dataset contains daily supplier performance metrics tracking delivery rates, quality scores, lead times, and communication effectiveness across multiple suppliers and regions from August 2024. The data is used to monitor and evaluate supplier performance for supply chain optimization and vendor management decisions.
+
+Column Descriptions:
+- date: Date of the performance measurement (YYYY-MM-DD format)
+- supplier_id: Unique identifier for each supplier (e.g., SUP_CN_001, SUP_AU_001)
+- region: Geographic region where the supplier is located (China, Australia, Chile, Canada)
+- on_time_delivery_rate: Percentage of deliveries completed on schedule (0.0 to 1.0 scale)
+- quality_score: Overall quality rating of delivered products (scale appears to be 0-10)
+- lead_time: Average lead time for order fulfillment (likely in days or weeks)
+- variance_days: Deviation from expected delivery schedule in days
+- communication_score: Rating of supplier communication effectiveness (scale appears to be 0-10)
+
+2. shipment_tracking_data.txt
+
+This dataset contains detailed shipment tracking information for various cargo types transported between different ports and routes during August 2024. The data includes logistics information such as shipping routes, lead times, transportation costs, and cargo specifications for supply chain and logistics analysis.
+
+Column Descriptions:
+- date: Date of the shipment record (YYYY-MM-DD format)
+- shipment_id: Unique identifier for each shipment (e.g., SH001, SH002, SH003)
+- origin_port: Port of departure/origin (e.g., Shanghai, Ningbo, Qingdao)
+- destination_port: Port of arrival/destination (e.g., Norfolk, Charleston, Baltimore, Houston, Savannah)
+- route_type: Type of shipping route or method (e.g., Direct)
+- lead_time_days: Duration of shipment in days from origin to destination
+- transport_cost_usd: Total transportation cost in US dollars
+- cargo_type: Type of goods being shipped (e.g., Lithium_Carbonate, Battery_Components, Cathode_Materials, Separator_Films, Lithium_Hydroxide, Electrolyte)
+- volume_containers: Number of shipping containers used for the cargo
+
+3. order_fulfillment_data.txt
+
+This dataset contains order fulfillment tracking information for various automotive customers during August 2024, showing delivery performance, order values, and penalty status. The data is used to monitor delivery accuracy, customer satisfaction, and financial impact of order fulfillment operations.
+
+Column Descriptions:
+- date: Date when the order was placed or processed (YYYY-MM-DD format)
+- customer_id: Unique identifier for each customer (e.g., CUST_TESLA, CUST_GM, CUST_FORD, CUST_HYUNDAI, CUST_BMW, CUST_VW)
+- order_id: Unique identifier for each order (e.g., ORD_T001, ORD_G001, ORD_F001)
+- requested_delivery: Originally requested delivery date by the customer (YYYY-MM-DD format)
+- actual_delivery: Actual delivery date achieved (YYYY-MM-DD format)
+- status: Order fulfillment status (Fulfilled indicates completed orders)
+- order_value_usd: Total monetary value of the order in US dollars
+- penalty_applied: Boolean indicator (TRUE/FALSE) showing whether delivery penalties were applied for late or non-compliant deliveries
+
+4. ira_compliance_data.txt
+
+This dataset tracks Inflation Reduction Act (IRA) compliance status for material shipments during August 2024, monitoring the ratio of Chinese content and Free Trade Agreement (FTA) compliance for regulatory requirements. The data is critical for ensuring compliance with U.S. trade and environmental regulations related to clean energy supply chains.
+
+Column Descriptions:
+- date: Date of the compliance assessment or shipment (YYYY-MM-DD format)
+- shipment_id: Unique identifier for each shipment being assessed (e.g., SH001, SH002, SH003)
+- material_origin: Country or region where the materials originated (Chile, Australia, China)
+- processing_location: Country where the materials were processed or manufactured (China, Canada)
+- fta_compliant: Boolean indicator (TRUE/FALSE) showing whether the shipment meets Free Trade Agreement requirements
+- china_content_ratio: Decimal ratio (0.0 to 1.0) representing the proportion of Chinese content in the shipment
+- compliance_status: Overall IRA compliance determination (Compliant/Non_Compliant) based on Chinese content thresholds and FTA requirements
+
+5. inventory_levels_data.txt
+
+This dataset tracks daily inventory levels for various battery and energy storage materials across different warehouse locations during August 2024, monitoring stock quantities, safety stock requirements, and reorder triggers for supply chain management. The data is essential for maintaining optimal inventory levels and preventing stockouts in battery manufacturing operations.
+
+Column Descriptions:
+- date: Date of the inventory record (YYYY-MM-DD format)
+- material_type: Type of material being tracked (Lithium_Carbonate, Battery_Components, Cathode_Materials, Separator_Films, Lithium_Hydroxide, Electrolyte)
+- location: Warehouse or storage location (US_East appears to be the primary location)
+- quantity_units: Current inventory quantity in stock (numerical units)
+- safety_stock_days: Number of days of safety stock maintained as buffer inventory
+- current_days_supply: Current inventory expressed in days of supply based on consumption rate
+- reorder_triggered: Boolean indicator (TRUE/FALSE) showing whether a reorder has been triggered based on inventory thresholds

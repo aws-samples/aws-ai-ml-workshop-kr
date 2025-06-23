@@ -16,7 +16,7 @@ AGENT_LLM_MAP: dict[str, LLMType] = {
     "reporter": "reasoning",
     # SCM specialized agents
     "scm_researcher": "basic",
-    "scm_insight_analyzer": "reasoning",
+    "scm_data_analyzer": "basic",
     "scm_impact_analyzer": "basic",
     "scm_correlation_analyzer": "reasoning",
     "scm_mitigation_planner": "reasoning"
@@ -33,7 +33,7 @@ AGENT_PROMPT_CACHE_MAP: dict[bool, CACHEType] = {
     "reporter": (True, "default"),
     # SCM specialized agents
     "scm_researcher": (False, None),
-    "scm_insight_analyzer": (False, None),
+    "scm_data_analyzer": (False, None),
     "scm_impact_analyzer": (False, None),
     "scm_correlation_analyzer": (True, "default"),
     "scm_mitigation_planner": (True, "default")
