@@ -1,45 +1,50 @@
 
 ==================================================
-# SCM Research Findings - 2025-06-23 12:39:55
+# SCM Research Findings - 2025-06-23 15:00:47
 --------------------------------------------------
 
 ## Problem Statement
-시카고 항만 파업이 공급망에 미치는 영향과 대응 방안 분석 (리드타임, 운송비, 주문 이행률 중심)
+시카고 항만 파업이 공급망에 미치는 영향 분석 요청
+- 리드타임 증가
+- 운송비 영향
+- 주문 이행률 영향
+- 물류 전략 조정 방안
+- 대체 경로 검토
 
 ## Research Findings
 
 ### Topic 1: 파업 현황 및 기본 영향
-- 2025년 항만 파업으로 인한 공급망 전반의 심각한 혼란 예상 [1]
-- 공급망 전반에 걸쳐 큰 지연 발생, 2025년 전반적인 산업 혼란 초래 예상 [1][2]
-- 동부 해안과 걸프 해안 항만들에도 영향이 미치며, 전국적인 물류 혼란 우려 [3]
+- 2025년 초 미국 동부 및 걸프 연안 항만 파업 발생으로 광범위한 물류 혼란 예상 [1]
+- ILA(국제항만노동자협회)와 USMX(미국해사연합) 간 협상 진행 중 [3]
+- 임금 62% 인상에 합의했으나, 항만 자동화 문제로 여전히 갈등 지속 [5]
 
-### Topic 2: 물류 비용 및 리드타임 영향
-- 대체 항만들의 수요 증가로 인한 비용 상승 및 혼잡 심화 [4]
-- 대체 경로 사용 시 더 높은 비용 발생 예상 [4]
-- 화물 처리 지연으로 인한 리드타임 증가 [4]
+### Topic 2: 공급망 영향 및 리드타임
+- 파업으로 인한 물류 지연이 2025년 전반에 걸쳐 영향을 미칠 것으로 예상 [2]
+- 특히 중국 춘절(2025년 1월 25일) 전후 생산 급증 시기와 겹쳐 더욱 심각한 영향 예상 [4]
+- 하루 최대 50억 달러의 경제적 손실 예상 [3]
 
-### Topic 3: 대체 경로 및 물류 전략
-- 서해안 항만이나 다른 북미 항만으로의 우회 고려 필요 [4]
-- 캐나다 항만을 통한 대체 경로 검토 가능 [4]
-- 리스크 관리 전략의 일환으로 유연한 운송 계획 수립 필요 [4]
+### Topic 3: 운송비 및 대체 경로
+- 운송업체들이 동부 항만을 회피하고 대체 경로를 모색 중 [4]
+- 서부 항만으로의 물류 이전이 어려워 전반적인 물류 흐름 악화 예상 [3]
+- 운송비 급격한 상승으로 인한 인플레이션 우려 [3]
 
-## 결론
-1. 리드타임 영향:
-   - 상당한 배송 지연 예상
-   - 대체 항만의 처리 능력 한계로 추가 지연 가능성
-   
-2. 운송비 영향:
-   - 대체 경로 사용으로 인한 비용 증가
-   - 혼잡도 증가로 인한 추가 비용 발생
-   
-3. 대응 전략:
-   - 서해안 항만 및 캐나다 항만 활용 검토
-   - 복수의 물류 경로 확보
-   - 재고 수준 조정 검토
+## Original Full Text
+[1]: "If the strikes go ahead, they will cause enormous delays across the supply chain, a ripple effect which will no doubt roll into 2025 and cause chaos across the industry"
+
+[2]: "Potential disruptions could impact your supply chain due to ongoing negotiations between the International Longshoremen's Association (ILA) and the United States Maritime Alliance, Ltd. (USMX)"
+
+[3]: "미 국제항만노동자협회(ILA)의 결정으로 시작된 이번 파업은 47년 만에 이루어진 대규모 파업으로, 미국 전체 항만 물동량의 약 41%에 영향을 미치는 것으로 예측되고 있습니다. 경제적 손실이 하루 최대 50억 달러에 이를 것으로 예측되면서, 이는 미국의 전반적인 물류 체계와 소비자 물가에 심각한 변화를 일으킬 수 있습니다."
+
+[4]: "Post-holiday shipping provides a brief window to manage inventories, but the lead-up to Chinese New Year (Jan. 25, 2025) triggers an annual pre-holiday surge as factories ramp up production and ports become"
+
+[5]: "ILA와 USMX는 지난 10월 3일 협상에서 6년간 약 62%의 임금 인상에는 잠정 합의했지만, 항만 자동화라는 핵심 쟁점에서는 여전히 입장 차를 좁히지 못하고 있습니다."
 
 ## References
-[1]: [Chicago Sun-Times - US port strike article](https://chicago.suntimes.com/transportation/2024/09/30/us-port-maritime-alliance-strike-dockworkers-longshoremen-certain-begin-midnight)
-[2]: [NBC Chicago - Longshoremen strike impact](https://www.nbcchicago.com/news/why-are-longshoreman-dockworkers-striking-what-will-the-strike-affect-list-of-ports/3561862/)
-[3]: [Rinchem - Supply Chain Alert](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)
-[4]: [SGL USA - January Port Strike 2025 Impact](https://www.sglusa.com/january-port-strike-east-gulf-coast-2025-what-you-need-to-know/)
+[1]: [NBC Chicago - Port Strike Impact](https://www.nbcchicago.com/news/why-are-longshoreman-dockworkers-striking-what-will-the-strike-affect-list-of-ports/3561862/)
+[2]: [Rinchem - Supply Chain Alert](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)
+[3]: [해외 물류 동향 보고서](https://narangdesign.com/mail/kotra_pro/202503/dw.php?dw=dw6)
+[4]: [Georgia Tech Research](https://research.gatech.edu/race-against-time-port-strike-threatens-supply-chain-stability)
+[5]: [Tradlinx - 물류 대란 분석](https://www.tradlinx.com/blog/market-trend/2%EC%B0%A8-%EB%AC%BC%EB%A5%98-%EB%8C%80%EB%9E%80-%EA%B3%B5%ED%8F%AC-%EB%AF%B8%EA%B5%AD-%EC%9A%B4%EC%86%A1%EC%97%85%EC%B2%B4%EB%93%A4-%EB%8F%99%EB%B6%80-%ED%95%AD%EB%A7%8C-%ED%9A%8C/)
+
+Current session ended: next session should start from Topic number 4, Reference index 6
 ==================================================

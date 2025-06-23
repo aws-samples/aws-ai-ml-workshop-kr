@@ -1,6 +1,6 @@
 import logging
 from textwrap import dedent
-from src.config import TEAM_MEMBERS, SCM_TEAM_MEMBERS
+from src.config import SCM_TEAM_MEMBERS
 from src.graph import build_graph
 from src.graph.builder import build_graph
 from src.utils.common_utils import get_message_from_string
@@ -76,7 +76,7 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     result = graph.invoke(
         input={
             # Constants
-            "TEAM_MEMBERS": SCM_TEAM_MEMBERS,
+            "SCM_TEAM_MEMBERS": SCM_TEAM_MEMBERS,
             # Runtime Variables
             "messages": messages,
             "search_before_planning": False,

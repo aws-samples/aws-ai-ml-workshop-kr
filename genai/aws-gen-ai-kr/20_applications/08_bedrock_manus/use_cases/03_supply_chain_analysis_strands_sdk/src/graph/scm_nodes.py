@@ -11,7 +11,7 @@ import asyncio
 from typing import Literal
 from langgraph.types import Command
 
-from src.config import TEAM_MEMBERS
+from src.config import SCM_TEAM_MEMBERS
 from .types import State
 from src.utils.common_utils import get_message_from_string
 from src.utils.strands_sdk_utils import strands_utils
@@ -38,9 +38,9 @@ FULL_PLAN_FORMAT = "Here is current full plan:\n\n<full_plan>\n{}\n</full_plan>\
 SCM_NEXT_STEP_MESSAGE = {
     "scm_researcher": "SCM research completed. Please proceed with business insight analysis.",
     "scm_data_analyzer": "Dataset analysis completed. Please proceed with analysis planning.", 
-    "planner": "Insight analysis completed. Please proceed with supervision.", 
-    "scm_impact_analyzer": "Impact analysis completed. Please proceed with correlation analysis.",
-    "scm_correlation_analyzer": "Correlation analysis completed. Please proceed with mitigation planning.",
+    "planner": "planning completed. Please go with next actions", 
+    "scm_impact_analyzer": "Impact analysis completed. Please go with next actions",
+    "scm_correlation_analyzer": "Correlation analysis completed. Please go with next actions",
     "scm_mitigation_planner": "Mitigation planning completed. All SCM analysis phases finished."
 }
 
@@ -127,7 +127,7 @@ def scm_data_analyzer_node(state: State) -> Command[Literal["planner"]]:
         goto="planner",
     )
 
-def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
+def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     """Planner node that generate the full plan."""
     logger.info(f"{Colors.GREEN}===== Planner generating full plan ====={Colors.END}")
     logger.info(f"{Colors.BLUE}===== Planner - Search before planning: {state.get("search_before_planning")} ====={Colors.END}")
@@ -144,8 +144,10 @@ def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
         tools=[file_read]
     )
 
-    full_plan, messages = state.get("full_plan", ""), state["messages"]
-    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    #full_plan, messages = state.get("full_plan", ""), state["messages"]
+    #message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    messages = state["messages"]
+    message = messages[-1]["content"][-1]["text"]
      
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="planner"))
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
@@ -157,23 +159,64 @@ def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
     logger.info(f"{Colors.GREEN}===== Planner completed task ====={Colors.END}")
     return Command(
         update={
-            "messages": [get_message_from_string(role="user", string=response["text"], imgs=[])],
+            #"messages": [get_message_from_string(role="user", string=response["text"], imgs=[])],
+            "messages": [get_message_from_string(role="user", string=SCM_NEXT_STEP_MESSAGE["planner"], imgs=[])],
             "messages_name": "planner",
             "full_plan": response["text"],
             "history": history
         },
-        #goto=goto,
+        goto=goto,
+    )
+
+def supervisor_node(state: State) -> Command[Literal[*SCM_TEAM_MEMBERS, "__end__"]]:
+    """Supervisor node that decides which agent should act next."""
+    logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
+    
+    agent = strands_utils.get_agent(
+        agent_name="supervisor",
+        state=state,
+        streaming=True
+    )
+    
+    clues, full_plan, messages = state.get("clues", ""), state.get("full_plan", ""), state["messages"]
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+    agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="supervisor"))
+    
+    if response["text"].startswith("```json"): response["text"] = response["text"].removeprefix("```json")
+    if response["text"].endswith("```"): response["text"] = response["text"].removesuffix("```")
+    
+    response["text"] = json.loads(response["text"])   
+    goto = response["text"]["next"]
+
+    logger.debug(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Supervisor response:{response["text"]}{Colors.END}")
+
+    if goto == "FINISH":
+        goto = "__end__"
+        logger.info(f"\n{Colors.GREEN}===== Workflow completed ====={Colors.END}")
+    else:
+        logger.info(f"{Colors.GREEN}Supervisor delegating to: {goto}{Colors.END}")
+
+    history = state.get("history", [])
+    history.append({"agent":"supervisor", "message": response["text"]})
+    logger.info(f"{Colors.GREEN}===== Supervisor completed task ====={Colors.END}")
+    return Command(
+        goto=goto,
+        update={
+            "next": goto,
+            "history": history
+        }
     )
 
 
-def scm_impact_analyzer_node(state: State) -> Command[Literal["supervisor"]]:
+def scm_impact_analyzer_node(state: State): # -> Command[Literal["supervisor"]]:
     """Analyze quantitative impact on SCM KPIs using user-provided datasets."""
     logger.info(f"{Colors.GREEN}===== SCM Impact Analyzer starting task ====={Colors.END}")
     
     agent = strands_utils.get_agent(
         agent_name="scm_impact_analyzer",
         state=state,
-        tools=[python_repl_tool, bash_tool],
+        tools=[file_read, python_repl_tool, bash_tool],
         streaming=True
     )
 

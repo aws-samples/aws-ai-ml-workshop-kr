@@ -18,10 +18,10 @@ from .env import (
 from .tools import TAVILY_MAX_RESULTS
 
 # Team configuration
-TEAM_MEMBERS = ["researcher", "coder", "reporter"]
+#TEAM_MEMBERS = ["researcher", "coder", "reporter"]
 
 # SCM specialized team configuration
-SCM_TEAM_MEMBERS = ["scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner", "reporter"]
+SCM_TEAM_MEMBERS = ["scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner"]
 
 __all__ = [
     # Reasoning LLM
@@ -37,7 +37,6 @@ __all__ = [
     "VL_BASE_URL",
     "VL_API_KEY",
     # Other configurations
-    "TEAM_MEMBERS",
     "SCM_TEAM_MEMBERS",
     "TAVILY_MAX_RESULTS",
     "CHROME_INSTANCE_PATH",
