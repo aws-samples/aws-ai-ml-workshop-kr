@@ -38,9 +38,9 @@ FULL_PLAN_FORMAT = "Here is current full plan:\n\n<full_plan>\n{}\n</full_plan>\
 SCM_NEXT_STEP_MESSAGE = {
     "scm_researcher": "SCM research completed. Please proceed with business insight analysis.",
     "scm_data_analyzer": "Dataset analysis completed. Please proceed with analysis planning.", 
-    "planner": "planning completed. Please go with next actions", 
-    "scm_impact_analyzer": "Impact analysis completed. Please update full plan",
-    "scm_correlation_analyzer": "Correlation analysis completed. Please go with next actions",
+    "planner": "planner just completed. Please go with next actions", 
+    "scm_impact_analyzer": "Impact analysis completed. Please update the full plan",
+    "scm_correlation_analyzer": "Correlation analysis completed. Please update the full plan",
     "scm_mitigation_planner": "Mitigation planning completed. All SCM analysis phases finished."
 }
 
@@ -144,8 +144,6 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
         tools=[file_read]
     )
 
-    #full_plan, messages = state.get("full_plan", ""), state["messages"]
-    #message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
     messages = state["messages"]
     message = messages[-1]["content"][-1]["text"]
      
@@ -178,10 +176,17 @@ def supervisor_node(state: State) -> Command[Literal[*SCM_TEAM_MEMBERS, "__end__
         streaming=True
     )
     
+    
+    
     clues, full_plan, messages = state.get("clues", ""), state.get("full_plan", ""), state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+    
+    logger.info(f"{Colors.GREEN}message{Colors.END}")
+    
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="supervisor"))
     
+    
+
     if response["text"].startswith("```json"): response["text"] = response["text"].removeprefix("```json")
     if response["text"].endswith("```"): response["text"] = response["text"].removesuffix("```")
     
@@ -308,4 +313,37 @@ def scm_mitigation_planner_node(state: State) -> Command[Literal["supervisor"]]:
             "history": history
         },
         goto="supervisor",
+    )
+
+def reporter_node(state: State) -> Command[Literal["supervisor"]]:
+    """Reporter node that write a final report."""
+    logger.info(f"{Colors.GREEN}===== Reporter write final report ====={Colors.END}")
+    logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+
+    agent = strands_utils.get_agent(
+        agent_name="reporter",
+        state=state,
+        tools=[python_repl_tool, bash_tool],
+        streaming=True
+    )
+
+    clues, messages = state.get("clues", ""), state["messages"]
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
+    agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="reporter"))
+
+    clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", response["text"])])
+    logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(state['messages'], indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
+
+    history = state.get("history", [])
+    history.append({"agent":"reporter", "message": response["text"]})
+    logger.info(f"{Colors.GREEN}===== Reporter completed task ====={Colors.END}")
+    return Command(
+        update={
+            "messages": [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("reporter", response["text"]), imgs=[])],
+            "messages_name": "reporter",
+            "history": history,
+            "clues": clues
+        },
+        goto="supervisor"
     )

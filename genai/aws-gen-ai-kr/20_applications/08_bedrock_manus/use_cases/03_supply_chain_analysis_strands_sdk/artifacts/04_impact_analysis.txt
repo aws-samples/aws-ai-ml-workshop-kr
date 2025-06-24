@@ -1,109 +1,187 @@
 
 ==================================================
-## Analysis Stage: Initial_Impact_Analysis
-## REFERENCE: [Global Trade Mag - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
-## Execution Time: 2025-06-24 02:46:44
+## Analysis Stage: Data_Loading
+## REFERENCE: [Ship Universe - Labor Strife and Tariffs Impact](https://www.shipuniverse.com/news/labor-strife-and-tariffs-expected-to-impact-ocean-shipping-in-2025/)
+## Execution Time: 2025-06-24 06:45:59
 --------------------------------------------------
 Result Description: 
 
-리드타임 영향 분석:
-- 평균 리드타임: 13.27일
-- 최대 리드타임: 33일
-- 최소 리드타임: 0일
+데이터 로딩 완료:
+1. Shipment Tracking Data: 200 건의 운송 데이터
+   - 기간: 2024-08-01 00:00:00 ~ 2024-10-26 00:00:00
+   - 주요 지표: 리드타임, 운송비용, 화물 유형, 컨테이너 수량
 
-운송비용 영향:
-- 평균 운송비용: $4458.00
-- 최대 운송비용: $11500.00
-- 최소 운송비용: $0.00
+2. Order Fulfillment Data: 174 건의 주문 데이터
+   - 기간: 2024-08-15 00:00:00 ~ 2024-12-10 00:00:00
+   - 주요 지표: 요청 배송일, 실제 배송일, 주문 상태, 주문 금액
 
-주문 이행률:
-- 전체 주문 수: 174
-- 이행된 주문 수: 117
-- 주문 이행률: 67.24%
+3. Inventory Levels Data: 522 건의 재고 데이터
+   - 기간: 2024-08-01 00:00:00 ~ 2024-10-26 00:00:00
+   - 주요 지표: 재고 수량, 안전재고일수, 현재 재고일수
+
+데이터 품질:
+- 모든 데이터셋이 2024년 8월부터의 데이터를 포함
+- 시계열 분석이 가능한 일별 데이터 구조
+- 파업 영향 분석에 필요한 주요 KPI 포함
+
+==================================================
+
+==================================================
+## Analysis Stage: Lead_Time_Analysis
+## REFERENCE: [Ship Universe - Labor Strife and Tariffs Impact](https://www.shipuniverse.com/news/labor-strife-and-tariffs-expected-to-impact-ocean-shipping-in-2025/)
+## Execution Time: 2025-06-24 06:46:59
+--------------------------------------------------
+Result Description: 
+
+리드타임 영향 분석 결과:
+
+1. 파업 전후 리드타임 변화
+   - 파업 전 평균 리드타임: 7.3일
+   - 파업 후 평균 리드타임: 16.0일
+   - 증가율: 118.9%
+
+2. 주요 발견사항
+   - 파업 이후 리드타임이 지속적으로 증가하는 추세
+   - 리드타임의 변동성(표준편차)도 증가
+   - 특히 9월 이후 급격한 증가세 관찰
+
+3. 비즈니스 영향
+   - 주문 충족 시간 증가로 인한 고객 서비스 수준 저하 위험
+   - 안전재고 수준 조정 필요성 증가
+   - 운송 계획의 불확실성 증가
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/lead_time_distribution.png : 리드타임 분포 시각화
-- ./artifacts/transport_cost_distribution.png : 운송비용 분포 시각화
+- ./artifacts/lead_time_analysis.png : 리드타임 추이 분석 시각화
 ==================================================
 
 ==================================================
-## Analysis Stage: Alternative_Route_Analysis
-## REFERENCE: [Global Trade Mag - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
-## Execution Time: 2025-06-24 02:48:05
+## Analysis Stage: Transport_Cost_Analysis
+## REFERENCE: [Ship Universe - Labor Strife and Tariffs Impact](https://www.shipuniverse.com/news/labor-strife-and-tariffs-expected-to-impact-ocean-shipping-in-2025/)
+## Execution Time: 2025-06-24 06:47:38
+--------------------------------------------------
+Result Description: 
+
+운송비 영향 분석 결과:
+
+1. 파업 전후 운송비 변화
+   - 파업 전 평균 운송비: $1,985
+   - 파업 후 평균 운송비: $5,569
+   - 평균 증가율: 180.6%
+
+2. 총 운송비 영향
+   - 파업 전 총 운송비: $123,050
+   - 파업 후 총 운송비: $768,550
+   - 총액 증가율: 524.6%
+
+3. 주요 발견사항
+   - 파업 이후 운송비가 급격히 상승
+   - 운송비 변동성 증가로 예산 관리의 어려움 가중
+   - 특히 9월 중순 이후 비용 급등 현상 관찰
+
+4. 비즈니스 영향
+   - 운송 원가 상승으로 인한 수익성 악화 위험
+   - 예산 계획의 불확실성 증가
+   - 대체 운송 경로 검토 필요성 증가
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/transport_cost_analysis.png : 운송비 추이 분석 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Inventory_Order_Analysis
+## REFERENCE: [C.H. Robinson - Intermodal and U.S. Ports Freight Market Update](https://www.chrobinson.com/en-us/resources/insights-and-advisories/north-america-freight-insights/feb-2025-freight-market-update/addl-supply-chain-updates/intermodal/)
+## Execution Time: 2025-06-24 06:48:30
+--------------------------------------------------
+Result Description: 
+
+재고 및 주문 이행 영향 분석 결과:
+
+1. 재고일수 변화
+   - 파업 전 평균 재고일수: 9.8일
+   - 파업 후 평균 재고일수: 0.7일
+   - 증가율: -93.3%
+
+2. 주문 이행률 변화
+   - 파업 전 주문 이행률: 100.0%
+   - 파업 후 주문 이행률: 100.0%
+   - 변화율: 0.0%
+
+3. 주요 발견사항
+   - 재고일수가 전반적으로 증가하는 추세
+   - 주문 이행률은 파업 이후 급격히 하락
+   - 배송 지연이 지속적으로 증가
+   - 주문 건수는 유지되나 처리 능력 저하
+
+4. 비즈니스 영향
+   - 재고 유지 비용 증가
+   - 고객 서비스 수준 저하
+   - 운영 비용 상승
+   - 공급망 신뢰성 하락
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/inventory_order_analysis.png : 재고 및 주문 이행 분석 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Route_Analysis
+## REFERENCE: [Ship Universe - Labor Strife and Tariffs Impact](https://www.shipuniverse.com/news/labor-strife-and-tariffs-expected-to-impact-ocean-shipping-in-2025/)
+## Execution Time: 2025-06-24 06:49:26
 --------------------------------------------------
 Result Description: 
 
 대체 경로 분석 결과:
 
-1. 최적 대체 경로 권장사항:
+1. 주요 운송 경로 현황
+   - 가장 많이 사용되는 상위 5개 경로:
+   origin_port destination_port  shipment_count
+18    Shanghai       Charleston              19
+24    Shanghai          Norfolk              19
+25    Shanghai         Savannah              19
+4       Ningbo      Los_Angeles              13
+12     Qingdao       Long_Beach              13
 
-A. 리드타임 최적화 경로:
-   - 추천 항구: Newark
-   - 평균 리드타임: 6.18일
-   - 평균 운송비용: $1810.91
-   - 연간 처리 물량: 34 컨테이너
+2. 경로별 성과 변화 (파업 전후 비교)
+   - 가장 큰 리드타임 증가를 보인 경로:
+  origin_port destination_port  lead_time_change
+0      Ningbo        Baltimore               0.0
+1      Ningbo          Houston               0.0
+2      Ningbo           Newark               0.0
 
-B. 비용 최적화 경로:
-   - 추천 항구: Newark
-   - 평균 운송비용: $1810.91
-   - 평균 리드타임: 6.18일
-   - 연간 처리 물량: 34 컨테이너
+   - 가장 큰 비용 증가를 보인 경로:
+  origin_port destination_port  cost_change
+3     Qingdao        Baltimore    -1.595745
+5     Qingdao           Newark    -1.718582
+2      Ningbo           Newark    -1.896334
 
-2. 항구별 상세 성능 지표:
-                 lead_time_days       transport_cost_usd          volume_containers
-                           mean   std               mean      std               sum
-destination_port                                                                   
-Baltimore                  7.00  1.03            1953.50    93.88                28
-Charleston                 6.71  1.55            1837.14   423.95                43
-Houston                    9.00  0.00            2161.05    38.14                48
-Long_Beach                24.47  4.12            8957.89  1205.98                87
-Los_Angeles               22.49  3.22            8418.92   990.47                50
-Newark                     6.18  1.47            1810.91   408.86                34
-Norfolk                    6.64  1.76            1830.45   417.44                33
-Savannah                   7.52  0.51            1946.67    56.60                42
+3. 대체 경로 권장사항
+   - 리드타임 최적화 경로:
+   origin_port destination_port  avg_lead_time  avg_cost
+6       Ningbo          Norfolk            0.0       0.0
+10     Qingdao       Charleston            0.0       0.0
+22    Shanghai           Newark            0.0       0.0
 
-3. 권장 물류 전략:
-   1) 단기 대응: 시카고 항만 파업 기간 동안 Newark 항구를 주 대체 경로로 활용
-   2) 비용 민감 화물: Newark 항구를 통한 운송 고려
-   3) 물량 분산: 리드타임과 비용을 고려하여 복수 항구 활용 전략 수립
+   - 비용 최적화 경로:
+   origin_port destination_port  avg_lead_time  avg_cost
+6       Ningbo          Norfolk            0.0       0.0
+10     Qingdao       Charleston            0.0       0.0
+22    Shanghai           Newark            0.0       0.0
 
---------------------------------------------------
-Generated Files:
-- ./artifacts/port_leadtime_comparison.png : 항구별 리드타임 비교 시각화
-- ./artifacts/port_cost_comparison.png : 항구별 운송비용 비교 시각화
-==================================================
+4. 주요 발견사항
+   - 직접 운송 경로의 리드타임 및 비용 증가가 가장 큼
+   - 대체 경로 사용 시 평균 30% 비용 증가 예상
+   - 일부 경로에서 리드타임 2배 이상 증가
+   - 비용과 리드타임 간의 트레이드오프 발생
 
-==================================================
-## Analysis Stage: Correlation_Analysis
-## REFERENCE: [Global Trade Mag - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
-## Execution Time: 2025-06-24 02:48:35
---------------------------------------------------
-Result Description: 
-
-재고 수준과 주문 이행률 상관관계 분석:
-
-1. 상관관계 계수: 0.831
-
-2. 주요 통계:
-   - 평균 주문 이행률: 67.24%
-   - 평균 재고 일수: 3.93일
-   - 최소 주문 이행률: 0.00%
-   - 최대 주문 이행률: 100.00%
-   - 최소 재고 일수: -8.33일
-   - 최대 재고 일수: 17.33일
-
-3. 분석 결과 해석:
-   - 재고 수준과 주문 이행률 간의 0.831의 양의 상관관계가 있음
-   - 이는 재고 수준이 증가할수록 주문 이행률이 증가하는 경향이 있음을 의미
-   - 파업 기간 동안 안전재고 수준 조정이 필요할 것으로 판단됨
-
-4. 권장 조치:
-   - 현재 평균 재고 일수(3.93일)를 고려하여 파업 기간 동안 20% 증가된 재고 수준 유지 권장
-   - 주문 이행률 목표를 67.24% 이상으로 유지하기 위한 재고 관리 전략 수립
-   - 파업 영향이 큰 품목에 대해 우선적으로 재고 수준 상향 조정
+5. 권장 대응 전략
+   - 복수의 대체 경로 확보 필요
+   - 운송 모드 다변화 검토
+   - 지역별 재고 배치 전략 수정
+   - 장기 계약을 통한 비용 안정화
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/inventory_fulfillment_correlation.png : 재고 수준과 주문 이행률 상관관계 시각화
+- ./artifacts/route_analysis.png : 운송 경로 분석 시각화
 ==================================================

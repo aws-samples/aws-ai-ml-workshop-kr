@@ -1,61 +1,48 @@
 
 ==================================================
-# SCM Research Findings - 2025-06-24 02:43:08
+# SCM Research Findings - 2025-06-24 06:42:27
 --------------------------------------------------
 
 ## Problem Statement
-Analysis of Chicago port strike impacts on supply chain operations, focusing on:
-- Lead time increases
-- Transportation cost impacts
-- Order fulfillment rate effects
-- Logistics strategy adjustments
-- Alternative route considerations
+시카고 항만을 포함한 미국 항만 파업이 공급망에 미치는 영향과 대응 방안 분석
 
 ## Research Findings
 
-### Topic 1: Current Strike Status and Overview
-- A major port strike is anticipated for January 15, 2025, affecting US East Coast and Gulf Coast ports [1]
-- The strike follows a previous three-day strike in October 2024 when the collective bargaining agreement expired [2]
-- Negotiations are ongoing between the International Longshoremen's Association (ILA) and the United States Maritime Alliance (USMX) [2]
+### Topic 1: 파업 현황 및 범위
+- 미국 동부 및 걸프 연안 항만에서 약 45,000명의 부두 노동자들이 관련된 대규모 파업 상황 발생 [1]
+- 47년 만의 대규모 파업으로, 미국 전체 항만 물동량의 약 41%에 영향을 미침 [2]
+- 하루 최대 50억 달러의 경제적 손실이 예상됨 [2]
 
-### Topic 2: Impact on Transportation Costs and Lead Times
-- Freight rates are already surging in anticipation of the strike [3]
-- Major shipping lines are implementing surcharges [3]
-- Companies are beginning to reroute shipments to alternative ports and increasing air freight usage, both leading to higher costs [4]
-- Global port delays have increased significantly, with some delays reaching up to 10+ days in major ports [5]
+### Topic 2: 공급망 영향
+- 주요 영향 분야:
+  * 리드타임 증가: 항만 처리 지연으로 인한 배송 지연 [3]
+  * 운송비 상승: 대체 경로 사용으로 인한 비용 증가 [3]
+  * 재고 관리: 불확실성으로 인한 재고 수준 증가 추세 [4]
+- 2025년 전반적인 물류비용 상승 예상 [5]
 
-### Topic 3: Alternative Routes and Strategic Adjustments
-- Companies are actively diversifying their shipping routes to less congested ports [6]
-- Some businesses are increasing their use of air freight as an alternative [4]
-- Supply chain stakeholders are preparing contingency plans for significant disruptions [3]
-- The situation is causing companies to reevaluate their inventory strategies and buffer stock levels [4]
+### Topic 3: 대체 경로 및 물류 전략
+- 서부 항만으로의 물류 전환이 제한적 [2]
+- 니어쇼어링(Near-shoring) 전략 증가 [4]
+- 실시간 항만 데이터 추적을 통한 선제적 물류 계획 수립 필요 [4]
 
 ## Original Full Text
-[1]: "The looming January 15, 2025, strike by US East Coast dockworkers is sending shockwaves through the logistics industry, driving up freight rates and triggering surcharges from major shipping lines."
+[1]: "The union representing 45,000 dock workers on the U.S. East and Gulf Coasts and their employers on Wednesday said they reached a tentative deal on a new six-year contract, averting further strikes"
 
-[2]: "As of October 1, 2024, their collective bargaining agreement expired, resulting in a three-day strike that affected all East Coast and Gulf Coast ports serviced by the ILA."
+[2]: "미 국제항만노동자협회(ILA)의 결정으로 시작된 이번 파업은 47년 만에 이루어진 대규모 파업으로, 미국 전체 항만 물동량의 약 41%에 영향을 미치는 것으로 예측되고 있습니다. 경제적 손실이 하루 최대 50억 달러에 이를 것으로 예측되면서, 이는 미국의 전반적인 물류 체계와 소비자 물가에 심각한 변화를 일으킬 수 있습니다."
 
-[3]: "In anticipation of the strike, some companies have already begun rerouting shipments to alternative ports or increasing their use of air freight, both of which come with higher costs."
+[3]: "Labor Strife: Dockworkers at key U.S. and European ports may strike over wages, automation, and pension reforms. Could cause delays and cargo handling backlogs."
 
-[4]: "A prolonged strike would impact industries ranging from retail to manufacturing, potentially leading to shortages of imported goods and components."
+[4]: "While there is uncertainty around long-term costs, many importers continue to increase inventories just in case. It remains to be seen if this will lead to a softening of demand in the future."
 
-[5]: "June 2025 port congestion has disrupted 96% of global shipping terminals, with delays surging up to 10+ days in Rotterdam, Cape Town, and Singapore."
-
-[6]: "In response, shipping companies have diverted vessels to less congested ports or adjusted schedules to mitigate the impact of these disruptions."
+[5]: "Will Freight Rates Go Up In 2025? Several reasons why freight rates will and are expected to go up in 2025."
 
 ## Conclusion
-The impending port strike situation presents significant challenges for supply chains, with impacts already being felt through increased freight rates and companies implementing preventive measures. The situation requires immediate attention to:
-1. Develop alternative routing strategies
-2. Plan for increased transportation costs
-3. Adjust lead time expectations
-4. Consider multi-modal transportation options
-5. Review and potentially increase safety stock levels
+미국 항만 파업은 글로벌 공급망에 광범위한 영향을 미치고 있으며, 특히 리드타임 증가와 운송비 상승이 주요 우려사항입니다. 기업들은 대체 운송 경로 확보, 재고 수준 조정, 실시간 모니터링 강화 등의 대응 전략을 고려해야 합니다.
 
 ## References
-[1]: [Global Trade Magazine - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
-[2]: [Rinchem - Supply Chain Alert](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)
-[3]: [Miami Drayage - Port Strike Threatens US Supply Chains](https://miamidrayage.com/news/port-strike-2025-what-to-know)
-[4]: [Ship Universe - Global Shipping Routes Under Pressure](https://www.shipuniverse.com/news/global-shipping-routes-under-pressure-the-impact-of-supply-chain-disruptions-in-2025/)
-[5]: [Tradlinx - Worldwide Port Delays](https://blogs.tradlinx.com/worldwide-port-delays-surge-300-in-june-2025-critical-hubs-like-singapore-cape-town-and-rotterdam-hit-hard/)
-[6]: [Supply Chain Digital - US Port Strikes Suspended](https://supplychaindigital.com/operations/us-port-strikes-suspended-supply-chain-impact)
+[1]: [Reuters - Second US port strike averted as union, employers reach deal](https://www.reuters.com/world/us/us-dockworkers-port-employers-reach-tentative-agreement-2025-01-09/)
+[2]: [해외 물류 동향 보고서](https://seo.goover.ai/report/202504/go-public-report-ko-b8ed6360-16f5-4af1-b82d-fd8dd2ad901c-0-0.html)
+[3]: [Ship Universe - Labor Strife and Tariffs Impact](https://www.shipuniverse.com/news/labor-strife-and-tariffs-expected-to-impact-ocean-shipping-in-2025/)
+[4]: [C.H. Robinson - Intermodal and U.S. Ports Freight Market Update](https://www.chrobinson.com/en-us/resources/insights-and-advisories/north-america-freight-insights/feb-2025-freight-market-update/addl-supply-chain-updates/intermodal/)
+[5]: [FMI - Freight Rates 2025](https://gofmi.com/blog/will-freight-rates-go-up-in-2025/)
 ==================================================

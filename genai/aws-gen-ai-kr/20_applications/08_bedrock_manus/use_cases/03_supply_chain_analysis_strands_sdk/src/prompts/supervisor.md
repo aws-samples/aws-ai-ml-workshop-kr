@@ -41,16 +41,30 @@ or
 - Consider the provided **`full_plan`** and **`clues`** to determine the next step
 - Initially, analyze the request to select the most appropriate worker
 
-# WORKFLOW STEPS (FOLLOW EXACTLY):
-1. **Check if a worker just completed**: Look at the last response/clues
-2. **If YES**: 
-   - Did `planner` just complete? → Go to step 3
-   - Did ANY other worker complete? → Return `{{"next": "planner"}}` IMMEDIATELY
-3. **If NO or planner just completed**: Evaluate which worker is needed next:
-   - scm_impact_analyzer: for quantitative analysis
-   - scm_correlation_analyzer: for correlation analysis  
-   - scm_mitigation_planner: for mitigation planning
-   - reporter: for final report
-   - "FINISH": if all tasks complete
+# CRITICAL WORKFLOW STEPS (FOLLOW EXACTLY):
+
+**STEP 1: Identify Who Just Completed**
+- Check the last message to see which agent just finished
+- Look for completion messages like "planner just completed", "Impact analysis completed", etc.
+
+**STEP 2: Handle Planner Completion** 
+- **IF planner just completed**: 
+  - **NEVER** call planner again immediately after planner completion
+  - **ALWAYS** move to the next agent based on the full_plan
+  - Look at full_plan to find the first uncompleted task [ ]
+  - Call the appropriate worker for that uncompleted task
+  - **CRITICAL**: Planner → Next Worker (NOT Planner → Planner)
+
+**STEP 3: Handle Other Worker Completion**
+- **IF scm_impact_analyzer, scm_correlation_analyzer, or scm_mitigation_planner just completed**: 
+  - Return `{{"next": "planner"}}` to update task status ONLY
+  - This allows planner to update [ ] to [x] for the completed task
+
+**STEP 4: Handle Reporter Completion**
+- **IF reporter just completed**: Return `{{"next": "FINISH"}}`
+
+**STEP 5: Initial Request or No Recent Completion**
+- Look at full_plan to determine next needed worker
+- Call appropriate worker based on uncompleted tasks
 
 - Always return "FINISH" after reporter has written the final report

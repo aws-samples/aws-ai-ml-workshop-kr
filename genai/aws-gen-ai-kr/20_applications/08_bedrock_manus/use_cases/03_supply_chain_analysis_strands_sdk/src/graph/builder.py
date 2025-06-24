@@ -1,10 +1,6 @@
 from langgraph.graph import StateGraph, START, END
 
 from .types import State
-#from .nodes import (
-#    reporter_node,
-#)
-
 from .scm_nodes import (
     scm_researcher_node,
     scm_data_analyzer_node,
@@ -13,6 +9,7 @@ from .scm_nodes import (
     scm_impact_analyzer_node,
     scm_correlation_analyzer_node,
     scm_mitigation_planner_node,
+    reporter_node
 )
 
 def build_graph():
@@ -27,7 +24,7 @@ def build_graph():
     builder.add_node("scm_impact_analyzer", scm_impact_analyzer_node)
     builder.add_node("scm_correlation_analyzer", scm_correlation_analyzer_node)
     builder.add_node("scm_mitigation_planner", scm_mitigation_planner_node)
-    #builder.add_node("reporter", reporter_node)
+    builder.add_node("reporter", reporter_node)
     
     # SCM workflow: scm_researcher → scm_insight_analyzer → planner → supervisor → [scm analyzers] → reporter
     builder.add_edge(START, "scm_researcher")
