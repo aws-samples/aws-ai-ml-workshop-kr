@@ -39,7 +39,7 @@ SCM_NEXT_STEP_MESSAGE = {
     "scm_researcher": "SCM research completed. Please proceed with business insight analysis.",
     "scm_data_analyzer": "Dataset analysis completed. Please proceed with analysis planning.", 
     "planner": "planning completed. Please go with next actions", 
-    "scm_impact_analyzer": "Impact analysis completed. Please go with next actions",
+    "scm_impact_analyzer": "Impact analysis completed. Please update full plan",
     "scm_correlation_analyzer": "Correlation analysis completed. Please go with next actions",
     "scm_mitigation_planner": "Mitigation planning completed. All SCM analysis phases finished."
 }
@@ -224,6 +224,9 @@ def scm_impact_analyzer_node(state: State): # -> Command[Literal["supervisor"]]:
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="scm_impact_analyzer"))
     
+    logger.info(f"\n{Colors.RED}scm_impact_analyzer_node, full_plan:{state["full_plan"]}{Colors.END}")
+    logger.info(f"\n{Colors.RED}scm_impact_analyzer_node, clues:{state["clues"]}{Colors.END}")
+
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("scm_impact_analyzer", response["text"])])
     
     history = state.get("history", [])

@@ -21,7 +21,7 @@ from .tools import TAVILY_MAX_RESULTS
 #TEAM_MEMBERS = ["researcher", "coder", "reporter"]
 
 # SCM specialized team configuration
-SCM_TEAM_MEMBERS = ["scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner"]
+SCM_TEAM_MEMBERS = ["scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner", "planner", "reporter"]
 
 __all__ = [
     # Reasoning LLM

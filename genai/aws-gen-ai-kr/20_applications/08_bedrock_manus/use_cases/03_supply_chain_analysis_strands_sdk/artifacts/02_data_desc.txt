@@ -1,110 +1,162 @@
 
 ==================================================
-# SCM Data Feasibility Assessment - 2025-06-23 15:02:05
+# SCM Data Feasibility Assessment - 2025-06-24 02:44:38
 --------------------------------------------------
 
 ## Problem Statement
-시카고 항만 파업이 공급망에 미치는 영향 분석이 필요하며, 특히 다음 세 가지 주요 영향에 대한 분석이 요구됨:
-1. 리드타임 증가
-2. 운송비 영향
-3. 주문 이행률 영향
+시카고 항만 파업이 공급망에 미치는 영향 분석을 위한 데이터 타당성 평가입니다. 주요 분석 대상:
+- 리드타임 증가 영향
+- 운송비용 영향
+- 주문 이행률 영향
+- 물류 전략 조정 방안
+- 대체 경로 분석
 
 ## Research Impact Summary
-연구 결과에 따르면 다음과 같은 주요 영향들이 분석되어야 함:
-- 물류 지연 및 리드타임 증가 [2]
-- 하루 최대 50억 달러의 경제적 손실 [3]
-- 운송비 급격한 상승 [3]
-- 전반적인 물류 흐름 악화 [3]
-- 대체 경로 필요성 [4]
+연구 결과에서 확인된 주요 영향:
+1. 운송 비용 및 리드타임 [1,3]
+   - 화물 운임 상승
+   - 추가 할증료 발생
+   - 최대 10일 이상의 항만 지연 발생
+
+2. 대체 경로 및 전략적 조정 [4,6]
+   - 대체 항만으로의 우회
+   - 항공 운송 증가
+   - 재고 전략 재검토 필요
 
 ## Dataset Inventory
 사용 가능한 데이터셋:
 1. supplier_performance_data.txt
-   - 공급업체 성과 지표
-   - 납기, 품질, 리드타임 정보 포함
+   - **File Path**: ./data/supplier_performance_data.txt
+   - **Purpose**: 공급업체 성과 지표 추적
+   - **Format**: TXT (구조화된 데이터)
 
 2. shipment_tracking_data.txt
-   - 화물 추적 정보
-   - 운송 경로, 리드타임, 운송비용 데이터 포함
+   - **File Path**: ./data/shipment_tracking_data.txt
+   - **Purpose**: 화물 추적 정보
+   - **Format**: TXT (구조화된 데이터)
 
 3. order_fulfillment_data.txt
-   - 주문 이행 추적 정보
-   - 배송 성과, 주문 가치, 패널티 상태 포함
+   - **File Path**: ./data/order_fulfillment_data.txt
+   - **Purpose**: 주문 이행 추적
+   - **Format**: TXT (구조화된 데이터)
 
-4. ira_compliance_data.txt
-   - IRA 규정 준수 상태
-   - 원산지, 가공 위치 정보 포함
+4. inventory_levels_data.txt
+   - **File Path**: ./data/inventory_levels_data.txt
+   - **Purpose**: 재고 수준 모니터링
+   - **Format**: TXT (구조화된 데이터)
 
-5. inventory_levels_data.txt
-   - 재고 수준 데이터
-   - 안전재고, 재주문 트리거 정보 포함
+5. ira_compliance_data.txt
+   - **File Path**: ./data/ira_compliance_data.txt
+   - **Purpose**: IRA 규정 준수 현황
+   - **Format**: TXT (구조화된 데이터)
+
+## Detailed Dataset Analysis
+
+### Dataset 1: Shipment Tracking Data
+- **File Path**: ./data/shipment_tracking_data.txt
+- **Structure**: 일일 선적 데이터
+- **Key Columns**: 
+  * date: 선적일
+  * origin_port: 출발항
+  * destination_port: 도착항
+  * lead_time_days: 운송 소요일수
+  * transport_cost_usd: 운송 비용
+- **Supply Chain Relevance**: 리드타임 및 운송비용 분석에 직접 관련 [3]
+
+### Dataset 2: Order Fulfillment Data
+- **File Path**: ./data/order_fulfillment_data.txt
+- **Structure**: 주문 이행 추적 데이터
+- **Key Columns**:
+  * requested_delivery: 요청 배송일
+  * actual_delivery: 실제 배송일
+  * status: 주문 상태
+  * penalty_applied: 지연 패널티 여부
+- **Supply Chain Relevance**: 주문 이행률 및 지연 영향 분석에 핵심 [4]
+
+### Dataset 3: Inventory Levels Data
+- **File Path**: ./data/inventory_levels_data.txt
+- **Structure**: 일일 재고 수준 데이터
+- **Key Columns**:
+  * quantity_units: 현재 재고량
+  * safety_stock_days: 안전재고 일수
+  * current_days_supply: 현재 공급 가능 일수
+- **Supply Chain Relevance**: 재고 전략 조정 분석에 필수 [4]
 
 ## Feasibility Assessment Results
 
 ### FEASIBLE Analyses
-1. 리드타임 영향 분석 [2, 4]
-   - Required Data: 배송 시간, 리드타임 변화
+1. 리드타임 영향 분석 [3,5]
+   - Required Data: 운송 소요시간, 실제 배송일
    - Available Data: 
-     * shipment_tracking_data.txt (lead_time_days)
-     * supplier_performance_data.txt (lead_time, variance_days)
+     * **File**: shipment_tracking_data.txt
+     * **Path**: ./data/shipment_tracking_data.txt
+     * **Columns**: lead_time_days
+     * **File**: order_fulfillment_data.txt
+     * **Path**: ./data/order_fulfillment_data.txt
+     * **Columns**: requested_delivery, actual_delivery
    - Feasibility Level: FEASIBLE
-   - Analysis Approach: 시계열 기반 리드타임 변화 추적 가능
+   - Analysis Approach: 리드타임 변화 추세 분석
 
-2. 운송비용 영향 분석 [3]
-   - Required Data: 운송 비용, 경로별 비용
-   - Available Data: 
-     * shipment_tracking_data.txt (transport_cost_usd, route_type)
-   - Feasibility Level: FEASIBLE
-   - Analysis Approach: 경로별 운송비용 비교 분석 가능
-
-3. 주문 이행률 영향 [2]
-   - Required Data: 주문 이행 성과, 배송 지연
+2. 운송비용 영향 분석 [1,3]
+   - Required Data: 운송 비용
    - Available Data:
-     * order_fulfillment_data.txt (requested_delivery, actual_delivery, status)
+     * **File**: shipment_tracking_data.txt
+     * **Path**: ./data/shipment_tracking_data.txt
+     * **Columns**: transport_cost_usd
    - Feasibility Level: FEASIBLE
-   - Analysis Approach: 주문 이행 성과 및 지연 패턴 분석 가능
+   - Analysis Approach: 비용 변동 추세 분석
+
+3. 주문 이행률 영향 분석 [4]
+   - Required Data: 주문 이행 상태, 지연 정보
+   - Available Data:
+     * **File**: order_fulfillment_data.txt
+     * **Path**: ./data/order_fulfillment_data.txt
+     * **Columns**: status, penalty_applied
+   - Feasibility Level: FEASIBLE
+   - Analysis Approach: 이행률 및 지연율 분석
 
 ### PARTIALLY FEASIBLE Analyses
-1. 대체 경로 분석 [4]
-   - Required Data: 모든 가능한 대체 경로 및 용량
-   - Available Data: 
-     * shipment_tracking_data.txt (route_type, origin_port, destination_port)
-   - Feasibility Level: PARTIALLY FEASIBLE
-   - Limitations: 현재 경로만 있고 잠재적 대체 경로 정보 부족
-
-2. 재고 영향 분석
-   - Required Data: 전체 공급망 재고 수준
+1. 대체 경로 분석 [6]
+   - Required Data: 경로 정보, 비용
    - Available Data:
-     * inventory_levels_data.txt (quantity_units, safety_stock_days)
+     * **File**: shipment_tracking_data.txt
+     * **Path**: ./data/shipment_tracking_data.txt
+     * **Columns**: origin_port, destination_port, route_type
    - Feasibility Level: PARTIALLY FEASIBLE
-   - Limitations: US_East 위치 데이터만 있어 전체 영향 파악 제한적
+   - 제한사항: 대체 경로별 상세 비용 정보 부족
 
 ### NOT FEASIBLE Analyses
-1. 항만 처리 용량 분석 [1]
-   - Required Data: 항만별 처리 용량, 적체 현황
-   - Missing Data: 항만 운영 데이터 없음
+1. 항공 운송 전환 영향 분석 [4]
+   - Required Data: 운송 수단별 비용 비교
+   - Missing Data: 항공 운송 관련 상세 데이터
    - Feasibility Level: NOT FEASIBLE
-   - Alternative Approaches: 간접적으로 리드타임 증가로 추정 가능
+   - 대안 제안: 일반적인 해상-항공 운송 비용 비율 활용
 
-## Analysis Recommendations for Planner
-1. 우선순위 분석 영역:
-   - 리드타임 변화 추적 및 예측
-   - 운송비용 증가 영향 분석
-   - 주문 이행률 저하 패턴 분석
+## Analysis Recommendations for Impact Analyzer
+1. **Priority Analysis Areas**:
+   - 리드타임 증가 분석
+   - 운송비용 변동 분석
+   - 주문 이행률 영향 분석
 
-2. 데이터 활용 전략:
-   - shipment_tracking_data.txt와 order_fulfillment_data.txt를 중심으로 분석
-   - supplier_performance_data.txt로 공급업체 영향 보완
-   - inventory_levels_data.txt로 재고 영향 부분 분석
+2. **Data Loading Strategy**:
+   1) shipment_tracking_data.txt - 기본 운송 정보
+   2) order_fulfillment_data.txt - 이행 영향 분석
+   3) inventory_levels_data.txt - 재고 영향 분석
 
-3. 제한사항 고려:
-   - 대체 경로 분석은 제한적으로만 가능
-   - 항만 처리 용량 분석은 직접적으로 불가능
+3. **Baseline Establishment**:
+   - 2024년 8월 데이터 기준 정상 운영 지표 설정
+   - 주요 KPI: 리드타임, 운송비용, 이행률
+
+4. **Impact Calculation Methods**:
+   - 리드타임: 평균 증가일수 계산
+   - 운송비용: 비용 증가율 계산
+   - 이행률: 지연 발생률 변화 계산
 
 ## References
-[1]: [NBC Chicago - Port Strike Impact](https://www.nbcchicago.com/news/why-are-longshoreman-dockworkers-striking-what-will-the-strike-affect-list-of-ports/3561862/)
+[1]: [Global Trade Magazine - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
 [2]: [Rinchem - Supply Chain Alert](https://www.rinchem.com/supply-chain-alert-potential-2025-port-strike/)
-[3]: [해외 물류 동향 보고서](https://narangdesign.com/mail/kotra_pro/202503/dw.php?dw=dw6)
-[4]: [Georgia Tech Research](https://research.gatech.edu/race-against-time-port-strike-threatens-supply-chain-stability)
-[5]: [Tradlinx - 물류 대란 분석](https://www.tradlinx.com/blog/market-trend/2%EC%B0%A8-%EB%AC%BC%EB%A5%98-%EB%8C%80%EB%9E%80-%EA%B3%B5%ED%8F%AC-%EB%AF%B8%EA%B5%AD-%EC%9A%B4%EC%86%A1%EC%97%85%EC%B2%B4%EB%93%A4-%EB%8F%99%EB%B6%80-%ED%95%AD%EB%A7%8C-%ED%9A%8C/)
+[3]: [Miami Drayage - Port Strike Threatens US Supply Chains](https://miamidrayage.com/news/port-strike-2025-what-to-know)
+[4]: [Ship Universe - Global Shipping Routes Under Pressure](https://www.shipuniverse.com/news/global-shipping-routes-under-pressure-the-impact-of-supply-chain-disruptions-in-2025/)
+[5]: [Tradlinx - Worldwide Port Delays](https://blogs.tradlinx.com/worldwide-port-delays-surge-300-in-june-2025-critical-hubs-like-singapore-cape-town-and-rotterdam-hit-hard/)
+[6]: [Supply Chain Digital - US Port Strikes Suspended](https://supplychaindigital.com/operations/us-port-strikes-suspended-supply-chain-impact)
 ==================================================

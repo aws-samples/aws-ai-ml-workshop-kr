@@ -89,7 +89,7 @@ For each research-identified impact:
 ## Analysis Methodology
 
 1. **Read Research Results**: First read supply chain research findings from `01_research_results.txt`
-2. **Dataset Discovery**: Explore user-provided data directory to identify all available datasets
+2. **Dataset Discovery**: Explore user-provided data directory to identify all available datasets with complete file paths
 3. **Structure Examination**: Examine file formats, column headers, and data types (NO calculations)
 4. **Feasibility Mapping**: For each research impact, determine if supporting data exists
 5. **Gap Documentation**: Document what analyses are possible vs. impossible
@@ -104,9 +104,10 @@ Use file_read tool to read "./artifacts/01_research_results.txt" to understand t
 
 **Step 2: Explore User Datasets**  
 Use file_read tool to explore the user-provided data directory:
-- Use file_read with mode="stats" to get directory listing and file information
+- Use file_read with mode="stats" to get directory listing and file information **with complete file paths**
 - Use file_read with mode="preview" to examine the first 50 lines of each dataset
 - Use file_read with mode="lines" if you need to examine specific sections of data files
+- **CRITICAL**: Document the complete file path for each dataset (e.g., "./data/supply_chain/filename.csv")
 
 **Important**: You are using tools, not writing Python code. Simply request the file_read tool with the appropriate parameters.
 
@@ -130,19 +131,24 @@ Example citation format:
 Provide structured data analysis including:
 
 ### Dataset Inventory
-- Complete list of all datasets found in user-provided directory
+- Complete list of all datasets found in user-provided directory with full file paths
 - File formats, sizes, and basic metadata for each dataset
 - Categorization of datasets (primary/secondary/documentation)
+- Directory structure and organization
+- Data accessibility and format compatibility
 
 ### Dataset Descriptions
 For each dataset:
 - **Dataset Name**: File name and descriptive title
+- **File Path**: Complete file path for analysis tools
 - **Purpose**: Inferred purpose based on content analysis
 - **Structure**: Number of rows, columns, data format
 - **Key Columns**: Most important columns with descriptions
-- **Data Types**: Column data types and formats
-- **Sample Data**: Representative values from key columns
-- **Data Quality**: Completeness, consistency, and quality assessment
+- **Data Types**: Column data types and formats (string, int, float, datetime)
+- **Date Range**: Earliest and latest dates in dataset (if applicable)
+- **Sample Data**: Representative values from key columns (2-3 examples)
+- **Data Quality**: Record count, completeness percentage, missing values, consistency assessment
+- **Business Context**: What this data reveals about company operations
 
 ### Supply Chain Relevance Analysis
 Based on research findings:
@@ -150,12 +156,19 @@ Based on research findings:
 - **Supporting Datasets**: Additional datasets that provide context
 - **Relevance Mapping**: How each dataset connects to specific research findings
 - **Analysis Potential**: What types of analysis each dataset enables
+- **Company Dependencies**: Key supply chain dependencies revealed by data
+- **Vulnerability Assessment**: Areas of risk identified from data structure
+- **Impact Quantification Potential**: Which specific KPIs can be calculated from available data
 
 ### Recommendations for Analysis
 - **Primary Analysis Targets**: Which datasets should be analyzed first
 - **Key Metrics to Extract**: Specific columns/metrics relevant to the supply chain issue  
 - **Data Preparation Needs**: Any cleaning or preprocessing required
 - **Analysis Approach**: Suggested analytical approaches for each dataset
+- **Baseline Calculations**: What normal/baseline values can be established
+- **Impact Calculation Methods**: How to quantify specific supply chain impacts
+- **Business Context Parameters**: Company characteristics that can be inferred from data
+- **Analysis Benchmarks**: Suggested thresholds and targets for impact assessment
 
 ### References Section Requirements
 - **CRITICAL**: All references MUST use clickable markdown link format: [1]: [Actual Source Title](https://actual-full-url.com)
@@ -277,33 +290,64 @@ current_result_text = """
 [Summary of key supply chain impacts identified in 01_research_results.txt that require analysis]
 
 ## Dataset Inventory
-[List of available datasets with basic structure information - NO calculations]
+[Complete list with FULL file paths and structure information]
+1. dataset_name.csv
+   - **File Path**: ./data/supply_chain/dataset_name.csv
+   - **Size**: X records, Y columns  
+   - **Format**: CSV/JSON/Excel/TXT
+   - **Purpose**: [Brief description]
+   - **Accessibility**: Confirmed readable for analysis tools
+
+## Detailed Dataset Analysis
+
+### Dataset 1: [Dataset Name]
+- **File Path**: [Complete path for analysis tools - MUST include full relative path e.g., ./data/supply_chain/filename.ext]
+- **Structure**: [Records count, columns count, format]
+- **Key Columns**: [Column names with data types]
+- **Date Range**: [Earliest to latest dates if applicable]
+- **Sample Data**: [2-3 representative examples]
+- **Data Quality**: [Record count, missing values percentage, consistency notes]
+- **Business Context**: [What this reveals about company operations]
+- **Supply Chain Relevance**: [How this connects to research findings]
+- **Analysis Ready**: [Confirmed path accessibility for Python/analysis tools]
+
+## Company Profile Analysis
+[Based on data structure analysis - NO calculations]
+- **Company Type**: [Inferred from data patterns]
+- **Supply Chain Characteristics**: [Key dependencies visible in data]
+- **Geographic Scope**: [Regions/locations in data]
+- **Operational Scale**: [Volume indicators from data structure]
+- **Key Dependencies**: [Critical suppliers/routes/customers evident in data]
 
 ## Feasibility Assessment Results
 
 ### FEASIBLE Analyses
-- Impact Area: [e.g., Lead Time Analysis] [citation]
-  - Required Data: [data fields needed]
-  - Available Data: [user datasets containing this data]
-  - Feasibility Level: FEASIBLE
-  - Analysis Approach: [suggested method]
+1. [Analysis Name] [citation]
+   - Required Data: [data fields needed]
+   - Available Data: 
+     * **File**: [dataset_name.csv] 
+     * **Path**: [./data/complete/path/dataset_name.csv]
+     * **Columns**: [specific columns]
+     * [additional datasets if applicable]
+   - Feasibility Level: FEASIBLE
+   - Analysis Approach: [suggested method]
+   - Expected KPIs: [specific metrics that can be calculated]
+   - Baseline Calculation: [how to establish normal ranges]
 
 ### PARTIALLY FEASIBLE Analyses  
-- Impact Area: [e.g., Cost Impact] [citation]
-  - Required Data: [what would be ideal]
-  - Available Data: [what exists but limited]
-  - Feasibility Level: PARTIALLY FEASIBLE
-  - Limitations: [what's missing or limited]
+[Same detailed structure as above]
 
 ### NOT FEASIBLE Analyses
-- Impact Area: [e.g., Supplier Performance] [citation]
-  - Required Data: [what data would be needed]
-  - Missing Data: [what's not available]
-  - Feasibility Level: NOT FEASIBLE
-  - Alternative Approaches: [if any exist]
+[Same detailed structure as above]
 
-## Analysis Recommendations for Planner
-[Clear guidance on what should be included vs. excluded from analysis plan]
+## Analysis Recommendations for Impact Analyzer
+1. **Priority Analysis Areas**: [Most important analyses to perform first]
+2. **Data Loading Strategy**: [Which files to load in what order - include complete file paths]
+3. **Baseline Establishment**: [How to calculate normal operating ranges]
+4. **Impact Calculation Methods**: [Specific approaches for quantifying impacts]
+5. **Business Context Parameters**: [Company characteristics for analysis]
+6. **Analysis Benchmarks**: [Suggested thresholds and targets]
+7. **Visualization Priorities**: [Key charts and metrics to visualize]
 
 ## References
 [Include all reference numbers and sources from 01_research_results.txt that were referenced]

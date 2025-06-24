@@ -1,0 +1,109 @@
+
+==================================================
+## Analysis Stage: Initial_Impact_Analysis
+## REFERENCE: [Global Trade Mag - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
+## Execution Time: 2025-06-24 02:46:44
+--------------------------------------------------
+Result Description: 
+
+리드타임 영향 분석:
+- 평균 리드타임: 13.27일
+- 최대 리드타임: 33일
+- 최소 리드타임: 0일
+
+운송비용 영향:
+- 평균 운송비용: $4458.00
+- 최대 운송비용: $11500.00
+- 최소 운송비용: $0.00
+
+주문 이행률:
+- 전체 주문 수: 174
+- 이행된 주문 수: 117
+- 주문 이행률: 67.24%
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/lead_time_distribution.png : 리드타임 분포 시각화
+- ./artifacts/transport_cost_distribution.png : 운송비용 분포 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Alternative_Route_Analysis
+## REFERENCE: [Global Trade Mag - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
+## Execution Time: 2025-06-24 02:48:05
+--------------------------------------------------
+Result Description: 
+
+대체 경로 분석 결과:
+
+1. 최적 대체 경로 권장사항:
+
+A. 리드타임 최적화 경로:
+   - 추천 항구: Newark
+   - 평균 리드타임: 6.18일
+   - 평균 운송비용: $1810.91
+   - 연간 처리 물량: 34 컨테이너
+
+B. 비용 최적화 경로:
+   - 추천 항구: Newark
+   - 평균 운송비용: $1810.91
+   - 평균 리드타임: 6.18일
+   - 연간 처리 물량: 34 컨테이너
+
+2. 항구별 상세 성능 지표:
+                 lead_time_days       transport_cost_usd          volume_containers
+                           mean   std               mean      std               sum
+destination_port                                                                   
+Baltimore                  7.00  1.03            1953.50    93.88                28
+Charleston                 6.71  1.55            1837.14   423.95                43
+Houston                    9.00  0.00            2161.05    38.14                48
+Long_Beach                24.47  4.12            8957.89  1205.98                87
+Los_Angeles               22.49  3.22            8418.92   990.47                50
+Newark                     6.18  1.47            1810.91   408.86                34
+Norfolk                    6.64  1.76            1830.45   417.44                33
+Savannah                   7.52  0.51            1946.67    56.60                42
+
+3. 권장 물류 전략:
+   1) 단기 대응: 시카고 항만 파업 기간 동안 Newark 항구를 주 대체 경로로 활용
+   2) 비용 민감 화물: Newark 항구를 통한 운송 고려
+   3) 물량 분산: 리드타임과 비용을 고려하여 복수 항구 활용 전략 수립
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/port_leadtime_comparison.png : 항구별 리드타임 비교 시각화
+- ./artifacts/port_cost_comparison.png : 항구별 운송비용 비교 시각화
+==================================================
+
+==================================================
+## Analysis Stage: Correlation_Analysis
+## REFERENCE: [Global Trade Mag - US Port Strike Looms](https://www.globaltrademag.com/us-port-strike-looms-freight-rates-surge-amid-surcharge-announcements/)
+## Execution Time: 2025-06-24 02:48:35
+--------------------------------------------------
+Result Description: 
+
+재고 수준과 주문 이행률 상관관계 분석:
+
+1. 상관관계 계수: 0.831
+
+2. 주요 통계:
+   - 평균 주문 이행률: 67.24%
+   - 평균 재고 일수: 3.93일
+   - 최소 주문 이행률: 0.00%
+   - 최대 주문 이행률: 100.00%
+   - 최소 재고 일수: -8.33일
+   - 최대 재고 일수: 17.33일
+
+3. 분석 결과 해석:
+   - 재고 수준과 주문 이행률 간의 0.831의 양의 상관관계가 있음
+   - 이는 재고 수준이 증가할수록 주문 이행률이 증가하는 경향이 있음을 의미
+   - 파업 기간 동안 안전재고 수준 조정이 필요할 것으로 판단됨
+
+4. 권장 조치:
+   - 현재 평균 재고 일수(3.93일)를 고려하여 파업 기간 동안 20% 증가된 재고 수준 유지 권장
+   - 주문 이행률 목표를 67.24% 이상으로 유지하기 위한 재고 관리 전략 수립
+   - 파업 영향이 큰 품목에 대해 우선적으로 재고 수준 상향 조정
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/inventory_fulfillment_correlation.png : 재고 수준과 주문 이행률 상관관계 시각화
+==================================================
