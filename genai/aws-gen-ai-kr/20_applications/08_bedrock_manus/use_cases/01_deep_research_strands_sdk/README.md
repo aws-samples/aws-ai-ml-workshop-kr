@@ -31,7 +31,7 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 [![Demo](./assets/demo.gif)]
 
 - [View on YouTube](https://www.youtube.com/watch?v=Pb1lJTSLI98)
-- Output in Demo is [English- Report.pdf (6 pages)](./assets/final_report_deep_resrarch.pdf))
+- Output in Demo is [English- Report.pdf (6 pages)](./assets/final_report_deep_resrarch.pdf)
 
 ## Table of Contents
 - [Quick Start](#quick-start)
@@ -47,6 +47,7 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 - [Acknowledgments](#acknowledgments)
 
 ## Quick Start
+Before executing the command below, please sign up at [Tavily](https://app.tavily.com/home) to get your API key and replace `<your_tavily_api_key_here>` in the command below with your key.
 
 ```bash
 # Clone the repository
@@ -59,7 +60,7 @@ cd setup/
 
 # Configure API keys (Required)
 cd ..
-echo "TAVILY_API_KEY=your_tavily_api_key_here" > .env
+echo "TAVILY_API_KEY=<your_tavily_api_key_here>" > .env
 
 # Run the project
 conda activate bedrock-manus
@@ -125,7 +126,7 @@ cd setup/
 #### Required API Keys
 
 1. **Tavily API Key** (Required for web search functionality)
-   - Sign up at [Tavily](https://tavily.com) to get your API key
+   - Sign up at [Tavily](https://app.tavily.com/home) to get your API key (The key starts with `tvly-dev-`)
    - The Researcher agent uses Tavily for real-time web searches and information gathering
 
 #### Setting Up Environment Variables
@@ -141,7 +142,7 @@ Add your API keys to the `.env` file:
 
 ```bash
 # Required: Tavily API key for web search
-TAVILY_API_KEY=your_tavily_api_key_here
+TAVILY_API_KEY=<your_tavily_api_key_here>
 
 # Optional: Other configuration
 # JINA_API_KEY=your_jina_api_key_here
@@ -154,7 +155,7 @@ TAVILY_API_KEY=your_tavily_api_key_here
 You can also set the API keys as system environment variables:
 
 ```bash
-export TAVILY_API_KEY=your_tavily_api_key_here
+export TAVILY_API_KEY=<your_tavily_api_key_here>
 ```
 
 **Note**: Without the Tavily API key, the application will fail to start with a validation error. Make sure to configure it before running the application.
