@@ -1,0 +1,7 @@
+artifacts/
+assets/
+charts/
+
+__pycache__/
+.env
+.DS_Store
