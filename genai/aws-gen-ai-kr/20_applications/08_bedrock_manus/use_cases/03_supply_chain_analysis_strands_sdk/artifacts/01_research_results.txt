@@ -1,48 +1,84 @@
 
 ==================================================
-# SCM Research Findings - 2025-06-24 06:42:27
+# SCM Research Findings - 2025-06-27 02:10:15
 --------------------------------------------------
 
 ## Problem Statement
-시카고 항만을 포함한 미국 항만 파업이 공급망에 미치는 영향과 대응 방안 분석
+2024년 8월-12월 시카고 항만 파업이 공급망에 미치는 영향과 대응 전략 분석
 
 ## Research Findings
 
 ### Topic 1: 파업 현황 및 범위
-- 미국 동부 및 걸프 연안 항만에서 약 45,000명의 부두 노동자들이 관련된 대규모 파업 상황 발생 [1]
-- 47년 만의 대규모 파업으로, 미국 전체 항만 물동량의 약 41%에 영향을 미침 [2]
-- 하루 최대 50억 달러의 경제적 손실이 예상됨 [2]
+- 2024년 미국 동부 및 걸프 연안 36개 항만에서 대규모 파업 발생 예정 [1]
+- 시카고는 직접적인 파업 대상은 아니지만, 연계 물류 허브로서 상당한 영향 예상 [2]
+- 1977년 이후 최대 규모의 항만 노동자 파업으로 예상됨 [2]
 
 ### Topic 2: 공급망 영향
-- 주요 영향 분야:
-  * 리드타임 증가: 항만 처리 지연으로 인한 배송 지연 [3]
-  * 운송비 상승: 대체 경로 사용으로 인한 비용 증가 [3]
-  * 재고 관리: 불확실성으로 인한 재고 수준 증가 추세 [4]
-- 2025년 전반적인 물류비용 상승 예상 [5]
+- 미국 수입품의 약 절반이 영향을 받을 것으로 예상 [3]
+- 소매, 자동차, 농업 부문의 수입 지연 발생 [1]
+- 글로벌 선박 일정에 2025년까지 영향이 지속될 것으로 전망 [1]
 
-### Topic 3: 대체 경로 및 물류 전략
-- 서부 항만으로의 물류 전환이 제한적 [2]
-- 니어쇼어링(Near-shoring) 전략 증가 [4]
-- 실시간 항만 데이터 추적을 통한 선제적 물류 계획 수립 필요 [4]
+### Topic 3: 물류 대체 경로 및 비용
+- 대체 경로를 통해 전 세계 용량의 6-9% 흡수 예상 [4]
+- 화물 운송 경로 변경으로 인한 해상 운임 상승 가능성 [5]
+- 컨테이너 재배치로 인한 북미 지역 가용성 감소 [6]
 
 ## Original Full Text
-[1]: "The union representing 45,000 dock workers on the U.S. East and Gulf Coasts and their employers on Wednesday said they reached a tentative deal on a new six-year contract, averting further strikes"
+[1]: "A U.S. port workers strike shut down 36 East and Gulf Coast ports in October. The port congestion delayed retail, auto, and agriculture imports and is expected to impact global shipping schedules through 2025."
 
-[2]: "미 국제항만노동자협회(ILA)의 결정으로 시작된 이번 파업은 47년 만에 이루어진 대규모 파업으로, 미국 전체 항만 물동량의 약 41%에 영향을 미치는 것으로 예측되고 있습니다. 경제적 손실이 하루 최대 50억 달러에 이를 것으로 예측되면서, 이는 미국의 전반적인 물류 체계와 소비자 물가에 심각한 변화를 일으킬 수 있습니다."
+[2]: "Dockworkers at 36 ports along the East and Gulf coasts went on strike Tuesday for the first time since 1977. And while Midwest ports are not affected, Chicago and the region will feel the impact."
 
-[3]: "Labor Strife: Dockworkers at key U.S. and European ports may strike over wages, automation, and pension reforms. Could cause delays and cargo handling backlogs."
+[3]: "If the country's largest maritime workers union goes on strike next week at ports along the Eastern Seaboard and Gulf Coast, nearly half of the nation's imports would be without a path into the country"
 
-[4]: "While there is uncertainty around long-term costs, many importers continue to increase inventories just in case. It remains to be seen if this will lead to a softening of demand in the future."
+[4]: "이로 인해 결항 및 서비스 변경이 발생하게 됩니다. 이 대체 경로를 통해 전 세계 용량 중 6~9%가 흡수되는 것으로 추정됩니다."
 
-[5]: "Will Freight Rates Go Up In 2025? Several reasons why freight rates will and are expected to go up in 2025."
+[5]: "이 파업은 동부 해안뿐만 아니라 전 세계 선박 일정과 장비 배치에 영향을 미칠 수 있으며, 화물 운송 경로 변경과 공급 부족으로 인해 해상 운임이 다시 상승할 수 있기 때문에 전세계가 이번 파업이 진행될 지에 대해 촉각을 곤두세우고 있습니다."
 
-## Conclusion
-미국 항만 파업은 글로벌 공급망에 광범위한 영향을 미치고 있으며, 특히 리드타임 증가와 운송비 상승이 주요 우려사항입니다. 기업들은 대체 운송 경로 확보, 재고 수준 조정, 실시간 모니터링 강화 등의 대응 전략을 고려해야 합니다.
+[6]: "TPEB 및 아시아-유럽 간 무역에 대한 수요가 증가함에 따라 운송업체들은 많은 컨테이너를 아시아로 재배치하고 있으며, 이로 인해 북미 지역의 가용성이 감소하고 있습니다."
 
 ## References
-[1]: [Reuters - Second US port strike averted as union, employers reach deal](https://www.reuters.com/world/us/us-dockworkers-port-employers-reach-tentative-agreement-2025-01-09/)
-[2]: [해외 물류 동향 보고서](https://seo.goover.ai/report/202504/go-public-report-ko-b8ed6360-16f5-4af1-b82d-fd8dd2ad901c-0-0.html)
-[3]: [Ship Universe - Labor Strife and Tariffs Impact](https://www.shipuniverse.com/news/labor-strife-and-tariffs-expected-to-impact-ocean-shipping-in-2025/)
-[4]: [C.H. Robinson - Intermodal and U.S. Ports Freight Market Update](https://www.chrobinson.com/en-us/resources/insights-and-advisories/north-america-freight-insights/feb-2025-freight-market-update/addl-supply-chain-updates/intermodal/)
-[5]: [FMI - Freight Rates 2025](https://gofmi.com/blog/will-freight-rates-go-up-in-2025/)
+[1]: [GEP Blog - 2024 US Port Strike](https://www.gep.com/blog/mind/2024-us-port-strike-lessons-for-supply-chain-resilience)
+[2]: [Chicago Sun Times - Dockworkers Strike Impact](https://chicago.suntimes.com/transportation/2024/10/01/dockworkers-strike-east-gulf-coasts-impact-chicago-freight-hubs)
+[3]: [SIU News - Port Strike Impact](https://news.siu.edu/2024/09/092624-siu-logistics-expert-possible-dock-strikes-could-have-staggering-impact-on-supply-chain.php)
+[4]: [C.H. Robinson - 화물 시장 업데이트](https://www.chrobinson.com/ko-kr/resources/insights-and-advisories/north-america-freight-insights/august-2024-freight-market-updates/)
+[5]: [Tradlinx - 미국 동부 해안 파업 영향](https://www.tradlinx.com/blog/market-trend/)
+[6]: [C.H. Robinson - 9월 시장 업데이트](https://www.chrobinson.com/ko-kr/resources/insights-and-advisories/north-america-freight-insights/september-2024-freight-market-updates/)
+
+Current session ended: next session should start from Topic number 4, Reference index 7
+==================================================
+
+==================================================
+# SCM Research Findings Update - 2025-06-27 02:10:53
+--------------------------------------------------
+
+## Research Findings (Continued)
+
+### Topic 4: 대체 운송 전략
+- 서부 해안이나 캐나다 항구로의 화물 전환 가능하나 수용 능력 제한적 [7]
+- 고가치 또는 시간에 민감한 화물의 경우 항공 운송으로 전환 가능 (해상 운송 대비 5-10배 비용) [7]
+- 멀티모달 운송 솔루션을 통한 유연한 물류 옵션 확보 필요 [8]
+
+### Topic 5: 재고 및 공급망 관리 전략
+- 대형 소매업체들은 이미 재고를 비축하여 대비 중 [7]
+- 중소규모 기업들은 재고 비축 능력 제한으로 더 큰 영향 예상 [7]
+- 공급업체 네트워크 다변화 및 최종 시장 근처로의 재배치 고려 필요 [7]
+
+### Topic 6: 리드타임 및 비용 영향
+- 대체 경로 사용 시 운송 시간 증가 및 물류비용 상승 불가피 [7]
+- 항만 파업이 2주 이상 지속될 경우 경제적 영향 심화 예상 [7]
+- 2025년까지 항만 일정에 영향을 미칠 것으로 전망 [9]
+
+## Original Full Text
+[7]: "Companies are already pivoting to divert their cargo to the West Coast or Canada, but these ports have limited capacity to absorb the overflow, and rerouting shipments involves the complex task of rerouting entire logistics networks, managing longer transit times, and increasing transportation costs. Alternatively, some businesses, especially those dealing in high-value or time-sensitive goods, are turning to air shipping. This option offers greater speed and reliability, but is 5-10 times more expensive than ocean shipping"
+
+[8]: "Investing in supply chain agility through inventory optimization and flexible logistics options, such as multi-modal transport solutions, can ensure that companies can quickly adapt to changes"
+
+[9]: "This backlog because of the strike is likely to affect port schedules for months if automation demands and labor disputes remain unresolved during upcoming negotiations in 2025, adding uncertainty for shippers and logistics providers"
+
+## References (Continued)
+[7]: [E2open Blog - Port Strike Navigation](https://www.e2open.com/blog/the-port-strike-5-ways-to-help-manage-large-scale-disruptions/)
+[8]: [Forbes - East Coast Port Strikes](https://www.forbes.com/sites/sap/2024/09/30/east-coast-port-strikes-what-businesses-can-do-to-mitigate-supply-chain-disruption/)
+[9]: [GEP Blog - US Port Strike](https://www.gep.com/blog/mind/2024-us-port-strike-lessons-for-supply-chain-resilience)
+
+Current session ended: next session should start from Topic number 7, Reference index 10
 ==================================================

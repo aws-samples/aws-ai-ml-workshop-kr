@@ -117,13 +117,13 @@ BROWSER_HEADLESS=False                     # Browser display mode
 
 ### Agent-LLM Mapping
 Defined in `src/config/agents.py`:
-- Reasoning tasks: `planner`, `supervisor`, `reporter`
-- Basic tasks: `clarifier`, `researcher`, `coder`
-- Prompt caching enabled for: `planner`, `reporter`
+- **Reasoning tasks**: `planner`, `supervisor`, `reporter`, `scm_correlation_analyzer`, `scm_mitigation_planner`
+- **Basic tasks**: `clarifier`, `researcher`, `coder`, `scm_researcher`, `scm_data_analyzer`, `scm_impact_analyzer`
+- **Prompt caching enabled for**: `planner`, `reporter`, `scm_correlation_analyzer`, `scm_mitigation_planner`
 
 ### Team Configuration
-- **Standard workflow**: `TEAM_MEMBERS = ["researcher", "coder", "reporter"]` - Agents available for supervisor routing
-- **SCM workflow**: Specialized agents including `scm_researcher`, `scm_insight_analyzer`, `scm_impact_analyzer`, `scm_correlation_analyzer`, `scm_mitigation_planner`
+- **SCM workflow**: `SCM_TEAM_MEMBERS = ["scm_impact_analyzer", "scm_correlation_analyzer", "scm_mitigation_planner", "planner", "reporter"]` - Agents available for supervisor routing
+- **Standard workflow**: Currently uses the same SCM workflow configuration
 
 ## Working with the Code
 
@@ -138,11 +138,11 @@ result = run_agent_workflow(user_input="Your query", debug=False)
 
 **SCM Specialized Workflow** (`src/workflow.py`):
 ```python
-from src.workflow import run_scm_workflow
-result = run_scm_workflow(user_input="Supply chain query", debug=False)
+from src.workflow import run_agent_workflow
+result = run_agent_workflow(user_input="Supply chain query", debug=False)
 ```
 
-The system auto-detects SCM-related queries using keywords: `["supply chain", "scm", "port", "shipping", "logistics", "disruption", "strike", "transportation"]`
+**Note**: The codebase currently only implements a single SCM workflow function (`run_agent_workflow`) which handles all supply chain analysis. The system auto-detects SCM-related queries using keywords: `["supply chain", "scm", "port", "shipping", "logistics", "disruption", "strike", "transportation"]`
 
 ### Strands SDK Integration
 Agents are created using `strands_utils.get_agent()` with:
@@ -174,12 +174,12 @@ The system automatically creates:
 
 ### Adding New Agents
 1. Create prompt template in `src/prompts/` (e.g., `new_agent.md`)
-2. Add agent function in `src/graph/nodes.py` (standard) or `src/graph/scm_nodes.py` (SCM-specific)
+2. Add agent function in `src/graph/scm_nodes.py` (currently only SCM nodes are implemented)
 3. Register in `src/config/agents.py`:
    - Add to `AGENT_LLM_MAP` with LLM type (`basic`/`reasoning`/`vision`)
    - Add to `AGENT_PROMPT_CACHE_MAP` with caching preference
 4. Update workflow routing logic in `src/graph/builder.py`
-5. Update `TEAM_MEMBERS` if supervisor-routable
+5. Update `SCM_TEAM_MEMBERS` if supervisor-routable
 
 ### Custom Tools
 Tools are defined in `src/tools/` and can be:
@@ -196,7 +196,7 @@ Prompts use template system in `src/prompts/template.py`:
 
 **Available Prompt Templates**:
 - Standard agents: `clarifier.md`, `planner.md`, `supervisor.md`, `researcher.md`, `coder.md`, `reporter.md`
-- SCM agents: `scm_researcher.md`, `scm_insight_analyzer.md`, `scm_impact_analyzer.md`, `scm_correlation_analyzer.md`, `scm_mitigation_planner.md`
+- SCM agents: `scm_researcher.md`, `scm_data_analyzer.md`, `scm_impact_analyzer.md`, `scm_correlation_analyzer.md`, `scm_mitigation_planner.md`
 - Utility prompts: `browser.md`, `human_feedback.md`, `coordinator.md`
 
 ## Key Dependencies
@@ -206,3 +206,6 @@ Prompts use template system in `src/prompts/template.py`:
 - **Research Tools**: `tavily-python==0.7.6` for web research
 - **Visualization**: `matplotlib==3.10.1`, `seaborn==0.13.2`, `lovelyplots==1.0.2`
 - **MCP Integration**: `mcp==1.9.4` for OpenSearch communication
+- **Data Processing**: `pandas==2.3.0`, `numpy==2.3.0`
+- **Web Automation**: `playwright==1.52.0` for browser automation
+- **Document Processing**: `weasyprint==65.1` for PDF generation
