@@ -1,0 +1,26 @@
+{
+  "name": "amazon-bedrock-reviewbot",
+  "version": "0.1.0",
+  "bin": {
+    "amazon-bedrock-reviewbot": "bin/amazon-bedrock-reviewbot.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "22.7.9",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "aws-cdk": "2.1000.2",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.6.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.179.0",
+    "constructs": "^10.0.0"
+  }
+}
