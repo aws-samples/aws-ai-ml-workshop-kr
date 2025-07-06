@@ -31,7 +31,7 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 [![Demo](./assets/demo.gif)]
 
 - [View on YouTube](https://www.youtube.com/watch?v=Pb1lJTSLI98)
-- Output in Demo is [English- Report.pdf (6 pages)](./assets/final_report_deep_resrarch.pdf))
+- Output in Demo is [English- Report.pdf (6 pages)](./assets/final_report_deep_resrarch.pdf)
 
 ## Table of Contents
 - [Quick Start](#quick-start)
@@ -40,21 +40,27 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 - [Setup](#setup)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
+    - [API Keys Configuration](#api-keys-configuration)
 - [Usage](#usage)
 - [Contributors](#contributors)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
 
 ## Quick Start
+Before executing the command below, please sign up at [Tavily](https://app.tavily.com/home) to get your API key and replace `<your_tavily_api_key_here>` in the command below with your key.
 
 ```bash
 # Clone the repository
 git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
-cd cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/01_deep_research
+cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/01_deep_research_strands_sdk
 
 # Create and activate virtual environment
 cd setup/
 ./create_conda_virtual_env.sh bedrock-manus
+
+# Configure API keys (Required)
+cd ..
+echo "TAVILY_API_KEY=<your_tavily_api_key_here>" > .env
 
 # Run the project
 conda activate bedrock-manus
@@ -112,6 +118,47 @@ Follow the steps below to set up a virtual environment and install the necessary
 cd setup/
 ./create_conda_virtual_env.sh bedrock-manus
 ```
+
+### API Keys Configuration
+
+**Important**: Before running the application, you must configure the required API keys.
+
+#### Required API Keys
+
+1. **Tavily API Key** (Required for web search functionality)
+   - Sign up at [Tavily](https://app.tavily.com/home) to get your API key (The key starts with `tvly-dev-`)
+   - The Researcher agent uses Tavily for real-time web searches and information gathering
+
+#### Setting Up Environment Variables
+
+Create a `.env` file in the project root directory:
+
+```bash
+# Create .env file
+touch .env
+```
+
+Add your API keys to the `.env` file:
+
+```bash
+# Required: Tavily API key for web search
+TAVILY_API_KEY=<your_tavily_api_key_here>
+
+# Optional: Other configuration
+# JINA_API_KEY=your_jina_api_key_here
+# CHROME_INSTANCE_PATH=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+# BROWSER_HEADLESS=False
+```
+
+#### Alternative: Environment Variables
+
+You can also set the API keys as system environment variables:
+
+```bash
+export TAVILY_API_KEY=<your_tavily_api_key_here>
+```
+
+**Note**: Without the Tavily API key, the application will fail to start with a validation error. Make sure to configure it before running the application.
 
 By completing these steps, you'll ensure your environment is properly configured and ready for development.
 
