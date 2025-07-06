@@ -22,7 +22,7 @@ AWS AIML 코드 및 워크샵 예제가 있습니다.
 - [SageMaker AI](sagemaker/Readme.md) : End-to-end 머신러닝/딥러닝 플랫폼 SageMaker 활용 예제
     - [SageMaker AI 101 - SageMaker 훈련 시작하기 (입문)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/sagemaker/01-sagemaker-101)
     - [SageMaker HyperPod - 모델 훈련 ](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/sagemaker/hyperpod)    
-- [AWS Neuron](neuron/Readme.md) : AWS Neuron (Inferentia, Inferentia2, Tranium )의 관련된 예제 및 활용
+- [AWS Neuron](neuron/Readme.md) : AWS Neuron (Inferentia, Inferentia2, Trainium )의 관련된 예제 및 활용
 
 
 ---
