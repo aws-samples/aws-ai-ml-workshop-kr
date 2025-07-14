@@ -1,0 +1,14 @@
+*__pycache__*
+*.py[cod]
+*$py.class
+*_test_*
+*test*py*
+venv*
+.chembl*
+*.csv
+*.ipynb
+*Report.txt
+*reports/*
+.env
+.DS_Store
+*.ttf
