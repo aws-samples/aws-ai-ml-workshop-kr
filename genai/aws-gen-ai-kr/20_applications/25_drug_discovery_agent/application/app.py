@@ -14,7 +14,7 @@ logger = logging.getLogger("streamlit")
 
 # title
 st.set_page_config(
-    page_title='Drug Discovery Agent',
+    page_title='신약 개발 에이전트',
     page_icon='💊',
     layout="centered",
     initial_sidebar_state="auto",
@@ -22,30 +22,30 @@ st.set_page_config(
 )
 
 with st.sidebar:
-    st.title("Menu")
+    st.title("메뉴")
     
     st.markdown(
-        "Implementing various types of Agents using Strands Agent SDK. "
-        "For detailed code, please refer to [Github](https://github.com/hsr87/drug-discovery-agent)."
+        "Strands Agent SDK를 사용하여 다양한 유형의 에이전트를 구현합니다. "
+        "자세한 코드는 [Github](https://github.com/hsr87/drug-discovery-agent)을 참조하세요."
     )
 
     # model selection box
     # model selection box
     modelName = st.selectbox(
-        '🖊️ Choose your foundation model for analysis',
-        ('Claude 3.7 Sonnet', 'Claude 3.5 Sonnet', 'Claude 3.5 Haiku'), index=0
+        '🖊️ 분석에 사용할 기반 모델을 선택하세요',
+        ('Claude 4 Sonnet', 'Claude 3.7 Sonnet', 'Claude 3.5 Sonnet', 'Claude 3.5 Haiku'), index=0
     )
     
     # extended thinking of claude 3.7 sonnet
-    select_reasoning = st.checkbox('Reasoning (only Claude 3.7 Sonnet)', value=False)
-    reasoningMode = 'Enable' if select_reasoning and modelName == 'Claude 3.7 Sonnet' else 'Disable'
+    select_reasoning = st.checkbox('추론 모드 (Claude 4 Sonnet 및 Claude 3.7 Sonnet)', value=False)
+    reasoningMode = 'Enable' if select_reasoning and modelName in ["Claude 4 Sonnet", "Claude 3.7 Sonnet"] else 'Disable'
     logger.info(f"reasoningMode: {reasoningMode}")
 
     chat.update(modelName, reasoningMode)
     
-    clear_button = st.button("Reset Conversation", key="clear")
+    clear_button = st.button("대화 초기화", key="clear")
 
-st.title('💊 Drug Discovery Agent')  
+st.title('💊 신약 개발 에이전트')  
 
 if clear_button is True:
     chat.initiate()
@@ -75,7 +75,7 @@ display_chat_messages()
 # Greet user
 if not st.session_state.greetings:
     with st.chat_message("assistant"):
-        intro = "Thank you for using Drug Discovery Agent based on Amazon Bedrock. You can enjoy comfortable conversations."
+        intro = "Amazon Bedrock 기반 신약 개발 에이전트를 사용해 주셔서 감사합니다. 편안한 대화를 즐기실 수 있습니다."
         st.markdown(intro)
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": intro})
@@ -89,7 +89,7 @@ if clear_button or "messages" not in st.session_state:
     chat.clear_chat_history()
        
 # Always show the chat input
-if prompt := st.chat_input("Enter your message."):
+if prompt := st.chat_input("메시지를 입력하세요."):
     with st.chat_message("user"):  # display user message in chat message container
         st.markdown(prompt)
 
