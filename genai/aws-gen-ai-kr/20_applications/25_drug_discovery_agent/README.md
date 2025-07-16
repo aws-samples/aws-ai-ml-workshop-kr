@@ -96,7 +96,9 @@
 - 독점 연구 데이터베이스 지원
 
 ## 기여자
-- Hasun Yu, Ph.D. (AWS AI/ML 전문 솔루션 아키텍트) | [메일](mailto:hasunyu@amazon.com) | [LinkedIn](https://www.linkedin.com/in/hasunyu/)
+- 류하선, Ph.D. (AWS AI/ML 전문 솔루션즈 아키텍트) | [메일](mailto:hasunyu@amazon.com) | [LinkedIn](https://www.linkedin.com/in/hasunyu/)
+- 신경식 (AWS 솔루션즈 아키텍트)| [메일](mailto:kyungss@amazon.com) | [LinkedIn](https://www.linkedin.com/in/shinks)
+- 최지선 (AWS 솔루션즈 아키텍트)| [메일](mailto:jschoii@amazon.com) | [LinkedIn](https://www.linkedin.com/in/jschoii/)
 
 ## 인용
 - 이 저장소가 유용하다고 생각되시면 별표 ⭐를 주시고 인용해 주세요
