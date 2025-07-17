@@ -13,6 +13,8 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [25.7.17]
+    - 25_GenAI_Menuboard_Generator, Kyutae Park: [AI 메뉴보드 생성기 (AI Menu Board Generator)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/25_GenAI_Menuboard_Generator)
 - [25.5.20]
     - 08_bedrock_manus, Dongjin Jang: [Bedrock-Manus: AI Automation Framework Based on Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus)
 - [25.4.30]

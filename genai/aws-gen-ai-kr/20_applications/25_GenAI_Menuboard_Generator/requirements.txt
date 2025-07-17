@@ -1,0 +1,6 @@
+streamlit==1.28.1
+boto3==1.34.0
+Pillow==10.1.0
+numpy==1.24.3
+opencv-python==4.8.1.78
+streamlit-drawable-canvas==0.9.3
