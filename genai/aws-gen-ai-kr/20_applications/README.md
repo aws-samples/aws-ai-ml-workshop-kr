@@ -13,6 +13,8 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
+- [25.7.14]
+    - 25_Drug Discovery Agent, Hasun Yu: [Drug Discovery Agent based on Amazon Bedrock and Strands Agents](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/25_drug_discovery_agent)
 - [25.5.20]
     - 08_bedrock_manus, Dongjin Jang: [Bedrock-Manus: AI Automation Framework Based on Amazon Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus)
 - [25.4.30]
