@@ -16,7 +16,7 @@ from botocore.exceptions import ClientError
 from langchain.callbacks.base import BaseCallbackHandler
 
 # LangFuse
-from langfuse.decorators import observe, langfuse_context
+from langfuse import observe, get_client
 
 def get_bedrock_client(
     assumed_role: Optional[str] = None,
@@ -218,9 +218,14 @@ class bedrock_utils():
             print ('args["toolConfig"]', args["toolConfig"])
         args["messages"], args["modelId"] = messages, model_id
 
+        
+
         if tracking:
+
+            langfuse = get_client()
+            
             # Langfuse 관측 컨텍스트에 입력, 모델 ID, 파라미터, 기타 메타데이터를 업데이트합니다.
-            langfuse_context.update_current_observation(
+            langfuse.update_current_observation(
                 input=args["messages"],
                 model=args["modelId"],
                 model_parameters={**args["inferenceConfig"], **args["additionalModelRequestFields"]},
@@ -232,14 +237,14 @@ class bedrock_utils():
                 response = bedrock_client.converse_stream(**args)
             except (ClientError, Exception) as e:
                 error_message = f"ERROR: Can't invoke '{model_id}'. Reason: {e}"
-                if tracking: langfuse_context.update_current_observation(level="ERROR", status_message=error_message)
+                if tracking: langfuse.update_current_observation(level="ERROR", status_message=error_message)
                 print(error_message)
         else:
             try:
                 response = bedrock_client.converse(**args)
             except (ClientError, Exception) as e:
                 error_message = f"ERROR: Can't invoke '{model_id}'. Reason: {e}"
-                if tracking: langfuse_context.update_current_observation(level="ERROR", status_message=error_message)
+                if tracking: langfuse.update_current_observation(level="ERROR", status_message=error_message)
                 print(error_message)
                 
 
