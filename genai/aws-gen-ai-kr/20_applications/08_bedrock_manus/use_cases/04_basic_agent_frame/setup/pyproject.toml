@@ -27,4 +27,6 @@ dependencies = [
     "pdf2image==1.17.0",
     "pillow>=10.0.0",
     "matplotlib==3.10.3",
+    "opensearch-py==3.0.0",
+    "langchain-community==0.3.20",
 ]

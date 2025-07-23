@@ -27,7 +27,7 @@ class opensearch_utils():
         인덱스 생성
         '''
         response = os_client.indices.create(
-            index_name,
+            index=index_name,
             body=index_body
         )
         print('\nCreating index:')
@@ -38,7 +38,7 @@ class opensearch_utils():
         '''
         인덱스가 존재하는지 확인
         '''
-        exists = os_client.indices.exists(index_name)
+        exists = os_client.indices.exists(index=index_name)
         print(f"index_name={index_name}, exists={exists}")
 
         return exists
