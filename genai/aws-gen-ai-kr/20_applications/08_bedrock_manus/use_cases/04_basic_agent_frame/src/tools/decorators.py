@@ -49,13 +49,13 @@ def log_io(func: Callable) -> Callable:
         # Log the output
         if len(result.split("||")) == 3:
             status, code, stdout = result.split("||")
-            logger.info(f"{Colors.RED}Coder - {status}\n{code}{Colors.END}")
+            logger.info(f"{Colors.RED}Tool - {status}\n{code}{Colors.END}")
             logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
             
         else:
             cmd = None
             if len(result.split("||")) == 2: cmd, stdout = result.split("||")
-            logger.info(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
+            logger.info(f"{Colors.RED}\nTool - {func_name} returned:\n{result}{Colors.END}")
             
         return result
 
