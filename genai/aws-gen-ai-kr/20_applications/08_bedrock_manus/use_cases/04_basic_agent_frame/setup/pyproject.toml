@@ -29,4 +29,6 @@ dependencies = [
     "matplotlib==3.10.3",
     "opensearch-py==3.0.0",
     "langchain-community==0.3.20",
+    "langchain-anthropic==0.3.17",
+    "transformers>=4.53.3",
 ]
