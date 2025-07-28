@@ -145,9 +145,11 @@ else
 fi
 
 sh install_korean_font.sh
+sudo apt-get update
 sudo apt-get install pandoc -y
 sudo apt-get install texlive -y
 sudo apt-get install texlive-xetex -y
+sudo apt-get install poppler-utils -y
 
 # 5. Jupyter 커널 등록
 print_info "Jupyter 커널 등록 중..."
