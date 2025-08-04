@@ -34,4 +34,4 @@ COPY . .
 
 # Use the full module path
 
-CMD ["opentelemetry-instrument", "python", "-m", "langgraph_bedrock"]
+CMD ["opentelemetry-instrument", "python", "-m", "strands_langgraph_bedrock"]
