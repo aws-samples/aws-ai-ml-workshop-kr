@@ -1,0 +1,30 @@
+default_agent: langgraph_bedrock
+agents:
+  langgraph_bedrock:
+    name: langgraph_bedrock
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/13_agentcore/tutorials/01-AgentCore-runtime/01-hosting-agent/05-strands-langgraph-with-bedrock-model/langgraph_bedrock.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::615299776985:role/agentcore-langgraph_bedrock-role
+      execution_role_auto_create: false
+      account: '615299776985'
+      region: us-west-2
+      ecr_repository: null
+      ecr_auto_create: true
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: null
+      agent_arn: null
+      agent_session_id: null
+    codebuild:
+      project_name: null
+      execution_role: null
+      source_bucket: null
+    authorizer_configuration: null
+    oauth_configuration: null
