@@ -1,9 +1,4 @@
 
-import sys, os
-#module_path = "../../../.."
-#module_path = "../../../.."
-#sys.path.append(os.path.abspath(module_path))
-
 import json
 import logging
 import argparse
@@ -12,7 +7,6 @@ from graph import build_graph
 from src.utils.common_utils import get_message_from_string
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
-
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 
 app = BedrockAgentCoreApp()
@@ -108,19 +102,8 @@ def strands_langgraph_bedrock(payload):
         debug=False
     )
 
-    # Create the input in the format expected by LangGraph
-    #response = agent.invoke({"messages": [HumanMessage(content=user_input)]})
-
-    # Extract the final message content
-    #return response["messages"][-1].content
     return result
 
 if __name__ == "__main__":
+
     app.run()
-
-    #parser = argparse.ArgumentParser()
-    #parser.add_argument("payload", type=str)
-    #args = parser.parse_args()
-    #response = strands_langgraph_bedrock(json.loads(args.payload))
-    #print(response)
-

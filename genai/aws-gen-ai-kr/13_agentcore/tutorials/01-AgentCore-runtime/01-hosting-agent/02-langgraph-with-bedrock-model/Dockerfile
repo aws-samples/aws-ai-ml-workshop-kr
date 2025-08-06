@@ -6,7 +6,12 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 # Install from requirements file
 RUN pip install -r requirements.txt
+
+
+
+
 RUN pip install aws-opentelemetry-distro>=0.10.0
+
 
 # Set AWS region environment variable
 
@@ -29,4 +34,4 @@ COPY . .
 
 # Use the full module path
 
-CMD ["opentelemetry-instrument", "python", "-m", "strands_langgraph_bedrock"]
+CMD ["opentelemetry-instrument", "python", "-m", "langgraph_bedrock"]

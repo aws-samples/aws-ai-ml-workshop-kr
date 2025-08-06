@@ -25,4 +25,7 @@ dependencies = [
     "langfuse>=3.2.1",
     "langchain-aws>=0.2.29",
     "bedrock-agentcore-starter-toolkit",
+    "duckduckgo-search>=8.1.1",
+    "aws-opentelemetry-distro>=0.10.1",
+    "ddgs>=9.5.2",
 ]

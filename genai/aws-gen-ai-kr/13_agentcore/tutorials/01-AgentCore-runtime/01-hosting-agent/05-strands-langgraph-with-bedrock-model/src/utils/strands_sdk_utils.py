@@ -158,6 +158,35 @@ class strands_utils():
             logger.error(traceback.format_exc())  # Detailed error logging
         
         return agent, response
+    
+    @staticmethod
+    async def process_streaming_response_agentcore(agent, message):
+        callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
+        response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
+        try:
+            agent_stream = agent.stream_async(message)
+            async for event in agent_stream:
+                if "reasoningText" in event:
+                    response["reasoning"] += event["reasoningText"]
+                    callback_reasoning.on_llm_new_token(event["reasoningText"])
+                elif "reasoning_signature" in event:
+                    response["signature"] += event["reasoning_signature"]
+                elif "data" in event:
+                    response["text"] += event["data"]
+                    callback_answer.on_llm_new_token(event["data"])
+                elif "current_tool_use" in event and event["current_tool_use"].get("name"):
+                    response["tool_use"] = event["current_tool_use"]["name"]
+                    if "event_loop_metrics" in event:
+                        if response["cycle"] != event["event_loop_metrics"].cycle_count:
+                            response["cycle"] = event["event_loop_metrics"].cycle_count
+                            callback_answer.on_llm_new_token(f' \n## Calling tool: {event["current_tool_use"]["name"]} - # Cycle: {event["event_loop_metrics"].cycle_count}\n')
+                # Yield the event for AgentCore streaming
+                #yield event
+        except Exception as e:
+            logger.error(f"Error in streaming response: {e}")
+            logger.error(traceback.format_exc())  # Detailed error logging
+        
+        return agent, response
 
     @staticmethod
     def parsing_text_from_response(response):

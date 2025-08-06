@@ -18,10 +18,6 @@ from src.prompts.template import apply_prompt_template
 
 #from src.tools import python_repl_tool, bash_tool
 
-#application = os.environ.get('APP', 'False')
-#if application == 'True': from src.utils.strands_sdk_utils_st import strands_utils
-#else: from src.utils.strands_sdk_utils import strands_utils
-
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
 logger.propagate = False  # 상위 로거로 메시지 전파 중지
@@ -87,8 +83,8 @@ def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
     agent = strands_utils.get_agent(
         agent_name="planner",
         system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={}), # apply_prompt_template(prompt_name="task_agent", prompt_context={"TEST": "sdsd"})
-        agent_type="reasoning", #"reasoning", "basic"
-        prompt_cache_info=(True, "default"), #(False, None), (True, "default")
+        agent_type="basic", #"reasoning", "basic"
+        prompt_cache_info=(False, None), #(False, None), (True, "default")
         streaming=True,
     )
 
