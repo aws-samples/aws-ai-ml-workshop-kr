@@ -7,11 +7,17 @@ from opentelemetry import trace
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Agent with Custom Span Creation')
-    parser.add_argument('--session-id', 
-                       type=str, 
-                       required=True,
-                       help='Session ID to associate with this agent run')
+    parser.add_argument(
+        '--session-id', 
+        type=str,
+        required=True,
+        help='Session ID to associate with this agent run'
+    )
     return parser.parse_args()
+
+###########################
+####   Session info    ####
+###########################
 
 def set_session_context(session_id):
     """Set the session ID in OpenTelemetry baggage for trace correlation"""
@@ -45,18 +51,24 @@ def web_search(query: str) -> str:
     with tracer.start_as_current_span("custom span web search tool") as span:
         try:
             # Add query attribute
-            span.set_attribute("search.query", query)
-            span.set_attribute("tool.name", "web_search")
-            span.set_attribute("search.provider", "duckduckgo")
+            span.set_attribute("search.query", query) # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
+            span.set_attribute("tool.name", "web_search") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
+            span.set_attribute("search.provider", "duckduckgo") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
 
             # Add event for search start
-            span.add_event("search_started", {"query": query})
+            span.add_event(
+                "search_started",
+                {"query": query}
+            )
 
             ddgs = DDGS()
             results = ddgs.text(query, max_results=5)
 
             # Add results count attribute
-            span.set_attribute("search.results_count", len(results))
+            span.set_attribute(
+                "search.results-count",
+                len(results)
+            )
 
             formatted_results = []
             for i, result in enumerate(results, 1):
@@ -77,15 +89,26 @@ def web_search(query: str) -> str:
             span.set_attribute("search.results_summary", search_results_text[:500])  # Truncate for telemetry
 
             # Add success event
-            span.add_event("search_completed", {
-                "results_count": len(results),
-                "success": True
-            })
+            span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
+                "search_completed",
+                {
+                    "results_count": len(results),
+                    "success": True
+                }
+            )
+
+            # Add tool results event
+            span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
+                "search_results",
+                {
+                    "tool-results": str(search_results_text),
+                }
+            )
 
             # Set span status to OK
             span.set_status(trace.Status(trace.StatusCode.OK))
 
-            logger.info(f"Web search completed successfully for query: {query[:50]}...")
+            logger.info(f"Web search completed successfully for query: {query[:50]}...") # logger 사용시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 가능, "Traces"의 event에서는 확인 x
             return search_results_text
 
         except Exception as e:
@@ -102,14 +125,14 @@ def web_search(query: str) -> str:
             # Set span status to ERROR
             span.set_status(trace.Status(trace.StatusCode.ERROR, str(e)))
 
-            logger.error(f"Web search failed: {str(e)}")
+            logger.error(f"Web search failed: {str(e)}") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
             return f"Search error: {str(e)}"
 
 def get_bedrock_model():
-    model_id = os.getenv("BEDROCK_MODEL_ID", "us.anthropic.claude-3-haiku-20240307-v1:0")
+    model_id = os.getenv("BEDROCK_MODEL_ID", "us.anthropic.claude-3-7-sonnet-20250219-v1:0")
     region = os.getenv("AWS_DEFAULT_REGION", "us-west-2")
-    print (model_id)
-    logger.info(f"Bedrock model: {model_id} in region: {region}")
+    logger.info(f"Bedrock model: {model_id} in region: {region}") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
+    logger.info(f"this is event?: this is event") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
     try:
         bedrock_model = BedrockModel(
             model_id=model_id,
@@ -117,11 +140,11 @@ def get_bedrock_model():
             temperature=0.7,
             max_tokens=512
         )
-        logger.info(f"Successfully initialized Bedrock model: {model_id} in region: {region}")
+        logger.info(f"Successfully initialized Bedrock model: {model_id} in region: {region}") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
         return bedrock_model
     except Exception as e:
-        logger.error(f"Failed to initialize Bedrock model: {str(e)}")
-        logger.error("Please ensure you have proper AWS credentials configured and access to the Bedrock model")
+        logger.error(f"Failed to initialize Bedrock model: {str(e)}") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
+        logger.error("Please ensure you have proper AWS credentials configured and access to the Bedrock model") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
         raise
 
 def main():
@@ -137,20 +160,24 @@ def main():
     with tracer.start_as_current_span("travel_agent_session") as main_span:
         try:
             # Add session attributes to main span
-            main_span.set_attribute("session.id", args.session_id) ## travel_agent_session 여기 span에 보면 나온다. 
-            main_span.set_attribute("agent.type", "travel_agent")
+            main_span.set_attribute("session.id", args.session_id) ## travel_agent_session 여기 span에 보면 나온다. # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
+            main_span.set_attribute("agent.type", "travel_agent") # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
 
             # Initialize Bedrock model
             bedrock_model = get_bedrock_model()
 
+            system_prompt ="""
+                You are an expert web search agent specializing in finding accurate and relevant information
+                with access to real-time web data. Your role is to efficiently search, analyze, and synthesize
+                information from multiple sources to answer user queries comprehensively. You should provide
+                well-researched responses with current information, clear summaries, and cite reliable sources
+                when presenting your findings.
+                """
+
             # Create travel agent
             travel_agent = Agent(
                 model=bedrock_model,
-                system_prompt="""You are an expert web search agent specializing in finding accurate and relevant information
-                                 with access to real-time web data. Your role is to efficiently search, analyze, and synthesize
-                                 information from multiple sources to answer user queries comprehensively. You should provide
-                                 well-researched responses with current information, clear summaries, and cite reliable sources
-                                 when presenting your findings.""",
+                system_prompt=system_prompt,
                 tools=[web_search],
                 trace_attributes={
                     "user.id": "user@domain.com",
@@ -158,31 +185,28 @@ def main():
                 }
             )
 
-            system_prompt="""You are an expert web search agent specializing in finding accurate and relevant information
-                                 with access to real-time web data. Your role is to efficiently search, analyze, and synthesize
-                                 information from multiple sources to answer user queries comprehensively. You should provide
-                                 well-researched responses with current information, clear summaries, and cite reliable sources
-                                 when presenting your findings."""
-
-            main_span.add_event("agent_system_prompt", {"system-prompt": system_prompt}) # attribute.name에 _(under bar)가 들어가면 안된다. 
-
             # Execute the travel research task
-            query = """Which of these restaurant are vegetarian friendly?"""
-
-            main_span.add_event("agent_query_started", {"query": query[:100]})
-
+            query = """Which of restaurants are vegetarian friendly in Seoul?"""
             result = travel_agent(query)
+            main_span.set_status(trace.Status(trace.StatusCode.OK))
 
-            main_span.add_event(
+            print("Result:", result)
+
+            main_span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
+                "agent_system_prompt",
+                {"system-prompt": str(system_prompt)}
+            ) # attribute.name에 _(under bar)가 들어가면 안된다. 
+            main_span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
+                "agent_query_started",
+                {"query": str(query[:100])}
+            )
+            main_span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
                 "agent_query_completed",
                 {
                     "result": str(result),
                     "success": True
                 }
             )
-            main_span.set_status(trace.Status(trace.StatusCode.OK))
-
-            print("Result:", result)
 
         except Exception as e:
             main_span.set_attribute("error", str(e))
