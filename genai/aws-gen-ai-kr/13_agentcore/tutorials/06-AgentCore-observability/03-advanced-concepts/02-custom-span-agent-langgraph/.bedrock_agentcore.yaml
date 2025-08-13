@@ -1,0 +1,86 @@
+default_agent: strands_langgraph_agentcore
+agents:
+  langgraph_bedrock:
+    name: langgraph_bedrock
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/13_agentcore/tutorials/01-AgentCore-runtime/01-hosting-agent/05-strands-langgraph-with-bedrock-model/langgraph_bedrock.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::615299776985:role/agentcore-strandlanggraph_bedrock-role
+      execution_role_auto_create: false
+      account: '615299776985'
+      region: us-west-2
+      ecr_repository: 615299776985.dkr.ecr.us-west-2.amazonaws.com/bedrock-agentcore-langgraph_bedrock
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: langgraph_bedrock-gevYPV5DFm
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:615299776985:runtime/langgraph_bedrock-gevYPV5DFm
+      agent_session_id: 24a676ef-187a-4602-9eeb-21cbcf085142
+    codebuild:
+      project_name: null
+      execution_role: null
+      source_bucket: null
+    authorizer_configuration: null
+    oauth_configuration: null
+  strands_langgraph_bedrock:
+    name: strands_langgraph_bedrock
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/13_agentcore/tutorials/01-AgentCore-runtime/01-hosting-agent/05-strands-langgraph-with-bedrock-model/strands_langgraph_bedrock.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::615299776985:role/agentcore-strand-langgraph-agentcore-role
+      execution_role_auto_create: false
+      account: '615299776985'
+      region: us-west-2
+      ecr_repository: null
+      ecr_auto_create: true
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: strands_langgraph_bedrock-cX1ijBFQs8
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:615299776985:runtime/strands_langgraph_bedrock-cX1ijBFQs8
+      agent_session_id: efcc3c0d-7c7e-4d19-b1d1-b575efced24a
+    codebuild:
+      project_name: null
+      execution_role: null
+      source_bucket: null
+    authorizer_configuration: null
+    oauth_configuration: null
+  strands_langgraph_agentcore:
+    name: strands_langgraph_agentcore
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/13_agentcore/tutorials/01-AgentCore-runtime/01-hosting-agent/05-strands-langgraph-with-bedrock-model/strands_langgraph_bedrock.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::615299776985:role/agentcore-strands_langgraph_agentcore-role
+      execution_role_auto_create: false
+      account: '615299776985'
+      region: us-west-2
+      ecr_repository: 615299776985.dkr.ecr.us-west-2.amazonaws.com/bedrock-agentcore-strands_langgraph_agentcore
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: strands_langgraph_agentcore-pJpRgs2mGU
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:615299776985:runtime/strands_langgraph_agentcore-pJpRgs2mGU
+      agent_session_id: 61f23594-847e-4a61-9be1-c4f6304ff621
+    codebuild:
+      project_name: null
+      execution_role: null
+      source_bucket: null
+    authorizer_configuration: null
+    oauth_configuration: null
