@@ -8,7 +8,7 @@ from .nodes import (
     #code_node,
     coordinator_node,
     #reporter_node,
-    #planner_node,
+    planner_node,
 )
 
 def build_graph():
@@ -17,10 +17,15 @@ def build_graph():
 
     # Nodes
     coordinator = FunctionNode(func=coordinator_node, name="coordinator")
+    planner = FunctionNode(func=planner_node, name="planner")
     builder.add_node(coordinator, "coordinator")
+    builder.add_node(planner, "planner")
 
     # Set entry points (optional - will be auto-detected if not specified)
     builder.set_entry_point("coordinator")
+    
+    # Add edges to define the workflow
+    builder.add_edge("coordinator", "planner")
 
     # Build the graph
     return builder.build()

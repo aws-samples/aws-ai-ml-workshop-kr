@@ -146,7 +146,7 @@ class strands_utils():
     @staticmethod
     def update_agent_state(agent, key, value):
         agent.state.set(key, value)
-        return agent
+        #return agent
     
     @staticmethod
     def update_agent_state_all(target_agent, source_agent):
