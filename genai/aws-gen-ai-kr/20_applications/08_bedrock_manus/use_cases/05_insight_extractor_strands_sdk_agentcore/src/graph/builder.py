@@ -9,6 +9,7 @@ from .nodes import (
     coordinator_node,
     #reporter_node,
     planner_node,
+    should_handoff_to_planner,
 )
 
 def build_graph():
@@ -24,8 +25,8 @@ def build_graph():
     # Set entry points (optional - will be auto-detected if not specified)
     builder.set_entry_point("coordinator")
     
-    # Add edges to define the workflow
-    builder.add_edge("coordinator", "planner")
+    # Add conditional edge - only go to planner if handoff is requested
+    builder.add_edge("coordinator", "planner", condition=should_handoff_to_planner)
 
     # Build the graph
     return builder.build()

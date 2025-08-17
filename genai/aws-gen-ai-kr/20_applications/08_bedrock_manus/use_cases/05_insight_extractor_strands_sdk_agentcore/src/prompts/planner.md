@@ -1,5 +1,6 @@
 ---
 CURRENT_TIME: {CURRENT_TIME}
+USER_REQUEST: {USER_REQUEST}
 ---
 You are a professional Deep Researcher. 
 

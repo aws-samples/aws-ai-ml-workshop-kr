@@ -40,6 +40,10 @@ class Colors:
 # Global state storage for sharing between nodes
 _global_node_states = {}
 
+RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
+FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
+CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
+
 class FunctionNode(MultiAgentBase):
     """Execute deterministic Python functions as graph nodes."""
 
@@ -51,15 +55,28 @@ class FunctionNode(MultiAgentBase):
     def __call__(self, task, **kwargs):
         """Synchronous execution for compatibility with MultiAgentBase"""
         if asyncio.iscoroutinefunction(self.func):
-            return asyncio.run(self.func(task if isinstance(task, str) else str(task)))
-        return self.func(task if isinstance(task, str) else str(task))
+            if isinstance(task, dict):
+                return asyncio.run(self.func(**task))
+            else:
+                return asyncio.run(self.func(task if isinstance(task, str) else str(task)))
+        else:
+            if isinstance(task, dict):
+                return self.func(**task)
+            else:
+                return self.func(task if isinstance(task, str) else str(task))
 
     async def invoke_async(self, task, **kwargs):
         # Execute function (nodes now use global state for data sharing)
         if asyncio.iscoroutinefunction(self.func):
-            agent, response = await self.func(task if isinstance(task, str) else str(task))
+            if isinstance(task, dict):
+                agent, response = await self.func(**task)
+            else:
+                agent, response = await self.func(task if isinstance(task, str) else str(task))
         else:
-            agent, response = self.func(task if isinstance(task, str) else str(task))
+            if isinstance(task, dict):
+                agent, response = self.func(**task)
+            else:
+                agent, response = self.func(task if isinstance(task, str) else str(task))
 
         agent_result = AgentResult(
             stop_reason="end_turn",
@@ -74,11 +91,22 @@ class FunctionNode(MultiAgentBase):
             results={self.name: NodeResult(result=agent_result)},
             # ... execution details
         )
-    
-async def coordinator_node(message: str):
 
+def should_handoff_to_planner(state):
+    """Check if coordinator requested handoff to planner."""
+    # Check global shared state for goto field
+    global _global_node_states
+    shared_state = _global_node_states.get('shared', {})
+    goto = shared_state.get('goto', '__end__')
+    return goto == 'planner'
+
+async def coordinator_node(**kwargs):
     """Coordinator node that communicate with customers."""
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
+
+    # Extract user request from kwargs (for coordinator only)
+    request = kwargs.get("request", "")
+    request_prompt = kwargs.get("request_prompt", request)
 
     agent = strands_utils.get_agent(
         agent_name="coordinator",
@@ -88,10 +116,10 @@ async def coordinator_node(message: str):
         streaming=True,
     )
         
-    agent, response = await strands_utils.process_streaming_response(agent, message)
+    agent, response = await strands_utils.process_streaming_response(agent, request_prompt)
     
     ## your logic here ##
-    logger.info(f"{Colors.GREEN}===== 여기서 무언가를 해도 되겠죠? ====={Colors.END}")
+    #logger.info(f"{Colors.GREEN}===== 여기서 무언가를 해도 되겠죠? ====={Colors.END}")
     
     logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(agent.messages[:-1], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Coordinator response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
@@ -99,78 +127,58 @@ async def coordinator_node(message: str):
     goto = "__end__"
     if "handoff_to_planner" in response["text"]: goto = "planner"
     
-    # Prepare state data for next node
-    strands_utils.update_agent_state(agent, "messages", agent.messages)
-    strands_utils.update_agent_state(agent, "goto", goto)
-    history = strands_utils.get_agent_state(agent, "history", [])
-    history.append({"agent":"coordinator", "message": response["text"]})
-    strands_utils.update_agent_state(agent, "history", history)
-    
-    # Add additional context for planner
-    strands_utils.update_agent_state(agent, "user_request", message)
-    strands_utils.update_agent_state(agent, "coordinator_response", response["text"])
-    
-    current_state = strands_utils.get_agent_state_all(agent)
-    logger.debug(f"\n{Colors.RED}Coordinator state to pass:\n{pprint.pformat(current_state, indent=2, width=100)}{Colors.END}")
-    
-    # Store coordinator state in global storage for next nodes
+    # Store data directly in shared global storage
     global _global_node_states
-    _global_node_states['coordinator'] = current_state
     
-    logger.info(f"{Colors.BLUE}===== Coordinator passing state with {len(current_state)} keys via global storage ====={Colors.END}")
+    # Initialize shared state if not exists
+    if 'shared' not in _global_node_states: _global_node_states['shared'] = {}
+    shared_state = _global_node_states['shared']
+    
+    # Update shared global state
+    shared_state['messages'] = agent.messages
+    shared_state['goto'] = goto
+    shared_state['request'] = request
+    shared_state['request_prompt'] = request_prompt
+    
+    # Build and update history
+    if 'history' not in shared_state: shared_state['history'] = []
+    shared_state['history'].append({"agent":"coordinator", "message": response["text"]})
+    
+    logger.debug(f"\n{Colors.RED}Shared global state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
+    logger.info(f"{Colors.BLUE}===== Coordinator updated shared global state with {len(shared_state)} keys ====={Colors.END}")
     logger.info(f"{Colors.GREEN}===== Coordinator completed task ====={Colors.END}")
     
     return agent, response
 
-async def planner_node(message: str):
+async def planner_node(message=None):
     """Planner node that generates detailed plans for task execution."""
     logger.info(f"{Colors.GREEN}===== Planner generating plan ====={Colors.END}")
     
-    # Log what we received
-    logger.debug(f"{Colors.YELLOW}Planner received message: {message}{Colors.END}")
+    # Log what we received  
+    logger.debug(f"\n{Colors.YELLOW}Planner received message:\n{pprint.pformat(message, indent=2, width=100)}{Colors.END}")
     
-    # Extract coordinator state from global storage
+    # Extract shared state from global storage
     global _global_node_states
-    coordinator_state = _global_node_states.get('coordinator', None)
+    shared_state = _global_node_states.get('shared', None)
+    request = shared_state.get("request", "")
     
-    if coordinator_state:
-        logger.info(f"{Colors.BLUE}===== Successfully retrieved coordinator state from global storage ====={Colors.END}")
-        logger.debug(f"{Colors.YELLOW}Coordinator state keys: {list(coordinator_state.keys())}{Colors.END}")
+    if shared_state:
+        logger.info(f"{Colors.BLUE}===== Successfully retrieved shared state from global storage ====={Colors.END}")
+        logger.debug(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
     else:
-        logger.warning(f"{Colors.RED}No coordinator state found in global storage{Colors.END}")
+        logger.warning(f"{Colors.RED}No shared state found in global storage{Colors.END}")
         logger.debug(f"Global states available: {list(_global_node_states.keys())}")
 
     agent = strands_utils.get_agent(
         agent_name="planner",
-        system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={}),
+        system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
         agent_type="reasoning",  # planner uses reasoning LLM
         prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
         streaming=True,
     )
     
-    # Load coordinator state into planner agent
-    if coordinator_state:
-        logger.info(f"{Colors.BLUE}===== Loading coordinator state into planner ====={Colors.END}")
-        
-        # Copy each state value to planner agent
-        for key, value in coordinator_state.items():
-            strands_utils.update_agent_state(agent, key, value)
-            logger.debug(f"  - Loaded {key}: {type(value)}")
-        
-        # Access the loaded state
-        user_request = strands_utils.get_agent_state(agent, "user_request", message)
-        coordinator_response = strands_utils.get_agent_state(agent, "coordinator_response", "")
-        history = strands_utils.get_agent_state(agent, "history", [])
-        messages = strands_utils.get_agent_state(agent, "messages", [])
-        
-        logger.info(f"{Colors.BLUE}Loaded coordinator state:{Colors.END}")
-        logger.info(f"  - user_request: {user_request}")
-        logger.info(f"  - coordinator_response: {coordinator_response}")
-        logger.info(f"  - history count: {len(history)}")
-        logger.info(f"  - messages count: {len(messages)}")
-    else:
-        logger.warning(f"{Colors.RED}No coordinator state loaded{Colors.END}")
-        
+    full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
     agent, response = await strands_utils.process_streaming_response(agent, message)
     
     ## Planner logic: create detailed plan with agent assignments ##
@@ -180,19 +188,15 @@ async def planner_node(message: str):
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
     # Planner determines next agent based on the plan
-    goto = "__end__"
-    if "supervisor" in response["text"].lower(): goto = "supervisor"
-    elif "coder" in response["text"].lower(): goto = "coder"
-    elif "reporter" in response["text"].lower(): goto = "reporter"
+    goto = "supervisor"
     
-    strands_utils.update_agent_state(agent, "messages", agent.messages)
-    strands_utils.update_agent_state(agent, "goto", goto)
-    strands_utils.update_agent_state(agent, "full_plan", response["text"])  # store the generated plan
-    history = strands_utils.get_agent_state(agent, "history", [])
-    history.append({"agent":"planner", "message": response["text"]})
-    strands_utils.update_agent_state(agent, "history", history)
+    # Update shared global state
+    shared_state['messages'] = agent.messages
+    shared_state['goto'] = goto
+    shared_state['full_plan'] = response["text"]  # store the generated plan
+    shared_state['history'].append({"agent":"planner", "message": response["text"]})
 
-    logger.debug(f"\n{Colors.RED}Planner state:\n{pprint.pformat(strands_utils.get_agent_state_all(agent), indent=2, width=100)}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Updated shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
     logger.info(f"{Colors.GREEN}===== Planner completed plan generation ====={Colors.END}")
     
     return agent, response

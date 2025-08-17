@@ -57,9 +57,14 @@ def run_agent_workflow(user_input: str, debug: bool = False):
         enable_debug_logging()
 
     #logger.info(f"Starting workflow with user input: {user_input}")
+    # Clear global state at workflow start
+    from src.graph.nodes import _global_node_states
+    _global_node_states.clear()
+    
     logger.info(f"{Colors.GREEN}===== Starting workflow ====={Colors.END}")
     logger.info(f"{Colors.GREEN}\nuser input: {user_input}{Colors.END}")
     
+    # Prepare input as dictionary for flexible parameter passing
     user_prompts = dedent(
         '''
         Here is a user request: <user_request>{user_request}</user_request>
@@ -67,10 +72,13 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     )
     context = {"user_request": user_input}
     user_prompts = user_prompts.format(**context)
-    #messages = [get_message_from_string(role="user", string=user_prompts, imgs=[])]
 
-    #result = graph("안녕 나는 장동진이야")
-    result = graph(user_prompts)
+    # Pass dictionary to graph for **kwargs support
+    input_data = {
+        "request": user_input,
+        "request_prompt": user_prompts
+    }
+    result = graph(input_data)
         
     # result = graph.invoke(
     #     input={
