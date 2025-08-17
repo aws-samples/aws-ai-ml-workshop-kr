@@ -56,11 +56,11 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     if debug:
         enable_debug_logging()
 
-    #logger.info(f"Starting workflow with user input: {user_input}")
     # Clear global state at workflow start
     from src.graph.nodes import _global_node_states
     _global_node_states.clear()
-    
+
+    #logger.info(f"Starting workflow with user input: {user_input}")
     logger.info(f"{Colors.GREEN}===== Starting workflow ====={Colors.END}")
     logger.info(f"{Colors.GREEN}\nuser input: {user_input}{Colors.END}")
     
@@ -74,11 +74,12 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     user_prompts = user_prompts.format(**context)
 
     # Pass dictionary to graph for **kwargs support
-    input_data = {
-        "request": user_input,
-        "request_prompt": user_prompts
-    }
-    result = graph(input_data)
+    result = graph(
+        input_data={
+            "request": user_input,
+            "request_prompt": user_prompts
+        }
+    )
         
     # result = graph.invoke(
     #     input={
