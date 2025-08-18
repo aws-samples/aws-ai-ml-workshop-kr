@@ -375,6 +375,7 @@ dependencies = [
     { name = "ipykernel" },
     { name = "jupyter" },
     { name = "langchain" },
+    { name = "lovelyplots" },
     { name = "matplotlib" },
     { name = "mcp" },
     { name = "python-dotenv" },
@@ -397,6 +398,7 @@ requires-dist = [
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "jupyter", specifier = ">=1.1.1" },
     { name = "langchain", specifier = ">=0.3.27" },
+    { name = "lovelyplots", specifier = ">=1.0.2" },
     { name = "matplotlib", specifier = ">=3.10.5" },
     { name = "mcp", specifier = ">=1.13.0" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
@@ -1637,6 +1639,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/7b/89/68c50fcfd81e11480cd8ee7f654c9bd790a9053b9a0efe9983d46106f6a9/lazy_object_proxy-1.11.0-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:0613116156801ab3fccb9e2b05ed83b08ea08c2517fdc6c6bc0d4697a1a376e3", size = 28777, upload-time = "2025-04-16T16:53:41.371Z" },
     { url = "https://files.pythonhosted.org/packages/39/d0/7e967689e24de8ea6368ec33295f9abc94b9f3f0cd4571bfe148dc432190/lazy_object_proxy-1.11.0-cp313-cp313t-win_amd64.whl", hash = "sha256:bb03c507d96b65f617a6337dedd604399d35face2cdf01526b913fb50c4cb6e8", size = 29598, upload-time = "2025-04-16T16:53:42.513Z" },
     { url = "https://files.pythonhosted.org/packages/e7/1e/fb441c07b6662ec1fc92b249225ba6e6e5221b05623cb0131d082f782edc/lazy_object_proxy-1.11.0-py3-none-any.whl", hash = "sha256:a56a5093d433341ff7da0e89f9b486031ccd222ec8e52ec84d0ec1cdc819674b", size = 16635, upload-time = "2025-04-16T16:53:47.198Z" },
+]
+
+[[package]]
+name = "lovelyplots"
+version = "1.0.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "matplotlib" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d8/06/948176dd3e96996c40bcc589cd30fa3ebd0a351659af54e3a3ffaf5d0305/lovelyplots-1.0.2.tar.gz", hash = "sha256:6b6e6cb50975e6681755b55447402e6cca6c21451adf6d1255884fd457739d68", size = 11428, upload-time = "2024-03-06T05:18:50.755Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/17/c8/dd7dd77f5022b0ae6d377d28dd49b470d820dc2fc51592c2c4860aa6cb2d/lovelyplots-1.0.2-py3-none-any.whl", hash = "sha256:3d778300203e546d7ff642b2ee16c91fa47f0980574b409148e1cb8976fe6832", size = 12968, upload-time = "2024-03-06T05:18:49.258Z" },
 ]
 
 [[package]]

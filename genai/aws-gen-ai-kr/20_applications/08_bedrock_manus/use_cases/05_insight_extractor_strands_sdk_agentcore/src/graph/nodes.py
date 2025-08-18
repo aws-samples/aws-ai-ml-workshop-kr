@@ -4,17 +4,15 @@ import logging
 import json
 
 import asyncio
-#from strands.models import BedrockModel
-#from src.utils.bedrock import bedrock_info
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
+from src.utils.common_utils import get_message_from_string
+
+from src.tools.coder_agent_tool import coder_agent_tool
 
 from strands.agent.agent_result import AgentResult
 from strands.types.content import ContentBlock, Message
 from strands.multiagent.base import MultiAgentBase, NodeResult, Status, MultiAgentResult
-
-#from strands.multiagent import GraphBuilder
-
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -94,14 +92,13 @@ async def coordinator_node(task=None, **kwargs):
     """Coordinator node that communicate with customers."""
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
 
-    # Extract user request from kwargs
-    state = kwargs.get("state", {})
-    if state:
-        request = state.get("request", "")
-        request_prompt = state.get("request_prompt", request)
+    # Extract user request from task (now passed as dictionary)
+    if isinstance(task, dict):
+        request = task.get("request", "")
+        request_prompt = task.get("request_prompt", request)
     else:
-        request = kwargs.get("request", task or "")
-        request_prompt = kwargs.get("request_prompt", request)
+        request = str(task) if task else ""
+        request_prompt = request
 
     agent = strands_utils.get_agent(
         agent_name="coordinator",
@@ -166,8 +163,8 @@ async def planner_node(task=None, **kwargs):
         request = shared_state.get("request", "") if shared_state else (task or "")
     
     if shared_state:
-        logger.debug(f"{Colors.BLUE}===== Successfully retrieved shared state from global storage ====={Colors.END}")
-        logger.debug(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
+        logger.info(f"{Colors.BLUE}===== Successfully retrieved shared state from global storage ====={Colors.END}")
+        logger.info(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
     else:
         logger.warning(f"{Colors.RED}No shared state found in global storage{Colors.END}")
         logger.debug(f"Global states available: {list(_global_node_states.keys())}")
@@ -193,7 +190,7 @@ async def planner_node(task=None, **kwargs):
     goto = "supervisor"
     
     # Update shared global state
-    shared_state['messages'] = agent.messages
+    shared_state['messages'] = [get_message_from_string(role="user", string=response["text"], imgs=[])]
     shared_state['goto'] = goto
     shared_state['full_plan'] = response["text"]  # store the generated plan
     shared_state['history'].append({"agent":"planner", "message": response["text"]})
@@ -216,8 +213,8 @@ async def supervisor_node(task=None, **kwargs):
     shared_state = _global_node_states.get('shared', None)
     
     if shared_state:
-        logger.info(f"{Colors.BLUE}===== Successfully retrieved shared state from global storage ====={Colors.END}")
-        logger.debug(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
+        logger.info(f"{Colors.YELLOW}===== Successfully retrieved shared state from global storage ====={Colors.END}")
+        logger.info(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
     else:
         logger.warning(f"{Colors.RED}No shared state found in global storage{Colors.END}")
         logger.debug(f"Global states available: {list(_global_node_states.keys())}")
@@ -225,8 +222,9 @@ async def supervisor_node(task=None, **kwargs):
     agent = strands_utils.get_agent(
         agent_name="supervisor",
         system_prompts=apply_prompt_template(prompt_name="supervisor", prompt_context={}),
-        agent_type="reasoning",  # supervisor uses reasoning LLM
+        agent_type="reasoning",  #"reasoning", "basic"
         prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        tools=[coder_agent_tool],  # Add coder agent as a tool
         streaming=True,
     )
 
@@ -251,7 +249,6 @@ async def supervisor_node(task=None, **kwargs):
         logger.info(f"{Colors.GREEN}Supervisor delegating to: {goto}{Colors.END}")
 
     # Update shared global state
-    shared_state['messages'] = agent.messages
     shared_state['goto'] = goto
     shared_state['history'].append({"agent":"supervisor", "message": response["text"]})
     
@@ -259,3 +256,5 @@ async def supervisor_node(task=None, **kwargs):
     logger.info(f"{Colors.GREEN}===== Supervisor completed task ====={Colors.END}")
     
     return agent, response
+
+

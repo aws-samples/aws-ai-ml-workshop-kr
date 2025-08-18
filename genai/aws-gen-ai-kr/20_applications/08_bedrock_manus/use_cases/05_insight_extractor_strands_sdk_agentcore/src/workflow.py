@@ -75,8 +75,7 @@ def run_agent_workflow(user_input: str, debug: bool = False):
 
     # Pass dictionary to graph for **kwargs support
     result = graph(
-        task=user_input,
-        state={
+        task={
             "request": user_input,
             "request_prompt": user_prompts
         }
