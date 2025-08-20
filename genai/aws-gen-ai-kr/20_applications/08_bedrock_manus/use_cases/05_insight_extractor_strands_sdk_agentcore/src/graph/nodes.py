@@ -8,7 +8,7 @@ from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 
-from src.tools.coder_agent_tool import coder_agent_tool
+from src.tools import coder_agent_tool, reporter_agent_tool, tracker_agent_tool
 
 from strands.agent.agent_result import AgentResult
 from strands.types.content import ContentBlock, Message
@@ -111,8 +111,6 @@ async def coordinator_node(task=None, **kwargs):
     agent, response = await strands_utils.process_streaming_response(agent, request_prompt)
     
     ## your logic here ##
-    #logger.info(f"{Colors.GREEN}===== 여기서 무언가를 해도 되겠죠? ====={Colors.END}")
-    
     logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(agent.messages[:-1], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Coordinator response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
@@ -224,7 +222,7 @@ async def supervisor_node(task=None, **kwargs):
         system_prompts=apply_prompt_template(prompt_name="supervisor", prompt_context={}),
         agent_type="reasoning",  #"reasoning", "basic"
         prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
-        tools=[coder_agent_tool],  # Add coder agent as a tool
+        tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool],  # Add coder, reporter and tracker agents as tools
         streaming=True,
     )
 

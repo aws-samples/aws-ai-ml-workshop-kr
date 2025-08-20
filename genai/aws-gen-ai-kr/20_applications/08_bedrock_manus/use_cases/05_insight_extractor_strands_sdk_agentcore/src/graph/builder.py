@@ -20,6 +20,7 @@ def build_graph():
     coordinator = FunctionNode(func=coordinator_node, name="coordinator")
     planner = FunctionNode(func=planner_node, name="planner")
     supervisor = FunctionNode(func=supervisor_node, name="supervisor")
+    
     builder.add_node(coordinator, "coordinator")
     builder.add_node(planner, "planner")
     builder.add_node(supervisor, "supervisor")
@@ -35,13 +36,3 @@ def build_graph():
 
     # Build the graph
     return builder.build()
-
-
-    #builder = StateGraph(State)
-    #builder.add_node("coordinator", coordinator_node)
-    #builder.add_node("planner", planner_node)
-    #builder.add_node("supervisor", supervisor_node)
-    #builder.add_node("coder", code_node)
-    #builder.add_node("reporter", reporter_node)
-    #builder.add_edge(START, "coordinator")
-    #return builder.compile()

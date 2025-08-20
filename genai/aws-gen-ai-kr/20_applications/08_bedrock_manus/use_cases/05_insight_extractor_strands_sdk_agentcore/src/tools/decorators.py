@@ -77,7 +77,7 @@ class LoggedToolMixin:
         """Override _run method to add logging."""
         self._log_operation("_run", *args, **kwargs)
         result = super()._run(*args, **kwargs)
-        logger.debug(f"{Colors.BLUE}\nCoder - Tool {self.__class__.__name__.replace('Logged', '')} returned: {result}{Colors.END}")
+        logger.debug(f"{Colors.BLUE}\nREPL - Tool {self.__class__.__name__.replace('Logged', '')} returned: {result}{Colors.END}")
         return result
 
 

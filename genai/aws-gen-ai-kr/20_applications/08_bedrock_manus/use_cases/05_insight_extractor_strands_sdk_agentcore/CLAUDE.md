@@ -10,12 +10,16 @@ Bedrock-Manus is an AI automation framework optimized for Amazon Bedrock that im
 
 ### Environment Setup
 ```bash
-# Create and activate UV environment
+# Create and activate UV environment with dependencies
 cd setup/
 ./create-uv-env.sh bedrock-manus
 
-# Install Korean fonts (required for PDF generation)
-cd setup/
+# Alternative: Traditional conda environment (as shown in README)
+./create_conda_virtual_env.sh bedrock-manus
+conda activate bedrock-manus
+
+# Korean fonts are automatically installed by the UV script
+# Manual installation if needed:
 ./install_korean_font.sh
 ```
 
@@ -34,10 +38,21 @@ streamlit run app.py
 
 ### Development Dependencies
 The project uses UV for dependency management. Main dependencies are defined in `setup/pyproject.toml`:
-- **Core**: `strands-agents`, `bedrock-agentcore`, `boto3`
-- **UI**: `streamlit`
-- **Data Processing**: `matplotlib`, `seaborn`
-- **Document Generation**: `pandoc`, `texlive-xetex` (system packages)
+- **Core**: `strands-agents>=1.4.0`, `bedrock-agentcore==0.1.2`, `boto3>=1.40.10`
+- **UI**: `streamlit==1.48.1`
+- **Data Processing**: `matplotlib>=3.10.5`, `seaborn>=0.13.2`, `lovelyplots>=1.0.2`
+- **Document Generation**: `pandoc`, `texlive-xetex`, `poppler-utils` (system packages, auto-installed)
+- **Testing**: Basic test files available (`test_*.py` files in root directory)
+
+### Testing
+```bash
+# Run individual test files
+python test_coordinator_integration.py
+python test_state_system.py
+
+# Test Korean font installation
+python setup/test_korean_font.py
+```
 
 ## Architecture Overview
 
@@ -52,9 +67,10 @@ The framework implements a LangGraph-based workflow with five specialized agents
 
 ### LLM Tier System
 Agent-LLM mapping is configured in `src/config/agents.py`:
-- **Basic LLM**: Coordinator, Coder
-- **Reasoning LLM**: Planner, Supervisor, Reporter  
+- **Basic LLM**: Coordinator, Coder (optimized for fast responses)
+- **Reasoning LLM**: Planner, Supervisor, Reporter (supports prompt caching)
 - **Vision LLM**: Browser agent (available but not used in current workflow)
+- **Model Support**: All Amazon Bedrock models (Nova, Claude, DeepSeek, Llama, etc.)
 
 ### Prompt System
 Each agent uses role-specific prompts from `src/prompts/*.md` files:
@@ -92,11 +108,12 @@ New agents should follow the pattern in `src/graph/nodes.py`:
 2. Apply prompt template from `src/prompts/template.py`
 3. Handle state updates and message passing according to LangGraph conventions
 
-### Tool Registration
+### Tool Registration  
 Custom tools should:
-1. Implement the Strands tool specification format
+1. Implement the Strands tool specification format (see `src/config/tools.py`)
 2. Include proper logging using the established logger pattern
 3. Use the `@log_io` decorator from `src/tools/decorators.py`
+4. Follow patterns in existing tools: `python_repl_tool.py`, `bash_tool.py`
 
 ### State Management
 The workflow uses a shared state object defined in `src/graph/types.py` that includes:
@@ -121,3 +138,17 @@ The framework automatically uses AWS credentials from the environment or AWS CLI
 - Generated reports and analysis results are saved to `./artifacts/` directory
 - The system automatically cleans this directory on each run
 - PDF reports require Korean font installation for proper rendering
+- Sample outputs available in `assets/` directory (report.pdf, demo.gif)
+
+## Development Environment
+
+### Tested Environments
+- Amazon SageMaker AI Studio (CodeEditor and JupyterLab)
+- Local development with UV package manager
+
+### File Structure Notes
+- `test.py` - Basic integration testing example
+- `main.py` - CLI entry point  
+- `main.ipynb` - Jupyter notebook interface
+- `app/app.py` - Streamlit web interface
+- Configuration files use both UV (`setup/pyproject.toml`) and traditional Python patterns

@@ -138,7 +138,7 @@ def planner_node(state: State) -> Command[Literal["supervisor", "__end__"]]:
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message, agent_name="planner"))
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
-    goto = "supervisor"
+    goto = "supervisor" 
         
     history = state.get("history", [])
     history.append({"agent":"planner", "message": response["text"]})

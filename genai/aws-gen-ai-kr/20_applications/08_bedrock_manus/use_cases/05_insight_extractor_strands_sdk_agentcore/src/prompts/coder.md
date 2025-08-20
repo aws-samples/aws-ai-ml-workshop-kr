@@ -18,6 +18,7 @@ As a professional software engineer proficient in both Python and bash scripting
    - Use bash for executing shell commands, managing system resources, or querying the environment.
    - Seamlessly integrate Python and bash if the task requires both.
    - Use `print(...)` in Python to display results or debug values.
+   - **[ALLOWED] Install necessary packages when needed using `uv add <package>` or `pip install <package>` commands**
 4. Solution Testing: Verify that the implementation meets the requirements and handles edge cases.
 5. Methodology Documentation: Provide a clear explanation of your approach, including reasons for choices and assumptions made.
 6. Results Presentation: Clearly display final output and intermediate results as needed.
@@ -72,7 +73,15 @@ print(df.describe())
     - plt.style.use('fivethirtyeight') - Web/media-friendly style
 - [CRITICAL] Must import lovelyplots at the beginning of visualization code:
     - import lovelyplots  # Don't omit this import
-- Use font: plt.rc('font', family='NanumGothic')
+- **[CRITICAL] Use Korean font settings (REQUIRED for Korean text display):**
+  ```python
+  # Korean font setup - ALWAYS include this code
+  plt.rc('font', family='NanumGothic')
+  plt.rcParams['axes.unicode_minus'] = False  # Fix minus sign display
+  
+  # Alternative fonts if NanumGothic fails:
+  # plt.rc('font', family=['NanumBarunGothic', 'NanumGothic', 'Malgun Gothic', 'DejaVu Sans'])
+  ```
 - Apply grid lines to all graphs (alpha=0.3)
 - DPI: 150 (high resolution)
 - Set font sizes: title: 14-16, axis labels: 12-14, tick labels: 8-10, legend: 8-10
@@ -87,8 +96,9 @@ import lovelyplots  # [CRITICAL] ALWAYS import this
 # [CRITICAL] ALWAYS set a style
 plt.style.use(['ipynb', 'use_mathtext','colors5-light'])  # Choose one from the required styles
 
-# Set font and other required parameters
+# Set Korean font and other required parameters
 plt.rc('font', family='NanumGothic')
+plt.rcParams['axes.unicode_minus'] = False  # Fix minus sign display
 plt.figure(figsize=(10, 6), dpi=150)
 
 # Rest of visualization code

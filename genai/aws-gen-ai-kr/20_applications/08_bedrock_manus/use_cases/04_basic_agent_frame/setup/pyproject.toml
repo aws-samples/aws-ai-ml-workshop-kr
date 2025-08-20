@@ -1,5 +1,5 @@
 [project]
-name = "basic-agent-frame-sh"
+name = "basic-agent-frame"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
