@@ -5,8 +5,7 @@ import os
 import sys
 import shutil
 import asyncio
-import streamlit as st
-from src.workflow import run_agent_workflow, run_agent_workflow_streaming
+from src.workflow import run_graph_streaming_workflow
 
 def remove_artifact_folder(folder_path="./artifacts/"):
     """
@@ -26,39 +25,43 @@ def remove_artifact_folder(folder_path="./artifacts/"):
     else:
         print(f"'{folder_path}' 폴더가 존재하지 않습니다.")
 
-def execution(user_query):
-    remove_artifact_folder()
-    result = asyncio.run(
-        run_agent_workflow(
-            user_input=user_query,
-            debug=False
-        )
-    )
 
-    # Print the conversation history
-    print("\n=== Conversation History ===")
-    print ("result", result)
-    for history in result["history"]:
-        print ("===")
-        print (f'agent: {history["agent"]}')
-        print (f'message: {history["message"]}')
 
-    return result
 
-async def execution_streaming(user_query):
-    """Execute workflow with streaming support"""
+async def graph_streaming_execution(user_query):
+    """Execute full graph streaming workflow with real-time events"""
     remove_artifact_folder()
     
-    print("\n=== Starting Streaming Execution ===")
+    print("\n=== Starting Graph Streaming Execution ===")
+    print("Real-time streaming events from full graph:")
     
-    final_result = None
-    async for event in run_agent_workflow_streaming(user_input=user_query, debug=False):
-        if event.get("type") == "workflow_complete":
-            final_result = event.get("result")
-            print(f"\n=== Workflow Complete ===")
-        elif event.get("event_type") == "text_chunk":
+    async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
+        if event.get("event_type") == "text_chunk":
             # Print streaming text chunks in real-time
             print(event.get("data", ""), end="", flush=True)
+        elif event.get("event_type") == "reasoning":
+            # Print reasoning tokens in real-time (can be used separately later)
+            print(event.get("reasoning_text", ""), end="", flush=True)
+        
+        
+        ## 툴 프린팅은 수정해야 함!! 스트리밍 될 수 있는 지 확인하기 event를 출력하면 어떻게 넘어 오는지 확인 가능함. 
+        elif event.get("event_type") == "tool_use": 
+            # Print tool usage events
+            tool_name = event.get("tool_name", "unknown")
+            tool_input = event.get("tool_input", "")
+            
+            # Try to parse tool_input as JSON and extract task
+            try:
+                import json
+                tool_data = json.loads(tool_input)
+                task = tool_data.get("task", tool_input)
+                print(f"\n[TOOL] Using {tool_name}", flush=True)
+                print(f"[TOOL] Task: {task[:100]}{'...' if len(task) > 100 else ''}", flush=True)
+            except:
+                print(f"\n[TOOL] Using {tool_name}...", flush=True)
+        elif event.get("type") == "final_result":
+            print(f"\n\n[FINAL] Agent: {event.get('agent')}")
+            print(f"[FINAL] Response: {event.get('response')}")
         else:
             # Print other events
             print(f"\n[EVENT] {event}")
@@ -77,16 +80,17 @@ async def execution_streaming(user_query):
     else:
         print("No conversation history found in global state")
     
-    return final_result
-    
+    print("\n=== Graph Streaming Execution Complete ===")
 
 if __name__ == "__main__":
 
     remove_artifact_folder()
 
-    if len(sys.argv) > 1: user_query = " ".join(sys.argv[1:])
-    else: user_query = input("Enter your query: ")
-    
+    if len(sys.argv) > 1: 
+        user_query = " ".join(sys.argv[1:])
+    else: 
+        user_query = input("Enter your query: ")
+
     user_query = '''
         이것은 아마존 상품판매 데이터를 분석하고 싶습니다.
         분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.
@@ -97,5 +101,5 @@ if __name__ == "__main__":
         최종 리포트는 pdf 형태로 저장해 주세요.
     '''
     
-    # Use streaming execution
-    result = asyncio.run(execution_streaming(user_query))
+    # Use full graph streaming execution for real-time streaming with graph structure
+    result = asyncio.run(graph_streaming_execution(user_query))

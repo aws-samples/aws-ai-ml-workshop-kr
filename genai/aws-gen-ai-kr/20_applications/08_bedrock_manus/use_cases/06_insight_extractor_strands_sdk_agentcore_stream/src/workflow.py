@@ -1,14 +1,8 @@
 import logging
 from textwrap import dedent
-#from src.config import TEAM_MEMBERS
 from src.graph import build_graph
-from src.utils.common_utils import get_message_from_string
+from src.graph.builder import build_streaming_graph
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,  # Default level is INFO
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-)
 
 def enable_debug_logging():
     """Enable debug level logging for more detailed execution information."""
@@ -40,65 +34,6 @@ graph = build_graph()
 def get_graph():
     return graph
 
-def run_agent_workflow(user_input: str, debug: bool = False):
-    """Run the agent workflow with the given user input.
-
-    Args:
-        user_input: The user's query or request
-        debug: If True, enables debug level logging
-
-    Returns:
-        The final state after the workflow completes
-    """
-    if not user_input:
-        raise ValueError("Input could not be empty")
-
-    if debug:
-        enable_debug_logging()
-
-    # Clear global state at workflow start
-    from src.graph.nodes import _global_node_states
-    _global_node_states.clear()
-
-    #logger.info(f"Starting workflow with user input: {user_input}")
-    logger.info(f"{Colors.GREEN}===== Starting workflow ====={Colors.END}")
-    logger.info(f"{Colors.GREEN}\nuser input: {user_input}{Colors.END}")
-    
-    # Prepare input as dictionary for flexible parameter passing
-    user_prompts = dedent(
-        '''
-        Here is a user request: <user_request>{user_request}</user_request>
-        '''
-    )
-    context = {"user_request": user_input}
-    user_prompts = user_prompts.format(**context)
-
-    # Pass dictionary to graph for **kwargs support
-    result = graph.invoke_async(
-        task={
-            "request": user_input,
-            "request_prompt": user_prompts
-        }
-    )
-        
-    # result = graph.invoke(
-    #     input={
-    #         # Constants
-    #         "TEAM_MEMBERS": TEAM_MEMBERS,
-    #         # Runtime Variables
-    #         "messages": messages,
-    #         #"deep_thinking_mode": True,
-    #         #"search_before_planning": False,
-    #         "request": user_input,
-    #         "request_prompt": user_prompts
-    #     },
-    #     config={
-    #         "recursion_limit": 100
-    #     }
-    # )
-    logger.debug(f"{Colors.RED}Final workflow state: {result}{Colors.END}")
-    logger.info(f"{Colors.GREEN}===== Workflow completed successfully ====={Colors.END}")
-    return result
 
 async def run_agent_workflow_streaming(user_input: str, debug: bool = False):
     """Run the agent workflow with streaming support using callback mechanism.
@@ -166,8 +101,46 @@ async def run_agent_workflow_streaming(user_input: str, debug: bool = False):
     logger.info(f"{Colors.GREEN}===== Streaming workflow completed successfully ====={Colors.END}")
 
 
-if __name__ == "__main__":
-    run_agent_workflow(
-        user_input="안녕 나는 장동진이야"
+async def run_graph_streaming_workflow(user_input: str, debug: bool = False):
+    """Full graph streaming workflow that maintains graph structure.
+    
+    Args:
+        user_input: The user's query or request  
+        debug: If True, enables debug level logging
+        
+    Yields:
+        Streaming events from graph execution in real-time
+    """
+    if not user_input:
+        raise ValueError("Input could not be empty")
+
+    if debug:
+        enable_debug_logging()
+
+    logger.info(f"{Colors.GREEN}===== Starting graph streaming workflow ====={Colors.END}")
+    logger.info(f"{Colors.GREEN}\nuser input: {user_input}{Colors.END}")
+    
+    # Prepare input as dictionary
+    user_prompts = dedent(
+        '''
+        Here is a user request: <user_request>{user_request}</user_request>
+        '''
     )
-    #print(graph.get_graph().draw_mermaid())
+    context = {"user_request": user_input}
+    user_prompts = user_prompts.format(**context)
+
+    # Build streaming graph
+    streaming_graph = build_streaming_graph()
+    
+    # Execute graph with streaming
+    async for event in streaming_graph.invoke_async_streaming(
+        task={
+            "request": user_input,
+            "request_prompt": user_prompts
+        }
+    ):
+        yield event
+        
+    logger.info(f"{Colors.GREEN}===== Graph streaming workflow completed ====={Colors.END}")
+
+

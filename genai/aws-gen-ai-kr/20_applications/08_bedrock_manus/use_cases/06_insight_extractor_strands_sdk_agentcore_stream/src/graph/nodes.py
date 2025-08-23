@@ -1,7 +1,6 @@
  
 import pprint
 import logging
-import json
 
 import asyncio
 from src.utils.strands_sdk_utils import strands_utils
@@ -123,13 +122,54 @@ class FunctionNode(MultiAgentBase):
             # ... execution details
         )
 
+class StreamingFunctionNode:
+    """Streaming version of FunctionNode that yields events in real-time."""
+
+    def __init__(self, func, name: str = None):
+        self.func = func
+        self.name = name or func.__name__
+
+    async def invoke_async_streaming(self, task=None, **kwargs):
+        """Execute function and yield streaming events in real-time"""
+        if asyncio.iscoroutinefunction(self.func): 
+            result = await self.func(task=task, **kwargs)
+        else: 
+            result = self.func(task=task, **kwargs)
+        
+        # Check if result is an async generator (streaming case)
+        if hasattr(result, '__aiter__'):
+            # For streaming functions, yield events in real-time
+            async for event in result:
+                #print(f"StreamingNode yielding: {event}")
+                yield event
+                
+                # Also call the global streaming callback if set
+                global _streaming_callback
+                if _streaming_callback:
+                    _streaming_callback(event)
+        else:
+            # Normal case: just return the result
+            _, response = result
+            yield {
+                "type": "final_result",
+                "agent": self.name,
+                "response": response
+            }
+
 def should_handoff_to_planner(state):
     """Check if coordinator requested handoff to planner."""
-    # Check global shared state for goto field
+    # Check coordinator's response for handoff request
     global _global_node_states
     shared_state = _global_node_states.get('shared', {})
-    goto = shared_state.get('goto', '__end__')
-    return goto == 'planner'
+    history = shared_state.get('history', [])
+    
+    # Look for coordinator's last message
+    for entry in reversed(history):
+        if entry.get('agent') == 'coordinator':
+            message = entry.get('message', '')
+            return 'handoff_to_planner' in message
+    
+    return False
 
 
 async def coordinator_node(task=None, **kwargs):
@@ -155,7 +195,6 @@ async def coordinator_node(task=None, **kwargs):
     # Collect streaming events and build final response
     streaming_events = []
     async for event in strands_utils.process_streaming_response_yield(agent, request_prompt):
-        print(f"in_node: {event}")
         streaming_events.append(event)
         yield(event)
 
@@ -171,9 +210,6 @@ async def coordinator_node(task=None, **kwargs):
     logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(agent.messages[:-1], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Coordinator response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
-    goto = "__end__"
-    if "handoff_to_planner" in response["text"]: goto = "planner"
-    
     # Store data directly in shared global storage
     global _global_node_states
     
@@ -181,9 +217,8 @@ async def coordinator_node(task=None, **kwargs):
     if 'shared' not in _global_node_states: _global_node_states['shared'] = {}
     shared_state = _global_node_states['shared']
     
-    # Update shared global state
+    # Update shared global state (remove goto, let graph handle routing)
     shared_state['messages'] = agent.messages
-    shared_state['goto'] = goto
     shared_state['request'] = request
     shared_state['request_prompt'] = request_prompt
     
@@ -235,26 +270,36 @@ async def planner_node(task=None, **kwargs):
     
     full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
-    agent, response = await strands_utils.process_streaming_response(agent, message)
+    
+    # Collect streaming events and build final response
+    streaming_events = []
+    async for event in strands_utils.process_streaming_response_yield(agent, message):
+        #print(f"planner_node: {event}")
+        streaming_events.append(event)
+        yield(event)
+
+    # Reconstruct the full response from streaming events
+    full_text = ""
+    for event in streaming_events:
+        if event.get("event_type") == "text_chunk":
+            full_text += event.get("data", "")
+    
+    response = {"text": full_text}
     
     ## Planner logic: create detailed plan with agent assignments ##
     logger.info(f"{Colors.GREEN}===== Planner analyzing and creating execution plan ====={Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner input message:\n{pprint.pformat(message, indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
-    # Planner determines next agent based on the plan
-    goto = "supervisor"
-    
-    # Update shared global state
+    # Update shared global state (remove goto, let graph handle routing)
     shared_state['messages'] = [get_message_from_string(role="user", string=response["text"], imgs=[])]
-    shared_state['goto'] = goto
     shared_state['full_plan'] = response["text"]  # store the generated plan
     shared_state['history'].append({"agent":"planner", "message": response["text"]})
 
     logger.debug(f"\n{Colors.RED}Updated shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
     logger.info(f"{Colors.GREEN}===== Planner completed plan generation ====={Colors.END}")
     
-    return agent, response
+    # Note: Can't return values in async generators, so final result handled through global state
 
 async def supervisor_node(task=None, **kwargs):
     """Supervisor node that decides which agent should act next."""
@@ -286,31 +331,36 @@ async def supervisor_node(task=None, **kwargs):
 
     clues, full_plan, messages = shared_state.get("clues", ""), shared_state.get("full_plan", ""), shared_state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
-    agent, response = await strands_utils.process_streaming_response(agent, message)
+    
+    # Collect streaming events and build final response
+    streaming_events = []
+    async for event in strands_utils.process_streaming_response_yield(agent, message):
+        #print(f"supervisor_node: {event}")
+        streaming_events.append(event)
+        yield(event)
+
+    # Reconstruct the full response from streaming events
+    full_text = ""
+    for event in streaming_events:
+        if event.get("event_type") == "text_chunk":
+            full_text += event.get("data", "")
+        elif event.get("event_type") == "reasoning":
+            full_text += event.get("reasoning_text", "")
+    
+    response = {"text": full_text}
 
     #full_response = response["text"]
-    if response["text"].startswith("```json"): response["text"] = response["text"].removeprefix("```json")
-    if response["text"].endswith("```"): response["text"] = response["text"].removesuffix("```")
-    
-    response["text"] = json.loads(response["text"])   
-    goto = response["text"]["next"]
-
     logger.debug(f"\n{Colors.RED}Supervisor - current state messages:\n{pprint.pformat(shared_state['messages'], indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Supervisor response:{response["text"]}{Colors.END}")
+    logger.debug(f"\n{Colors.RED}Supervisor response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
+    
+    logger.info(f"\n{Colors.GREEN}===== Workflow completed ====={Colors.END}")
 
-    if goto == "FINISH":
-        goto = "__end__"
-        logger.info(f"\n{Colors.GREEN}===== Workflow completed ====={Colors.END}")
-    else:
-        logger.info(f"{Colors.GREEN}Supervisor delegating to: {goto}{Colors.END}")
-
-    # Update shared global state
-    shared_state['goto'] = goto
+    # Update shared global state (remove goto, supervisor is the end node)
     shared_state['history'].append({"agent":"supervisor", "message": response["text"]})
     
     logger.debug(f"\n{Colors.RED}Updated shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}")
     logger.info(f"{Colors.GREEN}===== Supervisor completed task ====={Colors.END}")
     
-    return agent, response
+    # Note: Can't return values in async generators, so final result handled through global state
 
 
