@@ -57,7 +57,8 @@ def coordinator_node(state: State) -> Command[Literal["planner", "__end__"]]:
     
     message = state["request_prompt"]
     agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message))
-    
+    #asyncio.run(strands_utils.process_streaming_response_agentcore(agent, message))
+
     state["messages"] = agent.messages
     logger.debug(f"\n{Colors.RED}Current state messages:\n{pprint.pformat(state['messages'][:-1], indent=2, width=100)}{Colors.END}")
     logger.debug(f"\n{Colors.RED}Coordinator response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")

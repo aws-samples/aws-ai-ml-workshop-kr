@@ -1,0 +1,30 @@
+default_agent: agentcore_strands
+agents:
+  agentcore_strands:
+    name: agentcore_strands
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/13_agentcore/tutorials/01-AgentCore-runtime/01-hosting-agent/01-strands-with-bedrock-model/strands_claude_stream.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::615299776985:role/agentcore-agentcore_strands-role
+      execution_role_auto_create: false
+      account: '615299776985'
+      region: us-west-2
+      ecr_repository: 615299776985.dkr.ecr.us-west-2.amazonaws.com/bedrock-agentcore-agentcore_strands
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: agentcore_strands-R7MnezAFRn
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:615299776985:runtime/agentcore_strands-R7MnezAFRn
+      agent_session_id: 9edbfc94-7db9-4abc-a3dc-c228e5d97532
+    codebuild:
+      project_name: bedrock-agentcore-agentcore_strands-builder
+      execution_role: arn:aws:iam::615299776985:role/AmazonBedrockAgentCoreSDKCodeBuild-us-west-2-5b70b9d456
+      source_bucket: bedrock-agentcore-codebuild-sources-615299776985-us-west-2
+    authorizer_configuration: null
+    oauth_configuration: null

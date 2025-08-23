@@ -161,32 +161,68 @@ class strands_utils():
     
     @staticmethod
     async def process_streaming_response_agentcore(agent, message):
-        callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
+        #callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
         response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
-        try:
-            agent_stream = agent.stream_async(message)
-            async for event in agent_stream:
-                if "reasoningText" in event:
-                    response["reasoning"] += event["reasoningText"]
-                    callback_reasoning.on_llm_new_token(event["reasoningText"])
-                elif "reasoning_signature" in event:
-                    response["signature"] += event["reasoning_signature"]
-                elif "data" in event:
-                    response["text"] += event["data"]
-                    callback_answer.on_llm_new_token(event["data"])
-                elif "current_tool_use" in event and event["current_tool_use"].get("name"):
-                    response["tool_use"] = event["current_tool_use"]["name"]
-                    if "event_loop_metrics" in event:
-                        if response["cycle"] != event["event_loop_metrics"].cycle_count:
-                            response["cycle"] = event["event_loop_metrics"].cycle_count
-                            callback_answer.on_llm_new_token(f' \n## Calling tool: {event["current_tool_use"]["name"]} - # Cycle: {event["event_loop_metrics"].cycle_count}\n')
-                # Yield the event for AgentCore streaming
-                #yield event
-        except Exception as e:
-            logger.error(f"Error in streaming response: {e}")
-            logger.error(traceback.format_exc())  # Detailed error logging
         
-        return agent, response
+        agent_stream = agent.stream_async(message)
+        async for event in agent_stream:
+            #Strands 이벤트를 AgentCore 형식으로 변환
+            agentcore_event = await strands_utils._convert_to_agentcore_event(
+                event, "coordinator", "session-1"
+            )
+            if agentcore_event:
+                yield agentcore_event
+
+                # # 결과 텍스트 누적
+                # if agentcore_event.get("event_type") == "text_chunk":
+                #     coordinator_result += agentcore_event.get("data", "")
+
+
+    @staticmethod
+    async def _convert_to_agentcore_event(strands_event, agent_name, session_id):
+        
+        import datetime
+        """Strands 이벤트를 AgentCore 스트리밍 형식으로 변환"""        
+        
+        base_event = {
+            "timestamp": datetime.now().isoformat(),
+            "session_id": session_id,
+            "agent_name": agent_name,
+            "source": "strands_data_analysis_graph"
+        }
+        
+        # 텍스트 데이터 이벤트
+        if "data" in strands_event:
+            return {
+                **base_event,
+                "type": "agent_text_stream",
+                "event_type": "text_chunk",
+                "data": strands_event["data"],
+                "chunk_size": len(strands_event["data"])
+            }
+        
+        # 도구 사용 이벤트
+        elif "current_tool_use" in strands_event:
+            tool_info = strands_event["current_tool_use"]
+            return {
+                **base_event,
+                "type": "agent_tool_stream",
+                "event_type": "tool_use",
+                "tool_name": tool_info.get("name", "unknown"),
+                "tool_id": tool_info.get("toolUseId"),
+                "tool_input": tool_info.get("input", {})
+            }
+        
+        # 추론 이벤트
+        elif "reasoning" in strands_event and strands_event.get("reasoning"):
+            return {
+                **base_event,
+                "type": "agent_reasoning_stream",
+                "event_type": "reasoning",
+                "reasoning_text": strands_event.get("reasoningText", "")[:200]
+            }
+        
+        return None
 
     @staticmethod
     def parsing_text_from_response(response):

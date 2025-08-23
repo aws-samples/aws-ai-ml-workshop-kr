@@ -1,48 +1,33 @@
 
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>아마존 신선식품 판매 데이터 분석 및 마케팅 인사이트 도출</title>
+    <title>아마존 상품판매 데이터 분석 보고서</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
-        
         body {
             font-family: 'Nanum Gothic', sans-serif;
             margin: 2cm;
-            line-height: 1.6;
-            color: #333;
-        }
-        h1, h2, h3, h4 {
-            color: #2c3e50;
-            margin-top: 1.5em;
+            line-height: 1.5;
         }
         h1 {
+            color: #2c3e50;
             text-align: center;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
-            margin-bottom: 30px;
         }
         h2 {
-            border-left: 5px solid #3498db;
-            padding-left: 15px;
-            margin-top: 40px;
+            color: #3498db;
+            margin-top: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
         }
-        .executive-summary {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
         }
-        .key-finding {
-            background-color: #e8f4f8;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        .chart-container {
-            margin: 30px auto;
-            text-align: center;
+        .content {
+            margin-top: 20px;
         }
         img {
             max-width: 100%;
@@ -50,14 +35,11 @@
             display: block;
             margin: 20px auto;
             border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .image-caption {
             text-align: center;
             font-style: italic;
             margin-bottom: 20px;
-            color: #555;
         }
         table {
             width: 100%;
@@ -74,560 +56,180 @@
         th {
             background-color: #f2f2f2;
         }
-        .insights {
-            background-color: #f0f7f4;
+        .insight-box {
+            background-color: #e8f4f8;
             padding: 15px;
-            border-left: 4px solid #2ecc71;
-            margin: 15px 0;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
         }
-        .recommendations {
-            background-color: #fef9e7;
+        .recommendation-box {
+            background-color: #e8f8e8;
             padding: 15px;
-            border-left: 4px solid #f1c40f;
-            margin: 15px 0;
+            border-left: 5px solid #27ae60;
+            margin: 20px 0;
         }
-        .footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 0.9em;
-            color: #777;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
+        .executive-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>아마존 신선식품 판매 데이터 분석 및 마케팅 인사이트 도출</h1>
+    <h1>아마존 상품판매 데이터 분석 및 마케팅 인사이트 도출 보고서</h1>
     
     <div class="executive-summary">
-        <h2>Executive Summary</h2>
-        <p>본 분석은 아마존 신선식품(과일, 채소, 유제품) 판매 데이터를 기반으로 구매 패턴, 고객 세그먼테이션, 마케팅 프로모션 효과를 종합적으로 분석하여 마케팅 인사이트를 도출하는 것을 목적으로 합니다. 총 1,220건의 주문 데이터를 분석한 결과, 고객 세그먼트별 선호도, 카테고리별 성과, 프로모션 효과성에 뚜렷한 차이가 있음을 확인하였습니다. 이러한 인사이트를 바탕으로 맞춤형 마케팅 전략 수립이 가능하며, 매출 증대를 위한 구체적인 액션 아이템을 제시합니다.</p>
-    </div>
-    
-    <h2>1. 데이터셋 개요</h2>
-    <p>분석에 활용된 데이터셋은 아마존의 신선식품 판매 데이터로, 총 1,220건의 주문 정보를 포함하고 있습니다. 주요 변수로는 주문 날짜, 상품 카테고리, 금액, 수량, 고객 정보(성별, 연령대), 프로모션 정보 등 18개 항목이 포함되어 있습니다.</p>
-    
-    <h3>1.1 데이터 구조</h3>
-    <ul>
-        <li>데이터 크기: 1,220행 x 18열</li>
-        <li>주요 변수: Date, Status, Category, Qty, Amount, Gender, Age Group, promotion-ids 등</li>
-        <li>카테고리: 과일, 채소, 유제품</li>
-        <li>기간: 다수의 일자에 걸친 판매 데이터</li>
-    </ul>
-    
-    <h3>1.2 데이터 전처리</h3>
-    <p>분석을 위해 다음과 같은 전처리 작업을 수행하였습니다:</p>
-    <ul>
-        <li>결측치 처리: promotion-ids 컬럼의 결측치(103개)를 'NO_PROMOTION'으로 대체</li>
-        <li>이상치 분석: IQR 방식으로 Qty 및 Amount 변수의 이상치 식별 (Amount 변수에서 57개의 이상치 발견)</li>
-        <li>시간 데이터 변환: Date 컬럼을 datetime 형식으로 변환하고, Month, Weekday, Week 등의 추가 피처 생성</li>
-    </ul>
-    
-    <h2>2. 주요 분석 결과</h2>
-    
-    <h3>2.1 기술통계량 및 데이터 분포</h3>
-    <p>수치형 변수와 범주형 변수에 대한 기본 통계량 분석 결과는 다음과 같습니다:</p>
-    
-    <h4>수치형 변수 기술통계량</h4>
-    <table>
-        <tr>
-            <th></th>
-            <th>Qty</th>
-            <th>Amount</th>
-        </tr>
-        <tr>
-            <td>count</td>
-            <td>1,220.00</td>
-            <td>1,220.00</td>
-        </tr>
-        <tr>
-            <td>mean</td>
-            <td>1.79</td>
-            <td>7,064.88</td>
-        </tr>
-        <tr>
-            <td>std</td>
-            <td>0.83</td>
-            <td>3,750.57</td>
-        </tr>
-        <tr>
-            <td>min</td>
-            <td>1.00</td>
-            <td>2,900.00</td>
-        </tr>
-        <tr>
-            <td>25%</td>
-            <td>1.00</td>
-            <td>4,500.00</td>
-        </tr>
-        <tr>
-            <td>50%</td>
-            <td>2.00</td>
-            <td>5,990.00</td>
-        </tr>
-        <tr>
-            <td>75%</td>
-            <td>3.00</td>
-            <td>8,500.00</td>
-        </tr>
-        <tr>
-            <td>max</td>
-            <td>3.00</td>
-            <td>23,700.00</td>
-        </tr>
-    </table>
-    
-    <div class="chart-container">
-        <img src="./artifacts/numerical_distributions.png" alt="수치형 변수 분포">
-        <div class="image-caption">그림 1: 수치형 변수(Qty, Amount) 분포</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/categorical_distributions.png" alt="범주형 변수 분포">
-        <div class="image-caption">그림 2: 범주형 변수(Category, Gender, Age Group) 분포</div>
-    </div>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
+        <h2>개요</h2>
+        <p>본 보고서는 아마존 상품판매 데이터를 분석하여 마케팅 인사이트를 도출한 결과입니다. 데이터셋은 1,220개의 주문 데이터를 포함하고 있으며, 기본 데이터 탐색부터 상품 판매 트렌드, 변수 관계 분석, 고객 세그먼트 분석 등을 수행했습니다.</p>
+        
+        <h3>주요 발견사항</h3>
         <ul>
-            <li>주문 수량(Qty)은 1~3개 사이에 분포하며, 평균 1.79개입니다.</li>
-            <li>주문 금액(Amount)은 2,900원에서 23,700원 사이에 분포하며, 평균 7,065원입니다.</li>
-            <li>카테고리별로는 채소(458건), 과일(414건), 유제품(348건) 순으로 주문이 많았습니다.</li>
-            <li>성별 분포는 여성(612건, 50.2%)과 남성(608건, 49.8%)이 비슷합니다.</li>
-            <li>연령대는 30대(412건, 33.8%), 50대(301건, 24.7%), 40대(298건, 24.4%) 순으로 많으며, 이 세 연령대가 전체의 82.9%를 차지합니다.</li>
+            <li>과일 카테고리가 3,967,350원으로 가장 높은 매출을 기록했으며, 평균 주문 금액도 가장 높음</li>
+            <li>일요일이 1,337,340원으로 가장 높은 매출을 기록</li>
+            <li>프로모션이 적용된 주문은 미적용 주문보다 평균 3,605원 더 높은 금액을 기록</li>
+            <li>50대 남성이 과일 카테고리에서 가장 높은 매출을 기록 (987,400원)</li>
+            <li>배송 서비스 레벨 중 Standard가 가장 많이 사용되지만, Expedited와 Priority 서비스가 더 높은 평균 주문금액을 기록</li>
         </ul>
     </div>
     
-    <h3>2.2 시간에 따른 판매 트렌드 분석</h3>
-    <p>일별, 요일별 판매 패턴을 분석한 결과는 다음과 같습니다:</p>
-    
-    <div class="chart-container">
-        <img src="./artifacts/daily_trends.png" alt="일별 주문 건수 및 매출액 추이">
-        <div class="image-caption">그림 3: 일별 주문 건수 및 매출액 추이</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/weekday_patterns.png" alt="요일별 주문 패턴">
-        <div class="image-caption">그림 4: 요일별 주문 패턴</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/category_daily_trends.png" alt="카테고리별 일별 매출 추이">
-        <div class="image-caption">그림 5: 카테고리별 일별 매출 추이</div>
-    </div>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
+    <h2>1. 데이터 개요 및 기초 분석</h2>
+    <div class="content">
+        <p>분석에 사용된 데이터셋은 총 1,220개의 주문 기록과 18개의 변수로 구성되어 있습니다.</p>
+        
+        <h3>1.1 데이터 구조</h3>
+        <p>데이터셋은 다음과 같은 변수들로 구성되어 있습니다:</p>
         <ul>
-            <li>일평균 주문 건수는 6.70건, 일평균 매출액은 47,358원입니다.</li>
-            <li>최대 일일 주문 건수는 23건(2024-06-30), 최대 일일 매출액은 148,490원(2024-06-30)입니다.</li>
-            <li>요일별로는 일요일(Sunday)에 가장 많은 주문(188건)이 발생했으며, 금요일(Friday)에 평균 주문금액(7,385원)이 가장 높았습니다.</li>
-            <li>카테고리별 일별 매출 추이를 보면 카테고리마다 다른 변동성을 보이며, 특히 유제품 카테고리가 비교적 안정적인 매출을 보이고 있습니다.</li>
+            <li>index, Date: 주문 번호 및 날짜</li>
+            <li>Status, Fulfilment, Courier Status: 주문 상태 관련 정보</li>
+            <li>ship-service-level: 배송 서비스 수준 (Standard, Expedited, Priority)</li>
+            <li>Style, SKU, Category, Size: 상품 관련 정보</li>
+            <li>Qty, Amount: 주문 수량 및 금액</li>
+            <li>ship-city, ship-state, ship-postal-code: 배송지 정보</li>
+            <li>promotion-ids: 적용된 프로모션 ID</li>
+            <li>Gender, Age Group: 고객 인구통계 정보</li>
         </ul>
+        
+        <h3>1.2 기술통계량</h3>
+        <p>주문 수량(Qty)은 평균 1.79개이며, 주문 금액(Amount)은 평균 7,064원입니다. 최소 주문 금액은 2,900원, 최대 주문 금액은 23,700원입니다. 프로모션 ID(promotion-ids)에는 103개의 결측치가 있으며, 이는 프로모션이 적용되지 않은 주문을 의미합니다.</p>
     </div>
     
-    <h3>2.3 카테고리별 성과 분석</h3>
-    <p>각 카테고리별 성과를 분석한 결과는 다음과 같습니다:</p>
-    
-    <div class="chart-container">
-        <img src="./artifacts/category_amount.png" alt="카테고리별 평균 주문금액">
-        <div class="image-caption">그림 6: 카테고리별 평균 주문금액</div>
+    <h2>2. 판매 트렌드 분석</h2>
+    <div class="content">
+        <h3>2.1 월별 매출 트렌드</h3>
+        <p>전체 기간 동안의 총 매출액은 8,619,150원이며, 월평균 매출액은 1,436,525원입니다. 2024년 5월에 가장 높은 매출을 기록했습니다.</p>
+        <img src="./artifacts/monthly_sales_trend.png" alt="월별 매출액 추이">
+        <div class="image-caption">그림 1: 월별 매출액 추이</div>
+        
+        <h3>2.2 카테고리별 매출 분석</h3>
+        <p>카테고리별 매출은 과일이 3,967,350원으로 가장 높았으며, 유제품이 2,262,100원으로 가장 낮았습니다. 과일 카테고리는 가장 높은 평균 주문 금액(9,582원)을 기록했습니다.</p>
+        <img src="./artifacts/category_sales.png" alt="카테고리별 총 매출액">
+        <div class="image-caption">그림 2: 카테고리별 총 매출액</div>
+        
+        <h3>2.3 성별/연령대별 구매 패턴</h3>
+        <p>성별 매출 비중은 남성(M)이 4,655,800원, 여성(F)이 3,963,350원으로 남성의 매출 비중이 더 높습니다.</p>
+        <img src="./artifacts/age_gender_sales.png" alt="성별/연령대별 매출액">
+        <div class="image-caption">그림 3: 성별/연령대별 매출액</div>
+        
+        <h3>2.4 주문/배송 현황</h3>
+        <p>모든 주문(1,220건)이 "Shipped" 상태이며, 배송 서비스 레벨은 Standard(588건), Expedited(403건), Priority(229건) 순으로 사용되고 있습니다.</p>
+        <img src="./artifacts/order_delivery_status.png" alt="주문 상태 및 배송 서비스 분포">
+        <div class="image-caption">그림 4: 주문 상태 및 배송 서비스 분포</div>
+        
+        <div class="insight-box">
+            <strong>인사이트:</strong> 과일 카테고리는 총 매출과 평균 주문금액 모두에서 상위를 차지하여, 고부가가치 제품으로 판단됩니다. 또한 남성 고객이 여성 고객보다 더 높은 매출 기여도를 보여주고 있으며, Standard 배송 옵션이 가장 많이 선택되고 있습니다.
+        </div>
     </div>
     
-    <div class="chart-container">
-        <img src="./artifacts/category_performance.png" alt="카테고리별 성과 지표">
-        <div class="image-caption">그림 7: 카테고리별 성과 지표</div>
+    <h2>3. 변수 관계 및 패턴 분석</h2>
+    <div class="content">
+        <h3>3.1 주문 수량과 금액의 관계</h3>
+        <p>주문 수량과 금액 간의 상관계수는 0.383으로, 약한 양의 상관관계를 보입니다. 평균 단가(금액/수량)는 4,454원입니다.</p>
+        <img src="./artifacts/qty_amount_correlation.png" alt="주문 수량과 금액의 상관관계">
+        <div class="image-caption">그림 5: 주문 수량과 금액의 상관관계</div>
+        
+        <h3>3.2 카테고리별 상세 분석</h3>
+        <p>카테고리별 평균 주문금액은 과일(9,582원), 유제품(6,500원), 채소(5,217원) 순으로 높게 나타났습니다. 주문 건수는 채소(458건), 과일(414건), 유제품(348건) 순으로 많았습니다.</p>
+        <img src="./artifacts/category_avg_amount.png" alt="카테고리별 평균 주문 금액">
+        <div class="image-caption">그림 6: 카테고리별 평균 주문 금액</div>
+        
+        <h3>3.3 요일별 주문 패턴</h3>
+        <p>요일별 매출은 일요일(1,337,340원), 금요일(1,262,840원), 월요일(1,246,450원) 순으로 높게 나타났습니다. 가장 낮은 매출을 기록한 요일은 화요일(1,162,160원)입니다.</p>
+        <img src="./artifacts/weekday_sales.png" alt="요일별 총 매출액">
+        <div class="image-caption">그림 7: 요일별 총 매출액</div>
+        
+        <h3>3.4 프로모션 효과 분석</h3>
+        <p>프로모션이 적용된 주문(1,117건)의 평균 금액은 7,369원으로, 프로모션이 적용되지 않은 주문(103건)의 평균 금액 3,764원보다 3,605원 더 높습니다. 프로모션 적용 주문의 총 매출액은 8,231,450원으로 전체 매출의 95.5%를 차지합니다.</p>
+        <img src="./artifacts/promotion_impact.png" alt="프로모션 효과 분석">
+        <div class="image-caption">그림 8: 프로모션 효과 분석</div>
+        
+        <div class="insight-box">
+            <strong>인사이트:</strong> 프로모션은 주문 금액을 크게 증가시키는 효과가 있으며, 일요일과 금요일에 판매가 집중되는 패턴을 보입니다. 과일 카테고리는 다른 카테고리보다 높은 평균 주문금액을 기록하여 고부가가치 상품으로 확인됩니다.
+        </div>
     </div>
     
-    <div class="chart-container">
-        <img src="./artifacts/category_age_distribution.png" alt="카테고리별 연령대 분포">
-        <div class="image-caption">그림 8: 카테고리별 연령대 분포</div>
+    <h2>4. 고객 세그먼트 및 지역 분석</h2>
+    <div class="content">
+        <h3>4.1 고객 세그먼트 분석</h3>
+        <p>성별, 연령대, 카테고리별로 세그먼트를 구분하여 분석한 결과, 50대 남성의 과일 카테고리 구매가 987,400원으로 가장 높은 매출을 기록했습니다. 그 다음으로는 30대 남성의 과일 카테고리 구매(829,400원), 30대 여성의 과일 카테고리 구매(773,790원) 순입니다.</p>
+        <img src="./artifacts/gender_age_heatmap.png" alt="성별 x 연령대별 매출액 히트맵">
+        <div class="image-caption">그림 9: 성별 x 연령대별 매출액 히트맵</div>
+        
+        <h3>4.2 지역별 분석</h3>
+        <p>지역별 매출은 서울이 6,598,880원으로 가장 높았으며, 경기도가 2,020,270원으로 그 뒤를 이었습니다. 평균 주문금액은 경기도가 8,279원으로 서울(6,761원)보다 높게 나타났습니다.</p>
+        <img src="./artifacts/top_states_sales.png" alt="상위 10개 주별 매출액">
+        <div class="image-caption">그림 10: 상위 지역별 매출액</div>
+        
+        <h3>4.3 배송 서비스 레벨별 분석</h3>
+        <p>서비스 레벨별로는 Standard 서비스가 588건으로 가장 많이 사용되었으나, 평균 주문금액은 Priority(8,044원)와 Expedited(7,554원)가 Standard(6,347원)보다 높았습니다. 평균 주문수량은 Expedited 서비스가 2.44개로 가장 많았습니다.</p>
+        <img src="./artifacts/service_level_analysis.png" alt="배송 서비스 레벨별 분석">
+        <div class="image-caption">그림 11: 배송 서비스 레벨별 분석</div>
+        
+        <div class="insight-box">
+            <strong>인사이트:</strong> 50대 남성과 30대 남성이 과일 카테고리에서 가장 높은 매출을 기록하고 있어 주요 타겟 고객층으로 볼 수 있습니다. 서울 지역이 가장 높은 매출을 기록하고 있으나, 경기도 지역은 더 높은 평균 주문금액을 보이고 있어 고객 가치가 높은 지역으로 볼 수 있습니다.
+        </div>
     </div>
     
-    <table>
-        <tr>
-            <th>카테고리</th>
-            <th>주문 건수</th>
-            <th>총 매출액</th>
-            <th>평균 금액</th>
-            <th>총 수량</th>
-        </tr>
-        <tr>
-            <td>과일</td>
-            <td>414</td>
-            <td>3,967,350원</td>
-            <td>9,583원</td>
-            <td>743개</td>
-        </tr>
-        <tr>
-            <td>채소</td>
-            <td>458</td>
-            <td>2,389,700원</td>
-            <td>5,218원</td>
-            <td>844개</td>
-        </tr>
-        <tr>
-            <td>유제품</td>
-            <td>348</td>
-            <td>2,262,100원</td>
-            <td>6,500원</td>
-            <td>602개</td>
-        </tr>
-    </table>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
-        <ul>
-            <li>주문 건수는 채소(458건)가 가장 많았으나, 총 매출액은 과일(3,967,350원)이 가장 높았습니다.</li>
-            <li>평균 주문금액은 과일(9,583원)이 가장 높아, 단가가 높은 카테고리임을 알 수 있습니다.</li>
-            <li>카테고리별 선호 연령대가 다르게 나타났습니다: 과일은 50대, 유제품은 40대, 채소는 30대가 가장 많이 구매했습니다.</li>
-        </ul>
-    </div>
-    
-    <h3>2.4 변수 간 상관관계 분석</h3>
-    
-    <div class="chart-container">
-        <img src="./artifacts/correlation_heatmap.png" alt="변수 간 상관관계 히트맵">
-        <div class="image-caption">그림 9: 변수 간 상관관계 히트맵</div>
-    </div>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
-        <ul>
-            <li>수량(Qty)과 금액(Amount) 간의 상관계수는 0.38로, 중간 정도의 양의 상관관계를 보입니다.</li>
-            <li>카테고리와 구매금액 간에 뚜렷한 관계가 나타납니다.</li>
-            <li>연령대와 카테고리 선호도 간에 유의미한 패턴이 발견됩니다.</li>
-        </ul>
-    </div>
-    
-    <h3>2.5 고객 세그먼트별 구매 패턴 분석</h3>
-    
-    <div class="chart-container">
-        <img src="./artifacts/customer_segment_patterns.png" alt="고객 세그먼트별 구매 패턴">
-        <div class="image-caption">그림 10: 고객 세그먼트별 구매 패턴</div>
-    </div>
-    
-    <h4>성별 & 연령대별 구매 패턴</h4>
-    <table>
-        <tr>
-            <th>성별</th>
-            <th>연령대</th>
-            <th>주문 건수</th>
-            <th>평균 금액</th>
-            <th>총 금액</th>
-            <th>평균 수량</th>
-        </tr>
-        <tr>
-            <td>F</td>
-            <td>20대</td>
-            <td>100</td>
-            <td>5,941원</td>
-            <td>594,140원</td>
-            <td>1.19</td>
-        </tr>
-        <tr>
-            <td>F</td>
-            <td>30대</td>
-            <td>206</td>
-            <td>6,813원</td>
-            <td>1,403,390원</td>
-            <td>1.19</td>
-        </tr>
-        <tr>
-            <td>F</td>
-            <td>40대</td>
-            <td>113</td>
-            <td>5,774원</td>
-            <td>652,490원</td>
-            <td>1.21</td>
-        </tr>
-        <tr>
-            <td>F</td>
-            <td>50대</td>
-            <td>104</td>
-            <td>8,086원</td>
-            <td>840,900원</td>
-            <td>1.17</td>
-        </tr>
-        <tr>
-            <td>F</td>
-            <td>60대</td>
-            <td>89</td>
-            <td>5,308원</td>
-            <td>472,430원</td>
-            <td>1.07</td>
-        </tr>
-        <tr>
-            <td>M</td>
-            <td>20대</td>
-            <td>12</td>
-            <td>13,933원</td>
-            <td>167,200원</td>
-            <td>2.58</td>
-        </tr>
-        <tr>
-            <td>M</td>
-            <td>30대</td>
-            <td>206</td>
-            <td>7,700원</td>
-            <td>1,586,300원</td>
-            <td>2.39</td>
-        </tr>
-        <tr>
-            <td>M</td>
-            <td>40대</td>
-            <td>185</td>
-            <td>6,221원</td>
-            <td>1,150,800원</td>
-            <td>2.88</td>
-        </tr>
-        <tr>
-            <td>M</td>
-            <td>50대</td>
-            <td>197</td>
-            <td>8,513원</td>
-            <td>1,677,000원</td>
-            <td>2.02</td>
-        </tr>
-        <tr>
-            <td>M</td>
-            <td>60대</td>
-            <td>7</td>
-            <td>10,143원</td>
-            <td>71,000원</td>
-            <td>2.00</td>
-        </tr>
-    </table>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
-        <ul>
-            <li>여성(F)과 남성(M) 모두 30대가 가장 많은 주문(각 206건)을 했습니다.</li>
-            <li>평균 구매금액이 가장 높은 세그먼트는 20대 남성(13,933원)으로 나타났습니다.</li>
-            <li>남성이 여성보다 평균 주문 수량이 높게 나타났습니다(남성 평균: ~2.3개, 여성 평균: ~1.2개).</li>
-            <li>50대는 성별에 관계없이 높은 평균 구매금액을 보였습니다.</li>
-        </ul>
-    </div>
-    
-    <h3>2.6 프로모션 효과 및 가격 민감도 분석</h3>
-    
-    <div class="chart-container">
-        <img src="./artifacts/promotion_analysis.png" alt="프로모션별 주문 패턴 분석">
-        <div class="image-caption">그림 11: 프로모션별 주문 패턴 분석</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/price_distribution.png" alt="주문 금액 분포">
-        <div class="image-caption">그림 12: 주문 금액 분포</div>
-    </div>
-    
-    <h4>프로모션별 성과</h4>
-    <table>
-        <tr>
-            <th>프로모션</th>
-            <th>주문 건수</th>
-            <th>평균 금액</th>
-            <th>총 금액</th>
-            <th>평균 수량</th>
-        </tr>
-        <tr>
-            <td>VEGGIESALE</td>
-            <td>271</td>
-            <td>4,694원</td>
-            <td>1,272,000원</td>
-            <td>1.94</td>
-        </tr>
-        <tr>
-            <td>DAIRYPROMO</td>
-            <td>270</td>
-            <td>5,933원</td>
-            <td>1,602,000원</td>
-            <td>1.75</td>
-        </tr>
-        <tr>
-            <td>FRUITPROMO5</td>
-            <td>205</td>
-            <td>7,774원</td>
-            <td>1,593,650원</td>
-            <td>1.50</td>
-        </tr>
-        <tr>
-            <td>SUMMERFRUIT</td>
-            <td>136</td>
-            <td>10,700원</td>
-            <td>1,455,200원</td>
-            <td>2.12</td>
-        </tr>
-        <tr>
-            <td>EARLY5</td>
-            <td>53</td>
-            <td>10,898원</td>
-            <td>577,600원</td>
-            <td>2.06</td>
-        </tr>
-    </table>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
-        <ul>
-            <li>가장 많은 주문을 이끌어낸 프로모션은 VEGGIESALE(271건)과 DAIRYPROMO(270건)입니다.</li>
-            <li>평균 주문금액이 가장 높은 프로모션은 SPRING24(12,439원)와 EARLY5(10,898원)입니다.</li>
-            <li>SUMMERFRUIT 프로모션은 높은 평균 구매금액(10,700원)과 수량(2.12개)을 보여 효과적인 프로모션으로 나타났습니다.</li>
-            <li>주문 금액 분포는 5,000~6,000원대에서 가장 높은 빈도를 보이며, 정규분포와 유사한 형태를 보입니다.</li>
-        </ul>
-    </div>
-    
-    <h3>2.7 RFM 분석 및 장바구니 분석</h3>
-    
-    <div class="chart-container">
-        <img src="./artifacts/rfm_analysis.png" alt="RFM 분석 결과">
-        <div class="image-caption">그림 13: RFM 분석 결과</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/category_combinations.png" alt="카테고리 조합 분석">
-        <div class="image-caption">그림 14: 카테고리 조합 분석</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/category_correlation.png" alt="카테고리 간 구매 상관관계">
-        <div class="image-caption">그림 15: 카테고리 간 구매 상관관계</div>
-    </div>
-    
-    <h4>RFM 분석 결과</h4>
-    <table>
-        <tr>
-            <th>고객 세그먼트</th>
-            <th>비율</th>
-            <th>평균 구매금액</th>
-        </tr>
-        <tr>
-            <td>VIP</td>
-            <td>54.5%</td>
-            <td>1,218,480원</td>
-        </tr>
-        <tr>
-            <td>Recent Customers</td>
-            <td>18.2%</td>
-            <td>533,285원</td>
-        </tr>
-        <tr>
-            <td>Lost Customers</td>
-            <td>27.3%</td>
-            <td>80,567원</td>
-        </tr>
-    </table>
-    
-    <h4>상위 5개 카테고리 조합</h4>
-    <table>
-        <tr>
-            <th>카테고리 조합</th>
-            <th>주문 건수</th>
-        </tr>
-        <tr>
-            <td>채소</td>
-            <td>306</td>
-        </tr>
-        <tr>
-            <td>과일</td>
-            <td>273</td>
-        </tr>
-        <tr>
-            <td>유제품</td>
-            <td>235</td>
-        </tr>
-        <tr>
-            <td>과일, 채소</td>
-            <td>48</td>
-        </tr>
-        <tr>
-            <td>과일, 유제품</td>
-            <td>37</td>
-        </tr>
-    </table>
-    
-    <div class="key-finding">
-        <h4>주요 발견사항:</h4>
-        <ul>
-            <li>RFM 분석 결과, VIP 고객이 전체의 54.5%를 차지하며, 이들의 평균 구매금액은 1,218,480원으로 높습니다.</li>
-            <li>최근 구매 고객(Recent Customers)은 18.2%를 차지하며, 평균 구매금액은 533,285원입니다.</li>
-            <li>장바구니 분석 결과, 대부분의 주문(814건, 약 66.7%)은 단일 카테고리로 이루어져 있습니다.</li>
-            <li>복수 카테고리 주문 중에는 과일+채소(48건), 과일+유제품(37건) 조합이 가장 많았습니다.</li>
-            <li>평균 장바구니 크기는 1.30 카테고리로, 대체로 작은 규모의 주문이 많았습니다.</li>
-        </ul>
-    </div>
-    
-    <h2>3. 주요 인사이트 및 마케팅 전략</h2>
-    
-    <div class="insights">
-        <h3>3.1 고객 세그먼트 기반 인사이트</h3>
+    <h2>5. 종합 인사이트 및 마케팅 제안</h2>
+    <div class="content">
+        <h3>5.1 주요 마케팅 인사이트</h3>
         <ol>
-            <li><strong>타겟 세그먼트 선정:</strong> 30대 고객층이 주문 건수가 가장 많으며(전체의 33.8%), 20대 남성이 평균 구매금액(13,933원)이 가장 높아 핵심 타겟으로 고려할 수 있습니다.</li>
-            <li><strong>VIP 고객 관리:</strong> RFM 분석 결과 VIP 고객(54.5%)의 평균 구매금액은 1,218,480원으로, 이들을 위한 충성도 프로그램이 효과적일 수 있습니다.</li>
-            <li><strong>성별 맞춤 전략:</strong> 남성은 여성보다 평균 주문 수량이 높으나(2.3개 vs 1.2개), 여성 고객이 더 많은 빈도로 구매하는 경향이 있어 각각에 맞는 차별화된 접근이 필요합니다.</li>
-            <li><strong>연령대별 카테고리 선호도:</strong> 연령대별로 선호하는 카테고리가 다르므로(과일: 50대, 유제품: 40대, 채소: 30대), 이를 고려한 타겟 마케팅이 효과적일 수 있습니다.</li>
+            <li><strong>카테고리 성과:</strong> 과일 카테고리는 최고 매출과 최고 평균단가를 기록하여 가장 수익성 높은 카테고리로 확인됨</li>
+            <li><strong>주문 패턴:</strong> 일요일과 금요일에 판매가 집중되는 패턴을 보이며, 화요일에 가장 낮은 매출을 기록</li>
+            <li><strong>프로모션 효과:</strong> 프로모션은 평균 주문금액을 96% 증가시키는 효과를 보여 매출 증대에 크게 기여</li>
+            <li><strong>고객 세그먼트:</strong> 50대 남성과 30대 남성이 과일 카테고리에서 가장 높은 매출 기여도를 보임</li>
+            <li><strong>지역 특성:</strong> 서울 지역이 가장 높은 매출을 기록하나, 경기도 지역 고객의 평균 주문금액이 더 높음</li>
+            <li><strong>배송 서비스:</strong> 상위 서비스(Priority, Expedited)를 이용하는 고객이 더 높은 평균 주문금액을 보임</li>
         </ol>
+        
+        <div class="recommendation-box">
+            <h3>5.2 마케팅 제안사항</h3>
+            <ol>
+                <li><strong>타겟 마케팅 강화:</strong> 50대 및 30대 남성을 대상으로 과일 카테고리 프로모션을 강화하여 높은 ROI 기대</li>
+                <li><strong>요일별 차별화 전략:</strong> 화요일과 같이 매출이 낮은 요일에 특별 프로모션을 제공하여 매출 균형 개선</li>
+                <li><strong>프로모션 최적화:</strong> 프로모션 효과가 높게 나타나므로, 수익성을 고려한 전략적 프로모션 설계 필요</li>
+                <li><strong>지역 타겟팅:</strong> 서울 지역은 물량 확대 전략, 경기도 지역은 고객 가치 증대 전략 적용</li>
+                <li><strong>배송 서비스 업셀링:</strong> Standard 서비스 이용 고객을 대상으로 상위 서비스로의 전환 유도 프로그램 개발</li>
+                <li><strong>상품 추천 강화:</strong> 과일 구매 고객에게 유제품이나 채소와의 번들 상품을 추천하여 교차 판매 증대</li>
+            </ol>
+        </div>
+        
+        <h3>5.3 한계점 및 추가 분석 제안</h3>
+        <p>본 분석의 한계점과 추가 분석 제안은 다음과 같습니다:</p>
+        <ul>
+            <li>현재 데이터는 "Shipped" 상태의 주문만 포함하고 있어, 주문 취소나 반품 등의 정보가 부족함</li>
+            <li>고객 만족도나 리뷰 데이터가 없어 제품 품질이나 고객 경험에 대한 분석이 어려움</li>
+            <li>더 세분화된 카테고리 정보나 상품 속성 정보가 있다면 더 구체적인 인사이트 도출 가능</li>
+            <li>고객 생애 가치(CLV) 분석을 위한 장기간의 구매 이력 데이터 필요</li>
+            <li>마케팅 채널이나 캠페인 정보를 추가하여 마케팅 활동의 ROI 분석 필요</li>
+        </ul>
     </div>
-    
-    <div class="insights">
-        <h3>3.2 상품 및 카테고리 기반 인사이트</h3>
-        <ol>
-            <li><strong>카테고리 집중화 전략:</strong> 과일 카테고리는 주문 건수(414건)는 채소(458건)보다 적지만 평균 주문금액(9,583원)이 가장 높아, 수익성 측면에서 중요한 카테고리입니다.</li>
-            <li><strong>교차판매 기회:</strong> 장바구니 분석 결과 과일+채소(48건), 과일+유제품(37건) 조합이 가장 많아, 이들 조합에 대한 번들 프로모션이 효과적일 수 있습니다.</li>
-            <li><strong>평균 장바구니 크기 증대:</strong> 현재 평균 장바구니 크기는 1.30 카테고리로 작은 편이므로, 관련 상품 추천을 통해 장바구니 크기를 늘릴 여지가 있습니다.</li>
-        </ol>
-    </div>
-    
-    <div class="insights">
-        <h3>3.3 프로모션 및 가격 전략 인사이트</h3>
-        <ol>
-            <li><strong>효과적인 프로모션 식별:</strong> VEGGIESALE(271건)과 DAIRYPROMO(270건)는 많은 주문 수를, SPRING24(12,439원)와 SUMMERFRUIT(10,700원)는 높은 평균 주문금액을 유도했으므로, 이들의 조합이 효과적일 수 있습니다.</li>
-            <li><strong>요일별 프로모션 전략:</strong> 일요일에 가장 많은 주문이 발생하고 금요일에 평균 주문금액이 높으므로, 이 요일들에 특화된 프로모션을 고려할 수 있습니다.</li>
-            <li><strong>가격 포인트 최적화:</strong> 주문 금액 분포가 5,000~6,000원대에 집중되어 있으므로, 이 가격대를 중심으로 한 번들 상품이나 프로모션 설계가 효과적일 수 있습니다.</li>
-        </ol>
-    </div>
-    
-    <h2>4. 액션 아이템 및 전략적 제안</h2>
-    
-    <div class="recommendations">
-        <h3>4.1 고객 세그먼트별 맞춤 전략</h3>
-        <ol>
-            <li><strong>VIP 고객 로열티 프로그램:</strong> 구매 금액이 높은 VIP 고객을 위한 특별 혜택(프리미엄 배송, 사전 구매 기회, 독점 상품 등)을 제공하여 충성도를 높입니다.</li>
-            <li><strong>최근 고객 재구매 유도:</strong> Recent Customers 세그먼트를 대상으로 재구매 할인 쿠폰을 제공하여 구매 주기를 단축시킵니다.</li>
-            <li><strong>휴면 고객 재활성화:</strong> Lost Customers 세그먼트에게 복귀 프로모션을 제공하여 재구매를 유도합니다.</li>
-            <li><strong>연령대별 타겟 마케팅:</strong> 각 연령대의 선호 카테고리(과일: 50대, 유제품: 40대, 채소: 30대)를 고려한 맞춤형 추천과 프로모션을 제공합니다.</li>
-        </ol>
-    </div>
-    
-    <div class="recommendations">
-        <h3>4.2 상품 및 카테고리 전략</h3>
-        <ol>
-            <li><strong>카테고리 번들 프로모션:</strong> 자주 함께 구매되는 카테고리 조합(과일+채소, 과일+유제품)에 대한 할인 혜택을 제공하여 교차 판매를 촉진합니다.</li>
-            <li><strong>신선도 보장 프로그램:</strong> 신선식품의 특성을 고려하여 '신선도 보장 프로그램'을 도입해 고객 신뢰를 높이고 재구매율을 향상시킵니다.</li>
-            <li><strong>구독 서비스 도입:</strong> 정기적으로 구매하는 고객을 위한 구독 서비스를 도입하여 고정 매출을 확보합니다.</li>
-        </ol>
-    </div>
-    
-    <div class="recommendations">
-        <h3>4.3 프로모션 및 마케팅 커뮤니케이션 전략</h3>
-        <ol>
-            <li><strong>요일별 타겟 프로모션:</strong> 주문이 많은 일요일에는 '일요일 특가', 평균 주문금액이 높은 금요일에는 '프리미엄 프라이데이' 등의 요일별 프로모션을 운영합니다.</li>
-            <li><strong>성별 맞춤 마케팅:</strong> 여성에게는 소량 구매에 적합한 신선도 높은 상품을, 남성에게는 대용량 패키지를 중심으로 마케팅 메시지를 차별화합니다.</li>
-            <li><strong>시즌별 테마 프로모션:</strong> 시즌별 신선식품 테마를 활용한 프로모션(여름 과일 페스티벌, 가을 수확 특가 등)을 기획하여 계절별 매출 증대를 도모합니다.</li>
-            <li><strong>SNS 레시피 마케팅:</strong> 카테고리 조합 분석을 활용하여 레시피 제안과 SNS 마케팅을 통해 복수 카테고리 구매를 유도합니다.</li>
-        </ol>
-    </div>
-    
-    <h2>5. 결론</h2>
-    <p>아마존 신선식품 판매 데이터 분석 결과, 고객 세그먼트별 구매 패턴과 카테고리별 성과, 프로모션 효과에 뚜렷한 차이가 있음을 확인했습니다. VIP 고객이 전체 매출의 상당 부분을 차지하며, 연령대와 성별에 따라 선호하는 카테고리와 구매 패턴이 달라짐을 발견했습니다. 또한 프로모션 유형에 따라 주문 건수와 평균 주문금액에 미치는 영향이 다르게 나타났습니다.</p>
-    
-    <p>이러한 인사이트를 바탕으로 고객 세그먼트별 맞춤 전략, 카테고리 조합 기반의 번들 프로모션, 요일별/시즌별 타겟 마케팅 등을 통해 매출 증대와 고객 충성도 향상을 도모할 수 있습니다. 특히 VIP 고객 관리, 연령대별 맞춤 마케팅, 교차 판매 전략이 중요하며, 프로모션 효과를 지속적으로 모니터링하고 최적화하는 것이 필요합니다.</p>
-    
-    <p>향후 분석에서는 고객별 구매 이력 데이터가 더 풍부해진다면 개인화된 추천 모델 개발, 세분화된 고객 생애 가치(CLV) 분석, 그리고 더 정교한 마케팅 ROI 측정이 가능할 것입니다. 이를 통해 더욱 효과적인 마케팅 전략 수립과 실행이 가능해질 것입니다.</p>
-    
-    <div class="footer">
-        <p>© 2025 아마존 신선식품 판매 데이터 분석 리포트</p>
-        <p>분석 및 리포트 작성일: ${datetime.now().strftime('%Y년 %m월 %d일')}</p>
+
+    <h2>6. 결론</h2>
+    <div class="content">
+        <p>아마존 상품판매 데이터 분석을 통해 카테고리별 성과, 고객 세그먼트별 구매 패턴, 프로모션 효과, 지역별 특성 등 다양한 인사이트를 도출했습니다. 과일 카테고리가 가장 높은 매출과 평균 주문금액을 기록하고 있으며, 50대 및 30대 남성이 주요 고객층으로 확인되었습니다. 프로모션은 주문 금액을 크게 증가시키는 효과가 있어 전략적인 프로모션 설계가 중요합니다.</p>
+        
+        <p>이러한 인사이트를 바탕으로 타겟 마케팅 강화, 요일별 차별화 전략, 프로모션 최적화, 지역별 타겟팅, 배송 서비스 업셀링 등의 마케팅 전략을 수립하여 매출 증대와 고객 가치 향상을 도모할 수 있을 것입니다.</p>
     </div>
 </body>
 </html>

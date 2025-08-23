@@ -1,0 +1,1224 @@
+index,Date,Status,Fulfilment,ship-service-level,Style,SKU,Category,Size,Courier Status,Qty,Amount,ship-city,ship-state,ship-postal-code,promotion-ids,Gender,Age Group
+1,1/1/24,Shipped,Amazon,Expedited,유기농 바나나,FR-BNN-001,과일,500g,Delivered,2,5990,강남구,서울,6000,FRUITPROMO5,F,30대
+2,1/1/24,Shipped,Amazon,Standard,국산 방울토마토,VG-TOM-002,채소,200g,Delivered,1,3500,송파구,서울,5500,,M,40대
+3,1/1/24,Shipped,Amazon,Expedited,순두부,DP-TFU-001,유제품,300g,Delivered,3,3000,분당구,경기도,13500,FRESH10OFF,F,50대
+4,1/1/24,Shipped,Coupang,Expedited,아보카도,FR-AVC-001,과일,3개입,In Transit,1,6700,부천시,경기도,14700,FRUITPROMO5,M,30대
+5,1/1/24,Shipped,Amazon,Standard,유기농 당근,VG-CRT-001,채소,500g,Delivered,2,4200,일산동구,경기도,10300,VEGGIESALE,F,50대
+6,1/1/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-001,채소,300g,Delivered,3,4900,수원시,경기도,16400,VEGGIESALE,M,40대
+7,1/1/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-001,유제품,1L,Delivered,1,2900,용산구,서울,4000,DAIRYPROMO,F,30대
+8,1/2/24,Shipped,Amazon,Priority,태국 망고,FR-MNG-001,과일,2개입,Delivered,2,7200,성동구,서울,4800,SUMMERFRUIT,M,50대
+9,1/2/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-001,채소,300g,Delivered,1,3900,마포구,서울,4100,,F,40대
+10,1/2/24,Shipped,Market Kurly,Expedited,그릭 요거트,DP-YGT-001,유제품,500g,In Transit,3,7800,중구,서울,4500,DAIRYPROMO,M,30대
+11,1/2/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-001,과일,6개입,Delivered,1,8900,종로구,서울,3000,FRUITPROMO5,F,20대
+12,1/2/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-001,채소,3개입,Delivered,2,4800,은평구,서울,3400,VEGGIESALE,M,40대
+13,1/2/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-001,유제품,200g,Delivered,1,7900,동대문구,서울,2500,DAIRYPROMO,F,30대
+14,1/3/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-001,과일,400g,Delivered,3,12900,서대문구,서울,3600,SUMMERFRUIT,M,50대
+15,1/3/24,Shipped,SSG.com,Standard,양배추,VG-CBG-001,채소,1통,Delivered,1,3900,강북구,서울,1000,,F,60대
+16,1/3/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-002,유제품,4개입,In Transit,2,6900,도봉구,서울,1300,DAIRYPROMO,M,30대
+17,1/3/24,Shipped,Coupang,Standard,파인애플,FR-PNP-001,과일,1개,Delivered,1,6900,노원구,서울,1300,FRUITPROMO5,F,40대
+18,1/3/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-001,채소,300g,Delivered,3,4900,중랑구,서울,2100,VEGGIESALE,M,50대
+19,1/3/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-002,유제품,1L,Delivered,1,3500,구로구,서울,8200,DAIRYPROMO,F,30대
+20,1/3/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-001,과일,200g,Delivered,2,9800,금천구,서울,8500,SUMMERFRUIT,M,40대
+21,1/4/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-003,채소,300g,In Transit,1,4800,동작구,서울,7200,VEGGIESALE,F,30대
+22,1/4/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-002,유제품,250g,Delivered,3,8500,관악구,서울,8700,DAIRYPROMO,M,20대
+23,1/4/24,Shipped,SSG.com,Standard,사과,FR-APL-001,과일,1kg,Delivered,1,6500,광진구,서울,5000,FRUITPROMO5,F,50대
+24,1/4/24,Shipped,Amazon,Expedited,고구마,VG-SWP-001,채소,1kg,Delivered,2,5800,성북구,서울,2800,VEGGIESALE,M,30대
+25,1/4/24,Shipped,Coupang,Standard,연유,DP-CDM-001,유제품,300g,Delivered,1,4500,강동구,서울,5900,DAIRYPROMO,F,40대
+26,1/4/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-001,과일,5개입,In Transit,3,11700,분당구,경기도,13500,FRUITPROMO5,M,60대
+27,1/4/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-001,채소,300g,Delivered,1,4700,일산동구,경기도,10300,VEGGIESALE,F,30대
+28,1/5/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-003,유제품,400g,Delivered,2,5500,수원시,경기도,16400,DAIRYPROMO,M,40대
+29,1/5/24,Shipped,Coupang,Standard,수박,FR-WML-001,과일,1통,Delivered,1,12900,용산구,서울,4000,SUMMERFRUIT,F,30대
+30,1/5/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-001,채소,1kg,Delivered,3,3500,성동구,서울,4800,VEGGIESALE,M,50대
+31,1/5/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-002,과일,500g,Delivered,1,5990,마포구,서울,4100,FRUITPROMO5,F,40대
+32,1/5/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-004,채소,200g,Delivered,2,3500,중구,서울,4500,,M,30대
+33,1/6/24,Shipped,Coupang,Standard,순두부,DP-TFU-002,유제품,300g,In Transit,1,3000,종로구,서울,3000,FRESH10OFF,F,20대
+34,1/6/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-002,과일,3개입,Delivered,3,6700,은평구,서울,3400,FRUITPROMO5,M,40대
+35,1/6/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-002,채소,500g,Delivered,1,4200,동대문구,서울,2500,VEGGIESALE,F,30대
+36,1/6/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-002,채소,300g,Delivered,2,4900,서대문구,서울,3600,VEGGIESALE,M,50대
+37,1/6/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-003,유제품,1L,Delivered,1,2900,강북구,서울,1000,DAIRYPROMO,F,60대
+38,1/7/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-002,과일,2개입,In Transit,3,7200,도봉구,서울,1300,SUMMERFRUIT,M,30대
+39,1/7/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-002,채소,300g,Delivered,1,3900,노원구,서울,1300,,F,40대
+40,1/7/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-004,유제품,500g,Delivered,2,7800,중랑구,서울,2100,DAIRYPROMO,M,50대
+41,1/7/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-002,과일,6개입,Delivered,1,8900,구로구,서울,8200,FRUITPROMO5,F,30대
+42,1/7/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-002,채소,3개입,Delivered,3,4800,금천구,서울,8500,VEGGIESALE,M,40대
+43,1/8/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-003,유제품,200g,In Transit,1,7900,동작구,서울,7200,DAIRYPROMO,F,20대
+44,1/8/24,Shipped,Amazon,Expedited,딸기,FR-STB-002,과일,400g,Delivered,2,12900,관악구,서울,8700,SUMMERFRUIT,M,50대
+45,1/8/24,Shipped,Coupang,Standard,양배추,VG-CBG-002,채소,1통,Delivered,1,3900,광진구,서울,5000,,F,30대
+46,1/8/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-005,유제품,4개입,Delivered,3,6900,성북구,서울,2800,DAIRYPROMO,M,40대
+47,1/8/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-002,과일,1개,Delivered,1,6900,강동구,서울,5900,FRUITPROMO5,F,50대
+48,1/9/24,Shipped,Amazon,Expedited,청경채,VG-BCH-002,채소,300g,In Transit,2,4900,분당구,경기도,13500,VEGGIESALE,M,30대
+49,1/9/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-004,유제품,1L,Delivered,1,3500,일산동구,경기도,10300,DAIRYPROMO,F,60대
+50,1/9/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-002,과일,200g,Delivered,3,9800,수원시,경기도,16400,SUMMERFRUIT,M,30대
+51,1/9/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-005,채소,300g,Delivered,1,4800,용산구,서울,4000,VEGGIESALE,F,40대
+52,1/9/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-004,유제품,250g,Delivered,2,8500,성동구,서울,4800,DAIRYPROMO,M,50대
+53,1/10/24,Shipped,Coupang,Standard,사과,FR-APL-002,과일,1kg,In Transit,1,6500,마포구,서울,4100,FRUITPROMO5,F,30대
+54,1/10/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-002,채소,1kg,Delivered,3,5800,중구,서울,4500,VEGGIESALE,M,40대
+55,1/10/24,Shipped,SSG.com,Standard,연유,DP-CDM-002,유제품,300g,Delivered,1,4500,종로구,서울,3000,DAIRYPROMO,F,20대
+56,1/10/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-002,과일,5개입,Delivered,2,11700,은평구,서울,3400,FRUITPROMO5,M,50대
+57,1/10/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-002,채소,300g,Delivered,1,4700,동대문구,서울,2500,VEGGIESALE,F,30대
+58,1/11/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-006,유제품,400g,In Transit,3,5500,서대문구,서울,3600,DAIRYPROMO,M,40대
+59,1/11/24,Shipped,SSG.com,Standard,수박,FR-WML-002,과일,1통,Delivered,1,12900,강북구,서울,1000,SUMMERFRUIT,F,50대
+60,1/11/24,Shipped,Amazon,Expedited,양파,VG-ONI-002,채소,1kg,Delivered,2,3500,도봉구,서울,1300,VEGGIESALE,M,30대
+61,1/11/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-003,과일,500g,Delivered,1,5990,노원구,서울,1300,FRUITPROMO5,F,60대
+62,1/11/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-006,채소,200g,Delivered,3,3500,중랑구,서울,2100,,M,30대
+63,1/12/24,Shipped,SSG.com,Standard,순두부,DP-TFU-003,유제품,300g,In Transit,1,3000,구로구,서울,8200,FRESH10OFF,F,40대
+64,1/12/24,Shipped,Amazon,Priority,아보카도,FR-AVC-003,과일,3개입,Delivered,2,6700,금천구,서울,8500,FRUITPROMO5,M,50대
+65,1/12/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-003,채소,500g,Delivered,1,4200,동작구,서울,7200,VEGGIESALE,F,30대
+66,1/12/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-003,채소,300g,Delivered,3,4900,관악구,서울,8700,VEGGIESALE,M,40대
+67,1/12/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-005,유제품,1L,Delivered,1,2900,광진구,서울,5000,DAIRYPROMO,F,20대
+68,1/13/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-003,과일,2개입,In Transit,2,7200,성북구,서울,2800,SUMMERFRUIT,M,50대
+69,1/13/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-003,채소,300g,Delivered,1,3900,강동구,서울,5900,,F,30대
+70,1/13/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-007,유제품,500g,Delivered,3,7800,분당구,경기도,13500,DAIRYPROMO,M,40대
+71,1/13/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-003,과일,6개입,Delivered,1,8900,일산동구,경기도,10300,FRUITPROMO5,F,50대
+72,1/13/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-003,채소,3개입,Delivered,2,4800,수원시,경기도,16400,VEGGIESALE,M,30대
+73,1/14/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-005,유제품,200g,In Transit,1,7900,용산구,서울,4000,DAIRYPROMO,F,60대
+74,1/14/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-003,과일,400g,Delivered,3,12900,성동구,서울,4800,SUMMERFRUIT,M,30대
+75,1/14/24,Shipped,SSG.com,Standard,양배추,VG-CBG-003,채소,1통,Delivered,1,3900,마포구,서울,4100,,F,40대
+76,1/14/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-008,유제품,4개입,Delivered,2,6900,중구,서울,4500,DAIRYPROMO,M,50대
+77,1/14/24,Shipped,Coupang,Standard,파인애플,FR-PNP-003,과일,1개,Delivered,1,6900,종로구,서울,3000,FRUITPROMO5,F,30대
+78,1/15/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-003,채소,300g,In Transit,3,4900,은평구,서울,3400,VEGGIESALE,M,40대
+79,1/15/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-006,유제품,1L,Delivered,1,3500,동대문구,서울,2500,DAIRYPROMO,F,20대
+80,1/15/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-003,과일,200g,Delivered,2,9800,서대문구,서울,3600,SUMMERFRUIT,M,50대
+81,1/15/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-007,채소,300g,Delivered,1,4800,강북구,서울,1000,VEGGIESALE,F,30대
+82,1/15/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-006,유제품,250g,Delivered,3,8500,도봉구,서울,1300,DAIRYPROMO,M,40대
+83,1/16/24,Shipped,SSG.com,Standard,사과,FR-APL-003,과일,1kg,In Transit,1,6500,노원구,서울,1300,FRUITPROMO5,F,50대
+84,1/16/24,Shipped,Amazon,Expedited,고구마,VG-SWP-003,채소,1kg,Delivered,2,5800,중랑구,서울,2100,VEGGIESALE,M,30대
+85,1/16/24,Shipped,Coupang,Standard,연유,DP-CDM-003,유제품,300g,Delivered,1,4500,구로구,서울,8200,DAIRYPROMO,F,60대
+86,1/16/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-003,과일,5개입,Delivered,3,11700,금천구,서울,8500,FRUITPROMO5,M,30대
+87,1/16/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-003,채소,300g,Delivered,1,4700,동작구,서울,7200,VEGGIESALE,F,40대
+88,1/17/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-009,유제품,400g,In Transit,2,5500,관악구,서울,8700,DAIRYPROMO,M,50대
+89,1/17/24,Shipped,Coupang,Standard,수박,FR-WML-003,과일,1통,Delivered,1,12900,광진구,서울,5000,SUMMERFRUIT,F,30대
+90,1/17/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-003,채소,1kg,Delivered,3,3500,성북구,서울,2800,VEGGIESALE,M,40대
+91,1/17/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-004,과일,500g,Delivered,1,5990,강동구,서울,5900,FRUITPROMO5,F,20대
+92,1/17/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-008,채소,200g,Delivered,2,3500,분당구,경기도,13500,,M,50대
+93,1/18/24,Shipped,Coupang,Standard,순두부,DP-TFU-004,유제품,300g,In Transit,1,3000,일산동구,경기도,10300,FRESH10OFF,F,30대
+94,1/18/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-004,과일,3개입,Delivered,3,6700,수원시,경기도,16400,FRUITPROMO5,M,40대
+95,1/18/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-004,채소,500g,Delivered,1,4200,용산구,서울,4000,VEGGIESALE,F,50대
+96,1/18/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-004,채소,300g,Delivered,2,4900,성동구,서울,4800,VEGGIESALE,M,30대
+97,1/18/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-007,유제품,1L,Delivered,1,2900,마포구,서울,4100,DAIRYPROMO,F,60대
+98,1/19/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-004,과일,2개입,In Transit,3,7200,중구,서울,4500,SUMMERFRUIT,M,30대
+99,1/19/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-004,채소,300g,Delivered,1,3900,종로구,서울,3000,,F,40대
+100,1/19/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-010,유제품,500g,Delivered,2,7800,은평구,서울,3400,DAIRYPROMO,M,50대
+101,1/19/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-004,과일,6개입,Delivered,1,8900,동대문구,서울,2500,FRUITPROMO5,F,30대
+102,1/19/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-004,채소,3개입,Delivered,3,4800,서대문구,서울,3600,VEGGIESALE,M,40대
+103,1/20/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-007,유제품,200g,In Transit,1,7900,강북구,서울,1000,DAIRYPROMO,F,20대
+104,1/20/24,Shipped,Amazon,Expedited,딸기,FR-STB-004,과일,400g,Delivered,2,12900,도봉구,서울,1300,SUMMERFRUIT,M,50대
+105,1/20/24,Shipped,Coupang,Standard,양배추,VG-CBG-004,채소,1통,Delivered,1,3900,노원구,서울,1300,,F,30대
+106,1/20/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-011,유제품,4개입,Delivered,3,6900,중랑구,서울,2100,DAIRYPROMO,M,40대
+107,1/20/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-004,과일,1개,Delivered,1,6900,구로구,서울,8200,FRUITPROMO5,F,50대
+108,1/21/24,Shipped,Amazon,Expedited,청경채,VG-BCH-004,채소,300g,In Transit,2,4900,금천구,서울,8500,VEGGIESALE,M,30대
+109,1/21/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-008,유제품,1L,Delivered,1,3500,동작구,서울,7200,DAIRYPROMO,F,60대
+110,1/21/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-004,과일,200g,Delivered,3,9800,관악구,서울,8700,SUMMERFRUIT,M,30대
+111,1/21/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-009,채소,300g,Delivered,1,4800,광진구,서울,5000,VEGGIESALE,F,40대
+112,1/21/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-008,유제품,250g,Delivered,2,8500,성북구,서울,2800,DAIRYPROMO,M,50대
+113,1/22/24,Shipped,Coupang,Standard,사과,FR-APL-004,과일,1kg,In Transit,1,6500,강동구,서울,5900,FRUITPROMO5,F,30대
+114,1/22/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-004,채소,1kg,Delivered,3,5800,분당구,경기도,13500,VEGGIESALE,M,40대
+115,1/22/24,Shipped,SSG.com,Standard,연유,DP-CDM-004,유제품,300g,Delivered,1,4500,일산동구,경기도,10300,DAIRYPROMO,F,20대
+116,1/22/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-004,과일,5개입,Delivered,2,11700,수원시,경기도,16400,FRUITPROMO5,M,50대
+117,1/22/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-004,채소,300g,Delivered,1,4700,용산구,서울,4000,VEGGIESALE,F,30대
+118,1/23/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-012,유제품,400g,In Transit,3,5500,성동구,서울,4800,DAIRYPROMO,M,40대
+119,1/23/24,Shipped,SSG.com,Standard,수박,FR-WML-004,과일,1통,Delivered,1,12900,마포구,서울,4100,SUMMERFRUIT,F,50대
+120,1/23/24,Shipped,Amazon,Expedited,양파,VG-ONI-004,채소,1kg,Delivered,2,3500,중구,서울,4500,VEGGIESALE,M,30대
+121,1/23/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-005,과일,500g,Delivered,1,5990,종로구,서울,3000,FRUITPROMO5,F,60대
+122,1/23/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-010,채소,200g,Delivered,3,3500,은평구,서울,3400,,M,30대
+123,1/24/24,Shipped,SSG.com,Standard,순두부,DP-TFU-005,유제품,300g,In Transit,1,3000,동대문구,서울,2500,FRESH10OFF,F,40대
+124,1/24/24,Shipped,Amazon,Priority,아보카도,FR-AVC-005,과일,3개입,Delivered,2,6700,서대문구,서울,3600,FRUITPROMO5,M,50대
+125,1/24/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-005,채소,500g,Delivered,1,4200,강북구,서울,1000,VEGGIESALE,F,30대
+126,1/24/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-005,채소,300g,Delivered,3,4900,도봉구,서울,1300,VEGGIESALE,M,40대
+127,1/24/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-009,유제품,1L,Delivered,1,2900,노원구,서울,1300,DAIRYPROMO,F,20대
+128,1/25/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-005,과일,2개입,In Transit,2,7200,중랑구,서울,2100,SUMMERFRUIT,M,50대
+129,1/25/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-005,채소,300g,Delivered,1,3900,구로구,서울,8200,,F,30대
+130,1/25/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-013,유제품,500g,Delivered,3,7800,금천구,서울,8500,DAIRYPROMO,M,40대
+131,1/25/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-005,과일,6개입,Delivered,1,8900,동작구,서울,7200,FRUITPROMO5,F,50대
+132,1/25/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-005,채소,3개입,Delivered,2,4800,관악구,서울,8700,VEGGIESALE,M,30대
+133,1/26/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-009,유제품,200g,In Transit,1,7900,광진구,서울,5000,DAIRYPROMO,F,60대
+134,1/26/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-005,과일,400g,Delivered,3,12900,성북구,서울,2800,SUMMERFRUIT,M,30대
+135,1/26/24,Shipped,SSG.com,Standard,양배추,VG-CBG-005,채소,1통,Delivered,1,3900,강동구,서울,5900,,F,40대
+136,1/26/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-014,유제품,4개입,Delivered,2,6900,분당구,경기도,13500,DAIRYPROMO,M,50대
+137,1/26/24,Shipped,Coupang,Standard,파인애플,FR-PNP-005,과일,1개,Delivered,1,6900,일산동구,경기도,10300,FRUITPROMO5,F,30대
+138,1/27/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-005,채소,300g,In Transit,3,4900,수원시,경기도,16400,VEGGIESALE,M,40대
+139,1/27/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-010,유제품,1L,Delivered,1,3500,용산구,서울,4000,DAIRYPROMO,F,20대
+140,1/27/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-005,과일,200g,Delivered,2,9800,성동구,서울,4800,SUMMERFRUIT,M,50대
+141,1/27/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-011,채소,300g,Delivered,1,4800,마포구,서울,4100,VEGGIESALE,F,30대
+142,1/27/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-010,유제품,250g,Delivered,3,8500,중구,서울,4500,DAIRYPROMO,M,40대
+143,1/28/24,Shipped,SSG.com,Standard,사과,FR-APL-005,과일,1kg,In Transit,1,6500,종로구,서울,3000,FRUITPROMO5,F,50대
+144,1/28/24,Shipped,Amazon,Expedited,고구마,VG-SWP-005,채소,1kg,Delivered,2,5800,은평구,서울,3400,VEGGIESALE,M,30대
+145,1/28/24,Shipped,Coupang,Standard,연유,DP-CDM-005,유제품,300g,Delivered,1,4500,동대문구,서울,2500,DAIRYPROMO,F,60대
+146,1/28/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-005,과일,5개입,Delivered,3,11700,서대문구,서울,3600,FRUITPROMO5,M,30대
+147,1/28/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-005,채소,300g,Delivered,1,4700,강북구,서울,1000,VEGGIESALE,F,40대
+148,1/29/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-015,유제품,400g,In Transit,2,5500,도봉구,서울,1300,DAIRYPROMO,M,50대
+149,1/29/24,Shipped,Coupang,Standard,수박,FR-WML-005,과일,1통,Delivered,1,12900,노원구,서울,1300,SUMMERFRUIT,F,30대
+150,1/29/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-005,채소,1kg,Delivered,3,3500,중랑구,서울,2100,VEGGIESALE,M,40대
+151,1/29/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-006,과일,500g,Delivered,1,5990,구로구,서울,8200,FRUITPROMO5,F,20대
+152,1/29/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-012,채소,200g,Delivered,2,3500,금천구,서울,8500,,M,50대
+153,1/30/24,Shipped,Coupang,Standard,순두부,DP-TFU-006,유제품,300g,In Transit,1,3000,동작구,서울,7200,FRESH10OFF,F,30대
+154,1/30/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-006,과일,3개입,Delivered,3,6700,관악구,서울,8700,FRUITPROMO5,M,40대
+155,1/30/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-006,채소,500g,Delivered,1,4200,광진구,서울,5000,VEGGIESALE,F,50대
+156,1/30/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-006,채소,300g,Delivered,2,4900,성북구,서울,2800,VEGGIESALE,M,30대
+157,1/30/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-011,유제품,1L,Delivered,1,2900,강동구,서울,5900,DAIRYPROMO,F,60대
+158,1/31/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-006,과일,2개입,In Transit,3,7200,분당구,경기도,13500,SUMMERFRUIT,M,30대
+159,1/31/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-006,채소,300g,Delivered,1,3900,일산동구,경기도,10300,,F,40대
+160,1/31/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-016,유제품,500g,Delivered,2,7800,수원시,경기도,16400,DAIRYPROMO,M,50대
+161,1/31/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-006,과일,6개입,Delivered,1,8900,용산구,서울,4000,FRUITPROMO5,F,30대
+162,1/31/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-006,채소,3개입,Delivered,3,4800,성동구,서울,4800,VEGGIESALE,M,40대
+163,2/1/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-011,유제품,200g,In Transit,1,7900,마포구,서울,4100,DAIRYPROMO,F,20대
+164,2/1/24,Shipped,Amazon,Expedited,딸기,FR-STB-006,과일,400g,Delivered,2,12900,중구,서울,4500,SUMMERFRUIT,M,50대
+165,2/1/24,Shipped,Coupang,Standard,양배추,VG-CBG-006,채소,1통,Delivered,1,3900,종로구,서울,3000,,F,30대
+166,2/1/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-017,유제품,4개입,Delivered,3,6900,은평구,서울,3400,DAIRYPROMO,M,40대
+167,2/1/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-006,과일,1개,Delivered,1,6900,동대문구,서울,2500,FRUITPROMO5,F,50대
+168,2/2/24,Shipped,Amazon,Expedited,청경채,VG-BCH-006,채소,300g,In Transit,2,4900,서대문구,서울,3600,VEGGIESALE,M,30대
+169,2/2/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-012,유제품,1L,Delivered,1,3500,강북구,서울,1000,DAIRYPROMO,F,60대
+170,2/2/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-006,과일,200g,Delivered,3,9800,도봉구,서울,1300,SUMMERFRUIT,M,30대
+171,2/2/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-013,채소,300g,Delivered,1,4800,노원구,서울,1300,VEGGIESALE,F,40대
+172,2/2/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-012,유제품,250g,Delivered,2,8500,중랑구,서울,2100,DAIRYPROMO,M,50대
+173,2/3/24,Shipped,Coupang,Standard,사과,FR-APL-006,과일,1kg,In Transit,1,6500,구로구,서울,8200,FRUITPROMO5,F,30대
+174,2/3/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-006,채소,1kg,Delivered,3,5800,금천구,서울,8500,VEGGIESALE,M,40대
+175,2/3/24,Shipped,SSG.com,Standard,연유,DP-CDM-006,유제품,300g,Delivered,1,4500,동작구,서울,7200,DAIRYPROMO,F,20대
+176,2/3/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-006,과일,5개입,Delivered,2,11700,관악구,서울,8700,FRUITPROMO5,M,50대
+177,2/3/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-006,채소,300g,Delivered,1,4700,광진구,서울,5000,VEGGIESALE,F,30대
+178,2/4/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-018,유제품,400g,In Transit,3,5500,성북구,서울,2800,DAIRYPROMO,M,40대
+179,2/4/24,Shipped,SSG.com,Standard,수박,FR-WML-006,과일,1통,Delivered,1,12900,강동구,서울,5900,SUMMERFRUIT,F,50대
+180,2/4/24,Shipped,Amazon,Expedited,양파,VG-ONI-006,채소,1kg,Delivered,2,3500,분당구,경기도,13500,VEGGIESALE,M,30대
+181,2/4/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-007,과일,500g,Delivered,1,5990,일산동구,경기도,10300,FRUITPROMO5,F,60대
+182,2/4/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-014,채소,200g,Delivered,3,3500,수원시,경기도,16400,,M,30대
+183,2/5/24,Shipped,SSG.com,Standard,순두부,DP-TFU-007,유제품,300g,In Transit,1,3000,용산구,서울,4000,FRESH10OFF,F,40대
+184,2/5/24,Shipped,Amazon,Priority,아보카도,FR-AVC-007,과일,3개입,Delivered,2,6700,성동구,서울,4800,FRUITPROMO5,M,50대
+185,2/5/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-007,채소,500g,Delivered,1,4200,마포구,서울,4100,VEGGIESALE,F,30대
+186,2/5/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-007,채소,300g,Delivered,3,4900,중구,서울,4500,VEGGIESALE,M,40대
+187,2/5/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-013,유제품,1L,Delivered,1,2900,종로구,서울,3000,DAIRYPROMO,F,20대
+188,2/6/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-007,과일,2개입,In Transit,2,7200,은평구,서울,3400,SUMMERFRUIT,M,50대
+189,2/6/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-007,채소,300g,Delivered,1,3900,동대문구,서울,2500,,F,30대
+190,2/6/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-019,유제품,500g,Delivered,3,7800,서대문구,서울,3600,DAIRYPROMO,M,40대
+191,2/6/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-007,과일,6개입,Delivered,1,8900,강북구,서울,1000,FRUITPROMO5,F,50대
+192,2/6/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-007,채소,3개입,Delivered,2,4800,도봉구,서울,1300,VEGGIESALE,M,30대
+193,2/7/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-013,유제품,200g,In Transit,1,7900,노원구,서울,1300,DAIRYPROMO,F,60대
+194,2/7/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-007,과일,400g,Delivered,3,12900,중랑구,서울,2100,SUMMERFRUIT,M,30대
+195,2/7/24,Shipped,SSG.com,Standard,양배추,VG-CBG-007,채소,1통,Delivered,1,3900,구로구,서울,8200,,F,40대
+196,2/7/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-020,유제품,4개입,Delivered,2,6900,금천구,서울,8500,DAIRYPROMO,M,50대
+197,2/7/24,Shipped,Coupang,Standard,파인애플,FR-PNP-007,과일,1개,Delivered,1,6900,동작구,서울,7200,FRUITPROMO5,F,30대
+198,2/8/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-007,채소,300g,In Transit,3,4900,관악구,서울,8700,VEGGIESALE,M,40대
+199,2/8/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-014,유제품,1L,Delivered,1,3500,광진구,서울,5000,DAIRYPROMO,F,20대
+200,2/8/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-007,과일,200g,Delivered,2,9800,성북구,서울,2800,SUMMERFRUIT,M,50대
+201,2/8/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-015,채소,300g,Delivered,1,4800,강동구,서울,5900,VEGGIESALE,F,30대
+202,2/8/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-014,유제품,250g,Delivered,3,8500,분당구,경기도,13500,DAIRYPROMO,M,40대
+203,2/9/24,Shipped,SSG.com,Standard,사과,FR-APL-007,과일,1kg,In Transit,1,6500,일산동구,경기도,10300,FRUITPROMO5,F,50대
+204,2/9/24,Shipped,Amazon,Expedited,고구마,VG-SWP-007,채소,1kg,Delivered,2,5800,수원시,경기도,16400,VEGGIESALE,M,30대
+205,2/9/24,Shipped,Coupang,Standard,연유,DP-CDM-007,유제품,300g,Delivered,1,4500,용산구,서울,4000,DAIRYPROMO,F,60대
+206,2/9/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-007,과일,5개입,Delivered,3,11700,성동구,서울,4800,FRUITPROMO5,M,30대
+207,2/9/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-007,채소,300g,Delivered,1,4700,마포구,서울,4100,VEGGIESALE,F,40대
+208,2/10/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-021,유제품,400g,In Transit,2,5500,중구,서울,4500,DAIRYPROMO,M,50대
+209,2/10/24,Shipped,Coupang,Standard,수박,FR-WML-007,과일,1통,Delivered,1,12900,종로구,서울,3000,SUMMERFRUIT,F,30대
+210,2/10/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-007,채소,1kg,Delivered,3,3500,은평구,서울,3400,VEGGIESALE,M,40대
+211,2/10/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-008,과일,500g,Delivered,1,5990,동대문구,서울,2500,FRUITPROMO5,F,20대
+212,2/10/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-016,채소,200g,Delivered,2,3500,서대문구,서울,3600,,M,50대
+213,2/11/24,Shipped,Coupang,Standard,순두부,DP-TFU-008,유제품,300g,In Transit,1,3000,강북구,서울,1000,FRESH10OFF,F,30대
+214,2/11/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-008,과일,3개입,Delivered,3,6700,도봉구,서울,1300,FRUITPROMO5,M,40대
+215,2/11/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-008,채소,500g,Delivered,1,4200,노원구,서울,1300,VEGGIESALE,F,50대
+216,2/11/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-008,채소,300g,Delivered,2,4900,중랑구,서울,2100,VEGGIESALE,M,30대
+217,2/11/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-015,유제품,1L,Delivered,1,2900,구로구,서울,8200,DAIRYPROMO,F,60대
+218,2/12/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-008,과일,2개입,In Transit,3,7200,금천구,서울,8500,SUMMERFRUIT,M,30대
+219,2/12/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-008,채소,300g,Delivered,1,3900,동작구,서울,7200,,F,40대
+220,2/12/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-022,유제품,500g,Delivered,2,7800,관악구,서울,8700,DAIRYPROMO,M,50대
+221,2/12/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-008,과일,6개입,Delivered,1,8900,광진구,서울,5000,FRUITPROMO5,F,30대
+222,2/12/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-008,채소,3개입,Delivered,3,4800,성북구,서울,2800,VEGGIESALE,M,40대
+223,2/13/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-015,유제품,200g,In Transit,1,7900,강동구,서울,5900,DAIRYPROMO,F,20대
+224,2/13/24,Shipped,Amazon,Expedited,딸기,FR-STB-008,과일,400g,Delivered,2,12900,분당구,경기도,13500,SUMMERFRUIT,M,50대
+225,2/13/24,Shipped,Coupang,Standard,양배추,VG-CBG-008,채소,1통,Delivered,1,3900,일산동구,경기도,10300,,F,30대
+226,2/13/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-023,유제품,4개입,Delivered,3,6900,수원시,경기도,16400,DAIRYPROMO,M,40대
+227,2/13/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-008,과일,1개,Delivered,1,6900,용산구,서울,4000,FRUITPROMO5,F,50대
+228,2/14/24,Shipped,Amazon,Expedited,청경채,VG-BCH-008,채소,300g,In Transit,2,4900,성동구,서울,4800,VEGGIESALE,M,30대
+229,2/14/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-016,유제품,1L,Delivered,1,3500,마포구,서울,4100,DAIRYPROMO,F,60대
+230,2/14/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-008,과일,200g,Delivered,3,9800,중구,서울,4500,SUMMERFRUIT,M,30대
+231,2/14/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-017,채소,300g,Delivered,1,4800,종로구,서울,3000,VEGGIESALE,F,40대
+232,2/14/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-016,유제품,250g,Delivered,2,8500,은평구,서울,3400,DAIRYPROMO,M,50대
+233,2/15/24,Shipped,Coupang,Standard,사과,FR-APL-008,과일,1kg,In Transit,1,6500,동대문구,서울,2500,FRUITPROMO5,F,30대
+234,2/15/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-008,채소,1kg,Delivered,3,5800,서대문구,서울,3600,VEGGIESALE,M,40대
+235,2/15/24,Shipped,SSG.com,Standard,연유,DP-CDM-008,유제품,300g,Delivered,1,4500,강북구,서울,1000,DAIRYPROMO,F,20대
+236,2/15/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-008,과일,5개입,Delivered,2,11700,도봉구,서울,1300,FRUITPROMO5,M,50대
+237,2/15/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-008,채소,300g,Delivered,1,4700,노원구,서울,1300,VEGGIESALE,F,30대
+238,2/16/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-024,유제품,400g,In Transit,3,5500,중랑구,서울,2100,DAIRYPROMO,M,40대
+239,2/16/24,Shipped,SSG.com,Standard,수박,FR-WML-008,과일,1통,Delivered,1,12900,구로구,서울,8200,SUMMERFRUIT,F,50대
+240,2/16/24,Shipped,Amazon,Expedited,양파,VG-ONI-008,채소,1kg,Delivered,2,3500,금천구,서울,8500,VEGGIESALE,M,30대
+241,2/16/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-009,과일,500g,Delivered,1,5990,동작구,서울,7200,FRUITPROMO5,F,60대
+242,2/16/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-018,채소,200g,Delivered,3,3500,관악구,서울,8700,,M,30대
+243,2/17/24,Shipped,SSG.com,Standard,순두부,DP-TFU-009,유제품,300g,In Transit,1,3000,광진구,서울,5000,FRESH10OFF,F,40대
+244,2/17/24,Shipped,Amazon,Priority,아보카도,FR-AVC-009,과일,3개입,Delivered,2,6700,성북구,서울,2800,FRUITPROMO5,M,50대
+245,2/17/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-009,채소,500g,Delivered,1,4200,강동구,서울,5900,VEGGIESALE,F,30대
+246,2/17/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-009,채소,300g,Delivered,3,4900,분당구,경기도,13500,VEGGIESALE,M,40대
+247,2/17/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-017,유제품,1L,Delivered,1,2900,일산동구,경기도,10300,DAIRYPROMO,F,20대
+248,2/18/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-009,과일,2개입,In Transit,2,7200,수원시,경기도,16400,SUMMERFRUIT,M,50대
+249,2/18/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-009,채소,300g,Delivered,1,3900,용산구,서울,4000,,F,30대
+250,2/18/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-025,유제품,500g,Delivered,3,7800,성동구,서울,4800,DAIRYPROMO,M,40대
+251,2/18/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-009,과일,6개입,Delivered,1,8900,마포구,서울,4100,FRUITPROMO5,F,50대
+252,2/18/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-009,채소,3개입,Delivered,2,4800,중구,서울,4500,VEGGIESALE,M,30대
+253,2/19/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-017,유제품,200g,In Transit,1,7900,종로구,서울,3000,DAIRYPROMO,F,60대
+254,2/19/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-009,과일,400g,Delivered,3,12900,은평구,서울,3400,SUMMERFRUIT,M,30대
+255,2/19/24,Shipped,SSG.com,Standard,양배추,VG-CBG-009,채소,1통,Delivered,1,3900,동대문구,서울,2500,,F,40대
+256,2/19/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-026,유제품,4개입,Delivered,2,6900,서대문구,서울,3600,DAIRYPROMO,M,50대
+257,2/19/24,Shipped,Coupang,Standard,파인애플,FR-PNP-009,과일,1개,Delivered,1,6900,강북구,서울,1000,FRUITPROMO5,F,30대
+258,2/20/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-009,채소,300g,In Transit,3,4900,도봉구,서울,1300,VEGGIESALE,M,40대
+259,2/20/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-018,유제품,1L,Delivered,1,3500,노원구,서울,1300,DAIRYPROMO,F,20대
+260,2/20/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-009,과일,200g,Delivered,2,9800,중랑구,서울,2100,SUMMERFRUIT,M,50대
+261,2/20/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-019,채소,300g,Delivered,1,4800,구로구,서울,8200,VEGGIESALE,F,30대
+262,2/20/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-018,유제품,250g,Delivered,3,8500,금천구,서울,8500,DAIRYPROMO,M,40대
+263,2/21/24,Shipped,SSG.com,Standard,사과,FR-APL-009,과일,1kg,In Transit,1,6500,동작구,서울,7200,FRUITPROMO5,F,50대
+264,2/21/24,Shipped,Amazon,Expedited,고구마,VG-SWP-009,채소,1kg,Delivered,2,5800,관악구,서울,8700,VEGGIESALE,M,30대
+265,2/21/24,Shipped,Coupang,Standard,연유,DP-CDM-009,유제품,300g,Delivered,1,4500,광진구,서울,5000,DAIRYPROMO,F,60대
+266,2/21/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-009,과일,5개입,Delivered,3,11700,성북구,서울,2800,FRUITPROMO5,M,30대
+267,2/21/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-009,채소,300g,Delivered,1,4700,강동구,서울,5900,VEGGIESALE,F,40대
+268,2/22/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-027,유제품,400g,In Transit,2,5500,분당구,경기도,13500,DAIRYPROMO,M,50대
+269,2/22/24,Shipped,Coupang,Standard,수박,FR-WML-009,과일,1통,Delivered,1,12900,일산동구,경기도,10300,SUMMERFRUIT,F,30대
+270,2/22/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-009,채소,1kg,Delivered,3,3500,수원시,경기도,16400,VEGGIESALE,M,40대
+271,2/22/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-010,과일,500g,Delivered,1,5990,용산구,서울,4000,FRUITPROMO5,F,20대
+272,2/22/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-020,채소,200g,Delivered,2,3500,성동구,서울,4800,,M,50대
+273,2/23/24,Shipped,Coupang,Standard,순두부,DP-TFU-010,유제품,300g,In Transit,1,3000,마포구,서울,4100,FRESH10OFF,F,30대
+274,2/23/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-010,과일,3개입,Delivered,3,6700,중구,서울,4500,FRUITPROMO5,M,40대
+275,2/23/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-010,채소,500g,Delivered,1,4200,종로구,서울,3000,VEGGIESALE,F,50대
+276,2/23/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-010,채소,300g,Delivered,2,4900,은평구,서울,3400,VEGGIESALE,M,30대
+277,2/23/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-019,유제품,1L,Delivered,1,2900,동대문구,서울,2500,DAIRYPROMO,F,60대
+278,2/24/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-010,과일,2개입,In Transit,3,7200,서대문구,서울,3600,SUMMERFRUIT,M,30대
+279,2/24/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-010,채소,300g,Delivered,1,3900,강북구,서울,1000,,F,40대
+280,2/24/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-028,유제품,500g,Delivered,2,7800,도봉구,서울,1300,DAIRYPROMO,M,50대
+281,2/24/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-010,과일,6개입,Delivered,1,8900,노원구,서울,1300,FRUITPROMO5,F,30대
+282,2/24/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-010,채소,3개입,Delivered,3,4800,중랑구,서울,2100,VEGGIESALE,M,40대
+283,2/25/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-019,유제품,200g,In Transit,1,7900,구로구,서울,8200,DAIRYPROMO,F,20대
+284,2/25/24,Shipped,Amazon,Expedited,딸기,FR-STB-010,과일,400g,Delivered,2,12900,금천구,서울,8500,SUMMERFRUIT,M,50대
+285,2/25/24,Shipped,Coupang,Standard,양배추,VG-CBG-010,채소,1통,Delivered,1,3900,동작구,서울,7200,,F,30대
+286,2/25/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-029,유제품,4개입,Delivered,3,6900,관악구,서울,8700,DAIRYPROMO,M,40대
+287,2/25/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-010,과일,1개,Delivered,1,6900,광진구,서울,5000,FRUITPROMO5,F,50대
+288,2/26/24,Shipped,Amazon,Expedited,청경채,VG-BCH-010,채소,300g,In Transit,2,4900,성북구,서울,2800,VEGGIESALE,M,30대
+289,2/26/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-020,유제품,1L,Delivered,1,3500,강동구,서울,5900,DAIRYPROMO,F,60대
+290,2/26/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-010,과일,200g,Delivered,3,9800,분당구,경기도,13500,SUMMERFRUIT,M,30대
+291,2/26/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-021,채소,300g,Delivered,1,4800,일산동구,경기도,10300,VEGGIESALE,F,40대
+292,2/26/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-020,유제품,250g,Delivered,2,8500,수원시,경기도,16400,DAIRYPROMO,M,50대
+293,2/27/24,Shipped,Coupang,Standard,사과,FR-APL-010,과일,1kg,In Transit,1,6500,용산구,서울,4000,FRUITPROMO5,F,30대
+294,2/27/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-010,채소,1kg,Delivered,3,5800,성동구,서울,4800,VEGGIESALE,M,40대
+295,2/27/24,Shipped,SSG.com,Standard,연유,DP-CDM-010,유제품,300g,Delivered,1,4500,마포구,서울,4100,DAIRYPROMO,F,20대
+296,2/27/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-010,과일,5개입,Delivered,2,11700,중구,서울,4500,FRUITPROMO5,M,50대
+297,2/27/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-010,채소,300g,Delivered,1,4700,종로구,서울,3000,VEGGIESALE,F,30대
+298,2/28/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-030,유제품,400g,In Transit,3,5500,은평구,서울,3400,DAIRYPROMO,M,40대
+299,2/28/24,Shipped,SSG.com,Standard,수박,FR-WML-010,과일,1통,Delivered,1,12900,동대문구,서울,2500,SUMMERFRUIT,F,50대
+300,2/28/24,Shipped,Amazon,Expedited,양파,VG-ONI-010,채소,1kg,Delivered,2,3500,서대문구,서울,3600,VEGGIESALE,M,30대
+301,2/28/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-011,과일,500g,Delivered,1,5990,강북구,서울,1000,FRUITPROMO5,F,60대
+302,2/28/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-022,채소,200g,Delivered,3,3500,도봉구,서울,1300,,M,30대
+303,2/29/24,Shipped,SSG.com,Standard,순두부,DP-TFU-011,유제품,300g,In Transit,1,3000,노원구,서울,1300,FRESH10OFF,F,40대
+304,2/29/24,Shipped,Amazon,Priority,아보카도,FR-AVC-011,과일,3개입,Delivered,2,6700,중랑구,서울,2100,FRUITPROMO5,M,50대
+305,2/29/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-011,채소,500g,Delivered,1,4200,구로구,서울,8200,VEGGIESALE,F,30대
+306,2/29/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-011,채소,300g,Delivered,3,4900,금천구,서울,8500,VEGGIESALE,M,40대
+307,2/29/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-021,유제품,1L,Delivered,1,2900,동작구,서울,7200,DAIRYPROMO,F,20대
+308,3/1/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-011,과일,2개입,In Transit,2,7200,관악구,서울,8700,SUMMERFRUIT,M,50대
+309,3/1/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-011,채소,300g,Delivered,1,3900,광진구,서울,5000,,F,30대
+310,3/1/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-031,유제품,500g,Delivered,3,7800,성북구,서울,2800,DAIRYPROMO,M,40대
+311,3/1/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-011,과일,6개입,Delivered,1,8900,강동구,서울,5900,FRUITPROMO5,F,50대
+312,3/1/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-011,채소,3개입,Delivered,2,4800,분당구,경기도,13500,VEGGIESALE,M,30대
+313,3/2/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-021,유제품,200g,In Transit,1,7900,일산동구,경기도,10300,DAIRYPROMO,F,60대
+314,3/2/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-011,과일,400g,Delivered,3,12900,수원시,경기도,16400,SUMMERFRUIT,M,30대
+315,3/2/24,Shipped,SSG.com,Standard,양배추,VG-CBG-011,채소,1통,Delivered,1,3900,용산구,서울,4000,,F,40대
+316,3/2/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-032,유제품,4개입,Delivered,2,6900,성동구,서울,4800,DAIRYPROMO,M,50대
+317,3/2/24,Shipped,Coupang,Standard,파인애플,FR-PNP-011,과일,1개,Delivered,1,6900,마포구,서울,4100,FRUITPROMO5,F,30대
+318,3/3/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-011,채소,300g,In Transit,3,4900,중구,서울,4500,VEGGIESALE,M,40대
+319,3/3/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-022,유제품,1L,Delivered,1,3500,종로구,서울,3000,DAIRYPROMO,F,20대
+320,3/3/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-011,과일,200g,Delivered,2,9800,은평구,서울,3400,SUMMERFRUIT,M,50대
+321,3/3/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-023,채소,300g,Delivered,1,4800,동대문구,서울,2500,VEGGIESALE,F,30대
+322,3/3/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-022,유제품,250g,Delivered,3,8500,서대문구,서울,3600,DAIRYPROMO,M,40대
+323,3/4/24,Shipped,SSG.com,Standard,사과,FR-APL-011,과일,1kg,In Transit,1,6500,강북구,서울,1000,FRUITPROMO5,F,50대
+324,3/4/24,Shipped,Amazon,Expedited,고구마,VG-SWP-011,채소,1kg,Delivered,2,5800,도봉구,서울,1300,VEGGIESALE,M,30대
+325,3/4/24,Shipped,Coupang,Standard,연유,DP-CDM-011,유제품,300g,Delivered,1,4500,노원구,서울,1300,DAIRYPROMO,F,60대
+326,3/4/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-011,과일,5개입,Delivered,3,11700,중랑구,서울,2100,FRUITPROMO5,M,30대
+327,3/4/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-011,채소,300g,Delivered,1,4700,구로구,서울,8200,VEGGIESALE,F,40대
+328,3/5/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-033,유제품,400g,In Transit,2,5500,금천구,서울,8500,DAIRYPROMO,M,50대
+329,3/5/24,Shipped,Coupang,Standard,수박,FR-WML-011,과일,1통,Delivered,1,12900,동작구,서울,7200,SUMMERFRUIT,F,30대
+330,3/5/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-011,채소,1kg,Delivered,3,3500,관악구,서울,8700,VEGGIESALE,M,40대
+331,3/5/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-012,과일,500g,Delivered,1,5990,광진구,서울,5000,FRUITPROMO5,F,20대
+332,3/5/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-024,채소,200g,Delivered,2,3500,성북구,서울,2800,,M,50대
+333,3/6/24,Shipped,Coupang,Standard,순두부,DP-TFU-012,유제품,300g,In Transit,1,3000,강동구,서울,5900,FRESH10OFF,F,30대
+334,3/6/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-012,과일,3개입,Delivered,3,6700,분당구,경기도,13500,FRUITPROMO5,M,40대
+335,3/6/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-012,채소,500g,Delivered,1,4200,일산동구,경기도,10300,VEGGIESALE,F,50대
+336,3/6/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-012,채소,300g,Delivered,2,4900,수원시,경기도,16400,VEGGIESALE,M,30대
+337,3/6/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-023,유제품,1L,Delivered,1,2900,용산구,서울,4000,DAIRYPROMO,F,60대
+338,3/7/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-012,과일,2개입,In Transit,3,7200,성동구,서울,4800,SUMMERFRUIT,M,30대
+339,3/7/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-012,채소,300g,Delivered,1,3900,마포구,서울,4100,,F,40대
+340,3/7/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-034,유제품,500g,Delivered,2,7800,중구,서울,4500,DAIRYPROMO,M,50대
+341,3/7/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-012,과일,6개입,Delivered,1,8900,종로구,서울,3000,FRUITPROMO5,F,30대
+342,3/7/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-012,채소,3개입,Delivered,3,4800,은평구,서울,3400,VEGGIESALE,M,40대
+343,3/8/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-023,유제품,200g,In Transit,1,7900,동대문구,서울,2500,DAIRYPROMO,F,20대
+344,3/8/24,Shipped,Amazon,Expedited,딸기,FR-STB-012,과일,400g,Delivered,2,12900,서대문구,서울,3600,SUMMERFRUIT,M,50대
+345,3/8/24,Shipped,Coupang,Standard,양배추,VG-CBG-012,채소,1통,Delivered,1,3900,강북구,서울,1000,,F,30대
+346,3/8/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-035,유제품,4개입,Delivered,3,6900,도봉구,서울,1300,DAIRYPROMO,M,40대
+347,3/8/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-012,과일,1개,Delivered,1,6900,노원구,서울,1300,FRUITPROMO5,F,50대
+348,3/9/24,Shipped,Amazon,Expedited,청경채,VG-BCH-012,채소,300g,In Transit,2,4900,중랑구,서울,2100,VEGGIESALE,M,30대
+349,3/9/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-024,유제품,1L,Delivered,1,3500,구로구,서울,8200,DAIRYPROMO,F,60대
+350,3/9/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-012,과일,200g,Delivered,3,9800,금천구,서울,8500,SUMMERFRUIT,M,30대
+351,3/9/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-025,채소,300g,Delivered,1,4800,동작구,서울,7200,VEGGIESALE,F,40대
+352,3/9/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-024,유제품,250g,Delivered,2,8500,관악구,서울,8700,DAIRYPROMO,M,50대
+353,3/10/24,Shipped,Coupang,Standard,사과,FR-APL-012,과일,1kg,In Transit,1,6500,광진구,서울,5000,FRUITPROMO5,F,30대
+354,3/10/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-012,채소,1kg,Delivered,3,5800,성북구,서울,2800,VEGGIESALE,M,40대
+355,3/10/24,Shipped,SSG.com,Standard,연유,DP-CDM-012,유제품,300g,Delivered,1,4500,강동구,서울,5900,DAIRYPROMO,F,20대
+356,3/10/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-012,과일,5개입,Delivered,2,11700,분당구,경기도,13500,FRUITPROMO5,M,50대
+357,3/10/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-012,채소,300g,Delivered,1,4700,일산동구,경기도,10300,VEGGIESALE,F,30대
+358,3/11/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-036,유제품,400g,In Transit,3,5500,수원시,경기도,16400,DAIRYPROMO,M,40대
+359,3/11/24,Shipped,SSG.com,Standard,수박,FR-WML-012,과일,1통,Delivered,1,12900,용산구,서울,4000,SUMMERFRUIT,F,50대
+360,3/11/24,Shipped,Amazon,Expedited,양파,VG-ONI-012,채소,1kg,Delivered,2,3500,성동구,서울,4800,VEGGIESALE,M,30대
+361,3/11/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-013,과일,500g,Delivered,1,5990,마포구,서울,4100,FRUITPROMO5,F,60대
+362,3/11/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-026,채소,200g,Delivered,3,3500,중구,서울,4500,,M,30대
+363,3/12/24,Shipped,SSG.com,Standard,순두부,DP-TFU-013,유제품,300g,In Transit,1,3000,종로구,서울,3000,FRESH10OFF,F,40대
+364,3/12/24,Shipped,Amazon,Priority,아보카도,FR-AVC-013,과일,3개입,Delivered,2,6700,은평구,서울,3400,FRUITPROMO5,M,50대
+365,3/12/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-013,채소,500g,Delivered,1,4200,동대문구,서울,2500,VEGGIESALE,F,30대
+366,3/12/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-013,채소,300g,Delivered,3,4900,서대문구,서울,3600,VEGGIESALE,M,40대
+367,3/12/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-025,유제품,1L,Delivered,1,2900,강북구,서울,1000,DAIRYPROMO,F,20대
+368,3/13/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-013,과일,2개입,In Transit,2,7200,도봉구,서울,1300,SUMMERFRUIT,M,50대
+369,3/13/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-013,채소,300g,Delivered,1,3900,노원구,서울,1300,,F,30대
+370,3/13/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-037,유제품,500g,Delivered,3,7800,중랑구,서울,2100,DAIRYPROMO,M,40대
+371,3/13/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-013,과일,6개입,Delivered,1,8900,구로구,서울,8200,FRUITPROMO5,F,50대
+372,3/13/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-013,채소,3개입,Delivered,2,4800,금천구,서울,8500,VEGGIESALE,M,30대
+373,3/14/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-025,유제품,200g,In Transit,1,7900,동작구,서울,7200,DAIRYPROMO,F,60대
+374,3/14/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-013,과일,400g,Delivered,3,12900,관악구,서울,8700,SUMMERFRUIT,M,30대
+375,3/14/24,Shipped,SSG.com,Standard,양배추,VG-CBG-013,채소,1통,Delivered,1,3900,광진구,서울,5000,,F,40대
+376,3/14/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-038,유제품,4개입,Delivered,2,6900,성북구,서울,2800,DAIRYPROMO,M,50대
+377,3/14/24,Shipped,Coupang,Standard,파인애플,FR-PNP-013,과일,1개,Delivered,1,6900,강동구,서울,5900,FRUITPROMO5,F,30대
+378,3/15/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-013,채소,300g,In Transit,3,4900,분당구,경기도,13500,VEGGIESALE,M,40대
+379,3/15/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-026,유제품,1L,Delivered,1,3500,일산동구,경기도,10300,DAIRYPROMO,F,20대
+380,3/15/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-013,과일,200g,Delivered,2,9800,수원시,경기도,16400,SUMMERFRUIT,M,50대
+381,3/15/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-027,채소,300g,Delivered,1,4800,용산구,서울,4000,VEGGIESALE,F,30대
+382,3/15/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-026,유제품,250g,Delivered,3,8500,성동구,서울,4800,DAIRYPROMO,M,40대
+383,3/16/24,Shipped,SSG.com,Standard,사과,FR-APL-013,과일,1kg,In Transit,1,6500,마포구,서울,4100,FRUITPROMO5,F,50대
+384,3/16/24,Shipped,Amazon,Expedited,고구마,VG-SWP-013,채소,1kg,Delivered,2,5800,중구,서울,4500,VEGGIESALE,M,30대
+385,3/16/24,Shipped,Coupang,Standard,연유,DP-CDM-013,유제품,300g,Delivered,1,4500,종로구,서울,3000,DAIRYPROMO,F,60대
+386,3/16/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-013,과일,5개입,Delivered,3,11700,은평구,서울,3400,FRUITPROMO5,M,30대
+387,3/16/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-013,채소,300g,Delivered,1,4700,동대문구,서울,2500,VEGGIESALE,F,40대
+388,3/17/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-039,유제품,400g,In Transit,2,5500,서대문구,서울,3600,DAIRYPROMO,M,50대
+389,3/17/24,Shipped,Coupang,Standard,수박,FR-WML-013,과일,1통,Delivered,1,12900,강북구,서울,1000,SUMMERFRUIT,F,30대
+390,3/17/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-013,채소,1kg,Delivered,3,3500,도봉구,서울,1300,VEGGIESALE,M,40대
+391,3/17/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-014,과일,500g,Delivered,1,5990,노원구,서울,1300,FRUITPROMO5,F,20대
+392,3/17/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-028,채소,200g,Delivered,2,3500,중랑구,서울,2100,,M,50대
+393,3/18/24,Shipped,Coupang,Standard,순두부,DP-TFU-014,유제품,300g,In Transit,1,3000,구로구,서울,8200,FRESH10OFF,F,30대
+394,3/18/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-014,과일,3개입,Delivered,3,6700,금천구,서울,8500,FRUITPROMO5,M,40대
+395,3/18/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-014,채소,500g,Delivered,1,4200,동작구,서울,7200,VEGGIESALE,F,50대
+396,3/18/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-014,채소,300g,Delivered,2,4900,관악구,서울,8700,VEGGIESALE,M,30대
+397,3/18/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-027,유제품,1L,Delivered,1,2900,광진구,서울,5000,DAIRYPROMO,F,60대
+398,3/19/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-014,과일,2개입,In Transit,3,7200,성북구,서울,2800,SUMMERFRUIT,M,30대
+399,3/19/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-014,채소,300g,Delivered,1,3900,강동구,서울,5900,,F,40대
+400,3/19/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-040,유제품,500g,Delivered,2,7800,분당구,경기도,13500,DAIRYPROMO,M,50대
+401,3/19/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-014,과일,6개입,Delivered,1,8900,일산동구,경기도,10300,FRUITPROMO5,F,30대
+402,3/19/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-014,채소,3개입,Delivered,3,4800,수원시,경기도,16400,VEGGIESALE,M,40대
+403,3/20/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-027,유제품,200g,In Transit,1,7900,용산구,서울,4000,DAIRYPROMO,F,20대
+404,3/20/24,Shipped,Amazon,Expedited,딸기,FR-STB-014,과일,400g,Delivered,2,12900,성동구,서울,4800,SUMMERFRUIT,M,50대
+405,3/20/24,Shipped,Coupang,Standard,양배추,VG-CBG-014,채소,1통,Delivered,1,3900,마포구,서울,4100,,F,30대
+406,3/20/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-041,유제품,4개입,Delivered,3,6900,중구,서울,4500,DAIRYPROMO,M,40대
+407,3/20/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-014,과일,1개,Delivered,1,6900,종로구,서울,3000,FRUITPROMO5,F,50대
+408,3/21/24,Shipped,Amazon,Expedited,청경채,VG-BCH-014,채소,300g,In Transit,2,4900,은평구,서울,3400,VEGGIESALE,M,30대
+409,3/21/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-028,유제품,1L,Delivered,1,3500,동대문구,서울,2500,DAIRYPROMO,F,60대
+410,3/21/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-014,과일,200g,Delivered,3,9800,서대문구,서울,3600,SUMMERFRUIT,M,30대
+411,3/21/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-029,채소,300g,Delivered,1,4800,강북구,서울,1000,VEGGIESALE,F,40대
+412,3/21/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-028,유제품,250g,Delivered,2,8500,도봉구,서울,1300,DAIRYPROMO,M,50대
+413,3/22/24,Shipped,Coupang,Standard,사과,FR-APL-014,과일,1kg,In Transit,1,6500,노원구,서울,1300,FRUITPROMO5,F,30대
+414,3/22/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-014,채소,1kg,Delivered,3,5800,중랑구,서울,2100,VEGGIESALE,M,40대
+415,3/22/24,Shipped,SSG.com,Standard,연유,DP-CDM-014,유제품,300g,Delivered,1,4500,구로구,서울,8200,DAIRYPROMO,F,20대
+416,3/22/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-014,과일,5개입,Delivered,2,11700,금천구,서울,8500,FRUITPROMO5,M,50대
+417,3/22/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-014,채소,300g,Delivered,1,4700,동작구,서울,7200,VEGGIESALE,F,30대
+418,3/23/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-042,유제품,400g,In Transit,3,5500,관악구,서울,8700,DAIRYPROMO,M,40대
+419,3/23/24,Shipped,SSG.com,Standard,수박,FR-WML-014,과일,1통,Delivered,1,12900,광진구,서울,5000,SUMMERFRUIT,F,50대
+420,3/23/24,Shipped,Amazon,Expedited,양파,VG-ONI-014,채소,1kg,Delivered,2,3500,성북구,서울,2800,VEGGIESALE,M,30대
+421,3/23/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-015,과일,500g,Delivered,1,5990,강동구,서울,5900,FRUITPROMO5,F,60대
+422,3/23/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-030,채소,200g,Delivered,3,3500,분당구,경기도,13500,,M,30대
+423,3/24/24,Shipped,SSG.com,Standard,순두부,DP-TFU-015,유제품,300g,In Transit,1,3000,일산동구,경기도,10300,FRESH10OFF,F,40대
+424,3/24/24,Shipped,Amazon,Priority,아보카도,FR-AVC-015,과일,3개입,Delivered,2,6700,수원시,경기도,16400,FRUITPROMO5,M,50대
+425,3/24/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-015,채소,500g,Delivered,1,4200,용산구,서울,4000,VEGGIESALE,F,30대
+426,3/24/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-015,채소,300g,Delivered,3,4900,성동구,서울,4800,VEGGIESALE,M,40대
+427,3/24/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-029,유제품,1L,Delivered,1,2900,마포구,서울,4100,DAIRYPROMO,F,20대
+428,3/25/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-015,과일,2개입,In Transit,2,7200,중구,서울,4500,SUMMERFRUIT,M,50대
+429,3/25/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-015,채소,300g,Delivered,1,3900,종로구,서울,3000,,F,30대
+430,3/25/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-043,유제품,500g,Delivered,3,7800,은평구,서울,3400,DAIRYPROMO,M,40대
+431,3/25/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-015,과일,6개입,Delivered,1,8900,동대문구,서울,2500,FRUITPROMO5,F,50대
+432,3/25/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-015,채소,3개입,Delivered,2,4800,서대문구,서울,3600,VEGGIESALE,M,30대
+433,3/26/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-029,유제품,200g,In Transit,1,7900,강북구,서울,1000,DAIRYPROMO,F,60대
+434,3/26/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-015,과일,400g,Delivered,3,12900,도봉구,서울,1300,SUMMERFRUIT,M,30대
+435,3/26/24,Shipped,SSG.com,Standard,양배추,VG-CBG-015,채소,1통,Delivered,1,3900,노원구,서울,1300,,F,40대
+436,3/26/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-044,유제품,4개입,Delivered,2,6900,중랑구,서울,2100,DAIRYPROMO,M,50대
+437,3/26/24,Shipped,Coupang,Standard,파인애플,FR-PNP-015,과일,1개,Delivered,1,6900,구로구,서울,8200,FRUITPROMO5,F,30대
+438,3/27/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-015,채소,300g,In Transit,3,4900,금천구,서울,8500,VEGGIESALE,M,40대
+439,3/27/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-030,유제품,1L,Delivered,1,3500,동작구,서울,7200,DAIRYPROMO,F,20대
+440,3/27/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-015,과일,200g,Delivered,2,9800,관악구,서울,8700,SUMMERFRUIT,M,50대
+441,3/27/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-031,채소,300g,Delivered,1,4800,광진구,서울,5000,VEGGIESALE,F,30대
+442,3/27/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-030,유제품,250g,Delivered,3,8500,성북구,서울,2800,DAIRYPROMO,M,40대
+443,3/28/24,Shipped,SSG.com,Standard,사과,FR-APL-015,과일,1kg,In Transit,1,6500,강동구,서울,5900,FRUITPROMO5,F,50대
+444,3/28/24,Shipped,Amazon,Expedited,고구마,VG-SWP-015,채소,1kg,Delivered,2,5800,분당구,경기도,13500,VEGGIESALE,M,30대
+445,3/28/24,Shipped,Coupang,Standard,연유,DP-CDM-015,유제품,300g,Delivered,1,4500,일산동구,경기도,10300,DAIRYPROMO,F,60대
+446,3/28/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-015,과일,5개입,Delivered,3,11700,수원시,경기도,16400,FRUITPROMO5,M,30대
+447,3/28/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-015,채소,300g,Delivered,1,4700,용산구,서울,4000,VEGGIESALE,F,40대
+448,3/29/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-045,유제품,400g,In Transit,2,5500,성동구,서울,4800,DAIRYPROMO,M,50대
+449,3/29/24,Shipped,Coupang,Standard,수박,FR-WML-015,과일,1통,Delivered,1,12900,마포구,서울,4100,SUMMERFRUIT,F,30대
+450,3/29/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-015,채소,1kg,Delivered,3,3500,중구,서울,4500,VEGGIESALE,M,40대
+451,3/29/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-016,과일,500g,Delivered,1,5990,종로구,서울,3000,FRUITPROMO5,F,20대
+452,3/29/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-032,채소,200g,Delivered,2,3500,은평구,서울,3400,,M,50대
+453,3/30/24,Shipped,Coupang,Standard,순두부,DP-TFU-016,유제품,300g,In Transit,1,3000,동대문구,서울,2500,FRESH10OFF,F,30대
+454,3/30/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-016,과일,3개입,Delivered,3,6700,서대문구,서울,3600,FRUITPROMO5,M,40대
+455,3/30/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-016,채소,500g,Delivered,1,4200,강북구,서울,1000,VEGGIESALE,F,50대
+456,3/30/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-016,채소,300g,Delivered,2,4900,도봉구,서울,1300,VEGGIESALE,M,30대
+457,3/30/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-031,유제품,1L,Delivered,1,2900,노원구,서울,1300,DAIRYPROMO,F,60대
+458,3/31/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-016,과일,2개입,In Transit,3,7200,중랑구,서울,2100,SUMMERFRUIT,M,30대
+459,3/31/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-016,채소,300g,Delivered,1,3900,구로구,서울,8200,,F,40대
+460,3/31/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-046,유제품,500g,Delivered,2,7800,금천구,서울,8500,DAIRYPROMO,M,50대
+461,3/31/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-016,과일,6개입,Delivered,1,8900,동작구,서울,7200,FRUITPROMO5,F,30대
+462,3/31/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-016,채소,3개입,Delivered,3,4800,관악구,서울,8700,VEGGIESALE,M,40대
+463,4/1/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-031,유제품,200g,In Transit,1,7900,광진구,서울,5000,DAIRYPROMO,F,20대
+464,4/1/24,Shipped,Amazon,Expedited,딸기,FR-STB-016,과일,400g,Delivered,2,12900,성북구,서울,2800,SUMMERFRUIT,M,50대
+465,4/1/24,Shipped,Coupang,Standard,양배추,VG-CBG-016,채소,1통,Delivered,1,3900,강동구,서울,5900,,F,30대
+466,4/1/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-047,유제품,4개입,Delivered,3,6900,분당구,경기도,13500,DAIRYPROMO,M,40대
+467,4/1/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-016,과일,1개,Delivered,1,6900,일산동구,경기도,10300,FRUITPROMO5,F,50대
+468,4/2/24,Shipped,Amazon,Expedited,청경채,VG-BCH-016,채소,300g,In Transit,2,4900,수원시,경기도,16400,VEGGIESALE,M,30대
+469,4/2/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-032,유제품,1L,Delivered,1,3500,용산구,서울,4000,DAIRYPROMO,F,60대
+470,4/2/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-016,과일,200g,Delivered,3,9800,성동구,서울,4800,SUMMERFRUIT,M,30대
+471,4/2/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-033,채소,300g,Delivered,1,4800,마포구,서울,4100,VEGGIESALE,F,40대
+472,4/2/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-032,유제품,250g,Delivered,2,8500,중구,서울,4500,DAIRYPROMO,M,50대
+473,4/3/24,Shipped,Coupang,Standard,사과,FR-APL-016,과일,1kg,In Transit,1,6500,종로구,서울,3000,FRUITPROMO5,F,30대
+474,4/3/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-016,채소,1kg,Delivered,3,5800,은평구,서울,3400,VEGGIESALE,M,40대
+475,4/3/24,Shipped,SSG.com,Standard,연유,DP-CDM-016,유제품,300g,Delivered,1,4500,동대문구,서울,2500,DAIRYPROMO,F,20대
+476,4/3/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-016,과일,5개입,Delivered,2,11700,서대문구,서울,3600,FRUITPROMO5,M,50대
+477,4/3/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-016,채소,300g,Delivered,1,4700,강북구,서울,1000,VEGGIESALE,F,30대
+478,4/4/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-048,유제품,400g,In Transit,3,5500,도봉구,서울,1300,DAIRYPROMO,M,40대
+479,4/4/24,Shipped,SSG.com,Standard,수박,FR-WML-016,과일,1통,Delivered,1,12900,노원구,서울,1300,SUMMERFRUIT,F,50대
+480,4/4/24,Shipped,Amazon,Expedited,양파,VG-ONI-016,채소,1kg,Delivered,2,3500,중랑구,서울,2100,VEGGIESALE,M,30대
+481,4/4/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-017,과일,500g,Delivered,1,5990,구로구,서울,8200,FRUITPROMO5,F,60대
+482,4/4/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-034,채소,200g,Delivered,3,3500,금천구,서울,8500,,M,30대
+483,4/5/24,Shipped,SSG.com,Standard,순두부,DP-TFU-017,유제품,300g,In Transit,1,3000,동작구,서울,7200,FRESH10OFF,F,40대
+484,4/5/24,Shipped,Amazon,Priority,아보카도,FR-AVC-017,과일,3개입,Delivered,2,6700,관악구,서울,8700,FRUITPROMO5,M,50대
+485,4/5/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-017,채소,500g,Delivered,1,4200,광진구,서울,5000,VEGGIESALE,F,30대
+486,4/5/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-017,채소,300g,Delivered,3,4900,성북구,서울,2800,VEGGIESALE,M,40대
+487,4/5/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-033,유제품,1L,Delivered,1,2900,강동구,서울,5900,DAIRYPROMO,F,20대
+488,4/6/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-017,과일,2개입,In Transit,2,7200,분당구,경기도,13500,SUMMERFRUIT,M,50대
+489,4/6/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-017,채소,300g,Delivered,1,3900,일산동구,경기도,10300,,F,30대
+490,4/6/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-049,유제품,500g,Delivered,3,7800,수원시,경기도,16400,DAIRYPROMO,M,40대
+491,4/6/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-017,과일,6개입,Delivered,1,8900,용산구,서울,4000,FRUITPROMO5,F,50대
+492,4/6/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-017,채소,3개입,Delivered,2,4800,성동구,서울,4800,VEGGIESALE,M,30대
+493,4/7/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-033,유제품,200g,In Transit,1,7900,마포구,서울,4100,DAIRYPROMO,F,60대
+494,4/7/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-017,과일,400g,Delivered,3,12900,중구,서울,4500,SUMMERFRUIT,M,30대
+495,4/7/24,Shipped,SSG.com,Standard,양배추,VG-CBG-017,채소,1통,Delivered,1,3900,종로구,서울,3000,,F,40대
+496,4/7/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-050,유제품,4개입,Delivered,2,6900,은평구,서울,3400,DAIRYPROMO,M,50대
+497,4/7/24,Shipped,Coupang,Standard,파인애플,FR-PNP-017,과일,1개,Delivered,1,6900,동대문구,서울,2500,FRUITPROMO5,F,30대
+498,4/8/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-017,채소,300g,In Transit,3,4900,서대문구,서울,3600,VEGGIESALE,M,40대
+499,4/8/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-034,유제품,1L,Delivered,1,3500,강북구,서울,1000,DAIRYPROMO,F,20대
+500,4/8/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-017,과일,200g,Delivered,2,9800,도봉구,서울,1300,SUMMERFRUIT,M,50대
+501,4/8/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-035,채소,300g,Delivered,1,4800,노원구,서울,1300,VEGGIESALE,F,30대
+502,4/8/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-034,유제품,250g,Delivered,3,8500,중랑구,서울,2100,DAIRYPROMO,M,40대
+503,4/9/24,Shipped,SSG.com,Standard,사과,FR-APL-017,과일,1kg,In Transit,1,6500,구로구,서울,8200,FRUITPROMO5,F,50대
+504,4/9/24,Shipped,Amazon,Expedited,고구마,VG-SWP-017,채소,1kg,Delivered,2,5800,금천구,서울,8500,VEGGIESALE,M,30대
+505,4/9/24,Shipped,Coupang,Standard,연유,DP-CDM-017,유제품,300g,Delivered,1,4500,동작구,서울,7200,DAIRYPROMO,F,60대
+506,4/9/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-017,과일,5개입,Delivered,3,11700,관악구,서울,8700,FRUITPROMO5,M,30대
+507,4/9/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-017,채소,300g,Delivered,1,4700,광진구,서울,5000,VEGGIESALE,F,40대
+508,4/10/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-051,유제품,400g,In Transit,2,5500,성북구,서울,2800,DAIRYPROMO,M,50대
+509,4/10/24,Shipped,Coupang,Standard,수박,FR-WML-017,과일,1통,Delivered,1,12900,강동구,서울,5900,SUMMERFRUIT,F,30대
+510,4/10/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-017,채소,1kg,Delivered,3,3500,분당구,경기도,13500,VEGGIESALE,M,40
+511,4/10/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-018,과일,500g,Delivered,1,5990,일산동구,경기도,10300,FRUITPROMO5,F,20대
+512,4/10/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-036,채소,200g,Delivered,2,3500,수원시,경기도,16400,,M,50대
+513,4/11/24,Shipped,Coupang,Standard,순두부,DP-TFU-018,유제품,300g,In Transit,1,3000,용산구,서울,4000,FRESH10OFF,F,30대
+514,4/11/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-018,과일,3개입,Delivered,3,6700,성동구,서울,4800,FRUITPROMO5,M,40대
+515,4/11/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-018,채소,500g,Delivered,1,4200,마포구,서울,4100,VEGGIESALE,F,50대
+516,4/11/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-018,채소,300g,Delivered,2,4900,중구,서울,4500,VEGGIESALE,M,30대
+517,4/11/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-035,유제품,1L,Delivered,1,2900,종로구,서울,3000,DAIRYPROMO,F,60대
+518,4/12/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-018,과일,2개입,In Transit,3,7200,은평구,서울,3400,SUMMERFRUIT,M,30대
+519,4/12/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-018,채소,300g,Delivered,1,3900,동대문구,서울,2500,,F,40대
+520,4/12/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-052,유제품,500g,Delivered,2,7800,서대문구,서울,3600,DAIRYPROMO,M,50대
+521,4/12/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-018,과일,6개입,Delivered,1,8900,강북구,서울,1000,FRUITPROMO5,F,30대
+522,4/12/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-018,채소,3개입,Delivered,3,4800,도봉구,서울,1300,VEGGIESALE,M,40대
+523,4/13/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-035,유제품,200g,In Transit,1,7900,노원구,서울,1300,DAIRYPROMO,F,20대
+524,4/13/24,Shipped,Amazon,Expedited,딸기,FR-STB-018,과일,400g,Delivered,2,12900,중랑구,서울,2100,SUMMERFRUIT,M,50대
+525,4/13/24,Shipped,Coupang,Standard,양배추,VG-CBG-018,채소,1통,Delivered,1,3900,구로구,서울,8200,,F,30대
+526,4/13/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-053,유제품,4개입,Delivered,3,6900,금천구,서울,8500,DAIRYPROMO,M,40대
+527,4/13/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-018,과일,1개,Delivered,1,6900,동작구,서울,7200,FRUITPROMO5,F,50대
+528,4/14/24,Shipped,Amazon,Expedited,청경채,VG-BCH-018,채소,300g,In Transit,2,4900,관악구,서울,8700,VEGGIESALE,M,30대
+529,4/14/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-036,유제품,1L,Delivered,1,3500,광진구,서울,5000,DAIRYPROMO,F,60대
+530,4/14/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-018,과일,200g,Delivered,3,9800,성북구,서울,2800,SUMMERFRUIT,M,30대
+531,4/14/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-037,채소,300g,Delivered,1,4800,강동구,서울,5900,VEGGIESALE,F,40대
+532,4/14/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-036,유제품,250g,Delivered,2,8500,분당구,경기도,13500,DAIRYPROMO,M,50대
+533,4/15/24,Shipped,Coupang,Standard,사과,FR-APL-018,과일,1kg,In Transit,1,6500,일산동구,경기도,10300,FRUITPROMO5,F,30대
+534,4/15/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-018,채소,1kg,Delivered,3,5800,수원시,경기도,16400,VEGGIESALE,M,40대
+535,4/15/24,Shipped,SSG.com,Standard,연유,DP-CDM-018,유제품,300g,Delivered,1,4500,용산구,서울,4000,DAIRYPROMO,F,20대
+536,4/15/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-018,과일,5개입,Delivered,2,11700,성동구,서울,4800,FRUITPROMO5,M,50대
+537,4/15/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-018,채소,300g,Delivered,1,4700,마포구,서울,4100,VEGGIESALE,F,30대
+538,4/16/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-054,유제품,400g,In Transit,3,5500,중구,서울,4500,DAIRYPROMO,M,40대
+539,4/16/24,Shipped,SSG.com,Standard,수박,FR-WML-018,과일,1통,Delivered,1,12900,종로구,서울,3000,SUMMERFRUIT,F,50대
+540,4/16/24,Shipped,Amazon,Expedited,양파,VG-ONI-018,채소,1kg,Delivered,2,3500,은평구,서울,3400,VEGGIESALE,M,30대
+541,4/16/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-019,과일,500g,Delivered,1,5990,동대문구,서울,2500,FRUITPROMO5,F,60대
+542,4/16/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-038,채소,200g,Delivered,3,3500,서대문구,서울,3600,,M,30대
+543,4/17/24,Shipped,SSG.com,Standard,순두부,DP-TFU-019,유제품,300g,In Transit,1,3000,강북구,서울,1000,FRESH10OFF,F,40대
+544,4/17/24,Shipped,Amazon,Priority,아보카도,FR-AVC-019,과일,3개입,Delivered,2,6700,도봉구,서울,1300,FRUITPROMO5,M,50대
+545,4/17/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-019,채소,500g,Delivered,1,4200,노원구,서울,1300,VEGGIESALE,F,30대
+546,4/17/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-019,채소,300g,Delivered,3,4900,중랑구,서울,2100,VEGGIESALE,M,40대
+547,4/17/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-037,유제품,1L,Delivered,1,2900,구로구,서울,8200,DAIRYPROMO,F,20대
+548,4/18/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-019,과일,2개입,In Transit,2,7200,금천구,서울,8500,SUMMERFRUIT,M,50대
+549,4/18/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-019,채소,300g,Delivered,1,3900,동작구,서울,7200,,F,30대
+550,4/18/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-055,유제품,500g,Delivered,3,7800,관악구,서울,8700,DAIRYPROMO,M,40대
+551,4/18/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-019,과일,6개입,Delivered,1,8900,광진구,서울,5000,FRUITPROMO5,F,50대
+552,4/18/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-019,채소,3개입,Delivered,2,4800,성북구,서울,2800,VEGGIESALE,M,30대
+553,4/19/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-037,유제품,200g,In Transit,1,7900,강동구,서울,5900,DAIRYPROMO,F,60대
+554,4/19/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-019,과일,400g,Delivered,3,12900,분당구,경기도,13500,SUMMERFRUIT,M,30대
+555,4/19/24,Shipped,SSG.com,Standard,양배추,VG-CBG-019,채소,1통,Delivered,1,3900,일산동구,경기도,10300,,F,40대
+556,4/19/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-056,유제품,4개입,Delivered,2,6900,수원시,경기도,16400,DAIRYPROMO,M,50대
+557,4/19/24,Shipped,Coupang,Standard,파인애플,FR-PNP-019,과일,1개,Delivered,1,6900,용산구,서울,4000,FRUITPROMO5,F,30대
+558,4/20/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-019,채소,300g,In Transit,3,4900,성동구,서울,4800,VEGGIESALE,M,40대
+559,4/20/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-038,유제품,1L,Delivered,1,3500,마포구,서울,4100,DAIRYPROMO,F,20대
+560,4/20/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-019,과일,200g,Delivered,2,9800,중구,서울,4500,SUMMERFRUIT,M,50대
+561,4/20/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-039,채소,300g,Delivered,1,4800,종로구,서울,3000,VEGGIESALE,F,30대
+562,4/20/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-038,유제품,250g,Delivered,3,8500,은평구,서울,3400,DAIRYPROMO,M,40대
+563,4/21/24,Shipped,SSG.com,Standard,사과,FR-APL-019,과일,1kg,In Transit,1,6500,동대문구,서울,2500,FRUITPROMO5,F,50대
+564,4/21/24,Shipped,Amazon,Expedited,고구마,VG-SWP-019,채소,1kg,Delivered,2,5800,서대문구,서울,3600,VEGGIESALE,M,30대
+565,4/21/24,Shipped,Coupang,Standard,연유,DP-CDM-019,유제품,300g,Delivered,1,4500,강북구,서울,1000,DAIRYPROMO,F,60대
+566,4/21/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-019,과일,5개입,Delivered,3,11700,도봉구,서울,1300,FRUITPROMO5,M,30대
+567,4/21/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-019,채소,300g,Delivered,1,4700,노원구,서울,1300,VEGGIESALE,F,40대
+568,4/22/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-057,유제품,400g,In Transit,2,5500,중랑구,서울,2100,DAIRYPROMO,M,50대
+569,4/22/24,Shipped,Coupang,Standard,수박,FR-WML-019,과일,1통,Delivered,1,12900,구로구,서울,8200,SUMMERFRUIT,F,30대
+570,4/22/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-019,채소,1kg,Delivered,3,3500,금천구,서울,8500,VEGGIESALE,M,40대
+571,4/22/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-020,과일,500g,Delivered,1,5990,동작구,서울,7200,FRUITPROMO5,F,20대
+572,4/22/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-040,채소,200g,Delivered,2,3500,관악구,서울,8700,,M,50대
+573,4/23/24,Shipped,Coupang,Standard,순두부,DP-TFU-020,유제품,300g,In Transit,1,3000,광진구,서울,5000,FRESH10OFF,F,30대
+574,4/23/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-020,과일,3개입,Delivered,3,6700,성북구,서울,2800,FRUITPROMO5,M,40대
+575,4/23/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-020,채소,500g,Delivered,1,4200,강동구,서울,5900,VEGGIESALE,F,50대
+576,4/23/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-020,채소,300g,Delivered,2,4900,분당구,경기도,13500,VEGGIESALE,M,30대
+577,4/23/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-039,유제품,1L,Delivered,1,2900,일산동구,경기도,10300,DAIRYPROMO,F,60대
+578,4/24/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-020,과일,2개입,In Transit,3,7200,수원시,경기도,16400,SUMMERFRUIT,M,30대
+579,4/24/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-020,채소,300g,Delivered,1,3900,용산구,서울,4000,,F,40대
+580,4/24/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-058,유제품,500g,Delivered,2,7800,성동구,서울,4800,DAIRYPROMO,M,50대
+581,4/24/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-020,과일,6개입,Delivered,1,8900,마포구,서울,4100,FRUITPROMO5,F,30대
+582,4/24/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-020,채소,3개입,Delivered,3,4800,중구,서울,4500,VEGGIESALE,M,40대
+583,4/25/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-039,유제품,200g,In Transit,1,7900,종로구,서울,3000,DAIRYPROMO,F,20대
+584,4/25/24,Shipped,Amazon,Expedited,딸기,FR-STB-020,과일,400g,Delivered,2,12900,은평구,서울,3400,SUMMERFRUIT,M,50대
+585,4/25/24,Shipped,Coupang,Standard,양배추,VG-CBG-020,채소,1통,Delivered,1,3900,동대문구,서울,2500,,F,30대
+586,4/25/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-059,유제품,4개입,Delivered,3,6900,서대문구,서울,3600,DAIRYPROMO,M,40대
+587,4/25/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-020,과일,1개,Delivered,1,6900,강북구,서울,1000,FRUITPROMO5,F,50대
+588,4/26/24,Shipped,Amazon,Expedited,청경채,VG-BCH-020,채소,300g,In Transit,2,4900,도봉구,서울,1300,VEGGIESALE,M,30대
+589,4/26/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-040,유제품,1L,Delivered,1,3500,노원구,서울,1300,DAIRYPROMO,F,60대
+590,4/26/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-020,과일,200g,Delivered,3,9800,중랑구,서울,2100,SUMMERFRUIT,M,30대
+591,4/26/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-041,채소,300g,Delivered,1,4800,구로구,서울,8200,VEGGIESALE,F,40대
+592,4/26/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-040,유제품,250g,Delivered,2,8500,금천구,서울,8500,DAIRYPROMO,M,50대
+593,4/27/24,Shipped,Coupang,Standard,사과,FR-APL-020,과일,1kg,In Transit,1,6500,동작구,서울,7200,FRUITPROMO5,F,30대
+594,4/27/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-020,채소,1kg,Delivered,3,5800,관악구,서울,8700,VEGGIESALE,M,40대
+595,4/27/24,Shipped,SSG.com,Standard,연유,DP-CDM-020,유제품,300g,Delivered,1,4500,광진구,서울,5000,DAIRYPROMO,F,20대
+596,4/27/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-020,과일,5개입,Delivered,2,11700,성북구,서울,2800,FRUITPROMO5,M,50대
+597,4/27/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-020,채소,300g,Delivered,1,4700,강동구,서울,5900,VEGGIESALE,F,30대
+598,4/28/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-060,유제품,400g,In Transit,3,5500,분당구,경기도,13500,DAIRYPROMO,M,40대
+599,4/28/24,Shipped,SSG.com,Standard,수박,FR-WML-020,과일,1통,Delivered,1,12900,일산동구,경기도,10300,SUMMERFRUIT,F,50대
+600,4/28/24,Shipped,Amazon,Expedited,양파,VG-ONI-020,채소,1kg,Delivered,2,3500,수원시,경기도,16400,VEGGIESALE,M,30대
+601,4/28/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-021,과일,500g,Delivered,1,5990,용산구,서울,4000,FRUITPROMO5,F,60대
+602,4/28/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-042,채소,200g,Delivered,3,3500,성동구,서울,4800,,M,30대
+603,4/29/24,Shipped,SSG.com,Standard,순두부,DP-TFU-021,유제품,300g,In Transit,1,3000,마포구,서울,4100,FRESH10OFF,F,40대
+604,4/29/24,Shipped,Amazon,Priority,아보카도,FR-AVC-021,과일,3개입,Delivered,2,6700,중구,서울,4500,FRUITPROMO5,M,50대
+605,4/29/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-021,채소,500g,Delivered,1,4200,종로구,서울,3000,VEGGIESALE,F,30대
+606,4/29/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-021,채소,300g,Delivered,3,4900,은평구,서울,3400,VEGGIESALE,M,40대
+607,4/29/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-041,유제품,1L,Delivered,1,2900,동대문구,서울,2500,DAIRYPROMO,F,20대
+608,4/30/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-021,과일,2개입,In Transit,2,7200,서대문구,서울,3600,SUMMERFRUIT,M,50대
+609,4/30/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-021,채소,300g,Delivered,1,3900,강북구,서울,1000,,F,30대
+610,4/30/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-061,유제품,500g,Delivered,3,7800,도봉구,서울,1300,DAIRYPROMO,M,40대
+611,4/30/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-021,과일,6개입,Delivered,1,8900,노원구,서울,1300,FRUITPROMO5,F,50대
+612,4/30/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-021,채소,3개입,Delivered,2,4800,중랑구,서울,2100,VEGGIESALE,M,30대
+613,5/1/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-041,유제품,200g,In Transit,1,7900,구로구,서울,8200,DAIRYPROMO,F,60대
+614,5/1/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-021,과일,400g,Delivered,3,12900,금천구,서울,8500,SUMMERFRUIT,M,30대
+615,5/1/24,Shipped,SSG.com,Standard,양배추,VG-CBG-021,채소,1통,Delivered,1,3900,동작구,서울,7200,,F,40대
+616,5/1/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-062,유제품,4개입,Delivered,2,6900,관악구,서울,8700,DAIRYPROMO,M,50대
+617,5/1/24,Shipped,Coupang,Standard,파인애플,FR-PNP-021,과일,1개,Delivered,1,6900,광진구,서울,5000,FRUITPROMO5,F,30대
+618,5/2/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-021,채소,300g,In Transit,3,4900,성북구,서울,2800,VEGGIESALE,M,40대
+619,5/2/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-042,유제품,1L,Delivered,1,3500,강동구,서울,5900,DAIRYPROMO,F,20대
+620,5/2/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-021,과일,200g,Delivered,2,9800,분당구,경기도,13500,SUMMERFRUIT,M,50대
+621,5/2/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-043,채소,300g,Delivered,1,4800,일산동구,경기도,10300,VEGGIESALE,F,30대
+622,5/2/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-042,유제품,250g,Delivered,3,8500,수원시,경기도,16400,DAIRYPROMO,M,40대
+623,5/3/24,Shipped,SSG.com,Standard,사과,FR-APL-021,과일,1kg,In Transit,1,6500,용산구,서울,4000,FRUITPROMO5,F,50대
+624,5/3/24,Shipped,Amazon,Expedited,고구마,VG-SWP-021,채소,1kg,Delivered,2,5800,성동구,서울,4800,VEGGIESALE,M,30대
+625,5/3/24,Shipped,Coupang,Standard,연유,DP-CDM-021,유제품,300g,Delivered,1,4500,마포구,서울,4100,DAIRYPROMO,F,60대
+626,5/3/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-021,과일,5개입,Delivered,3,11700,중구,서울,4500,FRUITPROMO5,M,30대
+627,5/3/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-021,채소,300g,Delivered,1,4700,종로구,서울,3000,VEGGIESALE,F,40대
+628,5/4/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-063,유제품,400g,In Transit,2,5500,은평구,서울,3400,DAIRYPROMO,M,50대
+629,5/4/24,Shipped,Coupang,Standard,수박,FR-WML-021,과일,1통,Delivered,1,12900,동대문구,서울,2500,SUMMERFRUIT,F,30대
+630,5/4/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-021,채소,1kg,Delivered,3,3500,서대문구,서울,3600,VEGGIESALE,M,40대
+631,5/4/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-022,과일,500g,Delivered,1,5990,강북구,서울,1000,FRUITPROMO5,F,20대
+632,5/4/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-044,채소,200g,Delivered,2,3500,도봉구,서울,1300,,M,50대
+633,5/5/24,Shipped,Coupang,Standard,순두부,DP-TFU-022,유제품,300g,In Transit,1,3000,노원구,서울,1300,FRESH10OFF,F,30대
+634,5/5/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-022,과일,3개입,Delivered,3,6700,중랑구,서울,2100,FRUITPROMO5,M,40대
+635,5/5/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-022,채소,500g,Delivered,1,4200,구로구,서울,8200,VEGGIESALE,F,50대
+636,5/5/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-022,채소,300g,Delivered,2,4900,금천구,서울,8500,VEGGIESALE,M,30대
+637,5/5/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-043,유제품,1L,Delivered,1,2900,동작구,서울,7200,DAIRYPROMO,F,60대
+638,5/6/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-022,과일,2개입,In Transit,3,7200,관악구,서울,8700,SUMMERFRUIT,M,30대
+639,5/6/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-022,채소,300g,Delivered,1,3900,광진구,서울,5000,,F,40대
+640,5/6/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-064,유제품,500g,Delivered,2,7800,성북구,서울,2800,DAIRYPROMO,M,50대
+641,5/6/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-022,과일,6개입,Delivered,1,8900,강동구,서울,5900,FRUITPROMO5,F,30대
+642,5/6/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-022,채소,3개입,Delivered,3,4800,분당구,경기도,13500,VEGGIESALE,M,40대
+643,5/7/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-043,유제품,200g,In Transit,1,7900,일산동구,경기도,10300,DAIRYPROMO,F,20대
+644,5/7/24,Shipped,Amazon,Expedited,딸기,FR-STB-022,과일,400g,Delivered,2,12900,수원시,경기도,16400,SUMMERFRUIT,M,50대
+645,5/7/24,Shipped,Coupang,Standard,양배추,VG-CBG-022,채소,1통,Delivered,1,3900,용산구,서울,4000,,F,30대
+646,5/7/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-065,유제품,4개입,Delivered,3,6900,성동구,서울,4800,DAIRYPROMO,M,40대
+647,5/7/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-022,과일,1개,Delivered,1,6900,마포구,서울,4100,FRUITPROMO5,F,50대
+648,5/8/24,Shipped,Amazon,Expedited,청경채,VG-BCH-022,채소,300g,In Transit,2,4900,중구,서울,4500,VEGGIESALE,M,30대
+649,5/8/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-044,유제품,1L,Delivered,1,3500,종로구,서울,3000,DAIRYPROMO,F,60대
+650,5/8/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-022,과일,200g,Delivered,3,9800,은평구,서울,3400,SUMMERFRUIT,M,30대
+651,5/8/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-045,채소,300g,Delivered,1,4800,동대문구,서울,2500,VEGGIESALE,F,40대
+652,5/8/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-044,유제품,250g,Delivered,2,8500,서대문구,서울,3600,DAIRYPROMO,M,50대
+653,5/9/24,Shipped,Coupang,Standard,사과,FR-APL-022,과일,1kg,In Transit,1,6500,강북구,서울,1000,FRUITPROMO5,F,30대
+654,5/9/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-022,채소,1kg,Delivered,3,5800,도봉구,서울,1300,VEGGIESALE,M,40대
+655,5/9/24,Shipped,SSG.com,Standard,연유,DP-CDM-022,유제품,300g,Delivered,1,4500,노원구,서울,1300,DAIRYPROMO,F,20대
+656,5/9/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-022,과일,5개입,Delivered,2,11700,중랑구,서울,2100,FRUITPROMO5,M,50대
+657,5/9/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-022,채소,300g,Delivered,1,4700,구로구,서울,8200,VEGGIESALE,F,30대
+658,5/10/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-066,유제품,400g,In Transit,3,5500,금천구,서울,8500,DAIRYPROMO,M,40대
+659,5/10/24,Shipped,SSG.com,Standard,수박,FR-WML-022,과일,1통,Delivered,1,12900,동작구,서울,7200,SUMMERFRUIT,F,50대
+660,5/10/24,Shipped,Amazon,Expedited,양파,VG-ONI-022,채소,1kg,Delivered,2,3500,관악구,서울,8700,VEGGIESALE,M,30대
+661,5/10/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-023,과일,500g,Delivered,1,5990,광진구,서울,5000,FRUITPROMO5,F,60대
+662,5/10/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-046,채소,200g,Delivered,3,3500,성북구,서울,2800,,M,30대
+663,5/11/24,Shipped,SSG.com,Standard,순두부,DP-TFU-023,유제품,300g,In Transit,1,3000,강동구,서울,5900,FRESH10OFF,F,40대
+664,5/11/24,Shipped,Amazon,Priority,아보카도,FR-AVC-023,과일,3개입,Delivered,2,6700,분당구,경기도,13500,FRUITPROMO5,M,50대
+665,5/11/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-023,채소,500g,Delivered,1,4200,일산동구,경기도,10300,VEGGIESALE,F,30대
+666,5/11/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-023,채소,300g,Delivered,3,4900,수원시,경기도,16400,VEGGIESALE,M,40대
+667,5/11/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-045,유제품,1L,Delivered,1,2900,용산구,서울,4000,DAIRYPROMO,F,20대
+668,5/12/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-023,과일,2개입,In Transit,2,7200,성동구,서울,4800,SUMMERFRUIT,M,50대
+669,5/12/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-023,채소,300g,Delivered,1,3900,마포구,서울,4100,,F,30대
+670,5/12/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-067,유제품,500g,Delivered,3,7800,중구,서울,4500,DAIRYPROMO,M,40대
+671,5/12/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-023,과일,6개입,Delivered,1,8900,종로구,서울,3000,FRUITPROMO5,F,50대
+672,5/12/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-023,채소,3개입,Delivered,2,4800,은평구,서울,3400,VEGGIESALE,M,30대
+673,5/13/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-045,유제품,200g,In Transit,1,7900,동대문구,서울,2500,DAIRYPROMO,F,60대
+674,5/13/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-023,과일,400g,Delivered,3,12900,서대문구,서울,3600,SUMMERFRUIT,M,30대
+675,5/13/24,Shipped,SSG.com,Standard,양배추,VG-CBG-023,채소,1통,Delivered,1,3900,강북구,서울,1000,,F,40대
+676,5/13/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-068,유제품,4개입,Delivered,2,6900,도봉구,서울,1300,DAIRYPROMO,M,50대
+677,5/13/24,Shipped,Coupang,Standard,파인애플,FR-PNP-023,과일,1개,Delivered,1,6900,노원구,서울,1300,FRUITPROMO5,F,30대
+678,5/14/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-023,채소,300g,In Transit,3,4900,중랑구,서울,2100,VEGGIESALE,M,40대
+679,5/14/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-046,유제품,1L,Delivered,1,3500,구로구,서울,8200,DAIRYPROMO,F,20대
+680,5/14/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-023,과일,200g,Delivered,2,9800,금천구,서울,8500,SUMMERFRUIT,M,50대
+596,4/27/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-020,과일,5개입,Delivered,2,11700,성북구,서울,2800,FRUITPROMO5,M,50대
+597,4/27/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-020,채소,300g,Delivered,1,4700,강동구,서울,5900,VEGGIESALE,F,30대
+598,4/28/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-060,유제품,400g,In Transit,3,5500,분당구,경기도,13500,DAIRYPROMO,M,40대
+599,4/28/24,Shipped,SSG.com,Standard,수박,FR-WML-020,과일,1통,Delivered,1,12900,일산동구,경기도,10300,SUMMERFRUIT,F,50대
+600,4/28/24,Shipped,Amazon,Expedited,양파,VG-ONI-020,채소,1kg,Delivered,2,3500,수원시,경기도,16400,VEGGIESALE,M,30대
+601,4/28/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-021,과일,500g,Delivered,1,5990,용산구,서울,4000,FRUITPROMO5,F,60대
+602,4/28/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-042,채소,200g,Delivered,3,3500,성동구,서울,4800,,M,30대
+603,4/29/24,Shipped,SSG.com,Standard,순두부,DP-TFU-021,유제품,300g,In Transit,1,3000,마포구,서울,4100,FRESH10OFF,F,40대
+604,4/29/24,Shipped,Amazon,Priority,아보카도,FR-AVC-021,과일,3개입,Delivered,2,6700,중구,서울,4500,FRUITPROMO5,M,50대
+605,4/29/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-021,채소,500g,Delivered,1,4200,종로구,서울,3000,VEGGIESALE,F,30대
+606,4/29/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-021,채소,300g,Delivered,3,4900,은평구,서울,3400,VEGGIESALE,M,40대
+607,4/29/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-041,유제품,1L,Delivered,1,2900,동대문구,서울,2500,DAIRYPROMO,F,20대
+608,4/30/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-021,과일,2개입,In Transit,2,7200,서대문구,서울,3600,SUMMERFRUIT,M,50대
+609,4/30/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-021,채소,300g,Delivered,1,3900,강북구,서울,1000,,F,30대
+610,4/30/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-061,유제품,500g,Delivered,3,7800,도봉구,서울,1300,DAIRYPROMO,M,40대
+611,4/30/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-021,과일,6개입,Delivered,1,8900,노원구,서울,1300,FRUITPROMO5,F,50대
+612,4/30/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-021,채소,3개입,Delivered,2,4800,중랑구,서울,2100,VEGGIESALE,M,30대
+613,5/1/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-041,유제품,200g,In Transit,1,7900,구로구,서울,8200,DAIRYPROMO,F,60대
+614,5/1/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-021,과일,400g,Delivered,3,12900,금천구,서울,8500,SUMMERFRUIT,M,30대
+615,5/1/24,Shipped,SSG.com,Standard,양배추,VG-CBG-021,채소,1통,Delivered,1,3900,동작구,서울,7200,,F,40대
+616,5/1/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-062,유제품,4개입,Delivered,2,6900,관악구,서울,8700,DAIRYPROMO,M,50대
+617,5/1/24,Shipped,Coupang,Standard,파인애플,FR-PNP-021,과일,1개,Delivered,1,6900,광진구,서울,5000,FRUITPROMO5,F,30대
+618,5/2/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-021,채소,300g,In Transit,3,4900,성북구,서울,2800,VEGGIESALE,M,40대
+619,5/2/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-042,유제품,1L,Delivered,1,3500,강동구,서울,5900,DAIRYPROMO,F,20대
+620,5/2/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-021,과일,200g,Delivered,2,9800,분당구,경기도,13500,SUMMERFRUIT,M,50대
+621,5/2/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-043,채소,300g,Delivered,1,4800,일산동구,경기도,10300,VEGGIESALE,F,30대
+622,5/2/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-042,유제품,250g,Delivered,3,8500,수원시,경기도,16400,DAIRYPROMO,M,40대
+623,5/3/24,Shipped,SSG.com,Standard,사과,FR-APL-021,과일,1kg,In Transit,1,6500,용산구,서울,4000,FRUITPROMO5,F,50대
+624,5/3/24,Shipped,Amazon,Expedited,고구마,VG-SWP-021,채소,1kg,Delivered,2,5800,성동구,서울,4800,VEGGIESALE,M,30대
+625,5/3/24,Shipped,Coupang,Standard,연유,DP-CDM-021,유제품,300g,Delivered,1,4500,마포구,서울,4100,DAIRYPROMO,F,60대
+626,5/3/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-021,과일,5개입,Delivered,3,11700,중구,서울,4500,FRUITPROMO5,M,30대
+627,5/3/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-021,채소,300g,Delivered,1,4700,종로구,서울,3000,VEGGIESALE,F,40대
+628,5/4/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-063,유제품,400g,In Transit,2,5500,은평구,서울,3400,DAIRYPROMO,M,50대
+629,5/4/24,Shipped,Coupang,Standard,수박,FR-WML-021,과일,1통,Delivered,1,12900,동대문구,서울,2500,SUMMERFRUIT,F,30대
+630,5/4/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-021,채소,1kg,Delivered,3,3500,서대문구,서울,3600,VEGGIESALE,M,40대
+631,5/4/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-022,과일,500g,Delivered,1,5990,강북구,서울,1000,FRUITPROMO5,F,20대
+632,5/4/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-044,채소,200g,Delivered,2,3500,도봉구,서울,1300,,M,50대
+633,5/5/24,Shipped,Coupang,Standard,순두부,DP-TFU-022,유제품,300g,In Transit,1,3000,노원구,서울,1300,FRESH10OFF,F,30대
+634,5/5/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-022,과일,3개입,Delivered,3,6700,중랑구,서울,2100,FRUITPROMO5,M,40대
+635,5/5/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-022,채소,500g,Delivered,1,4200,구로구,서울,8200,VEGGIESALE,F,50대
+636,5/5/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-022,채소,300g,Delivered,2,4900,금천구,서울,8500,VEGGIESALE,M,30대
+637,5/5/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-043,유제품,1L,Delivered,1,2900,동작구,서울,7200,DAIRYPROMO,F,60대
+638,5/6/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-022,과일,2개입,In Transit,3,7200,관악구,서울,8700,SUMMERFRUIT,M,30대
+639,5/6/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-022,채소,300g,Delivered,1,3900,광진구,서울,5000,,F,40대
+640,5/6/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-064,유제품,500g,Delivered,2,7800,성북구,서울,2800,DAIRYPROMO,M,50대
+641,5/6/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-022,과일,6개입,Delivered,1,8900,강동구,서울,5900,FRUITPROMO5,F,30대
+642,5/6/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-022,채소,3개입,Delivered,3,4800,분당구,경기도,13500,VEGGIESALE,M,40대
+643,5/7/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-043,유제품,200g,In Transit,1,7900,일산동구,경기도,10300,DAIRYPROMO,F,20대
+644,5/7/24,Shipped,Amazon,Expedited,딸기,FR-STB-022,과일,400g,Delivered,2,12900,수원시,경기도,16400,SUMMERFRUIT,M,50대
+645,5/7/24,Shipped,Coupang,Standard,양배추,VG-CBG-022,채소,1통,Delivered,1,3900,용산구,서울,4000,,F,30대
+646,5/7/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-065,유제품,4개입,Delivered,3,6900,성동구,서울,4800,DAIRYPROMO,M,40대
+647,5/7/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-022,과일,1개,Delivered,1,6900,마포구,서울,4100,FRUITPROMO5,F,50대
+648,5/8/24,Shipped,Amazon,Expedited,청경채,VG-BCH-022,채소,300g,In Transit,2,4900,중구,서울,4500,VEGGIESALE,M,30대
+649,5/8/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-044,유제품,1L,Delivered,1,3500,종로구,서울,3000,DAIRYPROMO,F,60대
+650,5/8/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-022,과일,200g,Delivered,3,9800,은평구,서울,3400,SUMMERFRUIT,M,30대
+651,5/8/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-045,채소,300g,Delivered,1,4800,동대문구,서울,2500,VEGGIESALE,F,40대
+652,5/8/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-044,유제품,250g,Delivered,2,8500,서대문구,서울,3600,DAIRYPROMO,M,50대
+653,5/9/24,Shipped,Coupang,Standard,사과,FR-APL-022,과일,1kg,In Transit,1,6500,강북구,서울,1000,FRUITPROMO5,F,30대
+654,5/9/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-022,채소,1kg,Delivered,3,5800,도봉구,서울,1300,VEGGIESALE,M,40대
+655,5/9/24,Shipped,SSG.com,Standard,연유,DP-CDM-022,유제품,300g,Delivered,1,4500,노원구,서울,1300,DAIRYPROMO,F,20대
+656,5/9/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-022,과일,5개입,Delivered,2,11700,중랑구,서울,2100,FRUITPROMO5,M,50대
+657,5/9/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-022,채소,300g,Delivered,1,4700,구로구,서울,8200,VEGGIESALE,F,30대
+658,5/10/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-066,유제품,400g,In Transit,3,5500,금천구,서울,8500,DAIRYPROMO,M,40대
+659,5/10/24,Shipped,SSG.com,Standard,수박,FR-WML-022,과일,1통,Delivered,1,12900,동작구,서울,7200,SUMMERFRUIT,F,50대
+660,5/10/24,Shipped,Amazon,Expedited,양파,VG-ONI-022,채소,1kg,Delivered,2,3500,관악구,서울,8700,VEGGIESALE,M,30대
+661,5/10/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-023,과일,500g,Delivered,1,5990,광진구,서울,5000,FRUITPROMO5,F,60대
+662,5/10/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-046,채소,200g,Delivered,3,3500,성북구,서울,2800,,M,30대
+663,5/11/24,Shipped,SSG.com,Standard,순두부,DP-TFU-023,유제품,300g,In Transit,1,3000,강동구,서울,5900,FRESH10OFF,F,40대
+664,5/11/24,Shipped,Amazon,Priority,아보카도,FR-AVC-023,과일,3개입,Delivered,2,6700,분당구,경기도,13500,FRUITPROMO5,M,50대
+665,5/11/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-023,채소,500g,Delivered,1,4200,일산동구,경기도,10300,VEGGIESALE,F,30대
+666,5/11/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-023,채소,300g,Delivered,3,4900,수원시,경기도,16400,VEGGIESALE,M,40대
+667,5/11/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-045,유제품,1L,Delivered,1,2900,용산구,서울,4000,DAIRYPROMO,F,20대
+668,5/12/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-023,과일,2개입,In Transit,2,7200,성동구,서울,4800,SUMMERFRUIT,M,50대
+669,5/12/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-023,채소,300g,Delivered,1,3900,마포구,서울,4100,,F,30대
+670,5/12/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-067,유제품,500g,Delivered,3,7800,중구,서울,4500,DAIRYPROMO,M,40대
+671,5/12/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-023,과일,6개입,Delivered,1,8900,종로구,서울,3000,FRUITPROMO5,F,50대
+672,5/12/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-023,채소,3개입,Delivered,2,4800,은평구,서울,3400,VEGGIESALE,M,30대
+673,5/13/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-045,유제품,200g,In Transit,1,7900,동대문구,서울,2500,DAIRYPROMO,F,60대
+674,5/13/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-023,과일,400g,Delivered,3,12900,서대문구,서울,3600,SUMMERFRUIT,M,30대
+675,5/13/24,Shipped,SSG.com,Standard,양배추,VG-CBG-023,채소,1통,Delivered,1,3900,강북구,서울,1000,,F,40대
+676,5/13/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-068,유제품,4개입,Delivered,2,6900,도봉구,서울,1300,DAIRYPROMO,M,50대
+677,5/13/24,Shipped,Coupang,Standard,파인애플,FR-PNP-023,과일,1개,Delivered,1,6900,노원구,서울,1300,FRUITPROMO5,F,30대
+678,5/14/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-023,채소,300g,In Transit,3,4900,중랑구,서울,2100,VEGGIESALE,M,40대
+679,5/14/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-046,유제품,1L,Delivered,1,3500,구로구,서울,8200,DAIRYPROMO,F,20대
+680,5/14/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-023,과일,200g,Delivered,2,9800,금천구,서울,8500,SUMMERFRUIT,M,50대
+681,5/14/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-047,채소,300g,Delivered,1,4800,동작구,서울,7200,VEGGIESALE,F,30대
+682,5/14/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-046,유제품,250g,Delivered,3,8500,관악구,서울,8700,DAIRYPROMO,M,40대
+683,5/15/24,Shipped,SSG.com,Standard,사과,FR-APL-023,과일,1kg,In Transit,1,6500,광진구,서울,5000,FRUITPROMO5,F,50대
+684,5/15/24,Shipped,Amazon,Expedited,고구마,VG-SWP-023,채소,1kg,Delivered,2,5800,성북구,서울,2800,VEGGIESALE,M,30대
+685,5/15/24,Shipped,Coupang,Standard,연유,DP-CDM-023,유제품,300g,Delivered,1,4500,강동구,서울,5900,DAIRYPROMO,F,60대
+686,5/15/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-023,과일,5개입,Delivered,3,11700,분당구,경기도,13500,FRUITPROMO5,M,30대
+687,5/15/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-023,채소,300g,Delivered,1,4700,일산동구,경기도,10300,VEGGIESALE,F,40대
+688,5/16/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-069,유제품,400g,In Transit,2,5500,수원시,경기도,16400,DAIRYPROMO,M,50대
+689,5/16/24,Shipped,Coupang,Standard,수박,FR-WML-023,과일,1통,Delivered,1,12900,용산구,서울,4000,SUMMERFRUIT,F,30대
+690,5/16/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-023,채소,1kg,Delivered,3,3500,성동구,서울,4800,VEGGIESALE,M,40대
+691,5/16/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-024,과일,500g,Delivered,1,5990,마포구,서울,4100,FRUITPROMO5,F,20대
+692,5/16/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-048,채소,200g,Delivered,2,3500,중구,서울,4500,,M,50대
+693,5/17/24,Shipped,Coupang,Standard,순두부,DP-TFU-024,유제품,300g,In Transit,1,3000,종로구,서울,3000,FRESH10OFF,F,30대
+694,5/17/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-024,과일,3개입,Delivered,3,6700,은평구,서울,3400,FRUITPROMO5,M,40대
+695,5/17/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-024,채소,500g,Delivered,1,4200,동대문구,서울,2500,VEGGIESALE,F,50대
+696,5/17/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-024,채소,300g,Delivered,2,4900,서대문구,서울,3600,VEGGIESALE,M,30대
+697,5/17/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-047,유제품,1L,Delivered,1,2900,강북구,서울,1000,DAIRYPROMO,F,60대
+698,5/18/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-024,과일,2개입,In Transit,3,7200,도봉구,서울,1300,SUMMERFRUIT,M,30대
+699,5/18/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-024,채소,300g,Delivered,1,3900,노원구,서울,1300,,F,40대
+700,5/18/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-070,유제품,500g,Delivered,2,7800,중랑구,서울,2100,DAIRYPROMO,M,50대
+701,5/18/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-024,과일,6개입,Delivered,1,8900,구로구,서울,8200,FRUITPROMO5,F,30대
+702,5/18/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-024,채소,3개입,Delivered,3,4800,금천구,서울,8500,VEGGIESALE,M,40대
+703,5/19/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-047,유제품,200g,In Transit,1,7900,동작구,서울,7200,DAIRYPROMO,F,20대
+704,5/19/24,Shipped,Amazon,Expedited,딸기,FR-STB-024,과일,400g,Delivered,2,12900,관악구,서울,8700,SUMMERFRUIT,M,50대
+705,5/19/24,Shipped,Coupang,Standard,양배추,VG-CBG-024,채소,1통,Delivered,1,3900,광진구,서울,5000,,F,30대
+706,5/19/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-071,유제품,4개입,Delivered,3,6900,성북구,서울,2800,DAIRYPROMO,M,40대
+707,5/19/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-024,과일,1개,Delivered,1,6900,강동구,서울,5900,FRUITPROMO5,F,50대
+708,5/20/24,Shipped,Amazon,Expedited,청경채,VG-BCH-024,채소,300g,In Transit,2,4900,분당구,경기도,13500,VEGGIESALE,M,30대
+709,5/20/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-048,유제품,1L,Delivered,1,3500,일산동구,경기도,10300,DAIRYPROMO,F,60대
+710,5/20/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-024,과일,200g,Delivered,3,9800,수원시,경기도,16400,SUMMERFRUIT,M,30대
+711,5/20/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-049,채소,300g,Delivered,1,4800,용산구,서울,4000,VEGGIESALE,F,40대
+712,5/20/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-048,유제품,250g,Delivered,2,8500,성동구,서울,4800,DAIRYPROMO,M,50대
+713,5/21/24,Shipped,Coupang,Standard,사과,FR-APL-024,과일,1kg,In Transit,1,6500,마포구,서울,4100,FRUITPROMO5,F,30대
+714,5/21/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-024,채소,1kg,Delivered,3,5800,중구,서울,4500,VEGGIESALE,M,40대
+715,5/21/24,Shipped,SSG.com,Standard,연유,DP-CDM-024,유제품,300g,Delivered,1,4500,종로구,서울,3000,DAIRYPROMO,F,20대
+716,5/21/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-024,과일,5개입,Delivered,2,11700,은평구,서울,3400,FRUITPROMO5,M,50대
+717,5/21/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-024,채소,300g,Delivered,1,4700,동대문구,서울,2500,VEGGIESALE,F,30대
+718,5/22/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-072,유제품,400g,In Transit,3,5500,서대문구,서울,3600,DAIRYPROMO,M,40대
+719,5/22/24,Shipped,SSG.com,Standard,수박,FR-WML-024,과일,1통,Delivered,1,12900,강북구,서울,1000,SUMMERFRUIT,F,50대
+720,5/22/24,Shipped,Amazon,Expedited,양파,VG-ONI-024,채소,1kg,Delivered,2,3500,도봉구,서울,1300,VEGGIESALE,M,30대
+721,5/22/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-025,과일,500g,Delivered,1,5990,노원구,서울,1300,FRUITPROMO5,F,60대
+722,5/22/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-050,채소,200g,Delivered,3,3500,중랑구,서울,2100,,M,30대
+723,5/23/24,Shipped,SSG.com,Standard,순두부,DP-TFU-025,유제품,300g,In Transit,1,3000,구로구,서울,8200,FRESH10OFF,F,40대
+724,5/23/24,Shipped,Amazon,Priority,아보카도,FR-AVC-025,과일,3개입,Delivered,2,6700,금천구,서울,8500,FRUITPROMO5,M,50대
+725,5/23/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-025,채소,500g,Delivered,1,4200,동작구,서울,7200,VEGGIESALE,F,30대
+726,5/23/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-025,채소,300g,Delivered,3,4900,관악구,서울,8700,VEGGIESALE,M,40대
+727,5/23/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-049,유제품,1L,Delivered,1,2900,광진구,서울,5000,DAIRYPROMO,F,20대
+728,5/24/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-025,과일,2개입,In Transit,2,7200,성북구,서울,2800,SUMMERFRUIT,M,50대
+729,5/24/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-025,채소,300g,Delivered,1,3900,강동구,서울,5900,,F,30대
+730,5/24/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-073,유제품,500g,Delivered,3,7800,분당구,경기도,13500,DAIRYPROMO,M,40대
+731,5/24/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-025,과일,6개입,Delivered,1,8900,일산동구,경기도,10300,FRUITPROMO5,F,50대
+732,5/24/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-025,채소,3개입,Delivered,2,4800,수원시,경기도,16400,VEGGIESALE,M,30대
+733,5/25/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-049,유제품,200g,In Transit,1,7900,용산구,서울,4000,DAIRYPROMO,F,60대
+734,5/25/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-025,과일,400g,Delivered,3,12900,성동구,서울,4800,SUMMERFRUIT,M,30대
+735,5/25/24,Shipped,SSG.com,Standard,양배추,VG-CBG-025,채소,1통,Delivered,1,3900,마포구,서울,4100,,F,40대
+736,5/25/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-074,유제품,4개입,Delivered,2,6900,중구,서울,4500,DAIRYPROMO,M,50대
+737,5/25/24,Shipped,Coupang,Standard,파인애플,FR-PNP-025,과일,1개,Delivered,1,6900,종로구,서울,3000,FRUITPROMO5,F,30대
+738,5/26/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-025,채소,300g,In Transit,3,4900,은평구,서울,3400,VEGGIESALE,M,40대
+739,5/26/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-050,유제품,1L,Delivered,1,3500,동대문구,서울,2500,DAIRYPROMO,F,20대
+740,5/26/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-025,과일,200g,Delivered,2,9800,서대문구,서울,3600,SUMMERFRUIT,M,50대
+741,5/26/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-051,채소,300g,Delivered,1,4800,강북구,서울,1000,VEGGIESALE,F,30대
+742,5/26/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-050,유제품,250g,Delivered,3,8500,도봉구,서울,1300,DAIRYPROMO,M,40대
+743,5/27/24,Shipped,SSG.com,Standard,사과,FR-APL-025,과일,1kg,In Transit,1,6500,노원구,서울,1300,FRUITPROMO5,F,50대
+744,5/27/24,Shipped,Amazon,Expedited,고구마,VG-SWP-025,채소,1kg,Delivered,2,5800,중랑구,서울,2100,VEGGIESALE,M,30대
+745,5/27/24,Shipped,Coupang,Standard,연유,DP-CDM-025,유제품,300g,Delivered,1,4500,구로구,서울,8200,DAIRYPROMO,F,60대
+746,5/27/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-025,과일,5개입,Delivered,3,11700,금천구,서울,8500,FRUITPROMO5,M,30대
+747,5/27/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-025,채소,300g,Delivered,1,4700,동작구,서울,7200,VEGGIESALE,F,40대
+748,5/28/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-075,유제품,400g,In Transit,2,5500,관악구,서울,8700,DAIRYPROMO,M,50대
+749,5/28/24,Shipped,Coupang,Standard,수박,FR-WML-025,과일,1통,Delivered,1,12900,광진구,서울,5000,SUMMERFRUIT,F,30대
+750,5/28/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-025,채소,1kg,Delivered,3,3500,성북구,서울,2800,VEGGIESALE,M,40대
+751,5/28/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-026,과일,500g,Delivered,1,5990,강동구,서울,5900,FRUITPROMO5,F,20대
+752,5/28/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-052,채소,200g,Delivered,2,3500,분당구,경기도,13500,,M,50대
+753,5/29/24,Shipped,Coupang,Standard,순두부,DP-TFU-026,유제품,300g,In Transit,1,3000,일산동구,경기도,10300,FRESH10OFF,F,30대
+754,5/29/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-026,과일,3개입,Delivered,3,6700,수원시,경기도,16400,FRUITPROMO5,M,40대
+755,5/29/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-026,채소,500g,Delivered,1,4200,용산구,서울,4000,VEGGIESALE,F,50대
+756,5/29/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-026,채소,300g,Delivered,2,4900,성동구,서울,4800,VEGGIESALE,M,30대
+757,5/29/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-051,유제품,1L,Delivered,1,2900,마포구,서울,4100,DAIRYPROMO,F,60대
+758,5/30/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-026,과일,2개입,In Transit,3,7200,중구,서울,4500,SUMMERFRUIT,M,30대
+759,5/30/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-026,채소,300g,Delivered,1,3900,종로구,서울,3000,,F,40대
+760,5/30/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-076,유제품,500g,Delivered,2,7800,은평구,서울,3400,DAIRYPROMO,M,50대
+761,5/30/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-026,과일,6개입,Delivered,1,8900,동대문구,서울,2500,FRUITPROMO5,F,30대
+762,5/30/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-026,채소,3개입,Delivered,3,4800,서대문구,서울,3600,VEGGIESALE,M,40대
+763,5/31/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-051,유제품,200g,In Transit,1,7900,강북구,서울,1000,DAIRYPROMO,F,20대
+764,5/31/24,Shipped,Amazon,Expedited,딸기,FR-STB-026,과일,400g,Delivered,2,12900,도봉구,서울,1300,SUMMERFRUIT,M,50대
+765,5/31/24,Shipped,Coupang,Standard,양배추,VG-CBG-026,채소,1통,Delivered,1,3900,노원구,서울,1300,,F,30대
+766,5/31/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-077,유제품,4개입,Delivered,3,6900,중랑구,서울,2100,DAIRYPROMO,M,40대
+767,5/31/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-026,과일,1개,Delivered,1,6900,구로구,서울,8200,FRUITPROMO5,F,50대
+768,6/1/24,Shipped,Amazon,Expedited,청경채,VG-BCH-026,채소,300g,In Transit,2,4900,금천구,서울,8500,VEGGIESALE,M,30대
+769,6/1/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-052,유제품,1L,Delivered,1,3500,동작구,서울,7200,DAIRYPROMO,F,60대
+770,6/1/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-026,과일,200g,Delivered,3,9800,관악구,서울,8700,SUMMERFRUIT,M,30대
+771,6/1/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-053,채소,300g,Delivered,1,4800,광진구,서울,5000,VEGGIESALE,F,40대
+772,6/1/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-052,유제품,250g,Delivered,2,8500,성북구,서울,2800,DAIRYPROMO,M,50대
+773,6/2/24,Shipped,Coupang,Standard,사과,FR-APL-026,과일,1kg,In Transit,1,6500,강동구,서울,5900,FRUITPROMO5,F,30대
+774,6/2/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-026,채소,1kg,Delivered,3,5800,분당구,경기도,13500,VEGGIESALE,M,40대
+775,6/2/24,Shipped,SSG.com,Standard,연유,DP-CDM-026,유제품,300g,Delivered,1,4500,일산동구,경기도,10300,DAIRYPROMO,F,20대
+776,6/2/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-026,과일,5개입,Delivered,2,11700,수원시,경기도,16400,FRUITPROMO5,M,50대
+777,6/2/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-026,채소,300g,Delivered,1,4700,용산구,서울,4000,VEGGIESALE,F,30대
+778,6/3/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-078,유제품,400g,In Transit,3,5500,성동구,서울,4800,DAIRYPROMO,M,40대
+779,6/3/24,Shipped,SSG.com,Standard,수박,FR-WML-026,과일,1통,Delivered,1,12900,마포구,서울,4100,SUMMERFRUIT,F,50대
+780,6/3/24,Shipped,Amazon,Expedited,양파,VG-ONI-026,채소,1kg,Delivered,2,3500,중구,서울,4500,VEGGIESALE,M,30대
+781,6/3/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-027,과일,500g,Delivered,1,5990,종로구,서울,3000,FRUITPROMO5,F,60대
+782,6/3/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-054,채소,200g,Delivered,3,3500,은평구,서울,3400,,M,30대
+783,6/4/24,Shipped,SSG.com,Standard,순두부,DP-TFU-027,유제품,300g,In Transit,1,3000,동대문구,서울,2500,FRESH10OFF,F,40대
+784,6/4/24,Shipped,Amazon,Priority,아보카도,FR-AVC-027,과일,3개입,Delivered,2,6700,서대문구,서울,3600,FRUITPROMO5,M,50대
+785,6/4/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-027,채소,500g,Delivered,1,4200,강북구,서울,1000,VEGGIESALE,F,30대
+786,6/4/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-027,채소,300g,Delivered,3,4900,도봉구,서울,1300,VEGGIESALE,M,40대
+787,6/4/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-053,유제품,1L,Delivered,1,2900,노원구,서울,1300,DAIRYPROMO,F,20대
+788,6/5/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-027,과일,2개입,In Transit,2,7200,중랑구,서울,2100,SUMMERFRUIT,M,50대
+789,6/5/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-027,채소,300g,Delivered,1,3900,구로구,서울,8200,,F,30대
+790,6/5/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-079,유제품,500g,Delivered,3,7800,금천구,서울,8500,DAIRYPROMO,M,40대
+791,6/5/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-027,과일,6개입,Delivered,1,8900,동작구,서울,7200,FRUITPROMO5,F,50대
+792,6/5/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-027,채소,3개입,Delivered,2,4800,관악구,서울,8700,VEGGIESALE,M,30대
+793,6/6/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-053,유제품,200g,In Transit,1,7900,광진구,서울,5000,DAIRYPROMO,F,60대
+794,6/6/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-027,과일,400g,Delivered,3,12900,성북구,서울,2800,SUMMERFRUIT,M,30대
+795,6/6/24,Shipped,SSG.com,Standard,양배추,VG-CBG-027,채소,1통,Delivered,1,3900,강동구,서울,5900,,F,40대
+796,6/6/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-080,유제품,4개입,Delivered,2,6900,분당구,경기도,13500,DAIRYPROMO,M,50대
+797,6/6/24,Shipped,Coupang,Standard,파인애플,FR-PNP-027,과일,1개,Delivered,1,6900,일산동구,경기도,10300,FRUITPROMO5,F,30대
+798,6/7/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-027,채소,300g,In Transit,3,4900,수원시,경기도,16400,VEGGIESALE,M,40대
+799,6/7/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-054,유제품,1L,Delivered,1,3500,용산구,서울,4000,DAIRYPROMO,F,20대
+800,6/7/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-027,과일,200g,Delivered,2,9800,성동구,서울,4800,SUMMERFRUIT,M,50대
+801,6/7/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-055,채소,300g,Delivered,1,4800,마포구,서울,4100,VEGGIESALE,F,30대
+802,6/7/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-054,유제품,250g,Delivered,3,8500,중구,서울,4500,DAIRYPROMO,M,40대
+803,6/8/24,Shipped,SSG.com,Standard,사과,FR-APL-027,과일,1kg,In Transit,1,6500,종로구,서울,3000,FRUITPROMO5,F,50대
+804,6/8/24,Shipped,Amazon,Expedited,고구마,VG-SWP-027,채소,1kg,Delivered,2,5800,은평구,서울,3400,VEGGIESALE,M,30대
+805,6/8/24,Shipped,Coupang,Standard,연유,DP-CDM-027,유제품,300g,Delivered,1,4500,동대문구,서울,2500,DAIRYPROMO,F,60대
+806,6/8/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-027,과일,5개입,Delivered,3,11700,서대문구,서울,3600,FRUITPROMO5,M,30대
+807,6/8/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-027,채소,300g,Delivered,1,4700,강북구,서울,1000,VEGGIESALE,F,40대
+808,6/9/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-081,유제품,400g,In Transit,2,5500,도봉구,서울,1300,DAIRYPROMO,M,50대
+809,6/9/24,Shipped,Coupang,Standard,수박,FR-WML-027,과일,1통,Delivered,1,12900,노원구,서울,1300,SUMMERFRUIT,F,30대
+810,6/9/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-027,채소,1kg,Delivered,3,3500,중랑구,서울,2100,VEGGIESALE,M,40대
+811,6/9/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-028,과일,500g,Delivered,1,5990,구로구,서울,8200,FRUITPROMO5,F,20대
+812,6/9/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-056,채소,200g,Delivered,2,3500,금천구,서울,8500,,M,50대
+813,6/10/24,Shipped,Coupang,Standard,순두부,DP-TFU-028,유제품,300g,In Transit,1,3000,동작구,서울,7200,FRESH10OFF,F,30대
+814,6/10/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-028,과일,3개입,Delivered,3,6700,관악구,서울,8700,FRUITPROMO5,M,40대
+815,6/10/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-028,채소,500g,Delivered,1,4200,광진구,서울,5000,VEGGIESALE,F,50대
+816,6/10/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-028,채소,300g,Delivered,2,4900,성북구,서울,2800,VEGGIESALE,M,30대
+817,6/10/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-055,유제품,1L,Delivered,1,2900,강동구,서울,5900,DAIRYPROMO,F,60대
+818,6/11/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-028,과일,2개입,In Transit,3,7200,분당구,경기도,13500,SUMMERFRUIT,M,30대
+819,6/11/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-028,채소,300g,Delivered,1,3900,일산동구,경기도,10300,,F,40대
+820,6/11/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-082,유제품,500g,Delivered,2,7800,수원시,경기도,16400,DAIRYPROMO,M,50대
+821,6/11/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-028,과일,6개입,Delivered,1,8900,용산구,서울,4000,FRUITPROMO5,F,30대
+822,6/11/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-028,채소,3개입,Delivered,3,4800,성동구,서울,4800,VEGGIESALE,M,40대
+823,6/12/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-055,유제품,200g,In Transit,1,7900,마포구,서울,4100,DAIRYPROMO,F,20대
+824,6/12/24,Shipped,Amazon,Expedited,딸기,FR-STB-028,과일,400g,Delivered,2,12900,중구,서울,4500,SUMMERFRUIT,M,50대
+825,6/12/24,Shipped,Coupang,Standard,양배추,VG-CBG-028,채소,1통,Delivered,1,3900,종로구,서울,3000,,F,30대
+826,6/12/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-083,유제품,4개입,Delivered,3,6900,은평구,서울,3400,DAIRYPROMO,M,40대
+827,6/12/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-028,과일,1개,Delivered,1,6900,동대문구,서울,2500,FRUITPROMO5,F,50대
+828,6/13/24,Shipped,Amazon,Expedited,청경채,VG-BCH-028,채소,300g,In Transit,2,4900,서대문구,서울,3600,VEGGIESALE,M,30대
+829,6/13/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-056,유제품,1L,Delivered,1,3500,강북구,서울,1000,DAIRYPROMO,F,60대
+830,6/13/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-028,과일,200g,Delivered,3,9800,도봉구,서울,1300,SUMMERFRUIT,M,30대
+831,6/13/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-057,채소,300g,Delivered,1,4800,노원구,서울,1300,VEGGIESALE,F,40대
+832,6/13/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-056,유제품,250g,Delivered,2,8500,중랑구,서울,2100,DAIRYPROMO,M,50대
+833,6/14/24,Shipped,Coupang,Standard,사과,FR-APL-028,과일,1kg,In Transit,1,6500,구로구,서울,8200,FRUITPROMO5,F,30대
+834,6/14/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-028,채소,1kg,Delivered,3,5800,금천구,서울,8500,VEGGIESALE,M,40대
+835,6/14/24,Shipped,SSG.com,Standard,연유,DP-CDM-028,유제품,300g,Delivered,1,4500,동작구,서울,7200,DAIRYPROMO,F,20대
+836,6/14/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-028,과일,5개입,Delivered,2,11700,관악구,서울,8700,FRUITPROMO5,M,50대
+837,6/14/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-028,채소,300g,Delivered,1,4700,광진구,서울,5000,VEGGIESALE,F,30대
+838,6/15/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-084,유제품,400g,In Transit,3,5500,성북구,서울,2800,DAIRYPROMO,M,40대
+839,6/15/24,Shipped,SSG.com,Standard,수박,FR-WML-028,과일,1통,Delivered,1,12900,강동구,서울,5900,SUMMERFRUIT,F,50대
+840,6/15/24,Shipped,Amazon,Expedited,양파,VG-ONI-028,채소,1kg,Delivered,2,3500,분당구,경기도,13500,VEGGIESALE,M,30대
+841,6/15/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-029,과일,500g,Delivered,1,5990,일산동구,경기도,10300,FRUITPROMO5,F,60대
+842,6/15/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-058,채소,200g,Delivered,3,3500,수원시,경기도,16400,,M,30대
+843,6/16/24,Shipped,SSG.com,Standard,순두부,DP-TFU-029,유제품,300g,In Transit,1,3000,용산구,서울,4000,FRESH10OFF,F,40대
+844,6/16/24,Shipped,Amazon,Priority,아보카도,FR-AVC-029,과일,3개입,Delivered,2,6700,성동구,서울,4800,FRUITPROMO5,M,50대
+845,6/16/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-029,채소,500g,Delivered,1,4200,마포구,서울,4100,VEGGIESALE,F,30대
+846,6/16/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-029,채소,300g,Delivered,3,4900,중구,서울,4500,VEGGIESALE,M,40대
+847,6/16/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-057,유제품,1L,Delivered,1,2900,종로구,서울,3000,DAIRYPROMO,F,20대
+848,6/17/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-029,과일,2개입,In Transit,2,7200,은평구,서울,3400,SUMMERFRUIT,M,50대
+849,6/17/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-029,채소,300g,Delivered,1,3900,동대문구,서울,2500,,F,30대
+850,6/17/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-085,유제품,500g,Delivered,3,7800,서대문구,서울,3600,DAIRYPROMO,M,40대
+851,6/17/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-029,과일,6개입,Delivered,1,8900,강북구,서울,1000,FRUITPROMO5,F,50대
+852,6/17/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-029,채소,3개입,Delivered,2,4800,도봉구,서울,1300,VEGGIESALE,M,30대
+853,6/18/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-057,유제품,200g,In Transit,1,7900,노원구,서울,1300,DAIRYPROMO,F,60대
+854,6/18/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-029,과일,400g,Delivered,3,12900,중랑구,서울,2100,SUMMERFRUIT,M,30대
+855,6/18/24,Shipped,SSG.com,Standard,양배추,VG-CBG-029,채소,1통,Delivered,1,3900,구로구,서울,8200,,F,40대
+856,6/18/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-086,유제품,4개입,Delivered,2,6900,금천구,서울,8500,DAIRYPROMO,M,50대
+857,6/18/24,Shipped,Coupang,Standard,파인애플,FR-PNP-029,과일,1개,Delivered,1,6900,동작구,서울,7200,FRUITPROMO5,F,30대
+858,6/19/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-029,채소,300g,In Transit,3,4900,관악구,서울,8700,VEGGIESALE,M,40대
+859,6/19/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-058,유제품,1L,Delivered,1,3500,광진구,서울,5000,DAIRYPROMO,F,20대
+860,6/19/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-029,과일,200g,Delivered,2,9800,성북구,서울,2800,SUMMERFRUIT,M,50대
+861,6/19/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-059,채소,300g,Delivered,1,4800,강동구,서울,5900,VEGGIESALE,F,30대
+862,6/19/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-058,유제품,250g,Delivered,3,8500,분당구,경기도,13500,DAIRYPROMO,M,40대
+863,6/20/24,Shipped,SSG.com,Standard,사과,FR-APL-029,과일,1kg,In Transit,1,6500,일산동구,경기도,10300,FRUITPROMO5,F,50대
+864,6/20/24,Shipped,Amazon,Expedited,고구마,VG-SWP-029,채소,1kg,Delivered,2,5800,수원시,경기도,16400,VEGGIESALE,M,30대
+865,6/20/24,Shipped,Coupang,Standard,연유,DP-CDM-029,유제품,300g,Delivered,1,4500,용산구,서울,4000,DAIRYPROMO,F,60대
+866,6/20/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-029,과일,5개입,Delivered,3,11700,성동구,서울,4800,FRUITPROMO5,M,30대
+867,6/20/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-029,채소,300g,Delivered,1,4700,마포구,서울,4100,VEGGIESALE,F,40대
+868,6/21/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-087,유제품,400g,In Transit,2,5500,중구,서울,4500,DAIRYPROMO,M,50대
+869,6/21/24,Shipped,Coupang,Standard,수박,FR-WML-029,과일,1통,Delivered,1,12900,종로구,서울,3000,SUMMERFRUIT,F,30대
+870,6/21/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-029,채소,1kg,Delivered,3,3500,은평구,서울,3400,VEGGIESALE,M,40대
+871,6/21/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-030,과일,500g,Delivered,1,5990,동대문구,서울,2500,FRUITPROMO5,F,20대
+872,6/21/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-060,채소,200g,Delivered,2,3500,서대문구,서울,3600,,M,50대
+873,6/22/24,Shipped,Coupang,Standard,순두부,DP-TFU-030,유제품,300g,In Transit,1,3000,강북구,서울,1000,FRESH10OFF,F,30대
+874,6/22/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-030,과일,3개입,Delivered,3,6700,도봉구,서울,1300,FRUITPROMO5,M,40대
+875,6/22/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-030,채소,500g,Delivered,1,4200,노원구,서울,1300,VEGGIESALE,F,50대
+876,6/22/24,Shipped,Amazon,Expedited,유기농 시금치,VG-SPN-030,채소,300g,Delivered,2,4900,중랑구,서울,2100,VEGGIESALE,M,30대
+877,6/22/24,Shipped,Coupang,Standard,신선 우유,DP-MLK-059,유제품,1L,Delivered,1,2900,구로구,서울,8200,DAIRYPROMO,F,60대
+878,6/23/24,Shipped,Market Kurly,Expedited,태국 망고,FR-MNG-030,과일,2개입,In Transit,3,7200,금천구,서울,8500,SUMMERFRUIT,M,30대
+879,6/23/24,Shipped,SSG.com,Standard,브로콜리,VG-BRC-030,채소,300g,Delivered,1,3900,동작구,서울,7200,,F,40대
+880,6/23/24,Shipped,Amazon,Priority,그릭 요거트,DP-YGT-088,유제품,500g,Delivered,2,7800,관악구,서울,8700,DAIRYPROMO,M,50대
+881,6/23/24,Shipped,Coupang,Standard,골드 키위,FR-KWI-030,과일,6개입,Delivered,1,8900,광진구,서울,5000,FRUITPROMO5,F,30대
+882,6/23/24,Shipped,Market Kurly,Expedited,유기농 오이,VG-CCB-030,채소,3개입,Delivered,3,4800,성북구,서울,2800,VEGGIESALE,M,40대
+883,6/24/24,Shipped,SSG.com,Standard,체다 치즈,DP-CHS-059,유제품,200g,In Transit,1,7900,강동구,서울,5900,DAIRYPROMO,F,20대
+884,6/24/24,Shipped,Amazon,Expedited,딸기,FR-STB-030,과일,400g,Delivered,2,12900,분당구,경기도,13500,SUMMERFRUIT,M,50대
+885,6/24/24,Shipped,Coupang,Standard,양배추,VG-CBG-030,채소,1통,Delivered,1,3900,일산동구,경기도,10300,,F,30대
+886,6/24/24,Shipped,Market Kurly,Priority,무가당 요구르트,DP-YGT-089,유제품,4개입,Delivered,3,6900,수원시,경기도,16400,DAIRYPROMO,M,40대
+887,6/24/24,Shipped,SSG.com,Standard,파인애플,FR-PNP-030,과일,1개,Delivered,1,6900,용산구,서울,4000,FRUITPROMO5,F,50대
+888,6/25/24,Shipped,Amazon,Expedited,청경채,VG-BCH-030,채소,300g,In Transit,2,4900,성동구,서울,4800,VEGGIESALE,M,30대
+889,6/25/24,Shipped,Coupang,Standard,저지방 우유,DP-MLK-060,유제품,1L,Delivered,1,3500,마포구,서울,4100,DAIRYPROMO,F,60대
+890,6/25/24,Shipped,Market Kurly,Expedited,블루베리,FR-BBR-030,과일,200g,Delivered,3,9800,중구,서울,4500,SUMMERFRUIT,M,30대
+891,6/25/24,Shipped,SSG.com,Standard,방울토마토,VG-TOM-061,채소,300g,Delivered,1,4800,종로구,서울,3000,VEGGIESALE,F,40대
+892,6/25/24,Shipped,Amazon,Priority,모짜렐라 치즈,DP-CHS-060,유제품,250g,Delivered,2,8500,은평구,서울,3400,DAIRYPROMO,M,50대
+893,6/26/24,Shipped,Coupang,Standard,사과,FR-APL-030,과일,1kg,In Transit,1,6500,동대문구,서울,2500,FRUITPROMO5,F,30대
+894,6/26/24,Shipped,Market Kurly,Expedited,고구마,VG-SWP-030,채소,1kg,Delivered,3,5800,서대문구,서울,3600,VEGGIESALE,M,40대
+895,6/26/24,Shipped,SSG.com,Standard,연유,DP-CDM-030,유제품,300g,Delivered,1,4500,강북구,서울,1000,DAIRYPROMO,F,20대
+896,6/26/24,Shipped,Amazon,Expedited,복숭아,FR-PCH-030,과일,5개입,Delivered,2,11700,도봉구,서울,1300,FRUITPROMO5,M,50대
+897,6/26/24,Shipped,Coupang,Standard,샐러드 채소,VG-SLD-030,채소,300g,Delivered,1,4700,노원구,서울,1300,VEGGIESALE,F,30대
+898,6/27/24,Shipped,Market Kurly,Priority,플레인 요거트,DP-YGT-090,유제품,400g,In Transit,3,5500,중랑구,서울,2100,DAIRYPROMO,M,40대
+899,6/27/24,Shipped,SSG.com,Standard,수박,FR-WML-030,과일,1통,Delivered,1,12900,구로구,서울,8200,SUMMERFRUIT,F,50대
+900,6/27/24,Shipped,Amazon,Expedited,양파,VG-ONI-030,채소,1kg,Delivered,2,3500,금천구,서울,8500,VEGGIESALE,M,30대
+901,6/27/24,Shipped,Coupang,Standard,유기농 바나나,FR-BNN-031,과일,500g,Delivered,1,5990,동작구,서울,7200,FRUITPROMO5,F,60대
+902,6/27/24,Shipped,Market Kurly,Expedited,국산 방울토마토,VG-TOM-062,채소,200g,Delivered,3,3500,관악구,서울,8700,,M,30대
+903,6/28/24,Shipped,SSG.com,Standard,순두부,DP-TFU-031,유제품,300g,In Transit,1,3000,광진구,서울,5000,FRESH10OFF,F,40대
+904,6/28/24,Shipped,Amazon,Priority,아보카도,FR-AVC-031,과일,3개입,Delivered,2,6700,성북구,서울,2800,FRUITPROMO5,M,50대
+905,6/28/24,Shipped,Coupang,Standard,유기농 당근,VG-CRT-031,채소,500g,Delivered,1,4200,강동구,서울,5900,VEGGIESALE,F,30대
+906,6/28/24,Shipped,Market Kurly,Expedited,유기농 시금치,VG-SPN-031,채소,300g,Delivered,3,4900,분당구,경기도,13500,VEGGIESALE,M,40대
+907,6/28/24,Shipped,SSG.com,Standard,신선 우유,DP-MLK-061,유제품,1L,Delivered,1,2900,일산동구,경기도,10300,DAIRYPROMO,F,20대
+908,6/29/24,Shipped,Amazon,Expedited,태국 망고,FR-MNG-031,과일,2개입,In Transit,2,7200,수원시,경기도,16400,SUMMERFRUIT,M,50대
+909,6/29/24,Shipped,Coupang,Standard,브로콜리,VG-BRC-031,채소,300g,Delivered,1,3900,용산구,서울,4000,,F,30대
+910,6/29/24,Shipped,Market Kurly,Priority,그릭 요거트,DP-YGT-091,유제품,500g,Delivered,3,7800,성동구,서울,4800,DAIRYPROMO,M,40대
+911,6/29/24,Shipped,SSG.com,Standard,골드 키위,FR-KWI-031,과일,6개입,Delivered,1,8900,마포구,서울,4100,FRUITPROMO5,F,50대
+912,6/29/24,Shipped,Amazon,Expedited,유기농 오이,VG-CCB-031,채소,3개입,Delivered,2,4800,중구,서울,4500,VEGGIESALE,M,30대
+913,6/30/24,Shipped,Coupang,Standard,체다 치즈,DP-CHS-061,유제품,200g,In Transit,1,7900,종로구,서울,3000,DAIRYPROMO,F,60대
+914,6/30/24,Shipped,Market Kurly,Expedited,딸기,FR-STB-031,과일,400g,Delivered,3,12900,은평구,서울,3400,SUMMERFRUIT,M,30대
+915,6/30/24,Shipped,SSG.com,Standard,양배추,VG-CBG-031,채소,1통,Delivered,1,3900,동대문구,서울,2500,,F,40대
+916,6/30/24,Shipped,Amazon,Priority,무가당 요구르트,DP-YGT-092,유제품,4개입,Delivered,2,6900,서대문구,서울,3600,DAIRYPROMO,M,50대
+917,6/30/24,Shipped,Coupang,Standard,파인애플,FR-PNP-031,과일,1개,Delivered,1,6900,강북구,서울,1000,FRUITPROMO5,F,30대
+918,6/30/24,Shipped,Market Kurly,Expedited,청경채,VG-BCH-031,채소,300g,In Transit,3,4900,도봉구,서울,1300,VEGGIESALE,M,40대
+919,6/30/24,Shipped,SSG.com,Standard,저지방 우유,DP-MLK-062,유제품,1L,Delivered,1,3500,노원구,서울,1300,DAIRYPROMO,F,20대
+920,6/30/24,Shipped,Amazon,Expedited,블루베리,FR-BBR-031,과일,200g,Delivered,2,9800,중랑구,서울,2100,SUMMERFRUIT,M,50대
+921,6/30/24,Shipped,Coupang,Standard,방울토마토,VG-TOM-063,채소,300g,Delivered,1,4800,구로구,서울,8200,VEGGIESALE,F,30대
+922,6/30/24,Shipped,Market Kurly,Priority,모짜렐라 치즈,DP-CHS-062,유제품,250g,Delivered,3,8500,금천구,서울,8500,DAIRYPROMO,M,40대
+923,6/30/24,Shipped,SSG.com,Standard,사과,FR-APL-031,과일,1kg,In Transit,1,6500,동작구,서울,7200,FRUITPROMO5,F,50대
+924,6/30/24,Shipped,Amazon,Expedited,고구마,VG-SWP-031,채소,1kg,Delivered,2,5800,관악구,서울,8700,VEGGIESALE,M,30대
+925,6/30/24,Shipped,Coupang,Standard,연유,DP-CDM-031,유제품,300g,Delivered,1,4500,광진구,서울,5000,DAIRYPROMO,F,60대
+926,6/30/24,Shipped,Market Kurly,Expedited,복숭아,FR-PCH-031,과일,5개입,Delivered,3,11700,성북구,서울,2800,FRUITPROMO5,M,30대
+927,6/30/24,Shipped,SSG.com,Standard,샐러드 채소,VG-SLD-031,채소,300g,Delivered,1,4700,강동구,서울,5900,VEGGIESALE,F,40대
+928,6/30/24,Shipped,Amazon,Priority,플레인 요거트,DP-YGT-093,유제품,400g,In Transit,2,5500,분당구,경기도,13500,DAIRYPROMO,M,50대
+929,6/30/24,Shipped,Coupang,Standard,수박,FR-WML-031,과일,1통,Delivered,1,12900,일산동구,경기도,10300,SUMMERFRUIT,F,30대
+930,6/30/24,Shipped,Market Kurly,Expedited,양파,VG-ONI-031,채소,1kg,Delivered,3,3500,수원시,경기도,16400,VEGGIESALE,M,40대
+931,6/30/24,Shipped,SSG.com,Standard,유기농 바나나,FR-BNN-032,과일,500g,Delivered,1,5990,용산구,서울,4000,FRUITPROMO5,F,20대
+932,6/30/24,Shipped,Amazon,Expedited,국산 방울토마토,VG-TOM-064,채소,200g,Delivered,2,3500,성동구,서울,4800,,M,50대
+933,6/30/24,Shipped,Coupang,Standard,순두부,DP-TFU-032,유제품,300g,In Transit,1,3000,마포구,서울,4100,FRESH10OFF,F,30대
+934,6/30/24,Shipped,Market Kurly,Priority,아보카도,FR-AVC-032,과일,3개입,Delivered,3,6700,중구,서울,4500,FRUITPROMO5,M,40대
+935,6/30/24,Shipped,SSG.com,Standard,유기농 당근,VG-CRT-032,채소,500g,Delivered,1,4200,종로구,서울,3000,VEGGIESALE,F,50대
+0,6/20/24,Shipped,Coupang,Expedited,그릭요거트,FRESH-D-2024-000,유제품,XL,Delivered,3,13800,구로구,경기도,66077,EARLY5,M,30대
+1,6/15/24,Shipped,SSG.com,Standard,버터,FRESH-D-2024-001,유제품,S,Delivered,2,13600,구로구,서울,56076,FRESH10,M,40대
+2,4/3/24,Shipped,Market Kurly,Standard,키위,FRESH-F-2024-002,과일,M,Delivered,2,15200,강서구,경기도,50011,SPRING24,M,50대
+3,3/23/24,Shipped,Amazon,Standard,수박,FRESH-F-2024-003,과일,XL,Delivered,1,5900,광진구,경기도,64210,FRESH10,F,50대
+4,4/21/24,Shipped,Coupang,Expedited,토마토,FRESH-V-2024-004,채소,S,Delivered,3,15300,마포구,경기도,34015,EARLY5,M,50대
+5,5/15/24,Shipped,Coupang,Priority,우유,FRESH-D-2024-005,유제품,L,Delivered,3,17100,종로구,서울,11000,SPRING24,M,30대
+6,3/5/24,Shipped,Amazon,Priority,시금치,FRESH-V-2024-006,채소,S,Delivered,1,3800,강서구,서울,77701,SPRING24,M,50대
+7,3/21/24,Shipped,SSG.com,Priority,요거트,FRESH-D-2024-007,유제품,S,Delivered,2,8600,강남구,경기도,60409,SPRING24,M,40대
+8,6/16/24,Shipped,Amazon,Standard,배,FRESH-F-2024-008,과일,S,Delivered,2,11800,부천시,서울,24418,EARLY5,F,30대
+9,4/25/24,Shipped,Market Kurly,Priority,감자,FRESH-V-2024-009,채소,L,Delivered,2,11000,강동구,경기도,56096,FRESH10,M,50대
+10,2/4/24,Shipped,Market Kurly,Priority,딸기,FRESH-F-2024-010,과일,S,Delivered,3,19800,서초구,서울,23404,SPRING24,F,40대
+11,3/26/24,Shipped,Coupang,Standard,브로콜리,FRESH-V-2024-011,채소,XL,Delivered,2,9800,분당구,경기도,82761,FRESH10,F,40대
+12,6/20/24,Shipped,Coupang,Expedited,사과,FRESH-F-2024-012,과일,S,Delivered,2,14400,성동구,경기도,57232,FRESH10,F,30대
+13,2/29/24,Shipped,Market Kurly,Priority,사과,FRESH-F-2024-013,과일,M,Delivered,1,7000,노원구,경기도,36176,EARLY5,F,30대
+14,3/29/24,Shipped,Market Kurly,Priority,요거트,FRESH-D-2024-014,유제품,L,Delivered,3,23400,영등포구,경기도,38896,SPRING24,F,40대
+15,6/3/24,Shipped,Coupang,Expedited,상추,FRESH-V-2024-015,채소,L,Delivered,3,14400,종로구,경기도,67700,EARLY5,M,30대
+16,1/28/24,Shipped,Amazon,Standard,아이스크림,FRESH-D-2024-016,유제품,XL,Delivered,2,11200,중구,서울,18610,SPRING24,F,30대
+17,5/28/24,Shipped,SSG.com,Priority,크림치즈,FRESH-D-2024-017,유제품,M,Delivered,2,9200,양천구,경기도,35096,BUNDLE15,M,50대
+18,2/3/24,Shipped,Market Kurly,Standard,시금치,FRESH-V-2024-018,채소,XL,Delivered,1,3300,송파구,경기도,50936,EARLY5,M,50대
+19,1/22/24,Shipped,Market Kurly,Standard,상추,FRESH-V-2024-019,채소,L,Delivered,1,3700,중구,서울,12607,NONE,F,50대
+20,3/27/24,Shipped,Amazon,Standard,키위,FRESH-F-2024-020,과일,L,Delivered,1,5900,동대문구,경기도,15191,SPRING24,F,40대
+21,5/6/24,Shipped,Coupang,Standard,치즈,FRESH-D-2024-021,유제품,M,Delivered,3,23700,송파구,서울,89309,NONE,F,40대
+22,4/30/24,Shipped,SSG.com,Expedited,그릭요거트,FRESH-D-2024-022,유제품,L,Delivered,1,7200,수원시,서울,19997,BUNDLE15,M,50대
+23,4/17/24,Shipped,Amazon,Expedited,양파,FRESH-V-2024-023,채소,S,Delivered,2,9000,분당구,서울,54056,NONE,M,50대
+24,5/19/24,Shipped,Market Kurly,Expedited,토마토,FRESH-V-2024-024,채소,L,Delivered,2,7200,양천구,서울,73860,BUNDLE15,M,50대
+25,4/9/24,Shipped,Amazon,Standard,토마토,FRESH-V-2024-025,채소,L,Delivered,1,3700,성북구,서울,23414,FRESH10,M,30대
+26,1/29/24,Shipped,Coupang,Priority,배,FRESH-F-2024-026,과일,XL,Delivered,2,11000,양천구,서울,95078,FRESH10,F,40대
+27,5/21/24,Shipped,Coupang,Standard,감자,FRESH-V-2024-027,채소,M,Delivered,2,11400,중구,서울,66771,EARLY5,M,30대
+28,5/25/24,Shipped,SSG.com,Expedited,아이스크림,FRESH-D-2024-028,유제품,XL,Delivered,3,19200,동대문구,서울,10221,NONE,M,30대
+29,2/6/24,Shipped,Market Kurly,Expedited,사과,FRESH-F-2024-029,과일,L,Delivered,2,11200,인천시,서울,60573,NONE,F,50대
+30,2/7/24,Shipped,SSG.com,Standard,시금치,FRESH-V-2024-030,채소,M,Delivered,1,5200,관악구,서울,60946,EARLY5,M,50대
+31,6/7/24,Shipped,Coupang,Priority,딸기,FRESH-F-2024-031,과일,M,Delivered,1,7600,마포구,서울,74218,NONE,M,30대
+32,3/6/24,Shipped,Market Kurly,Priority,배,FRESH-F-2024-032,과일,XL,Delivered,1,7900,양천구,서울,41318,FRESH10,F,30대
+33,4/21/24,Shipped,Market Kurly,Priority,우유,FRESH-D-2024-033,유제품,L,Delivered,2,14800,종로구,서울,43378,EARLY5,F,40대
+34,5/21/24,Shipped,SSG.com,Standard,포도,FRESH-F-2024-034,과일,L,Delivered,3,21600,광진구,서울,62787,SPRING24,M,50대
+35,1/16/24,Shipped,Market Kurly,Priority,감자,FRESH-V-2024-035,채소,M,Delivered,3,16800,성동구,경기도,61899,BUNDLE15,F,50대
+36,1/21/24,Shipped,Market Kurly,Standard,그릭요거트,FRESH-D-2024-036,유제품,L,Delivered,3,12600,성북구,경기도,83213,NONE,M,40대
+37,2/12/24,Shipped,Market Kurly,Expedited,딸기,FRESH-F-2024-037,과일,L,Delivered,3,18600,구로구,경기도,22986,SPRING24,F,20대
+38,1/10/24,Shipped,SSG.com,Priority,딸기,FRESH-F-2024-038,과일,L,Delivered,2,13200,일산동구,서울,85321,FRESH10,F,50대
+39,6/15/24,Shipped,Coupang,Priority,그릭요거트,FRESH-D-2024-039,유제품,S,Delivered,2,15000,성동구,서울,55731,EARLY5,M,30대
+40,3/10/24,Shipped,Market Kurly,Standard,배,FRESH-F-2024-040,과일,L,Delivered,1,8000,용산구,경기도,42609,SPRING24,M,20대
+41,4/27/24,Shipped,Amazon,Standard,당근,FRESH-V-2024-041,채소,L,Delivered,2,6400,강남구,경기도,70106,EARLY5,F,40대
+42,2/24/24,Shipped,Coupang,Standard,생크림,FRESH-D-2024-042,유제품,L,Delivered,1,6700,성동구,서울,74241,NONE,M,30대
+43,2/6/24,Shipped,Market Kurly,Standard,배,FRESH-F-2024-043,과일,XL,Delivered,2,10600,서초구,경기도,10481,SPRING24,F,40대
+44,2/19/24,Shipped,Market Kurly,Expedited,키위,FRESH-F-2024-044,과일,L,Delivered,1,5300,강동구,경기도,53859,BUNDLE15,M,30대
+45,1/24/24,Shipped,Coupang,Expedited,딸기,FRESH-F-2024-045,과일,L,Delivered,3,23700,은평구,경기도,50832,SPRING24,M,50대
+46,4/9/24,Shipped,Amazon,Expedited,토마토,FRESH-V-2024-046,채소,L,Delivered,2,10000,영등포구,경기도,75945,SPRING24,M,50대
+47,1/26/24,Shipped,Market Kurly,Expedited,바나나,FRESH-F-2024-047,과일,S,Delivered,2,11800,부천시,서울,49747,SPRING24,F,30대
+48,1/23/24,Shipped,Market Kurly,Expedited,시금치,FRESH-V-2024-048,채소,S,Delivered,1,5400,강남구,경기도,55467,FRESH10,M,30대
+49,2/10/24,Shipped,Amazon,Standard,버터,FRESH-D-2024-049,유제품,XL,Delivered,1,4700,성동구,경기도,90859,EARLY5,F,30대
+50,4/26/24,Shipped,Amazon,Standard,아이스크림,FRESH-D-2024-050,유제품,XL,Delivered,3,19500,인천시,경기도,28375,NONE,M,40대
+51,5/15/24,Shipped,Coupang,Standard,토마토,FRESH-V-2024-051,채소,S,Delivered,1,3500,동작구,경기도,26052,NONE,F,50대
+52,5/9/24,Shipped,Market Kurly,Expedited,당근,FRESH-V-2024-052,채소,M,Delivered,2,8200,서초구,경기도,70555,EARLY5,F,30대
+53,2/8/24,Shipped,SSG.com,Standard,바나나,FRESH-F-2024-053,과일,S,Delivered,2,12400,구로구,서울,66184,NONE,M,40대
+54,6/16/24,Shipped,SSG.com,Priority,바나나,FRESH-F-2024-054,과일,S,Delivered,1,7400,영등포구,서울,85752,EARLY5,M,30대
+55,6/19/24,Shipped,Amazon,Expedited,브로콜리,FRESH-V-2024-055,채소,M,Delivered,2,9000,은평구,서울,37713,NONE,F,30대
+56,3/12/24,Shipped,Market Kurly,Priority,버터,FRESH-D-2024-056,유제품,M,Delivered,2,8200,수원시,서울,20296,EARLY5,F,50대
+57,2/23/24,Shipped,Coupang,Expedited,수박,FRESH-F-2024-057,과일,L,Delivered,2,15200,노원구,경기도,71224,EARLY5,F,50대
+58,2/11/24,Shipped,SSG.com,Standard,수박,FRESH-F-2024-058,과일,XL,Delivered,2,12600,광진구,경기도,54617,EARLY5,F,60대
+59,2/1/24,Shipped,Amazon,Priority,감자,FRESH-V-2024-059,채소,M,Delivered,1,3700,관악구,서울,52814,EARLY5,F,50대
+60,1/25/24,Shipped,Amazon,Priority,포도,FRESH-F-2024-060,과일,XL,Delivered,1,7500,분당구,서울,51250,NONE,M,40대
+61,6/17/24,Shipped,Market Kurly,Priority,우유,FRESH-D-2024-061,유제품,XL,Delivered,1,4100,관악구,서울,55311,FRESH10,M,20대
+62,2/7/24,Shipped,SSG.com,Priority,당근,FRESH-V-2024-062,채소,M,Delivered,1,3200,서초구,경기도,21850,SPRING24,M,60대
+63,3/8/24,Shipped,SSG.com,Priority,브로콜리,FRESH-V-2024-063,채소,S,Delivered,3,17100,인천시,경기도,81368,SPRING24,F,30대
+64,1/5/24,Shipped,SSG.com,Standard,오렌지,FRESH-F-2024-064,과일,XL,Delivered,1,5100,관악구,서울,55854,EARLY5,F,60대
+65,3/3/24,Shipped,Coupang,Expedited,당근,FRESH-V-2024-065,채소,L,Delivered,1,5500,관악구,경기도,26525,FRESH10,F,20대
+66,1/7/24,Shipped,Amazon,Expedited,양파,FRESH-V-2024-066,채소,S,Delivered,3,10200,동작구,경기도,76244,EARLY5,F,30대
+67,4/12/24,Shipped,Market Kurly,Standard,브로콜리,FRESH-V-2024-067,채소,M,Delivered,3,12600,성북구,경기도,33721,BUNDLE15,F,40대
+68,6/13/24,Shipped,Market Kurly,Priority,양파,FRESH-V-2024-068,채소,S,Delivered,1,5000,강남구,경기도,14775,FRESH10,F,40대
+69,1/29/24,Shipped,SSG.com,Expedited,키위,FRESH-F-2024-069,과일,M,Delivered,3,17700,광진구,서울,37995,NONE,F,30대
+70,1/3/24,Shipped,Amazon,Priority,시금치,FRESH-V-2024-070,채소,XL,Delivered,2,10400,종로구,경기도,14005,FRESH10,F,50대
+71,2/4/24,Shipped,Market Kurly,Expedited,오이,FRESH-V-2024-071,채소,S,Delivered,2,8000,부천시,서울,64012,EARLY5,M,40대
+72,1/20/24,Shipped,Coupang,Priority,크림치즈,FRESH-D-2024-072,유제품,XL,Delivered,2,8800,부천시,경기도,27508,FRESH10,M,40대
+73,2/16/24,Shipped,Amazon,Priority,양파,FRESH-V-2024-073,채소,M,Delivered,3,17100,송파구,서울,64804,NONE,M,30대
+74,5/20/24,Shipped,Amazon,Standard,버터,FRESH-D-2024-074,유제품,M,Delivered,3,19200,마포구,경기도,26943,FRESH10,M,20대
+75,4/26/24,Shipped,Amazon,Standard,바나나,FRESH-F-2024-075,과일,XL,Delivered,3,16800,강동구,서울,22824,EARLY5,F,40대
+76,2/8/24,Shipped,Coupang,Expedited,요거트,FRESH-D-2024-076,유제품,L,Delivered,3,21300,부천시,경기도,33325,EARLY5,M,60대
+77,5/16/24,Shipped,Market Kurly,Expedited,오이,FRESH-V-2024-077,채소,L,Delivered,2,9400,종로구,서울,18894,FRESH10,F,60대
+78,4/12/24,Shipped,Market Kurly,Standard,토마토,FRESH-V-2024-078,채소,S,Delivered,2,9200,마포구,경기도,54083,EARLY5,F,30대
+79,1/29/24,Shipped,SSG.com,Standard,버터,FRESH-D-2024-079,유제품,S,Delivered,3,18900,강남구,서울,74960,FRESH10,M,20대
+80,3/24/24,Shipped,SSG.com,Priority,아이스크림,FRESH-D-2024-080,유제품,M,Delivered,3,19800,강동구,경기도,20808,SPRING24,F,40대
+81,5/28/24,Shipped,SSG.com,Standard,오렌지,FRESH-F-2024-081,과일,S,Delivered,2,13600,서초구,경기도,92758,BUNDLE15,F,30대
+82,1/20/24,Shipped,Coupang,Expedited,포도,FRESH-F-2024-082,과일,L,Delivered,3,16200,종로구,서울,46996,SPRING24,M,60대
+83,2/29/24,Shipped,Market Kurly,Standard,치즈,FRESH-D-2024-083,유제품,M,Delivered,3,23700,구로구,경기도,74688,EARLY5,M,30대
+84,4/22/24,Shipped,Amazon,Standard,상추,FRESH-V-2024-084,채소,L,Delivered,1,5900,양천구,서울,92678,SPRING24,F,40대
+85,3/2/24,Shipped,Market Kurly,Standard,요거트,FRESH-D-2024-085,유제품,XL,Delivered,1,4200,송파구,경기도,41295,SPRING24,M,50대
+86,4/27/24,Shipped,Amazon,Expedited,포도,FRESH-F-2024-086,과일,XL,Delivered,2,12800,수원시,서울,93157,BUNDLE15,M,50대
+87,5/10/24,Shipped,Coupang,Priority,아이스크림,FRESH-D-2024-087,유제품,XL,Delivered,2,10000,노원구,경기도,57481,FRESH10,M,50대
+88,2/16/24,Shipped,Coupang,Priority,딸기,FRESH-F-2024-088,과일,M,Delivered,1,7400,노원구,경기도,69118,NONE,F,40대
+89,5/4/24,Shipped,Amazon,Expedited,토마토,FRESH-V-2024-089,채소,M,Delivered,3,10200,성북구,경기도,44538,SPRING24,F,60대
+90,2/16/24,Shipped,Coupang,Expedited,수박,FRESH-F-2024-090,과일,S,Delivered,3,20700,인천시,서울,41319,SPRING24,M,50대
+91,2/18/24,Shipped,SSG.com,Standard,브로콜리,FRESH-V-2024-091,채소,M,Delivered,3,17700,강남구,경기도,78383,EARLY5,F,30대
+92,6/18/24,Shipped,Amazon,Standard,바나나,FRESH-F-2024-092,과일,L,Delivered,2,12200,노원구,서울,81529,NONE,F,30대
+93,5/24/24,Shipped,Coupang,Expedited,딸기,FRESH-F-2024-093,과일,S,Delivered,3,18000,송파구,경기도,99821,BUNDLE15,F,30대
+94,4/4/24,Shipped,SSG.com,Priority,오이,FRESH-V-2024-094,채소,M,Delivered,3,17700,성북구,서울,47835,BUNDLE15,M,30대
+95,3/20/24,Shipped,Coupang,Standard,감자,FRESH-V-2024-095,채소,M,Delivered,1,4700,동작구,서울,42676,SPRING24,M,40대
+96,4/3/24,Shipped,Amazon,Expedited,상추,FRESH-V-2024-096,채소,XL,Delivered,1,4800,용산구,경기도,67605,NONE,F,60대
+97,4/13/24,Shipped,Market Kurly,Standard,크림치즈,FRESH-D-2024-097,유제품,L,Delivered,1,5000,중구,서울,50447,EARLY5,F,50대
+98,3/2/24,Shipped,Coupang,Standard,토마토,FRESH-V-2024-098,채소,XL,Delivered,3,9300,동대문구,경기도,50362,SPRING24,F,20대
+99,5/6/24,Shipped,SSG.com,Standard,토마토,FRESH-V-2024-099,채소,S,Delivered,1,3800,송파구,경기도,83083,NONE,F,40대
+100,6/23/24,Shipped,SSG.com,Standard,파프리카,FRESH-V-2024-100,채소,XL,Delivered,3,16500,인천시,서울,16318,NONE,F,50대
+101,3/30/24,Shipped,Amazon,Priority,콩나물,FRESH-V-2024-101,채소,L,Delivered,2,8200,마포구,경기도,60048,EARLY5,M,30대
+102,4/13/24,Shipped,Coupang,Standard,수박,FRESH-F-2024-102,과일,XL,Delivered,2,12000,강서구,서울,19021,EARLY5,M,40대
+103,4/6/24,Shipped,SSG.com,Expedited,딸기,FRESH-F-2024-103,과일,XL,Delivered,1,5900,강남구,서울,78630,BUNDLE15,F,20대
+104,4/11/24,Shipped,Amazon,Expedited,바나나,FRESH-F-2024-104,과일,L,Delivered,3,16200,부천시,경기도,86845,SPRING24,M,30대
+105,5/18/24,Shipped,SSG.com,Expedited,배,FRESH-F-2024-105,과일,M,Delivered,3,15900,동작구,경기도,22973,SPRING24,F,20대
+106,1/7/24,Shipped,Coupang,Priority,자두,FRESH-F-2024-106,과일,M,Delivered,3,18600,인천시,서울,81845,SPRING24,M,50대
+107,4/29/24,Shipped,Market Kurly,Standard,딸기,FRESH-F-2024-107,과일,S,Delivered,2,11600,노원구,서울,24352,EARLY5,F,20대
+108,3/18/24,Shipped,Market Kurly,Standard,바나나,FRESH-F-2024-108,과일,S,Delivered,1,5300,강서구,경기도,85490,SPRING24,F,40대
+109,3/1/24,Shipped,SSG.com,Standard,호박,FRESH-V-2024-109,채소,XL,Delivered,2,6200,동대문구,경기도,40253,EARLY5,F,20대
+110,3/16/24,Shipped,Amazon,Expedited,생크림,FRESH-D-2024-110,유제품,XL,Delivered,2,15800,중구,경기도,37025,FRESH10,M,20대
+111,3/6/24,Shipped,Coupang,Priority,시금치,FRESH-V-2024-111,채소,S,Delivered,2,9200,노원구,서울,18274,FRESH10,F,40대
+112,3/8/24,Shipped,Coupang,Expedited,시금치,FRESH-V-2024-112,채소,XL,Delivered,3,9300,종로구,경기도,48829,NONE,M,30대
+113,6/26/24,Shipped,Coupang,Priority,브로콜리,FRESH-V-2024-113,채소,XL,Delivered,2,11000,마포구,경기도,67987,BUNDLE15,M,30대
+114,5/17/24,Shipped,SSG.com,Standard,사과,FRESH-F-2024-114,과일,M,Delivered,3,20100,인천시,서울,56253,NONE,M,30대
+115,2/23/24,Shipped,SSG.com,Priority,오이,FRESH-V-2024-115,채소,M,Delivered,2,9200,종로구,서울,53009,FRESH10,F,30대
+116,4/20/24,Shipped,SSG.com,Standard,가지,FRESH-V-2024-116,채소,L,Delivered,1,3600,분당구,경기도,22705,SPRING24,M,40대
+117,3/22/24,Shipped,Coupang,Standard,치즈,FRESH-D-2024-117,유제품,XL,Delivered,3,22800,종로구,서울,24620,SPRING24,F,40대
+118,3/29/24,Shipped,Market Kurly,Expedited,양파,FRESH-V-2024-118,채소,L,Delivered,1,4000,성북구,서울,71799,SPRING24,F,20대
+119,6/21/24,Shipped,Amazon,Priority,딸기,FRESH-F-2024-119,과일,L,Delivered,3,23700,중구,서울,17806,EARLY5,M,50대
+120,6/22/24,Shipped,Market Kurly,Expedited,망고,FRESH-F-2024-120,과일,XL,Delivered,1,5500,마포구,경기도,22197,FRESH10,M,60대
+121,1/11/24,Shipped,SSG.com,Standard,두유,FRESH-D-2024-121,유제품,M,Delivered,3,16800,성북구,경기도,80080,FRESH10,F,30대
+122,6/2/24,Shipped,SSG.com,Standard,배,FRESH-F-2024-122,과일,L,Delivered,3,15900,서초구,경기도,76491,SPRING24,M,20대
+123,3/26/24,Shipped,Market Kurly,Expedited,오렌지,FRESH-F-2024-123,과일,M,Delivered,1,6800,노원구,경기도,98056,NONE,M,30대
+124,2/27/24,Shipped,SSG.com,Standard,리코타,FRESH-D-2024-124,유제품,XL,Delivered,2,13400,분당구,서울,68177,NONE,M,30대
+125,2/20/24,Shipped,Coupang,Priority,브로콜리,FRESH-V-2024-125,채소,L,Delivered,1,5800,수원시,경기도,95776,NONE,F,30대
+126,5/16/24,Shipped,SSG.com,Priority,브로콜리,FRESH-V-2024-126,채소,S,Delivered,1,5300,성동구,경기도,34146,FRESH10,M,30대
+127,5/17/24,Shipped,Coupang,Expedited,가지,FRESH-V-2024-127,채소,M,Delivered,2,7000,송파구,서울,42735,NONE,F,30대
+128,3/26/24,Shipped,Amazon,Standard,체리,FRESH-F-2024-128,과일,XL,Delivered,1,7400,종로구,경기도,29855,NONE,M,30대
+129,6/19/24,Shipped,Coupang,Priority,양파,FRESH-V-2024-129,채소,S,Delivered,2,11600,일산동구,서울,58323,NONE,M,50대
+130,3/2/24,Shipped,SSG.com,Standard,버터,FRESH-D-2024-130,유제품,M,Delivered,2,11600,강남구,경기도,34212,EARLY5,F,50대
+131,5/17/24,Shipped,SSG.com,Priority,수박,FRESH-F-2024-131,과일,L,Delivered,1,7200,노원구,경기도,23675,NONE,F,50대
+132,2/28/24,Shipped,Amazon,Priority,파프리카,FRESH-V-2024-132,채소,S,Delivered,3,10800,일산동구,서울,16914,SPRING24,M,40대
+133,6/16/24,Shipped,Amazon,Priority,키위,FRESH-F-2024-133,과일,M,Delivered,2,13600,마포구,서울,72090,EARLY5,F,20대
+134,3/22/24,Shipped,Coupang,Expedited,체리,FRESH-F-2024-134,과일,M,Delivered,2,10200,양천구,서울,64257,SPRING24,F,50대
+135,4/1/24,Shipped,Amazon,Standard,키위,FRESH-F-2024-135,과일,S,Delivered,1,6300,서초구,서울,46954,FRESH10,M,40대
+136,3/3/24,Shipped,Coupang,Standard,당근,FRESH-V-2024-136,채소,XL,Delivered,1,5600,종로구,서울,77424,NONE,F,50대
+137,4/24/24,Shipped,Market Kurly,Expedited,키위,FRESH-F-2024-137,과일,L,Delivered,3,17400,성동구,경기도,68076,SPRING24,F,30대
+138,3/7/24,Shipped,SSG.com,Expedited,체리,FRESH-F-2024-138,과일,M,Delivered,3,15000,동작구,서울,88860,NONE,M,20대
+139,4/23/24,Shipped,Market Kurly,Expedited,당근,FRESH-V-2024-139,채소,XL,Delivered,2,6400,강남구,경기도,77421,SPRING24,M,40대
+140,6/13/24,Shipped,Coupang,Priority,버터,FRESH-D-2024-140,유제품,XL,Delivered,3,12900,일산동구,서울,24504,EARLY5,F,30대
+141,4/6/24,Shipped,Market Kurly,Expedited,키위,FRESH-F-2024-141,과일,XL,Delivered,1,5100,은평구,서울,48461,EARLY5,M,60대
+142,6/10/24,Shipped,Market Kurly,Priority,가지,FRESH-V-2024-142,채소,M,Delivered,1,3000,서초구,서울,59310,BUNDLE15,M,50대
+143,2/12/24,Shipped,Market Kurly,Priority,바나나,FRESH-F-2024-143,과일,M,Delivered,3,20100,분당구,서울,93024,SPRING24,M,30대
+144,1/17/24,Shipped,Coupang,Priority,감자,FRESH-V-2024-144,채소,XL,Delivered,2,8200,노원구,경기도,27201,EARLY5,F,30대
+145,4/3/24,Shipped,SSG.com,Expedited,체리,FRESH-F-2024-145,과일,XL,Delivered,1,7300,일산동구,경기도,88984,NONE,F,40대
+146,5/3/24,Shipped,Coupang,Priority,복숭아,FRESH-F-2024-146,과일,M,Delivered,2,10800,성동구,서울,91605,BUNDLE15,F,30대
+147,6/10/24,Shipped,Amazon,Expedited,감자,FRESH-V-2024-147,채소,XL,Delivered,2,9400,용산구,경기도,26919,EARLY5,M,50대
+148,6/6/24,Shipped,Coupang,Priority,양파,FRESH-V-2024-148,채소,S,Delivered,2,8800,강남구,경기도,87613,NONE,F,50대
+149,4/21/24,Shipped,SSG.com,Standard,호박,FRESH-V-2024-149,채소,S,Delivered,3,15300,강동구,경기도,84028,NONE,M,20대
+150,5/29/24,Shipped,Amazon,Standard,자두,FRESH-F-2024-150,과일,XL,Delivered,3,16800,수원시,경기도,93442,NONE,F,20대
+151,6/5/24,Shipped,Amazon,Standard,파프리카,FRESH-V-2024-151,채소,L,Delivered,1,3600,은평구,서울,54103,BUNDLE15,M,30대
+152,6/14/24,Shipped,Market Kurly,Priority,우유,FRESH-D-2024-152,유제품,XL,Delivered,2,8600,분당구,경기도,24398,SPRING24,F,40대
+153,6/26/24,Shipped,Coupang,Priority,브로콜리,FRESH-V-2024-153,채소,L,Delivered,1,6000,강남구,서울,94234,SPRING24,F,40대
+154,1/22/24,Shipped,SSG.com,Expedited,바나나,FRESH-F-2024-154,과일,S,Delivered,3,15900,일산동구,서울,72566,NONE,F,60대
+155,2/19/24,Shipped,SSG.com,Standard,치즈,FRESH-D-2024-155,유제품,XL,Delivered,3,18300,분당구,경기도,22692,NONE,F,20대
+156,5/4/24,Shipped,SSG.com,Expedited,상추,FRESH-V-2024-156,채소,S,Delivered,3,11400,용산구,서울,18627,EARLY5,F,30대
+157,4/8/24,Shipped,Coupang,Standard,파프리카,FRESH-V-2024-157,채소,L,Delivered,2,9000,중구,서울,21133,FRESH10,F,30대
+158,1/31/24,Shipped,SSG.com,Standard,시금치,FRESH-V-2024-158,채소,S,Delivered,2,6800,구로구,경기도,62647,EARLY5,M,40대
+159,3/12/24,Shipped,Coupang,Expedited,콩나물,FRESH-V-2024-159,채소,S,Delivered,1,5900,성동구,서울,87299,EARLY5,M,30대
+160,1/12/24,Shipped,Market Kurly,Standard,감자,FRESH-V-2024-160,채소,S,Delivered,3,10500,동대문구,서울,81951,BUNDLE15,M,30대
+161,3/19/24,Shipped,Market Kurly,Standard,배,FRESH-F-2024-161,과일,S,Delivered,3,20400,송파구,경기도,53694,BUNDLE15,M,30대
+162,5/22/24,Shipped,Coupang,Standard,딸기,FRESH-F-2024-162,과일,L,Delivered,2,12600,성북구,경기도,67561,FRESH10,F,30대
+163,3/16/24,Shipped,Market Kurly,Standard,사과,FRESH-F-2024-163,과일,M,Delivered,3,16800,송파구,경기도,79604,EARLY5,M,20대
+164,4/30/24,Shipped,Coupang,Priority,요거트,FRESH-D-2024-164,유제품,S,Delivered,1,4400,동대문구,경기도,58806,BUNDLE15,M,50대
+165,5/19/24,Shipped,Coupang,Expedited,양파,FRESH-V-2024-165,채소,L,Delivered,3,17400,양천구,경기도,85957,EARLY5,M,50대
+166,4/4/24,Shipped,Coupang,Priority,콩나물,FRESH-V-2024-166,채소,M,Delivered,3,14700,관악구,서울,88480,SPRING24,M,20대
+167,3/1/24,Shipped,Market Kurly,Expedited,시금치,FRESH-V-2024-167,채소,XL,Delivered,1,5000,은평구,서울,96543,EARLY5,F,30대
+168,5/4/24,Shipped,SSG.com,Priority,토마토,FRESH-V-2024-168,채소,XL,Delivered,2,8000,분당구,서울,10044,FRESH10,M,60대
+169,5/27/24,Shipped,Market Kurly,Expedited,체리,FRESH-F-2024-169,과일,XL,Delivered,2,15600,동대문구,서울,80411,FRESH10,F,40대
+170,1/24/24,Shipped,Coupang,Expedited,사과,FRESH-F-2024-170,과일,S,Delivered,1,6400,동작구,경기도,55896,SPRING24,F,20대
+171,3/30/24,Shipped,Coupang,Priority,요거트,FRESH-D-2024-171,유제품,L,Delivered,1,6100,중구,경기도,94821,EARLY5,F,30대
+172,4/24/24,Shipped,Amazon,Priority,두유,FRESH-D-2024-172,유제품,L,Delivered,1,6800,영등포구,경기도,28835,FRESH10,M,30대
+173,1/21/24,Shipped,Amazon,Standard,케피어,FRESH-D-2024-173,유제품,M,Delivered,1,4400,노원구,경기도,91337,NONE,M,50대
+174,3/19/24,Shipped,Coupang,Standard,감자,FRESH-V-2024-174,채소,M,Delivered,1,5600,부천시,경기도,93348,FRESH10,M,40대
+175,6/18/24,Shipped,Market Kurly,Expedited,당근,FRESH-V-2024-175,채소,L,Delivered,2,8600,관악구,서울,50803,EARLY5,M,50대
+176,4/15/24,Shipped,Coupang,Standard,사과,FRESH-F-2024-176,과일,M,Delivered,2,10800,양천구,경기도,50544,NONE,M,30대
+177,5/9/24,Shipped,Coupang,Standard,오렌지,FRESH-F-2024-177,과일,S,Delivered,1,5400,분당구,경기도,39111,NONE,F,40대
+178,5/2/24,Shipped,Market Kurly,Standard,감자,FRESH-V-2024-178,채소,M,Delivered,3,10800,종로구,서울,71538,FRESH10,F,20대
+179,1/10/24,Shipped,Amazon,Priority,상추,FRESH-V-2024-179,채소,XL,Delivered,3,10500,강남구,경기도,62017,EARLY5,F,50대
+180,5/26/24,Shipped,Amazon,Standard,시금치,FRESH-V-2024-180,채소,XL,Delivered,2,7800,성동구,서울,48906,EARLY5,F,50대
+181,5/20/24,Shipped,SSG.com,Standard,당근,FRESH-V-2024-181,채소,S,Delivered,3,10500,인천시,경기도,79453,BUNDLE15,F,30대
+182,3/21/24,Shipped,Coupang,Expedited,상추,FRESH-V-2024-182,채소,M,Delivered,3,10800,부천시,서울,60129,NONE,F,40대
+183,1/4/24,Shipped,SSG.com,Standard,치즈,FRESH-D-2024-183,유제품,S,Delivered,3,22500,동대문구,서울,44457,NONE,M,30대
+184,5/18/24,Shipped,Amazon,Priority,딸기,FRESH-F-2024-184,과일,XL,Delivered,1,7300,은평구,경기도,49327,NONE,F,40대
+185,2/5/24,Shipped,Coupang,Expedited,오렌지,FRESH-F-2024-185,과일,S,Delivered,2,11600,성동구,서울,31538,BUNDLE15,F,30대
+186,2/14/24,Shipped,SSG.com,Priority,체리,FRESH-F-2024-186,과일,M,Delivered,3,22800,동대문구,경기도,48194,EARLY5,M,50대
+187,4/1/24,Shipped,SSG.com,Standard,시금치,FRESH-V-2024-187,채소,M,Delivered,3,15000,동작구,서울,66772,EARLY5,M,20대
+188,6/3/24,Shipped,SSG.com,Priority,두유,FRESH-D-2024-188,유제품,M,Delivered,1,5100,중구,경기도,27698,EARLY5,M,30대
+189,1/27/24,Shipped,Market Kurly,Expedited,양파,FRESH-V-2024-189,채소,XL,Delivered,2,8400,수원시,경기도,30658,NONE,F,20대
+190,2/25/24,Shipped,Market Kurly,Standard,수박,FRESH-F-2024-190,과일,XL,Delivered,3,18000,마포구,서울,26762,NONE,F,30대
+191,5/27/24,Shipped,Market Kurly,Expedited,가지,FRESH-V-2024-191,채소,M,Delivered,2,10000,부천시,경기도,10834,NONE,M,30대
+192,4/26/24,Shipped,Coupang,Expedited,상추,FRESH-V-2024-192,채소,XL,Delivered,2,7600,부천시,경기도,85875,SPRING24,F,30대
+193,5/29/24,Shipped,Market Kurly,Expedited,아이스크림,FRESH-D-2024-193,유제품,M,Delivered,1,6200,은평구,서울,49284,NONE,M,30대
+194,3/22/24,Shipped,Coupang,Priority,두유,FRESH-D-2024-194,유제품,S,Delivered,3,15900,광진구,서울,73174,EARLY5,F,20대
+195,2/26/24,Shipped,Amazon,Standard,호박,FRESH-V-2024-195,채소,L,Delivered,1,4600,중구,서울,52974,EARLY5,M,30대
+196,5/21/24,Shipped,SSG.com,Standard,망고,FRESH-F-2024-196,과일,S,Delivered,1,5900,은평구,서울,26295,FRESH10,M,30대
+197,3/14/24,Shipped,Coupang,Standard,체리,FRESH-F-2024-197,과일,XL,Delivered,2,12000,동작구,서울,81671,FRESH10,F,20대
+198,4/27/24,Shipped,Coupang,Standard,브로콜리,FRESH-V-2024-198,채소,M,Delivered,1,4500,중구,서울,98717,BUNDLE15,F,40대
+199,1/18/24,Shipped,Market Kurly,Expedited,오렌지,FRESH-F-2024-199,과일,L,Delivered,3,16200,성북구,서울,17872,SPRING24,M,30대
+
+
+

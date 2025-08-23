@@ -111,6 +111,7 @@ def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
     
     # Start a new span for the web search operation
     with tracer.start_as_current_span("planner") as span:
+
         agent = strands_utils.get_agent(
             agent_name="planner",
             system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={}), # apply_prompt_template(prompt_name="task_agent", prompt_context={"TEST": "sdsd"})
@@ -124,11 +125,31 @@ def planner_node(state: State):# -> Command[Literal["supervisor", "__end__"]]:
         agent, response = asyncio.run(strands_utils.process_streaming_response(agent, message))
         logger.debug(f"\n{Colors.RED}Planner response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
+        # Add query attribute
+        span.set_attribute("planner.input", state["request_prompt"]) # set_attribute의 경우 "Traces" 및 GenAI Observability의 metadata에서 확인가능 
+        
+        # Add event for search start
+        span.add_event(
+            "input",
+            {"input-message": str(message)}
+        )
         goto = "supervisor"
             
         history = state.get("history", [])
         history.append({"agent":"planner", "message": response["text"]})
         logger.info(f"{Colors.GREEN}===== Planner completed task ====={Colors.END}")
+
+        # Add tool results event
+        span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
+            "planner_results",
+            {
+                "planner-results": str(response["text"]),
+            }
+        )
+        
+        # Set span status to OK
+        span.set_status(trace.Status(trace.StatusCode.OK))
+
         return Command(
             update={
                 "messages": [get_message_from_string(role="user", string=response["text"], imgs=[])],
