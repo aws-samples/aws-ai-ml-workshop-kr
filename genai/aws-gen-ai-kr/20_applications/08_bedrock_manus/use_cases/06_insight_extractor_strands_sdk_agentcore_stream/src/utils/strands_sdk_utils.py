@@ -187,12 +187,11 @@ class strands_utils():
         return agent, response
     
     @staticmethod
-    async def process_streaming_response_yield(agent, message):
+    async def process_streaming_response_yield(agent, message, agent_name="coordinator"):
         callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
         response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
         try:
             
-            agent_name = "coordinator"
             session_id = "ABC"
             agent_stream = agent.stream_async(message)
 

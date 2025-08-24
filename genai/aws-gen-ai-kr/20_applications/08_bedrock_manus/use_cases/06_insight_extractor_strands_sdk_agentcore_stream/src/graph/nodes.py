@@ -65,55 +65,26 @@ class FunctionNode(MultiAgentBase):
         else: 
             return self.func(task=task, **kwargs)
 
+    # 여기서 invoke_async_streaming는 FunctionNode의 invoke_async을 대체하는 것이다.
+    # 원래 strands로 graph를 만들고 invoke (혹은 invoke_async)를 하게 되면 FunctionNode의 invoke_async가 실행되는데, 
+    # 여기에서는 yeild기반 스트리밍을 위해 만들어진 그래프를 StreamingGraphWrapper로 감싸기 때문에 invoke_async_streaming가 실행되는 것이다. 
+    # StreamingFunctionNode 과 합쳐보려고 했으나, yield로 streaming 할 때는 return 값을 보낼 수 없기에 합치지 않았음
+    # 추가로 FunctionNode에는 MultiAgentResult return하는 부분이 있지만 StreamingFunctionNode에는 retrun이 없음 (yield 이기 때문)
+    # 즉, streaming 시 각 노드간에 task 형태로 리턴되는 것은 없고, 전달되는 값은 모두 shared var로 하고 있음
     async def invoke_async(self, task=None, **kwargs):
         # Execute function (nodes now use global state for data sharing)  
         # Pass task and kwargs directly to function
         if asyncio.iscoroutinefunction(self.func): 
-            result = await self.func(task=task, **kwargs)
+            agent, response = await self.func(task=task, **kwargs)
         else: 
-            result = self.func(task=task, **kwargs)
-        
-        # Check if result is an async generator (streaming case)
-        if hasattr(result, '__aiter__'):
-            # For streaming functions, collect all events
-            events = []
-            async for event in result:
-                events.append(event)
-                print(f"Streaming event: {event}")
-                
-                # Call the global streaming callback if set
-                global _streaming_callback
-                if _streaming_callback:
-                    _streaming_callback(event)
-            
-            # Reconstruct response text from streaming events
-            full_text = ""
-            for event in events:
-                if event.get("event_type") == "text_chunk":
-                    full_text += event.get("data", "")
-            
-            response = {"text": full_text}
-            agent = None  # Agent might not be available in streaming case
-        else:
-            # Normal case: unpack agent and response
-            agent, response = result
+            agent, response = self.func(task=task, **kwargs)
 
-        # Create agent result
-        if agent:
-            agent_result = AgentResult(
-                stop_reason="end_turn",
-                message=Message(role="assistant", content=[ContentBlock(text=str(response["text"]))]),
-                metrics={},
-                state=strands_utils.get_agent_state_all(agent)
-            )
-        else:
-            # Fallback for streaming case without agent
-            agent_result = AgentResult(
-                stop_reason="end_turn",
-                message=Message(role="assistant", content=[ContentBlock(text=str(response["text"]))]),
-                metrics={},
-                state={}
-            )
+        agent_result = AgentResult(
+            stop_reason="end_turn",
+            message=Message(role="assistant", content=[ContentBlock(text=str(response["text"]))]),
+            metrics={},
+            state=strands_utils.get_agent_state_all(agent)
+        )
 
         # Return wrapped in MultiAgentResult
         return MultiAgentResult(
@@ -129,6 +100,12 @@ class StreamingFunctionNode:
         self.func = func
         self.name = name or func.__name__
 
+    # 여기서 invoke_async_streaming는 FunctionNode의 invoke_async을 대체하는 것이다.
+    # 원래 strands로 graph를 만들고 invoke (혹은 invoke_async)를 하게 되면 FunctionNode의 invoke_async가 실행되는데, 
+    # 여기에서는 yeild기반 스트리밍을 위해 만들어진 그래프를 StreamingGraphWrapper로 감싸기 때문에 invoke_async_streaming가 실행되는 것이다. 
+    # StreamingFunctionNode 과 합쳐보려고 했으나, yield로 streaming 할 때는 return 값을 보낼 수 없기에 합치지 않았음
+    # 추가로 FunctionNode에는 MultiAgentResult return하는 부분이 있지만 StreamingFunctionNode에는 retrun이 없음 (yield 이기 때문)
+    # 즉, streaming 시 각 노드간에 task 형태로 리턴되는 것은 없고, 전달되는 값은 모두 shared var로 하고 있음
     async def invoke_async_streaming(self, task=None, **kwargs):
         """Execute function and yield streaming events in real-time"""
         if asyncio.iscoroutinefunction(self.func): 
@@ -143,10 +120,9 @@ class StreamingFunctionNode:
                 #print(f"StreamingNode yielding: {event}")
                 yield event
                 
-                # Also call the global streaming callback if set
+                # Also call the global streaming callback if set (없으면 skip, 콜백 함수 만들어서 사용도 가능)
                 global _streaming_callback
-                if _streaming_callback:
-                    _streaming_callback(event)
+                if _streaming_callback: _streaming_callback(event)
         else:
             # Normal case: just return the result
             _, response = result
@@ -194,7 +170,7 @@ async def coordinator_node(task=None, **kwargs):
         
     # Collect streaming events and build final response
     streaming_events = []
-    async for event in strands_utils.process_streaming_response_yield(agent, request_prompt):
+    async for event in strands_utils.process_streaming_response_yield(agent, request_prompt, agent_name="coordinator"):
         streaming_events.append(event)
         yield(event)
 
@@ -273,7 +249,7 @@ async def planner_node(task=None, **kwargs):
     
     # Collect streaming events and build final response
     streaming_events = []
-    async for event in strands_utils.process_streaming_response_yield(agent, message):
+    async for event in strands_utils.process_streaming_response_yield(agent, message, agent_name="planner"):
         #print(f"planner_node: {event}")
         streaming_events.append(event)
         yield(event)
@@ -334,7 +310,7 @@ async def supervisor_node(task=None, **kwargs):
     
     # Collect streaming events and build final response
     streaming_events = []
-    async for event in strands_utils.process_streaming_response_yield(agent, message):
+    async for event in strands_utils.process_streaming_response_yield(agent, message, agent_name="supervisor"):
         #print(f"supervisor_node: {event}")
         streaming_events.append(event)
         yield(event)

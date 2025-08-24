@@ -25,9 +25,6 @@ def remove_artifact_folder(folder_path="./artifacts/"):
     else:
         print(f"'{folder_path}' 폴더가 존재하지 않습니다.")
 
-
-
-
 async def graph_streaming_execution(user_query):
     """Execute full graph streaming workflow with real-time events"""
     remove_artifact_folder()
@@ -39,26 +36,29 @@ async def graph_streaming_execution(user_query):
         if event.get("event_type") == "text_chunk":
             # Print streaming text chunks in real-time
             print(event.get("data", ""), end="", flush=True)
+            #print (event)
         elif event.get("event_type") == "reasoning":
             # Print reasoning tokens in real-time (can be used separately later)
             print(event.get("reasoning_text", ""), end="", flush=True)
-        
+            #print (event)
         
         ## 툴 프린팅은 수정해야 함!! 스트리밍 될 수 있는 지 확인하기 event를 출력하면 어떻게 넘어 오는지 확인 가능함. 
         elif event.get("event_type") == "tool_use": 
             # Print tool usage events
             tool_name = event.get("tool_name", "unknown")
             tool_input = event.get("tool_input", "")
+            #print (event)
             
             # Try to parse tool_input as JSON and extract task
             try:
                 import json
                 tool_data = json.loads(tool_input)
                 task = tool_data.get("task", tool_input)
-                print(f"\n[TOOL] Using {tool_name}", flush=True)
-                print(f"[TOOL] Task: {task[:100]}{'...' if len(task) > 100 else ''}", flush=True)
+                #print(f"\n[TOOL] Using {tool_name}", flush=True)
+                print(f"[TOOL] Task: {task}{'...' if len(task) > 100 else ''}", flush=True)
             except:
-                print(f"\n[TOOL] Using {tool_name}...", flush=True)
+                pass
+                #print(f"\n[TOOL] Using {tool_name}...", flush=True)
         elif event.get("type") == "final_result":
             print(f"\n\n[FINAL] Agent: {event.get('agent')}")
             print(f"[FINAL] Response: {event.get('response')}")

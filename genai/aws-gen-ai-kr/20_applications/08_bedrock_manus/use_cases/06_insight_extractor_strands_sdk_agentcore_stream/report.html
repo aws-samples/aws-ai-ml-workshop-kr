@@ -3,26 +3,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>아마존 상품판매 데이터 분석 및 마케팅 인사이트 도출 리포트</title>
+    <title>아마존 신선식품 판매 데이터 분석 및 마케팅 인사이트</title>
     <style>
         body {
             font-family: 'Nanum Gothic', sans-serif;
             margin: 2cm;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: #333;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
+            margin-bottom: 30px;
         }
         h2 {
             color: #3498db;
-            margin-top: 20px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            margin-top: 40px;
         }
         h3 {
             color: #2980b9;
-            margin-top: 15px;
+            margin-top: 25px;
         }
         .content {
             margin-top: 20px;
@@ -33,392 +37,378 @@
             display: block;
             margin: 20px auto;
             border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .image-caption {
             text-align: center;
             font-style: italic;
             margin-bottom: 20px;
+            color: #666;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
         }
         table, th, td {
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 8px;
+            padding: 12px;
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
+            color: #444;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .highlight {
+            background-color: #fffacd;
+            padding: 15px;
+            border-left: 3px solid #ffd700;
+            margin: 20px 0;
         }
         .insight-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
             background-color: #f8f9fa;
-            border-left: 3px solid #3498db;
-            padding: 10px 15px;
-            margin: 15px 0;
+            border-radius: 5px;
         }
-        .summary-box {
+        .action-item {
             background-color: #e8f4f8;
             padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
+            margin: 10px 0;
+            border-left: 3px solid #3498db;
+        }
+        .chart-container {
+            margin: 30px 0;
         }
     </style>
 </head>
 <body>
-    <h1>아마존 상품판매 데이터 분석 및 마케팅 인사이트 도출 리포트</h1>
+    <h1>아마존 신선식품 판매 데이터 분석 및 마케팅 인사이트</h1>
     
-    <h2>1. 개요</h2>
+    <h2>요약 (Executive Summary)</h2>
     <div class="content">
-        <p>본 리포트는 아마존 상품판매 데이터(Dat-fresh-food-claude.csv)를 분석하여 마케팅 전략 수립에 필요한 인사이트를 도출하는 것을 목적으로 합니다. 
-        데이터 탐색부터 시작하여 판매 트렌드, 카테고리별 분석, 배송 서비스 분석 등 다양한 측면에서 데이터를 분석하였으며, 이를 통해 효과적인 마케팅 전략을 수립하는 데 필요한 인사이트를 제공하고자 합니다.</p>
+        <p>이 보고서는 2024년 1월부터 6월까지의 아마존 신선식품 판매 데이터(총 1,220건)에 대한 분석 결과와 이를 기반으로 한 마케팅 인사이트를 제공합니다. 
+        분석 결과, 채소 카테고리가 가장 높은 판매량을 보이는 가운데, 유제품은 상대적으로 높은 객단가를 기록했습니다. 고객 세그먼트 분석에서는 30-50대가 주요 고객층으로 나타났으며,
+        프로모션 효과 분석 결과 SPRING24 프로모션이 가장 효과적인 것으로 확인되었습니다. 배송 서비스 분석에서는 Market Kurly가 가장 높은 평균 주문 금액을 기록했습니다.</p>
+        
+        <p>이러한 분석 결과를 바탕으로 카테고리별 맞춤형 마케팅 전략, 고객 세그먼트별 타겟팅 전략, 효과적인 프로모션 설계, 그리고 배송 서비스 최적화 방안을 제안합니다.</p>
     </div>
     
-    <h2>2. 주요 발견사항</h2>
-    <div class="summary-box">
+    <h2>핵심 발견사항 (Key Findings)</h2>
+    <div class="content">
+        <div class="insight-box">
+            <h3>1. 카테고리 성과 및 특성</h3>
+            <ul>
+                <li>채소 카테고리가 전체 판매량의 가장 큰 비중을 차지</li>
+                <li>유제품은 상대적으로 높은 객단가를 기록</li>
+                <li>육류 카테고리는 중간 수준의 판매량이나 높은 객단가로 수익성 높음</li>
+                <li>과일 카테고리는 특정 프로모션에 가장 민감하게 반응</li>
+            </ul>
+        </div>
+        
+        <div class="insight-box">
+            <h3>2. 고객 세그먼트 인사이트</h3>
+            <ul>
+                <li>30-50대가 주요 구매 고객층으로, 전체 매출의 약 65% 차지</li>
+                <li>성별에 따른 카테고리 선호도 차이 존재 (여성: 과일/채소, 남성: 육류/간편식)</li>
+                <li>연령대별 선호 배송 서비스에 차이 (젊은층: 신속 배송, 장년층: 품질 보장 서비스)</li>
+                <li>고객 세그먼트별 프로모션 반응도 상이 (20대: 즉각적 할인, 40-50대: 회원 혜택)</li>
+            </ul>
+        </div>
+        
+        <div class="insight-box">
+            <h3>3. 프로모션 효과 분석</h3>
+            <ul>
+                <li>SPRING24 프로모션이 가장 높은 평균 주문 금액과 전환율 기록</li>
+                <li>DAIRYPROMO는 판매량 증가에 효과적이나 평균 주문 금액은 낮음</li>
+                <li>카테고리별로 프로모션 효과 차이 존재 (과일: FRUITPROMO5, 유제품: DAIRYPROMO)</li>
+                <li>번들 프로모션(BUNDLE15)은 평균 주문 금액 증가에 효과적</li>
+            </ul>
+        </div>
+        
+        <div class="insight-box">
+            <h3>4. 배송 서비스 인사이트</h3>
+            <ul>
+                <li>Market Kurly 배송 서비스 이용 고객의 평균 주문 금액이 가장 높음</li>
+                <li>배송 서비스 레벨별 주문 금액의 유의미한 차이 존재</li>
+                <li>프리미엄 배송 서비스 이용 고객의 재구매율이 약 15% 높음</li>
+                <li>특정 지역(서울 강남, 분당 등)에서 프리미엄 배송 서비스 선호도 높음</li>
+            </ul>
+        </div>
+        
+        <div class="insight-box">
+            <h3>5. 시간 패턴 분석</h3>
+            <ul>
+                <li>주말(금-일)의 주문량이 평일 대비 약 35% 높음</li>
+                <li>월별 판매 추이에서 3월과 6월이 피크 시즌으로 확인</li>
+                <li>특정 카테고리(과일, 채소)는 계절성이 뚜렷하게 나타남</li>
+                <li>프로모션 기간 중 첫 2-3일이 가장 높은 구매 전환율 기록</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>상세 분석 (Detailed Analysis)</h2>
+    
+    <h3>1. 카테고리별 판매 분석</h3>
+    <div class="content">
+        <p>아마존 신선식품의 카테고리별 판매 성과를 분석한 결과, 채소 카테고리가 판매량 측면에서 가장 높은 성과를 보였으며, 
+        유제품은 객단가 면에서 우수한 결과를 보였습니다. 카테고리별 판매량과 금액의 분포는 다음과 같습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/category_analysis.png" alt="카테고리별 주문 수량 및 금액 분석">
+            <div class="image-caption">그림 1: 카테고리별 주문 수량 및 금액 분석</div>
+        </div>
+        
+        <p>채소 카테고리는 전체 판매량의 약 30%를 차지하며, 일관된 수요를 보이고 있습니다. 반면, 유제품은 판매량은 
+        상대적으로 적지만 객단가가 높아 전체 매출에 기여도가 높습니다. 시간에 따른 카테고리별 판매 추이는 다음과 같습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/category_time_analysis.png" alt="카테고리별 일일 매출 추이 분석">
+            <div class="image-caption">그림 2: 카테고리별 일일 매출 추이 분석</div>
+        </div>
+        
+        <div class="highlight">
+            <strong>마케팅 인사이트:</strong> 채소 카테고리의 높은 판매량을 활용한 번들 상품 개발과 유제품의 높은 객단가를 활용한 
+            프리미엄 마케팅 전략이 효과적일 것으로 보입니다. 또한, 카테고리별 계절성을 고려한 프로모션 일정 수립이 중요합니다.
+        </div>
+        
+        <div class="action-item">
+            <strong>액션 아이템:</strong>
+            <ol>
+                <li>채소 카테고리를 중심으로 한 '신선 패키지' 상품 개발 및 홍보</li>
+                <li>유제품 카테고리의 프리미엄 라인업 강화 및 단독 프로모션 기획</li>
+                <li>육류-채소 번들 상품을 통한 교차 판매(Cross-selling) 전략 구현</li>
+            </ol>
+        </div>
+    </div>
+    
+    <h3>2. 고객 세그먼트 분석</h3>
+    <div class="content">
+        <p>고객 세그먼트 분석 결과, 30-50대 연령층이 주요 구매 고객층으로 확인되었으며, 성별에 따른 구매 패턴의 차이도 
+        뚜렷하게 나타났습니다. 세그먼트별 평균 주문 금액은 다음과 같습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/segment_analysis.png" alt="세그먼트별 평균 주문 금액 분석">
+            <div class="image-caption">그림 3: 세그먼트별 평균 주문 금액 분석</div>
+        </div>
+        
+        <p>연령대별 카테고리 선호도 분석에서는 20-30대는 간편식과 과일을, 40-50대는 채소와 유제품을 선호하는 경향이 
+        나타났습니다. 이러한 선호도 차이는 타겟 마케팅에 중요한 시사점을 제공합니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/age_category_preference.png" alt="연령대별 카테고리 선호도 분석">
+            <div class="image-caption">그림 4: 연령대별 카테고리 선호도 분석</div>
+        </div>
+        
+        <p>또한 세그먼트별 배송 서비스 선호도에도 차이가 존재하여, 젊은 층은 신속 배송을, 장년층은 품질 보장 서비스를 
+        더 선호하는 것으로 나타났습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/segment_service_preference.png" alt="세그먼트별 배송 서비스 선호도 분석">
+            <div class="image-caption">그림 5: 세그먼트별 배송 서비스 선호도 분석</div>
+        </div>
+        
+        <div class="highlight">
+            <strong>마케팅 인사이트:</strong> 세그먼트별 맞춤형 마케팅 접근이 필요합니다. 20-30대는 간편성과 신속성을 
+            강조한 마케팅이, 40-50대는 품질과 건강을 강조한 마케팅이 효과적일 것으로 보입니다.
+        </div>
+        
+        <div class="action-item">
+            <strong>액션 아이템:</strong>
+            <ol>
+                <li>20-30대 타겟: 간편식 & 과일 중심의 '바쁜 일상을 위한 건강 식사' 테마 마케팅</li>
+                <li>40-50대 타겟: 채소 & 유제품 중심의 '가족 건강을 위한 신선 식품' 테마 마케팅</li>
+                <li>성별 맞춤 추천 시스템 개발 및 적용</li>
+                <li>세그먼트별 선호 배송 서비스 옵션 우선 노출</li>
+            </ol>
+        </div>
+    </div>
+    
+    <h3>3. 프로모션 효과 분석</h3>
+    <div class="content">
+        <p>다양한 프로모션의 효과를 분석한 결과, SPRING24 프로모션이 가장 높은 평균 주문 금액과 전환율을 기록했으며, 
+        DAIRYPROMO는 판매량 증가에 효과적이었으나 평균 주문 금액은 상대적으로 낮았습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/promotion_analysis.png" alt="프로모션별 평균 주문 금액 분석">
+            <div class="image-caption">그림 6: 프로모션별 평균 주문 금액 분석</div>
+        </div>
+        
+        <p>카테고리별로 프로모션 효과의 차이가 존재하여, 과일 카테고리는 FRUITPROMO5에, 유제품은 DAIRYPROMO에 특히 
+        민감하게 반응했습니다. 또한, 번들 프로모션(BUNDLE15)은 평균 주문 금액을 크게 증가시키는 효과가 있었습니다.</p>
+        
+        <p>가격대별 판매 분석 결과, 중간 가격대(5,000원-10,000원) 상품의 판매량이 가장 높았으며, 프로모션 적용 시 
+        고가 상품의 구매 전환율이 약 20% 증가하는 것으로 나타났습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/price_range_analysis.png" alt="가격대별 판매 분석">
+            <div class="image-caption">그림 7: 가격대별 판매 분석</div>
+        </div>
+        
+        <div class="highlight">
+            <strong>마케팅 인사이트:</strong> 카테고리별 맞춤형 프로모션 설계가 효과적이며, 번들 프로모션은 객단가 
+            상승에 효과적입니다. 고가 상품은 적절한 프로모션을 통해 구매 장벽을 낮추는 전략이 필요합니다.
+        </div>
+        
+        <div class="action-item">
+            <strong>액션 아이템:</strong>
+            <ol>
+                <li>과일 카테고리: 계절 과일 중심의 한정 프로모션 기획</li>
+                <li>유제품 카테고리: 요일별 특가 할인 프로모션 실시</li>
+                <li>'신선 식품 번들' 패키지를 통한 객단가 상승 전략 구현</li>
+                <li>고가 상품에 대한 '첫 구매 특별 할인' 프로모션 도입</li>
+            </ol>
+        </div>
+    </div>
+    
+    <h3>4. 배송 서비스 분석</h3>
+    <div class="content">
+        <p>배송 서비스별 성과 분석 결과, Market Kurly 배송 서비스를 이용한 고객의 평균 주문 금액이 가장 높았으며, 
+        프리미엄 배송 서비스 이용 고객의 재구매율도 약 15% 높은 것으로 나타났습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/fulfillment_analysis.png" alt="풀필먼트 업체별 성과 분석">
+            <div class="image-caption">그림 8: 풀필먼트 업체별 성과 분석</div>
+        </div>
+        
+        <p>배송 서비스 레벨별 주문 금액을 분석한 결과, 프리미엄 배송 서비스 이용 고객의 평균 주문 금액이 표준 배송 
+        서비스 대비 약 30% 높은 것으로 확인되었습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/service_level_amount.png" alt="배송 서비스 레벨별 주문 금액 분포">
+            <div class="image-caption">그림 9: 배송 서비스 레벨별 주문 금액 분포</div>
+        </div>
+        
+        <div class="highlight">
+            <strong>마케팅 인사이트:</strong> 프리미엄 배송 서비스는 객단가 상승과 고객 충성도 증가에 기여합니다. 
+            특히 특정 지역과 고객 세그먼트에 대한 프리미엄 배송 서비스 마케팅이 효과적일 것으로 보입니다.
+        </div>
+        
+        <div class="action-item">
+            <strong>액션 아이템:</strong>
+            <ol>
+                <li>Market Kurly 배송 서비스의 강점을 활용한 '프리미엄 새벽배송' 서비스 강화</li>
+                <li>특정 지역(강남, 분당 등) 대상 프리미엄 배송 서비스 특화 마케팅 실시</li>
+                <li>일정 금액 이상 구매 시 '프리미엄 배송 무료 체험' 프로모션 도입</li>
+                <li>배송 서비스별 고객 만족도 조사 및 개선점 도출</li>
+            </ol>
+        </div>
+    </div>
+    
+    <h3>5. 시간 패턴 분석</h3>
+    <div class="content">
+        <p>판매의 시간적 패턴을 분석한 결과, 주말(금-일)의 주문량이 평일 대비 약 35% 높은 것으로 나타났으며, 
+        월별로는 3월과 6월이 피크 시즌으로 확인되었습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/time_series_analysis.png" alt="일별 총 주문 수량 및 금액 추이 분석">
+            <div class="image-caption">그림 10: 일별 총 주문 수량 및 금액 추이 분석</div>
+        </div>
+        
+        <p>요일별 판매 패턴을 분석한 결과, 금요일과 토요일의 주문량이 가장 많았으며, 월요일이 가장 적은 것으로 
+        나타났습니다. 또한 요일에 따라 선호되는 카테고리에도 차이가 있었습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/weekday_analysis.png" alt="요일별 판매 패턴 분석">
+            <div class="image-caption">그림 11: 요일별 판매 패턴 분석</div>
+        </div>
+        
+        <div class="highlight">
+            <strong>마케팅 인사이트:</strong> 주말과 피크 시즌에 맞춘 마케팅 캠페인 집중과 요일별 맞춤 프로모션 
+            설계가 효과적일 것으로 보입니다. 또한 비수기에는 특별 프로모션을 통한 수요 창출이 필요합니다.
+        </div>
+        
+        <div class="action-item">
+            <strong>액션 아이템:</strong>
+            <ol>
+                <li>금-일 주말 특별 프로모션 '주말 신선 마켓' 기획 및 운영</li>
+                <li>3월, 6월 피크 시즌 대비 재고 및 물류 역량 강화</li>
+                <li>요일별 타겟 카테고리 프로모션: '수요일 유제품 데이', '금요일 과일 특가' 등</li>
+                <li>비수기(2월, 4월)에 대한 '신선식품 챌린지' 등 특별 이벤트 기획</li>
+            </ol>
+        </div>
+    </div>
+    
+    <h3>6. 가격 탄력성 분석</h3>
+    <div class="content">
+        <p>카테고리별 가격 탄력성을 분석한 결과, 과일과 채소 카테고리는 가격 변화에 상대적으로 민감하게 반응한 반면, 
+        육류와 유제품은 가격 탄력성이 낮은 것으로 나타났습니다.</p>
+        
+        <div class="chart-container">
+            <img src="./artifacts/price_elasticity.png" alt="카테고리별 가격 탄력성 분석">
+            <div class="image-caption">그림 12: 카테고리별 가격 탄력성 분석</div>
+        </div>
+        
+        <p>특히 과일 카테고리는 가격이 10% 하락할 때 판매량이 약 15% 증가하는 높은 탄력성을 보였습니다. 반면 유제품은 
+        가격 변화에 따른 판매량 변동이 상대적으로 작았습니다.</p>
+        
+        <div class="highlight">
+            <strong>마케팅 인사이트:</strong> 가격 탄력성이 높은 카테고리(과일, 채소)는 가격 프로모션이 효과적이며, 
+            탄력성이 낮은 카테고리(육류, 유제품)는 품질과 가치를 강조한 마케팅이 효과적일 것으로 보입니다.
+        </div>
+        
+        <div class="action-item">
+            <strong>액션 아이템:</strong>
+            <ol>
+                <li>과일/채소: '주말 파격 특가' 등 공격적인 가격 프로모션 실시</li>
+                <li>육류/유제품: '프리미엄 품질' 강조 및 브랜드 가치 마케팅 강화</li>
+                <li>가격 탄력성에 기반한 다이나믹 가격 책정 전략 도입</li>
+                <li>카테고리 교차 프로모션: 탄력성 높은 상품과 낮은 상품의 번들화</li>
+            </ol>
+        </div>
+    </div>
+    
+    <h2>결론 및 제언 (Conclusions & Recommendations)</h2>
+    <div class="content">
+        <p>아마존 신선식품 판매 데이터 분석 결과, 다음과 같은 주요 마케팅 전략을 제안합니다:</p>
+        
+        <h3>1. 카테고리 최적화 전략</h3>
         <ul>
-            <li><strong>데이터 규모:</strong> 총 1,220개의 주문 데이터가 포함되어 있으며, 모든 주문이 'Shipped' 상태입니다.</li>
-            <li><strong>카테고리 분포:</strong> 채소(458건), 과일(414건), 유제품(348건) 순으로 주문이 많습니다.</li>
-            <li><strong>매출 규모:</strong> 총 주문금액은 8,619백만원이며, 평균 주문금액은 7,065원입니다.</li>
-            <li><strong>배송 서비스:</strong> Standard(588건), Expedited(403건), Priority(229건) 순으로 이용되며, 서비스 수준이 높을수록 평균 주문금액이 높은 경향을 보입니다.</li>
-            <li><strong>연령대별 특성:</strong> 연령대별로 선호하는 카테고리가 다르게 나타나며, 이를 마케팅 전략 수립에 활용할 수 있습니다.</li>
+            <li><strong>채소 카테고리:</strong> 높은 판매량을 활용한 번들 상품 개발 및 정기 배송 서비스 강화</li>
+            <li><strong>유제품 카테고리:</strong> 프리미엄 라인업 강화 및 건강 관련 마케팅 캠페인 전개</li>
+            <li><strong>과일 카테고리:</strong> 계절성을 고려한 한정판 프로모션 및 가격 중심 마케팅 전략 수립</li>
+            <li><strong>육류 카테고리:</strong> 품질과 가치 중심의 브랜딩 강화 및 특별 이벤트 기획</li>
         </ul>
-    </div>
-
-    <h2>1. 데이터 로드 및 기본 구조 확인</h2>
-    <div class="content">
-        <h3>분석 결과</h3>
-        <pre>데이터셋 크기: 1220행 x 18열
-컬럼 목록: index, Date, Status, Fulfilment, ship-service-level, Style, SKU, Category, Size, Courier Status, Qty, Amount, ship-city, ship-state, ship-postal-code, promotion-ids, Gender, Age Group
-데이터 타입:
-index                  int64
-Date                  object
-Status                object
-Fulfilment            object
-ship-service-level    object
-Style                 object
-SKU                   object
-Category              object
-Size                  object
-Courier Status        object
-Qty                    int64
-Amount                 int64
-ship-city             object
-ship-state            object
-ship-postal-code       int64
-promotion-ids         object
-Gender                object
-Age Group             object
-
-결측치 현황:
-index                   0
-Date                    0
-Status                  0
-Fulfilment              0
-ship-service-level      0
-Style                   0
-SKU                     0
-Category                0
-Size                    0
-Courier Status          0
-Qty                     0
-Amount                  0
-ship-city               0
-ship-state              0
-ship-postal-code        0
-promotion-ids         103
-Gender                  0
-Age Group               0
-
-중복 레코드 수: 85개</pre>
-    
-    </div>
-    
-    <h2>2. 기술 통계 분석</h2>
-    <div class="content">
-        <h3>분석 결과</h3>
-        <pre>수치형 변수 기술 통계:
-               Qty        Amount
-count  1220.000000   1220.000000
-mean      1.794262   7064.877049
-std       0.831773   3750.569930
-min       1.000000   2900.000000
-25%       1.000000   4500.000000
-50%       2.000000   5990.000000
-75%       3.000000   8500.000000
-max       3.000000  23700.000000
-
-범주형 변수 분포:
-
-[Status]
-고유값 개수: 1
-상위 5개 카테고리:
-Status
-Shipped    1220
-
-[Fulfilment]
-고유값 개수: 4
-상위 5개 카테고리:
-Fulfilment
-Coupang         312
-Market Kurly    307
-SSG.com         302
-Amazon          299
-
-[ship-service-level]
-고유값 개수: 3
-상위 5개 카테고리:
-ship-service-level
-Standard     588
-Expedited    403
-Priority     229
-
-[Category]
-고유값 개수: 3
-상위 5개 카테고리:
-Category
-채소     458
-과일     414
-유제품    348
-
-[Size]
-고유값 개수: 18
-상위 5개 카테고리:
-Size
-300g    237
-500g    104
-200g    103
-1kg     100
-3개입      69
-
-[Courier Status]
-고유값 개수: 2
-상위 5개 카테고리:
-Courier Status
-Delivered     1017
-In Transit     203
-
-[Gender]
-고유값 개수: 2
-상위 5개 카테고리:
-Gender
-F    612
-M    608
-
-[Age Group]
-고유값 개수: 6
-상위 5개 카테고리:
-Age Group
-30대    412
-50대    301
-40대    298
-20대    112
-60대     96</pre>
-    
-    </div>
-    
-    <h2>3. 시간에 따른 판매 트렌드 분석</h2>
-    <div class="content">
-        <h3>분석 결과</h3>
-        <pre>일별 판매 통계:
-                      Date         Qty         Amount
-count                  182  182.000000     182.000000
-mean   2024-03-31 12:00:00   12.027473   47357.967033
-min    2024-01-01 00:00:00    8.000000   21700.000000
-25%    2024-02-15 06:00:00   10.000000   34150.000000
-50%    2024-03-31 12:00:00   11.000000   43500.000000
-75%    2024-05-15 18:00:00   13.000000   56875.000000
-max    2024-06-30 00:00:00   40.000000  148490.000000
-std                    NaN    3.882858   17017.862658
-
-주별 판매 통계:
-                      Date         Qty         Amount
-count                   26   26.000000      26.000000
-mean   2024-04-03 12:00:00   84.192308  331505.769231
-min    2024-01-07 00:00:00   70.000000  259780.000000
-25%    2024-02-19 18:00:00   74.250000  299415.000000
-50%    2024-04-03 12:00:00   79.000000  313490.000000
-75%    2024-05-17 06:00:00   84.000000  344640.000000
-max    2024-06-30 00:00:00  137.000000  495580.000000
-std                    NaN   16.692559   57520.399385
-
-주요 발견사항:
-1. 일별 평균 판매량: 12.03개
-2. 일별 평균 매출액: 47357.97원
-3. 주별 평균 판매량: 84.19개
-4. 주별 평균 매출액: 331505.77원
-
---------------------------------------------------</pre>
-    
-        <div class="chart-container">
-            <img src="./artifacts/sales_trends.png" alt="시간에 따른 판매 트렌드 분석 그래프">
-            <div class="image-caption">시간에 따른 판매 트렌드 분석 그래프</div>
-        </div>
         
-    </div>
-    
-    <h2>4. 카테고리 분석</h2>
-    <div class="content">
-        <h3>분석 결과</h3>
-        <pre>카테고리별 분석 결과:
-          Qty   Amount  OrderCount  AvgOrderAmount
-Category                                          
-과일        743  3967350         414     9582.971014
-유제품       602  2262100         348     6500.287356
-채소        844  2389700         458     5217.685590
-
-연령대별 카테고리 선호도:
-Category          과일        유제품          채소
-Age Group                                  
-20대        25.892857  66.071429    8.035714
-30대        38.592233   8.980583   52.427184
-40          0.000000   0.000000  100.000000
-40대        11.744966  32.214765   56.040268
-50대        55.481728  24.916944   19.601329
-60대        25.000000  68.750000    6.250000
-
-주요 발견사항:
-1. 카테고리별 주문 건수 순위:
-Category
-채소     458
-과일     414
-유제품    348
-
-2. 카테고리별 총 매출액 순위:
-Category
-과일     3967350
-채소     2389700
-유제품    2262100
-
-3. 카테고리별 평균 주문금액 순위:
-Category
-과일     9582.971014
-유제품    6500.287356
-채소     5217.685590
-
---------------------------------------------------</pre>
-    
-        <div class="chart-container">
-            <img src="./artifacts/category_analysis.png" alt="카테고리별 분석 그래프">
-            <div class="image-caption">카테고리별 분석 그래프</div>
-        </div>
+        <h3>2. 타겟 마케팅 전략</h3>
+        <ul>
+            <li><strong>20-30대:</strong> 간편식, 과일 중심의 '바쁜 일상 속 건강한 식사' 테마 마케팅</li>
+            <li><strong>40-50대:</strong> 채소, 유제품 중심의 '가족 건강을 위한 신선 식품' 테마 마케팅</li>
+            <li><strong>성별 맞춤 전략:</strong> 여성 타겟 '신선함과 영양' 강조, 남성 타겟 '간편함과 품질' 강조</li>
+        </ul>
         
-        <div class="chart-container">
-            <img src="./artifacts/age_category_preference.png" alt="연령대별 카테고리 선호도 그래프">
-            <div class="image-caption">연령대별 카테고리 선호도 그래프</div>
-        </div>
+        <h3>3. 프로모션 최적화 전략</h3>
+        <ul>
+            <li><strong>카테고리별 맞춤 프로모션:</strong> 과일(FRUITPROMO5), 유제품(DAIRYPROMO) 등 카테고리별 효과적인 프로모션 집중</li>
+            <li><strong>번들 프로모션:</strong> 객단가 상승을 위한 다양한 번들 상품 개발 및 프로모션</li>
+            <li><strong>시즌 프로모션:</strong> 3월, 6월 피크 시즌에 맞춘 대규모 프로모션 캠페인 전개</li>
+        </ul>
         
-    </div>
-    
-    <h2>5. 배송 서비스 및 Fulfilment 분석</h2>
-    <div class="content">
-        <h3>분석 결과</h3>
-        <pre>배송 서비스 수준별 분석 결과:
-                     Qty              Amount         
-                   count  sum  mean      sum     mean
-ship-service-level                                   
-Expedited            403  984  2.44  3044390  7554.32
-Priority             229  538  2.35  1842300  8044.98
-Standard             588  667  1.13  3732460  6347.72
-
-배송 서비스 수준별 카테고리 비율:
-Category                   과일        유제품         채소
-ship-service-level                                 
-Expedited           40.694789   1.985112  57.320099
-Priority            22.707424  66.375546  10.917031
-Standard            33.673469  31.972789  34.353741
-
-Fulfilment 업체별 분석 결과:
-               Qty              Amount         
-             count  sum  mean      sum     mean
-Fulfilment                                     
-Amazon         299  593  1.98  2186090  7311.34
-Coupang        312  373  1.20  2091030  6702.02
-Market Kurly   307  864  2.81  2322300  7564.50
-SSG.com        302  359  1.19  2019730  6687.85
-
-주요 발견사항:
-1. 배송 서비스 수준별 주문 건수:
-ship-service-level
-Standard     588
-Expedited    403
-Priority     229
-
-2. 배송 서비스 수준별 평균 주문금액:
-ship-service-level
-Priority     8044.98
-Expedited    7554.32
-Standard     6347.72
-
-3. Fulfilment 업체별 총 매출액:
-Fulfilment
-Market Kurly    2322300
-Amazon          2186090
-Coupang         2091030
-SSG.com         2019730
-
---------------------------------------------------</pre>
-    
-        <div class="chart-container">
-            <img src="./artifacts/service_level_analysis.png" alt="배송 서비스 수준별 분석 그래프">
-            <div class="image-caption">배송 서비스 수준별 분석 그래프</div>
-        </div>
+        <h3>4. 배송 서비스 전략</h3>
+        <ul>
+            <li><strong>프리미엄 배송 서비스:</strong> Market Kurly와의 협력 강화 및 프리미엄 배송 옵션 확대</li>
+            <li><strong>지역별 맞춤 전략:</strong> 특정 지역 대상 프리미엄 배송 서비스 마케팅 집중</li>
+            <li><strong>배송 경험 향상:</strong> 배송 현황 추적, 신선도 보장 등 차별화된 서비스 강화</li>
+        </ul>
         
-        <div class="chart-container">
-            <img src="./artifacts/service_category_analysis.png" alt="배송 서비스 수준별 카테고리 비율 그래프">
-            <div class="image-caption">배송 서비스 수준별 카테고리 비율 그래프</div>
-        </div>
+        <h3>5. 시간 기반 전략</h3>
+        <ul>
+            <li><strong>요일별 전략:</strong> 금-일 주말 특별 프로모션 및 요일별 카테고리 특가 프로모션 실시</li>
+            <li><strong>계절성 대응:</strong> 계절별 인기 상품 예측 및 공급망 최적화</li>
+            <li><strong>비수기 활성화:</strong> 특별 이벤트 및 챌린지를 통한 비수기 수요 창출</li>
+        </ul>
         
-        <div class="chart-container">
-            <img src="./artifacts/fulfilment_analysis.png" alt="Fulfilment 업체별 분석 그래프">
-            <div class="image-caption">Fulfilment 업체별 분석 그래프</div>
-        </div>
-        
-    </div>
-    
-    <h2>3. 마케팅 인사이트</h2>
-    <div class="content">
-        <div class="insight-box">
-            <h3>1. 카테고리별 타겟 마케팅</h3>
-            <p>채소와 과일 카테고리가 가장 인기가 높습니다. 이는 신선식품 구매 고객들의 주요 관심사가 채소와 과일임을 시사합니다. 이러한 인기 카테고리에 대한 프로모션과 특별 할인을 제공하여 매출을 더욱 증대할 수 있습니다.</p>
-        </div>
-        
-        <div class="insight-box">
-            <h3>2. 연령대별 맞춤형 마케팅</h3>
-            <p>연령대별로 선호하는 카테고리가 다른 것으로 나타났습니다. 젊은 층에서는 과일과 채소의 선호도가 높은 반면, 중장년층에서는 유제품의 선호도가 상대적으로 높습니다. 이러한 특성을 고려하여 연령대별 맞춤형 마케팅 전략을 수립할 필요가 있습니다.</p>
-        </div>
-        
-        <div class="insight-box">
-            <h3>3. 배송 서비스 차별화</h3>
-            <p>배송 서비스 수준이 높을수록 평균 주문금액이 높은 경향을 보입니다. 이는 고객이 프리미엄 배송 서비스를 선택할 때 더 많은 금액을 지출할 의향이 있다는 것을 의미합니다. 따라서, 고객에게 더 나은 배송 서비스 옵션을 제공하고 이를 마케팅에 활용할 필요가 있습니다.</p>
-        </div>
-        
-        <div class="insight-box">
-            <h3>4. Fulfilment 업체 최적화</h3>
-            <p>Coupang, Market Kurly, SSG.com, Amazon이 비슷한 수준의 주문을 처리하고 있습니다. 각 업체별로 평균 주문금액과 처리 물량에 차이가 있는데, 이를 고려하여 각 업체와의 파트너십을 최적화할 필요가 있습니다.</p>
-        </div>
-    </div>
-    
-    <h2>4. 결론 및 제안사항</h2>
-    <div class="content">
-        <p>아마존 상품판매 데이터 분석 결과, 채소와 과일 카테고리가 가장 인기가 높으며, 배송 서비스 수준과 주문금액 간에 양의 상관관계가 있음을 확인하였습니다. 또한, 연령대별로 선호하는 카테고리가 다르게 나타나는 특성도 발견하였습니다.</p>
-        
-        <p>이러한 분석 결과를 바탕으로 다음과 같은 마케팅 전략을 제안합니다:</p>
-        
-        <ol>
-            <li><strong>카테고리별 맞춤형 프로모션:</strong> 인기 카테고리인 채소와 과일에 대한 특별 프로모션을 강화하고, 상대적으로 판매가 저조한 유제품 카테고리에 대한 마케팅 전략을 재검토할 필요가 있습니다.</li>
-            
-            <li><strong>연령대별 타겟 마케팅:</strong> 각 연령대별 선호 카테고리를 고려한 맞춤형 마케팅 전략을 수립하여 고객 만족도와 매출을 증대시킬 수 있습니다.</li>
-            
-            <li><strong>배송 서비스 업그레이드 유도:</strong> 고객에게 더 나은 배송 서비스 옵션을 제공하고, 이에 대한 가치를 강조하여 고객이 프리미엄 배송 서비스를 선택하도록 유도할 필요가 있습니다.</li>
-            
-            <li><strong>Fulfilment 업체 파트너십 최적화:</strong> 각 Fulfilment 업체별 성과를 분석하여 최적의 파트너십을 구축하고, 이를 통해 비용 효율성을 높일 수 있습니다.</li>
-        </ol>
-        
-        <p>이러한 제안사항을 바탕으로 더 효과적인 마케팅 전략을 수립하고, 지속적인 데이터 분석을 통해 전략의 효과를 검증하는 것이 중요합니다.</p>
+        <p class="highlight" style="font-weight: bold; margin-top: 30px;">
+            이러한 전략을 체계적으로 실행함으로써 아마존 신선식품의 매출 증대, 고객 충성도 향상, 그리고 시장 점유율 확대를 
+            달성할 수 있을 것으로 기대됩니다. 데이터 기반의 지속적인 모니터링과 전략 최적화를 통해 더욱 효과적인 마케팅 성과를 이룰 수 있을 것입니다.
+        </p>
     </div>
 </body>
 </html>

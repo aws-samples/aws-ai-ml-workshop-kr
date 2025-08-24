@@ -133,6 +133,12 @@ async def run_graph_streaming_workflow(user_input: str, debug: bool = False):
     streaming_graph = build_streaming_graph()
     
     # Execute graph with streaming
+    # 여기서 invoke_async_streaming는 FunctionNode의 invoke_async을 대체하는 것이다.
+    # 원래 strands로 graph를 만들고 invoke (혹은 invoke_async)를 하게 되면 FunctionNode의 invoke_async가 실행되는데, 
+    # 여기에서는 yeild기반 스트리밍을 위해 만들어진 그래프를 StreamingGraphWrapper로 감싸기 때문에 invoke_async_streaming가 실행되는 것이다. 
+    # StreamingFunctionNode 과 합쳐보려고 했으나, yield로 streaming 할 때는 return 값을 보낼 수 없기에 합치지 않았음
+    # 추가로 FunctionNode에는 MultiAgentResult return하는 부분이 있지만 StreamingFunctionNode에는 retrun이 없음 (yield 이기 때문)
+    # 즉, streaming 시 각 노드간에 task 형태로 리턴되는 것은 없고, 전달되는 값은 모두 shared var로 하고 있음
     async for event in streaming_graph.invoke_async_streaming(
         task={
             "request": user_input,

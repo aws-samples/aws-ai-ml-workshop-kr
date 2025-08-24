@@ -39,9 +39,11 @@ streamlit run app.py
 ### Development Dependencies
 The project uses UV for dependency management. Main dependencies are defined in `setup/pyproject.toml`:
 - **Core**: `strands-agents>=1.4.0`, `bedrock-agentcore==0.1.2`, `boto3>=1.40.10`
+- **Agent Framework**: `strands-agents-tools>=0.2.3`, `bedrock-agentcore-starter-toolkit>=0.1.6`
 - **UI**: `streamlit==1.48.1`
 - **Data Processing**: `matplotlib>=3.10.5`, `seaborn>=0.13.2`, `lovelyplots>=1.0.2`
-- **Document Generation**: `pandoc`, `texlive-xetex`, `poppler-utils` (system packages, auto-installed)
+- **Document Generation**: `weasyprint>=66.0` for PDF generation (system packages like `pandoc`, `texlive-xetex` auto-installed)
+- **LLM/AI**: `langchain>=0.3.27`, `mcp>=1.13.0`
 - **Testing**: Basic test files available (`test_*.py` files in root directory)
 
 ### Testing
@@ -152,3 +154,6 @@ The framework automatically uses AWS credentials from the environment or AWS CLI
 - `main.ipynb` - Jupyter notebook interface
 - `app/app.py` - Streamlit web interface
 - Configuration files use both UV (`setup/pyproject.toml`) and traditional Python patterns
+- `final_report.md` - Generated markdown report from workflow execution
+- `report.html` - Generated HTML report output
+- `artifacts/` - Directory where generated reports and analysis results are saved (auto-cleaned)
