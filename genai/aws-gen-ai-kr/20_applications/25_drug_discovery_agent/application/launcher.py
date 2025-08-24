@@ -3,6 +3,7 @@ import sys
 import time
 import signal
 import os
+import shlex
 
 # 실행할 MCP 서버 목록
 mcp_servers = [
@@ -29,19 +30,19 @@ def main():
     
     for server in mcp_servers:
         print(f"{server} 시작 중...")
+
+        normalized_path = os.path.realpath(server)
         
         # 서버 시작
         process = subprocess.Popen(
-            [sys.executable, server],
+            [sys.executable,shlex.quote(normalized_path)],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
-            bufsize=1
+            bufsize=1,
+            shell=False,
         )
         processes.append(process)
-        
-        # 서버가 시작될 때까지 약간의 지연
-        time.sleep(1)
         
         # 초기 로그 출력 확인
         if process.poll() is not None:
@@ -85,7 +86,6 @@ def main():
                         break
                     print(f"[{mcp_servers[i]} ERROR] {line.strip()}")
                     
-            time.sleep(0.1)
     except KeyboardInterrupt:
         signal_handler(signal.SIGINT, None)
 
