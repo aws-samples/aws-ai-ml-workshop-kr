@@ -209,6 +209,7 @@ async def strands_agent_bedrock(payload):
         #print(f"Event: {event}")
         #yield f"ss:{event}"
         if "data" in event:
+            print (event["data"])
             yield event["data"]
 
 if __name__ == "__main__":

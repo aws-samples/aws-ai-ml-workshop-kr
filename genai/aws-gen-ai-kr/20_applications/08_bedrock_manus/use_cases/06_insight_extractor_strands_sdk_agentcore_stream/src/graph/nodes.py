@@ -239,8 +239,10 @@ async def planner_node(task=None, **kwargs):
     agent = strands_utils.get_agent(
         agent_name="planner",
         system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
-        agent_type="reasoning",  # planner uses reasoning LLM
-        prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        agent_type="basic",  # planner uses reasoning LLM reasoning
+        #prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        prompt_cache_info=(False, None), #(False, None), (True, "default")
+        #prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
         streaming=True,
     )
     

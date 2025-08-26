@@ -1,4 +1,5 @@
 
+import sys, os
 import json
 import logging
 import argparse
@@ -7,9 +8,8 @@ from graph import build_graph
 from src.utils.common_utils import get_message_from_string
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
-from bedrock_agentcore.runtime import BedrockAgentCoreApp
 
-app = BedrockAgentCoreApp()
+from bedrock_agentcore.runtime import BedrockAgentCoreApp
 
 # Configure logging
 logging.basicConfig(
@@ -90,7 +90,6 @@ def run_agent_workflow(user_input: str, debug: bool = False):
     logger.info(f"{Colors.GREEN}===== Workflow completed successfully ====={Colors.END}")
     return result
 
-@app.entrypoint
 def strands_langgraph_bedrock(payload):
     """
     Invoke the agent with a payload
@@ -105,5 +104,9 @@ def strands_langgraph_bedrock(payload):
     return result
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("payload", type=str)
+    args = parser.parse_args()
+    response = strands_langgraph_bedrock(json.loads(args.payload))
+    print(response)
 
-    app.run()

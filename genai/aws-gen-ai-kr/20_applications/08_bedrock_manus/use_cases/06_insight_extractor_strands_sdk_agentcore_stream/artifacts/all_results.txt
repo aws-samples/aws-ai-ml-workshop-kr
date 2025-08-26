@@ -1,16 +1,15 @@
 
 ==================================================
-## Analysis Stage: Initial Data Analysis
-## Execution Time: 2025-08-24 04:54:24
+## Analysis Stage: 1. 데이터 로드 및 기본 속성 확인
+## Execution Time: 2025-08-26 13:57:16
 --------------------------------------------------
 Result Description: 
 
-데이터셋 기본 정보:
-- 행 수: 1220
-- 열 수: 18
-- 컬럼: index, Date, Status, Fulfilment, ship-service-level, Style, SKU, Category, Size, Courier Status, Qty, Amount, ship-city, ship-state, ship-postal-code, promotion-ids, Gender, Age Group
+데이터셋 크기: 1220행 x 18열
+컬럼 정보:
+None
 
-기술 통계량 요약:
+기술 통계량:
              index          Qty        Amount  ship-postal-code
 count  1220.000000  1220.000000   1220.000000       1220.000000
 mean    419.434426     1.794262   7064.877049      13582.980328
@@ -21,109 +20,4 @@ min       0.000000     1.000000   2900.000000       1000.000000
 75%     655.250000     3.000000   8500.000000      10300.000000
 max     935.000000     3.000000  23700.000000      99821.000000
 
-결측치 정보:
-index                   0
-Date                    0
-Status                  0
-Fulfilment              0
-ship-service-level      0
-Style                   0
-SKU                     0
-Category                0
-Size                    0
-Courier Status          0
-Qty                     0
-Amount                  0
-ship-city               0
-ship-state              0
-ship-postal-code        0
-promotion-ids         103
-Gender                  0
-Age Group               0
-
-==================================================
-
-==================================================
-## Analysis Stage: Comprehensive Sales Analysis
-## Execution Time: 2025-08-24 04:55:22
---------------------------------------------------
-Result Description: 
-
-1. 일별 판매 동향:
-- 평균 일일 판매량: 12.03개
-- 최대 일일 판매량: 40개
-- 평균 일일 매출액: 47,358원
-- 최대 일일 매출액: 148,490원
-
-2. 카테고리별 판매 실적:
-Category  Qty  Amount
-      과일  743 3967350
-     유제품  602 2262100
-      채소  844 2389700
-
-3. 연령대별 판매 실적:
-Age Group  Qty  Amount
-      20대  150  761340
-      30대  739 2989690
-       40    3    3500
-      40대  669 1803290
-      50대  519 2517900
-      60대  109  543430
-
-4. 프로모션 효과 분석:
-- 프로모션 미사용 평균 구매금액: 3,764원
-- 프로모션 사용 평균 구매금액: 7,369원
-- 프로모션 사용 건수: 1117건
-- 프로모션 미사용 건수: 103건
-
---------------------------------------------------
-Generated Files:
-- ./artifacts/daily_sales_trends.png : 일별 판매량 및 매출액 추이 그래프
-- ./artifacts/category_sales.png : 카테고리별 총 매출액 그래프
-- ./artifacts/age_group_sales.png : 연령대별 총 매출액 그래프
-- ./artifacts/promotion_effect.png : 프로모션 효과 분석 그래프
-==================================================
-
-==================================================
-## Analysis Stage: Customer Segment and Product Performance Analysis
-## Execution Time: 2025-08-24 04:56:36
---------------------------------------------------
-Result Description: 
-
-1. 고객 세그먼트별 매출 분포:
-Gender             F          M
-Age Group                      
-20대         594140.0   167200.0
-30대        1403390.0  1586300.0
-40               NaN     3500.0
-40대         652490.0  1150800.0
-50대         840900.0  1677000.0
-60대         472430.0    71000.0
-
-2. 상위 5개 매출 기여 상품:
-    Style  Amount  revenue_share
-9      딸기  608000       7.054060
-25     수박  530200       6.151419
-18    복숭아  408600       4.740607
-20   블루베리  333200       3.865810
-3   골드 키위  302600       3.510787
-
-3. 배송 서비스 레벨별 실적:
-                    Qty   Amount                   
-                    sum      sum         mean count
-ship-service-level                                 
-Expedited           984  3044390  7554.317618   403
-Priority            538  1842300  8044.978166   229
-Standard            667  3732460  6347.721088   588
-
-주요 발견사항:
-1. 최고 매출 기여 상품: 딸기 (매출 기여도: 7.1%)
-2. 가장 많이 사용된 배송 서비스: Standard
-3. 평균 구매금액이 가장 높은 배송 서비스: Priority
-
---------------------------------------------------
-Generated Files:
-- ./artifacts/gender_age_sales_heatmap.png : 성별-연령대별 매출 히트맵
-- ./artifacts/top_products_revenue_share.png : 상위 10개 상품의 매출 기여도
-- ./artifacts/delivery_service_sales.png : 배송 서비스 레벨별 매출
 ==================================================
