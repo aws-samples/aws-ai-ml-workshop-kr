@@ -1,11 +1,10 @@
 
+
 """
-Entry point script for the Strands Agent Demo.
+Entry point script for the LangGraph Demo.
 """
 import os
-import json
 import shutil
-import asyncio
 import argparse
 from src.workflow import run_graph_streaming_workflow
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
@@ -33,19 +32,32 @@ def remove_artifact_folder(folder_path="./artifacts/"):
 @app.entrypoint
 async def graph_streaming_execution(payload):
 
+    print ("111111")
     user_query = payload.get("prompt")
+    print ("222222")
 
     """Execute full graph streaming workflow with real-time events"""
     remove_artifact_folder()
 
-    # Remove print statements to avoid duplicate output
+    print("\n=== Starting Graph Streaming Execution ===")
+    print("Real-time streaming events from full graph:")
 
-    async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
-        # Yield only the main workflow event
-        yield event
+    try:
+        async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
+            #if "data" in event:
+            print (event)
+            yield event
 
-    # Yield completion event instead of printing
-    yield {"type": "execution_complete"}
+    except Exception as e:
+        # Handle errors gracefully in streaming context
+        error_response = {"error": str(e), "type": "stream_error"}
+        print(f"Streaming error: {error_response}")
+        yield error_response
+
+    # async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
 
 if __name__ == "__main__":
     app.run()
+
+
+

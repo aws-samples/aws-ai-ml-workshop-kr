@@ -95,7 +95,37 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
     
     # Prepare message with context if available
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
-    coder_agent, response = asyncio.run(strands_utils.process_streaming_response(coder_agent, message))
+    
+    # Import event queue for streaming
+    from src.utils.event_queue import put_event
+    
+    # Process streaming response and send events to global queue
+    async def process_coder_stream():
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(coder_agent, message, agent_name="coder"):
+            # Add source metadata to distinguish from supervisor events
+            event["source"] = "coder_tool"
+            event["tool_context"] = "coder_agent_tool"
+            
+            # Put event in global queue for main.py to process
+            put_event(event)
+            
+            # Also print directly for immediate feedback
+            #if event.get("event_type") == "text_chunk":
+            #    print(f"\033[96m{event.get('data', '')}\033[0m", end="", flush=True)
+            
+            # Also keep for local processing
+            streaming_events.append(event)
+            
+        # Reconstruct response from streaming events for return value
+        response = {"text": ""}
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk":
+                response["text"] += event.get("data", "")
+        
+        return coder_agent, response
+    
+    coder_agent, response = asyncio.run(process_coder_stream())
     
     # Extract text from response
     if isinstance(response, dict) and 'text' in response:

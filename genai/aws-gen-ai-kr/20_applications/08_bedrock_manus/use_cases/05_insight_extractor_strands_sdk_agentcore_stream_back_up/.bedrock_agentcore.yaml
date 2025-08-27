@@ -21,7 +21,7 @@ agents:
     bedrock_agentcore:
       agent_id: runtime-GxV7G995xb
       agent_arn: arn:aws:bedrock-agentcore:us-west-2:615299776985:runtime/runtime-GxV7G995xb
-      agent_session_id: null
+      agent_session_id: 64d1067d-735e-428d-89cb-d44e5468733c
     codebuild:
       project_name: bedrock-agentcore-runtime-builder
       execution_role: arn:aws:iam::615299776985:role/AmazonBedrockAgentCoreSDKCodeBuild-us-west-2-d92c6a81b2

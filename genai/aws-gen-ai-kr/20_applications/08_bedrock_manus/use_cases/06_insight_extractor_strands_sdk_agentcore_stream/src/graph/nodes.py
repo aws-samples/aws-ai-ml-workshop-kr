@@ -6,6 +6,7 @@ import asyncio
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
+from src.utils.event_queue import put_event
 
 from src.tools import coder_agent_tool, reporter_agent_tool, tracker_agent_tool
 
@@ -150,6 +151,8 @@ def should_handoff_to_planner(state):
 
 async def coordinator_node(task=None, **kwargs):
     """Coordinator node that communicate with customers."""
+    global _global_node_states
+    
     logger.info(f"{Colors.GREEN}===== Coordinator talking...... ====={Colors.END}")
 
     # Extract user request from task (now passed as dictionary)
@@ -171,15 +174,20 @@ async def coordinator_node(task=None, **kwargs):
     # Collect streaming events and build final response
     streaming_events = []
     async for event in strands_utils.process_streaming_response_yield(agent, request_prompt, agent_name="coordinator"):
+        # Add source metadata
+        event["source"], event["tool_context"] = "coordinator_node", "coordinator"
+        
+        # Put event in global queue for unified processing
+        put_event(event)
+        
+        # Also keep for local processing
         streaming_events.append(event)
-        yield(event)
+        yield(event) ## put_event와 동일한 기능, 글로벌 queue (put_event(event))를 이용해 처리하기 때문에 이 정보를 직접 사용하지는 않음. 
 
     # Reconstruct the full response from streaming events
     full_text = ""
     for event in streaming_events:
-        if event.get("event_type") == "text_chunk":
-            full_text += event.get("data", "")
-    
+        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
     response = {"text": full_text}
     
     ## your logic here ##
@@ -187,8 +195,6 @@ async def coordinator_node(task=None, **kwargs):
     logger.debug(f"\n{Colors.RED}Coordinator response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
 
     # Store data directly in shared global storage
-    global _global_node_states
-    
     # Initialize shared state if not exists
     if 'shared' not in _global_node_states: _global_node_states['shared'] = {}
     shared_state = _global_node_states['shared']
@@ -211,6 +217,8 @@ async def coordinator_node(task=None, **kwargs):
 
 async def planner_node(task=None, **kwargs):
     """Planner node that generates detailed plans for task execution."""
+    global _global_node_states
+    
     logger.info(f"{Colors.GREEN}===== Planner generating plan ====={Colors.END}")
     
     # Log what we received  
@@ -219,15 +227,12 @@ async def planner_node(task=None, **kwargs):
     logger.info(f"\n{Colors.YELLOW}Planner received kwargs:\n{pprint.pformat(kwargs, indent=2, width=100)}{Colors.END}")
 
     # Extract shared state from global storage
-    global _global_node_states
     shared_state = _global_node_states.get('shared', None)
     
     # Get request from kwargs state or shared state
     state = kwargs.get("state", {})
-    if state:
-        request = state.get("request", "")
-    else:
-        request = shared_state.get("request", "") if shared_state else (task or "")
+    if state: request = state.get("request", "")
+    else: request = shared_state.get("request", "") if shared_state else (task or "")
     
     if shared_state:
         logger.info(f"{Colors.BLUE}===== Successfully retrieved shared state from global storage ====={Colors.END}")
@@ -239,29 +244,33 @@ async def planner_node(task=None, **kwargs):
     agent = strands_utils.get_agent(
         agent_name="planner",
         system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
-        agent_type="basic",  # planner uses reasoning LLM reasoning
-        #prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
-        prompt_cache_info=(False, None), #(False, None), (True, "default")
-        #prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        agent_type="reasoning",  # planner uses reasoning LLM reasoning
+        prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        #prompt_cache_info=(False, None), #(False, None), (True, "default")
         streaming=True,
     )
     
     full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
     
+    
     # Collect streaming events and build final response
     streaming_events = []
     async for event in strands_utils.process_streaming_response_yield(agent, message, agent_name="planner"):
-        #print(f"planner_node: {event}")
+        # Add source metadata
+        event["source"], event["tool_context"] = "planner_node", "planner"
+        
+        # Put event in global queue for unified processing
+        put_event(event)
+        
+        # Also keep for local processing
         streaming_events.append(event)
         yield(event)
 
     # Reconstruct the full response from streaming events
     full_text = ""
     for event in streaming_events:
-        if event.get("event_type") == "text_chunk":
-            full_text += event.get("data", "")
-    
+        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
     response = {"text": full_text}
     
     ## Planner logic: create detailed plan with agent assignments ##
@@ -281,6 +290,8 @@ async def planner_node(task=None, **kwargs):
 
 async def supervisor_node(task=None, **kwargs):
     """Supervisor node that decides which agent should act next."""
+    global _global_node_states
+    
     logger.info(f"{Colors.GREEN}===== Supervisor evaluating next action ====={Colors.END}")
     
     # Log what we received  
@@ -288,7 +299,6 @@ async def supervisor_node(task=None, **kwargs):
     logger.info(f"\n{Colors.YELLOW}Supervisor received kwargs:\n{pprint.pformat(kwargs, indent=2, width=100)}{Colors.END}")
     
     # Extract shared state from global storage
-    global _global_node_states
     shared_state = _global_node_states.get('shared', None)
     
     if shared_state:
@@ -303,28 +313,32 @@ async def supervisor_node(task=None, **kwargs):
         system_prompts=apply_prompt_template(prompt_name="supervisor", prompt_context={}),
         agent_type="reasoning",  #"reasoning", "basic"
         prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        #agent_type="basic",  # planner uses reasoning LLM reasoning
+        #prompt_cache_info=(False, None), #(False, None), (True, "default")
         tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool],  # Add coder, reporter and tracker agents as tools
         streaming=True,
     )
 
     clues, full_plan, messages = shared_state.get("clues", ""), shared_state.get("full_plan", ""), shared_state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
-    
+        
     # Collect streaming events and build final response
     streaming_events = []
     async for event in strands_utils.process_streaming_response_yield(agent, message, agent_name="supervisor"):
-        #print(f"supervisor_node: {event}")
+        # Add source metadata
+        event["source"], event["tool_context"] = "supervisor_node", "supervisor"
+        
+        # Put event in global queue for unified processing
+        put_event(event)
+        
+        # Also keep for local processing
         streaming_events.append(event)
         yield(event)
 
     # Reconstruct the full response from streaming events
     full_text = ""
     for event in streaming_events:
-        if event.get("event_type") == "text_chunk":
-            full_text += event.get("data", "")
-        elif event.get("event_type") == "reasoning":
-            full_text += event.get("reasoning_text", "")
-    
+        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
     response = {"text": full_text}
 
     #full_response = response["text"]

@@ -2,7 +2,7 @@
 Entry point script for the LangGraph Demo.
 """
 import os
-import json
+import sys
 import shutil
 import asyncio
 from src.workflow import run_graph_streaming_workflow
@@ -29,56 +29,42 @@ async def graph_streaming_execution(user_query):
     """Execute full graph streaming workflow with real-time events"""
     remove_artifact_folder()
     
-    # Import event queue for processing tool events
-    from src.utils.event_queue import get_event, has_events
-    from src.utils.strands_sdk_utils import ColoredStreamingCallback
-    
-    # Helper function to process queue events
-    def process_queue_events():
-        """Process all available events from the global queue"""
-        # Initialize colored callbacks
-        callback_reasoning = ColoredStreamingCallback('cyan')
-        callback_default = ColoredStreamingCallback('purple')
-        callback_tool = ColoredStreamingCallback('yellow')
-        callback_red = ColoredStreamingCallback('red')
-        
-        while has_events():
-            queue_event = get_event()
-            if queue_event:
-                source = queue_event.get("source", "unknown")
-                
-                if queue_event.get("event_type") == "text_chunk":
-                    if source == "coder_tool": callback_red.on_llm_new_token(queue_event.get('data', ''))
-                    else: callback_default.on_llm_new_token(queue_event.get('data', ''))
-                        
-                # Skip tool_use events to avoid repetitive output
-                # elif queue_event.get("event_type") == "tool_use":
-                    
-                elif queue_event.get("event_type") == "reasoning":
-                    if source == "coder_tool":
-                        callback_red.on_llm_new_token(queue_event.get('reasoning_text', ''))
-                    else:
-                        callback_reasoning.on_llm_new_token(queue_event.get('reasoning_text', ''))
-    
     print("\n=== Starting Graph Streaming Execution ===")
     print("Real-time streaming events from full graph:")
     
     async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
-        # Process any queued events first
-        process_queue_events()
+        if event.get("event_type") == "text_chunk":
+            # Print streaming text chunks in real-time
+            print(event.get("data", ""), end="", flush=True)
+            #print (event)
+        elif event.get("event_type") == "reasoning":
+            # Print reasoning tokens in real-time (can be used separately later)
+            print(event.get("reasoning_text", ""), end="", flush=True)
+            #print (event)
         
-        # All streaming events (text_chunk, reasoning, tool_use) are now handled by the unified queue system
-        # No need for individual event processing here since everything goes through process_queue_events()
-        if event.get("type") == "final_result":
+        ## 툴 프린팅은 수정해야 함!! 스트리밍 될 수 있는 지 확인하기 event를 출력하면 어떻게 넘어 오는지 확인 가능함. 
+        elif event.get("event_type") == "tool_use": 
+            # Print tool usage events
+            tool_name = event.get("tool_name", "unknown")
+            tool_input = event.get("tool_input", "")
+            #print (event)
+            
+            # Try to parse tool_input as JSON and extract task
+            try:
+                import json
+                tool_data = json.loads(tool_input)
+                task = tool_data.get("task", tool_input)
+                #print(f"\n[TOOL] Using {tool_name}", flush=True)
+                print(f"[TOOL] Task: {task}{'...' if len(task) > 100 else ''}", flush=True)
+            except:
+                pass
+                #print(f"\n[TOOL] Using {tool_name}...", flush=True)
+        elif event.get("type") == "final_result":
             print(f"\n\n[FINAL] Agent: {event.get('agent')}")
             print(f"[FINAL] Response: {event.get('response')}")
-        elif event.get("type") == "workflow_complete":
-            # Workflow completed - process any remaining queue events
-            process_queue_events()
-        # All streaming events are now processed through the queue - no else block needed
-    
-    # Process any remaining queued events after main loop
-    process_queue_events()
+        else:
+            # Print other events
+            print(f"\n[EVENT] {event}")
     
     # Print the conversation history from global state
     print("\n\n=== Conversation History ===")
@@ -100,7 +86,11 @@ if __name__ == "__main__":
 
     remove_artifact_folder()
 
-    # Use predefined query for testing
+    if len(sys.argv) > 1: 
+        user_query = " ".join(sys.argv[1:])
+    else: 
+        user_query = input("Enter your query: ")
+
     user_query = '''
         이것은 아마존 상품판매 데이터를 분석하고 싶습니다.
         분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.
