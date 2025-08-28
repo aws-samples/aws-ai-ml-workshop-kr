@@ -26,59 +26,69 @@ def remove_artifact_folder(folder_path="./artifacts/"):
         print(f"'{folder_path}' 폴더가 존재하지 않습니다.")
 
 async def graph_streaming_execution(user_query):
-    """Execute full graph streaming workflow with real-time events"""
+    """Execute full graph streaming workflow - queue-only event processing"""
     remove_artifact_folder()
     
-    # Import event queue for processing tool events
-    from src.utils.event_queue import get_event, has_events
-    from src.utils.strands_sdk_utils import ColoredStreamingCallback
+    # Import event queue for unified event processing
+    from src.utils.event_queue import get_event, has_events, clear_queue
+    import asyncio
     
-    # Helper function to process queue events
-    def process_queue_events():
-        """Process all available events from the global queue"""
-        # Initialize colored callbacks
-        callback_reasoning = ColoredStreamingCallback('cyan')
-        callback_default = ColoredStreamingCallback('purple')
-        callback_tool = ColoredStreamingCallback('yellow')
-        callback_red = ColoredStreamingCallback('red')
+    # Clear any existing events in queue
+    clear_queue()
+    
+    
+    print("\n=== Starting Queue-Only Event Stream ===")
+    print("All events (nodes + tools) processed through global queue")
+    
+    # Start workflow in background - it will put all events in global queue
+    async def run_workflow_background():
+        """Run workflow and consume its events (since nodes already use put_event)"""
+        try:
+            async for _ in run_graph_streaming_workflow(user_input=user_query, debug=False):
+                # We ignore these events since nodes already put them in global queue
+                pass
+        except Exception as e: print(f"Workflow error: {e}")
+    
+    workflow_task = asyncio.create_task(run_workflow_background())
+    
+    try:
+        workflow_complete = False
         
+        # Main event loop - only monitor global queue
+        while not workflow_complete:
+            # Check for events in global queue
+            if has_events():
+                event = get_event()
+                if event:
+                    #print(f"DEBUG: Queue event: {event}")
+                    yield event
+            
+            # Check if workflow is complete
+            if workflow_task.done(): workflow_complete = True
+            
+            # Small delay to prevent busy waiting
+            await asyncio.sleep(0.01)
+            
+    finally:
+        # Wait for workflow to complete
+        
+        if not workflow_task.done():
+            try:
+                await asyncio.wait_for(workflow_task, timeout=1.0)
+            except asyncio.TimeoutError:
+                workflow_task.cancel()
+                try: await workflow_task
+                except asyncio.CancelledError: pass
+        
+        # Process any final remaining events in queue
         while has_events():
-            queue_event = get_event()
-            if queue_event:
-                source = queue_event.get("source", "unknown")
-                
-                if queue_event.get("event_type") == "text_chunk":
-                    if source == "coder_tool": callback_red.on_llm_new_token(queue_event.get('data', ''))
-                    else: callback_default.on_llm_new_token(queue_event.get('data', ''))
-                        
-                # Skip tool_use events to avoid repetitive output
-                # elif queue_event.get("event_type") == "tool_use":
-                    
-                elif queue_event.get("event_type") == "reasoning":
-                    if source == "coder_tool":
-                        callback_red.on_llm_new_token(queue_event.get('reasoning_text', ''))
-                    else:
-                        callback_reasoning.on_llm_new_token(queue_event.get('reasoning_text', ''))
+            event = get_event()
+            if event:
+                print(f"DEBUG: Final queue event: {event}")
+                yield event
     
-    print("\n=== Starting Graph Streaming Execution ===")
-    print("Real-time streaming events from full graph:")
-    
-    async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
-        # Process any queued events first
-        process_queue_events()
-        
-        # All streaming events (text_chunk, reasoning, tool_use) are now handled by the unified queue system
-        # No need for individual event processing here since everything goes through process_queue_events()
-        if event.get("type") == "final_result":
-            print(f"\n\n[FINAL] Agent: {event.get('agent')}")
-            print(f"[FINAL] Response: {event.get('response')}")
-        elif event.get("type") == "workflow_complete":
-            # Workflow completed - process any remaining queue events
-            process_queue_events()
-        # All streaming events are now processed through the queue - no else block needed
-    
-    # Process any remaining queued events after main loop
-    process_queue_events()
+    # Final workflow complete event
+    yield {"type": "workflow_complete", "message": "All events processed through global queue"}
     
     # Print the conversation history from global state
     print("\n\n=== Conversation History ===")
@@ -94,7 +104,7 @@ async def graph_streaming_execution(user_query):
     else:
         print("No conversation history found in global state")
     
-    print("\n=== Graph Streaming Execution Complete ===")
+    print("\n=== Queue-Only Event Stream Complete ===")
 
 if __name__ == "__main__":
 
@@ -112,4 +122,32 @@ if __name__ == "__main__":
     '''
     
     # Use full graph streaming execution for real-time streaming with graph structure
-    result = asyncio.run(graph_streaming_execution(user_query))
+    async def run_streaming():
+        # Initialize colored callbacks for terminal display
+        from src.utils.strands_sdk_utils import ColoredStreamingCallback
+        callback_reasoning = ColoredStreamingCallback('cyan')
+        callback_default = ColoredStreamingCallback('purple')
+        callback_red = ColoredStreamingCallback('red')
+        
+        def process_event_for_display(event):
+            """Process events for colored terminal output"""
+            if event:
+                source = event.get("source", "unknown")
+                if event.get("event_type") == "text_chunk":
+                    if source == "coder_tool": 
+                        callback_red.on_llm_new_token(event.get('data', ''))
+                    else: 
+                        callback_default.on_llm_new_token(event.get('data', ''))
+                        
+                elif event.get("event_type") == "reasoning":
+                    if source == "coder_tool": 
+                        callback_red.on_llm_new_token(event.get('reasoning_text', ''))
+                    else: 
+                        callback_reasoning.on_llm_new_token(event.get('reasoning_text', ''))
+        
+        async for event in graph_streaming_execution(user_query):
+            # Process event for terminal display
+            process_event_for_display(event)
+            # Event is yielded from graph_streaming_execution and consumed here for display
+    
+    asyncio.run(run_streaming())

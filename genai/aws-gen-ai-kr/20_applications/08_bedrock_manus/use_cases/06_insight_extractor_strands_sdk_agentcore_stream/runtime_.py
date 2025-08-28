@@ -6,6 +6,7 @@ Entry point script for the LangGraph Demo.
 import os
 import shutil
 import argparse
+import asyncio
 from src.workflow import run_graph_streaming_workflow
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 
@@ -39,14 +40,24 @@ async def graph_streaming_execution(payload):
     """Execute full graph streaming workflow with real-time events"""
     remove_artifact_folder()
 
+    # Import event queue for processing tool events
+    from src.utils.event_queue import get_event, has_events
+
     print("\n=== Starting Graph Streaming Execution ===")
     print("Real-time streaming events from full graph:")
 
     try:
         async for event in run_graph_streaming_workflow(user_input=user_query, debug=False):
-            #if "data" in event:
-            print (event)
+            # Yield node-level event first
+            print(f"Node event: {event}")
             yield event
+            
+            # Check and yield any queued events from tools (like coder_agent_tool)
+            while has_events():
+                queue_event = get_event()
+                if queue_event:
+                    print(f"Queue event: {queue_event}")
+                    yield queue_event
 
     except Exception as e:
         # Handle errors gracefully in streaming context

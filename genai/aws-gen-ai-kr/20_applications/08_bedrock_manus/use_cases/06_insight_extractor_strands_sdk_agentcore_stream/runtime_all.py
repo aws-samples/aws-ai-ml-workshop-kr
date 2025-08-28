@@ -1,4 +1,3 @@
-
 """
 AgentCore Runtime for Bedrock-Manus Multi-Agent System
 Unified event streaming through global queue - compatible with AgentCore Runtime API
@@ -14,7 +13,7 @@ app = BedrockAgentCoreApp()
 def remove_artifact_folder(folder_path="./artifacts/"):
     """
     ./artifact/ 폴더가 존재하면 삭제하는 함수
-
+    
     Args:
         folder_path (str): 삭제할 폴더 경로
     """
@@ -31,20 +30,20 @@ async def unified_streaming_execution(payload):
     All events (nodes + tools) processed through global queue
     """
     user_query = payload.get("prompt", "")
-
+    
     if not user_query:
         yield {"type": "error", "message": "No prompt provided"}
         return
-
+    
     # Clean artifacts folder
     remove_artifact_folder()
-
+    
     # Import event queue for unified event processing
     from src.utils.event_queue import get_event, has_events, clear_queue
-
+    
     # Clear any existing events in queue
     clear_queue()
-
+    
     # Start workflow in background - it will put all events in global queue
     async def run_workflow_background():
         """Run workflow and consume its events (since nodes already use put_event)"""
@@ -61,13 +60,13 @@ async def unified_streaming_execution(payload):
                 "source": "workflow",
                 "message": f"Workflow error: {str(e)}"
             })
-
+    
     workflow_task = asyncio.create_task(run_workflow_background())
-
+    
     try:
         workflow_complete = False
         event_count = 0
-
+        
         # Main event loop - only monitor global queue
         while not workflow_complete:
             # Check for events in global queue
@@ -79,14 +78,14 @@ async def unified_streaming_execution(payload):
                     event["event_id"] = event_count
                     event["runtime_source"] = "bedrock_manus_runtime"
                     yield event
-
+            
             # Check if workflow is complete
             if workflow_task.done():
                 workflow_complete = True
-
+            
             # Small delay to prevent busy waiting
             await asyncio.sleep(0.01)
-
+            
     finally:
         # Wait for workflow to complete gracefully
         if not workflow_task.done():
@@ -98,7 +97,7 @@ async def unified_streaming_execution(payload):
                     await workflow_task
                 except asyncio.CancelledError:
                     pass
-
+        
         # Process any final remaining events in queue
         while has_events():
             event = get_event()
@@ -108,7 +107,7 @@ async def unified_streaming_execution(payload):
                 event["runtime_source"] = "bedrock_manus_runtime"
                 event["final_event"] = True
                 yield event
-
+    
     # Final completion event
     yield {
         "type": "workflow_complete", 
