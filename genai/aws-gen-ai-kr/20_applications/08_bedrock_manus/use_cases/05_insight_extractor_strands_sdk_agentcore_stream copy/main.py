@@ -2,6 +2,7 @@
 Entry point script for the LangGraph Demo.
 """
 import os
+import json
 import shutil
 import asyncio
 from src.workflow import run_graph_streaming_workflow
@@ -35,15 +36,17 @@ async def graph_streaming_execution(user_query):
     # Clear any existing events in queue
     clear_queue()
     
+    
     print("\n=== Starting Queue-Only Event Stream ===")
     print("All events (nodes + tools) processed through global queue")
     
     # Start workflow in background - it will put all events in global queue
     async def run_workflow_background():
-        """Run workflow (since nodes use put_event, no need to iterate)"""
+        """Run workflow and consume its events (since nodes already use put_event)"""
         try:
-            result = await run_graph_streaming_workflow(user_input=user_query)
-            print(f"Workflow completed: {result}")
+            async for _ in run_graph_streaming_workflow(user_input=user_query, debug=False):
+                # We ignore these events since nodes already put them in global queue
+                pass
         except Exception as e: print(f"Workflow error: {e}")
     
     workflow_task = asyncio.create_task(run_workflow_background())
@@ -141,28 +144,6 @@ if __name__ == "__main__":
                         callback_red.on_llm_new_token(event.get('reasoning_text', ''))
                     else: 
                         callback_reasoning.on_llm_new_token(event.get('reasoning_text', ''))
-                
-                #elif event.get("event_type") == "tool_use":
-                #    tool_name = event.get("tool_name", "unknown")
-                #    print(f"\n[TOOL START - {tool_name}]", flush=True)
-                
-                elif event.get("event_type") == "tool_result":
-                    tool_name = event.get("tool_name", "unknown")
-                    output = event.get("output", "")
-                    print(f"\n[TOOL RESULT - {tool_name}]", flush=True)
-                    
-                    # Parse output based on function name
-                    if tool_name == "handle_python_repl_tool" and len(output.split("||")) == 3:
-                        status, code, stdout = output.split("||")
-                        callback_default.on_llm_new_token(f"Status: {status}\n")
-                        callback_default.on_llm_new_token(f"Code:\n{code}\n")
-                        callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
-                    elif tool_name == "handle_bash_tool" and len(output.split("||")) == 2:
-                        cmd, stdout = output.split("||")
-                        callback_default.on_llm_new_token(f"CMD:\n{cmd}\n")
-                        callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
-                    else:
-                        callback_default.on_llm_new_token(output)
         
         async for event in graph_streaming_execution(user_query):
             # Process event for terminal display

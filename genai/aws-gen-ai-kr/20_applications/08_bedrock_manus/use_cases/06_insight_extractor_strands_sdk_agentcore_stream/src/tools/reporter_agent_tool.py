@@ -1,4 +1,3 @@
-import pprint
 import logging
 import asyncio
 from typing import Any, Annotated
@@ -9,18 +8,9 @@ from src.utils.common_utils import get_message_from_string
 
 from src.tools import python_repl_tool, bash_tool
 
-
-# Initialize logger
+# Simple logger setup
 logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]: 
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # DEBUG 이상 모든 로그 표시
+logger.setLevel(logging.INFO)
 
 TOOL_SPEC = {
     "name": "reporter_agent_tool",
@@ -44,15 +34,10 @@ FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Ple
 CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
 
 class Colors:
-    BLUE = '\033[94m'
     GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
     END = '\033[0m'
 
-def handle_reporter_agent_tool(task: Annotated[str, "The reporting task or instruction for generating the report."]):
+def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or instruction for generating the report."]):
     """
     Generate comprehensive reports based on analysis results using a specialized reporter agent.
     
@@ -69,15 +54,15 @@ def handle_reporter_agent_tool(task: Annotated[str, "The reporting task or instr
     Returns:
         The generated report content and confirmation of file creation
     """
-    logger.info(f"{Colors.GREEN}===== Reporter Agent Tool starting task ====={Colors.END}")
+    logger.info(f"\n{Colors.GREEN}Reporter Agent Tool starting{Colors.END}")
     
-    #try:
-    # Try to extract shared state from global storage (optional for context)
+    # Try to extract shared state from global storage
     from src.graph.nodes import _global_node_states
     shared_state = _global_node_states.get('shared', None)
-
-    logger.info(f"{Colors.YELLOW}===== Successfully retrieved shared state from global storage ====={Colors.END}")
-    logger.info(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}") 
+    
+    if not shared_state:
+        logger.warning("No shared state found")
+        return "Error: No shared state available" 
                     
     request_prompt, full_plan = shared_state.get("request_prompt", ""), shared_state.get("full_plan", "")
     clues, messages = shared_state.get("clues", ""), shared_state.get("messages", [])
@@ -93,28 +78,28 @@ def handle_reporter_agent_tool(task: Annotated[str, "The reporting task or instr
     )
     
     # Prepare message with context if available
-    
-    print ("messages", messages)
-    print ("==")
-    print ('\n\n'.join([messages[-1]["content"][-1]["text"], clues]))
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
-
-
     
-
-    reporter_agent, response = asyncio.run(strands_utils.process_streaming_response(reporter_agent, message))
+    # Process streaming response
+    async def process_reporter_stream():
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(
+            reporter_agent, message, agent_name="reporter", source="reporter_tool"
+        ):
+            streaming_events.append(event)
+            
+        # Reconstruct response from streaming events for return value
+        response = {"text": ""}
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk":
+                response["text"] += event.get("data", "")
+        
+        return reporter_agent, response
     
-    # Extract text from response
-    if isinstance(response, dict) and 'text' in response:
-        result_text = response['text']
-    elif hasattr(response, 'message') and 'content' in response.message:
-        result_text = response.message['content'][-1]['text']
-    else:
-        result_text = str(response)
+    reporter_agent, response = asyncio.run(process_reporter_stream())
     
-    logger.debug(f"\n{Colors.RED}Reporter - current state messages:\n{pprint.pformat(shared_state.get('messages', []), indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Reporter response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
-
+    result_text = response['text']
+    
     # Update clues
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("reporter", response["text"])])
     
@@ -127,17 +112,11 @@ def handle_reporter_agent_tool(task: Annotated[str, "The reporting task or instr
     shared_state['clues'] = clues
     shared_state['history'] = history
     
-    logger.info(f"{Colors.GREEN}===== Updated shared state with reporter results ====={Colors.END}")
-    logger.info(f"{Colors.GREEN}===== Reporter Agent Tool completed successfully ====={Colors.END}")
+    logger.info(f"\n{Colors.GREEN}Reporter Agent Tool completed{Colors.END}")
     return result_text
-        
-    #except Exception as e:
-    #    error_msg = f"Error in reporter agent tool: {str(e)}"
-    #    logger.error(f"{Colors.RED}{error_msg}{Colors.END}")
-    #    return error_msg
 
 # Function name must match tool name
-def reporter_agent_tool(tool: ToolUse, **kwargs: Any) -> ToolResult:
+def reporter_agent_tool(tool: ToolUse, **_kwargs: Any) -> ToolResult:
     tool_use_id = tool["toolUseId"]
     task = tool["input"]["task"]
     

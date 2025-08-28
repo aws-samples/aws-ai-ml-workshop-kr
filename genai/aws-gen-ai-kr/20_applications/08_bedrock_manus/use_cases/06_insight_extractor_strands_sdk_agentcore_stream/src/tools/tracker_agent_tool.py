@@ -1,4 +1,3 @@
-import pprint
 import logging
 import asyncio
 from typing import Any, Annotated
@@ -7,18 +6,9 @@ from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 
-
-# Initialize logger
+# Simple logger setup
 logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]: 
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # DEBUG 이상 모든 로그 표시
+logger.setLevel(logging.INFO)
 
 TOOL_SPEC = {
     "name": "tracker_agent_tool",
@@ -45,12 +35,8 @@ RESPONSE_FORMAT = "Updated task tracking from {}:\n\n<tracking_update>\n{}\n</tr
 CLUES_FORMAT = "Here is updated tracking status:\n\n<tracking_clues>\n{}\n</tracking_clues>\n\n"
 
 class Colors:
-    BLUE = '\033[94m'
     GREEN = '\033[92m'
-    YELLOW = '\033[93m'
-    RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+    BLUE = '\033[94m'
     END = '\033[0m'
 
 def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the agent that just completed its task"], 
@@ -70,14 +56,15 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
     Returns:
         Updated task tracking status
     """
-    logger.info(f"{Colors.GREEN}===== Tracker Agent Tool starting task tracking ====={Colors.END}")
+    logger.info(f"\n{Colors.GREEN}Tracker Agent Tool starting{Colors.END}")
     
     # Try to extract shared state from global storage
     from src.graph.nodes import _global_node_states
     shared_state = _global_node_states.get('shared', None)
-
-    logger.info(f"{Colors.YELLOW}===== Successfully retrieved shared state for tracking ====={Colors.END}")
-    logger.info(f"\n{Colors.YELLOW}Shared state for tracking:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}") 
+    
+    if not shared_state:
+        logger.warning("No shared state found")
+        return "Error: No shared state available" 
                     
     request_prompt = shared_state.get("request_prompt", "")
     full_plan = shared_state.get("full_plan", "")
@@ -107,19 +94,26 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
     if messages:
         tracking_message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues, tracking_message])
     
-    tracker_agent, response = asyncio.run(strands_utils.process_streaming_response(tracker_agent, tracking_message))
+    # Process streaming response
+    async def process_tracker_stream():
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(
+            tracker_agent, tracking_message, agent_name="tracker", source="tracker_tool"
+        ):
+            streaming_events.append(event)
+            
+        # Reconstruct response from streaming events for return value
+        response = {"text": ""}
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk":
+                response["text"] += event.get("data", "")
+        
+        return tracker_agent, response
     
-    # Extract text from response
-    if isinstance(response, dict) and 'text' in response:
-        result_text = response['text']
-    elif hasattr(response, 'message') and 'content' in response.message:
-        result_text = response.message['content'][-1]['text']
-    else:
-        result_text = str(response)
+    tracker_agent, response = asyncio.run(process_tracker_stream())
     
-    logger.debug(f"\n{Colors.RED}Tracker - current state messages:\n{pprint.pformat(shared_state.get('messages', []), indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Tracker response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
-
+    result_text = response['text']
+    
     # Update clues with tracking information
     clues = '\n\n'.join([clues, CLUES_FORMAT.format(response["text"])])
     
@@ -135,17 +129,14 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
     # Update the full_plan with the tracked version if the response contains an updated plan
     if "# Plan" in response["text"]:
         shared_state['full_plan'] = response["text"]
-        logger.info(f"{Colors.BLUE}===== Updated full_plan with tracking results ====={Colors.END}")
+        logger.info(f"{Colors.BLUE}Updated full_plan with tracking results{Colors.END}")
     
-    logger.info(f"{Colors.GREEN}===== Updated shared state with tracking results ====={Colors.END}")
-    logger.info(f"{Colors.GREEN}===== Tracker Agent Tool completed successfully ====={Colors.END}")
-
-    print("tracker result_text", result_text)
+    logger.info(f"\n{Colors.GREEN}Tracker Agent Tool completed{Colors.END}")
 
     return result_text
 
 # Function name must match tool name
-def tracker_agent_tool(tool: ToolUse, **kwargs: Any) -> ToolResult:
+def tracker_agent_tool(tool: ToolUse, **_kwargs: Any) -> ToolResult:
     tool_use_id = tool["toolUseId"]
     completed_agent = tool["input"]["completed_agent"]
     completion_summary = tool["input"]["completion_summary"]

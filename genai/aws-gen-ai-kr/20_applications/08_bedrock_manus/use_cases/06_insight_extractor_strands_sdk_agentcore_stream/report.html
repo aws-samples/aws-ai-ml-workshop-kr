@@ -3,13 +3,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>아마존 식품 판매 데이터 분석 및 마케팅 인사이트 보고서</title>
+    <title>아마존 상품판매 데이터 분석 보고서</title>
     <style>
         body {
             font-family: 'Nanum Gothic', sans-serif;
             margin: 2cm;
-            line-height: 1.6;
-            color: #333;
+            line-height: 1.5;
         }
         h1 {
             color: #2c3e50;
@@ -19,13 +18,13 @@
         }
         h2 {
             color: #3498db;
-            margin-top: 25px;
+            margin-top: 20px;
             border-left: 5px solid #3498db;
             padding-left: 10px;
         }
         h3 {
             color: #2980b9;
-            margin-top: 20px;
+            margin-top: 15px;
         }
         .content {
             margin-top: 20px;
@@ -37,15 +36,10 @@
             margin: 20px auto;
             border: 1px solid #ddd;
         }
-        .image-container {
-            margin: 25px 0;
-            text-align: center;
-        }
         .image-caption {
             text-align: center;
             font-style: italic;
-            margin: 8px 0 20px 0;
-            color: #555;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
@@ -56,238 +50,192 @@
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 8px 12px;
+            padding: 8px;
             text-align: left;
         }
         th {
             background-color: #f2f2f2;
         }
-        .highlight {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-left: 4px solid #28a745;
-            margin: 20px 0;
-        }
         .insight {
-            background-color: #e8f4f8;
-            padding: 15px;
-            border-left: 4px solid #17a2b8;
+            background-color: #eaf7fd;
+            border-left: 5px solid #3498db;
+            padding: 10px;
             margin: 15px 0;
-        }
-        .recommendation {
-            background-color: #fff3cd;
-            padding: 15px;
-            border-left: 4px solid #ffc107;
-            margin: 15px 0;
-        }
-        .executive-summary {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #ddd;
-            color: #777;
-            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <h1>아마존 식품 판매 데이터 분석 및 마케팅 인사이트 보고서</h1>
+    <h1>아마존 상품판매 데이터 분석 및 마케팅 인사이트 보고서</h1>
     
-    <div class="executive-summary">
-        <h2>분석 개요</h2>
-        <p>본 보고서는 아마존 식품 판매 데이터(Dat-fresh-food-claude.csv)에 대한 분석을 통해 마케팅 인사이트를 도출하는 것을 목적으로 합니다. 
-        총 1,220건의 거래 데이터를 분석하여 판매 트렌드, 고객 세그먼트, 구매 패턴 등을 파악했습니다.</p>
-        
-        <h3>주요 발견사항</h3>
-        <ul>
-            <li>세 가지 식품 카테고리(채소, 과일, 유제품) 중 <strong>채소</strong>가 가장 높은 판매량을 보이며, <strong>과일</strong>이 가장 높은 판매 금액을 기록했습니다.</li>
-            <li><strong>50대</strong> 연령층이 가장 높은 평균 구매 금액을 보이며, <strong>주말보다 평일</strong>에 더 높은 구매 금액을 보입니다.</li>
-            <li>고객은 구매 패턴에 따라 뚜렷한 <strong>3개의 세그먼트</strong>로 구분됩니다.</li>
-            <li>연령대와 성별에 따라 선호하는 카테고리에 뚜렷한 차이가 있습니다.</li>
-        </ul>
+    <h2>1. 분석 개요 및 목적</h2>
+    <div class="content">
+        <p>본 보고서는 아마존 상품판매 데이터셋을 분석하여 마케팅 인사이트를 도출하기 위한 분석 결과를 정리한 것입니다. 데이터 기반의 의사결정을 통해 판매 전략을 최적화하고 고객 세그먼트별 맞춤형 마케팅 전략을 수립하기 위한 목적으로 진행되었습니다.</p>
+        <p>분석은 데이터 속성 탐색부터 상품 판매 트렌드, 변수 관계, 고객 행동 패턴 분석 등 다양한 분석 기법을 통해 수행되었으며, 시각화 자료를 통해 인사이트를 직관적으로 제공하고자 하였습니다.</p>
     </div>
+    
+    <h2>2. 데이터셋 설명 및 기초 분석 결과</h2>
 
-    <h2>1. 데이터 개요 및 기본 분석</h2>
-    <p>분석 대상 데이터는 아마존 식품 판매 데이터로, 다음과 같은 특징을 가지고 있습니다:</p>
-    <ul>
-        <li>데이터 크기: 1,220개 행, 18개 열</li>
-        <li>주요 변수: 날짜, 상품 카테고리, 수량, 금액, 배송 정보, 고객 인구통계(성별, 연령대) 등</li>
-        <li>거래 기간: 2024년 1월 1일 ~ 2024년 6월 30일</li>
-    </ul>
-    
-    <div class="image-container">
-        <img src="./artifacts/category_distribution.png" alt="카테고리별 판매 분포">
-        <div class="image-caption">그림 1: 카테고리별 판매 분포</div>
+    <h3>2.1 데이터셋 기본 정보</h3>
+    <div class="content">
+        <p>데이터셋 기본 정보 분석 결과:<br>1. 데이터 크기: 1220행 x 18열<br>2. 컬럼 목록: index, Date, Status, Fulfilment, ship-service-level, Style, SKU, Category, Size, Courier Status, Qty, Amount, ship-city, ship-state, ship-postal-code, promotion-ids, Gender, Age Group<br>3. 데이터 타입:<br>index                  int64<br>Date                  object<br>Status                object<br>Fulfilment            object<br>ship-service-level    object<br>Style                 object<br>SKU                   object<br>Category              object<br>Size                  object<br>Courier Status        object<br>Qty                    int64<br>Amount                 int64<br>ship-city             object<br>ship-state            object<br>ship-postal-code       int64<br>promotion-ids         object<br>Gender                object<br>Age Group             object<br>4. 결측치 현황:<br>index                   0<br>Date                    0<br>Status                  0<br>Fulfilment              0<br>ship-service-level      0<br>Style                   0<br>SKU                     0<br>Category                0<br>Size                    0<br>Courier Status          0<br>Qty                     0<br>Amount                  0<br>ship-city               0<br>ship-state              0<br>ship-postal-code        0<br>promotion-ids         103<br>Gender                  0<br>Age Group               0</p>
     </div>
     
-    <div class="image-container">
-        <img src="./artifacts/amount_distribution.png" alt="판매 금액 분포">
-        <div class="image-caption">그림 2: 판매 금액 분포</div>
+    <h3>2.2 데이터 전처리 및 기술통계 분석</h3>
+    <div class="content">
+        <p>1. 데이터 전처리:<br>   - Date 컬럼을 datetime 형식으로 변환<br>   - promotion-ids의 결측치를 'NO_PROMO'로 대체<br><br>2. 수치형 변수 기술통계:<br>               Qty        Amount<br>count  1220.000000   1220.000000<br>mean      1.794262   7064.877049<br>std       0.831773   3750.569930<br>min       1.000000   2900.000000<br>25%       1.000000   4500.000000<br>50%       2.000000   5990.000000<br>75%       3.000000   8500.000000<br>max       3.000000  23700.000000<br><br>3. 범주형 변수 분포:<br><br>Category 분포:<br>Category<br>채소     458<br>과일     414<br>유제품    348<br><br>Gender 분포:<br>Gender<br>F    612<br>M    608<br><br>Age Group 분포:<br>Age Group<br>30대    412<br>50대    301<br>40대    298<br>20대    112<br>60대     96<br>40       1<br><br>Status 분포:<br>Status<br>Shipped    1220</p>
     </div>
     
-    <div class="image-container">
-        <img src="./artifacts/demographic_distribution.png" alt="인구통계학적 분포">
-        <div class="image-caption">그림 3: 인구통계학적 분포 - 성별 및 연령대</div>
+    <h3>2.3 기본 시각화 분석</h3>
+    <div class="content">
+    
+            <div class="chart-container">
+                <img src="./artifacts/distribution_plots.png" alt="수량 및 금액 분포 시각화">
+                <div class="image-caption">수량 및 금액 분포 시각화</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/category_analysis.png" alt="카테고리별 분석 시각화">
+                <div class="image-caption">카테고리별 분석 시각화</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/age_gender_distribution.png" alt="연령대 및 성별 분포 시각화">
+                <div class="image-caption">연령대 및 성별 분포 시각화</div>
+            </div>
+            
+        <div class="insight">
+            <p><strong>인사이트:</strong> 
+            <ul>
+                <li>수량은 대부분 1-3개 사이에 분포하며, 금액은 3,000원부터 23,700원까지 다양하게 분포합니다.</li>
+                <li>카테고리별로는 채소(458건), 과일(414건), 유제품(348건) 순으로 판매되었습니다.</li>
+                <li>성별 분포는 균등하며, 연령대별로는 30대(412명)가 가장 많고, 그 다음으로 50대(301명)와 40대(298명)가 많은 비중을 차지합니다.</li>
+            </ul>
+            </p>
+        </div>
     </div>
     
-    <div class="insight">
-        <p>데이터 분석 결과, 채소(458건)가 가장 많이 판매되는 카테고리였으며, 그 다음으로 과일(414건), 유제품(348건) 순으로 나타났습니다. 
-        고객층은 남성(608명)과 여성(612명)이 비슷한 비율로 분포하며, 연령대는 30대가 가장 많고(412명), 그 다음으로 50대(301명)와 40대(298명) 순입니다.</p>
-    </div>
-
-    <h2>2. 시간별 판매 트렌드 분석</h2>
-    <p>6개월간의 판매 데이터를 시간대별로 분석한 결과는 다음과 같습니다:</p>
+    <h2>3. 판매 트렌드 및 상관관계 분석</h2>
+    <div class="content">
+        <p>1. 일별 판매 트렌드 분석:<br>- 일별 주문 건수 통계:<br>count    182.000000<br>mean       6.703297<br>std        2.035565<br>min        5.000000<br>25%        5.250000<br>50%        6.000000<br>75%        7.000000<br>max       23.000000<br><br>- 일별 판매 수량 통계:<br>count    182.000000<br>mean      12.027473<br>std        3.882858<br>min        8.000000<br>25%       10.000000<br>50%       11.000000<br>75%       13.000000<br>max       40.000000<br><br>- 일별 판매 금액 통계:<br>count       182.000000<br>mean      47357.967033<br>std       17017.862658<br>min       21700.000000<br>25%       34150.000000<br>50%       43500.000000<br>75%       56875.000000<br>max      148490.000000<br><br>2. 상관관계 분석:<br>             Qty    Amount<br>Qty     1.000000  0.383091<br>Amount  0.383091  1.000000<br><br>3. 프로모션 효과 분석:<br>              Amount                      Qty     <br>               count      mean      sum  mean  sum<br>promotion-ids                                     <br>BUNDLE15          21  10314.29   216600  2.00   42<br>DAIRYPROMO       270   5933.33  1602000  1.75  473<br>EARLY5            53  10898.11   577600  2.06  109<br>FRESH10           35   9760.00   341600  1.74   61<br>FRESH10OFF        35   3000.00   105000  1.06   37<br>FRUITPROMO5      205   7773.90  1593650  1.50  308<br>NONE              47  11074.47   520500  1.98   93<br>SPRING24          44  12438.64   547300  2.23   98<br>SUMMERFRUIT      136  10700.00  1455200  2.12  288<br>VEGGIESALE       271   4693.73  1272000  1.94  526</p>
     
-    <div class="image-container">
-        <img src="./artifacts/daily_sales_trend.png" alt="일별 판매 금액 추이">
-        <div class="image-caption">그림 4: 일별 판매 금액 추이</div>
-    </div>
-    
-    <div class="image-container">
-        <img src="./artifacts/weekday_analysis.png" alt="요일별 판매 분석">
-        <div class="image-caption">그림 5: 요일별 판매 분석</div>
-    </div>
-    
-    <div class="insight">
-        <p>시간별 판매 트렌드 분석 결과, 일평균 판매금액은 약 47,358원이며 일평균 판매수량은 약 12.03개입니다. 
-        요일별 분석에서는 금요일(평균 7,385원)과 목요일(평균 7,273원)에 가장 높은 평균 판매금액을 기록했으며, 
-        주말보다 평일에 더 많은 구매가 이루어지는 경향을 보입니다.</p>
-    </div>
-    
-    <h2>3. 카테고리별 판매 성과 분석</h2>
-    <div class="image-container">
-        <img src="./artifacts/category_correlation.png" alt="카테고리별 판매 금액과 수량 관계">
-        <div class="image-caption">그림 6: 카테고리별 판매 금액과 수량 관계</div>
-    </div>
-    
-    <table>
-        <tr>
-            <th>카테고리</th>
-            <th>평균 판매금액</th>
-            <th>평균 판매수량</th>
-        </tr>
-        <tr>
-            <td>과일</td>
-            <td>9,582.97원</td>
-            <td>1.79개</td>
-        </tr>
-        <tr>
-            <td>유제품</td>
-            <td>6,500.29원</td>
-            <td>1.73개</td>
-        </tr>
-        <tr>
-            <td>채소</td>
-            <td>5,217.69원</td>
-            <td>1.84개</td>
-        </tr>
-    </table>
-    
-    <div class="insight">
-        <p>카테고리별 판매 성과 분석 결과, 과일이 평균 9,582원으로 가장 높은 평균 판매금액을 기록했으며, 
-        채소는 평균 판매금액(5,217원)이 가장 낮지만 평균 판매수량(1.84개)은 가장 높게 나타났습니다. 
-        이는 채소의 단가가 낮지만 구매 빈도가 높다는 것을 의미합니다.</p>
+            <div class="chart-container">
+                <img src="./artifacts/daily_sales_trends.png" alt="일별 판매 트렌드 시각화">
+                <div class="image-caption">일별 판매 트렌드 시각화</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/category_daily_sales.png" alt="카테고리별 일별 판매 트렌드">
+                <div class="image-caption">카테고리별 일별 판매 트렌드</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/correlation_matrix.png" alt="변수 간 상관관계 시각화">
+                <div class="image-caption">변수 간 상관관계 시각화</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/promotion_impact.png" alt="프로모션 효과 분석">
+                <div class="image-caption">프로모션 효과 분석</div>
+            </div>
+            
+        <div class="insight">
+            <p><strong>인사이트:</strong> 
+            <ul>
+                <li>일별 판매량은 평균 12.03개, 표준편차 3.88개로 안정적인 판매 패턴을 보입니다.</li>
+                <li>일별 판매 금액은 평균 47,358원, 최대 148,490원으로 변동성이 존재합니다.</li>
+                <li>수량과 금액 간의 상관계수는 0.383로 양의 상관관계가 있으나 강한 상관관계는 아닙니다.</li>
+                <li>프로모션별 효과에서는 SPRING24, BUNDLE15, EARLY5, SUMMERFRUIT 등의 프로모션이 높은 평균 구매금액을 보여 효과적인 프로모션으로 나타났습니다.</li>
+            </ul>
+            </p>
+        </div>
     </div>
     
-    <h2>4. 고객 세그먼트 분석</h2>
-    <div class="image-container">
-        <img src="./artifacts/customer_segments.png" alt="고객 세그먼트 분석">
-        <div class="image-caption">그림 7: 고객 세그먼트 분석</div>
+    <h2>4. 고객 행동 패턴 및 세그먼트 분석</h2>
+    <div class="content">
+        <p>1. 연령대별 구매 패턴 분석:<br>          Amount                     Qty     <br>           count     mean      sum  mean  sum<br>Age Group                                    <br>20대          112  6797.68   761340  1.34  150<br>30대          412  7256.53  2989690  1.79  739<br>40             1  3500.00     3500  3.00    3<br>40대          298  6051.31  1803290  2.24  669<br>50대          301  8365.12  2517900  1.72  519<br>60대           96  5660.73   543430  1.14  109<br><br>2. 구매 금액 기반 고객 세그먼트 분석:<br>              Amount                      Qty     <br>               count      mean      sum  mean  sum<br>AmountSegment                                     <br>Low              430   3929.07  1689500  1.36  585<br>Medium           385   6128.18  2359350  1.94  747<br>High             405  11284.69  4570300  2.12  857<br><br>3. 구매 주기 분석:<br>- 평균 구매 주기 통계:<br>count    21.000000<br>mean      3.871176<br>std       0.438425<br>min       1.967033<br>25%       3.934783<br>50%       3.955556<br>75%       3.977778<br>max       4.045455<br><br>4. 카테고리별 선호도 분석:<br>Category      과일    유제품      채소<br>Age Group                      <br>20대        25.89  66.07    8.04<br>30대        38.59   8.98   52.43<br>40           NaN    NaN  100.00<br>40대        11.74  32.21   56.04<br>50대        55.48  24.92   19.60<br>60대        25.00  68.75    6.25</p>
+    
+            <div class="chart-container">
+                <img src="./artifacts/age_pattern.png" alt="연령대별 구매 패턴 시각화">
+                <div class="image-caption">연령대별 구매 패턴 시각화</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/segment_distribution.png" alt="고객 세그먼트 분포">
+                <div class="image-caption">고객 세그먼트 분포</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/purchase_cycle.png" alt="구매 주기 분포">
+                <div class="image-caption">구매 주기 분포</div>
+            </div>
+            
+            <div class="chart-container">
+                <img src="./artifacts/category_preference.png" alt="카테고리 선호도 분석">
+                <div class="image-caption">카테고리 선호도 분석</div>
+            </div>
+            
+        <div class="insight">
+            <p><strong>인사이트:</strong> 
+            <ul>
+                <li>50대 연령층이 평균 구매 금액(8,365원)이 가장 높아 가장 가치 있는 고객층으로 나타났습니다.</li>
+                <li>연령대별 카테고리 선호도에서는 20대와 60대는 유제품, 30대와 40대는 채소, 50대는 과일 선호도가 높습니다.</li>
+                <li>구매 주기는 평균 3.87일로 나타나 일주일에 약 2회 정도 구매하는 패턴을 보입니다.</li>
+                <li>구매 금액 기준 세그먼트 분석 결과, 고가 구매층(High)은 전체의 33%를 차지하며 평균 구매 금액이 11,285원으로 매출 기여도가 높습니다.</li>
+            </ul>
+            </p>
+        </div>
     </div>
     
-    <div class="image-container">
-        <img src="./artifacts/category_gender_preference.png" alt="카테고리별 성별 선호도">
-        <div class="image-caption">그림 8: 카테고리별 성별 선호도</div>
-    </div>
-    
-    <div class="image-container">
-        <img src="./artifacts/age_category_preference.png" alt="연령대별 카테고리 선호도">
-        <div class="image-caption">그림 9: 연령대별 카테고리 선호도</div>
-    </div>
-    
-    <div class="insight">
-        <p>고객 세그먼트 분석 결과, 구매 패턴에 따라 크게 3개의 고객 그룹으로 구분할 수 있습니다:</p>
+    <h2>5. 결론 및 마케팅 인사이트</h2>
+    <div class="content">
+        <h3>5.1 주요 결론</h3>
         <ul>
-            <li><strong>클러스터 1:</strong> 고액 구매 고객 (평균 구매금액 9,091원, 평균 구매수량 2.47개)</li>
-            <li><strong>클러스터 2:</strong> 평균 구매 고객 (평균 구매금액 7,010원, 평균 구매수량 1.31개)</li>
-            <li><strong>클러스터 3:</strong> 대량 구매 고객 (평균 구매금액 3,500원, 평균 구매수량 3개)</li>
-        </ul>
-        <p>성별에 따른 카테고리 선호도를 분석한 결과, 여성은 유제품(53.45%)과 과일(51.21%)을, 남성은 채소(53.28%)를 상대적으로 더 선호하는 경향을 보였습니다.</p>
-        <p>연령대별 선호도는 더욱 뚜렷한 차이를 보이는데, 20대와 60대는 유제품을, 30대와 40대는 채소를, 50대는 과일을 주로 구매하는 것으로 나타났습니다.</p>
-    </div>
-    
-    <h2>5. 구매 패턴 분석</h2>
-    <div class="image-container">
-        <img src="./artifacts/purchase_pattern.png" alt="구매 패턴 분석">
-        <div class="image-caption">그림 10: 구매 패턴 분석</div>
-    </div>
-    
-    <div class="image-container">
-        <img src="./artifacts/age_amount_analysis.png" alt="연령대별 평균 구매 금액 분석">
-        <div class="image-caption">그림 11: 연령대별 평균 구매 금액 분석</div>
-    </div>
-    
-    <div class="insight">
-        <p>구매 패턴 분석 결과, 구매 금액대별로 살펴보면 중간 금액대(Medium) 구매가 273건으로 가장 많았고, 
-        구매 수량은 1개(573건)가 가장 많은 것으로 나타났습니다.</p>
-        <p>연령대별 평균 구매금액은 50대가 8,365원으로 가장 높고, 그 다음으로 30대(7,256원), 
-        20대(6,798원), 40대(6,051원), 60대(5,661원) 순으로 나타났습니다.</p>
-    </div>
-
-    <h2>6. 마케팅 인사이트 및 전략적 제언</h2>
-    
-    <div class="recommendation">
-        <h3>1. 타겟 마케팅 전략</h3>
-        <ul>
-            <li><strong>50대 고객층을 위한 프리미엄 과일 제품 마케팅:</strong> 50대 연령층이 가장 높은 평균 구매금액을 보이며 과일 카테고리를 선호하는 경향이 있으므로, 이들을 위한 프리미엄 과일 제품 라인업을 강화하고 타겟 마케팅을 진행합니다.</li>
-            <li><strong>20대와 60대를 위한 유제품 번들 프로모션:</strong> 두 연령층 모두 유제품 선호도가 높으므로, 이들을 대상으로 한 유제품 번들 패키지나 구독 서비스를 개발합니다.</li>
-            <li><strong>30-40대를 위한 신선 채소 정기배송 서비스:</strong> 채소 카테고리를 선호하는 30-40대 고객을 위한 정기배송 서비스를 강화합니다.</li>
+            <li>30대가 가장 큰 구매 고객층(33.8%)을 형성하고 있으며, 채소 제품에 대한 선호도가 높습니다.</li>
+            <li>50대는 평균 구매 금액이 가장 높아(8,365원) 가치 있는 고객층으로, 과일 카테고리를 선호합니다.</li>
+            <li>프로모션 중 SPRING24와 BUNDLE15의 효과가 가장 좋아 평균 구매 금액이 각각 12,439원, 10,314원입니다.</li>
+            <li>구매 주기는 평균 3.87일로, 일주일에 약 2회 구매하는 패턴을 보입니다.</li>
+            <li>카테고리별 판매는 채소 > 과일 > 유제품 순이며, 연령대별로 선호 카테고리가 다르게 나타납니다.</li>
         </ul>
         
-        <h3>2. 시간대별 프로모션 최적화</h3>
+        <h3>5.2 마케팅 전략 제안</h3>
+        <ol>
+            <li><strong>연령대별 타겟 마케팅</strong>
+                <ul>
+                    <li>20대 및 60대: 유제품 중심 프로모션 (각각 66.07%, 68.75% 선호)</li>
+                    <li>30대 및 40대: 채소 중심 프로모션 (각각 52.43%, 56.04% 선호)</li>
+                    <li>50대: 과일 중심 프로모션 (55.48% 선호)</li>
+                </ul>
+            </li>
+            <li><strong>효과적인 프로모션 활용</strong>
+                <ul>
+                    <li>SPRING24, BUNDLE15, EARLY5 프로모션의 특성을 분석하여 유사한 프로모션 전략 수립</li>
+                    <li>번들 판매 전략 강화 (BUNDLE15 프로모션의 높은 평균 구매 금액)</li>
+                    <li>FRESH10OFF, VEGGIESALE 등 낮은 효과를 보인 프로모션은 재설계 필요</li>
+                </ul>
+            </li>
+            <li><strong>고객 세그먼트별 접근 전략</strong>
+                <ul>
+                    <li>고가 구매층(High): 프리미엄 제품 및 번들 상품 제안</li>
+                    <li>중간 구매층(Medium): 교차 판매(Cross-selling) 전략으로 구매 상승 유도</li>
+                    <li>저가 구매층(Low): 상향 판매(Up-selling) 및 소량 패키지 제안</li>
+                </ul>
+            </li>
+            <li><strong>구매 주기 기반 마케팅</strong>
+                <ul>
+                    <li>평균 구매 주기(3.87일)를 고려한 리마케팅 타이밍 설정</li>
+                    <li>3-4일 주기로 재구매 유도 이메일 및 알림 발송</li>
+                    <li>주간 프로모션을 통한 정기 구매 패턴 강화</li>
+                </ul>
+            </li>
+        </ol>
+        
+        <h3>5.3 추가 분석 제안</h3>
         <ul>
-            <li><strong>목요일-금요일 특별 프로모션:</strong> 구매금액이 가장 높은 목요일과 금요일에 특별 프로모션을 진행하여 매출을 극대화합니다.</li>
-            <li><strong>주말 구매 활성화 전략:</strong> 상대적으로 판매가 저조한 주말(특히 토요일)에 특별 할인이나 이벤트를 제공하여 구매를 촉진합니다.</li>
+            <li>계절별 판매 패턴 분석: 현재 데이터를 확장하여 계절적 요인 파악</li>
+            <li>고객 생애 가치(CLV) 분석: 장기적 고객 관계 관리를 위한 CLV 분석</li>
+            <li>장바구니 분석: 함께 구매되는 상품 조합 파악을 통한 번들링 전략 수립</li>
+            <li>고객 이탈 예측 모델: 구매 주기 이탈 징후 포착을 위한 예측 모델 개발</li>
         </ul>
-        
-        <h3>3. 고객 세그먼트별 맞춤 전략</h3>
-        <ul>
-            <li><strong>고액 구매 고객층 유지 전략:</strong> 클러스터 1(고액 구매 고객)을 위한 VIP 서비스 및 충성도 프로그램을 강화하여 고객 유지율을 높입니다.</li>
-            <li><strong>평균 구매 고객층 상향 판매 전략:</strong> 클러스터 2(평균 구매 고객)에게 관련 상품 추천 및 번들 할인을 제공하여 구매 금액을 증가시킵니다.</li>
-            <li><strong>대량 구매 고객층 타겟팅:</strong> 클러스터 3(대량 구매 고객)에게 대용량 패키지 및 빈번한 구매에 대한 특별 할인을 제공합니다.</li>
-        </ul>
-        
-        <h3>4. 크로스셀링 및 업셀링 기회</h3>
-        <ul>
-            <li><strong>카테고리 간 크로스셀링:</strong> 성별 및 연령대별 선호도 분석을 활용하여 타겟 고객에게 관련 카테고리 제품을 추천합니다.</li>
-            <li><strong>연령대별 맞춤형 추천 시스템:</strong> 각 연령대가 선호하는 카테고리 내에서 상위 제품으로의 업셀링 전략을 구현합니다.</li>
-        </ul>
-    </div>
-
-    <h2>7. 결론</h2>
-    <div class="highlight">
-        <p>아마존 식품 판매 데이터 분석 결과, 고객의 연령대와 성별에 따라 뚜렷하게 구분되는 카테고리 선호도와 구매 패턴이 확인되었습니다. 
-        특히 50대 고객층의 높은 평균 구매금액과 과일 카테고리 선호도, 요일별 판매 트렌드의 차이, 그리고 3개의 뚜렷한 고객 세그먼트는 
-        마케팅 전략 수립에 중요한 인사이트를 제공합니다.</p>
-        
-        <p>이러한 분석 결과를 바탕으로 고객 세그먼트별 맞춤형 마케팅 전략, 시간대별 최적화된 프로모션, 
-        타겟 고객층을 위한 제품 라인업 강화 등의 전략을 수립할 수 있습니다. 
-        이를 통해 고객 만족도 향상과 함께 매출 증대를 기대할 수 있을 것입니다.</p>
-        
-        <p>향후 추가 분석을 통해 계절적 요인에 따른 구매 패턴 변화, 지역별 선호도 차이, 
-        그리고 프로모션 효과에 대한 심층적인 연구가 필요합니다.</p>
-    </div>
-    
-    <div class="footer">
-        <p>본 보고서는 2025년 8월 28일에 작성되었습니다.</p>
-        <p>© 2025 아마존 식품 판매 데이터 분석팀</p>
     </div>
 </body>
 </html>

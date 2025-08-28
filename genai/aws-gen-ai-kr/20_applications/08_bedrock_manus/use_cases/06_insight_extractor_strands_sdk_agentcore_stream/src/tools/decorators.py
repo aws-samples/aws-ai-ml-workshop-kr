@@ -1,29 +1,16 @@
-import os
 import logging
 import functools
 from typing import Any, Callable, Type, TypeVar
 
-# 새 핸들러와 포맷터 설정
+# Simple logger setup
 logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]:
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+logger.setLevel(logging.INFO)
 
 T = TypeVar("T")
 
 class Colors:
     BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    YELLOW = '\033[93m'
     RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
     END = '\033[0m'
 
 def log_io(func: Callable) -> Callable:
@@ -39,23 +26,35 @@ def log_io(func: Callable) -> Callable:
 
     @functools.wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
-        # Log input parameters
         func_name = func.__name__
-        params = ", ".join(
-            [*(str(arg) for arg in args), *(f"{k}={v}" for k, v in kwargs.items())]
-        )
         # Execute the function
         result = func(*args, **kwargs)
 
         # Log the output
         if len(result.split("||")) == 3:
             status, code, stdout = result.split("||")
-            logger.info(f"{Colors.RED}Python-REPL - {status}\n{code}{Colors.END}")
-            logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
+            #logger.info(f"{Colors.RED}Python-REPL - {status}\n{code}{Colors.END}")
+            #logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
         else:
-            cmd = None
-            if len(result.split("||")) == 2: cmd, stdout = result.split("||")
-            logger.info(f"{Colors.RED}\n Tool {func_name} returned:\n{result}{Colors.END}")
+            if len(result.split("||")) == 2:
+                _, stdout = result.split("||")
+            #logger.info(f"{Colors.RED}\nTool {func_name} returned:\n{result}{Colors.END}")
+
+        # Put tool result in global queue
+        try:
+            from src.utils.event_queue import put_event
+            from datetime import datetime
+            
+            put_event({
+                "timestamp": datetime.now().isoformat(),
+                "type": "tool_result",
+                "event_type": "tool_result",
+                "tool_name": func_name,
+                "output": result,
+                "source": "tool_execution"
+            })
+        except ImportError:
+            pass  # Fallback if event_queue not available
 
         return result
 
@@ -71,13 +70,13 @@ class LoggedToolMixin:
         params = ", ".join(
             [*(str(arg) for arg in args), *(f"{k}={v}" for k, v in kwargs.items())]
         )
-        logger.debug(f"{Colors.RED}Tool {tool_name}.{method_name} called with parameters: {params}{Colors.END}")
+        logger.debug(f"{Colors.RED}Tool {tool_name}.{method_name} called with: {params}{Colors.END}")
 
     def _run(self, *args: Any, **kwargs: Any) -> Any:
         """Override _run method to add logging."""
         self._log_operation("_run", *args, **kwargs)
         result = super()._run(*args, **kwargs)
-        logger.debug(f"{Colors.BLUE}\nREPL - Tool {self.__class__.__name__.replace('Logged', '')} returned: {result}{Colors.END}")
+        logger.debug(f"{Colors.BLUE}\nTool {self.__class__.__name__.replace('Logged', '')} returned: {result}{Colors.END}")
         return result
 
 

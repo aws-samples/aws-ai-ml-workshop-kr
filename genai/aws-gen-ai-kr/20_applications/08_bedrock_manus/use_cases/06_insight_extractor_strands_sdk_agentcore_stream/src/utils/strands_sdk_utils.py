@@ -118,8 +118,8 @@ class strands_utils():
         #if agent_name == "supervisor": enable_reasoning = False
 
         prompt_cache, cache_type = prompt_cache_info
-        if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
-        else: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
+        if prompt_cache: logger.info(f"\n{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
+        else: logger.info(f"\n{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
 
         #llm = get_llm_by_type(AGENT_LLM_MAP[agent_name], cache_type, enable_reasoning)
         llm = strands_utils.get_model(llm_type=agent_type, cache_type=cache_type, enable_reasoning=enable_reasoning)
@@ -187,7 +187,8 @@ class strands_utils():
         return agent, response
     
     @staticmethod
-    async def process_streaming_response_yield(agent, message, agent_name="coordinator"):
+    async def process_streaming_response_yield(agent, message, agent_name="coordinator", source=None):
+        from src.utils.event_queue import put_event
         callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
         response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
         try:
@@ -197,22 +198,25 @@ class strands_utils():
 
             async for event in agent_stream:
                 #Strands 이벤트를 AgentCore 형식으로 변환
-                agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id)
-                if agentcore_event: yield agentcore_event
+                agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id, source)
+                if agentcore_event: 
+                    # Put event in global queue for unified processing
+                    put_event(agentcore_event)
+                    yield agentcore_event
 
         except Exception as e:
             logger.error(f"Error in streaming response: {e}")
             logger.error(traceback.format_exc())  # Detailed error logging
         
     @staticmethod
-    async def _convert_to_agentcore_event(strands_event, agent_name, session_id):
+    async def _convert_to_agentcore_event(strands_event, agent_name, session_id, source=None):
         """Strands 이벤트를 AgentCore 스트리밍 형식으로 변환"""
     
         base_event = {
             "timestamp": datetime.now().isoformat(),
             "session_id": session_id,
             "agent_name": agent_name,
-            "source": "strands_data_analysis_graph"
+            "source": source or f"{agent_name}_node",
         }
         
         # 텍스트 데이터 이벤트

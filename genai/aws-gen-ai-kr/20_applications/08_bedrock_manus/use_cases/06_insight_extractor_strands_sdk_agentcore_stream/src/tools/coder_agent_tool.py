@@ -1,4 +1,3 @@
-import pprint
 import logging
 import asyncio
 from typing import Any, Annotated
@@ -6,21 +5,11 @@ from strands.types.tools import ToolResult, ToolUse
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
-
 from src.tools import python_repl_tool, bash_tool
 
-
-# Initialize logger
+# Simple logger setup
 logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]: 
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # DEBUG 이상 모든 로그 표시
+logger.setLevel(logging.INFO)
 
 TOOL_SPEC = {
     "name": "coder_agent_tool",
@@ -44,12 +33,8 @@ FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Ple
 CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
 
 class Colors:
-    BLUE = '\033[94m'
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
-    RED = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
     END = '\033[0m'
 
 def handle_coder_agent_tool(task: Annotated[str, "The coding task or question that needs to be executed by the coder agent."]):
@@ -67,18 +52,15 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
     Returns:
         The result of the code execution or analysis
     """
-    logger.info(f"{Colors.GREEN}===== Coder Agent Tool starting task ====={Colors.END}")
+    logger.info(f"\n{Colors.GREEN}Coder Agent Tool starting task{Colors.END}")
     
-    #try:
-        # Import tools here to avoid circular imports
-        
-
-        # Try to extract shared state from global storage (optional for context)
+    # Try to extract shared state from global storage
     from src.graph.nodes import _global_node_states
     shared_state = _global_node_states.get('shared', None)
-
-    logger.info(f"{Colors.YELLOW}===== Successfully retrieved shared state from global storage ====={Colors.END}")
-    logger.info(f"\n{Colors.YELLOW}Shared state:\n{pprint.pformat(shared_state, indent=2, width=100)}{Colors.END}") 
+    
+    if not shared_state:
+        logger.warning("No shared state found")
+        return "Error: No shared state available" 
                     
     request_prompt, full_plan = shared_state.get("request_prompt", ""), shared_state.get("full_plan", "")
     clues, messages = shared_state.get("clues", ""), shared_state.get("messages", [])
@@ -96,25 +78,13 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
     # Prepare message with context if available
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
     
-    # Import event queue for streaming
-    from src.utils.event_queue import put_event
-    
-    # Process streaming response and send events to global queue
+    # Process streaming response
     async def process_coder_stream():
         streaming_events = []
-        async for event in strands_utils.process_streaming_response_yield(coder_agent, message, agent_name="coder"):
-            # Add source metadata to distinguish from supervisor events
-            event["source"] = "coder_tool"
-            event["tool_context"] = "coder_agent_tool"
-            
-            # Put event in global queue for main.py to process
-            put_event(event)
-            
-            # Also print directly for immediate feedback
-            #if event.get("event_type") == "text_chunk":
-            #    print(f"\033[96m{event.get('data', '')}\033[0m", end="", flush=True)
-            
-            # Also keep for local processing
+        async for event in strands_utils.process_streaming_response_yield(
+            coder_agent, message, agent_name="coder", source="coder_tool"
+        ):
+            # Keep for local processing
             streaming_events.append(event)
             
         # Reconstruct response from streaming events for return value
@@ -126,18 +96,8 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
         return coder_agent, response
     
     coder_agent, response = asyncio.run(process_coder_stream())
+    result_text = response['text']
     
-    # Extract text from response
-    if isinstance(response, dict) and 'text' in response:
-        result_text = response['text']
-    elif hasattr(response, 'message') and 'content' in response.message:
-        result_text = response.message['content'][-1]['text']
-    else:
-        result_text = str(response)
-    
-    logger.debug(f"\n{Colors.RED}Coder - current state messages:\n{pprint.pformat(shared_state.get('messages', []), indent=2, width=100)}{Colors.END}")
-    logger.debug(f"\n{Colors.RED}Coder response:\n{pprint.pformat(response["text"], indent=2, width=100)}{Colors.END}")
-
     # Update clues
     clues = '\n\n'.join([clues, CLUES_FORMAT.format("coder", response["text"])])
     
@@ -150,20 +110,12 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
     shared_state['clues'] = clues
     shared_state['history'] = history
     
-    logger.info(f"{Colors.GREEN}===== Updated shared state with coder results ====={Colors.END}")
-    logger.info(f"{Colors.GREEN}===== Coder Agent Tool completed successfully ====={Colors.END}")
-
-    print ("result_text", result_text)
+    logger.info(f"\n{Colors.GREEN}Coder Agent Tool completed successfully{Colors.END}")
 
     return result_text
-        
-    #except Exception as e:
-    #    error_msg = f"Error in coder agent tool: {str(e)}"
-    #    logger.error(f"{Colors.RED}{error_msg}{Colors.END}")
-    #    return error_msg
 
 # Function name must match tool name
-def coder_agent_tool(tool: ToolUse, **kwargs: Any) -> ToolResult:
+def coder_agent_tool(tool: ToolUse, **_kwargs: Any) -> ToolResult:
     tool_use_id = tool["toolUseId"]
     task = tool["input"]["task"]
     
