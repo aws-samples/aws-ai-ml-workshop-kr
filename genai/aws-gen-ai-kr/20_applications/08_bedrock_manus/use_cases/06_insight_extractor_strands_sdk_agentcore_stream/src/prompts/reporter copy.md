@@ -146,23 +146,20 @@ Important: Variable states are not preserved between conversation turns. All cod
 
 2. Writing style:
    - Use professional tone
-   - Be concise and precise - prioritize key insights over lengthy explanations
+   - Be concise and precise
    - Avoid speculation
    - Support claims with evidence from the txt file
    - Reference all artifacts (images, charts, files) in your report
    - Indicate if data is incomplete or unavailable
    - Never invent or extrapolate data
-   - Optimize space usage: charts should occupy 70% of visual space, text content 30%
-   - Use bullet points and tables for efficient information presentation
 
 3. Formatting:
-   - Use proper markdown syntax with optimized font sizes (20% smaller titles, 15% smaller body text)
+   - Use proper markdown syntax
    - Include headers for each analysis section
-   - Use lists and tables when appropriate for compact information display
+   - Use lists and tables when appropriate
    - Add emphasis for important points
-   - Reference images using appropriate notation with optimized sizing (70% width)
+   - Reference images using appropriate notation
    - Generate PDF version when requested by the user
-   - Minimize white space and optimize content density while maintaining readability
 </guidelines>
 
 <report_structure>
@@ -220,55 +217,33 @@ html_content = """
     <style>
         body {{
             font-family: 'Nanum Gothic', sans-serif;
-            margin: 1cm; /* Reduced from 2cm to 1cm for more content space */
+            margin: 2cm;
             line-height: 1.5;
-            font-size: 0.85em; /* 15% smaller than default */
         }}
         h1 {{
             color: #2c3e50;
             text-align: center;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
-            font-size: 1.6em; /* 20% smaller than default */
         }}
         h2 {{
             color: #3498db;
             margin-top: 20px;
-            font-size: 1.4em; /* 20% smaller than default */
-        }}
-        h3 {{
-            color: #34495e;
-            margin-top: 15px;
-            font-size: 1.2em; /* 20% smaller than default */
         }}
         .content {{
             margin-top: 20px;
         }}
         img {{
-            max-width: 95%; /* Increased from 90% to 95% for even larger images */
+            max-width: 100%;
             height: auto;
             display: block;
-            margin: 10px auto; /* Reduced margin from 15px to 10px */
+            margin: 20px auto;
             border: 1px solid #ddd;
-        }}
-        .chart-container {{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 10px 0; /* Reduced margin from 15px to 10px */
-            width: 95%; /* Charts take 95% of space - increased from 90% */
-            margin-left: auto;
-            margin-right: auto;
         }}
         .image-caption {{
             text-align: center;
             font-style: italic;
-            margin-bottom: 15px; /* Reduced margin */
-            font-size: 0.9em; /* Slightly smaller caption text */
-        }}
-        .text-content {{
-            width: 100%; /* Text takes remaining space alongside charts */
-            margin: 10px 0; /* Reduced margins for better space utilization */
+            margin-bottom: 20px;
         }}
         table {{
             width: 100%;

@@ -63,7 +63,7 @@ def get_llm_by_type(llm_type, cache_type=None, enable_reasoning=False):
     """
     Get LLM instance by type. Returns cached instance if available.
     """
-    if llm_type == "reasoning":
+    if llm_type == "claude-sonnet-3-7":
         
         ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
         llm = BedrockModel(
@@ -87,7 +87,7 @@ def get_llm_by_type(llm_type, cache_type=None, enable_reasoning=False):
             )
         )
         
-    elif llm_type == "basic":
+    elif llm_type == "claude-sonnet-3-5-v-2":
         ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
         llm = BedrockModel(
             model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-V-2-Sonnet-CRI"),

@@ -6,17 +6,9 @@ from typing import Any, Annotated
 from strands.types.tools import ToolResult, ToolUse
 from src.tools.decorators import log_io
 
-# 새 핸들러와 포맷터 설정
+# Simple logger setup
 logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]:
-    logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+logger.setLevel(logging.INFO)
 
 TOOL_SPEC = {
     "name": "python_repl_tool",
@@ -73,6 +65,7 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
     Use this to execute python code and do data analysis or calculation. If you want to see the output of a value,
     you should print it out with `print(...)`. This is visible to the user.
     """
+    print()  # Add newline before log
     logger.info(f"{Colors.GREEN}===== Executing Python code ====={Colors.END}")
     try:
         result = repl.run(code)
@@ -81,7 +74,9 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
         #logger.error(error_msg)
         logger.debug(f"{Colors.RED}Failed to execute. Error: {repr(e)}{Colors.END}")
         return error_msg
-    result_str = f"Successfully executed:\n||```python\n{code}\n```\n||Stdout: {result}"
+    
+    #result_str = f"Successfully executed:\n||```python\n{code}\n```\n||Stdout: {result}"
+    result_str = f"Successfully executed:\n||{code}||Stdout: {result}"
     logger.info(f"{Colors.GREEN}===== Code execution successful ====={Colors.END}")
     return result_str
 

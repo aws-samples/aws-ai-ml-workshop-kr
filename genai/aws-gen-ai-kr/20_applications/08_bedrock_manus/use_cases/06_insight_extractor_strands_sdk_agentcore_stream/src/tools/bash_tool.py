@@ -34,6 +34,7 @@ class Colors:
 def handle_bash_tool(cmd: Annotated[str, "The bash command to be executed."]):
     """Use this to execute bash command and do necessary operations."""
 
+    print()  # Add newline before log
     logger.info(f"\n{Colors.GREEN}Executing Bash: {cmd}{Colors.END}")
     try:
         # Execute the command and capture output

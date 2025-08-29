@@ -56,6 +56,7 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
     Returns:
         Updated task tracking status
     """
+    print()  # Add newline before log
     logger.info(f"\n{Colors.GREEN}Tracker Agent Tool starting{Colors.END}")
     
     # Try to extract shared state from global storage
@@ -81,7 +82,8 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
                 "FULL_PLAN": full_plan
             }
         ),
-        agent_type="reasoning",  # tracker uses reasoning LLM for plan analysis
+        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        enable_reasoning=False,
         prompt_cache_info=(True, None),  # reasoning agent uses prompt caching
         tools=[],  # tracker doesn't need additional tools
         streaming=True

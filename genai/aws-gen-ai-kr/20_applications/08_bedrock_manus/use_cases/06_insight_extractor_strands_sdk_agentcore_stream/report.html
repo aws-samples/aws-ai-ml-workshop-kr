@@ -3,43 +3,59 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>아마존 상품판매 데이터 분석 보고서</title>
+    <title>Moon Market 판매 현황 보고서</title>
     <style>
         body {
             font-family: 'Nanum Gothic', sans-serif;
             margin: 2cm;
             line-height: 1.5;
+            font-size: 0.85em;
         }
         h1 {
             color: #2c3e50;
             text-align: center;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
+            font-size: 1.6em;
         }
         h2 {
             color: #3498db;
             margin-top: 20px;
-            border-left: 5px solid #3498db;
-            padding-left: 10px;
+            font-size: 1.4em;
         }
         h3 {
-            color: #2980b9;
+            color: #34495e;
             margin-top: 15px;
+            font-size: 1.2em;
         }
         .content {
             margin-top: 20px;
         }
         img {
-            max-width: 100%;
+            max-width: 70%;
             height: auto;
             display: block;
-            margin: 20px auto;
+            margin: 15px auto;
             border: 1px solid #ddd;
+        }
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15px 0;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
         }
         .image-caption {
             text-align: center;
             font-style: italic;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        .text-content {
+            width: 100%;
+            margin: 10px 0;
         }
         table {
             width: 100%;
@@ -56,186 +72,508 @@
         th {
             background-color: #f2f2f2;
         }
-        .insight {
-            background-color: #eaf7fd;
-            border-left: 5px solid #3498db;
+        .executive-summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 20px;
+        }
+        .key-insight {
+            background-color: #e8f4f8;
             padding: 10px;
-            margin: 15px 0;
+            border-left: 3px solid #2ecc71;
+            margin: 10px 0;
+        }
+        .recommendation {
+            background-color: #f0f7fb;
+            padding: 10px;
+            border-left: 3px solid #f39c12;
+            margin: 10px 0;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .page-break {
+            page-break-before: always;
         }
     </style>
 </head>
 <body>
-    <h1>아마존 상품판매 데이터 분석 및 마케팅 인사이트 보고서</h1>
+    <h1>Moon Market 판매 현황 보고서</h1>
+    <p style="text-align: right;">작성일: 2025년 8월 29일</p>
     
-    <h2>1. 분석 개요 및 목적</h2>
-    <div class="content">
-        <p>본 보고서는 아마존 상품판매 데이터셋을 분석하여 마케팅 인사이트를 도출하기 위한 분석 결과를 정리한 것입니다. 데이터 기반의 의사결정을 통해 판매 전략을 최적화하고 고객 세그먼트별 맞춤형 마케팅 전략을 수립하기 위한 목적으로 진행되었습니다.</p>
-        <p>분석은 데이터 속성 탐색부터 상품 판매 트렌드, 변수 관계, 고객 행동 패턴 분석 등 다양한 분석 기법을 통해 수행되었으며, 시각화 자료를 통해 인사이트를 직관적으로 제공하고자 하였습니다.</p>
+    <div class="executive-summary">
+        <h2>요약</h2>
+        <p>본 보고서는 Moon Market의 판매 현황을 세일즈 및 마케팅 관점에서 종합적으로 분석한 결과입니다. 
+        2024년 8월부터 2025년 7월까지의 판매 데이터를 기반으로 시계열 분석, 제품 분석, 고객 분석, 마케팅 채널 분석, 
+        주요 KPI 계산, 경쟁사 비교 분석 등을 수행하였습니다.</p>
+        
+        <p>Moon Market은 총 매출 약 14.9억원, 총 이익 약 7.5억원을 기록하였으며, 평균 이익률은 50.05%로 
+        높은 수준을 유지하고 있습니다. 가전(30.5%), 화장품(19.4%), 의류(19.0%) 카테고리가 핵심 매출원이며, 
+        일반 소비자(28.4%)와 친환경 지향(24.4%) 세그먼트가 주요 고객층입니다. 마케팅 채널 중에서는 
+        인플루언서(26.3%)와 검색광고(24.9%) 채널이 가장 효과적인 것으로 나타났습니다.</p>
     </div>
     
-    <h2>2. 데이터셋 설명 및 기초 분석 결과</h2>
+    <div class="page-break"></div>
+    <h2>목차</h2>
+    <ol>
+        <li>판매 현황 개요</li>
+        <li>시계열 분석: 월별/분기별 판매 추세</li>
+        <li>제품 분석: 카테고리별, 제품별 매출 및 수익성</li>
+        <li>고객 분석: 고객 세그먼트별 구매 패턴</li>
+        <li>마케팅 채널 효과 분석: 채널별 ROI 및 전환율</li>
+        <li>주요 KPI 분석</li>
+        <li>경쟁사 비교 분석</li>
+        <li>주요 인사이트 및 전략적 제안</li>
+        <li>결론 및 향후 전략</li>
+    </ol>
+    
+    <div class="page-break"></div>
+    <h2>1. 판매 현황 개요</h2>
 
-    <h3>2.1 데이터셋 기본 정보</h3>
-    <div class="content">
-        <p>데이터셋 기본 정보 분석 결과:<br>1. 데이터 크기: 1220행 x 18열<br>2. 컬럼 목록: index, Date, Status, Fulfilment, ship-service-level, Style, SKU, Category, Size, Courier Status, Qty, Amount, ship-city, ship-state, ship-postal-code, promotion-ids, Gender, Age Group<br>3. 데이터 타입:<br>index                  int64<br>Date                  object<br>Status                object<br>Fulfilment            object<br>ship-service-level    object<br>Style                 object<br>SKU                   object<br>Category              object<br>Size                  object<br>Courier Status        object<br>Qty                    int64<br>Amount                 int64<br>ship-city             object<br>ship-state            object<br>ship-postal-code       int64<br>promotion-ids         object<br>Gender                object<br>Age Group             object<br>4. 결측치 현황:<br>index                   0<br>Date                    0<br>Status                  0<br>Fulfilment              0<br>ship-service-level      0<br>Style                   0<br>SKU                     0<br>Category                0<br>Size                    0<br>Courier Status          0<br>Qty                     0<br>Amount                  0<br>ship-city               0<br>ship-state              0<br>ship-postal-code        0<br>promotion-ids         103<br>Gender                  0<br>Age Group               0</p>
+    <div class="chart-container">
+        <img src="./artifacts/sales_summary_dashboard.png" alt="매출 요약 대시보드">
+        <div class="image-caption">매출 요약 대시보드</div>
     </div>
     
-    <h3>2.2 데이터 전처리 및 기술통계 분석</h3>
-    <div class="content">
-        <p>1. 데이터 전처리:<br>   - Date 컬럼을 datetime 형식으로 변환<br>   - promotion-ids의 결측치를 'NO_PROMO'로 대체<br><br>2. 수치형 변수 기술통계:<br>               Qty        Amount<br>count  1220.000000   1220.000000<br>mean      1.794262   7064.877049<br>std       0.831773   3750.569930<br>min       1.000000   2900.000000<br>25%       1.000000   4500.000000<br>50%       2.000000   5990.000000<br>75%       3.000000   8500.000000<br>max       3.000000  23700.000000<br><br>3. 범주형 변수 분포:<br><br>Category 분포:<br>Category<br>채소     458<br>과일     414<br>유제품    348<br><br>Gender 분포:<br>Gender<br>F    612<br>M    608<br><br>Age Group 분포:<br>Age Group<br>30대    412<br>50대    301<br>40대    298<br>20대    112<br>60대     96<br>40       1<br><br>Status 분포:<br>Status<br>Shipped    1220</p>
-    </div>
-    
-    <h3>2.3 기본 시각화 분석</h3>
-    <div class="content">
-    
-            <div class="chart-container">
-                <img src="./artifacts/distribution_plots.png" alt="수량 및 금액 분포 시각화">
-                <div class="image-caption">수량 및 금액 분포 시각화</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/category_analysis.png" alt="카테고리별 분석 시각화">
-                <div class="image-caption">카테고리별 분석 시각화</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/age_gender_distribution.png" alt="연령대 및 성별 분포 시각화">
-                <div class="image-caption">연령대 및 성별 분포 시각화</div>
-            </div>
-            
-        <div class="insight">
-            <p><strong>인사이트:</strong> 
-            <ul>
-                <li>수량은 대부분 1-3개 사이에 분포하며, 금액은 3,000원부터 23,700원까지 다양하게 분포합니다.</li>
-                <li>카테고리별로는 채소(458건), 과일(414건), 유제품(348건) 순으로 판매되었습니다.</li>
-                <li>성별 분포는 균등하며, 연령대별로는 30대(412명)가 가장 많고, 그 다음으로 50대(301명)와 40대(298명)가 많은 비중을 차지합니다.</li>
-            </ul>
-            </p>
-        </div>
-    </div>
-    
-    <h2>3. 판매 트렌드 및 상관관계 분석</h2>
-    <div class="content">
-        <p>1. 일별 판매 트렌드 분석:<br>- 일별 주문 건수 통계:<br>count    182.000000<br>mean       6.703297<br>std        2.035565<br>min        5.000000<br>25%        5.250000<br>50%        6.000000<br>75%        7.000000<br>max       23.000000<br><br>- 일별 판매 수량 통계:<br>count    182.000000<br>mean      12.027473<br>std        3.882858<br>min        8.000000<br>25%       10.000000<br>50%       11.000000<br>75%       13.000000<br>max       40.000000<br><br>- 일별 판매 금액 통계:<br>count       182.000000<br>mean      47357.967033<br>std       17017.862658<br>min       21700.000000<br>25%       34150.000000<br>50%       43500.000000<br>75%       56875.000000<br>max      148490.000000<br><br>2. 상관관계 분석:<br>             Qty    Amount<br>Qty     1.000000  0.383091<br>Amount  0.383091  1.000000<br><br>3. 프로모션 효과 분석:<br>              Amount                      Qty     <br>               count      mean      sum  mean  sum<br>promotion-ids                                     <br>BUNDLE15          21  10314.29   216600  2.00   42<br>DAIRYPROMO       270   5933.33  1602000  1.75  473<br>EARLY5            53  10898.11   577600  2.06  109<br>FRESH10           35   9760.00   341600  1.74   61<br>FRESH10OFF        35   3000.00   105000  1.06   37<br>FRUITPROMO5      205   7773.90  1593650  1.50  308<br>NONE              47  11074.47   520500  1.98   93<br>SPRING24          44  12438.64   547300  2.23   98<br>SUMMERFRUIT      136  10700.00  1455200  2.12  288<br>VEGGIESALE       271   4693.73  1272000  1.94  526</p>
-    
-            <div class="chart-container">
-                <img src="./artifacts/daily_sales_trends.png" alt="일별 판매 트렌드 시각화">
-                <div class="image-caption">일별 판매 트렌드 시각화</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/category_daily_sales.png" alt="카테고리별 일별 판매 트렌드">
-                <div class="image-caption">카테고리별 일별 판매 트렌드</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/correlation_matrix.png" alt="변수 간 상관관계 시각화">
-                <div class="image-caption">변수 간 상관관계 시각화</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/promotion_impact.png" alt="프로모션 효과 분석">
-                <div class="image-caption">프로모션 효과 분석</div>
-            </div>
-            
-        <div class="insight">
-            <p><strong>인사이트:</strong> 
-            <ul>
-                <li>일별 판매량은 평균 12.03개, 표준편차 3.88개로 안정적인 판매 패턴을 보입니다.</li>
-                <li>일별 판매 금액은 평균 47,358원, 최대 148,490원으로 변동성이 존재합니다.</li>
-                <li>수량과 금액 간의 상관계수는 0.383로 양의 상관관계가 있으나 강한 상관관계는 아닙니다.</li>
-                <li>프로모션별 효과에서는 SPRING24, BUNDLE15, EARLY5, SUMMERFRUIT 등의 프로모션이 높은 평균 구매금액을 보여 효과적인 프로모션으로 나타났습니다.</li>
-            </ul>
-            </p>
-        </div>
-    </div>
-    
-    <h2>4. 고객 행동 패턴 및 세그먼트 분석</h2>
-    <div class="content">
-        <p>1. 연령대별 구매 패턴 분석:<br>          Amount                     Qty     <br>           count     mean      sum  mean  sum<br>Age Group                                    <br>20대          112  6797.68   761340  1.34  150<br>30대          412  7256.53  2989690  1.79  739<br>40             1  3500.00     3500  3.00    3<br>40대          298  6051.31  1803290  2.24  669<br>50대          301  8365.12  2517900  1.72  519<br>60대           96  5660.73   543430  1.14  109<br><br>2. 구매 금액 기반 고객 세그먼트 분석:<br>              Amount                      Qty     <br>               count      mean      sum  mean  sum<br>AmountSegment                                     <br>Low              430   3929.07  1689500  1.36  585<br>Medium           385   6128.18  2359350  1.94  747<br>High             405  11284.69  4570300  2.12  857<br><br>3. 구매 주기 분석:<br>- 평균 구매 주기 통계:<br>count    21.000000<br>mean      3.871176<br>std       0.438425<br>min       1.967033<br>25%       3.934783<br>50%       3.955556<br>75%       3.977778<br>max       4.045455<br><br>4. 카테고리별 선호도 분석:<br>Category      과일    유제품      채소<br>Age Group                      <br>20대        25.89  66.07    8.04<br>30대        38.59   8.98   52.43<br>40           NaN    NaN  100.00<br>40대        11.74  32.21   56.04<br>50대        55.48  24.92   19.60<br>60대        25.00  68.75    6.25</p>
-    
-            <div class="chart-container">
-                <img src="./artifacts/age_pattern.png" alt="연령대별 구매 패턴 시각화">
-                <div class="image-caption">연령대별 구매 패턴 시각화</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/segment_distribution.png" alt="고객 세그먼트 분포">
-                <div class="image-caption">고객 세그먼트 분포</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/purchase_cycle.png" alt="구매 주기 분포">
-                <div class="image-caption">구매 주기 분포</div>
-            </div>
-            
-            <div class="chart-container">
-                <img src="./artifacts/category_preference.png" alt="카테고리 선호도 분석">
-                <div class="image-caption">카테고리 선호도 분석</div>
-            </div>
-            
-        <div class="insight">
-            <p><strong>인사이트:</strong> 
-            <ul>
-                <li>50대 연령층이 평균 구매 금액(8,365원)이 가장 높아 가장 가치 있는 고객층으로 나타났습니다.</li>
-                <li>연령대별 카테고리 선호도에서는 20대와 60대는 유제품, 30대와 40대는 채소, 50대는 과일 선호도가 높습니다.</li>
-                <li>구매 주기는 평균 3.87일로 나타나 일주일에 약 2회 정도 구매하는 패턴을 보입니다.</li>
-                <li>구매 금액 기준 세그먼트 분석 결과, 고가 구매층(High)은 전체의 33%를 차지하며 평균 구매 금액이 11,285원으로 매출 기여도가 높습니다.</li>
-            </ul>
-            </p>
-        </div>
-    </div>
-    
-    <h2>5. 결론 및 마케팅 인사이트</h2>
-    <div class="content">
-        <h3>5.1 주요 결론</h3>
+    <div class="text-content">
+        <h3>종합 매출 및 이익 요약</h3>
         <ul>
-            <li>30대가 가장 큰 구매 고객층(33.8%)을 형성하고 있으며, 채소 제품에 대한 선호도가 높습니다.</li>
-            <li>50대는 평균 구매 금액이 가장 높아(8,365원) 가치 있는 고객층으로, 과일 카테고리를 선호합니다.</li>
-            <li>프로모션 중 SPRING24와 BUNDLE15의 효과가 가장 좋아 평균 구매 금액이 각각 12,439원, 10,314원입니다.</li>
-            <li>구매 주기는 평균 3.87일로, 일주일에 약 2회 구매하는 패턴을 보입니다.</li>
-            <li>카테고리별 판매는 채소 > 과일 > 유제품 순이며, 연령대별로 선호 카테고리가 다르게 나타납니다.</li>
+            <li><span class="highlight">총 매출:</span> 1,489,708,872원</li>
+            <li><span class="highlight">총 이익:</span> 745,637,245원</li>
+            <li><span class="highlight">평균 이익률:</span> 50.05%</li>
+            <li><span class="highlight">총 주문 수:</span> 13,238건</li>
         </ul>
         
-        <h3>5.2 마케팅 전략 제안</h3>
+        <h3>카테고리별 매출 및 이익</h3>
+        <table>
+            <tr>
+                <th>카테고리</th>
+                <th>매출</th>
+                <th>이익</th>
+                <th>이익률</th>
+                <th>매출 비중</th>
+            </tr>
+            <tr>
+                <td>가전</td>
+                <td>454,690,900원</td>
+                <td>234,986,300원</td>
+                <td>51.68%</td>
+                <td>30.52%</td>
+            </tr>
+            <tr>
+                <td>화장품</td>
+                <td>288,459,300원</td>
+                <td>155,224,500원</td>
+                <td>53.81%</td>
+                <td>19.36%</td>
+            </tr>
+            <tr>
+                <td>의류</td>
+                <td>282,469,100원</td>
+                <td>131,763,300원</td>
+                <td>46.65%</td>
+                <td>18.96%</td>
+            </tr>
+            <tr>
+                <td>식품</td>
+                <td>269,869,400원</td>
+                <td>139,144,500원</td>
+                <td>51.56%</td>
+                <td>18.12%</td>
+            </tr>
+            <tr>
+                <td>생활용품</td>
+                <td>194,220,200원</td>
+                <td>84,518,630원</td>
+                <td>43.52%</td>
+                <td>13.04%</td>
+            </tr>
+        </table>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> 가전 카테고리가 전체 매출의 30.5%로 가장 큰 비중을 차지하고 있으며, 
+            화장품 카테고리는 53.8%로 가장 높은 이익률을 기록하고 있습니다. 생활용품 카테고리는 이익률이 43.5%로 
+            가장 낮아 개선이 필요합니다.</p>
+        </div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/key_kpi_dashboard.png" alt="주요 KPI 대시보드">
+        <div class="image-caption">주요 KPI 대시보드</div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>2. 시계열 분석: 월별/분기별 판매 추세</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_sales_trend.png" alt="월별 매출 및 이익 추이 그래프">
+        <div class="image-caption">월별 매출 및 이익 추이 그래프</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>월별 매출 및 이익 분석</h3>
+        <p>2024년 8월부터 2025년 7월까지의 월별 매출 및 이익 추이를 분석한 결과, 
+        <span class="highlight">12월(2.42억원)</span>과 <span class="highlight">5월(1.68억원)</span>에 
+        매출 피크가 발생했습니다. 반면, <span class="highlight">2월(0.62억원)</span>과 
+        <span class="highlight">1월(0.85억원)</span>은 매출이 가장 낮은 시기로 나타났습니다.</p>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> 연말 시즌(11-12월)과 봄 시즌(4-5월)에 매출이 집중되어 있으며, 
+            겨울 시즌(1-2월)은 매출이 크게 감소하는 패턴을 보입니다. 이는 계절적 요인과 명절/휴가 시즌의 
+            영향으로 분석됩니다.</p>
+        </div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/quarterly_sales_trend.png" alt="분기별 매출 및 이익 그래프">
+        <div class="image-caption">분기별 매출 및 이익 그래프</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>분기별 매출 및 이익 분석</h3>
+        <p>분기별 분석 결과, <span class="highlight">2024년 4분기(5.12억원)</span>가 가장 높은 매출을 기록했으며, 
+        <span class="highlight">2025년 2분기(3.96억원)</span>가 그 뒤를 이었습니다. 
+        이익률은 2024년 4분기가 55.9%로 가장 높았습니다.</p>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/weekday_sales_pattern.png" alt="요일별 매출 패턴 그래프">
+        <div class="image-caption">요일별 매출 패턴 그래프</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>요일별 매출 패턴</h3>
+        <p>요일별 매출 패턴을 분석한 결과, <span class="highlight">주말(토요일, 일요일)</span>에 매출이 집중되어 있으며, 
+        특히 일요일(2.55억원)이 가장 높은 매출을 기록했습니다. 평일 중에서는 목요일(2.03억원)의 매출이 
+        상대적으로 높게 나타났습니다.</p>
+        
+        <div class="recommendation">
+            <p><strong>전략적 제안:</strong> 주말 쇼핑 수요를 활용한 주말 특별 프로모션을 강화하고, 
+            평일(특히 월요일-수요일) 매출 증대를 위한 평일 전용 할인 혜택이나 이벤트를 도입할 필요가 있습니다.</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>3. 제품 분석: 카테고리별, 제품별 매출 및 수익성</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_sales_pie.png" alt="카테고리별 매출 비중 파이 차트">
+        <div class="image-caption">카테고리별 매출 비중</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_sales_bar.png" alt="카테고리별 매출 및 이익 막대 차트">
+        <div class="image-caption">카테고리별 매출 및 이익</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>카테고리별 매출 및 수익성 분석</h3>
+        <p>카테고리별 매출 및 수익성을 분석한 결과, <span class="highlight">가전</span> 카테고리가 전체 매출의 30.5%로 
+        가장 큰 비중을 차지하고 있으며, <span class="highlight">화장품</span>(19.4%)과 <span class="highlight">의류</span>(19.0%)가 
+        그 뒤를 이었습니다. 이익률 측면에서는 <span class="highlight">화장품</span> 카테고리가 53.8%로 가장 높았으며, 
+        <span class="highlight">생활용품</span> 카테고리는 43.5%로 가장 낮았습니다.</p>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/top_products_sales.png" alt="상위 제품 매출 차트">
+        <div class="image-caption">상위 제품 매출</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/product_profitability_analysis.png" alt="제품 수익성 분석 차트">
+        <div class="image-caption">제품 수익성 분석</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>베스트셀러 제품 분석</h3>
+        <p>베스트셀러 제품을 분석한 결과, <span class="highlight">프리미엄 스마트 TV</span>, 
+        <span class="highlight">유기농 스킨케어 세트</span>, <span class="highlight">고급 주방용품 세트</span> 등이 
+        높은 매출을 기록했습니다. 특히 프리미엄 제품군의 판매가 두드러지며, 이는 고객들이 품질과 브랜드 가치를 
+        중요시하는 경향을 보여줍니다.</p>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> 화장품 카테고리는 매출 비중(19.4%)에 비해 높은 이익률(53.8%)을 
+            기록하고 있어 수익성이 가장 우수한 카테고리입니다. 반면, 생활용품 카테고리는 이익률 개선이 필요합니다.</p>
+        </div>
+        
+        <div class="recommendation">
+            <p><strong>전략적 제안:</strong> 화장품과 가전 카테고리에 마케팅 자원을 집중하고 제품 라인업을 확장하는 전략이 
+            효과적일 것으로 예상됩니다. 생활용품 카테고리는 제품 차별화 및 이익률 개선을 위한 전략이 필요합니다.</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>4. 고객 분석: 고객 세그먼트별 구매 패턴</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/segment_revenue_pie.png" alt="고객 세그먼트별 매출 비중 파이 차트">
+        <div class="image-caption">고객 세그먼트별 매출 비중</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/segment_metrics.png" alt="고객 세그먼트별 주요 지표 차트">
+        <div class="image-caption">고객 세그먼트별 주요 지표</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>고객 세그먼트별 매출 및 구매 패턴</h3>
+        <p>고객 세그먼트별 매출 및 구매 패턴을 분석한 결과, <span class="highlight">일반 소비자</span>(28.4%)와 
+        <span class="highlight">친환경 지향</span>(24.4%) 세그먼트가 주요 고객층으로 나타났습니다. 
+        객단가 측면에서는 <span class="highlight">프리미엄</span> 세그먼트가 약 193만원으로 가장 높았으며, 
+        <span class="highlight">가성비 추구</span> 세그먼트는 약 130만원으로 가장 낮았습니다.</p>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/segment_category_preference.png" alt="세그먼트별 카테고리 선호도 차트">
+        <div class="image-caption">세그먼트별 카테고리 선호도</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/segment_age_distribution.png" alt="세그먼트별 연령 분포 차트">
+        <div class="image-caption">세그먼트별 연령 분포</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>세그먼트별 특성 및 선호도</h3>
+        <p>세그먼트별 특성 및 선호도를 분석한 결과, <span class="highlight">프리미엄</span> 세그먼트는 가전과 화장품 카테고리를, 
+        <span class="highlight">친환경 지향</span> 세그먼트는 식품과 화장품 카테고리를, <span class="highlight">트렌드 민감</span> 
+        세그먼트는 의류와 화장품 카테고리를 선호하는 것으로 나타났습니다.</p>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> 프리미엄 세그먼트는 객단가가 가장 높고(약 193만원) 재구매율도 100%로 
+            고객 충성도가 매우 높습니다. 친환경 지향 세그먼트는 전체 매출의 24.4%를 차지하며 지속적으로 성장하고 있습니다.</p>
+        </div>
+        
+        <div class="recommendation">
+            <p><strong>전략적 제안:</strong> 프리미엄 세그먼트를 위한 VIP 프로그램 및 맞춤형 서비스를 강화하고, 
+            친환경 지향 고객을 위한 정기 구독 서비스를 도입하여 구매 빈도를 증대시키는 전략이 효과적일 것으로 예상됩니다.</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>5. 마케팅 채널 효과 분석: 채널별 ROI 및 전환율</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/marketing_channel_roi.png" alt="마케팅 채널별 ROI 차트">
+        <div class="image-caption">마케팅 채널별 ROI</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/marketing_channel_conversion.png" alt="마케팅 채널별 전환율 차트">
+        <div class="image-caption">마케팅 채널별 전환율</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>마케팅 채널별 효과 분석</h3>
+        <p>마케팅 채널별 효과를 분석한 결과, <span class="highlight">인플루언서</span>(26.3%)와 
+        <span class="highlight">검색광고</span>(24.9%) 채널이 가장 높은 매출 기여도를 보였습니다. 
+        ROI 측면에서는 <span class="highlight">인플루언서</span> 마케팅이 252.3%로 가장 높았으며, 
+        <span class="highlight">이메일 마케팅</span>도 215.6%로 비용 대비 효율성이 높았습니다.</p>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/marketing_efficiency_analysis.png" alt="마케팅 효율성 분석 차트">
+        <div class="image-caption">마케팅 효율성 분석</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/channel_category_effect.png" alt="채널별 카테고리 효과 차트">
+        <div class="image-caption">채널별 카테고리 효과</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>채널별 카테고리 효과 및 타겟팅 효율성</h3>
+        <p>채널별 카테고리 효과를 분석한 결과, <span class="highlight">인플루언서</span> 마케팅은 화장품과 의류 카테고리에서, 
+        <span class="highlight">검색광고</span>는 가전 카테고리에서, <span class="highlight">오프라인 이벤트</span>는 
+        식품 카테고리에서 특히 효과적인 것으로 나타났습니다.</p>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> 인플루언서 마케팅은 가장 높은 ROI(252.3%)를 기록하며 특히 화장품과 
+            의류 카테고리에서 효과적입니다. 이메일 마케팅은 비용이 낮아 ROI(215.6%)가 높지만 매출 기여도(2.7%)는 
+            낮은 편입니다.</p>
+        </div>
+        
+        <div class="recommendation">
+            <p><strong>전략적 제안:</strong> 인플루언서 마케팅 예산을 확대하고 화장품/의류 카테고리에 집중 홍보하는 전략이 
+            효과적일 것으로 예상됩니다. 또한, 이메일 마케팅을 활용한 기존 고객 대상 리마케팅을 강화하여 비용 효율적인 
+            매출 증대를 도모할 필요가 있습니다.</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>6. 주요 KPI 분석</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/key_kpi_summary.png" alt="주요 KPI 요약 차트">
+        <div class="image-caption">주요 KPI 요약</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>주요 KPI 분석 결과</h3>
+        <ul>
+            <li><span class="highlight">평균 주문 가치(AOV):</span> 112,533원</li>
+            <li><span class="highlight">고객 생애 가치(CLV):</span> 4,469,127원</li>
+            <li><span class="highlight">재구매율:</span> 100.00%</li>
+            <li><span class="highlight">평균 구매 빈도:</span> 13.36회/년</li>
+        </ul>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_aov_trend.png" alt="월별 평균 주문 가치 추이 차트">
+        <div class="image-caption">월별 평균 주문 가치 추이</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_retention_rate.png" alt="월별 고객 유지율 추이 차트">
+        <div class="image-caption">월별 고객 유지율 추이</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>KPI 추이 분석</h3>
+        <p>주요 KPI의 월별 추이를 분석한 결과, 평균 주문 가치(AOV)는 12월(146,627원)과 5월(114,100원)에 
+        가장 높았으며, 고객 유지율은 연중 높은 수준(평균 95% 이상)을 유지하고 있습니다.</p>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> 고객 생애 가치(CLV)가 447만원으로 매우 높은 수준이며, 
+            이는 고객 충성도와 재구매율이 높다는 것을 의미합니다. 평균 구매 빈도도 13.36회/년으로 
+            고객들이 Moon Market을 정기적으로 이용하고 있음을 보여줍니다.</p>
+        </div>
+        
+        <div class="recommendation">
+            <p><strong>전략적 제안:</strong> 로열티 프로그램을 강화하여 고객 생애 가치를 극대화하고, 
+            비수기(1-2월)에는 특별 할인 이벤트를 통해 평균 주문 가치를 높이는 전략이 필요합니다.</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>7. 경쟁사 비교 분석</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/market_share_analysis.png" alt="시장 점유율 분석 차트">
+        <div class="image-caption">시장 점유율 분석</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/competitor_strengths_weaknesses.png" alt="경쟁사 강점 및 약점 분석 차트">
+        <div class="image-caption">경쟁사 강점 및 약점 분석</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>시장 점유율 및 경쟁 포지션</h3>
+        <p>시장 점유율 및 경쟁 포지션을 분석한 결과, Moon Market은 시장 점유율 19.8%로 업계 3위를 
+        차지하고 있습니다. 1위 기업(25.3%)과 2위 기업(22.1%)과의 격차는 각각 5.5%p, 2.3%p입니다.</p>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/customer_satisfaction.png" alt="고객 만족도 비교 차트">
+        <div class="image-caption">고객 만족도 비교</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/price_competitiveness.png" alt="가격 경쟁력 비교 차트">
+        <div class="image-caption">가격 경쟁력 비교</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>경쟁사 대비 강점 및 약점</h3>
+        <p>경쟁사 대비 Moon Market의 강점은 <span class="highlight">고객 서비스(9.1점)</span>와 
+        <span class="highlight">친환경성(9점)</span>으로 나타났으며, 약점은 <span class="highlight">가격 경쟁력(7.2점)</span>과 
+        <span class="highlight">제품 다양성(7.8점)</span>으로 분석되었습니다.</p>
+        
+        <div class="key-insight">
+            <p><strong>핵심 인사이트:</strong> Moon Market은 고객 서비스와 친환경성에서 경쟁 우위를 가지고 있으나, 
+            가격 경쟁력은 상대적으로 낮은 편입니다. 특히 가성비 추구 세그먼트를 타겟팅하기 위해서는 
+            가격 경쟁력 개선이 필요합니다.</p>
+        </div>
+        
+        <div class="recommendation">
+            <p><strong>전략적 제안:</strong> 고객 서비스와 친환경성의 강점을 마케팅 메시지로 강조하고, 
+            가격 민감 고객을 위한 가성비 라인업을 확대하여 가격 경쟁력을 개선할 필요가 있습니다.</p>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>8. 주요 인사이트 및 전략적 제안</h2>
+    
+    <div class="chart-container">
+        <img src="./artifacts/insights_strategies_summary.png" alt="인사이트 및 전략 요약 차트">
+        <div class="image-caption">인사이트 및 전략 요약</div>
+    </div>
+    
+    <div class="text-content">
+        <h3>주요 인사이트</h3>
         <ol>
-            <li><strong>연령대별 타겟 마케팅</strong>
-                <ul>
-                    <li>20대 및 60대: 유제품 중심 프로모션 (각각 66.07%, 68.75% 선호)</li>
-                    <li>30대 및 40대: 채소 중심 프로모션 (각각 52.43%, 56.04% 선호)</li>
-                    <li>50대: 과일 중심 프로모션 (55.48% 선호)</li>
-                </ul>
-            </li>
-            <li><strong>효과적인 프로모션 활용</strong>
-                <ul>
-                    <li>SPRING24, BUNDLE15, EARLY5 프로모션의 특성을 분석하여 유사한 프로모션 전략 수립</li>
-                    <li>번들 판매 전략 강화 (BUNDLE15 프로모션의 높은 평균 구매 금액)</li>
-                    <li>FRESH10OFF, VEGGIESALE 등 낮은 효과를 보인 프로모션은 재설계 필요</li>
-                </ul>
-            </li>
-            <li><strong>고객 세그먼트별 접근 전략</strong>
-                <ul>
-                    <li>고가 구매층(High): 프리미엄 제품 및 번들 상품 제안</li>
-                    <li>중간 구매층(Medium): 교차 판매(Cross-selling) 전략으로 구매 상승 유도</li>
-                    <li>저가 구매층(Low): 상향 판매(Up-selling) 및 소량 패키지 제안</li>
-                </ul>
-            </li>
-            <li><strong>구매 주기 기반 마케팅</strong>
-                <ul>
-                    <li>평균 구매 주기(3.87일)를 고려한 리마케팅 타이밍 설정</li>
-                    <li>3-4일 주기로 재구매 유도 이메일 및 알림 발송</li>
-                    <li>주간 프로모션을 통한 정기 구매 패턴 강화</li>
-                </ul>
-            </li>
+            <li><span class="highlight">매출 및 이익 현황:</span> 총 매출 약 14.9억원, 총 이익 약 7.5억원으로 
+            평균 이익률 50.05%의 높은 수준을 유지하고 있으며, 5월과 12월에 매출 피크가 발생합니다.</li>
+            
+            <li><span class="highlight">카테고리별 분석:</span> 가전(30.5%), 화장품(19.4%), 의류(19.0%) 카테고리가 
+            핵심 매출원이며, 화장품 카테고리가 53.8%로 가장 높은 이익률을 기록하고 있습니다.</li>
+            
+            <li><span class="highlight">고객 세그먼트 분석:</span> 일반 소비자(28.4%)와 친환경 지향(24.4%) 세그먼트가 
+            주요 고객층이며, 프리미엄 세그먼트는 객단가가 가장 높고(약 193만원) 재구매율도 100%로 고객 충성도가 
+            매우 높습니다.</li>
+            
+            <li><span class="highlight">마케팅 채널 효과:</span> 인플루언서(26.3%)와 검색광고(24.9%) 채널이 
+            가장 효과적이며, 인플루언서 마케팅이 가장 높은 ROI(252.3%)를 기록하고 있습니다. 이메일 마케팅은 
+            비용 대비 효율성이 높습니다(ROI 215.6%).</li>
+            
+            <li><span class="highlight">주요 KPI:</span> 평균 주문 가치(AOV) 112,533원, 고객 생애 가치(CLV) 4,469,127원, 
+            평균 구매 빈도 13.36회/년으로 고객 충성도가 높은 편입니다.</li>
+            
+            <li><span class="highlight">경쟁사 비교 분석:</span> Moon Market은 시장 점유율 19.8%로 업계 3위이며, 
+            고객 서비스(9.1점)와 친환경성(9점)에서 경쟁 우위를 가지고 있으나, 가격 경쟁력은 상대적으로 낮은 편입니다.</li>
         </ol>
         
-        <h3>5.3 추가 분석 제안</h3>
-        <ul>
-            <li>계절별 판매 패턴 분석: 현재 데이터를 확장하여 계절적 요인 파악</li>
-            <li>고객 생애 가치(CLV) 분석: 장기적 고객 관계 관리를 위한 CLV 분석</li>
-            <li>장바구니 분석: 함께 구매되는 상품 조합 파악을 통한 번들링 전략 수립</li>
-            <li>고객 이탈 예측 모델: 구매 주기 이탈 징후 포착을 위한 예측 모델 개발</li>
-        </ul>
+        <h3>전략적 제안</h3>
+        <ol>
+            <li><span class="highlight">카테고리 전략:</span> 화장품과 가전 카테고리에 마케팅 자원을 집중하고 
+            제품 라인업을 확장하며, 생활용품 카테고리는 제품 차별화 및 이익률 개선이 필요합니다.</li>
+            
+            <li><span class="highlight">고객 세그먼트 전략:</span> 프리미엄 세그먼트를 위한 VIP 프로그램 및 
+            맞춤형 서비스를 강화하고, 친환경 지향 고객을 위한 정기 구독 서비스를 도입하여 구매 빈도를 증대시킵니다.</li>
+            
+            <li><span class="highlight">마케팅 채널 전략:</span> 인플루언서 마케팅 예산을 확대하고 화장품/의류 카테고리에 
+            집중 홍보하며, 이메일 마케팅을 활용한 기존 고객 대상 리마케팅을 강화합니다.</li>
+            
+            <li><span class="highlight">시즌별 전략:</span> 5월과 12월 성수기에 맞춘 시즌별 프로모션 전략을 최적화하고, 
+            비수기(1-2월)에는 특별 할인 이벤트로 매출을 유지합니다.</li>
+            
+            <li><span class="highlight">가격 및 서비스 전략:</span> 고객 서비스와 제품 품질의 강점을 유지하면서 
+            가격 만족도를 개선하고, 로열티 프로그램을 강화하여 고객 생애 가치를 극대화합니다.</li>
+        </ol>
+    </div>
+    
+    <div class="page-break"></div>
+    <h2>9. 결론 및 향후 전략</h2>
+    
+    <div class="text-content">
+        <p>Moon Market은 높은 이익률(50.05%)과 고객 충성도를 바탕으로 안정적인 성장을 이어가고 있습니다. 
+        가전, 화장품, 의류 카테고리를 중심으로 한 제품 포트폴리오와 일반 소비자, 친환경 지향 세그먼트를 
+        주요 타겟으로 하는 마케팅 전략이 효과적으로 작동하고 있습니다.</p>
+        
+        <p>향후 지속적인 성장을 위해서는 다음과 같은 전략적 방향성이 필요합니다:</p>
+        
+        <ol>
+            <li><span class="highlight">차별화 강화:</span> 고객 서비스와 친환경성의 강점을 더욱 강화하여 
+            경쟁사와의 차별화 포인트로 활용</li>
+            
+            <li><span class="highlight">세그먼트별 맞춤 전략:</span> 프리미엄, 친환경 지향, 가성비 추구 등 
+            세그먼트별 맞춤형 제품 및 서비스 개발</li>
+            
+            <li><span class="highlight">마케팅 효율성 개선:</span> 인플루언서, 이메일 마케팅 등 ROI가 높은 
+            채널에 마케팅 자원 집중</li>
+            
+            <li><span class="highlight">시즌별 프로모션 최적화:</span> 성수기/비수기에 따른 탄력적인 
+            프로모션 전략 수립</li>
+            
+            <li><span class="highlight">제품 포트폴리오 확장:</span> 수익성이 높은 화장품 카테고리와 
+            매출 비중이 높은 가전 카테고리의 제품 라인업 확대</li>
+        </ol>
+        
+        <p>이러한 전략을 체계적으로 실행함으로써 Moon Market은 시장 점유율을 확대하고 수익성을 더욱 
+        향상시킬 수 있을 것으로 기대됩니다.</p>
     </div>
 </body>
 </html>

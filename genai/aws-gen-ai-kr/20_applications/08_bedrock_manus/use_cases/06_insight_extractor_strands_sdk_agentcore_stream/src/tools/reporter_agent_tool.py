@@ -54,6 +54,7 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
     Returns:
         The generated report content and confirmation of file creation
     """
+    print()  # Add newline before log
     logger.info(f"\n{Colors.GREEN}Reporter Agent Tool starting{Colors.END}")
     
     # Try to extract shared state from global storage
@@ -71,7 +72,8 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
     reporter_agent = strands_utils.get_agent(
         agent_name="reporter",
         system_prompts=apply_prompt_template(prompt_name="reporter", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
-        agent_type="reasoning",  # reporter uses reasoning LLM
+        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        enable_reasoning=False,
         prompt_cache_info=(True, None),  # reasoning agent uses prompt caching
         tools=[python_repl_tool, bash_tool],
         streaming=True  # Enable streaming for consistency

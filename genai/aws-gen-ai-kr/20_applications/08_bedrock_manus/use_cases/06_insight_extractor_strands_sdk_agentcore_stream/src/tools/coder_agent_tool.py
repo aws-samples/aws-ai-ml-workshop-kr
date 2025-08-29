@@ -52,6 +52,7 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
     Returns:
         The result of the code execution or analysis
     """
+    print()  # Add newline before log
     logger.info(f"\n{Colors.GREEN}Coder Agent Tool starting task{Colors.END}")
     
     # Try to extract shared state from global storage
@@ -69,8 +70,8 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
     coder_agent = strands_utils.get_agent(
         agent_name="coder",
         system_prompts=apply_prompt_template(prompt_name="coder", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
-        agent_type="basic",  # coder uses basic LLM
-        prompt_cache_info=(False, None),  # basic agent doesn't use prompt caching
+        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        enable_reasoning=False,
         tools=[python_repl_tool, bash_tool],
         streaming=True  # Enable streaming for consistency
     )
@@ -84,6 +85,7 @@ def handle_coder_agent_tool(task: Annotated[str, "The coding task or question th
         async for event in strands_utils.process_streaming_response_yield(
             coder_agent, message, agent_name="coder", source="coder_tool"
         ):
+            #print (event)
             # Keep for local processing
             streaming_events.append(event)
             

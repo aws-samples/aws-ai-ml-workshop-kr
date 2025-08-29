@@ -8,16 +8,9 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 from datetime import datetime
 
-# 새 핸들러와 포맷터 설정
+# Simple logger setup
 logger = logging.getLogger(__name__)
-logger.propagate = False  # 상위 로거로 메시지 전파 중지
-for handler in logger.handlers[:]: logger.removeHandler(handler)
-handler = logging.StreamHandler()
-formatter = logging.Formatter('\n%(levelname)s [%(name)s] %(message)s')  # 로그 레벨이 동적으로 표시되도록 변경
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-# DEBUG와 INFO 중 원하는 레벨로 설정
-logger.setLevel(logging.INFO)  # 기본 레벨은 INFO로 설정
+logger.setLevel(logging.INFO)
 
 class Colors:
     BLUE = '\033[94m'
@@ -56,13 +49,13 @@ class strands_utils():
         cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
     
-        if llm_type == "reasoning":    
+        if llm_type == "claude-sonnet-3-7":    
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
                 model_id=bedrock_info.get_model_id(model_name="Claude-V3-7-Sonnet-CRI"),
                 streaming=True,
                 max_tokens=8192*5,
-                stop_sequencesb=["\n\nHuman"],
+                stop_sequences=["\n\nHuman"],
                 temperature=1 if enable_reasoning else 0.01, 
                 additional_request_fields={
                     "thinking": {
@@ -77,15 +70,14 @@ class strands_utils():
                     connect_timeout=900,
                     retries=dict(max_attempts=50, mode="adaptive"),
                 )
-            )
-            
-        elif llm_type == "basic":
+            )   
+        elif llm_type == "claude-sonnet-3-5-v-2":
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
                 model_id=bedrock_info.get_model_id(model_name="Claude-V3-5-V-2-Sonnet-CRI"),
                 streaming=True,
                 max_tokens=8192,
-                stop_sequencesb=["\n\nHuman"],
+                stop_sequences=["\n\nHuman"],
                 temperature=0.01,
                 cache_prompt=cache_type, # None/ephemeral/defalut
                 #cache_tools: Cache point type for tools
@@ -95,33 +87,25 @@ class strands_utils():
                     retries=dict(max_attempts=50, mode="standard"),
                 )
             )
-
         else:
             raise ValueError(f"Unknown LLM type: {llm_type}")
             
         return llm
 
-
     @staticmethod
     def get_agent(**kwargs):
 
         agent_name, system_prompts = kwargs["agent_name"], kwargs["system_prompts"]
-        agent_type = kwargs.get("agent_type", "basic") # "reasoning"
+        agent_type = kwargs.get("agent_type", "claude-sonnet-3-7")
+        enable_reasoning = kwargs.get("enable_reasoning", False)
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
-            
-        if "reasoning" in agent_type: enable_reasoning = True
-        else: enable_reasoning = False
-
-        ## Use reasoning model but not use reasoning capability
-        #if agent_name == "supervisor": enable_reasoning = False
-
+        
         prompt_cache, cache_type = prompt_cache_info
         if prompt_cache: logger.info(f"\n{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
         else: logger.info(f"\n{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
 
-        #llm = get_llm_by_type(AGENT_LLM_MAP[agent_name], cache_type, enable_reasoning)
         llm = strands_utils.get_model(llm_type=agent_type, cache_type=cache_type, enable_reasoning=enable_reasoning)
         llm.config["streaming"] = streaming
 
@@ -270,3 +254,55 @@ class strands_utils():
         output["text"] = response.message["content"][-1]["text"]
     
         return output  
+
+    @staticmethod
+    def process_event_for_display(event):
+        """Process events for colored terminal output"""
+        # Initialize colored callbacks for terminal display
+        callback_reasoning = ColoredStreamingCallback('cyan')
+        callback_default = ColoredStreamingCallback('purple')
+        callback_red = ColoredStreamingCallback('red')
+        
+        if event:
+            source = event.get("source", "unknown")
+            if event.get("event_type") == "text_chunk":
+                if source == "coder_tool": 
+                    callback_red.on_llm_new_token(event.get('data', ''))
+                else: 
+                    callback_default.on_llm_new_token(event.get('data', ''))
+                    
+            elif event.get("event_type") == "reasoning":
+                if source == "coder_tool": 
+                    callback_red.on_llm_new_token(event.get('reasoning_text', ''))
+                else: 
+                    callback_reasoning.on_llm_new_token(event.get('reasoning_text', ''))
+            
+            elif event.get("event_type") == "tool_result":
+                tool_name = event.get("tool_name", "unknown")
+                output = event.get("output", "")
+                print(f"\n[TOOL RESULT - {tool_name}]", flush=True)
+                
+                # Parse output based on function name
+                if tool_name == "handle_python_repl_tool" and len(output.split("||")) == 3:
+                    status, code, stdout = output.split("||")
+                    callback_default.on_llm_new_token(f"Status: {status}\n")
+                   
+                    if code:
+                        callback_default.on_llm_new_token(f"Code:\n```python\n{code}\n```\n")
+                    
+                    if stdout and stdout != 'None':
+                        callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
+                
+                elif tool_name == "handle_bash_tool" and len(output.split("||")) >= 3:
+                    parts = output.split("||")
+                    status, stdout, stderr = parts[0], parts[1], parts[2] if len(parts) > 2 else ""
+                    callback_default.on_llm_new_token(f"Status: {status}\n")
+                    
+                    if stdout and stdout != 'None':
+                        callback_default.on_llm_new_token(f"Stdout:\n{stdout}\n")
+                    
+                    if stderr and stderr != 'None':
+                        callback_red.on_llm_new_token(f"Stderr:\n{stderr}\n")
+                
+                else:
+                    callback_default.on_llm_new_token(f"Output: {output}\n")

@@ -1,10 +1,14 @@
 """
-Entry point script for the LangGraph Demo.
+Entry point script for the Strands Agent Demo.
 """
 import os
 import shutil
 import asyncio
 from src.workflow import run_graph_streaming_workflow
+from src.utils.strands_sdk_utils import strands_utils
+
+# Import event queue for unified event processing
+from src.utils.event_queue import get_event, has_events, clear_queue
 
 def remove_artifact_folder(folder_path="./artifacts/"):
     """
@@ -16,157 +20,101 @@ def remove_artifact_folder(folder_path="./artifacts/"):
     if os.path.exists(folder_path):
         print(f"'{folder_path}' 폴더를 삭제합니다...")
         try:
-            # 폴더와 그 내용을 모두 삭제
             shutil.rmtree(folder_path)
             print(f"'{folder_path}' 폴더가 성공적으로 삭제되었습니다.")
-        except Exception as e:
-            print(f"오류 발생: {e}")
+        except Exception as e: print(f"오류 발생: {e}")
     else:
         print(f"'{folder_path}' 폴더가 존재하지 않습니다.")
 
-async def graph_streaming_execution(user_query):
-    """Execute full graph streaming workflow - queue-only event processing"""
+def _setup_execution():
+    """Initialize execution environment"""
     remove_artifact_folder()
-    
-    # Import event queue for unified event processing
-    from src.utils.event_queue import get_event, has_events, clear_queue
-    import asyncio
-    
-    # Clear any existing events in queue
     clear_queue()
-    
     print("\n=== Starting Queue-Only Event Stream ===")
-    print("All events (nodes + tools) processed through global queue")
-    
-    # Start workflow in background - it will put all events in global queue
-    async def run_workflow_background():
-        """Run workflow (since nodes use put_event, no need to iterate)"""
+
+async def _cleanup_workflow(workflow_task):
+    """Handle workflow completion and cleanup"""
+    if not workflow_task.done():
         try:
-            result = await run_graph_streaming_workflow(user_input=user_query)
-            print(f"Workflow completed: {result}")
-        except Exception as e: print(f"Workflow error: {e}")
-    
-    workflow_task = asyncio.create_task(run_workflow_background())
-    
-    try:
-        workflow_complete = False
-        
-        # Main event loop - only monitor global queue
-        while not workflow_complete:
-            # Check for events in global queue
-            if has_events():
-                event = get_event()
-                if event:
-                    #print(f"DEBUG: Queue event: {event}")
-                    yield event
-            
-            # Check if workflow is complete
-            if workflow_task.done(): workflow_complete = True
-            
-            # Small delay to prevent busy waiting
-            await asyncio.sleep(0.01)
-            
-    finally:
-        # Wait for workflow to complete
-        
-        if not workflow_task.done():
+            await asyncio.wait_for(workflow_task, timeout=1.0)
+        except asyncio.TimeoutError:
+            workflow_task.cancel()
             try:
-                await asyncio.wait_for(workflow_task, timeout=1.0)
-            except asyncio.TimeoutError:
-                workflow_task.cancel()
-                try: await workflow_task
-                except asyncio.CancelledError: pass
-        
-        # Process any final remaining events in queue
-        while has_events():
-            event = get_event()
-            if event:
-                print(f"DEBUG: Final queue event: {event}")
-                yield event
-    
-    # Final workflow complete event
-    yield {"type": "workflow_complete", "message": "All events processed through global queue"}
-    
-    # Print the conversation history from global state
-    print("\n\n=== Conversation History ===")
+                await workflow_task
+            except asyncio.CancelledError:
+                pass
+
+async def _yield_pending_events():
+    """Yield any pending events from queue"""
+    while has_events():
+        event = get_event()
+        if event:
+            yield event
+
+def _print_conversation_history():
+    """Print final conversation history"""
+    print("\n=== Conversation History ===")
     from src.graph.nodes import _global_node_states
     shared_state = _global_node_states.get('shared', {})
     history = shared_state.get('history', [])
     
     if history:
         for hist_item in history:
-            print("===")
-            print(f'agent: {hist_item["agent"]}')
-            print(f'message: {hist_item["message"]}')
+            print(f"[{hist_item['agent']}] {hist_item['message']}")
     else:
-        print("No conversation history found in global state")
+        print("No conversation history found")
+
+async def graph_streaming_execution(user_query):
+    """Execute full graph streaming workflow - queue-only event processing"""
+    _setup_execution()
     
-    print("\n=== Queue-Only Event Stream Complete ===")
+    # Start workflow in background
+    async def run_workflow():
+        try:
+            result = await run_graph_streaming_workflow(user_input=user_query)
+            print(f"Workflow completed: {result}")
+        except Exception as e:
+            print(f"Workflow error: {e}")
+    
+    workflow_task = asyncio.create_task(run_workflow())
+    
+    try:
+        # Main event loop - monitor queue until workflow completes
+        while not workflow_task.done():
+            async for event in _yield_pending_events():
+                yield event
+            await asyncio.sleep(0.01)
+            
+    finally:
+        await _cleanup_workflow(workflow_task)
+        
+        # Process remaining events
+        async for event in _yield_pending_events():
+            yield event
+    
+    # Final completion
+    yield {"type": "workflow_complete", "message": "All events processed through global queue"}
+    _print_conversation_history()
+    print("=== Queue-Only Event Stream Complete ===")
 
 if __name__ == "__main__":
 
+    # Use predefined query for testing
+    user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘"
+    # user_query = '''
+        
+    #     분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.
+    #     데이터를 기반으로 마케팅 인사이트 추출을 위한 분석을 진행해 주세요.
+    #     분석은 기본적인 데이터 속성 탐색 부터, 상품 판매 트렌드, 변수 관계, 변수 조합 등 다양한 분석 기법을 수행해 주세요.
+    #     데이터 분석 후 인사이트 추출에 필요한 사항이 있다면 그를 위한 추가 분석도 수행해 주세요.
+    #     분석 리포트는 상세 분석과 그 것을 뒷받침 할 수 있는 이미지 및 차트를 함께 삽입해 주세요.
+    #     최종 리포트는 pdf 형태로 저장해 주세요.
+    # '''
     remove_artifact_folder()
 
-    # Use predefined query for testing
-    user_query = '''
-        이것은 아마존 상품판매 데이터를 분석하고 싶습니다.
-        분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.
-        데이터를 기반으로 마케팅 인사이트 추출을 위한 분석을 진행해 주세요.
-        분석은 기본적인 데이터 속성 탐색 부터, 상품 판매 트렌드, 변수 관계, 변수 조합 등 다양한 분석 기법을 수행해 주세요.
-        데이터 분석 후 인사이트 추출에 필요한 사항이 있다면 그를 위한 추가 분석도 수행해 주세요.
-        분석 리포트는 상세 분석과 그 것을 뒷받침 할 수 있는 이미지 및 차트를 함께 삽입해 주세요.
-        최종 리포트는 pdf 형태로 저장해 주세요.
-    '''
-    
     # Use full graph streaming execution for real-time streaming with graph structure
     async def run_streaming():
-        # Initialize colored callbacks for terminal display
-        from src.utils.strands_sdk_utils import ColoredStreamingCallback
-        callback_reasoning = ColoredStreamingCallback('cyan')
-        callback_default = ColoredStreamingCallback('purple')
-        callback_red = ColoredStreamingCallback('red')
-        
-        def process_event_for_display(event):
-            """Process events for colored terminal output"""
-            if event:
-                source = event.get("source", "unknown")
-                if event.get("event_type") == "text_chunk":
-                    if source == "coder_tool": 
-                        callback_red.on_llm_new_token(event.get('data', ''))
-                    else: 
-                        callback_default.on_llm_new_token(event.get('data', ''))
-                        
-                elif event.get("event_type") == "reasoning":
-                    if source == "coder_tool": 
-                        callback_red.on_llm_new_token(event.get('reasoning_text', ''))
-                    else: 
-                        callback_reasoning.on_llm_new_token(event.get('reasoning_text', ''))
-                
-                #elif event.get("event_type") == "tool_use":
-                #    tool_name = event.get("tool_name", "unknown")
-                #    print(f"\n[TOOL START - {tool_name}]", flush=True)
-                
-                elif event.get("event_type") == "tool_result":
-                    tool_name = event.get("tool_name", "unknown")
-                    output = event.get("output", "")
-                    print(f"\n[TOOL RESULT - {tool_name}]", flush=True)
-                    
-                    # Parse output based on function name
-                    if tool_name == "handle_python_repl_tool" and len(output.split("||")) == 3:
-                        status, code, stdout = output.split("||")
-                        callback_default.on_llm_new_token(f"Status: {status}\n")
-                        callback_default.on_llm_new_token(f"Code:\n{code}\n")
-                        callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
-                    elif tool_name == "handle_bash_tool" and len(output.split("||")) == 2:
-                        cmd, stdout = output.split("||")
-                        callback_default.on_llm_new_token(f"CMD:\n{cmd}\n")
-                        callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
-                    else:
-                        callback_default.on_llm_new_token(output)
-        
         async for event in graph_streaming_execution(user_query):
-            # Process event for terminal display
-            process_event_for_display(event)
-            # Event is yielded from graph_streaming_execution and consumed here for display
-    
+            strands_utils.process_event_for_display(event)
+
     asyncio.run(run_streaming())
