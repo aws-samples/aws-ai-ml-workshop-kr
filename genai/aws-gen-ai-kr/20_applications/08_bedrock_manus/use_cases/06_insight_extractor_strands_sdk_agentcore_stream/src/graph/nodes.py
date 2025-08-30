@@ -178,13 +178,12 @@ async def planner_node(task=None, **kwargs):
         system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
         agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=True,
-        prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
+        prompt_cache_info=(False, None),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
         streaming=True,
     )
     
     full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
-    
     
     # Collect streaming events and build final response
     streaming_events = []

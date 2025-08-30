@@ -170,20 +170,20 @@ def optimize_image_size(image_path, max_width=800, max_height=600, quality=90):
                 # 기존 파일 덮어쓰기 (또는 _optimized 접미사 추가)
                 resized_img.save(image_path, optimize=True, quality=quality)
                 
-                print(f"이미지 최적화 완료: {image_path} ({original_width}x{original_height} -> {new_width}x{new_height})")
+                print(f"이미지 최적화 완료: {{image_path}} ({{original_width}}x{{original_height}} -> {{new_width}}x{{new_height}})")
                 return True
             else:
-                print(f"이미지 크기가 적절합니다: {image_path} ({original_width}x{original_height})")
+                print(f"이미지 크기가 적절합니다: {{image_path}} ({{original_width}}x{{original_height}})")
                 return False
                 
     except Exception as e:
-        print(f"이미지 최적화 실패 {image_path}: {e}")
+        print(f"이미지 최적화 실패 {{image_path}}: {{e}}")
         return False
 
 # artifacts 디렉토리의 모든 이미지 파일 최적화
 image_extensions = ['*.png', '*.jpg', '*.jpeg', '*.gif']
 for extension in image_extensions:
-    for image_path in glob.glob(f'./artifacts/{extension}'):
+    for image_path in glob.glob(f'./artifacts/{{extension}}'):
         optimize_image_size(image_path)
 
 # HTML 파일 경로와 PDF 파일 경로 설정
