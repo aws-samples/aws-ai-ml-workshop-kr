@@ -36,25 +36,12 @@ def log_io(func: Callable) -> Callable:
             #logger.info(f"{Colors.RED}Python-REPL - {status}\n{code}{Colors.END}")
             #logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
         else:
-            if len(result.split("||")) == 2:
-                _, stdout = result.split("||")
-            #logger.info(f"{Colors.RED}\nTool {func_name} returned:\n{result}{Colors.END}")
+            cmd = None
+            if len(result.split("||")) == 2: cmd, stdout = result.split("||")
+            #logger.info(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
 
-        # Put tool result in global queue
-        try:
-            from src.utils.event_queue import put_event
-            from datetime import datetime
-            
-            put_event({
-                "timestamp": datetime.now().isoformat(),
-                "type": "tool_result",
-                "event_type": "tool_result",
-                "tool_name": func_name,
-                "output": result,
-                "source": "tool_execution"
-            })
-        except ImportError:
-            pass  # Fallback if event_queue not available
+        # Note: Tool results are now handled through Strands SDK message wrapper
+        # No need to put events in queue here
 
         return result
 

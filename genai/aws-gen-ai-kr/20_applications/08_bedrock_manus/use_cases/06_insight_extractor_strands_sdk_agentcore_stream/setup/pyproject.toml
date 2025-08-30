@@ -28,4 +28,5 @@ dependencies = [
     "langchain>=0.3.27",
     "lovelyplots>=1.0.2",
     "weasyprint>=66.0",
+    "scikit-learn>=1.7.1",
 ]

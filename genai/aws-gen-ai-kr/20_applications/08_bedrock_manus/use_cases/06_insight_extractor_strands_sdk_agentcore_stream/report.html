@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Nanum Gothic', sans-serif;
-            margin: 2cm;
+            margin: 1cm;
             line-height: 1.5;
             font-size: 0.85em;
         }
@@ -32,18 +32,18 @@
             margin-top: 20px;
         }
         img {
-            max-width: 70%;
+            max-width: 95%;
             height: auto;
             display: block;
-            margin: 15px auto;
+            margin: 10px auto;
             border: 1px solid #ddd;
         }
         .chart-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 15px 0;
-            width: 70%;
+            margin: 10px 0;
+            width: 95%;
             margin-left: auto;
             margin-right: auto;
         }
@@ -81,499 +81,307 @@
         .key-insight {
             background-color: #e8f4f8;
             padding: 10px;
-            border-left: 3px solid #2ecc71;
+            border-left: 3px solid #2980b9;
             margin: 10px 0;
         }
         .recommendation {
-            background-color: #f0f7fb;
+            background-color: #eafaf1;
             padding: 10px;
-            border-left: 3px solid #f39c12;
+            border-left: 3px solid #27ae60;
             margin: 10px 0;
-        }
-        .highlight {
-            font-weight: bold;
-            color: #e74c3c;
-        }
-        .page-break {
-            page-break-before: always;
         }
     </style>
 </head>
 <body>
     <h1>Moon Market 판매 현황 보고서</h1>
-    <p style="text-align: right;">작성일: 2025년 8월 29일</p>
     
+    <h2>개요</h2>
     <div class="executive-summary">
-        <h2>요약</h2>
-        <p>본 보고서는 Moon Market의 판매 현황을 세일즈 및 마케팅 관점에서 종합적으로 분석한 결과입니다. 
-        2024년 8월부터 2025년 7월까지의 판매 데이터를 기반으로 시계열 분석, 제품 분석, 고객 분석, 마케팅 채널 분석, 
-        주요 KPI 계산, 경쟁사 비교 분석 등을 수행하였습니다.</p>
-        
-        <p>Moon Market은 총 매출 약 14.9억원, 총 이익 약 7.5억원을 기록하였으며, 평균 이익률은 50.05%로 
-        높은 수준을 유지하고 있습니다. 가전(30.5%), 화장품(19.4%), 의류(19.0%) 카테고리가 핵심 매출원이며, 
-        일반 소비자(28.4%)와 친환경 지향(24.4%) 세그먼트가 주요 고객층입니다. 마케팅 채널 중에서는 
-        인플루언서(26.3%)와 검색광고(24.9%) 채널이 가장 효과적인 것으로 나타났습니다.</p>
+        <p>본 보고서는 Moon Market의 2023년 1월부터 2024년 7월까지의 판매 데이터를 세일즈 및 마케팅 관점에서 분석한 결과입니다. 총 10,000건의 판매 데이터를 기반으로 판매 트렌드, 주요 성과 지표(KPI), 마케팅 캠페인 효과, 고객 세그먼트 분석 등을 수행하였습니다. 분석 결과, Moon Market은 전년 동기 대비 9.26%의 성장률을 보이고 있으며, 특히 전자제품 카테고리가 매출의 가장 큰 부분을 차지하고 있습니다. 마케팅 캠페인은 매출 증대에 효과적이었으며, 특히 SNS 프로모션 캠페인이 가장 높은 ROI를 기록했습니다. 고객 세그먼트별 맞춤형 마케팅 전략과 효과적인 채널 활용을 통해 매출 증대와 고객 만족도 향상을 이룰 수 있을 것으로 기대됩니다.</p>
     </div>
     
-    <div class="page-break"></div>
-    <h2>목차</h2>
+    <h2>주요 발견사항</h2>
+    <ul>
+        <li>총 매출액은 4,824,531,293원이며, 전자제품 카테고리가 3,531,356,865원으로 가장 높은 매출을 기록했습니다.</li>
+        <li>2024년 1-7월 매출은 2023년 동기 대비 9.26% 성장했습니다.</li>
+        <li>마케팅 캠페인 기간 동안 평균 매출이 비캠페인 기간 대비 1.36배 증가했습니다.</li>
+        <li>고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 매우 효과적입니다.</li>
+        <li>SNS 프로모션 캠페인이 838.52%로 가장 높은 ROI를 기록했습니다.</li>
+        <li>이메일 채널이 1,026,120,647원으로 가장 높은 매출을 발생시켰습니다.</li>
+        <li>고객 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다.</li>
+    </ul>
+    
+    <h2>판매 트렌드 및 패턴 분석</h2>
+    
+    <h3>월별 매출 추이</h3>
+    <div class="chart-container">
+        <img src="./artifacts/monthly_sales_trend.png" alt="월별 매출 추이">
+        <div class="image-caption">그림 1: 월별 매출 추이 (2023년 1월 ~ 2024년 7월)</div>
+    </div>
+    <div class="text-content">
+        <p>월별 매출 추이를 분석한 결과, 전반적으로 상승 추세를 보이고 있으며, 특히 연말(11-12월)과 여름 시즌(6-7월)에 매출이 증가하는 계절적 패턴이 관찰됩니다. 2024년의 매출은 2023년 동기 대비 꾸준히 높은 수준을 유지하고 있어, 전체적인 성장세가 지속되고 있음을 알 수 있습니다.</p>
+    </div>
+    
+    <h3>카테고리별 매출 분석</h3>
+    <div class="chart-container">
+        <img src="./artifacts/category_sales.png" alt="카테고리별 총 매출액">
+        <div class="image-caption">그림 2: 카테고리별 총 매출액</div>
+    </div>
+    <div class="text-content">
+        <p>카테고리별 매출 분석 결과, 전자제품이 3,531,356,865원으로 전체 매출의 가장 큰 부분을 차지하고 있습니다. 이는 고가 제품군인 전자제품의 특성이 반영된 결과로, 전자제품에 대한 마케팅 전략을 강화하면 전체 매출 증대에 효과적일 것으로 예상됩니다.</p>
+    </div>
+    
+    <h3>계절별 카테고리 매출 현황</h3>
+    <div class="chart-container">
+        <img src="./artifacts/seasonal_category_sales.png" alt="계절별 카테고리 매출 현황">
+        <div class="image-caption">그림 3: 계절별 카테고리 매출 현황 히트맵</div>
+    </div>
+    <div class="text-content">
+        <p>계절별 카테고리 매출 현황을 분석한 결과, 의류는 가을과 겨울에 매출이 높고, 전자제품은 연말에 매출이 증가하는 등 카테고리별로 뚜렷한 계절적 패턴이 관찰됩니다. 이러한 패턴을 고려하여 계절별 맞춤형 마케팅 전략과 재고 관리가 필요합니다.</p>
+    </div>
+    
+    <h3>연도별 매출 비교</h3>
+    <div class="chart-container">
+        <img src="./artifacts/yearly_comparison.png" alt="2023년 vs 2024년 월별 매출 비교">
+        <div class="image-caption">그림 4: 2023년 vs 2024년 월별 매출 비교</div>
+    </div>
+    <div class="text-content">
+        <p>2023년과 2024년의 월별 매출을 비교한 결과, 2024년 1-7월 매출이 2023년 동기 대비 9.26% 성장했습니다. 특히 3월과 6월에 큰 폭의 성장이 관찰되었으며, 이는 해당 시기에 진행된 마케팅 캠페인의 효과로 분석됩니다.</p>
+    </div>
+    
+    <h3>캠페인별 성과 분석</h3>
+    <div class="chart-container">
+        <img src="./artifacts/campaign_performance.png" alt="캠페인별 평균 매출액">
+        <div class="image-caption">그림 5: 캠페인별 평균 매출액</div>
+    </div>
+    <div class="text-content">
+        <p>캠페인별 성과를 분석한 결과, 캠페인 기간 동안의 평균 매출은 비캠페인 기간 대비 1.36배 높았습니다. 특히 'SNS 프로모션' 캠페인이 가장 높은 평균 매출을 기록했으며, 이는 소셜 미디어를 통한 마케팅이 효과적임을 시사합니다.</p>
+    </div>
+    
+    <div class="key-insight">
+        <strong>핵심 인사이트:</strong> 전자제품 카테고리가 전체 매출의 가장 큰 부분을 차지하고 있으며, 계절별로 카테고리 매출에 뚜렷한 차이가 있습니다. 마케팅 캠페인은 매출 증대에 효과적이며, 특히 SNS 프로모션 캠페인이 가장 효과적이었습니다.
+    </div>
+    
+    <h2>주요 성과 지표(KPI) 및 마케팅 ROI 분석</h2>
+    
+    <h3>고객 세그먼트별 매출 기여도</h3>
+    <div class="chart-container">
+        <img src="./artifacts/segment_revenue_pie.png" alt="고객 세그먼트별 매출 기여도">
+        <div class="image-caption">그림 6: 고객 세그먼트별 매출 기여도</div>
+    </div>
+    <div class="text-content">
+        <p>고객 세그먼트별 매출 기여도를 분석한 결과, VIP 고객은 전체 고객의 약 9.9%에 불과하지만, 매출의 상당 부분을 차지하고 있습니다. 이는 VIP 고객 유지 및 확대를 위한 충성도 프로그램 강화가 매출 증대에 효과적일 것임을 시사합니다.</p>
+    </div>
+    
+    <h3>마케팅 캠페인별 ROI</h3>
+    <div class="chart-container">
+        <img src="./artifacts/campaign_roi.png" alt="마케팅 캠페인별 ROI">
+        <div class="image-caption">그림 7: 마케팅 캠페인별 ROI</div>
+    </div>
+    <div class="text-content">
+        <p>마케팅 캠페인별 ROI를 분석한 결과, 'SNS 프로모션' 캠페인이 838.52%로 가장 높은 ROI를 기록했으며, '시즌 세일' 캠페인이 260.30%로 가장 낮은 ROI를 기록했습니다. 성공적인 캠페인의 전략과 타겟팅 방식을 다른 캠페인에도 적용하여 전체 마케팅 효율성을 높일 필요가 있습니다.</p>
+    </div>
+    
+    <h3>마케팅 채널별 매출</h3>
+    <div class="chart-container">
+        <img src="./artifacts/channel_revenue.png" alt="마케팅 채널별 총 매출">
+        <div class="image-caption">그림 8: 마케팅 채널별 총 매출</div>
+    </div>
+    <div class="text-content">
+        <p>마케팅 채널별 매출을 분석한 결과, '이메일' 채널이 1,026,120,647원으로 가장 높은 매출을 발생시켰습니다. 이는 이메일 마케팅이 Moon Market의 고객층에게 효과적임을 시사하며, 이메일 마케팅 전략을 더욱 강화할 필요가 있습니다.</p>
+    </div>
+    
+    <h3>마케팅 채널별 전환율</h3>
+    <div class="chart-container">
+        <img src="./artifacts/channel_conversion.png" alt="마케팅 채널별 전환율">
+        <div class="image-caption">그림 9: 마케팅 채널별 전환율</div>
+    </div>
+    <div class="text-content">
+        <p>마케팅 채널별 전환율을 분석한 결과, '온라인 광고' 채널이 1.12로 가장 높은 전환율을 기록했습니다. 이는 온라인 광고가 구매 의사가 높은 고객들에게 효과적으로 도달하고 있음을 시사합니다.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>주요 KPI</th>
+            <th>값</th>
+            <th>의미</th>
+        </tr>
+        <tr>
+            <td>총 매출액</td>
+            <td>4,824,531,293원</td>
+            <td>분석 기간 동안의 총 매출액</td>
+        </tr>
+        <tr>
+            <td>평균 주문 금액</td>
+            <td>482,453원</td>
+            <td>주문당 평균 금액</td>
+        </tr>
+        <tr>
+            <td>고객 획득 비용(CAC)</td>
+            <td>103,175원</td>
+            <td>신규 고객 1명을 획득하는데 드는 비용</td>
+        </tr>
+        <tr>
+            <td>고객 생애 가치(CLV)</td>
+            <td>4,509,888원</td>
+            <td>고객이 생애 동안 창출하는 평균 가치</td>
+        </tr>
+        <tr>
+            <td>CLV/CAC 비율</td>
+            <td>43.71</td>
+            <td>마케팅 투자 효율성 지표 (3 이상이면 양호)</td>
+        </tr>
+    </table>
+    
+    <div class="key-insight">
+        <strong>핵심 인사이트:</strong> 고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 매우 효과적입니다. 'SNS 프로모션' 캠페인이 가장 높은 ROI를 기록했으며, '이메일' 채널이 가장 높은 매출을 발생시켰습니다.
+    </div>
+    
+    <h2>고객 세그먼트 분석</h2>
+    
+    <h3>세그먼트별 총 구매액 분포</h3>
+    <div class="chart-container">
+        <img src="./artifacts/segment_purchase_distribution.png" alt="세그먼트별 총 구매액 분포">
+        <div class="image-caption">그림 10: 세그먼트별 총 구매액 분포</div>
+    </div>
+    <div class="text-content">
+        <p>세그먼트별 총 구매액 분포를 분석한 결과, VIP 고객의 평균 총구매액은 787,142원, 충성 고객은 781,668원, 일반 고객은 807,697원, 신규 고객은 789,961원으로 나타났습니다. 일반 고객의 평균 총구매액이 가장 높게 나타난 것은 특이한 점으로, 이들을 VIP 고객으로 전환하기 위한 전략이 필요합니다.</p>
+    </div>
+    
+    <h3>세그먼트별 구매 횟수 분포</h3>
+    <div class="chart-container">
+        <img src="./artifacts/segment_frequency_distribution.png" alt="세그먼트별 구매 횟수 분포">
+        <div class="image-caption">그림 11: 세그먼트별 구매 횟수 분포</div>
+    </div>
+    <div class="text-content">
+        <p>세그먼트별 구매 횟수 분포를 분석한 결과, VIP 고객의 평균 구매횟수는 1.63회, 충성 고객은 1.62회, 일반 고객은 1.67회, 신규 고객은 1.63회로 나타났습니다. 일반 고객의 구매 횟수가 가장 높은 것은 주목할 만한 점으로, 이들의 구매 패턴을 더 자세히 분석할 필요가 있습니다.</p>
+    </div>
+    
+    <h3>세그먼트별 제품 카테고리 선호도</h3>
+    <div class="chart-container">
+        <img src="./artifacts/segment_category_preference.png" alt="고객 세그먼트별 제품 카테고리 선호도">
+        <div class="image-caption">그림 12: 고객 세그먼트별 제품 카테고리 선호도</div>
+    </div>
+    <div class="text-content">
+        <p>세그먼트별 제품 카테고리 선호도를 분석한 결과, VIP 고객은 전자제품 선호도가 높고, 충성 고객은 다양한 카테고리를 구매하지만 특히 의류와 화장품 선호도가 높습니다. 일반 고객은 생활용품과 식품 비중이 높고, 신규 고객은 식품과 생활용품 위주로 구매하는 경향이 있습니다. 이러한 선호도 차이를 고려한 맞춤형 마케팅 전략이 필요합니다.</p>
+    </div>
+    
+    <h3>세그먼트별 마케팅 채널 선호도</h3>
+    <div class="chart-container">
+        <img src="./artifacts/segment_channel_preference.png" alt="고객 세그먼트별 마케팅 채널 선호도">
+        <div class="image-caption">그림 13: 고객 세그먼트별 마케팅 채널 선호도</div>
+    </div>
+    <div class="text-content">
+        <p>세그먼트별 마케팅 채널 선호도를 분석한 결과, VIP 고객은 이메일과 제휴 마케팅에 높은 반응을 보이고, 충성 고객은 온라인 광고와 소셜 미디어에 반응이 좋습니다. 일반 고객은 오프라인 광고와 이메일에 반응하고, 신규 고객은 소셜 미디어와 온라인 광고에 높은 반응을 보입니다. 이러한 채널 선호도 차이를 고려한 세그먼트별 맞춤형 마케팅 전략이 필요합니다.</p>
+    </div>
+    
+    <h3>세그먼트별 인구통계학적 특성</h3>
+    <div class="chart-container">
+        <img src="./artifacts/segment_gender_distribution.png" alt="고객 세그먼트별 성별 분포">
+        <div class="image-caption">그림 14: 고객 세그먼트별 성별 분포</div>
+    </div>
+    <div class="chart-container">
+        <img src="./artifacts/segment_age_distribution.png" alt="고객 세그먼트별 연령대 분포">
+        <div class="image-caption">그림 15: 고객 세그먼트별 연령대 분포</div>
+    </div>
+    <div class="text-content">
+        <p>세그먼트별 인구통계학적 특성을 분석한 결과, 성별과 연령대에 따라 세그먼트 분포에 차이가 있음을 확인할 수 있습니다. 이러한 인구통계학적 특성을 고려한 타겟 마케팅 전략이 필요합니다.</p>
+    </div>
+    
+    <div class="key-insight">
+        <strong>핵심 인사이트:</strong> 고객 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다. VIP 고객은 전자제품을 선호하고 이메일과 제휴 마케팅에 높은 반응을 보이는 반면, 신규 고객은 식품과 생활용품을 주로 구매하고 소셜 미디어와 온라인 광고에 높은 반응을 보입니다.
+    </div>
+    
+    <h2>마케팅 활동과 판매 성과 간의 상관관계 분석</h2>
+    
+    <h3>캠페인 기간 vs 비캠페인 기간 매출 비교</h3>
+    <div class="chart-container">
+        <img src="./artifacts/campaign_daily_sales_comparison.png" alt="캠페인 기간 vs 비캠페인 기간 일일 매출 비교">
+        <div class="image-caption">그림 16: 캠페인 기간 vs 비캠페인 기간 일일 매출 비교</div>
+    </div>
+    <div class="text-content">
+        <p>캠페인 기간과 비캠페인 기간의 일일 매출을 비교한 결과, 캠페인 기간 동안의 일평균 매출(10,001,415원)이 비캠페인 기간(7,674,684원) 대비 30.32% 높게 나타났습니다. 이는 마케팅 캠페인이 매출 증대에 효과적임을 명확히 보여줍니다.</p>
+    </div>
+    
+    <h3>캠페인 전/중/후 매출 효과</h3>
+    <div class="chart-container">
+        <img src="./artifacts/campaign_before_after_effect.png" alt="캠페인 전/중/후 일평균 매출 비교">
+        <div class="image-caption">그림 17: 캠페인 전/중/후 일평균 매출 비교</div>
+    </div>
+    <div class="text-content">
+        <p>캠페인 전/중/후의 일평균 매출을 비교한 결과, 캠페인 효과는 종료 후에도 일정 기간 지속되는 경향이 있음을 확인할 수 있습니다. 특히 'SNS 프로모션' 캠페인은 캠페인 전 대비 88.05%의 매출 증가를 보였으며, 캠페인 종료 후에도 효과가 지속되었습니다. 이는 캠페인 종료 후에도 관련 마케팅 활동을 점진적으로 줄여나가는 전략이 효과적일 수 있음을 시사합니다.</p>
+    </div>
+    
+    <h3>마케팅 채널별 일일 매출 추이</h3>
+    <div class="chart-container">
+        <img src="./artifacts/channel_daily_sales_trend.png" alt="마케팅 채널별 일일 매출 추이">
+        <div class="image-caption">그림 18: 마케팅 채널별 일일 매출 추이</div>
+    </div>
+    <div class="text-content">
+        <p>마케팅 채널별 일일 매출 추이를 분석한 결과, 채널별로 매출 패턴에 차이가 있음을 확인할 수 있습니다. 특히 이메일 채널은 꾸준히 높은 매출을 발생시키고 있으며, 소셜 미디어 채널은 캠페인 기간 동안 큰 폭의 매출 증가를 보이고 있습니다. 이러한 채널별 특성을 고려한 마케팅 전략이 필요합니다.</p>
+    </div>
+    
+    <div class="key-insight">
+        <strong>핵심 인사이트:</strong> 마케팅 캠페인은 매출 증대에 효과적이며, 특히 'SNS 프로모션' 캠페인이 가장 효과적이었습니다. 캠페인 효과는 종료 후에도 일정 기간 지속되는 경향이 있으며, 마케팅 채널별로 매출 패턴에 차이가 있습니다.
+    </div>
+    
+    <h2>결론 및 전략적 제안</h2>
+    
+    <h3>주요 결론</h3>
     <ol>
-        <li>판매 현황 개요</li>
-        <li>시계열 분석: 월별/분기별 판매 추세</li>
-        <li>제품 분석: 카테고리별, 제품별 매출 및 수익성</li>
-        <li>고객 분석: 고객 세그먼트별 구매 패턴</li>
-        <li>마케팅 채널 효과 분석: 채널별 ROI 및 전환율</li>
-        <li>주요 KPI 분석</li>
-        <li>경쟁사 비교 분석</li>
-        <li>주요 인사이트 및 전략적 제안</li>
-        <li>결론 및 향후 전략</li>
+        <li>Moon Market은 전년 동기 대비 9.26%의 성장률을 보이고 있으며, 특히 전자제품 카테고리가 매출의 가장 큰 부분을 차지하고 있습니다.</li>
+        <li>마케팅 캠페인은 매출 증대에 효과적이며, 특히 SNS 프로모션 캠페인이 가장 높은 ROI를 기록했습니다.</li>
+        <li>고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 매우 효과적입니다.</li>
+        <li>고객 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다.</li>
+        <li>계절별로 카테고리 매출에 뚜렷한 차이가 있어, 계절적 특성을 고려한 마케팅 전략이 필요합니다.</li>
     </ol>
     
-    <div class="page-break"></div>
-    <h2>1. 판매 현황 개요</h2>
-
-    <div class="chart-container">
-        <img src="./artifacts/sales_summary_dashboard.png" alt="매출 요약 대시보드">
-        <div class="image-caption">매출 요약 대시보드</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>종합 매출 및 이익 요약</h3>
+    <h3>전략적 제안</h3>
+    <div class="recommendation">
+        <strong>1. 제품 카테고리 전략</strong>
         <ul>
-            <li><span class="highlight">총 매출:</span> 1,489,708,872원</li>
-            <li><span class="highlight">총 이익:</span> 745,637,245원</li>
-            <li><span class="highlight">평균 이익률:</span> 50.05%</li>
-            <li><span class="highlight">총 주문 수:</span> 13,238건</li>
-        </ul>
-        
-        <h3>카테고리별 매출 및 이익</h3>
-        <table>
-            <tr>
-                <th>카테고리</th>
-                <th>매출</th>
-                <th>이익</th>
-                <th>이익률</th>
-                <th>매출 비중</th>
-            </tr>
-            <tr>
-                <td>가전</td>
-                <td>454,690,900원</td>
-                <td>234,986,300원</td>
-                <td>51.68%</td>
-                <td>30.52%</td>
-            </tr>
-            <tr>
-                <td>화장품</td>
-                <td>288,459,300원</td>
-                <td>155,224,500원</td>
-                <td>53.81%</td>
-                <td>19.36%</td>
-            </tr>
-            <tr>
-                <td>의류</td>
-                <td>282,469,100원</td>
-                <td>131,763,300원</td>
-                <td>46.65%</td>
-                <td>18.96%</td>
-            </tr>
-            <tr>
-                <td>식품</td>
-                <td>269,869,400원</td>
-                <td>139,144,500원</td>
-                <td>51.56%</td>
-                <td>18.12%</td>
-            </tr>
-            <tr>
-                <td>생활용품</td>
-                <td>194,220,200원</td>
-                <td>84,518,630원</td>
-                <td>43.52%</td>
-                <td>13.04%</td>
-            </tr>
-        </table>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> 가전 카테고리가 전체 매출의 30.5%로 가장 큰 비중을 차지하고 있으며, 
-            화장품 카테고리는 53.8%로 가장 높은 이익률을 기록하고 있습니다. 생활용품 카테고리는 이익률이 43.5%로 
-            가장 낮아 개선이 필요합니다.</p>
-        </div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/key_kpi_dashboard.png" alt="주요 KPI 대시보드">
-        <div class="image-caption">주요 KPI 대시보드</div>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>2. 시계열 분석: 월별/분기별 판매 추세</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/monthly_sales_trend.png" alt="월별 매출 및 이익 추이 그래프">
-        <div class="image-caption">월별 매출 및 이익 추이 그래프</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>월별 매출 및 이익 분석</h3>
-        <p>2024년 8월부터 2025년 7월까지의 월별 매출 및 이익 추이를 분석한 결과, 
-        <span class="highlight">12월(2.42억원)</span>과 <span class="highlight">5월(1.68억원)</span>에 
-        매출 피크가 발생했습니다. 반면, <span class="highlight">2월(0.62억원)</span>과 
-        <span class="highlight">1월(0.85억원)</span>은 매출이 가장 낮은 시기로 나타났습니다.</p>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> 연말 시즌(11-12월)과 봄 시즌(4-5월)에 매출이 집중되어 있으며, 
-            겨울 시즌(1-2월)은 매출이 크게 감소하는 패턴을 보입니다. 이는 계절적 요인과 명절/휴가 시즌의 
-            영향으로 분석됩니다.</p>
-        </div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/quarterly_sales_trend.png" alt="분기별 매출 및 이익 그래프">
-        <div class="image-caption">분기별 매출 및 이익 그래프</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>분기별 매출 및 이익 분석</h3>
-        <p>분기별 분석 결과, <span class="highlight">2024년 4분기(5.12억원)</span>가 가장 높은 매출을 기록했으며, 
-        <span class="highlight">2025년 2분기(3.96억원)</span>가 그 뒤를 이었습니다. 
-        이익률은 2024년 4분기가 55.9%로 가장 높았습니다.</p>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/weekday_sales_pattern.png" alt="요일별 매출 패턴 그래프">
-        <div class="image-caption">요일별 매출 패턴 그래프</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>요일별 매출 패턴</h3>
-        <p>요일별 매출 패턴을 분석한 결과, <span class="highlight">주말(토요일, 일요일)</span>에 매출이 집중되어 있으며, 
-        특히 일요일(2.55억원)이 가장 높은 매출을 기록했습니다. 평일 중에서는 목요일(2.03억원)의 매출이 
-        상대적으로 높게 나타났습니다.</p>
-        
-        <div class="recommendation">
-            <p><strong>전략적 제안:</strong> 주말 쇼핑 수요를 활용한 주말 특별 프로모션을 강화하고, 
-            평일(특히 월요일-수요일) 매출 증대를 위한 평일 전용 할인 혜택이나 이벤트를 도입할 필요가 있습니다.</p>
-        </div>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>3. 제품 분석: 카테고리별, 제품별 매출 및 수익성</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/category_sales_pie.png" alt="카테고리별 매출 비중 파이 차트">
-        <div class="image-caption">카테고리별 매출 비중</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/category_sales_bar.png" alt="카테고리별 매출 및 이익 막대 차트">
-        <div class="image-caption">카테고리별 매출 및 이익</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>카테고리별 매출 및 수익성 분석</h3>
-        <p>카테고리별 매출 및 수익성을 분석한 결과, <span class="highlight">가전</span> 카테고리가 전체 매출의 30.5%로 
-        가장 큰 비중을 차지하고 있으며, <span class="highlight">화장품</span>(19.4%)과 <span class="highlight">의류</span>(19.0%)가 
-        그 뒤를 이었습니다. 이익률 측면에서는 <span class="highlight">화장품</span> 카테고리가 53.8%로 가장 높았으며, 
-        <span class="highlight">생활용품</span> 카테고리는 43.5%로 가장 낮았습니다.</p>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/top_products_sales.png" alt="상위 제품 매출 차트">
-        <div class="image-caption">상위 제품 매출</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/product_profitability_analysis.png" alt="제품 수익성 분석 차트">
-        <div class="image-caption">제품 수익성 분석</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>베스트셀러 제품 분석</h3>
-        <p>베스트셀러 제품을 분석한 결과, <span class="highlight">프리미엄 스마트 TV</span>, 
-        <span class="highlight">유기농 스킨케어 세트</span>, <span class="highlight">고급 주방용품 세트</span> 등이 
-        높은 매출을 기록했습니다. 특히 프리미엄 제품군의 판매가 두드러지며, 이는 고객들이 품질과 브랜드 가치를 
-        중요시하는 경향을 보여줍니다.</p>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> 화장품 카테고리는 매출 비중(19.4%)에 비해 높은 이익률(53.8%)을 
-            기록하고 있어 수익성이 가장 우수한 카테고리입니다. 반면, 생활용품 카테고리는 이익률 개선이 필요합니다.</p>
-        </div>
-        
-        <div class="recommendation">
-            <p><strong>전략적 제안:</strong> 화장품과 가전 카테고리에 마케팅 자원을 집중하고 제품 라인업을 확장하는 전략이 
-            효과적일 것으로 예상됩니다. 생활용품 카테고리는 제품 차별화 및 이익률 개선을 위한 전략이 필요합니다.</p>
-        </div>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>4. 고객 분석: 고객 세그먼트별 구매 패턴</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/segment_revenue_pie.png" alt="고객 세그먼트별 매출 비중 파이 차트">
-        <div class="image-caption">고객 세그먼트별 매출 비중</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/segment_metrics.png" alt="고객 세그먼트별 주요 지표 차트">
-        <div class="image-caption">고객 세그먼트별 주요 지표</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>고객 세그먼트별 매출 및 구매 패턴</h3>
-        <p>고객 세그먼트별 매출 및 구매 패턴을 분석한 결과, <span class="highlight">일반 소비자</span>(28.4%)와 
-        <span class="highlight">친환경 지향</span>(24.4%) 세그먼트가 주요 고객층으로 나타났습니다. 
-        객단가 측면에서는 <span class="highlight">프리미엄</span> 세그먼트가 약 193만원으로 가장 높았으며, 
-        <span class="highlight">가성비 추구</span> 세그먼트는 약 130만원으로 가장 낮았습니다.</p>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/segment_category_preference.png" alt="세그먼트별 카테고리 선호도 차트">
-        <div class="image-caption">세그먼트별 카테고리 선호도</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/segment_age_distribution.png" alt="세그먼트별 연령 분포 차트">
-        <div class="image-caption">세그먼트별 연령 분포</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>세그먼트별 특성 및 선호도</h3>
-        <p>세그먼트별 특성 및 선호도를 분석한 결과, <span class="highlight">프리미엄</span> 세그먼트는 가전과 화장품 카테고리를, 
-        <span class="highlight">친환경 지향</span> 세그먼트는 식품과 화장품 카테고리를, <span class="highlight">트렌드 민감</span> 
-        세그먼트는 의류와 화장품 카테고리를 선호하는 것으로 나타났습니다.</p>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> 프리미엄 세그먼트는 객단가가 가장 높고(약 193만원) 재구매율도 100%로 
-            고객 충성도가 매우 높습니다. 친환경 지향 세그먼트는 전체 매출의 24.4%를 차지하며 지속적으로 성장하고 있습니다.</p>
-        </div>
-        
-        <div class="recommendation">
-            <p><strong>전략적 제안:</strong> 프리미엄 세그먼트를 위한 VIP 프로그램 및 맞춤형 서비스를 강화하고, 
-            친환경 지향 고객을 위한 정기 구독 서비스를 도입하여 구매 빈도를 증대시키는 전략이 효과적일 것으로 예상됩니다.</p>
-        </div>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>5. 마케팅 채널 효과 분석: 채널별 ROI 및 전환율</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/marketing_channel_roi.png" alt="마케팅 채널별 ROI 차트">
-        <div class="image-caption">마케팅 채널별 ROI</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/marketing_channel_conversion.png" alt="마케팅 채널별 전환율 차트">
-        <div class="image-caption">마케팅 채널별 전환율</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>마케팅 채널별 효과 분석</h3>
-        <p>마케팅 채널별 효과를 분석한 결과, <span class="highlight">인플루언서</span>(26.3%)와 
-        <span class="highlight">검색광고</span>(24.9%) 채널이 가장 높은 매출 기여도를 보였습니다. 
-        ROI 측면에서는 <span class="highlight">인플루언서</span> 마케팅이 252.3%로 가장 높았으며, 
-        <span class="highlight">이메일 마케팅</span>도 215.6%로 비용 대비 효율성이 높았습니다.</p>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/marketing_efficiency_analysis.png" alt="마케팅 효율성 분석 차트">
-        <div class="image-caption">마케팅 효율성 분석</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/channel_category_effect.png" alt="채널별 카테고리 효과 차트">
-        <div class="image-caption">채널별 카테고리 효과</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>채널별 카테고리 효과 및 타겟팅 효율성</h3>
-        <p>채널별 카테고리 효과를 분석한 결과, <span class="highlight">인플루언서</span> 마케팅은 화장품과 의류 카테고리에서, 
-        <span class="highlight">검색광고</span>는 가전 카테고리에서, <span class="highlight">오프라인 이벤트</span>는 
-        식품 카테고리에서 특히 효과적인 것으로 나타났습니다.</p>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> 인플루언서 마케팅은 가장 높은 ROI(252.3%)를 기록하며 특히 화장품과 
-            의류 카테고리에서 효과적입니다. 이메일 마케팅은 비용이 낮아 ROI(215.6%)가 높지만 매출 기여도(2.7%)는 
-            낮은 편입니다.</p>
-        </div>
-        
-        <div class="recommendation">
-            <p><strong>전략적 제안:</strong> 인플루언서 마케팅 예산을 확대하고 화장품/의류 카테고리에 집중 홍보하는 전략이 
-            효과적일 것으로 예상됩니다. 또한, 이메일 마케팅을 활용한 기존 고객 대상 리마케팅을 강화하여 비용 효율적인 
-            매출 증대를 도모할 필요가 있습니다.</p>
-        </div>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>6. 주요 KPI 분석</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/key_kpi_summary.png" alt="주요 KPI 요약 차트">
-        <div class="image-caption">주요 KPI 요약</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>주요 KPI 분석 결과</h3>
-        <ul>
-            <li><span class="highlight">평균 주문 가치(AOV):</span> 112,533원</li>
-            <li><span class="highlight">고객 생애 가치(CLV):</span> 4,469,127원</li>
-            <li><span class="highlight">재구매율:</span> 100.00%</li>
-            <li><span class="highlight">평균 구매 빈도:</span> 13.36회/년</li>
+            <li>전자제품이 매출의 가장 큰 부분을 차지하므로, 이 카테고리에 대한 마케팅 전략 강화</li>
+            <li>계절별 특성을 고려한 맞춤형 마케팅 전략과 재고 관리 필요</li>
+            <li>의류는 가을과 겨울, 전자제품은 연말에 집중적인 프로모션 진행</li>
         </ul>
     </div>
     
-    <div class="chart-container">
-        <img src="./artifacts/monthly_aov_trend.png" alt="월별 평균 주문 가치 추이 차트">
-        <div class="image-caption">월별 평균 주문 가치 추이</div>
+    <div class="recommendation">
+        <strong>2. 고객 세그먼트 전략</strong>
+        <ul>
+            <li>VIP 고객 유지 및 확대를 위한 충성도 프로그램 강화</li>
+            <li>세그먼트별 맞춤형 마케팅 전략 수립 (VIP와 충성 고객에게는 이메일과 제휴 마케팅, 신규 고객에게는 소셜 미디어와 온라인 광고)</li>
+            <li>일반 고객의 구매력이 높은 점을 활용하여 이들을 VIP 고객으로 전환하기 위한 전략 수립</li>
+        </ul>
     </div>
     
-    <div class="chart-container">
-        <img src="./artifacts/monthly_retention_rate.png" alt="월별 고객 유지율 추이 차트">
-        <div class="image-caption">월별 고객 유지율 추이</div>
+    <div class="recommendation">
+        <strong>3. 마케팅 캠페인 전략</strong>
+        <ul>
+            <li>SNS 프로모션과 같은 성공적인 캠페인의 전략과 타겟팅 방식을 다른 캠페인에도 적용</li>
+            <li>캠페인 빈도와 기간을 최적화하여 전체 마케팅 효율성 향상</li>
+            <li>캠페인 종료 후에도 관련 마케팅 활동을 점진적으로 줄여나가는 전략 고려</li>
+        </ul>
     </div>
     
-    <div class="text-content">
-        <h3>KPI 추이 분석</h3>
-        <p>주요 KPI의 월별 추이를 분석한 결과, 평균 주문 가치(AOV)는 12월(146,627원)과 5월(114,100원)에 
-        가장 높았으며, 고객 유지율은 연중 높은 수준(평균 95% 이상)을 유지하고 있습니다.</p>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> 고객 생애 가치(CLV)가 447만원으로 매우 높은 수준이며, 
-            이는 고객 충성도와 재구매율이 높다는 것을 의미합니다. 평균 구매 빈도도 13.36회/년으로 
-            고객들이 Moon Market을 정기적으로 이용하고 있음을 보여줍니다.</p>
-        </div>
-        
-        <div class="recommendation">
-            <p><strong>전략적 제안:</strong> 로열티 프로그램을 강화하여 고객 생애 가치를 극대화하고, 
-            비수기(1-2월)에는 특별 할인 이벤트를 통해 평균 주문 가치를 높이는 전략이 필요합니다.</p>
-        </div>
+    <div class="recommendation">
+        <strong>4. 마케팅 채널 전략</strong>
+        <ul>
+            <li>이메일과 같은 효과적인 채널에 마케팅 예산을 더 할당</li>
+            <li>채널별 타겟팅을 세분화하고, 각 세그먼트에 맞는 메시지와 프로모션 제공</li>
+            <li>온라인 광고의 높은 전환율을 활용하여 구매 의사가 높은 고객 타겟팅 강화</li>
+        </ul>
     </div>
     
-    <div class="page-break"></div>
-    <h2>7. 경쟁사 비교 분석</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/market_share_analysis.png" alt="시장 점유율 분석 차트">
-        <div class="image-caption">시장 점유율 분석</div>
+    <div class="recommendation">
+        <strong>5. 신규 고객 확보 전략</strong>
+        <ul>
+            <li>신규 고객의 CLV(549,281원)가 CAC(103,175원)보다 높으므로, 신규 고객 확보를 위한 마케팅 투자 확대 고려</li>
+            <li>신규 고객이 선호하는 소셜 미디어와 온라인 광고 채널을 통한 마케팅 강화</li>
+            <li>신규 고객의 첫 구매 경험을 개선하여 재구매율 향상 및 충성 고객으로의 전환 유도</li>
+        </ul>
     </div>
     
-    <div class="chart-container">
-        <img src="./artifacts/competitor_strengths_weaknesses.png" alt="경쟁사 강점 및 약점 분석 차트">
-        <div class="image-caption">경쟁사 강점 및 약점 분석</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>시장 점유율 및 경쟁 포지션</h3>
-        <p>시장 점유율 및 경쟁 포지션을 분석한 결과, Moon Market은 시장 점유율 19.8%로 업계 3위를 
-        차지하고 있습니다. 1위 기업(25.3%)과 2위 기업(22.1%)과의 격차는 각각 5.5%p, 2.3%p입니다.</p>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/customer_satisfaction.png" alt="고객 만족도 비교 차트">
-        <div class="image-caption">고객 만족도 비교</div>
-    </div>
-    
-    <div class="chart-container">
-        <img src="./artifacts/price_competitiveness.png" alt="가격 경쟁력 비교 차트">
-        <div class="image-caption">가격 경쟁력 비교</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>경쟁사 대비 강점 및 약점</h3>
-        <p>경쟁사 대비 Moon Market의 강점은 <span class="highlight">고객 서비스(9.1점)</span>와 
-        <span class="highlight">친환경성(9점)</span>으로 나타났으며, 약점은 <span class="highlight">가격 경쟁력(7.2점)</span>과 
-        <span class="highlight">제품 다양성(7.8점)</span>으로 분석되었습니다.</p>
-        
-        <div class="key-insight">
-            <p><strong>핵심 인사이트:</strong> Moon Market은 고객 서비스와 친환경성에서 경쟁 우위를 가지고 있으나, 
-            가격 경쟁력은 상대적으로 낮은 편입니다. 특히 가성비 추구 세그먼트를 타겟팅하기 위해서는 
-            가격 경쟁력 개선이 필요합니다.</p>
-        </div>
-        
-        <div class="recommendation">
-            <p><strong>전략적 제안:</strong> 고객 서비스와 친환경성의 강점을 마케팅 메시지로 강조하고, 
-            가격 민감 고객을 위한 가성비 라인업을 확대하여 가격 경쟁력을 개선할 필요가 있습니다.</p>
-        </div>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>8. 주요 인사이트 및 전략적 제안</h2>
-    
-    <div class="chart-container">
-        <img src="./artifacts/insights_strategies_summary.png" alt="인사이트 및 전략 요약 차트">
-        <div class="image-caption">인사이트 및 전략 요약</div>
-    </div>
-    
-    <div class="text-content">
-        <h3>주요 인사이트</h3>
-        <ol>
-            <li><span class="highlight">매출 및 이익 현황:</span> 총 매출 약 14.9억원, 총 이익 약 7.5억원으로 
-            평균 이익률 50.05%의 높은 수준을 유지하고 있으며, 5월과 12월에 매출 피크가 발생합니다.</li>
-            
-            <li><span class="highlight">카테고리별 분석:</span> 가전(30.5%), 화장품(19.4%), 의류(19.0%) 카테고리가 
-            핵심 매출원이며, 화장품 카테고리가 53.8%로 가장 높은 이익률을 기록하고 있습니다.</li>
-            
-            <li><span class="highlight">고객 세그먼트 분석:</span> 일반 소비자(28.4%)와 친환경 지향(24.4%) 세그먼트가 
-            주요 고객층이며, 프리미엄 세그먼트는 객단가가 가장 높고(약 193만원) 재구매율도 100%로 고객 충성도가 
-            매우 높습니다.</li>
-            
-            <li><span class="highlight">마케팅 채널 효과:</span> 인플루언서(26.3%)와 검색광고(24.9%) 채널이 
-            가장 효과적이며, 인플루언서 마케팅이 가장 높은 ROI(252.3%)를 기록하고 있습니다. 이메일 마케팅은 
-            비용 대비 효율성이 높습니다(ROI 215.6%).</li>
-            
-            <li><span class="highlight">주요 KPI:</span> 평균 주문 가치(AOV) 112,533원, 고객 생애 가치(CLV) 4,469,127원, 
-            평균 구매 빈도 13.36회/년으로 고객 충성도가 높은 편입니다.</li>
-            
-            <li><span class="highlight">경쟁사 비교 분석:</span> Moon Market은 시장 점유율 19.8%로 업계 3위이며, 
-            고객 서비스(9.1점)와 친환경성(9점)에서 경쟁 우위를 가지고 있으나, 가격 경쟁력은 상대적으로 낮은 편입니다.</li>
-        </ol>
-        
-        <h3>전략적 제안</h3>
-        <ol>
-            <li><span class="highlight">카테고리 전략:</span> 화장품과 가전 카테고리에 마케팅 자원을 집중하고 
-            제품 라인업을 확장하며, 생활용품 카테고리는 제품 차별화 및 이익률 개선이 필요합니다.</li>
-            
-            <li><span class="highlight">고객 세그먼트 전략:</span> 프리미엄 세그먼트를 위한 VIP 프로그램 및 
-            맞춤형 서비스를 강화하고, 친환경 지향 고객을 위한 정기 구독 서비스를 도입하여 구매 빈도를 증대시킵니다.</li>
-            
-            <li><span class="highlight">마케팅 채널 전략:</span> 인플루언서 마케팅 예산을 확대하고 화장품/의류 카테고리에 
-            집중 홍보하며, 이메일 마케팅을 활용한 기존 고객 대상 리마케팅을 강화합니다.</li>
-            
-            <li><span class="highlight">시즌별 전략:</span> 5월과 12월 성수기에 맞춘 시즌별 프로모션 전략을 최적화하고, 
-            비수기(1-2월)에는 특별 할인 이벤트로 매출을 유지합니다.</li>
-            
-            <li><span class="highlight">가격 및 서비스 전략:</span> 고객 서비스와 제품 품질의 강점을 유지하면서 
-            가격 만족도를 개선하고, 로열티 프로그램을 강화하여 고객 생애 가치를 극대화합니다.</li>
-        </ol>
-    </div>
-    
-    <div class="page-break"></div>
-    <h2>9. 결론 및 향후 전략</h2>
-    
-    <div class="text-content">
-        <p>Moon Market은 높은 이익률(50.05%)과 고객 충성도를 바탕으로 안정적인 성장을 이어가고 있습니다. 
-        가전, 화장품, 의류 카테고리를 중심으로 한 제품 포트폴리오와 일반 소비자, 친환경 지향 세그먼트를 
-        주요 타겟으로 하는 마케팅 전략이 효과적으로 작동하고 있습니다.</p>
-        
-        <p>향후 지속적인 성장을 위해서는 다음과 같은 전략적 방향성이 필요합니다:</p>
-        
-        <ol>
-            <li><span class="highlight">차별화 강화:</span> 고객 서비스와 친환경성의 강점을 더욱 강화하여 
-            경쟁사와의 차별화 포인트로 활용</li>
-            
-            <li><span class="highlight">세그먼트별 맞춤 전략:</span> 프리미엄, 친환경 지향, 가성비 추구 등 
-            세그먼트별 맞춤형 제품 및 서비스 개발</li>
-            
-            <li><span class="highlight">마케팅 효율성 개선:</span> 인플루언서, 이메일 마케팅 등 ROI가 높은 
-            채널에 마케팅 자원 집중</li>
-            
-            <li><span class="highlight">시즌별 프로모션 최적화:</span> 성수기/비수기에 따른 탄력적인 
-            프로모션 전략 수립</li>
-            
-            <li><span class="highlight">제품 포트폴리오 확장:</span> 수익성이 높은 화장품 카테고리와 
-            매출 비중이 높은 가전 카테고리의 제품 라인업 확대</li>
-        </ol>
-        
-        <p>이러한 전략을 체계적으로 실행함으로써 Moon Market은 시장 점유율을 확대하고 수익성을 더욱 
-        향상시킬 수 있을 것으로 기대됩니다.</p>
-    </div>
+    <p>이 분석 결과를 바탕으로 Moon Market은 세일즈 및 마케팅 전략을 최적화하여 매출 증대와 고객 만족도 향상을 이룰 수 있을 것입니다. 특히 고객 세그먼트별 맞춤형 전략과 효과적인 마케팅 캠페인 운영이 중요한 성공 요소가 될 것입니다.</p>
 </body>
 </html>

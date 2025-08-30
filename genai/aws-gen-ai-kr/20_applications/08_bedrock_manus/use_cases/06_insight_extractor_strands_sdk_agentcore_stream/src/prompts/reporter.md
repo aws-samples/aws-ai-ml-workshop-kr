@@ -185,7 +185,7 @@ Important: Variable states are not preserved between conversation turns. All cod
 </report_structure>
 
 <report_output_formats>
-- [CRITICAL] When the user requests PDF output, you MUST generate the PDF file
+- [CRITICAL] When the user requests PDF output, you MUST generate the PDF file at ./artifacts/final_report.pdf
 - Reports can be saved in multiple formats based on user requests:
   1. HTML (default): Always provide the report in HTML format
   2. PDF: When explicitly requested by the user (e.g., "Save as PDF", "Provide in PDF format")
@@ -433,7 +433,7 @@ with open(md_file_path, 'w', encoding='utf-8') as f:
     
     # Add remaining report content
 
-# Set markdown file path and PDF file path
+# Set markdown file path and PDF file path  
 pdf_file_path = './artifacts/final_report.pdf'
 
 # Detect Korean/English - simple heuristic

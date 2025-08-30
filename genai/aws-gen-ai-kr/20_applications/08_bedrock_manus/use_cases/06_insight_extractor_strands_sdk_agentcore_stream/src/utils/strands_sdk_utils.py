@@ -192,9 +192,13 @@ class strands_utils():
             logger.error(f"Error in streaming response: {e}")
             logger.error(traceback.format_exc())  # Detailed error logging
         
+    # 툴 사용 ID와 툴 이름 매핑을 위한 클래스 변수
+    _tool_use_mapping = {}
+    
     @staticmethod
     async def _convert_to_agentcore_event(strands_event, agent_name, session_id, source=None):
         """Strands 이벤트를 AgentCore 스트리밍 형식으로 변환"""
+        
     
         base_event = {
             "timestamp": datetime.now().isoformat(),
@@ -216,15 +220,76 @@ class strands_utils():
         # 도구 사용 이벤트
         elif "current_tool_use" in strands_event:
             tool_info = strands_event["current_tool_use"]
+            tool_id = tool_info.get("toolUseId")
+            tool_name = tool_info.get("name", "unknown")
+            
+            # toolUseId와 tool_name 매핑 저장
+            if tool_id and tool_name:
+                strands_utils._tool_use_mapping[tool_id] = tool_name
+            
             return {
                 **base_event,
                 "type": "agent_tool_stream",
                 "event_type": "tool_use",
-                "tool_name": tool_info.get("name", "unknown"),
-                "tool_id": tool_info.get("toolUseId"),
+                "tool_name": tool_name,
+                "tool_id": tool_id,
                 "tool_input": tool_info.get("input", {})
             }
         
+        # 도구 결과 이벤트 - 두 가지 형식 처리 (현재 미사용)
+        # elif "tool_result" in strands_event:
+        #     tool_result = strands_event["tool_result"]
+        #     return {
+        #         **base_event,
+        #         "type": "agent_tool_stream", 
+        #         "event_type": "tool_result",
+        #         "tool_name": tool_result.get("name", "unknown"),
+        #         "tool_id": tool_result.get("toolUseId"),
+        #         "output": str(tool_result.get("content", [{}])[0].get("text", "")) if tool_result.get("content") else ""
+        #     }
+        # 메시지 형식의 도구 결과 이벤트 (strands_tools 등 외부 툴) - 현재 미사용
+        # elif "content" in strands_event and isinstance(strands_event.get("content"), list):
+        #     for content_item in strands_event["content"]:
+        #         if "toolResult" in content_item:
+        #             tool_result = content_item["toolResult"]
+        #             tool_id = tool_result.get("toolUseId")
+        #             
+        #             # 저장된 매핑에서 툴 이름 찾기
+        #             tool_name = strands_utils._tool_use_mapping.get(tool_id, "external_tool")
+        #             output = str(tool_result.get("content", [{}])[0].get("text", "")) if tool_result.get("content") else ""
+        #             
+        #             
+        #             return {
+        #                 **base_event,
+        #                 "type": "agent_tool_stream",
+        #                 "event_type": "tool_result", 
+        #                 "tool_name": tool_name,
+        #                 "tool_id": tool_id,
+        #                 "output": output
+        #             }
+        
+        # message 래퍼 안의 tool result 처리
+        if "message" in strands_event:
+            message = strands_event["message"]
+            if isinstance(message, dict) and "content" in message and isinstance(message["content"], list):
+                for content_item in message["content"]:
+                    if isinstance(content_item, dict) and "toolResult" in content_item:
+                        tool_result = content_item["toolResult"]
+                        tool_id = tool_result.get("toolUseId")
+                        
+                        # 저장된 매핑에서 툴 이름 찾기
+                        tool_name = strands_utils._tool_use_mapping.get(tool_id, "external_tool")
+                        output = str(tool_result.get("content", [{}])[0].get("text", "")) if tool_result.get("content") else ""
+                        
+                        return {
+                            **base_event,
+                            "type": "agent_tool_stream",
+                            "event_type": "tool_result", 
+                            "tool_name": tool_name,
+                            "tool_id": tool_id,
+                            "output": output
+                        }
+            
         # 추론 이벤트
         elif "reasoning" in strands_event and strands_event.get("reasoning"):
             return {
@@ -277,32 +342,33 @@ class strands_utils():
                 else: 
                     callback_reasoning.on_llm_new_token(event.get('reasoning_text', ''))
             
+            elif event.get("event_type") == "tool_use": 
+                #print ("tool_use", event)
+                pass
             elif event.get("event_type") == "tool_result":
                 tool_name = event.get("tool_name", "unknown")
                 output = event.get("output", "")
                 print(f"\n[TOOL RESULT - {tool_name}]", flush=True)
                 
                 # Parse output based on function name
-                if tool_name == "handle_python_repl_tool" and len(output.split("||")) == 3:
+                if tool_name == "python_repl_tool" and len(output.split("||")) == 3:
                     status, code, stdout = output.split("||")
                     callback_default.on_llm_new_token(f"Status: {status}\n")
                    
-                    if code:
-                        callback_default.on_llm_new_token(f"Code:\n```python\n{code}\n```\n")
-                    
-                    if stdout and stdout != 'None':
-                        callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
+                    if code: callback_default.on_llm_new_token(f"Code:\n```python\n{code}\n```\n")
+                    if stdout and stdout != 'None': callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
                 
-                elif tool_name == "handle_bash_tool" and len(output.split("||")) >= 3:
-                    parts = output.split("||")
-                    status, stdout, stderr = parts[0], parts[1], parts[2] if len(parts) > 2 else ""
-                    callback_default.on_llm_new_token(f"Status: {status}\n")
-                    
-                    if stdout and stdout != 'None':
-                        callback_default.on_llm_new_token(f"Stdout:\n{stdout}\n")
-                    
-                    if stderr and stderr != 'None':
-                        callback_red.on_llm_new_token(f"Stderr:\n{stderr}\n")
+                elif tool_name == "bash_tool" and len(output.split("||")) == 2:
+                    cmd, stdout = output.split("||")
+                    if cmd: callback_default.on_llm_new_token(f"CMD:\n```bash\n{cmd}\n```\n")
+                    if stdout and stdout != 'None': callback_default.on_llm_new_token(f"Output:\n{stdout}\n")
                 
-                else:
-                    callback_default.on_llm_new_token(f"Output: {output}\n")
+                # file_read 및 기타 외부 툴 처리
+                elif tool_name == "file_read":
+                    # file_read 결과는 보통 길어서 앞부분만 표시
+                    truncated_output = output[:500] + "..." if len(output) > 500 else output
+                    callback_default.on_llm_new_token(f"File content preview:\n{truncated_output}\n")
+                    
+                # else: # 기타 모든 툴 결과 표시, 코더 툴, 리포터 툴 결과도 다 출력 (for debug)
+                #     callback_default.on_llm_new_token(f"Output: {output}\n")
+            

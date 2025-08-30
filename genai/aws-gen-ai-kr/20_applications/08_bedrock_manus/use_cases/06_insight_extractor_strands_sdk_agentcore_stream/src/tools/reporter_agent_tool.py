@@ -7,6 +7,7 @@ from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 
 from src.tools import python_repl_tool, bash_tool
+from strands_tools import file_read
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -75,7 +76,7 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(True, None),  # reasoning agent uses prompt caching
-        tools=[python_repl_tool, bash_tool],
+        tools=[python_repl_tool, bash_tool, file_read],
         streaming=True  # Enable streaming for consistency
     )
     
