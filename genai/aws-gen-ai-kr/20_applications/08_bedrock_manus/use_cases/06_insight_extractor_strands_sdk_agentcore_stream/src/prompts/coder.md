@@ -253,5 +253,5 @@ print("Code has been saved to ./artifacts/solution.py")
   - Use this path when writing files, e.g., plt.savefig("./artifacts/plot.png")
   - Specify this path when generating output that needs to be saved to disk
 - [CRITICAL] Always write code according to the plan defined in the FULL_PLAN (Coder part only) variable
-- [CRITICAL] Maintain the same language as the user request
+- [CRITICAL] Always analyze the entire USER_REQUEST to detect the main language and respond in that language. For mixed languages, use whichever language is dominant in the request.
 </note>

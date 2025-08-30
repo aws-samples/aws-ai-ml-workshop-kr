@@ -1,169 +1,246 @@
 
 ==================================================
-## Analysis Stage: 판매 트렌드 및 패턴 분석
-## Execution Time: 2025-08-30 12:08:07
+## Analysis Stage: 판매 트렌드 분석
+## Execution Time: 2025-08-30 14:45:45
 --------------------------------------------------
 Result Description: 
 
-Moon Market 판매 데이터 기본 정보:
-- 데이터 기간: 2023-01-01 ~ 2024-07-31
-- 총 판매 건수: 10,000건
-- 총 매출액: 4,824,531,293원
-- 평균 주문 금액: 482,453원
-
-판매 트렌드 및 패턴 분석 결과:
-1. 총 매출액: 4,824,531,293원
-2. 최고 매출 카테고리: 전자제품 (3,531,356,865원)
-3. 전년 동기 대비 성장률: 9.26%
-4. 캠페인 효과: 캠페인 기간 평균 매출은 비캠페인 기간 대비 1.36배
+판매 트렌드 분석 결과:
+1. 일별 판매량 및 매출 분석: 일별 판매량과 매출 추이를 분석하여 시간에 따른 변화를 파악했습니다.
+2. 월별 판매량 및 매출 분석: 월별 판매량과 매출을 분석하여 월간 성과를 비교했습니다.
+3. 요일별 판매량 및 매출 분석: 요일별 판매량과 매출을 분석하여 요일에 따른 판매 패턴을 파악했습니다.
 
 --------------------------------------------------
 Key Findings & Insights:
 
 [DISCOVERY & INSIGHTS]:
-- Discovery 1: 전자제품 카테고리가 전체 매출의 가장 큰 부분을 차지하고 있습니다.
-- Insight 1: 고가 제품군인 전자제품에 대한 마케팅 전략을 강화하면 전체 매출 증대에 효과적일 것입니다.
-- Discovery 2: 2024년 1-7월 매출이 2023년 동기 대비 9.26% 성장했습니다.
-- Insight 2: 지속적인 성장세를 보이고 있으며, 이 추세를 유지하기 위한 전략이 필요합니다.
-- Discovery 3: 마케팅 캠페인 기간 동안 평균 매출이 1.36배 증가했습니다.
-- Insight 3: 마케팅 캠페인이 매출 증대에 효과적이므로, 캠페인 빈도와 기간을 최적화할 필요가 있습니다.
-- Discovery 4: 계절별로 카테고리 매출에 뚜렷한 차이가 있습니다. 특히 의류는 가을과 겨울에 매출이 높습니다.
-- Insight 4: 계절별 특성을 고려한 맞춤형 마케팅 전략과 재고 관리가 필요합니다.
+- 일별 판매 패턴: 일별 판매량과 매출에서 특정 패턴이나 피크가 있는지 확인했습니다.
+- 월별 성장 추세: 월별 데이터를 통해 성장 또는 하락 추세를 파악했습니다.
+- 요일별 판매 특성: 특정 요일에 판매가 집중되는지 확인하여 재고 관리 및 마케팅 전략에 활용할 수 있습니다.
+- 판매량과 매출의 상관관계: 판매량이 많다고 반드시 매출이 비례하여 증가하지 않을 수 있으며, 이는 제품 믹스와 관련이 있습니다.
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/monthly_sales_trend.png : 월별 매출 추이 그래프
-- ./artifacts/category_sales.png : 카테고리별 총 매출액 그래프
-- ./artifacts/seasonal_category_sales.png : 계절별 카테고리 매출 현황 히트맵
-- ./artifacts/yearly_comparison.png : 2023년 vs 2024년 월별 매출 비교 그래프
-- ./artifacts/campaign_performance.png : 캠페인별 평균 매출액 그래프
-- ./artifacts/monthly_sales.csv : 월별 매출 데이터
-- ./artifacts/category_sales.csv : 카테고리별 매출 데이터
-- ./artifacts/seasonal_category_sales.csv : 계절별 카테고리 매출 데이터
-- ./artifacts/campaign_performance.csv : 캠페인 효과 데이터
+- ./artifacts/daily_sales_qty.png : 일별 판매량 추이 그래프
+- ./artifacts/daily_sales_amount.png : 일별 매출 추이 그래프
+- ./artifacts/monthly_sales_qty.png : 월별 판매량 그래프
+- ./artifacts/monthly_sales_amount.png : 월별 매출 그래프
+- ./artifacts/weekday_sales_qty.png : 요일별 판매량 그래프
+- ./artifacts/weekday_sales_amount.png : 요일별 매출 그래프
+- ./artifacts/daily_sales_analysis.csv : 일별 판매 분석 데이터
+- ./artifacts/monthly_sales_analysis.csv : 월별 판매 분석 데이터
+- ./artifacts/weekday_sales_analysis.csv : 요일별 판매 분석 데이터
 ==================================================
 
 ==================================================
-## Analysis Stage: 주요 성과 지표(KPI) 및 마케팅 ROI 분석
-## Execution Time: 2025-08-30 12:09:16
+## Analysis Stage: 제품 카테고리별 판매 성과 분석
+## Execution Time: 2025-08-30 14:46:22
 --------------------------------------------------
 Result Description: 
 
-Moon Market 주요 성과 지표(KPI) 분석 결과:
-
-1. 총 매출액: 4,824,531,293원
-2. 평균 주문 금액: 482,453원
-3. 고객 획득 비용(CAC): 103,175원
-4. 고객 생애 가치(CLV): 4,509,888원
-5. CLV/CAC 비율: 43.71
-
-마케팅 캠페인 ROI 분석:
-- 최고 ROI 캠페인: SNS 프로모션 (ROI: 838.52%)
-- 최저 ROI 캠페인: 시즌 세일 (ROI: 260.30%)
-
-마케팅 채널 효과 분석:
-- 최고 매출 채널: 이메일 (매출: 1,026,120,647원)
-- 최고 전환율 채널: 온라인 광고 (전환율: 1.12)
+제품 카테고리별 판매 성과 분석 결과:
+1. 카테고리별 판매량 및 매출 분석: 각 카테고리의 판매량과 매출 비중을 분석했습니다.
+2. 월별 카테고리 판매 추이 분석: 월별로 각 카테고리의 판매량과 매출 추이를 분석했습니다.
+3. 카테고리별 평균 구매 금액 분석: 각 카테고리의 평균 구매 금액을 분석했습니다.
+4. 카테고리별 판매 성과 요약: 각 카테고리의 판매 성과를 종합적으로 요약했습니다.
 
 --------------------------------------------------
 Key Findings & Insights:
 
 [DISCOVERY & INSIGHTS]:
-- Discovery 1: VIP 고객 세그먼트는 전체 고객의 10% 미만이지만, 매출의 상당 부분을 차지합니다.
-- Insight 1: VIP 고객 유지 및 확대를 위한 충성도 프로그램 강화가 필요합니다.
-
-- Discovery 2: 고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 효과적입니다.
-- Insight 2: CLV/CAC 비율이 3 이상이면 마케팅 투자가 건전하다고 판단할 수 있으며, 현재 비율은 양호한 수준입니다.
-
-- Discovery 3: 'SNS 프로모션' 캠페인이 가장 높은 ROI(838.52%)를 보이고 있습니다.
-- Insight 3: 성공적인 캠페인의 전략과 타겟팅 방식을 다른 캠페인에도 적용하여 전체 마케팅 효율성을 높일 수 있습니다.
-
-- Discovery 4: '이메일' 채널이 가장 높은 매출을 발생시키고 있습니다.
-- Insight 4: 효과적인 채널에 마케팅 예산을 더 할당하고, 저성과 채널은 전략을 재검토해야 합니다.
-
-- Discovery 5: 신규 고객의 CLV는 549,281원으로, 고객 획득 비용(103,175원)보다 높습니다.
-- Insight 5: 신규 고객 확보를 위한 마케팅 투자를 늘려도 장기적으로 수익성이 있을 것으로 예상됩니다.
+- 카테고리별 판매 비중: 각 카테고리가 전체 판매량과 매출에서 차지하는 비중을 파악했습니다.
+- 카테고리별 성장 추세: 월별 데이터를 통해 각 카테고리의 성장 또는 하락 추세를 파악했습니다.
+- 카테고리별 수익성: 평균 구매 금액을 통해 각 카테고리의 수익성을 비교했습니다.
+- 카테고리별 판매 전략: 판매량과 매출 비중이 다른 카테고리에 대해 차별화된 마케팅 전략이 필요합니다.
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/segment_revenue_pie.png : 고객 세그먼트별 매출 기여도 파이 차트
-- ./artifacts/campaign_roi.png : 마케팅 캠페인별 ROI 바 차트
-- ./artifacts/channel_revenue.png : 마케팅 채널별 총 매출 바 차트
-- ./artifacts/channel_conversion.png : 마케팅 채널별 전환율 바 차트
-- ./artifacts/campaign_roi.csv : 캠페인별 ROI 데이터
-- ./artifacts/channel_metrics.csv : 마케팅 채널별 성과 지표
-- ./artifacts/customer_lifetime_value.csv : 고객 세그먼트별 생애 가치
+- ./artifacts/category_sales_qty_pie.png : 카테고리별 판매량 비중 파이 차트
+- ./artifacts/category_sales_amount_pie.png : 카테고리별 매출 비중 파이 차트
+- ./artifacts/monthly_category_sales_qty.png : 월별 카테고리 판매량 추이 그래프
+- ./artifacts/monthly_category_sales_amount.png : 월별 카테고리 매출 추이 그래프
+- ./artifacts/category_avg_amount.png : 카테고리별 평균 구매 금액 그래프
+- ./artifacts/category_performance.csv : 카테고리별 판매 성과 요약 데이터
+- ./artifacts/monthly_category_sales.csv : 월별 카테고리 판매 데이터
 ==================================================
 
 ==================================================
-## Analysis Stage: 고객 세그먼트 분석 및 마케팅-판매 상관관계 분석
-## Execution Time: 2025-08-30 12:10:58
+## Analysis Stage: 상위/하위 판매 제품 분석
+## Execution Time: 2025-08-30 14:47:12
 --------------------------------------------------
 Result Description: 
 
-고객 세그먼트 분석 결과:
-
-1. 세그먼트별 고객 행동 특성:
-   - VIP 고객: 평균 총구매액 787,142원, 평균 구매횟수 1.63회
-   - 충성 고객: 평균 총구매액 781,668원, 평균 구매횟수 1.62회
-   - 일반 고객: 평균 총구매액 807,697원, 평균 구매횟수 1.67회
-   - 신규 고객: 평균 총구매액 789,961원, 평균 구매횟수 1.63회
-
-2. 세그먼트별 제품 카테고리 선호도:
-   - VIP 고객: 전자제품 선호도 높음
-   - 충성 고객: 다양한 카테고리 구매, 특히 의류와 화장품 선호
-   - 일반 고객: 생활용품과 식품 비중 높음
-   - 신규 고객: 식품과 생활용품 위주 구매
-
-3. 세그먼트별 마케팅 채널 반응도:
-   - VIP 고객: 이메일과 제휴 마케팅에 높은 반응
-   - 충성 고객: 온라인 광고와 소셜 미디어에 반응 좋음
-   - 일반 고객: 오프라인 광고와 이메일에 반응
-   - 신규 고객: 소셜 미디어와 온라인 광고에 높은 반응
-
-마케팅 활동과 판매 성과 간의 상관관계 분석:
-
-1. 캠페인 효과:
-   - 캠페인 기간 일평균 매출: 10,001,415원
-   - 비캠페인 기간 일평균 매출: 7,674,684원
-   - 매출 증가율: 30.32%
-
-2. 가장 효과적인 캠페인:
-   - 캠페인명: SNS 프로모션
-   - 캠페인 전 대비 증가율: 88.05%
+상위/하위 판매 제품 분석 결과:
+1. 제품별 판매량 및 매출 분석: 각 제품의 판매량과 매출을 분석했습니다.
+2. 판매량 기준 상위/하위 10개 제품 분석: 판매량이 가장 많은/적은 10개 제품을 분석했습니다.
+3. 매출 기준 상위/하위 10개 제품 분석: 매출이 가장 높은/낮은 10개 제품을 분석했습니다.
+4. 평균 판매 금액 기준 상위 10개 제품 분석: 평균 판매 금액이 가장 높은 10개 제품을 분석했습니다.
+5. 제품 성과 요약: 각 제품의 판매 성과를 종합적으로 요약했습니다.
 
 --------------------------------------------------
 Key Findings & Insights:
 
 [DISCOVERY & INSIGHTS]:
-- Discovery 1: VIP 고객은 전체 고객의 약 9.9%에 불과하지만, 평균 구매액이 일반 고객보다 1.0배 높습니다.
-- Insight 1: VIP 고객 유지 및 확대를 위한 맞춤형 혜택과 서비스 제공이 매출 증대에 효과적일 것입니다.
-
-- Discovery 2: 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다.
-- Insight 2: 세그먼트별 맞춤형 마케팅 전략 수립이 필요하며, 특히 VIP와 충성 고객에게는 이메일과 제휴 마케팅을, 신규 고객에게는 소셜 미디어와 온라인 광고를 강화해야 합니다.
-
-- Discovery 3: 캠페인 기간 동안 일평균 매출이 비캠페인 기간 대비 30.32% 증가했습니다.
-- Insight 3: 캠페인은 매출 증대에 효과적이며, 특히 'SNS 프로모션' 캠페인이 가장 효과적이었습니다.
-
-- Discovery 4: 캠페인 효과는 종료 후에도 일정 기간 지속되는 경향이 있습니다.
-- Insight 4: 캠페인 종료 후에도 관련 마케팅 활동을 점진적으로 줄여나가는 전략이 효과적일 수 있습니다.
-
-- Discovery 5: 마케팅 채널별 효과는 고객 세그먼트에 따라 다르게 나타납니다.
-- Insight 5: 채널별 타겟팅을 세분화하고, 각 세그먼트에 맞는 메시지와 프로모션을 제공해야 합니다.
+- 베스트셀러 제품: 판매량과 매출 기준 상위 제품을 파악하여 마케팅 및 재고 관리에 활용할 수 있습니다.
+- 저성과 제품: 판매량과 매출 기준 하위 제품을 파악하여 개선 또는 단종 여부를 검토할 수 있습니다.
+- 고가치 제품: 평균 판매 금액이 높은 제품을 파악하여 프리미엄 마케팅 전략을 수립할 수 있습니다.
+- 카테고리별 성과 차이: 상위/하위 제품의 카테고리 분포를 통해 카테고리별 성과 차이를 파악할 수 있습니다.
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/segment_purchase_distribution.png : 세그먼트별 총 구매액 분포 박스플롯
-- ./artifacts/segment_frequency_distribution.png : 세그먼트별 구매 횟수 분포 박스플롯
-- ./artifacts/segment_category_preference.png : 고객 세그먼트별 제품 카테고리 선호도 히트맵
-- ./artifacts/segment_channel_preference.png : 고객 세그먼트별 마케팅 채널 선호도 히트맵
-- ./artifacts/segment_gender_distribution.png : 고객 세그먼트별 성별 분포 막대 그래프
-- ./artifacts/segment_age_distribution.png : 고객 세그먼트별 연령대 분포 막대 그래프
-- ./artifacts/campaign_daily_sales_comparison.png : 캠페인 기간 vs 비캠페인 기간 일일 매출 비교 박스플롯
-- ./artifacts/campaign_before_after_effect.png : 캠페인 전/중/후 일평균 매출 비교 막대 그래프
-- ./artifacts/channel_daily_sales_trend.png : 마케팅 채널별 일일 매출 추이 선 그래프
-- ./artifacts/segment_behavior_analysis.csv : 세그먼트별 고객 행동 분석 데이터
-- ./artifacts/segment_category_preference.csv : 세그먼트별 제품 카테고리 선호도 데이터
-- ./artifacts/segment_channel_preference.csv : 세그먼트별 마케팅 채널 선호도 데이터
-- ./artifacts/campaign_effect_analysis.csv : 캠페인 효과 분석 데이터
+- ./artifacts/top10_qty_products.png : 판매량 기준 상위 10개 제품 그래프
+- ./artifacts/top10_amount_products.png : 매출 기준 상위 10개 제품 그래프
+- ./artifacts/bottom10_qty_products.png : 판매량 기준 하위 10개 제품 그래프
+- ./artifacts/bottom10_amount_products.png : 매출 기준 하위 10개 제품 그래프
+- ./artifacts/top10_avg_amount_products.png : 평균 판매 금액 기준 상위 10개 제품 그래프
+- ./artifacts/top10_qty_products.csv : 판매량 기준 상위 10개 제품 데이터
+- ./artifacts/top10_amount_products.csv : 매출 기준 상위 10개 제품 데이터
+- ./artifacts/bottom10_qty_products.csv : 판매량 기준 하위 10개 제품 데이터
+- ./artifacts/bottom10_amount_products.csv : 매출 기준 하위 10개 제품 데이터
+- ./artifacts/top10_avg_amount_products.csv : 평균 판매 금액 기준 상위 10개 제품 데이터
+- ./artifacts/product_performance.csv : 제품 성과 요약 데이터
+==================================================
+
+==================================================
+## Analysis Stage: 마케팅 채널 효과 분석
+## Execution Time: 2025-08-30 14:48:08
+--------------------------------------------------
+Result Description: 
+
+마케팅 채널 효과 분석 결과:
+1. 프로모션별 판매량 및 매출 분석: 각 프로모션의 판매량과 매출을 분석했습니다.
+2. 프로모션별 주문 건수 및 매출 시각화: 각 프로모션의 주문 건수와 매출을 시각화했습니다.
+3. 프로모션별 평균 주문 금액 분석: 각 프로모션의 평균 주문 금액을 분석했습니다.
+4. 프로모션별 카테고리 판매 분석: 각 프로모션이 카테고리별 판매에 미치는 영향을 분석했습니다.
+5. 프로모션 효과 분석: 프로모션 유무에 따른 판매 효과를 비교 분석했습니다.
+6. 배송 서비스별 판매 분석: 각 배송 서비스의 판매 성과를 분석했습니다.
+
+--------------------------------------------------
+Key Findings & Insights:
+
+[DISCOVERY & INSIGHTS]:
+- 프로모션 효과: 각 프로모션 코드별 효과를 비교하여 가장 효과적인 프로모션을 파악했습니다.
+- 카테고리별 프로모션 효과: 특정 프로모션이 특정 카테고리에 더 효과적인지 분석했습니다.
+- 프로모션 ROI: 프로모션 유무에 따른 평균 주문 금액과 수량을 비교하여 프로모션의 ROI를 추정할 수 있습니다.
+- 배송 채널 효과: 각 배송 서비스의 판매 비중을 파악하여 효과적인 배송 전략을 수립할 수 있습니다.
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/promo_order_count.png : 프로모션별 주문 건수 그래프
+- ./artifacts/promo_amount.png : 프로모션별 매출 그래프
+- ./artifacts/promo_avg_order_amount.png : 프로모션별 평균 주문 금액 그래프
+- ./artifacts/promo_category_qty_pct.png : 프로모션별 카테고리 판매량 비중 그래프
+- ./artifacts/promo_effect_comparison.png : 프로모션 효과 비교 그래프
+- ./artifacts/fulfillment_order_pct.png : 배송 서비스별 주문 비중 그래프
+- ./artifacts/promo_sales.csv : 프로모션별 판매 성과 데이터
+- ./artifacts/promo_category_sales.csv : 프로모션별 카테고리 판매 데이터
+- ./artifacts/promo_effect.csv : 프로모션 효과 분석 데이터
+- ./artifacts/fulfillment_sales.csv : 배송 서비스별 판매 성과 데이터
+==================================================
+
+==================================================
+## Analysis Stage: 고객 구매 패턴 분석
+## Execution Time: 2025-08-30 14:52:23
+--------------------------------------------------
+Result Description: 
+
+고객 구매 패턴 분석 결과:
+1. 성별 판매 분석: 성별에 따른 판매량과 매출을 분석했습니다.
+2. 연령대별 판매 분석: 연령대별 판매량과 매출을 분석했습니다.
+3. 성별 및 연령대별 판매 분석: 성별과 연령대를 조합하여 판매 패턴을 분석했습니다.
+4. 성별 및 연령대별 카테고리 선호도 분석: 성별과 연령대에 따른 카테고리 선호도를 분석했습니다.
+5. 지역별 판매 분석: 지역별 판매량과 매출을 분석했습니다.
+
+--------------------------------------------------
+Key Findings & Insights:
+
+[DISCOVERY & INSIGHTS]:
+- 성별 구매 패턴: 성별에 따른 구매 패턴과 선호 제품 카테고리를 파악했습니다.
+- 연령대별 구매 패턴: 연령대별 구매 패턴과 선호 제품 카테고리를 파악했습니다.
+- 타겟 고객층: 매출 기여도가 높은 주요 고객층을 파악하여 마케팅 전략을 수립할 수 있습니다.
+- 지역별 판매 특성: 지역별 판매 특성을 파악하여 지역 맞춤형 마케팅 전략을 수립할 수 있습니다.
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/gender_order_count.png : 성별 주문 건수 그래프
+- ./artifacts/gender_amount.png : 성별 매출 그래프
+- ./artifacts/age_order_count.png : 연령대별 주문 건수 그래프
+- ./artifacts/age_amount.png : 연령대별 매출 그래프
+- ./artifacts/gender_age_order_count.png : 성별 및 연령대별 주문 건수 그래프
+- ./artifacts/gender_age_amount.png : 성별 및 연령대별 매출 그래프
+- ./artifacts/gender_category_preference.png : 성별 카테고리 선호도 그래프
+- ./artifacts/age_category_preference.png : 연령대별 카테고리 선호도 그래프
+- ./artifacts/top10_regions_amount.png : 매출 기준 상위 10개 지역 그래프
+- ./artifacts/gender_sales.csv : 성별 판매 성과 데이터
+- ./artifacts/age_sales.csv : 연령대별 판매 성과 데이터
+- ./artifacts/gender_age_sales.csv : 성별 및 연령대별 판매 성과 데이터
+- ./artifacts/gender_age_category_sales.csv : 성별 및 연령대별 카테고리 선호도 데이터
+- ./artifacts/region_sales.csv : 지역별 판매 성과 데이터
+==================================================
+
+==================================================
+## Analysis Stage: 주요 KPI 및 비즈니스 인사이트 분석
+## Execution Time: 2025-08-30 14:55:09
+--------------------------------------------------
+Result Description: 
+
+주요 KPI 및 비즈니스 인사이트 분석 결과:
+1. 주요 KPI 계산: 총 매출, 총 주문 건수, 총 판매 수량, 평균 주문 금액, 평균 구매 수량 등 주요 KPI를 계산했습니다.
+2. 월별 성장률 분석: 월별 매출 및 주문 건수 성장률을 분석했습니다.
+3. 프로모션 효과 분석: 각 프로모션의 효과와 예상 ROI를 분석했습니다.
+4. 고객 세그먼트별 가치 분석: 성별 및 연령대별 고객 가치를 분석했습니다.
+5. 제품 카테고리별 성과 분석: 각 카테고리의 매출 기여도 및 수익성을 분석했습니다.
+6. 주요 KPI 대시보드 생성: 주요 KPI를 시각화한 대시보드를 생성했습니다.
+7. 비즈니스 인사이트 요약: 분석 결과를 바탕으로 비즈니스 인사이트를 도출했습니다.
+
+--------------------------------------------------
+Key Findings & Insights:
+
+[DISCOVERY & INSIGHTS]:
+- 매출 및 성장 패턴: 월별 매출 및 성장률 분석을 통해 비즈니스 성장 패턴을 파악했습니다.
+- 프로모션 효과: 각 프로모션의 효과와 ROI를 분석하여 효율적인 마케팅 전략을 수립할 수 있습니다.
+- 고객 세그먼트 가치: 성별 및 연령대별 고객 가치를 분석하여 타겟 마케팅 전략을 수립할 수 있습니다.
+- 카테고리 성과: 카테고리별 매출 기여도 및 수익성을 분석하여 제품 전략을 수립할 수 있습니다.
+- 개선 기회: 분석 결과를 바탕으로 비즈니스 개선 기회를 도출했습니다.
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/monthly_growth_rate.png : 월별 성장률 그래프
+- ./artifacts/promotion_roi.png : 프로모션별 예상 ROI 그래프
+- ./artifacts/customer_segment_value.png : 고객 세그먼트별 가치 그래프
+- ./artifacts/category_contribution.png : 카테고리별 매출 및 수량 기여도 그래프
+- ./artifacts/kpi_dashboard.png : 주요 KPI 대시보드
+- ./artifacts/kpi_summary.csv : 주요 KPI 요약 데이터
+- ./artifacts/monthly_growth.csv : 월별 성장률 데이터
+- ./artifacts/promo_effect_kpi.csv : 프로모션 효과 데이터
+- ./artifacts/customer_segment_value.csv : 고객 세그먼트별 가치 데이터
+- ./artifacts/category_performance_kpi.csv : 카테고리별 성과 데이터
+- ./artifacts/business_insights.txt : 비즈니스 인사이트 요약
+==================================================
+
+==================================================
+## Analysis Stage: 분석 결과 정리 및 요약
+## Execution Time: 2025-08-30 14:56:11
+--------------------------------------------------
+Result Description: 
+
+분석 결과 정리 및 요약:
+1. 생성된 분석 결과 파일 목록 확인: 분석 과정에서 생성된 모든 파일을 확인했습니다.
+2. 분석 결과 요약 파일 생성: 전체 분석 결과를 요약한 마크다운 파일을 생성했습니다.
+3. 주요 시각화 결과 모음: 핵심 분석 결과를 한눈에 볼 수 있는 대시보드 형태의 시각화를 생성했습니다.
+
+--------------------------------------------------
+Key Findings & Insights:
+
+[DISCOVERY & INSIGHTS]:
+- 종합적 판매 현황: Moon Market은 과일 카테고리를 중심으로 안정적인 매출을 기록하고 있으며, 5월에 가장 높은 매출을 기록했습니다.
+- 제품 카테고리 성과: 과일 카테고리가 가장 높은 매출 기여도를 보이며, 채소 카테고리는 판매량은 많지만 매출 기여도가 상대적으로 낮습니다.
+- 프로모션 효과: 프로모션을 적용한 주문의 평균 금액이 프로모션이 없는 주문보다 약 2배 높아 프로모션의 효과가 뚜렷합니다.
+- 고객 세그먼트: 30-50대 고객층이 주요 매출을 창출하고 있으며, 남성 고객의 매출 기여도가 여성 고객보다 높습니다.
+- 개선 기회: 채소 카테고리의 수익성 개선, 20대 고객층 확대, 고객 충성도 프로그램 도입, 지역 확장 등의 전략적 접근이 필요합니다.
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/analysis_summary.md : 분석 결과 요약 마크다운 파일
+- ./artifacts/summary_dashboard.png : 주요 분석 결과 대시보드
 ==================================================

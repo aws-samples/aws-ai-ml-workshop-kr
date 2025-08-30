@@ -76,7 +76,7 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
         return error_msg
     
     #result_str = f"Successfully executed:\n||```python\n{code}\n```\n||Stdout: {result}"
-    result_str = f"Successfully executed:\n||{code}||Stdout: {result}"
+    result_str = f"Successfully executed:\n||{code}||{result}"
     logger.info(f"{Colors.GREEN}===== Code execution successful ====={Colors.END}")
     return result_str
 

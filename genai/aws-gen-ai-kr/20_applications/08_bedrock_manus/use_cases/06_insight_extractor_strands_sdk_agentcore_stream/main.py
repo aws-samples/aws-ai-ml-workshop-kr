@@ -39,17 +39,14 @@ async def _cleanup_workflow(workflow_task):
             await asyncio.wait_for(workflow_task, timeout=1.0)
         except asyncio.TimeoutError:
             workflow_task.cancel()
-            try:
-                await workflow_task
-            except asyncio.CancelledError:
-                pass
+            try: await workflow_task
+            except asyncio.CancelledError: pass
 
 async def _yield_pending_events():
     """Yield any pending events from queue"""
     while has_events():
         event = get_event()
-        if event:
-            yield event
+        if event: yield event
 
 def _print_conversation_history():
     """Print final conversation history"""
@@ -100,8 +97,8 @@ async def graph_streaming_execution(user_query):
 if __name__ == "__main__":
 
     # Use predefined query for testing
-    #user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. Coder 에이전트가 할일은 최대한 작게 해줘. 왜냐하면 reporter 에이전트 테스트 중이라 빨리 코더 단계를 넘어 가야 하거든. 부탁해."
-    user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘."
+    #user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다. Coder 에이전트가 할일은 최대한 작게 해줘. 왜냐하면 reporter 에이전트 테스트 중이라 빨리 코더 단계를 넘어 가야 하거든. 부탁해."
+    user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다."
     # user_query = '''
         
     #     분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.

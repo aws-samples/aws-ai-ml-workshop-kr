@@ -72,316 +72,400 @@
         th {
             background-color: #f2f2f2;
         }
-        .executive-summary {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-left: 4px solid #3498db;
+        .cover-page {
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .cover-title {
+            font-size: 2.5em;
+            color: #2c3e50;
             margin-bottom: 20px;
         }
-        .key-insight {
-            background-color: #e8f4f8;
-            padding: 10px;
-            border-left: 3px solid #2980b9;
-            margin: 10px 0;
+        .cover-subtitle {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            margin-bottom: 40px;
         }
-        .recommendation {
-            background-color: #eafaf1;
-            padding: 10px;
-            border-left: 3px solid #27ae60;
-            margin: 10px 0;
+        .cover-date {
+            font-size: 1.2em;
+            color: #95a5a6;
+            margin-top: 60px;
+        }
+        .highlight-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .kpi-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .kpi-box {
+            width: 30%;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .kpi-title {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        .kpi-value {
+            font-size: 1.4em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        .toc {
+            margin: 30px 0;
+        }
+        .toc-item {
+            margin: 5px 0;
+        }
+        .toc-level-1 {
+            font-weight: bold;
+        }
+        .toc-level-2 {
+            margin-left: 20px;
+        }
+        .conclusion {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Moon Market 판매 현황 보고서</h1>
-    
-    <h2>개요</h2>
-    <div class="executive-summary">
-        <p>본 보고서는 Moon Market의 2023년 1월부터 2024년 7월까지의 판매 데이터를 세일즈 및 마케팅 관점에서 분석한 결과입니다. 총 10,000건의 판매 데이터를 기반으로 판매 트렌드, 주요 성과 지표(KPI), 마케팅 캠페인 효과, 고객 세그먼트 분석 등을 수행하였습니다. 분석 결과, Moon Market은 전년 동기 대비 9.26%의 성장률을 보이고 있으며, 특히 전자제품 카테고리가 매출의 가장 큰 부분을 차지하고 있습니다. 마케팅 캠페인은 매출 증대에 효과적이었으며, 특히 SNS 프로모션 캠페인이 가장 높은 ROI를 기록했습니다. 고객 세그먼트별 맞춤형 마케팅 전략과 효과적인 채널 활용을 통해 매출 증대와 고객 만족도 향상을 이룰 수 있을 것으로 기대됩니다.</p>
+    <!-- 표지 -->
+    <div class="cover-page">
+        <div class="cover-title">Moon Market 판매 현황 보고서</div>
+        <div class="cover-subtitle">세일즈 및 마케팅 분석</div>
+        <img src="./artifacts/summary_dashboard.png" alt="요약 대시보드" style="width: 70%; margin-top: 40px;">
+        <div class="cover-date">2025년 8월 30일</div>
     </div>
     
-    <h2>주요 발견사항</h2>
-    <ul>
-        <li>총 매출액은 4,824,531,293원이며, 전자제품 카테고리가 3,531,356,865원으로 가장 높은 매출을 기록했습니다.</li>
-        <li>2024년 1-7월 매출은 2023년 동기 대비 9.26% 성장했습니다.</li>
-        <li>마케팅 캠페인 기간 동안 평균 매출이 비캠페인 기간 대비 1.36배 증가했습니다.</li>
-        <li>고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 매우 효과적입니다.</li>
-        <li>SNS 프로모션 캠페인이 838.52%로 가장 높은 ROI를 기록했습니다.</li>
-        <li>이메일 채널이 1,026,120,647원으로 가장 높은 매출을 발생시켰습니다.</li>
-        <li>고객 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다.</li>
-    </ul>
+    <div class="page-break"></div>
     
-    <h2>판매 트렌드 및 패턴 분석</h2>
+    <!-- 목차 -->
+    <h1>목차</h1>
+    <div class="toc">
+        <div class="toc-item toc-level-1">1. 개요</div>
+        <div class="toc-item toc-level-1">2. 주요 발견사항</div>
+        <div class="toc-item toc-level-1">3. 판매 트렌드 분석</div>
+        <div class="toc-item toc-level-2">3.1 월별 판매 트렌드</div>
+        <div class="toc-item toc-level-2">3.2 요일별 판매 트렌드</div>
+        <div class="toc-item toc-level-2">3.3 월별 성장률</div>
+        <div class="toc-item toc-level-1">4. 제품 카테고리 분석</div>
+        <div class="toc-item toc-level-2">4.1 카테고리별 판매 비중</div>
+        <div class="toc-item toc-level-2">4.2 카테고리별 평균 판매 가격</div>
+        <div class="toc-item toc-level-2">4.3 월별 카테고리 판매 추이</div>
+        <div class="toc-item toc-level-1">5. 상위/하위 제품 분석</div>
+        <div class="toc-item toc-level-2">5.1 매출 기준 상위 제품</div>
+        <div class="toc-item toc-level-2">5.2 판매량 기준 상위 제품</div>
+        <div class="toc-item toc-level-2">5.3 매출 기준 하위 제품</div>
+        <div class="toc-item toc-level-1">6. 프로모션 효과 분석</div>
+        <div class="toc-item toc-level-2">6.1 프로모션별 매출 기여도</div>
+        <div class="toc-item toc-level-2">6.2 프로모션별 평균 주문 금액</div>
+        <div class="toc-item toc-level-2">6.3 프로모션 ROI 분석</div>
+        <div class="toc-item toc-level-1">7. 고객 구매 패턴 분석</div>
+        <div class="toc-item toc-level-2">7.1 성별 구매 패턴</div>
+        <div class="toc-item toc-level-2">7.2 연령대별 구매 패턴</div>
+        <div class="toc-item toc-level-2">7.3 지역별 판매 현황</div>
+        <div class="toc-item toc-level-1">8. 결론 및 제안</div>
+    </div>
     
-    <h3>월별 매출 추이</h3>
+    <div class="page-break"></div>
+    
+    <!-- 개요 -->
+    <h1>1. 개요</h1>
+    <p>본 보고서는 Moon Market의 판매 데이터를 분석하여 세일즈 및 마케팅 관점에서의 인사이트를 제공합니다. 분석 기간은 2024년 1월부터 2024년 6월까지이며, 총 1,220건의 주문 데이터를 기반으로 합니다.</p>
+    
+    <div class="kpi-container">
+        <div class="kpi-box">
+            <div class="kpi-title">총 매출</div>
+            <div class="kpi-value">8,619,150원</div>
+        </div>
+        <div class="kpi-box">
+            <div class="kpi-title">총 주문 건수</div>
+            <div class="kpi-value">936건</div>
+        </div>
+        <div class="kpi-box">
+            <div class="kpi-title">총 판매 수량</div>
+            <div class="kpi-value">2,189개</div>
+        </div>
+        <div class="kpi-box">
+            <div class="kpi-title">평균 주문 금액</div>
+            <div class="kpi-value">9,208원</div>
+        </div>
+        <div class="kpi-box">
+            <div class="kpi-title">평균 구매 수량</div>
+            <div class="kpi-value">2.34개</div>
+        </div>
+    </div>
+    
     <div class="chart-container">
-        <img src="./artifacts/monthly_sales_trend.png" alt="월별 매출 추이">
-        <div class="image-caption">그림 1: 월별 매출 추이 (2023년 1월 ~ 2024년 7월)</div>
-    </div>
-    <div class="text-content">
-        <p>월별 매출 추이를 분석한 결과, 전반적으로 상승 추세를 보이고 있으며, 특히 연말(11-12월)과 여름 시즌(6-7월)에 매출이 증가하는 계절적 패턴이 관찰됩니다. 2024년의 매출은 2023년 동기 대비 꾸준히 높은 수준을 유지하고 있어, 전체적인 성장세가 지속되고 있음을 알 수 있습니다.</p>
+        <img src="./artifacts/kpi_dashboard.png" alt="KPI 대시보드">
+        <div class="image-caption">그림 1. Moon Market KPI 대시보드</div>
     </div>
     
-    <h3>카테고리별 매출 분석</h3>
-    <div class="chart-container">
-        <img src="./artifacts/category_sales.png" alt="카테고리별 총 매출액">
-        <div class="image-caption">그림 2: 카테고리별 총 매출액</div>
-    </div>
-    <div class="text-content">
-        <p>카테고리별 매출 분석 결과, 전자제품이 3,531,356,865원으로 전체 매출의 가장 큰 부분을 차지하고 있습니다. 이는 고가 제품군인 전자제품의 특성이 반영된 결과로, 전자제품에 대한 마케팅 전략을 강화하면 전체 매출 증대에 효과적일 것으로 예상됩니다.</p>
-    </div>
-    
-    <h3>계절별 카테고리 매출 현황</h3>
-    <div class="chart-container">
-        <img src="./artifacts/seasonal_category_sales.png" alt="계절별 카테고리 매출 현황">
-        <div class="image-caption">그림 3: 계절별 카테고리 매출 현황 히트맵</div>
-    </div>
-    <div class="text-content">
-        <p>계절별 카테고리 매출 현황을 분석한 결과, 의류는 가을과 겨울에 매출이 높고, 전자제품은 연말에 매출이 증가하는 등 카테고리별로 뚜렷한 계절적 패턴이 관찰됩니다. 이러한 패턴을 고려하여 계절별 맞춤형 마케팅 전략과 재고 관리가 필요합니다.</p>
-    </div>
-    
-    <h3>연도별 매출 비교</h3>
-    <div class="chart-container">
-        <img src="./artifacts/yearly_comparison.png" alt="2023년 vs 2024년 월별 매출 비교">
-        <div class="image-caption">그림 4: 2023년 vs 2024년 월별 매출 비교</div>
-    </div>
-    <div class="text-content">
-        <p>2023년과 2024년의 월별 매출을 비교한 결과, 2024년 1-7월 매출이 2023년 동기 대비 9.26% 성장했습니다. 특히 3월과 6월에 큰 폭의 성장이 관찰되었으며, 이는 해당 시기에 진행된 마케팅 캠페인의 효과로 분석됩니다.</p>
-    </div>
-    
-    <h3>캠페인별 성과 분석</h3>
-    <div class="chart-container">
-        <img src="./artifacts/campaign_performance.png" alt="캠페인별 평균 매출액">
-        <div class="image-caption">그림 5: 캠페인별 평균 매출액</div>
-    </div>
-    <div class="text-content">
-        <p>캠페인별 성과를 분석한 결과, 캠페인 기간 동안의 평균 매출은 비캠페인 기간 대비 1.36배 높았습니다. 특히 'SNS 프로모션' 캠페인이 가장 높은 평균 매출을 기록했으며, 이는 소셜 미디어를 통한 마케팅이 효과적임을 시사합니다.</p>
-    </div>
-    
-    <div class="key-insight">
-        <strong>핵심 인사이트:</strong> 전자제품 카테고리가 전체 매출의 가장 큰 부분을 차지하고 있으며, 계절별로 카테고리 매출에 뚜렷한 차이가 있습니다. 마케팅 캠페인은 매출 증대에 효과적이며, 특히 SNS 프로모션 캠페인이 가장 효과적이었습니다.
-    </div>
-    
-    <h2>주요 성과 지표(KPI) 및 마케팅 ROI 분석</h2>
-    
-    <h3>고객 세그먼트별 매출 기여도</h3>
-    <div class="chart-container">
-        <img src="./artifacts/segment_revenue_pie.png" alt="고객 세그먼트별 매출 기여도">
-        <div class="image-caption">그림 6: 고객 세그먼트별 매출 기여도</div>
-    </div>
-    <div class="text-content">
-        <p>고객 세그먼트별 매출 기여도를 분석한 결과, VIP 고객은 전체 고객의 약 9.9%에 불과하지만, 매출의 상당 부분을 차지하고 있습니다. 이는 VIP 고객 유지 및 확대를 위한 충성도 프로그램 강화가 매출 증대에 효과적일 것임을 시사합니다.</p>
-    </div>
-    
-    <h3>마케팅 캠페인별 ROI</h3>
-    <div class="chart-container">
-        <img src="./artifacts/campaign_roi.png" alt="마케팅 캠페인별 ROI">
-        <div class="image-caption">그림 7: 마케팅 캠페인별 ROI</div>
-    </div>
-    <div class="text-content">
-        <p>마케팅 캠페인별 ROI를 분석한 결과, 'SNS 프로모션' 캠페인이 838.52%로 가장 높은 ROI를 기록했으며, '시즌 세일' 캠페인이 260.30%로 가장 낮은 ROI를 기록했습니다. 성공적인 캠페인의 전략과 타겟팅 방식을 다른 캠페인에도 적용하여 전체 마케팅 효율성을 높일 필요가 있습니다.</p>
-    </div>
-    
-    <h3>마케팅 채널별 매출</h3>
-    <div class="chart-container">
-        <img src="./artifacts/channel_revenue.png" alt="마케팅 채널별 총 매출">
-        <div class="image-caption">그림 8: 마케팅 채널별 총 매출</div>
-    </div>
-    <div class="text-content">
-        <p>마케팅 채널별 매출을 분석한 결과, '이메일' 채널이 1,026,120,647원으로 가장 높은 매출을 발생시켰습니다. 이는 이메일 마케팅이 Moon Market의 고객층에게 효과적임을 시사하며, 이메일 마케팅 전략을 더욱 강화할 필요가 있습니다.</p>
-    </div>
-    
-    <h3>마케팅 채널별 전환율</h3>
-    <div class="chart-container">
-        <img src="./artifacts/channel_conversion.png" alt="마케팅 채널별 전환율">
-        <div class="image-caption">그림 9: 마케팅 채널별 전환율</div>
-    </div>
-    <div class="text-content">
-        <p>마케팅 채널별 전환율을 분석한 결과, '온라인 광고' 채널이 1.12로 가장 높은 전환율을 기록했습니다. 이는 온라인 광고가 구매 의사가 높은 고객들에게 효과적으로 도달하고 있음을 시사합니다.</p>
-    </div>
-    
-    <table>
-        <tr>
-            <th>주요 KPI</th>
-            <th>값</th>
-            <th>의미</th>
-        </tr>
-        <tr>
-            <td>총 매출액</td>
-            <td>4,824,531,293원</td>
-            <td>분석 기간 동안의 총 매출액</td>
-        </tr>
-        <tr>
-            <td>평균 주문 금액</td>
-            <td>482,453원</td>
-            <td>주문당 평균 금액</td>
-        </tr>
-        <tr>
-            <td>고객 획득 비용(CAC)</td>
-            <td>103,175원</td>
-            <td>신규 고객 1명을 획득하는데 드는 비용</td>
-        </tr>
-        <tr>
-            <td>고객 생애 가치(CLV)</td>
-            <td>4,509,888원</td>
-            <td>고객이 생애 동안 창출하는 평균 가치</td>
-        </tr>
-        <tr>
-            <td>CLV/CAC 비율</td>
-            <td>43.71</td>
-            <td>마케팅 투자 효율성 지표 (3 이상이면 양호)</td>
-        </tr>
-    </table>
-    
-    <div class="key-insight">
-        <strong>핵심 인사이트:</strong> 고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 매우 효과적입니다. 'SNS 프로모션' 캠페인이 가장 높은 ROI를 기록했으며, '이메일' 채널이 가장 높은 매출을 발생시켰습니다.
-    </div>
-    
-    <h2>고객 세그먼트 분석</h2>
-    
-    <h3>세그먼트별 총 구매액 분포</h3>
-    <div class="chart-container">
-        <img src="./artifacts/segment_purchase_distribution.png" alt="세그먼트별 총 구매액 분포">
-        <div class="image-caption">그림 10: 세그먼트별 총 구매액 분포</div>
-    </div>
-    <div class="text-content">
-        <p>세그먼트별 총 구매액 분포를 분석한 결과, VIP 고객의 평균 총구매액은 787,142원, 충성 고객은 781,668원, 일반 고객은 807,697원, 신규 고객은 789,961원으로 나타났습니다. 일반 고객의 평균 총구매액이 가장 높게 나타난 것은 특이한 점으로, 이들을 VIP 고객으로 전환하기 위한 전략이 필요합니다.</p>
-    </div>
-    
-    <h3>세그먼트별 구매 횟수 분포</h3>
-    <div class="chart-container">
-        <img src="./artifacts/segment_frequency_distribution.png" alt="세그먼트별 구매 횟수 분포">
-        <div class="image-caption">그림 11: 세그먼트별 구매 횟수 분포</div>
-    </div>
-    <div class="text-content">
-        <p>세그먼트별 구매 횟수 분포를 분석한 결과, VIP 고객의 평균 구매횟수는 1.63회, 충성 고객은 1.62회, 일반 고객은 1.67회, 신규 고객은 1.63회로 나타났습니다. 일반 고객의 구매 횟수가 가장 높은 것은 주목할 만한 점으로, 이들의 구매 패턴을 더 자세히 분석할 필요가 있습니다.</p>
-    </div>
-    
-    <h3>세그먼트별 제품 카테고리 선호도</h3>
-    <div class="chart-container">
-        <img src="./artifacts/segment_category_preference.png" alt="고객 세그먼트별 제품 카테고리 선호도">
-        <div class="image-caption">그림 12: 고객 세그먼트별 제품 카테고리 선호도</div>
-    </div>
-    <div class="text-content">
-        <p>세그먼트별 제품 카테고리 선호도를 분석한 결과, VIP 고객은 전자제품 선호도가 높고, 충성 고객은 다양한 카테고리를 구매하지만 특히 의류와 화장품 선호도가 높습니다. 일반 고객은 생활용품과 식품 비중이 높고, 신규 고객은 식품과 생활용품 위주로 구매하는 경향이 있습니다. 이러한 선호도 차이를 고려한 맞춤형 마케팅 전략이 필요합니다.</p>
-    </div>
-    
-    <h3>세그먼트별 마케팅 채널 선호도</h3>
-    <div class="chart-container">
-        <img src="./artifacts/segment_channel_preference.png" alt="고객 세그먼트별 마케팅 채널 선호도">
-        <div class="image-caption">그림 13: 고객 세그먼트별 마케팅 채널 선호도</div>
-    </div>
-    <div class="text-content">
-        <p>세그먼트별 마케팅 채널 선호도를 분석한 결과, VIP 고객은 이메일과 제휴 마케팅에 높은 반응을 보이고, 충성 고객은 온라인 광고와 소셜 미디어에 반응이 좋습니다. 일반 고객은 오프라인 광고와 이메일에 반응하고, 신규 고객은 소셜 미디어와 온라인 광고에 높은 반응을 보입니다. 이러한 채널 선호도 차이를 고려한 세그먼트별 맞춤형 마케팅 전략이 필요합니다.</p>
-    </div>
-    
-    <h3>세그먼트별 인구통계학적 특성</h3>
-    <div class="chart-container">
-        <img src="./artifacts/segment_gender_distribution.png" alt="고객 세그먼트별 성별 분포">
-        <div class="image-caption">그림 14: 고객 세그먼트별 성별 분포</div>
-    </div>
-    <div class="chart-container">
-        <img src="./artifacts/segment_age_distribution.png" alt="고객 세그먼트별 연령대 분포">
-        <div class="image-caption">그림 15: 고객 세그먼트별 연령대 분포</div>
-    </div>
-    <div class="text-content">
-        <p>세그먼트별 인구통계학적 특성을 분석한 결과, 성별과 연령대에 따라 세그먼트 분포에 차이가 있음을 확인할 수 있습니다. 이러한 인구통계학적 특성을 고려한 타겟 마케팅 전략이 필요합니다.</p>
-    </div>
-    
-    <div class="key-insight">
-        <strong>핵심 인사이트:</strong> 고객 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다. VIP 고객은 전자제품을 선호하고 이메일과 제휴 마케팅에 높은 반응을 보이는 반면, 신규 고객은 식품과 생활용품을 주로 구매하고 소셜 미디어와 온라인 광고에 높은 반응을 보입니다.
-    </div>
-    
-    <h2>마케팅 활동과 판매 성과 간의 상관관계 분석</h2>
-    
-    <h3>캠페인 기간 vs 비캠페인 기간 매출 비교</h3>
-    <div class="chart-container">
-        <img src="./artifacts/campaign_daily_sales_comparison.png" alt="캠페인 기간 vs 비캠페인 기간 일일 매출 비교">
-        <div class="image-caption">그림 16: 캠페인 기간 vs 비캠페인 기간 일일 매출 비교</div>
-    </div>
-    <div class="text-content">
-        <p>캠페인 기간과 비캠페인 기간의 일일 매출을 비교한 결과, 캠페인 기간 동안의 일평균 매출(10,001,415원)이 비캠페인 기간(7,674,684원) 대비 30.32% 높게 나타났습니다. 이는 마케팅 캠페인이 매출 증대에 효과적임을 명확히 보여줍니다.</p>
-    </div>
-    
-    <h3>캠페인 전/중/후 매출 효과</h3>
-    <div class="chart-container">
-        <img src="./artifacts/campaign_before_after_effect.png" alt="캠페인 전/중/후 일평균 매출 비교">
-        <div class="image-caption">그림 17: 캠페인 전/중/후 일평균 매출 비교</div>
-    </div>
-    <div class="text-content">
-        <p>캠페인 전/중/후의 일평균 매출을 비교한 결과, 캠페인 효과는 종료 후에도 일정 기간 지속되는 경향이 있음을 확인할 수 있습니다. 특히 'SNS 프로모션' 캠페인은 캠페인 전 대비 88.05%의 매출 증가를 보였으며, 캠페인 종료 후에도 효과가 지속되었습니다. 이는 캠페인 종료 후에도 관련 마케팅 활동을 점진적으로 줄여나가는 전략이 효과적일 수 있음을 시사합니다.</p>
-    </div>
-    
-    <h3>마케팅 채널별 일일 매출 추이</h3>
-    <div class="chart-container">
-        <img src="./artifacts/channel_daily_sales_trend.png" alt="마케팅 채널별 일일 매출 추이">
-        <div class="image-caption">그림 18: 마케팅 채널별 일일 매출 추이</div>
-    </div>
-    <div class="text-content">
-        <p>마케팅 채널별 일일 매출 추이를 분석한 결과, 채널별로 매출 패턴에 차이가 있음을 확인할 수 있습니다. 특히 이메일 채널은 꾸준히 높은 매출을 발생시키고 있으며, 소셜 미디어 채널은 캠페인 기간 동안 큰 폭의 매출 증가를 보이고 있습니다. 이러한 채널별 특성을 고려한 마케팅 전략이 필요합니다.</p>
-    </div>
-    
-    <div class="key-insight">
-        <strong>핵심 인사이트:</strong> 마케팅 캠페인은 매출 증대에 효과적이며, 특히 'SNS 프로모션' 캠페인이 가장 효과적이었습니다. 캠페인 효과는 종료 후에도 일정 기간 지속되는 경향이 있으며, 마케팅 채널별로 매출 패턴에 차이가 있습니다.
-    </div>
-    
-    <h2>결론 및 전략적 제안</h2>
-    
-    <h3>주요 결론</h3>
-    <ol>
-        <li>Moon Market은 전년 동기 대비 9.26%의 성장률을 보이고 있으며, 특히 전자제품 카테고리가 매출의 가장 큰 부분을 차지하고 있습니다.</li>
-        <li>마케팅 캠페인은 매출 증대에 효과적이며, 특히 SNS 프로모션 캠페인이 가장 높은 ROI를 기록했습니다.</li>
-        <li>고객 생애 가치(CLV)와 고객 획득 비용(CAC)의 비율은 43.71로, 마케팅 투자가 매우 효과적입니다.</li>
-        <li>고객 세그먼트별로 선호하는 제품 카테고리와 마케팅 채널에 뚜렷한 차이가 있습니다.</li>
-        <li>계절별로 카테고리 매출에 뚜렷한 차이가 있어, 계절적 특성을 고려한 마케팅 전략이 필요합니다.</li>
-    </ol>
-    
-    <h3>전략적 제안</h3>
-    <div class="recommendation">
-        <strong>1. 제품 카테고리 전략</strong>
+    <!-- 주요 발견사항 -->
+    <h1>2. 주요 발견사항</h1>
+    <div class="highlight-box">
         <ul>
-            <li>전자제품이 매출의 가장 큰 부분을 차지하므로, 이 카테고리에 대한 마케팅 전략 강화</li>
-            <li>계절별 특성을 고려한 맞춤형 마케팅 전략과 재고 관리 필요</li>
-            <li>의류는 가을과 겨울, 전자제품은 연말에 집중적인 프로모션 진행</li>
+            <li>월별 매출은 5월에 가장 높았으며(1,834,730원), 1월부터 5월까지 전반적으로 상승세를 보였습니다.</li>
+            <li>과일 카테고리가 전체 매출의 46.03%로 가장 높은 비중을 차지했습니다.</li>
+            <li>프로모션을 적용한 주문의 평균 금액(7,369원)이 프로모션이 없는 주문(3,764원)보다 약 2배 높았습니다.</li>
+            <li>남성 고객의 매출 기여도(54.02%)가 여성 고객(45.98%)보다 높았습니다.</li>
+            <li>서울 지역이 전체 매출의 약 76.6%를 차지했습니다.</li>
         </ul>
     </div>
     
-    <div class="recommendation">
-        <strong>2. 고객 세그먼트 전략</strong>
-        <ul>
-            <li>VIP 고객 유지 및 확대를 위한 충성도 프로그램 강화</li>
-            <li>세그먼트별 맞춤형 마케팅 전략 수립 (VIP와 충성 고객에게는 이메일과 제휴 마케팅, 신규 고객에게는 소셜 미디어와 온라인 광고)</li>
-            <li>일반 고객의 구매력이 높은 점을 활용하여 이들을 VIP 고객으로 전환하기 위한 전략 수립</li>
-        </ul>
+    <div class="page-break"></div>
+    
+    <!-- 판매 트렌드 분석 -->
+    <h1>3. 판매 트렌드 분석</h1>
+    
+    <h2>3.1 월별 판매 트렌드</h2>
+    <p>Moon Market의 월별 판매 트렌드를 분석한 결과, 1월부터 5월까지 전반적으로 상승세를 보였습니다. 특히 5월에는 1,834,730원으로 가장 높은 매출을 기록했습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_sales_amount.png" alt="월별 매출 추이">
+        <div class="image-caption">그림 2. 월별 매출 추이</div>
     </div>
     
-    <div class="recommendation">
-        <strong>3. 마케팅 캠페인 전략</strong>
-        <ul>
-            <li>SNS 프로모션과 같은 성공적인 캠페인의 전략과 타겟팅 방식을 다른 캠페인에도 적용</li>
-            <li>캠페인 빈도와 기간을 최적화하여 전체 마케팅 효율성 향상</li>
-            <li>캠페인 종료 후에도 관련 마케팅 활동을 점진적으로 줄여나가는 전략 고려</li>
-        </ul>
+    <div class="chart-container">
+        <img src="./artifacts/monthly_sales_qty.png" alt="월별 판매량 추이">
+        <div class="image-caption">그림 3. 월별 판매량 추이</div>
     </div>
     
-    <div class="recommendation">
-        <strong>4. 마케팅 채널 전략</strong>
-        <ul>
-            <li>이메일과 같은 효과적인 채널에 마케팅 예산을 더 할당</li>
-            <li>채널별 타겟팅을 세분화하고, 각 세그먼트에 맞는 메시지와 프로모션 제공</li>
-            <li>온라인 광고의 높은 전환율을 활용하여 구매 의사가 높은 고객 타겟팅 강화</li>
-        </ul>
+    <h2>3.2 요일별 판매 트렌드</h2>
+    <p>요일별 판매 트렌드를 분석한 결과, 일요일(1,337,340원)과 금요일(1,262,840원)의 매출이 상대적으로 높게 나타났습니다. 이는 주말과 주말 직전에 소비자들의 구매 활동이 활발함을 시사합니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/weekday_sales_amount.png" alt="요일별 매출 추이">
+        <div class="image-caption">그림 4. 요일별 매출 추이</div>
     </div>
     
-    <div class="recommendation">
-        <strong>5. 신규 고객 확보 전략</strong>
-        <ul>
-            <li>신규 고객의 CLV(549,281원)가 CAC(103,175원)보다 높으므로, 신규 고객 확보를 위한 마케팅 투자 확대 고려</li>
-            <li>신규 고객이 선호하는 소셜 미디어와 온라인 광고 채널을 통한 마케팅 강화</li>
-            <li>신규 고객의 첫 구매 경험을 개선하여 재구매율 향상 및 충성 고객으로의 전환 유도</li>
-        </ul>
+    <div class="chart-container">
+        <img src="./artifacts/weekday_sales_qty.png" alt="요일별 판매량 추이">
+        <div class="image-caption">그림 5. 요일별 판매량 추이</div>
     </div>
     
-    <p>이 분석 결과를 바탕으로 Moon Market은 세일즈 및 마케팅 전략을 최적화하여 매출 증대와 고객 만족도 향상을 이룰 수 있을 것입니다. 특히 고객 세그먼트별 맞춤형 전략과 효과적인 마케팅 캠페인 운영이 중요한 성공 요소가 될 것입니다.</p>
+    <h2>3.3 월별 성장률</h2>
+    <p>월별 매출 성장률을 분석한 결과, 5월에는 전월 대비 약 28.9%의 매출 성장률을 기록했습니다. 이는 봄철 시즌 상품의 판매 증가와 효과적인 프로모션 전략의 결과로 볼 수 있습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_growth_rate.png" alt="월별 성장률">
+        <div class="image-caption">그림 6. 월별 매출 성장률</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- 제품 카테고리 분석 -->
+    <h1>4. 제품 카테고리 분석</h1>
+    
+    <h2>4.1 카테고리별 판매 비중</h2>
+    <p>Moon Market의 제품은 과일, 채소, 유제품 세 가지 카테고리로 구분됩니다. 카테고리별 판매 비중을 분석한 결과, 과일 카테고리가 전체 매출의 46.03%로 가장 높은 비중을 차지했습니다. 반면, 채소 카테고리는 판매량은 가장 많지만(38.56%), 매출 기여도는 27.73%로 상대적으로 낮았습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_sales_amount_pie.png" alt="카테고리별 매출 비중">
+        <div class="image-caption">그림 7. 카테고리별 매출 비중</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_sales_qty_pie.png" alt="카테고리별 판매량 비중">
+        <div class="image-caption">그림 8. 카테고리별 판매량 비중</div>
+    </div>
+    
+    <h2>4.2 카테고리별 평균 판매 가격</h2>
+    <p>카테고리별 평균 판매 가격을 분석한 결과, 과일 카테고리의 평균 판매 가격(9,583원)이 가장 높았으며, 채소 카테고리의 평균 판매 가격(5,218원)이 가장 낮았습니다. 이는 과일 카테고리의 고수익성과 채소 카테고리의 저수익성을 보여줍니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_avg_amount.png" alt="카테고리별 평균 판매 가격">
+        <div class="image-caption">그림 9. 카테고리별 평균 판매 가격</div>
+    </div>
+    
+    <h2>4.3 월별 카테고리 판매 추이</h2>
+    <p>월별 카테고리 판매 추이를 분석한 결과, 과일 카테고리는 5월에 가장 높은 매출을 기록했으며, 채소와 유제품 카테고리도 전반적으로 상승세를 보였습니다. 특히 봄철(4-5월)에는 과일 카테고리의 매출이 크게 증가했습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_category_sales_amount.png" alt="월별 카테고리 매출 추이">
+        <div class="image-caption">그림 10. 월별 카테고리 매출 추이</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_contribution.png" alt="카테고리별 기여도">
+        <div class="image-caption">그림 11. 카테고리별 매출 및 판매량 기여도</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- 상위/하위 제품 분석 -->
+    <h1>5. 상위/하위 제품 분석</h1>
+    
+    <h2>5.1 매출 기준 상위 제품</h2>
+    <p>매출 기준 상위 10개 제품을 분석한 결과, 주로 과일 카테고리에 속한 제품들이 높은 매출을 기록했습니다. 특히 '딸기'는 가장 높은 매출(387,000원)을 기록했으며, '수박'과 '골드 키위'가 그 뒤를 이었습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/top10_amount_products.png" alt="매출 기준 상위 10개 제품">
+        <div class="image-caption">그림 12. 매출 기준 상위 10개 제품</div>
+    </div>
+    
+    <h2>5.2 판매량 기준 상위 제품</h2>
+    <p>판매량 기준 상위 10개 제품을 분석한 결과, 채소와 유제품 카테고리에 속한 제품들이 고르게 분포했습니다. '유기농 시금치'는 가장 높은 판매량(90개)을 기록했으며, '그릭 요거트'와 '양파'가 그 뒤를 이었습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/top10_qty_products.png" alt="판매량 기준 상위 10개 제품">
+        <div class="image-caption">그림 13. 판매량 기준 상위 10개 제품</div>
+    </div>
+    
+    <h2>5.3 매출 기준 하위 제품</h2>
+    <p>매출 기준 하위 10개 제품을 분석한 결과, 주로 채소와 유제품 카테고리에 속한 제품들이 낮은 매출을 기록했습니다. 이러한 제품들의 가격 전략과 프로모션 전략을 재검토할 필요가 있습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/bottom10_amount_products.png" alt="매출 기준 하위 10개 제품">
+        <div class="image-caption">그림 14. 매출 기준 하위 10개 제품</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- 프로모션 효과 분석 -->
+    <h1>6. 프로모션 효과 분석</h1>
+    
+    <h2>6.1 프로모션별 매출 기여도</h2>
+    <p>Moon Market에서는 다양한 프로모션을 통해 매출을 증대시키고 있습니다. 프로모션별 매출 기여도를 분석한 결과, 'DAIRYPROMO'(1,602,000원)와 'FRUITPROMO5'(1,593,650원) 프로모션이 가장 높은 매출을 기록했습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_amount.png" alt="프로모션별 매출">
+        <div class="image-caption">그림 15. 프로모션별 매출</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_order_count.png" alt="프로모션별 주문 건수">
+        <div class="image-caption">그림 16. 프로모션별 주문 건수</div>
+    </div>
+    
+    <h2>6.2 프로모션별 평균 주문 금액</h2>
+    <p>프로모션별 평균 주문 금액을 분석한 결과, 'SPRING24'(12,439원)와 'NONE'(11,074원) 프로모션은 평균 주문 금액이 가장 높았습니다. 또한, 프로모션을 적용한 주문의 평균 금액(7,369원)이 프로모션이 없는 주문(3,764원)보다 약 2배 높았습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_avg_order_amount.png" alt="프로모션별 평균 주문 금액">
+        <div class="image-caption">그림 17. 프로모션별 평균 주문 금액</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_effect_comparison.png" alt="프로모션 효과 비교">
+        <div class="image-caption">그림 18. 프로모션 적용 여부에 따른 평균 주문 금액 비교</div>
+    </div>
+    
+    <h2>6.3 프로모션 ROI 분석</h2>
+    <p>프로모션별 ROI(투자 수익률)를 분석한 결과, 'FRUITPROMO5'와 'DAIRYPROMO' 프로모션이 가장 높은 ROI를 기록했습니다. 이는 해당 프로모션들이 비용 대비 효과적으로 매출을 증대시키고 있음을 보여줍니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promotion_roi.png" alt="프로모션별 ROI">
+        <div class="image-caption">그림 19. 프로모션별 ROI</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- 고객 구매 패턴 분석 -->
+    <h1>7. 고객 구매 패턴 분석</h1>
+    
+    <h2>7.1 성별 구매 패턴</h2>
+    <p>성별 구매 패턴을 분석한 결과, 남성 고객의 매출 기여도(54.02%)가 여성 고객(45.98%)보다 높았습니다. 또한, 남성 고객은 과일 카테고리를, 여성 고객은 채소 카테고리를 상대적으로 더 선호하는 것으로 나타났습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/gender_amount.png" alt="성별 매출">
+        <div class="image-caption">그림 20. 성별 매출</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/gender_category_preference.png" alt="성별 카테고리 선호도">
+        <div class="image-caption">그림 21. 성별 카테고리 선호도</div>
+    </div>
+    
+    <h2>7.2 연령대별 구매 패턴</h2>
+    <p>연령대별 구매 패턴을 분석한 결과, 30대와 50대 고객의 매출 기여도가 가장 높았습니다. 반면, 20대 고객의 매출 기여도는 상대적으로 낮았습니다. 연령대별 카테고리 선호도를 분석한 결과, 30-40대는 과일 카테고리를, 50-60대는 채소 카테고리를 상대적으로 더 선호하는 것으로 나타났습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/age_amount.png" alt="연령대별 매출">
+        <div class="image-caption">그림 22. 연령대별 매출</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/age_category_preference.png" alt="연령대별 카테고리 선호도">
+        <div class="image-caption">그림 23. 연령대별 카테고리 선호도</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/gender_age_amount.png" alt="성별-연령대별 매출">
+        <div class="image-caption">그림 24. 성별-연령대별 매출</div>
+    </div>
+    
+    <h2>7.3 지역별 판매 현황</h2>
+    <p>지역별 판매 현황을 분석한 결과, 서울 지역이 전체 매출의 약 76.6%를 차지했으며, 경기도 지역이 23.4%를 차지했습니다. 서울 내에서는 강남구, 송파구, 마포구 등이 높은 매출을 기록했습니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/top10_regions_amount.png" alt="지역별 매출 상위 10개 지역">
+        <div class="image-caption">그림 25. 지역별 매출 상위 10개 지역</div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- 결론 및 제안 -->
+    <h1>8. 결론 및 제안</h1>
+    
+    <div class="conclusion">
+        <h3>결론</h3>
+        <p>Moon Market은 과일 카테고리를 중심으로 안정적인 매출을 기록하고 있으며, 프로모션을 통한 매출 증대 효과가 뚜렷하게 나타났습니다. 특히 5월에는 전월 대비 약 28.9%의 매출 성장률을 기록하며 높은 성장세를 보였습니다. 고객 구매 패턴 분석 결과, 남성 고객과 30-50대 고객층이 주요 매출을 창출하고 있으며, 서울 지역이 전체 매출의 약 76.6%를 차지하고 있습니다.</p>
+        
+        <h3>제안</h3>
+        <ol>
+            <li><strong>제품 전략</strong>:
+                <ul>
+                    <li>과일 카테고리의 고수익성을 유지하면서, 채소 카테고리의 가격 전략을 재검토하여 수익성을 개선해야 합니다.</li>
+                    <li>판매량은 많지만 매출 기여도가 낮은 제품의 가격 전략을 재검토해야 합니다.</li>
+                    <li>계절별 특화 상품을 개발하여 시즌별 매출 증대를 도모해야 합니다.</li>
+                </ul>
+            </li>
+            <li><strong>마케팅 전략</strong>:
+                <ul>
+                    <li>'DAIRYPROMO'와 'FRUITPROMO5' 프로모션의 성공 요인을 분석하여 다른 프로모션에도 적용해야 합니다.</li>
+                    <li>카테고리별 특화된 프로모션 전략을 수립하여 효율적인 마케팅 예산 배분이 필요합니다.</li>
+                    <li>프로모션별 ROI를 고려한 마케팅 예산 배분이 필요합니다.</li>
+                </ul>
+            </li>
+            <li><strong>고객 전략</strong>:
+                <ul>
+                    <li>20대 고객층 확대를 위한 타겟 마케팅 전략이 필요합니다.</li>
+                    <li>고객 충성도 프로그램 도입을 통한 재구매율 향상이 필요합니다.</li>
+                    <li>성별 및 연령대별 선호 제품을 고려한 맞춤형 마케팅 전략이 필요합니다.</li>
+                </ul>
+            </li>
+            <li><strong>지역 전략</strong>:
+                <ul>
+                    <li>서울 외 지역으로의 확장을 위한 지역별 맞춤형 마케팅 전략 수립이 필요합니다.</li>
+                    <li>지역별 소비자 특성을 고려한 제품 구성 및 프로모션 전략이 필요합니다.</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <p>본 보고서의 분석 결과를 바탕으로 Moon Market은 제품 전략, 마케팅 전략, 고객 전략, 지역 전략 등을 종합적으로 재검토하여 지속적인 성장을 도모할 수 있을 것으로 기대됩니다.</p>
 </body>
 </html>

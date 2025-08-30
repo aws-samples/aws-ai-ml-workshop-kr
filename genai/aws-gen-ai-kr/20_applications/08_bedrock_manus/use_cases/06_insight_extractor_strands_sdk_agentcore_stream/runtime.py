@@ -81,7 +81,7 @@ async def graph_streaming_execution(payload):
 
     if not user_query:
         # Use default query if none provided
-        user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘"
+        user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다. Coder 에이전트가 할일은 최대한 작게 해줘. 왜냐하면 reporter 에이전트 테스트 중이라 빨리 코더 단계를 넘어 가야 하거든. 부탁해."
 
     _setup_execution()
 
@@ -114,7 +114,7 @@ async def graph_streaming_execution(payload):
                 event["runtime_source"] = "bedrock_manus_agentcore"
 
                 # Process event for display (optional - can be removed for pure runtime)
-                strands_utils.process_event_for_display(event)
+                #strands_utils.process_event_for_display(event)
 
                 yield event
             await asyncio.sleep(0.01)
@@ -130,7 +130,7 @@ async def graph_streaming_execution(payload):
             event["final_event"] = True
 
             # Process event for display (optional)
-            strands_utils.process_event_for_display(event)
+            #strands_utils.process_event_for_display(event)
 
             yield event
 

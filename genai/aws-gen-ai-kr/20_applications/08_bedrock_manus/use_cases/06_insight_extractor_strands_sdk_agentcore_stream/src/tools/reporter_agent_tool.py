@@ -75,7 +75,7 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         system_prompts=apply_prompt_template(prompt_name="reporter", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
         agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
-        prompt_cache_info=(True, None),  # reasoning agent uses prompt caching
+        prompt_cache_info=(True, None), # reasoning agent uses prompt caching
         tools=[python_repl_tool, bash_tool, file_read],
         streaming=True  # Enable streaming for consistency
     )
@@ -100,7 +100,6 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         return reporter_agent, response
     
     reporter_agent, response = asyncio.run(process_reporter_stream())
-    
     result_text = response['text']
     
     # Update clues

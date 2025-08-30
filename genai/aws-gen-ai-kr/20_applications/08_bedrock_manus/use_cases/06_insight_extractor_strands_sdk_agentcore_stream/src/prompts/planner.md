@@ -116,5 +116,5 @@ Directly output the raw Markdown format of Plan as below
 - Always use Coder for mathematical computations.
 - Always use Coder to get stock information via yfinance.
 - Always use Reporter to present your final report. Reporter can only be used once as the last step.
-- Always use the same language as the user.
+- [CRITICAL] Always analyze the entire USER_REQUEST to detect the main language and respond in that language. For mixed languages, use whichever language is dominant in the request.
 </notes>

@@ -26,19 +26,8 @@ def log_io(func: Callable) -> Callable:
 
     @functools.wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
-        func_name = func.__name__
         # Execute the function
         result = func(*args, **kwargs)
-
-        # Log the output
-        if len(result.split("||")) == 3:
-            status, code, stdout = result.split("||")
-            #logger.info(f"{Colors.RED}Python-REPL - {status}\n{code}{Colors.END}")
-            #logger.info(f"{Colors.BLUE}\n{stdout}{Colors.END}")
-        else:
-            cmd = None
-            if len(result.split("||")) == 2: cmd, stdout = result.split("||")
-            #logger.info(f"{Colors.RED}\nCoder - Tool {func_name} returned:\n{result}{Colors.END}")
 
         # Note: Tool results are now handled through Strands SDK message wrapper
         # No need to put events in queue here
