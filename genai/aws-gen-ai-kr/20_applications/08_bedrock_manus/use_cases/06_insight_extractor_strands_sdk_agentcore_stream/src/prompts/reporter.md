@@ -136,9 +136,55 @@ Important: Variable states are not preserved between conversation turns. All cod
 import os
 from weasyprint import HTML, CSS
 from weasyprint.text.fonts import FontConfiguration
+from PIL import Image
+import glob
 
 # 디렉토리 생성
 os.makedirs('./artifacts', exist_ok=True)
+
+# 이미지 크기 최적화 함수
+def optimize_image_size(image_path, max_width=800, max_height=600, quality=90):
+    """
+    이미지 크기를 최적화하여 PDF에 잘 맞도록 조정
+    """
+    try:
+        with Image.open(image_path) as img:
+            # 원본 크기 가져오기
+            original_width, original_height = img.size
+            
+            # 최대 크기를 넘으면 비율을 유지하며 축소
+            if original_width > max_width or original_height > max_height:
+                # 가로/세로 비율 계산
+                width_ratio = max_width / original_width
+                height_ratio = max_height / original_height
+                
+                # 더 작은 비율을 선택하여 이미지가 모든 제약 조건을 만족하도록 함
+                ratio = min(width_ratio, height_ratio)
+                
+                new_width = int(original_width * ratio)
+                new_height = int(original_height * ratio)
+                
+                # 이미지 리사이즈
+                resized_img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                
+                # 기존 파일 덮어쓰기 (또는 _optimized 접미사 추가)
+                resized_img.save(image_path, optimize=True, quality=quality)
+                
+                print(f"이미지 최적화 완료: {image_path} ({original_width}x{original_height} -> {new_width}x{new_height})")
+                return True
+            else:
+                print(f"이미지 크기가 적절합니다: {image_path} ({original_width}x{original_height})")
+                return False
+                
+    except Exception as e:
+        print(f"이미지 최적화 실패 {image_path}: {e}")
+        return False
+
+# artifacts 디렉토리의 모든 이미지 파일 최적화
+image_extensions = ['*.png', '*.jpg', '*.jpeg', '*.gif']
+for extension in image_extensions:
+    for image_path in glob.glob(f'./artifacts/{extension}'):
+        optimize_image_size(image_path)
 
 # HTML 파일 경로와 PDF 파일 경로 설정
 html_file_path = './report.html'
@@ -180,10 +226,14 @@ html_content = """
         }}
         img {{
             max-width: 95%; /* Increased from 90% to 95% for even larger images */
-            height: auto;
+            max-height: 600px; /* Maximum height to prevent overflow */
+            width: auto !important; /* Maintain aspect ratio */
+            height: auto !important; /* Maintain aspect ratio */
             display: block;
             margin: 10px auto; /* Reduced margin from 15px to 10px */
             border: 1px solid #ddd;
+            object-fit: contain; /* Ensure image fits within bounds while maintaining aspect ratio */
+            page-break-inside: avoid; /* Prevent image from being split across pages */
         }}
         .chart-container {{
             display: flex;
@@ -191,8 +241,11 @@ html_content = """
             align-items: center;
             margin: 10px 0; /* Reduced margin from 15px to 10px */
             width: 95%; /* Charts take 95% of space - increased from 90% */
+            max-height: 650px; /* Maximum container height */
             margin-left: auto;
             margin-right: auto;
+            page-break-inside: avoid; /* Prevent chart containers from being split across pages */
+            overflow: hidden; /* Hide any overflow content */
         }}
         .image-caption {{
             text-align: center;
