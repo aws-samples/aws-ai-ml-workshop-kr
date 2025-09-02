@@ -18,7 +18,8 @@ from src.utils.agentcore_observability import set_session_context
 from src.utils.event_queue import get_event, has_events, clear_queue 
 
 # Env.
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
+load_dotenv()
 
 def remove_artifact_folder(folder_path="./artifacts/"):
     """
@@ -107,7 +108,10 @@ async def graph_streaming_execution(payload):
 
     try:
         # Get tracer for main application
-        tracer = trace.get_tracer("insight_extractor_agent", "1.0.0")
+        tracer = trace.get_tracer(
+            os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
+            os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
+        )
         with tracer.start_as_current_span("insight_extractor_session") as main_span:
 
             main_span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능

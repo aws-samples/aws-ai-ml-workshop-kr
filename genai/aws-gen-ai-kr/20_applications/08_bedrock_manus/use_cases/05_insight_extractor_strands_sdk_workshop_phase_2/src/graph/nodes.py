@@ -1,6 +1,8 @@
 import logging
-
+import os
 import asyncio
+from dotenv import load_dotenv
+load_dotenv()
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
@@ -10,6 +12,10 @@ from src.tools import coder_agent_tool, reporter_agent_tool, tracker_agent_tool
 from strands.agent.agent_result import AgentResult
 from strands.types.content import ContentBlock, Message
 from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
+
+# Observability
+from opentelemetry import trace
+from src.utils.agentcore_observability import add_span_event
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -32,7 +38,6 @@ def log_node_complete(node_name: str):
 
 # Global state storage for sharing between nodes
 _global_node_states = {}
-
 
 RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please execute the next step.*"
 FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
@@ -95,165 +100,195 @@ def should_handoff_to_planner(_):
 
 
 async def coordinator_node(task=None, **kwargs):
-    """Coordinator node that communicate with customers."""
-    global _global_node_states
     
-    log_node_start("Coordinator")
-
-    # Extract user request from task (now passed as dictionary)
-    if isinstance(task, dict):
-        request = task.get("request", "")
-        request_prompt = task.get("request_prompt", request)
-    else:
-        request = str(task) if task else ""
-        request_prompt = request
-
-    agent = strands_utils.get_agent(
-        agent_name="coordinator",
-        system_prompts=apply_prompt_template(prompt_name="coordinator", prompt_context={}), # apply_prompt_template(prompt_name="task_agent", prompt_context={"TEST": "sdsd"})
-        agent_type="claude-sonnet-3-5-v-2", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
-        enable_reasoning=False,
-        prompt_cache_info=(False, None), #(False, None), (True, "default")
-        streaming=True,
+    tracer = trace.get_tracer(
+        instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
+        instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
     )
+    with tracer.start_as_current_span("coordinator") as span:
+        """Coordinator node that communicate with customers."""
+        global _global_node_states
         
-    # Collect streaming events and build final response
-    streaming_events = []
-    async for event in strands_utils.process_streaming_response_yield(
-        agent, request_prompt, agent_name="coordinator", source="coordinator_node"
-    ):
-        # Keep for local processing
-        streaming_events.append(event) 
+        log_node_start("Coordinator")
 
-    # Reconstruct the full response from streaming events
-    full_text = ""
-    for event in streaming_events:
-        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
-    response = {"text": full_text}
-    
-    # Store data directly in shared global storage
-    if 'shared' not in _global_node_states: 
-        _global_node_states['shared'] = {}
-    shared_state = _global_node_states['shared']
-    
-    # Update shared global state
-    shared_state['messages'] = agent.messages
-    shared_state['request'] = request
-    shared_state['request_prompt'] = request_prompt
-    
-    # Build and update history
-    if 'history' not in shared_state: 
-        shared_state['history'] = []
-    shared_state['history'].append({"agent":"coordinator", "message": response["text"]})
-    
-    log_node_complete("Coordinator")
-    
-    # Return agent and response tuple as expected by the workflow
-    return agent, response
+        # Extract user request from task (now passed as dictionary)
+        if isinstance(task, dict):
+            request = task.get("request", "")
+            request_prompt = task.get("request_prompt", request)
+        else:
+            request = str(task) if task else ""
+            request_prompt = request
+
+        agent = strands_utils.get_agent(
+            agent_name="coordinator",
+            system_prompts=apply_prompt_template(prompt_name="coordinator", prompt_context={}), # apply_prompt_template(prompt_name="task_agent", prompt_context={"TEST": "sdsd"})
+            agent_type="claude-sonnet-3-5-v-2", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+            enable_reasoning=False,
+            prompt_cache_info=(False, None), #(False, None), (True, "default")
+            streaming=True,
+        )
+            
+        # Collect streaming events and build final response
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(
+            agent, request_prompt, agent_name="coordinator", source="coordinator_node"
+        ):
+            # Keep for local processing
+            streaming_events.append(event) 
+
+        # Reconstruct the full response from streaming events
+        full_text = ""
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+        response = {"text": full_text}
+        
+        # Store data directly in shared global storage
+        if 'shared' not in _global_node_states: 
+            _global_node_states['shared'] = {}
+        shared_state = _global_node_states['shared']
+        
+        # Update shared global state
+        shared_state['messages'] = agent.messages
+        shared_state['request'] = request
+        shared_state['request_prompt'] = request_prompt
+        
+        # Build and update history
+        if 'history' not in shared_state: 
+            shared_state['history'] = []
+        shared_state['history'].append({"agent":"coordinator", "message": response["text"]})
+        
+        log_node_complete("Coordinator")
+
+        # Add Event
+        add_span_event(span, "input_message", {"message": str(request_prompt)})
+        add_span_event(span, "response", {"response": str(response["text"])})
+
+        # Return agent and response tuple as expected by the workflow
+        return agent, response
 
 async def planner_node(task=None, **kwargs):
-    """Planner node that generates detailed plans for task execution."""
-    global _global_node_states
     
-    log_node_start("Planner")
-
-    # Extract shared state from global storage
-    shared_state = _global_node_states.get('shared', None)
-    
-    # Get request from kwargs state or shared state
-    state = kwargs.get("state", {})
-    if state: 
-        request = state.get("request", "")
-    else: 
-        request = shared_state.get("request", "") if shared_state else (task or "")
-    
-    if not shared_state:
-        logger.warning("No shared state found in global storage")
-        return None, {"text": "No shared state available"}
-
-    agent = strands_utils.get_agent(
-        agent_name="planner",
-        system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
-        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
-        enable_reasoning=True,
-        prompt_cache_info=(False, None),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
-        streaming=True,
+    tracer = trace.get_tracer(
+        instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
+        instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
     )
-    
-    full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
-    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
-    
-    # Collect streaming events and build final response
-    streaming_events = []
-    async for event in strands_utils.process_streaming_response_yield(
-        agent, message, agent_name="planner", source="planner_node"
-    ):
-        # Keep for local processing
-        streaming_events.append(event)
+    with tracer.start_as_current_span("planner") as span:   
+        """Planner node that generates detailed plans for task execution."""
+        global _global_node_states
+        
+        log_node_start("Planner")
 
-    # Reconstruct the full response from streaming events
-    full_text = ""
-    for event in streaming_events:
-        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
-    response = {"text": full_text}
-    
-    # Update shared global state
-    shared_state['messages'] = [get_message_from_string(role="user", string=response["text"], imgs=[])]
-    shared_state['full_plan'] = response["text"]
-    shared_state['history'].append({"agent":"planner", "message": response["text"]})
+        # Extract shared state from global storage
+        shared_state = _global_node_states.get('shared', None)
+        
+        # Get request from kwargs state or shared state
+        state = kwargs.get("state", {})
+        if state: 
+            request = state.get("request", "")
+        else: 
+            request = shared_state.get("request", "") if shared_state else (task or "")
+        
+        if not shared_state:
+            logger.warning("No shared state found in global storage")
+            return None, {"text": "No shared state available"}
 
-    log_node_complete("Planner")
-    
-    # Return agent and response tuple as expected by the workflow
-    return agent, response
+        agent = strands_utils.get_agent(
+            agent_name="planner",
+            system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
+            agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+            enable_reasoning=True,
+            prompt_cache_info=(False, None),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
+            streaming=True,
+        )
+        
+        full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
+        message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+        
+        # Collect streaming events and build final response
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(
+            agent, message, agent_name="planner", source="planner_node"
+        ):
+            # Keep for local processing
+            streaming_events.append(event)
+
+        # Reconstruct the full response from streaming events
+        full_text = ""
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+        response = {"text": full_text}
+        
+        # Update shared global state
+        shared_state['messages'] = [get_message_from_string(role="user", string=response["text"], imgs=[])]
+        shared_state['full_plan'] = response["text"]
+        shared_state['history'].append({"agent":"planner", "message": response["text"]})
+
+        log_node_complete("Planner")
+
+        # Add Event
+        add_span_event(span, "input_message", {"message": str(message)})
+        add_span_event(span, "response", {"response": str(response["text"])})
+        
+        # Return agent and response tuple as expected by the workflow
+        return agent, response
 
 async def supervisor_node(task=None, **kwargs):
-    """Supervisor node that decides which agent should act next."""
-    global _global_node_states
-    
-    log_node_start("Supervisor")
-    
-    # Extract shared state from global storage
-    shared_state = _global_node_states.get('shared', None)
-    
-    if not shared_state:
-        logger.warning("No shared state found in global storage")
-        return None, {"text": "No shared state available"}
-
-    agent = strands_utils.get_agent(
-        agent_name="supervisor",
-        system_prompts=apply_prompt_template(prompt_name="supervisor", prompt_context={}),
-        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
-        enable_reasoning=False,
-        prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
-        tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool],  # Add coder, reporter and tracker agents as tools
-        streaming=True,
+    tracer = trace.get_tracer(
+        instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
+        instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
     )
+    with tracer.start_as_current_span("supervisor") as span:  
 
-    clues, full_plan, messages = shared_state.get("clues", ""), shared_state.get("full_plan", ""), shared_state["messages"]
-    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+        """Supervisor node that decides which agent should act next."""
+        global _global_node_states
         
-    # Collect streaming events and build final response
-    streaming_events = []
-    async for event in strands_utils.process_streaming_response_yield(
-        agent, message, agent_name="supervisor", source="supervisor_node"
-    ):
-        # Keep for local processing
-        streaming_events.append(event)
+        log_node_start("Supervisor")
+        
+        # Extract shared state from global storage
+        shared_state = _global_node_states.get('shared', None)
+        
+        if not shared_state:
+            logger.warning("No shared state found in global storage")
+            return None, {"text": "No shared state available"}
 
-    # Reconstruct the full response from streaming events
-    full_text = ""
-    for event in streaming_events:
-        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
-    response = {"text": full_text}
+        agent = strands_utils.get_agent(
+            agent_name="supervisor",
+            system_prompts=apply_prompt_template(prompt_name="supervisor", prompt_context={}),
+            agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+            enable_reasoning=False,
+            prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+            tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool],  # Add coder, reporter and tracker agents as tools
+            streaming=True,
+        )
 
-    # Update shared global state
-    shared_state['history'].append({"agent":"supervisor", "message": response["text"]})
-    
-    log_node_complete("Supervisor")
-    logger.info("Workflow completed")
-    
-    # Return agent and response tuple as expected by the workflow
-    return agent, response
+        clues, full_plan, messages = shared_state.get("clues", ""), shared_state.get("full_plan", ""), shared_state["messages"]
+        message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+            
+        # Collect streaming events and build final response
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(
+            agent, message, agent_name="supervisor", source="supervisor_node"
+        ):
+            # Keep for local processing
+            streaming_events.append(event)
+
+        # Reconstruct the full response from streaming events
+        full_text = ""
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+        response = {"text": full_text}
+
+        # Update shared global state
+        shared_state['history'].append({"agent":"supervisor", "message": response["text"]})
+        
+        log_node_complete("Supervisor")
+        logger.info("Workflow completed")
+
+        # Add Event
+        add_span_event(span, "input_message", {"message": str(message)})
+        add_span_event(span, "response", {"response": str(response["text"])})
+        
+        # Return agent and response tuple as expected by the workflow
+        return agent, response
 
 

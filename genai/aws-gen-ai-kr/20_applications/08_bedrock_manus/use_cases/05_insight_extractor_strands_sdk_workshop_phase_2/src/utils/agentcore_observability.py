@@ -29,3 +29,37 @@ def set_session_context(session_id, user_type=None, experiment_id=None):
         logger.info(f"{Colors.GREEN}Experiment ID '{experiment_id}' attached to telemetry context{Colors.END}")
         
     return context.attach(ctx)
+
+
+###########################
+####   Event Helpers    ####
+###########################
+
+def add_span_event(span, event_name: str, attributes: dict = None):
+    """
+    Add an event to the specified span.
+    
+    Args:
+        span: The OpenTelemetry span to add the event to
+        event_name: Name of the event
+        attributes: Dictionary of attributes to attach to the event (str, bool, int, float)
+    """
+    if span and span.is_recording():
+        span.add_event(event_name, attributes or {})
+    else:
+        logger.warning(f"Invalid or non-recording span for event: {event_name}")
+
+
+def set_span_attribute(span, key: str, value):
+    """
+    Set an attribute on the specified span.
+    
+    Args:
+        span: The OpenTelemetry span to set the attribute on
+        key: The attribute key
+        value: The attribute value
+    """
+    if span and span.is_recording():
+        span.set_attribute(key, value)
+    else:
+        logger.warning(f"Invalid or non-recording span for attribute: {key}")

@@ -4,12 +4,16 @@ Entry point script for the Strands Agent Demo.
 import os
 import shutil
 import asyncio
+from dotenv import load_dotenv
 from src.workflow import run_graph_streaming_workflow
 from src.utils.strands_sdk_utils import strands_utils
 
+# Load environment variables
+load_dotenv()
+
 # Observability
 from opentelemetry import trace, context
-from src.utils.agentcore_observability import set_session_context
+from src.utils.agentcore_observability import set_session_context, add_span_event
 
 # Import event queue for unified event processing
 from src.utils.event_queue import get_event, has_events, clear_queue 
@@ -29,27 +33,6 @@ def remove_artifact_folder(folder_path="./artifacts/"):
         except Exception as e: print(f"오류 발생: {e}")
     else:
         print(f"'{folder_path}' 폴더가 존재하지 않습니다.")
-
-def _get_env():
-
-    load_dotenv()
-
-    # Display the OTEL-related environment variables
-    otel_vars = [
-        "OTEL_PYTHON_DISTRO",
-        "OTEL_PYTHON_CONFIGURATOR",
-        "OTEL_EXPORTER_OTLP_PROTOCOL",
-        "OTEL_EXPORTER_OTLP_LOGS_HEADERS",
-        "OTEL_RESOURCE_ATTRIBUTES",
-        "AGENT_OBSERVABILITY_ENABLED",
-        "OTEL_TRACES_EXPORTER"
-    ]
-
-    print("OpenTelemetry Configuration:")
-    for var in otel_vars:
-        value = os.getenv(var)
-        if value: print(f"{var}={value}")
-    print("=======================")
 
 def _setup_execution():
     """Initialize execution environment"""
@@ -102,9 +85,11 @@ async def graph_streaming_execution(payload):
     
     try:
         # Get tracer for main application
-        tracer = trace.get_tracer("insight_extractor_agent", "1.0.0")
-        with tracer.start_as_current_span("insight_extractor_session") as main_span:
-            
+        tracer = trace.get_tracer(
+            instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
+            instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
+        )
+        with tracer.start_as_current_span("insight_extractor_session") as span:   
             # Start workflow in background
             async def run_workflow():
                 try:
@@ -115,11 +100,6 @@ async def graph_streaming_execution(payload):
             
             workflow_task = asyncio.create_task(run_workflow())
 
-            main_span.add_event( # add_event 사용 시 (CloudWatch)GenAI Observability의 trace의 event에서 바로 확인 x, "Traces"의 event에서는 확인 가능
-                    "user_query",
-                    {"user-query": str(user_query)}
-                ) # attribute.name에 _(under bar)가 들어가면 안된다. 
-            
             try:
                 # Main event loop - monitor queue until workflow completes
                 while not workflow_task.done():
@@ -138,8 +118,12 @@ async def graph_streaming_execution(payload):
             yield {"type": "workflow_complete", "message": "All events processed through global queue"}
             _print_conversation_history()
             print("=== Queue-Only Event Stream Complete ===")
+            
+            # Add Event
+            add_span_event(span, "user_query", {"user-query": str(user_query)}) 
     
     finally:
+        
         context.detach(context_token)
 
 if __name__ == "__main__":
