@@ -853,6 +853,7 @@ class retriever_utils():
                 filter=search_filter,
                 hybrid=True
             )
+
             semantic_pool = cls.pool.apply_async(semantic_search,)
             lexical_pool = cls.pool.apply_async(lexical_search,)
             similar_docs_semantic, similar_docs_keyword = semantic_pool.get(), lexical_pool.get()
