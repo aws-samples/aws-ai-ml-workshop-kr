@@ -80,204 +80,255 @@
             background-color: #f2f2f2;
         }
         .highlight {
-            background-color: #ffffcc;
-            padding: 2px 4px;
+            color: #e74c3c;
+            font-weight: bold;
         }
-        .executive-summary {
+        .recommendation {
             background-color: #f8f9fa;
-            padding: 15px;
             border-left: 4px solid #3498db;
-            margin-bottom: 20px;
-        }
-        .recommendations {
-            background-color: #f0f7fb;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin-top: 20px;
+            padding: 10px;
+            margin: 15px 0;
         }
     </style>
 </head>
 <body>
     <h1>Moon Market 판매 현황 보고서</h1>
     
-    <h2>경영진 요약</h2>
-    <div class="executive-summary">
-        <p>본 보고서는 Moon Market의 판매 현황을 세일즈 및 마케팅 관점에서 분석한 결과입니다. 2024년 1월부터 6월까지의 판매 데이터를 기반으로 시간별/기간별 판매 트렌드, 제품 카테고리별 성능, 마케팅 활동과 매출 간의 상관관계, 그리고 인구통계학적 분석을 수행했습니다.</p>
-        <p>주요 발견사항으로는 <span class="highlight">5월에 가장 높은 매출(3,622,530원)과 성장률(32.1%)</span>을 기록했으나, 6월에는 큰 폭으로 하락(-29.2%)했습니다. <span class="highlight">과일 카테고리</span>가 전체 매출의 45.1%를 차지하며 가장 높은 비중을 보이고, <span class="highlight">30대(33.8%)와 50대(24.7%)</span>가 주요 고객층입니다. 또한 <span class="highlight">SPRING24, EARLY5, SUMMERFRUIT</span> 프로모션이 가장 효과적인 것으로 나타났습니다.</p>
+    <h2>1. 개요</h2>
+    <p>본 보고서는 Moon Market의 2024년 1월부터 6월까지의 판매 데이터를 분석하여 세일즈 및 마케팅 관점에서의 인사이트를 제공합니다. 데이터 분석을 통해 판매 트렌드, 고객 세그먼트, 프로모션 효과 등을 파악하고 향후 비즈니스 전략 수립에 도움이 될 수 있는 권장사항을 제시합니다.</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/key_kpi_table.png" alt="Moon Market 주요 KPI">
+        <div class="image-caption">Moon Market 주요 KPI</div>
     </div>
     
-    <h2>1. 시간별/기간별 판매 트렌드 분석</h2>
-    <div class="content">
-        <p>Moon Market의 2024년 1월부터 6월까지의 판매 트렌드를 분석한 결과, 월별 및 주별로 다양한 패턴이 관찰되었습니다.</p>
-        
-        <h3>1.1 월별 판매 트렌드</h3>
-        <div class="chart-container">
-            <img src="./artifacts/monthly_sales_trend.png" alt="월별 판매 트렌드 및 성장률">
-            <div class="image-caption">그림 1. Moon Market 월별 판매 트렌드 및 성장률</div>
-        </div>
-        <div class="text-content">
-            <p>월별 판매 트렌드를 살펴보면, 5월에 3,622,530원으로 가장 높은 매출을 기록했으며, 전월 대비 32.1%의 높은 성장률을 보였습니다. 그러나 6월에는 2,564,740원으로 매출이 급격히 하락(-29.2%)했습니다. 1월부터 4월까지는 비교적 안정적인 매출 추이를 보였습니다.</p>
-        </div>
-        
-        <h3>1.2 월별 주문 건수 및 평균 주문 금액</h3>
-        <div class="chart-container">
-            <img src="./artifacts/monthly_order_metrics.png" alt="월별 주문 건수 및 평균 주문 금액">
-            <div class="image-caption">그림 2. Moon Market 월별 주문 건수 및 평균 주문 금액</div>
-        </div>
-        <div class="text-content">
-            <p>월별 주문 건수는 5월에 259건으로 가장 많았으며, 평균 주문 금액은 13,085원~14,753원 사이로 비교적 안정적인 추이를 보였습니다. 이는 고객들의 구매 패턴이 일정하게 유지되고 있음을 시사합니다.</p>
-        </div>
-        
-        <h3>1.3 주별 판매 트렌드</h3>
-        <div class="chart-container">
-            <img src="./artifacts/weekly_sales_trend.png" alt="주별 판매 트렌드">
-            <div class="image-caption">그림 3. Moon Market 주별 판매 트렌드</div>
-        </div>
-        <div class="text-content">
-            <p>주별 판매 트렌드를 분석한 결과, 18주차(5월 초)에 944,580원, 19주차에 920,480원으로 가장 높은 매출을 기록했습니다. 이는 5월 초에 진행된 프로모션과 계절적 요인이 영향을 미친 것으로 보입니다.</p>
-        </div>
+    <h2>2. 주요 발견사항</h2>
+    
+    <h3>2.1 카테고리별 성과</h3>
+    <p>Moon Market의 상품은 과일, 채소, 유제품 세 가지 카테고리로 구분됩니다. 각 카테고리별 매출 및 판매량 기여도를 분석한 결과는 다음과 같습니다:</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_contribution.png" alt="카테고리별 매출 및 판매량 기여도">
+        <div class="image-caption">카테고리별 매출 및 판매량 기여도</div>
     </div>
     
-    <h2>2. 제품 카테고리별 성능 분석</h2>
-    <div class="content">
-        <p>Moon Market에서 판매되는 제품은 과일, 채소, 유제품 세 가지 카테고리로 구분됩니다. 각 카테고리별 성능을 분석한 결과는 다음과 같습니다.</p>
-        
-        <h3>2.1 카테고리별 매출 비중</h3>
-        <div class="chart-container">
-            <img src="./artifacts/category_sales_pie.png" alt="카테고리별 매출 비중">
-            <div class="image-caption">그림 4. Moon Market 카테고리별 매출 비중</div>
-        </div>
-        <div class="text-content">
-            <p>과일 카테고리가 전체 매출의 45.1%를 차지하며 가장 높은 비중을 보였고, 채소(27.7%)와 유제품(27.2%) 카테고리가 비슷한 비중으로 뒤를 이었습니다. 이는 Moon Market 고객들이 신선한 과일에 대한 선호도가 높음을 시사합니다.</p>
-        </div>
-        
-        <h3>2.2 카테고리별 주요 지표 비교</h3>
-        <div class="chart-container">
-            <img src="./artifacts/category_metrics_comparison.png" alt="카테고리별 주요 지표 비교">
-            <div class="image-caption">그림 5. Moon Market 카테고리별 주요 지표 비교</div>
-        </div>
-        <div class="text-content">
-            <p>카테고리별 주요 지표를 비교한 결과, 과일 카테고리의 평균 주문 금액(18,496원)과 평균 단가(9,583원)가 다른 카테고리보다 높게 나타났습니다. 이는 과일 카테고리의 제품이 상대적으로 고가이며, 고객들이 품질 좋은 과일에 더 많은 비용을 지불할 의향이 있음을 보여줍니다.</p>
-        </div>
-        
-        <h3>2.3 카테고리별 연령대 분포</h3>
-        <div class="chart-container">
-            <img src="./artifacts/category_age_distribution.png" alt="카테고리별 연령대 분포">
-            <div class="image-caption">그림 6. Moon Market 카테고리별 연령대 분포 (%)</div>
-        </div>
-        <div class="text-content">
-            <p>카테고리별 연령대 분포를 분석한 결과, 과일은 50대(40.3%)와 30대(38.4%), 유제품은 40대(27.6%)와 50대(21.6%), 채소는 30대(47.2%)와 40대(36.5%)가 주요 소비층으로 나타났습니다. 이러한 정보는 연령대별 맞춤형 마케팅 전략 수립에 활용할 수 있습니다.</p>
-        </div>
+    <ul>
+        <li><span class="highlight">과일 카테고리</span>는 판매량(33.9%)보다 매출 기여도(45.3%)가 높아 고수익 카테고리로 확인되었습니다.</li>
+        <li><span class="highlight">채소 카테고리</span>는 판매량(38.6%)에 비해 매출 기여도(27.8%)가 낮아 상대적으로 저가 제품 위주로 판매되고 있습니다.</li>
+        <li><span class="highlight">유제품 카테고리</span>는 판매량(27.5%)과 매출 기여도(26.9%)가 비슷한 수준을 보이고 있습니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/category_sales_pie.png" alt="카테고리별 매출 비중">
+        <div class="image-caption">카테고리별 매출 비중</div>
     </div>
     
-    <h2>3. 마케팅 활동과 매출 간의 상관관계 분석</h2>
-    <div class="content">
-        <p>Moon Market에서 진행한 다양한 프로모션과 매출 간의 상관관계를 분석하여 효과적인 마케팅 전략을 도출했습니다.</p>
-        
-        <h3>3.1 프로모션별 매출 비중</h3>
-        <div class="chart-container">
-            <img src="./artifacts/promotion_sales_pie.png" alt="상위 5개 프로모션별 매출 비중">
-            <div class="image-caption">그림 7. Moon Market 상위 5개 프로모션별 매출 비중</div>
-        </div>
-        <div class="text-content">
-            <p>상위 3개 프로모션(DAIRYPROMO, SUMMERFRUIT, FRUITPROMO5)이 전체 매출의 54%를 차지하는 것으로 나타났습니다. 특히 DAIRYPROMO가 27.3%로 가장 높은 비중을 차지했으며, SUMMERFRUIT(16.7%)와 FRUITPROMO5(10.1%)가 뒤를 이었습니다.</p>
-        </div>
-        
-        <h3>3.2 프로모션별 효과성</h3>
-        <div class="chart-container">
-            <img src="./artifacts/promotion_effectiveness.png" alt="프로모션별 효과성 지표">
-            <div class="image-caption">그림 8. Moon Market 프로모션별 효과성 지표</div>
-        </div>
-        <div class="text-content">
-            <p>프로모션별 효과성을 분석한 결과, SPRING24(1.76), EARLY5(1.54), SUMMERFRUIT(1.51) 순으로 효과적인 것으로 나타났습니다. 효과성 지표는 프로모션별 평균 주문 금액을 전체 평균 주문 금액으로 나눈 값으로, 1보다 크면 평균보다 효과적임을 의미합니다.</p>
-        </div>
-        
-        <h3>3.3 상위 프로모션의 연령대별 분포</h3>
-        <div class="chart-container">
-            <img src="./artifacts/top3_promotion_age_dist.png" alt="상위 3개 프로모션의 연령대별 분포">
-            <div class="image-caption">그림 9. Moon Market 상위 3개 프로모션의 연령대별 분포</div>
-        </div>
-        <div class="text-content">
-            <p>상위 3개 프로모션의 연령대별 분포를 분석한 결과, SUMMERFRUIT는 50대와 30대, FRUITPROMO5는 50대와 30대, DAIRYPROMO는 40대와 50대가 주요 타겟층으로 나타났습니다. 이는 각 프로모션이 특정 연령대에 더 효과적임을 보여줍니다.</p>
-        </div>
+    <div class="chart-container">
+        <img src="./artifacts/category_qty_pie.png" alt="카테고리별 판매량 비중">
+        <div class="image-caption">카테고리별 판매량 비중</div>
     </div>
     
-    <h2>4. 인구통계학적 분석</h2>
-    <div class="content">
-        <p>Moon Market 고객의 성별, 연령대, 지역별 특성을 분석하여 고객 프로필을 파악했습니다.</p>
-        
-        <h3>4.1 성별 분석</h3>
-        <div class="chart-container">
-            <img src="./artifacts/gender_order_ratio.png" alt="성별 주문 비율">
-            <div class="image-caption">그림 10. Moon Market 성별 주문 비율</div>
-        </div>
-        <div class="text-content">
-            <p>성별 분석 결과, 여성(50.2%)과 남성(49.8%)의 주문 비율은 비슷하게 나타났습니다. 그러나 평균 주문 금액은 남성(18,952원)이 여성(8,822원)보다 2배 이상 높게 나타났습니다. 이는 남성 고객이 상대적으로 고가의 제품을 선호하거나 대량 구매하는 경향이 있음을 시사합니다.</p>
-        </div>
-        
-        <h3>4.2 연령대별 분석</h3>
-        <div class="chart-container">
-            <img src="./artifacts/age_order_ratio.png" alt="연령대별 주문 비율">
-            <div class="image-caption">그림 11. Moon Market 연령대별 주문 비율</div>
-        </div>
-        <div class="chart-container">
-            <img src="./artifacts/age_avg_order_amount.png" alt="연령대별 평균 주문 금액">
-            <div class="image-caption">그림 12. Moon Market 연령대별 평균 주문 금액</div>
-        </div>
-        <div class="text-content">
-            <p>연령대별 분석 결과, 30대(33.8%), 50대(24.7%), 40대(24.4%), 20대(9.2%), 60대(7.9%) 순으로 주문 비율이 높게 나타났습니다. 평균 주문 금액은 50대가 가장 높고, 60대가 가장 낮았습니다. 이는 30~50대가 Moon Market의 핵심 고객층임을 보여줍니다.</p>
-        </div>
-        
-        <h3>4.3 지역별 분석</h3>
-        <div class="chart-container">
-            <img src="./artifacts/region_order_ratio.png" alt="지역별 주문 비율">
-            <div class="image-caption">그림 13. Moon Market 지역별 주문 비율</div>
-        </div>
-        <div class="text-content">
-            <p>지역별 분석 결과, 서울(80.0%)이 경기도(20.0%)보다 주문 비율이 4배 높게 나타났습니다. 그러나 평균 주문 금액은 경기도(18,352원)가 서울(12,750원)보다 높게 나타났습니다. 이는 경기도 지역 고객의 구매력이 상대적으로 높음을 시사합니다.</p>
-        </div>
+    <h3>2.2 고객 세그먼트 분석</h3>
+    <p>고객 성별 및 연령대에 따른 구매 패턴을 분석한 결과는 다음과 같습니다:</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/gender_sales_pie.png" alt="성별 매출 비중">
+        <div class="image-caption">성별 매출 비중</div>
     </div>
     
-    <h2>5. 종합 대시보드</h2>
-    <div class="content">
-        <div class="chart-container">
-            <img src="./artifacts/comprehensive_dashboard.png" alt="판매 현황 종합 대시보드">
-            <div class="image-caption">그림 14. Moon Market 판매 현황 종합 대시보드</div>
-        </div>
-        <div class="text-content">
-            <p>위 대시보드는 Moon Market의 판매 현황을 종합적으로 보여줍니다. 월별 판매 트렌드, 카테고리별 매출 비중, 연령대별/성별/지역별 주문 비율, 그리고 프로모션별 효과성을 한눈에 파악할 수 있습니다.</p>
-        </div>
+    <div class="chart-container">
+        <img src="./artifacts/gender_avg_qty.png" alt="성별 평균 주문 수량">
+        <div class="image-caption">성별 평균 주문 수량</div>
     </div>
     
-    <h2>6. 핵심 인사이트 및 제안사항</h2>
-    <div class="content">
-        <h3>6.1 핵심 인사이트</h3>
+    <div class="chart-container">
+        <img src="./artifacts/gender_avg_order.png" alt="성별 평균 주문 금액">
+        <div class="image-caption">성별 평균 주문 금액</div>
+    </div>
+    
+    <ul>
+        <li><span class="highlight">남성 고객</span>은 전체 매출의 68.1%를 차지하며, 여성 고객보다 평균 주문 수량과 금액이 높습니다.</li>
+        <li><span class="highlight">여성 고객</span>은 전체 매출의 31.9%를 차지하며, 상대적으로 적은 수량을 구매하는 경향이 있습니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/age_sales_pie.png" alt="연령대별 매출 비중">
+        <div class="image-caption">연령대별 매출 비중</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/age_contribution.png" alt="연령대별 매출 기여도">
+        <div class="image-caption">연령대별 매출 기여도</div>
+    </div>
+    
+    <ul>
+        <li><span class="highlight">30대</span>가 전체 매출의 35.4%로 가장 높은 비중을 차지합니다.</li>
+        <li><span class="highlight">50대</span>와 <span class="highlight">40대</span>가 각각 26.8%와 25.7%로 그 뒤를 이어, 30~50대가 전체 매출의 87.9%를 차지하는 주요 고객층입니다.</li>
+        <li><span class="highlight">20대</span>와 <span class="highlight">60대</span>는 각각 7.8%와 4.3%로 상대적으로 낮은 매출 기여도를 보입니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/gender_age_sales.png" alt="성별 및 연령대별 총 매출액">
+        <div class="image-caption">성별 및 연령대별 총 매출액</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/age_cat_preference.png" alt="연령대별 카테고리 선호도">
+        <div class="image-caption">연령대별 카테고리 선호도</div>
+    </div>
+    
+    <h3>2.3 프로모션 효과 분석</h3>
+    <p>다양한 프로모션이 매출에 미치는 영향을 분석한 결과는 다음과 같습니다:</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_pie_chart.png" alt="프로모션 유무에 따른 매출 비중">
+        <div class="image-caption">프로모션 유무에 따른 매출 비중</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_vs_no_promo.png" alt="프로모션 유무에 따른 총 매출액">
+        <div class="image-caption">프로모션 유무에 따른 총 매출액</div>
+    </div>
+    
+    <ul>
+        <li>전체 매출의 <span class="highlight">96.7%</span>가 프로모션을 통해 발생하여, 프로모션이 매출 증대에 매우 중요한 역할을 하고 있음을 알 수 있습니다.</li>
+        <li>프로모션이 없는 경우는 전체 매출의 3.3%에 불과합니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/top_promo_contribution.png" alt="상위 5개 프로모션 매출 기여도">
+        <div class="image-caption">상위 5개 프로모션 매출 기여도</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/promo_avg_order.png" alt="프로모션별 평균 주문 금액">
+        <div class="image-caption">프로모션별 평균 주문 금액</div>
+    </div>
+    
+    <ul>
+        <li><span class="highlight">DAIRYPROMO</span>(18.1%), <span class="highlight">SUMMERFRUIT</span>(17.6%), <span class="highlight">FRUITPROMO5</span>(15.0%)가 매출 기여도 상위 3개 프로모션입니다.</li>
+        <li><span class="highlight">SPRING24</span> 프로모션은 평균 주문 금액이 가장 높아 고가 제품 판매에 효과적입니다.</li>
+        <li><span class="highlight">BUNDLE15</span> 프로모션은 평균 주문 수량이 높아 대량 구매를 유도하는 데 효과적입니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/cat_promo_effect.png" alt="카테고리별 프로모션 효과">
+        <div class="image-caption">카테고리별 프로모션 효과</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/age_promo_effect.png" alt="연령대별 프로모션 효과">
+        <div class="image-caption">연령대별 프로모션 효과</div>
+    </div>
+    
+    <h3>2.4 시간별 판매 패턴</h3>
+    <p>월별, 요일별 판매 패턴을 분석한 결과는 다음과 같습니다:</p>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_sales.png" alt="월별 총 매출액">
+        <div class="image-caption">월별 총 매출액</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/monthly_contribution.png" alt="월별 매출 기여도">
+        <div class="image-caption">월별 매출 기여도</div>
+    </div>
+    
+    <ul>
+        <li><span class="highlight">5월</span>의 매출이 전체의 21.4%로 가장 높으며, 다른 월에 비해 약 30% 이상 높은 매출을 기록했습니다.</li>
+        <li>나머지 월들은 15~16% 정도로 비슷한 수준의 매출 기여도를 보입니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/day_sales.png" alt="요일별 총 매출액">
+        <div class="image-caption">요일별 총 매출액</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/day_contribution.png" alt="요일별 매출 기여도">
+        <div class="image-caption">요일별 매출 기여도</div>
+    </div>
+    
+    <ul>
+        <li><span class="highlight">일요일</span>(15.8%)과 <span class="highlight">금요일</span>(15.2%)의 매출이 가장 높습니다.</li>
+        <li><span class="highlight">화요일</span>(12.8%)과 <span class="highlight">토요일</span>(13.0%)의 매출이 가장 낮습니다.</li>
+    </ul>
+    
+    <div class="chart-container">
+        <img src="./artifacts/month_promo_effect.png" alt="월별 프로모션 효과">
+        <div class="image-caption">월별 프로모션 효과</div>
+    </div>
+    
+    <div class="chart-container">
+        <img src="./artifacts/day_promo_effect.png" alt="요일별 프로모션 효과">
+        <div class="image-caption">요일별 프로모션 효과</div>
+    </div>
+    
+    <h2>3. 데이터 기반 권장사항</h2>
+    
+    <h3>3.1 카테고리별 전략</h3>
+    <div class="recommendation">
+        <p><strong>과일 카테고리:</strong></p>
         <ul>
-            <li>5월에 가장 높은 매출(3,622,530원)과 성장률(32.1%)을 기록했으나, 6월에는 큰 폭으로 하락(-29.2%)</li>
-            <li>월별 평균 주문 금액은 13,085원~14,753원으로 비교적 안정적</li>
-            <li>주별 분석 결과, 18주차(5월 초)와 19주차에 가장 높은 매출 기록</li>
-            <li>과일 카테고리가 전체 매출의 45.1%를 차지하며 가장 높은 비중</li>
-            <li>과일 카테고리의 평균 주문 금액(18,496원)과 평균 단가(9,583원)가 다른 카테고리보다 높음</li>
-            <li>카테고리별 주요 소비 연령층: 과일(50대, 30대), 유제품(40대, 50대), 채소(30대, 40대)</li>
-            <li>상위 3개 프로모션(DAIRYPROMO, SUMMERFRUIT, FRUITPROMO5)이 전체 매출의 54% 차지</li>
-            <li>프로모션별 효과성: SPRING24(1.76), EARLY5(1.54), SUMMERFRUIT(1.51) 순으로 효과적</li>
-            <li>성별: 남성(49.8%, 평균 주문 금액 18,952원), 여성(50.2%, 평균 주문 금액 8,822원)</li>
-            <li>연령대: 30대(33.8%), 50대(24.7%), 40대(24.4%), 20대(9.2%), 60대(7.9%)</li>
-            <li>지역: 서울(80.0%, 평균 주문 금액 12,750원), 경기도(20.0%, 평균 주문 금액 18,352원)</li>
+            <li>고수익 카테고리인 만큼 프리미엄 제품 라인업을 강화하고, 고품질 이미지를 유지하는 마케팅 전략이 필요합니다.</li>
+            <li>SUMMERFRUIT와 FRUITPROMO5 프로모션이 효과적이므로 이를 활용한 시즌별 캠페인을 기획하세요.</li>
+            <li>30대와 50대 남성을 타겟으로 한 마케팅 활동을 강화하세요.</li>
         </ul>
         
-        <h3>6.2 제안사항</h3>
-        <div class="recommendations">
-            <ol>
-                <li><strong>시즌별 전략 최적화:</strong> 5월의 성공 요인을 분석하여 다른 월에도 적용하고, 6월 매출 하락에 대한 대응 전략을 수립해야 합니다. 특히 5월에 효과적이었던 프로모션과 상품 구성을 파악하여 다른 월에도 적용할 필요가 있습니다.</li>
-                <li><strong>과일 카테고리 강화:</strong> 과일 카테고리는 품질 관리와 다양성 확보에 집중하고, 프리미엄 과일 라인업을 확대해야 합니다. 특히 50대와 30대를 타겟으로 한 고품질 과일 상품을 개발하고 마케팅할 필요가 있습니다.</li>
-                <li><strong>효과적인 프로모션 설계:</strong> SPRING24, EARLY5, SUMMERFRUIT와 같이 효과적인 프로모션의 특성을 분석하여 새로운 프로모션을 설계해야 합니다. 특히 평균 주문 금액을 높이는 데 효과적인 프로모션 전략을 개발할 필요가 있습니다.</li>
-                <li><strong>성별 맞춤형 마케팅:</strong> 남성 고객의 높은 평균 주문 금액을 활용한 마케팅 전략을 수립하고, 여성 고객의 평균 주문 금액을 높이기 위한 전략을 개발해야 합니다.</li>
-                <li><strong>연령대별 타겟팅:</strong> 30대와 50대를 타겟으로 한 맞춤형 마케팅 전략을 강화하고, 20대와 60대의 구매를 촉진하기 위한 특별 프로모션을 개발할 필요가 있습니다.</li>
-                <li><strong>카테고리별 맞춤형 상품 구성:</strong> 연령대별 선호 카테고리를 고려한 맞춤형 상품 구성과 프로모션을 설계해야 합니다. 예를 들어, 30대를 위한 채소 상품, 50대를 위한 과일 상품 등을 개발할 수 있습니다.</li>
-                <li><strong>지역별 마케팅 전략:</strong> 경기도 지역의 고객 확보를 위한 마케팅을 강화하고, 서울 지역 고객의 평균 주문 금액을 증대하기 위한 전략을 수립해야 합니다. 특히 경기도 지역의 높은 평균 주문 금액을 활용한 프리미엄 상품 마케팅을 고려할 수 있습니다.</li>
-            </ol>
-        </div>
+        <p><strong>채소 카테고리:</strong></p>
+        <ul>
+            <li>판매량은 높지만 매출 기여도가 낮으므로, 고부가가치 유기농 제품 비중을 높이는 전략이 필요합니다.</li>
+            <li>VEGGIESALE 프로모션이 효과적이므로 이를 활용한 번들 상품 구성을 고려하세요.</li>
+            <li>40대와 50대 고객층을 대상으로 한 건강 관련 마케팅을 강화하세요.</li>
+        </ul>
+        
+        <p><strong>유제품 카테고리:</strong></p>
+        <ul>
+            <li>DAIRYPROMO가 가장 효과적인 프로모션이므로 이를 활용한 마케팅 전략을 지속하세요.</li>
+            <li>30대와 40대 남성 고객을 타겟으로 한 프리미엄 유제품 라인을 강화하세요.</li>
+            <li>프로모션 없이도 높은 평균 주문 금액을 보이므로, 품질과 브랜드 가치를 강조하는 마케팅이 효과적일 것입니다.</li>
+        </ul>
     </div>
+    
+    <h3>3.2 고객 세그먼트별 전략</h3>
+    <div class="recommendation">
+        <p><strong>성별 전략:</strong></p>
+        <ul>
+            <li>남성 고객은 이미 높은 매출 기여도를 보이므로, 충성도 프로그램을 통해 이를 유지하는 전략이 필요합니다.</li>
+            <li>여성 고객의 평균 주문 수량과 금액을 높이기 위한 특별 프로모션을 개발하세요.</li>
+            <li>성별에 따른 카테고리 선호도 차이를 활용한 타겟 마케팅을 실시하세요.</li>
+        </ul>
+        
+        <p><strong>연령대별 전략:</strong></p>
+        <ul>
+            <li>30대는 가장 높은 매출 기여도를 보이는 핵심 고객층이므로, 이들을 위한 맞춤형 서비스와 제품을 강화하세요.</li>
+            <li>50대와 40대는 높은 구매력을 가진 고객층이므로, 프리미엄 제품 라인을 통해 평균 주문 금액을 더 높일 수 있는 전략을 구사하세요.</li>
+            <li>20대와 60대의 매출 기여도를 높이기 위한 특별 프로모션과 마케팅 캠페인을 개발하세요.</li>
+        </ul>
+    </div>
+    
+    <h3>3.3 프로모션 전략 개선</h3>
+    <div class="recommendation">
+        <p><strong>프로모션 효율성 향상:</strong></p>
+        <ul>
+            <li>SPRING24 프로모션은 평균 주문 금액이 가장 높으므로, 이 프로모션의 성공 요인을 분석하고 유사한 전략을 개발하세요.</li>
+            <li>DAIRYPROMO, SUMMERFRUIT, FRUITPROMO5는 매출 기여도가 높은 프로모션이므로 지속적으로 활용하되, 시즌별로 최적화하세요.</li>
+            <li>프로모션 의존도가 매우 높으므로(96.7%), 장기적으로는 프로모션 없이도 안정적인 매출을 유지할 수 있는 브랜드 가치 강화 전략이 필요합니다.</li>
+        </ul>
+        
+        <p><strong>시간별 프로모션 전략:</strong></p>
+        <ul>
+            <li>5월은 매출이 가장 높은 달이므로, 이 시기에 맞춘 특별 프로모션과 충분한 재고 확보가 필요합니다.</li>
+            <li>매출이 낮은 화요일과 토요일에는 특별 할인이나 이벤트를 통해 고객 방문을 유도하세요.</li>
+            <li>일요일과 금요일은 이미 높은 매출을 보이므로, 이 시기에는 프리미엄 제품 판매에 집중하는 전략이 효과적일 것입니다.</li>
+        </ul>
+    </div>
+    
+    <h2>4. 결론</h2>
+    <p>Moon Market의 판매 데이터 분석 결과, 과일 카테고리가 가장 높은 매출 기여도를 보이며, 30~50대 남성 고객이 주요 고객층임을 확인했습니다. 또한 프로모션이 매출에 미치는 영향이 매우 크며, 특히 DAIRYPROMO, SUMMERFRUIT, FRUITPROMO5 프로모션이 효과적임을 알 수 있었습니다.</p>
+    
+    <p>이러한 분석 결과를 바탕으로, 카테고리별, 고객 세그먼트별, 시간별로 차별화된 마케팅 전략을 수립하고, 효과적인 프로모션을 지속적으로 개발하는 것이 Moon Market의 매출 증대와 고객 만족도 향상에 기여할 것으로 기대됩니다.</p>
+    
+    <p>특히, 프로모션에 대한 의존도가 매우 높은 만큼, 장기적으로는 브랜드 가치를 강화하고 고품질 제품 라인업을 확대하여 프로모션 없이도 안정적인 매출을 유지할 수 있는 방향으로 비즈니스 전략을 발전시켜 나가는 것이 중요합니다.</p>
 </body>
 </html>

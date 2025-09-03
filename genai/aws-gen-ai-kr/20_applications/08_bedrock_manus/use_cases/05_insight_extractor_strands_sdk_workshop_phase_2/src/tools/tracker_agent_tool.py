@@ -96,23 +96,17 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
     if messages:
         tracking_message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues, tracking_message])
     
-    # Process streaming response
+    # Process streaming response and collect text in one pass
     async def process_tracker_stream():
-        streaming_events = []
+        full_text = ""
         async for event in strands_utils.process_streaming_response_yield(
             tracker_agent, tracking_message, agent_name="tracker", source="tracker_tool"
         ):
-            streaming_events.append(event)
-            
-        # Reconstruct response from streaming events for return value
-        response = {"text": ""}
-        for event in streaming_events:
-            if event.get("event_type") == "text_chunk":
-                response["text"] += event.get("data", "")
-        
-        return tracker_agent, response
+            if event.get("event_type") == "text_chunk": 
+                full_text += event.get("data", "")
+        return {"text": full_text}
     
-    tracker_agent, response = asyncio.run(process_tracker_stream())
+    response = asyncio.run(process_tracker_stream())
     
     result_text = response['text']
     

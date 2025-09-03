@@ -329,8 +329,8 @@ class strands_utils():
                     callback_tool.on_llm_new_token(f"File content preview:\n{truncated_output}\n")
                     
                 else: # 기타 모든 툴 결과 표시, 코더 툴, 리포터 툴 결과도 다 출력 (for debug)
-                    #callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
-                    callback_default.on_llm_new_token(f"Output: {output}\n")
+                    callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
+                    #callback_default.on_llm_new_token(f"Output: {output}\n")
                     #pass
                     
             

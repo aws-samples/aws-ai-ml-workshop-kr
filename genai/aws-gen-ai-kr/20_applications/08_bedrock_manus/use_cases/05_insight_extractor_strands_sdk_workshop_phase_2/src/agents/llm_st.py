@@ -11,17 +11,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 import streamlit as st
 
-from src.config import (
-    REASONING_MODEL,
-    REASONING_BASE_URL,
-    REASONING_API_KEY,
-    BASIC_MODEL,
-    BASIC_BASE_URL,
-    BASIC_API_KEY,
-    VL_MODEL,
-    VL_BASE_URL,
-    VL_API_KEY,
-)
+# Removed unused OpenAI-style environment variables - using Bedrock models directly
 
 
 """

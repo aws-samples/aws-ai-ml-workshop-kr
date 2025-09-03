@@ -1,11 +1,10 @@
+
+import os
 import sys
 import time
 import logging
-import os
 import subprocess
 from typing import Any, Annotated
-from dotenv import load_dotenv
-load_dotenv()
 from strands.types.tools import ToolResult, ToolUse
 from src.tools.decorators import log_io
 
@@ -46,7 +45,7 @@ class Colors:
 class PythonREPL:
     def __init__(self):
         pass
-        
+
     def run(self, command):
         try:
             # 입력된 명령어 실행
@@ -68,7 +67,7 @@ repl = PythonREPL()
 
 @log_io
 def handle_python_repl_tool(code: Annotated[str, "The python code to execute to do further analysis or calculation."]):
-    
+
     """
     Use this to execute python code and do data analysis or calculation. If you want to see the output of a value,
     you should print it out with `print(...)`. This is visible to the user.
@@ -85,13 +84,13 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
         except BaseException as e:
             error_msg = f"Failed to execute. Error: {repr(e)}"
             logger.debug(f"{Colors.RED}Failed to execute. Error: {repr(e)}{Colors.END}")
-            
+
             # Add Event
             add_span_event(span, "code", {"code": str(code)})
             add_span_event(span, "result", {"response": repr(e)})
-            
+
             return error_msg
-        
+
         #result_str = f"Successfully executed:\n||```python\n{code}\n```\n||Stdout: {result}"
         result_str = f"Successfully executed:\n||{code}||{result}"
         logger.info(f"{Colors.GREEN}===== Code execution successful ====={Colors.END}")
@@ -99,17 +98,17 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
         # Add Event
         add_span_event(span, "code", {"code": str(code)})
         add_span_event(span, "result", {"response": str(result)})
-        
+
         return result_str
 
 # Function name must match tool name
 def python_repl_tool(tool: ToolUse, **kwargs: Any) -> ToolResult:
     tool_use_id = tool["toolUseId"]
     code = tool["input"]["code"]
-    
+
     # Use the existing handle_python_repl_tool function
     result = handle_python_repl_tool(code)
-    
+
     # Check if execution was successful based on the result string
     if "Failed to execute" in result:
         return {

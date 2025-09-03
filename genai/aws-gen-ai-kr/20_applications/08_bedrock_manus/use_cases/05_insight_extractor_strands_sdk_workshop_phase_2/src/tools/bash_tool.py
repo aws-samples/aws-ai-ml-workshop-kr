@@ -6,10 +6,8 @@ from strands.types.tools import ToolResult, ToolUse
 from src.tools.decorators import log_io
 
 # Observability
-from dotenv import load_dotenv
 from opentelemetry import trace
 from src.utils.agentcore_observability import add_span_event
-load_dotenv()
 
 # Simple logger setup
 logger = logging.getLogger(__name__)

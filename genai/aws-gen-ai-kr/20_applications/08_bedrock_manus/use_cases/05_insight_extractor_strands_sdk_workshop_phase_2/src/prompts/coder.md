@@ -1,3 +1,4 @@
+
 ---
 CURRENT_TIME: {CURRENT_TIME}
 USER_REQUEST: {USER_REQUEST}
@@ -66,7 +67,7 @@ print(df.head())
 print(df.describe())
 ```
 </data_analysis_requirements>
- 
+
 <matplotlib_requirements>
 - [CRITICAL] Must declare one of these matplotlib styles when you use `matplotlib`:
     - plt.style.use(['ipynb', 'use_mathtext','colors5-light']) - Notebook-friendly style with mathematical typography and a light color scheme with 5 distinct colors
@@ -80,7 +81,7 @@ print(df.describe())
   # Korean font setup - ALWAYS include this code
   plt.rc('font', family='NanumGothic')
   plt.rcParams['axes.unicode_minus'] = False  # Fix minus sign display
-  
+
   # Alternative fonts if NanumGothic fails:
   # plt.rc('font', family=['NanumBarunGothic', 'NanumGothic', 'Malgun Gothic', 'DejaVu Sans'])
   ```

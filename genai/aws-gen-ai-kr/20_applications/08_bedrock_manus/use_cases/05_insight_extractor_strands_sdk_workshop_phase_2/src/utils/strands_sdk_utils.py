@@ -1,5 +1,7 @@
+
 import logging
 import traceback
+import asyncio
 from src.utils.bedrock import bedrock_info
 from strands import Agent, tool
 from strands.models import BedrockModel
@@ -7,6 +9,10 @@ from botocore.config import Config
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 from datetime import datetime
+
+from strands.agent.agent_result import AgentResult
+from strands.types.content import ContentBlock, Message
+from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -31,12 +37,12 @@ class ColoredStreamingCallback(StreamingStdOutCallbackHandler):
         'cyan': '\033[96m',
         'white': '\033[97m',
     }
-    
+
     def __init__(self, color='blue'):
         super().__init__()
         self.color_code = self.COLORS.get(color, '\033[94m')
         self.reset_code = '\033[0m'
-    
+
     def on_llm_new_token(self, token: str, **kwargs) -> None:
         print(f"{self.color_code}{token}{self.reset_code}", end="", flush=True)
 
@@ -48,7 +54,7 @@ class strands_utils():
         llm_type = kwargs["llm_type"]
         cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
-    
+
         if llm_type == "claude-sonnet-3-7":    
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
@@ -89,7 +95,7 @@ class strands_utils():
             )
         else:
             raise ValueError(f"Unknown LLM type: {llm_type}")
-            
+
         return llm
 
     @staticmethod
@@ -101,7 +107,7 @@ class strands_utils():
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
-        
+
         prompt_cache, cache_type = prompt_cache_info
         if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
         else: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
@@ -117,23 +123,23 @@ class strands_utils():
         )
 
         return agent
-    
+
     @staticmethod
     def get_agent_state(agent, key, default_value=None):
       """Strands Agent의 state에서 안전하게 값을 가져오는 메서드"""
       value = agent.state.get(key)
       if value is None: return default_value
       return value
-      
+
     @staticmethod
     def get_agent_state_all(agent):
         return agent.state.get()
-    
+
     @staticmethod
     def update_agent_state(agent, key, value):
         agent.state.set(key, value)
         #return agent
-    
+
     @staticmethod
     def update_agent_state_all(target_agent, source_agent):
         """다른 에이전트의 state를 현재 에이전트에 복사"""
@@ -167,16 +173,16 @@ class strands_utils():
         except Exception as e:
             logger.error(f"Error in streaming response: {e}")
             logger.error(traceback.format_exc())  # Detailed error logging
-        
+
         return agent, response
-    
+
     @staticmethod
     async def process_streaming_response_yield(agent, message, agent_name="coordinator", source=None):
         from src.utils.event_queue import put_event
         callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
         response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
         try:
-            
+
             session_id = "ABC"
             agent_stream = agent.stream_async(message)
 
@@ -191,21 +197,21 @@ class strands_utils():
         except Exception as e:
             logger.error(f"Error in streaming response: {e}")
             logger.error(traceback.format_exc())  # Detailed error logging
-        
+
     # 툴 사용 ID와 툴 이름 매핑을 위한 클래스 변수
     _tool_use_mapping = {}
-    
+
     @staticmethod
     async def _convert_to_agentcore_event(strands_event, agent_name, session_id, source=None):
         """Strands 이벤트를 AgentCore 스트리밍 형식으로 변환"""
-        
+
         base_event = {
             "timestamp": datetime.now().isoformat(),
             "session_id": session_id,
             "agent_name": agent_name,
             "source": source or f"{agent_name}_node",
         }
-        
+
         # 텍스트 데이터 이벤트
         if "data" in strands_event:
             return {
@@ -215,16 +221,16 @@ class strands_utils():
                 "data": strands_event["data"],
                 "chunk_size": len(strands_event["data"])
             }
-        
+
         # 도구 사용 이벤트
         elif "current_tool_use" in strands_event:
             tool_info = strands_event["current_tool_use"]
             tool_id = tool_info.get("toolUseId")
             tool_name = tool_info.get("name", "unknown")
-            
+
             # toolUseId와 tool_name 매핑 저장
             if tool_id and tool_name: strands_utils._tool_use_mapping[tool_id] = tool_name
-            
+
             return {
                 **base_event,
                 "type": "agent_tool_stream",
@@ -233,7 +239,7 @@ class strands_utils():
                 "tool_id": tool_id,
                 "tool_input": tool_info.get("input", {})
             }
-                
+
         # message 래퍼 안의 tool result 처리
         if "message" in strands_event:
             message = strands_event["message"]
@@ -242,11 +248,11 @@ class strands_utils():
                     if isinstance(content_item, dict) and "toolResult" in content_item:
                         tool_result = content_item["toolResult"]
                         tool_id = tool_result.get("toolUseId")
-                        
+
                         # 저장된 매핑에서 툴 이름 찾기
                         tool_name = strands_utils._tool_use_mapping.get(tool_id, "external_tool")
                         output = str(tool_result.get("content", [{}])[0].get("text", "")) if tool_result.get("content") else ""
-                        
+
                         return {
                             **base_event,
                             "type": "agent_tool_stream",
@@ -255,7 +261,7 @@ class strands_utils():
                             "tool_id": tool_id,
                             "output": output
                         }
-            
+
         # 추론 이벤트
         elif "reasoning" in strands_event and strands_event.get("reasoning"):
             return {
@@ -264,7 +270,7 @@ class strands_utils():
                 "event_type": "reasoning",
                 "reasoning_text": strands_event.get("reasoningText", "")[:200]
             }
-        
+
         return None
 
     @staticmethod
@@ -281,10 +287,14 @@ class strands_utils():
         if len(response.message["content"]) == 2: ## reasoning
             output["reasoning"] = response.message["content"][0]["reasoningContent"]["reasoningText"]["text"]
             output["signature"] = response.message["content"][0]["reasoningContent"]["reasoningText"]["signature"]
-        
+
         output["text"] = response.message["content"][-1]["text"]
-    
+
         return output  
+
+    #########################
+    ## modification STRART ##
+    #########################
 
     @staticmethod
     def process_event_for_display(event):
@@ -293,15 +303,14 @@ class strands_utils():
         callback_default = ColoredStreamingCallback('white')
         callback_reasoning = ColoredStreamingCallback('cyan')        
         callback_tool = ColoredStreamingCallback('yellow')
-        
+
         if event:
-            #source = event.get("source", "unknown")
             if event.get("event_type") == "text_chunk":
                 callback_default.on_llm_new_token(event.get('data', ''))
-                    
+
             elif event.get("event_type") == "reasoning":
                 callback_reasoning.on_llm_new_token(event.get('reasoning_text', ''))
-                
+
             elif event.get("event_type") == "tool_use": 
                 pass
 
@@ -309,28 +318,72 @@ class strands_utils():
                 tool_name = event.get("tool_name", "unknown")
                 output = event.get("output", "")
                 print(f"\n[TOOL RESULT - {tool_name}]", flush=True)
-                
+
                 # Parse output based on function name
                 if tool_name == "python_repl_tool" and len(output.split("||")) == 3:
                     status, code, stdout = output.split("||")
                     callback_tool.on_llm_new_token(f"Status: {status}\n")
-                   
+
                     if code: callback_tool.on_llm_new_token(f"Code:\n```python\n{code}\n```\n")
                     if stdout and stdout != 'None': callback_tool.on_llm_new_token(f"Output:\n{stdout}\n")
-                
+
                 elif tool_name == "bash_tool" and len(output.split("||")) == 2:
                     cmd, stdout = output.split("||")
                     if cmd: callback_tool.on_llm_new_token(f"CMD:\n```bash\n{cmd}\n```\n")
                     if stdout and stdout != 'None': callback_tool.on_llm_new_token(f"Output:\n{stdout}\n")
-                
+
                 elif tool_name == "file_read":
                     # file_read 결과는 보통 길어서 앞부분만 표시
                     truncated_output = output[:500] + "..." if len(output) > 500 else output
                     callback_tool.on_llm_new_token(f"File content preview:\n{truncated_output}\n")
-                    
+
                 else: # 기타 모든 툴 결과 표시, 코더 툴, 리포터 툴 결과도 다 출력 (for debug)
-                    #callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
-                    callback_default.on_llm_new_token(f"Output: {output}\n")
+                    callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
+                    #callback_default.on_llm_new_token(f"Output: {output}\n")
                     #pass
-                    
-            
+
+    #########################
+    ## modification END    ##
+    #########################
+
+class FunctionNode(MultiAgentBase):
+    """Execute deterministic Python functions as graph nodes."""
+
+    def __init__(self, func, name: str = None):
+        super().__init__()
+        self.func = func
+        self.name = name or func.__name__
+
+    def __call__(self, task=None, **kwargs):
+        """Synchronous execution for compatibility with MultiAgentBase"""
+        # Pass task and kwargs directly to function
+        if asyncio.iscoroutinefunction(self.func): 
+            return asyncio.run(self.func(task=task, **kwargs))
+        else: 
+            return self.func(task=task, **kwargs)
+
+    # Execute function and return standard MultiAgentResult
+    async def invoke_async(self, task=None, **kwargs):
+        # Execute function (nodes now use global state for data sharing)  
+        # Pass task and kwargs directly to function
+        if asyncio.iscoroutinefunction(self.func): 
+            response = await self.func(task=task, **kwargs)
+        else: 
+            response = self.func(task=task, **kwargs)
+
+        agent_result = AgentResult(
+            stop_reason="end_turn",
+            message=Message(role="assistant", content=[ContentBlock(text=str(response["text"]))]),
+            metrics={},
+            state={}
+        )
+
+        # Return wrapped in MultiAgentResult
+        return MultiAgentResult(
+            status=Status.COMPLETED,
+            results={self.name: NodeResult(result=agent_result)}
+        )
+
+
+
+

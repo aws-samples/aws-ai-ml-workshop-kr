@@ -2,7 +2,7 @@ default_agent: runtime
 agents:
   runtime:
     name: runtime
-    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_agentcore/runtime.py
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_workshop_phase_2/runtime.py
     platform: linux/arm64
     container_runtime: docker
     aws:

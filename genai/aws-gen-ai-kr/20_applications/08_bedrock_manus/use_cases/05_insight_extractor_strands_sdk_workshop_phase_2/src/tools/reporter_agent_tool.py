@@ -11,10 +11,8 @@ from src.tools import python_repl_tool, bash_tool
 from strands_tools import file_read
 
 # Observability
-from dotenv import load_dotenv
 from opentelemetry import trace
 from src.utils.agentcore_observability import add_span_event
-load_dotenv()
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -67,6 +65,7 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
     )
     with tracer.start_as_current_span("reporter_agent_tool") as span:
+        
         print()  # Add newline before log
         logger.info(f"\n{Colors.GREEN}Reporter Agent Tool starting{Colors.END}")
         
@@ -95,23 +94,16 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         # Prepare message with context if available
         message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
         
-        # Process streaming response
+        # Process streaming response and collect text in one pass
         async def process_reporter_stream():
-            streaming_events = []
+            full_text = ""
             async for event in strands_utils.process_streaming_response_yield(
                 reporter_agent, message, agent_name="reporter", source="reporter_tool"
             ):
-                streaming_events.append(event)
-                
-            # Reconstruct response from streaming events for return value
-            response = {"text": ""}
-            for event in streaming_events:
-                if event.get("event_type") == "text_chunk":
-                    response["text"] += event.get("data", "")
-            
-            return reporter_agent, response
+                if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+            return {"text": full_text}
         
-        reporter_agent, response = asyncio.run(process_reporter_stream())
+        response = asyncio.run(process_reporter_stream())
         result_text = response['text']
         
         # Update clues
@@ -126,12 +118,11 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         shared_state['clues'] = clues
         shared_state['history'] = history
         
-        logger.info(f"\n{Colors.GREEN}Reporter Agent Tool completed{Colors.END}")
-
         # Add Event
         add_span_event(span, "input_message", {"message": str(request_prompt)})
         add_span_event(span, "response", {"response": str(response["text"])})
 
+        logger.info(f"\n{Colors.GREEN}Reporter Agent Tool completed{Colors.END}")
         return result_text
 
 # Function name must match tool name

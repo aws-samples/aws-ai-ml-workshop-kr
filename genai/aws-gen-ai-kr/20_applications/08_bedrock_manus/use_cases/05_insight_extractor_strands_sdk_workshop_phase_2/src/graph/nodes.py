@@ -1,17 +1,12 @@
-import logging
+
 import os
-import asyncio
-from dotenv import load_dotenv
-load_dotenv()
+import logging
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 
+# Tools
 from src.tools import coder_agent_tool, reporter_agent_tool, tracker_agent_tool
-
-from strands.agent.agent_result import AgentResult
-from strands.types.content import ContentBlock, Message
-from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
 
 # Observability
 from opentelemetry import trace
@@ -43,64 +38,35 @@ RESPONSE_FORMAT = "Response from {}:\n\n<response>\n{}\n</response>\n\n*Please e
 FULL_PLAN_FORMAT = "Here is full plan :\n\n<full_plan>\n{}\n</full_plan>\n\n*Please consider this to select the next step.*"
 CLUES_FORMAT = "Here is clues from {}:\n\n<clues>\n{}\n</clues>\n\n"
 
-class FunctionNode(MultiAgentBase):
-    """Execute deterministic Python functions as graph nodes."""
-
-    def __init__(self, func, name: str = None):
-        super().__init__()
-        self.func = func
-        self.name = name or func.__name__
-
-    def __call__(self, task=None, **kwargs):
-        """Synchronous execution for compatibility with MultiAgentBase"""
-        # Pass task and kwargs directly to function
-        if asyncio.iscoroutinefunction(self.func): 
-            return asyncio.run(self.func(task=task, **kwargs))
-        else: 
-            return self.func(task=task, **kwargs)
-
-    # Execute function and return standard MultiAgentResult
-    async def invoke_async(self, task=None, **kwargs):
-        # Execute function (nodes now use global state for data sharing)  
-        # Pass task and kwargs directly to function
-        if asyncio.iscoroutinefunction(self.func): 
-            agent, response = await self.func(task=task, **kwargs)
-        else: 
-            agent, response = self.func(task=task, **kwargs)
-
-        agent_result = AgentResult(
-            stop_reason="end_turn",
-            message=Message(role="assistant", content=[ContentBlock(text=str(response["text"]))]),
-            metrics={},
-            state=strands_utils.get_agent_state_all(agent)
-        )
-
-        # Return wrapped in MultiAgentResult
-        return MultiAgentResult(
-            status=Status.COMPLETED,
-            results={self.name: NodeResult(result=agent_result)},
-            # ... execution details
-        )
-
 
 def should_handoff_to_planner(_):
     """Check if coordinator requested handoff to planner."""
-    # Check coordinator's response for handoff request
-    global _global_node_states
-    shared_state = _global_node_states.get('shared', {})
-    history = shared_state.get('history', [])
-    
-    # Look for coordinator's last message
-    for entry in reversed(history):
-        if entry.get('agent') == 'coordinator':
-            message = entry.get('message', '')
-            return 'handoff_to_planner' in message
-    
-    return False
 
+    tracer = trace.get_tracer(
+        instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
+        instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
+    )
+    with tracer.start_as_current_span("should_handoff_to_planner") as span:
+        # Check coordinator's response for handoff request
+        global _global_node_states
+        shared_state = _global_node_states.get('shared', {})
+        history = shared_state.get('history', [])
+
+        # Look for coordinator's last message
+        for entry in reversed(history):
+            if entry.get('agent') == 'coordinator':
+                message = entry.get('message', '')
+
+                # Add Event
+                add_span_event(span, "input_message", {"message": str(message)})
+                add_span_event(span, "response", {"handoff_to_planner": bool("handoff_to_planner" in message)})
+
+                return 'handoff_to_planner' in message
+
+        return False
 
 async def coordinator_node(task=None, **kwargs):
-    
+
     tracer = trace.get_tracer(
         instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
         instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
@@ -108,7 +74,7 @@ async def coordinator_node(task=None, **kwargs):
     with tracer.start_as_current_span("coordinator") as span:
         """Coordinator node that communicate with customers."""
         global _global_node_states
-        
+
         log_node_start("Coordinator")
 
         # Extract user request from task (now passed as dictionary)
@@ -127,67 +93,55 @@ async def coordinator_node(task=None, **kwargs):
             prompt_cache_info=(False, None), #(False, None), (True, "default")
             streaming=True,
         )
-            
-        # Collect streaming events and build final response
-        streaming_events = []
+
+        # Process streaming response and collect text in one pass
+        full_text = ""
         async for event in strands_utils.process_streaming_response_yield(
             agent, request_prompt, agent_name="coordinator", source="coordinator_node"
         ):
-            # Keep for local processing
-            streaming_events.append(event) 
-
-        # Reconstruct the full response from streaming events
-        full_text = ""
-        for event in streaming_events:
-            if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+            if event.get("event_type") == "text_chunk": 
+                full_text += event.get("data", "")
         response = {"text": full_text}
-        
+
         # Store data directly in shared global storage
-        if 'shared' not in _global_node_states: 
-            _global_node_states['shared'] = {}
+        if 'shared' not in _global_node_states: _global_node_states['shared'] = {}
         shared_state = _global_node_states['shared']
-        
+
         # Update shared global state
         shared_state['messages'] = agent.messages
         shared_state['request'] = request
         shared_state['request_prompt'] = request_prompt
-        
+
         # Build and update history
         if 'history' not in shared_state: 
             shared_state['history'] = []
         shared_state['history'].append({"agent":"coordinator", "message": response["text"]})
-        
-        log_node_complete("Coordinator")
 
         # Add Event
         add_span_event(span, "input_message", {"message": str(request_prompt)})
         add_span_event(span, "response", {"response": str(response["text"])})
 
-        # Return agent and response tuple as expected by the workflow
-        return agent, response
+        log_node_complete("Coordinator")
+        # Return response only
+        return response
 
 async def planner_node(task=None, **kwargs):
-    
+
     tracer = trace.get_tracer(
         instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
         instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
     )
     with tracer.start_as_current_span("planner") as span:   
         """Planner node that generates detailed plans for task execution."""
-        global _global_node_states
-        
         log_node_start("Planner")
+        global _global_node_states
 
         # Extract shared state from global storage
         shared_state = _global_node_states.get('shared', None)
-        
-        # Get request from kwargs state or shared state
-        state = kwargs.get("state", {})
-        if state: 
-            request = state.get("request", "")
-        else: 
-            request = shared_state.get("request", "") if shared_state else (task or "")
-        
+
+        # Get request from shared state (task parameter not used in planner)
+        request = shared_state.get("request", "") if shared_state else ""
+
         if not shared_state:
             logger.warning("No shared state found in global storage")
             return None, {"text": "No shared state available"}
@@ -200,53 +154,46 @@ async def planner_node(task=None, **kwargs):
             prompt_cache_info=(False, None),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
             streaming=True,
         )
-        
+
         full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
         message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
-        
-        # Collect streaming events and build final response
-        streaming_events = []
+
+        # Process streaming response and collect text in one pass
+        full_text = ""
         async for event in strands_utils.process_streaming_response_yield(
             agent, message, agent_name="planner", source="planner_node"
         ):
-            # Keep for local processing
-            streaming_events.append(event)
-
-        # Reconstruct the full response from streaming events
-        full_text = ""
-        for event in streaming_events:
             if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
         response = {"text": full_text}
-        
+
         # Update shared global state
         shared_state['messages'] = [get_message_from_string(role="user", string=response["text"], imgs=[])]
         shared_state['full_plan'] = response["text"]
         shared_state['history'].append({"agent":"planner", "message": response["text"]})
 
-        log_node_complete("Planner")
-
         # Add Event
         add_span_event(span, "input_message", {"message": str(message)})
         add_span_event(span, "response", {"response": str(response["text"])})
-        
-        # Return agent and response tuple as expected by the workflow
-        return agent, response
+
+        log_node_complete("Planner")
+        # Return response only
+        return response
 
 async def supervisor_node(task=None, **kwargs):
+    """Supervisor node that decides which agent should act next."""
+    log_node_start("Supervisor")
+    global _global_node_states
+
+    # task and kwargs parameters are unused - supervisor relies on global state
     tracer = trace.get_tracer(
         instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
         instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
     )
     with tracer.start_as_current_span("supervisor") as span:  
 
-        """Supervisor node that decides which agent should act next."""
-        global _global_node_states
-        
-        log_node_start("Supervisor")
-        
         # Extract shared state from global storage
         shared_state = _global_node_states.get('shared', None)
-        
+
         if not shared_state:
             logger.warning("No shared state found in global storage")
             return None, {"text": "No shared state available"}
@@ -263,32 +210,23 @@ async def supervisor_node(task=None, **kwargs):
 
         clues, full_plan, messages = shared_state.get("clues", ""), shared_state.get("full_plan", ""), shared_state["messages"]
         message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
-            
-        # Collect streaming events and build final response
-        streaming_events = []
+
+        # Process streaming response and collect text in one pass
+        full_text = ""
         async for event in strands_utils.process_streaming_response_yield(
             agent, message, agent_name="supervisor", source="supervisor_node"
         ):
-            # Keep for local processing
-            streaming_events.append(event)
-
-        # Reconstruct the full response from streaming events
-        full_text = ""
-        for event in streaming_events:
             if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
         response = {"text": full_text}
 
         # Update shared global state
         shared_state['history'].append({"agent":"supervisor", "message": response["text"]})
-        
-        log_node_complete("Supervisor")
-        logger.info("Workflow completed")
 
         # Add Event
         add_span_event(span, "input_message", {"message": str(message)})
         add_span_event(span, "response", {"response": str(response["text"])})
-        
-        # Return agent and response tuple as expected by the workflow
-        return agent, response
 
-
+        log_node_complete("Supervisor")
+        logger.info("Workflow completed")
+        # Return response only
+        return response

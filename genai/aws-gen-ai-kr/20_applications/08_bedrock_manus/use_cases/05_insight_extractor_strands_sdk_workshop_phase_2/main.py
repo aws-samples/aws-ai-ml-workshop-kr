@@ -1,9 +1,11 @@
+
 """
 Entry point script for the Strands Agent Demo.
 """
 import os
 import shutil
 import asyncio
+import argparse
 from dotenv import load_dotenv
 from src.workflow import run_graph_streaming_workflow
 from src.utils.strands_sdk_utils import strands_utils
@@ -21,7 +23,7 @@ from src.utils.event_queue import get_event, has_events, clear_queue
 def remove_artifact_folder(folder_path="./artifacts/"):
     """
     ./artifact/ 폴더가 존재하면 삭제하는 함수
-    
+
     Args:
         folder_path (str): 삭제할 폴더 경로
     """
@@ -62,7 +64,7 @@ def _print_conversation_history():
     from src.graph.nodes import _global_node_states
     shared_state = _global_node_states.get('shared', {})
     history = shared_state.get('history', [])
-    
+
     if history:
         for hist_item in history:
             print(f"[{hist_item['agent']}] {hist_item['message']}")
@@ -74,15 +76,12 @@ async def graph_streaming_execution(payload):
 
     #_get_env()
     _setup_execution()
-    
+
     # Get user query from payload
     user_query = payload.get("user_query", "")
     session_id = payload.get("session-id", "default")
-
     context_token = set_session_context(session_id)
-    print ("context_token", context_token)
-    
-    
+
     try:
         # Get tracer for main application
         tracer = trace.get_tracer(
@@ -97,7 +96,7 @@ async def graph_streaming_execution(payload):
                     print(f"Workflow completed: {result}")
                 except Exception as e:
                     print(f"Workflow error: {e}")
-            
+
             workflow_task = asyncio.create_task(run_workflow())
 
             try:
@@ -106,48 +105,55 @@ async def graph_streaming_execution(payload):
                     async for event in _yield_pending_events():
                         yield event
                     await asyncio.sleep(0.01)
-                    
+
             finally:
                 await _cleanup_workflow(workflow_task)
-                
+
                 # Process remaining events
                 async for event in _yield_pending_events():
                     yield event
-            
+
             # Final completion
             yield {"type": "workflow_complete", "message": "All events processed through global queue"}
             _print_conversation_history()
             print("=== Queue-Only Event Stream Complete ===")
-            
+
             # Add Event
             add_span_event(span, "user_query", {"user-query": str(user_query)}) 
-    
+
     finally:
-        
         context.detach(context_token)
 
 if __name__ == "__main__":
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Strands Agent Demo')
+    parser.add_argument('--user_query', type=str, help='User query for the agent')
+    parser.add_argument('--session_id', type=str, default='insight-extractor-1', help='Session ID')
 
-    
+    args = parser.parse_args()
 
-    # Use predefined query for testing
-    payload = {
-        "user_query": "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다.",
-        "session-id": "insight-extractor-1"
-    }
 
-    #user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다. Coder 에이전트가 할일은 최대한 작게 해줘. 왜냐하면 reporter 에이전트 테스트 중이라 빨리 코더 단계를 넘어 가야 하거든. 부탁해."
-    #user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다."
+    #########################
+    ## modification START  ##
+    #########################
 
-    # user_query = '''
-        
-    #     분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.
-    #     데이터를 기반으로 마케팅 인사이트 추출을 위한 분석을 진행해 주세요.
-    #     분석은 기본적인 데이터 속성 탐색 부터, 상품 판매 트렌드, 변수 관계, 변수 조합 등 다양한 분석 기법을 수행해 주세요.
-    #     데이터 분석 후 인사이트 추출에 필요한 사항이 있다면 그를 위한 추가 분석도 수행해 주세요.
-    #     분석 리포트는 상세 분석과 그 것을 뒷받침 할 수 있는 이미지 및 차트를 함께 삽입해 주세요.
-    #     최종 리포트는 pdf 형태로 저장해 주세요.
-    # '''
+    # Use argparse values if provided, otherwise use predefined values
+    if args.user_query:
+        payload = {
+            "user_query": args.user_query,
+            "session-id": args.session_id
+        }
+    else:
+        # Use predefined query for testing
+        payload = {
+            "user_query": "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다.",
+            "session-id": "insight-extractor-1"
+        }
+
+    #########################
+    ## modification END    ##
+    #########################
+
     remove_artifact_folder()
 
     # Use full graph streaming execution for real-time streaming with graph structure
@@ -156,3 +162,16 @@ if __name__ == "__main__":
             strands_utils.process_event_for_display(event)
 
     asyncio.run(run_streaming())
+
+    #user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다. Coder 에이전트가 할일은 최대한 작게 해줘. 왜냐하면 reporter 에이전트 테스트 중이라 빨리 코더 단계를 넘어 가야 하거든. 부탁해."
+    #user_query = "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다."
+
+    # user_query = '''
+
+    #     분석대상은 "./data/Dat-fresh-food-claude.csv" 파일 입니다.
+    #     데이터를 기반으로 마케팅 인사이트 추출을 위한 분석을 진행해 주세요.
+    #     분석은 기본적인 데이터 속성 탐색 부터, 상품 판매 트렌드, 변수 관계, 변수 조합 등 다양한 분석 기법을 수행해 주세요.
+    #     데이터 분석 후 인사이트 추출에 필요한 사항이 있다면 그를 위한 추가 분석도 수행해 주세요.
+    #     분석 리포트는 상세 분석과 그 것을 뒷받침 할 수 있는 이미지 및 차트를 함께 삽입해 주세요.
+    #     최종 리포트는 pdf 형태로 저장해 주세요.
+    # '''
