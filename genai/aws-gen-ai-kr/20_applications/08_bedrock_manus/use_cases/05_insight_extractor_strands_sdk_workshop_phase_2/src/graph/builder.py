@@ -57,7 +57,7 @@ class StreamableGraph:
             while not workflow_task.done():
                 async for event in self._yield_pending_events():
                     yield event
-                await asyncio.sleep(0.01)
+                await asyncio.sleep(0.005)
         finally:
             await self._cleanup_workflow(workflow_task)
             async for event in self._yield_pending_events():
