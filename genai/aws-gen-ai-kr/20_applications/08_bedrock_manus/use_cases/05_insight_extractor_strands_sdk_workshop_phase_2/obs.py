@@ -7,7 +7,7 @@ Entry point script for the Strands Agent Demo.
 import os
 import shutil
 import asyncio
-from src.workflow import run_graph_streaming_workflow
+from src.graph.builder import build_graph
 from src.utils.strands_sdk_utils import strands_utils
 
 # Observability
@@ -15,7 +15,7 @@ from opentelemetry import trace, context
 from src.utils.agentcore_observability import set_session_context
 
 # Import event queue for unified event processing
-from src.utils.event_queue import get_event, has_events, clear_queue 
+from src.utils.event_queue import clear_queue 
 
 # Env.
 from dotenv import load_dotenv
@@ -64,21 +64,6 @@ def _setup_execution():
     clear_queue()
     print("\n=== Starting Queue-Only Event Stream ===")
 
-async def _cleanup_workflow(workflow_task):
-    """Handle workflow completion and cleanup"""
-    if not workflow_task.done():
-        try:
-            await asyncio.wait_for(workflow_task, timeout=1.0)
-        except asyncio.TimeoutError:
-            workflow_task.cancel()
-            try: await workflow_task
-            except asyncio.CancelledError: pass
-
-async def _yield_pending_events():
-    """Yield any pending events from queue"""
-    while has_events():
-        event = get_event()
-        if event: yield event
 
 def _print_conversation_history():
     """Print final conversation history"""
@@ -120,34 +105,15 @@ async def graph_streaming_execution(payload):
             ) # attribute.name에 _(under bar)가 들어가면 안된다. 
 
 
-            # Start workflow in background
-            async def run_workflow():
-                try:
-                    result = await run_graph_streaming_workflow(user_input=user_query)
-                    print(f"Workflow completed: {result}")
-                except Exception as e:
-                    print(f"Workflow error: {e}")
-
-            workflow_task = asyncio.create_task(run_workflow())
-
-
-
-            try:
-                # Main event loop - monitor queue until workflow completes
-                while not workflow_task.done():
-                    async for event in _yield_pending_events():
-                        yield event
-                    await asyncio.sleep(0.01)
-
-            finally:
-                await _cleanup_workflow(workflow_task)
-
-                # Process remaining events
-                async for event in _yield_pending_events():
-                    yield event
-
-            # Final completion
-            yield {"type": "workflow_complete", "message": "All events processed through global queue"}
+            # Build graph and use stream_async method
+            graph = build_graph()
+            
+            # Stream events from graph execution
+            async for event in graph.stream_async({
+                "request": user_query,
+                "request_prompt": f"Here is a user request: <user_request>{user_query}</user_request>"
+            }):
+                yield event
             _print_conversation_history()
             print("=== Queue-Only Event Stream Complete ===")
 
