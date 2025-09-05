@@ -179,13 +179,10 @@ class strands_utils():
     @staticmethod
     async def process_streaming_response_yield(agent, message, agent_name="coordinator", source=None):
         from src.utils.event_queue import put_event
-        callback_reasoning, callback_answer = ColoredStreamingCallback('purple'), ColoredStreamingCallback('white')
-        response = {"text": "","reasoning": "", "signature": "", "tool_use": None, "cycle": 0}
         try:
-
             session_id = "ABC"
+            
             agent_stream = agent.stream_async(message)
-
             async for event in agent_stream:
                 #Strands 이벤트를 AgentCore 형식으로 변환
                 agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id, source)
@@ -366,10 +363,8 @@ class FunctionNode(MultiAgentBase):
     async def invoke_async(self, task=None, **kwargs):
         # Execute function (nodes now use global state for data sharing)  
         # Pass task and kwargs directly to function
-        if asyncio.iscoroutinefunction(self.func): 
-            response = await self.func(task=task, **kwargs)
-        else: 
-            response = self.func(task=task, **kwargs)
+        if asyncio.iscoroutinefunction(self.func): response = await self.func(task=task, **kwargs)
+        else: response = self.func(task=task, **kwargs)
 
         agent_result = AgentResult(
             stop_reason="end_turn",
@@ -382,8 +377,4 @@ class FunctionNode(MultiAgentBase):
         return MultiAgentResult(
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
-        )
-
-
-
-
+        )  
