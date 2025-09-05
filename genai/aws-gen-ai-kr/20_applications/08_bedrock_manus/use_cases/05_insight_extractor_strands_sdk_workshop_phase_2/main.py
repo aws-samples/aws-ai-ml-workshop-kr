@@ -77,6 +77,10 @@ async def graph_streaming_execution(payload):
             # Build graph and use stream_async method
             graph = build_graph()
             
+            #########################
+            ## modification START  ##
+            #########################
+
             # Stream events from graph execution
             async for event in graph.stream_async(
                 {
@@ -85,6 +89,10 @@ async def graph_streaming_execution(payload):
                 }
             ):
                 yield event
+
+            #########################
+            ## modification END    ##
+            #########################
             
             _print_conversation_history()
             print("=== Queue-Only Event Stream Complete ===")
@@ -101,7 +109,7 @@ if __name__ == "__main__":
     parser.add_argument('--user_query', type=str, help='User query for the agent')
     parser.add_argument('--session_id', type=str, default='insight-extractor-1', help='Session ID')
 
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
 
     #########################

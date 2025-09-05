@@ -42,6 +42,7 @@ class StreamableGraph:
     async def stream_async(self, task):
         """Stream events from graph execution using background task + event queue pattern."""
         
+        # Step 1: Run graph backgound and put event into the global queue
         async def run_workflow():
             try:
                 return await self.graph.invoke_async(task)
@@ -51,6 +52,7 @@ class StreamableGraph:
         
         workflow_task = asyncio.create_task(run_workflow())
         
+        # Step 2: Consuming event in the global queue
         try:
             while not workflow_task.done():
                 async for event in self._yield_pending_events():
