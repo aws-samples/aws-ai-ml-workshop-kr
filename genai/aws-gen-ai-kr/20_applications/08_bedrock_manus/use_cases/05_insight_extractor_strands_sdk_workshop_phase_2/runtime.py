@@ -7,11 +7,11 @@ import os
 import shutil
 import asyncio
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
-from src.workflow import run_graph_streaming_workflow
+from src.graph.builder import build_graph
 from src.utils.strands_sdk_utils import strands_utils
 
 # Import event queue for unified event processing
-from src.utils.event_queue import get_event, has_events, clear_queue
+from src.utils.event_queue import clear_queue
 
 app = BedrockAgentCoreApp()
 
@@ -37,25 +37,6 @@ def _setup_execution():
     remove_artifact_folder()
     clear_queue()
     print("\n=== Starting AgentCore Runtime Event Stream ===")
-
-async def _cleanup_workflow(workflow_task):
-    """Handle workflow completion and cleanup"""
-    if not workflow_task.done():
-        try:
-            await asyncio.wait_for(workflow_task, timeout=1.0)
-        except asyncio.TimeoutError:
-            workflow_task.cancel()
-            try:
-                await workflow_task
-            except asyncio.CancelledError:
-                pass
-
-async def _yield_pending_events():
-    """Yield any pending events from queue"""
-    while has_events():
-        event = get_event()
-        if event:
-            yield event
 
 def _print_conversation_history():
     """Print final conversation history"""
@@ -85,65 +66,26 @@ async def graph_streaming_execution(payload):
 
     _setup_execution()
 
-    # Start workflow in background
-    async def run_workflow():
-        try:
-            result = await run_graph_streaming_workflow(user_input=user_query)
-            print(f"Workflow completed: {result}")
-        except Exception as e:
-            print(f"Workflow error: {e}")
-            # Put error in queue for client to receive
-            from src.utils.event_queue import put_event
-            put_event({
-                "type": "error",
-                "event_type": "error",
-                "source": "workflow",
-                "message": f"Workflow error: {str(e)}"
-            })
-
-    workflow_task = asyncio.create_task(run_workflow())
+    # Build graph and use stream_async method
+    graph = build_graph()
     event_count = 0
 
-    try:
-        # Main event loop - monitor queue until workflow completes
-        while not workflow_task.done():
-            async for event in _yield_pending_events():
-                event_count += 1
-                # Add AgentCore runtime metadata
-                event["event_id"] = event_count
-                event["runtime_source"] = "bedrock_manus_agentcore"
+    # Stream events from graph execution
+    async for event in graph.stream_async({
+        "request": user_query,
+        "request_prompt": f"Here is a user request: <user_request>{user_query}</user_request>"
+    }):
+        event_count += 1
+        # Add AgentCore runtime metadata
+        event["event_id"] = event_count
+        event["runtime_source"] = "bedrock_manus_agentcore"
 
-                # Process event for display (optional - can be removed for pure runtime)
-                #strands_utils.process_event_for_display(event)
+        # Mark final event
+        if event.get("type") == "workflow_complete":
+            event["total_events"] = event_count
+            event["message"] = "All events processed through global queue via AgentCore Runtime"
 
-                yield event
-            await asyncio.sleep(0.01)
-
-    finally:
-        await _cleanup_workflow(workflow_task)
-
-        # Process remaining events
-        async for event in _yield_pending_events():
-            event_count += 1
-            event["event_id"] = event_count
-            event["runtime_source"] = "bedrock_manus_agentcore"
-            event["final_event"] = True
-
-            # Process event for display (optional)
-            #strands_utils.process_event_for_display(event)
-
-            yield event
-
-    # Final completion
-    completion_event = {
-        "type": "workflow_complete", 
-        "event_type": "completion",
-        "message": "All events processed through global queue via AgentCore Runtime",
-        "total_events": event_count,
-        "runtime_source": "bedrock_manus_agentcore"
-    }
-
-    yield completion_event
+        yield event
 
     _print_conversation_history()
     print("=== AgentCore Runtime Event Stream Complete ===")
@@ -151,6 +93,5 @@ async def graph_streaming_execution(payload):
 
 if __name__ == "__main__":
     app.run()
-
 
 

@@ -37,4 +37,5 @@ dependencies = [
     "reportlab>=4.4.3",
     "markdown>=3.9",
     "fpdf2>=2.8.4",
+    "matplotlib-inline>=0.1.7",
 ]

@@ -1,0 +1,38 @@
+# Core web framework
+flask==3.0.0
+
+# Data science and analysis
+pandas==2.3.1
+numpy==1.26.4
+scikit-learn==1.7.1
+
+# Visualization
+matplotlib==3.10.5
+seaborn==0.13.2
+plotly==6.3.0
+lovelyplots==1.0.2
+koreanize-matplotlib==0.1.1
+matplotlib-inline==0.1.7
+
+# Document generation
+weasyprint==66.0
+pillow>=11.3.0
+
+# AWS and web services
+boto3==1.40.10
+requests==2.31.0
+requests-toolbelt>=1.0.0
+
+# Development and utilities
+python-dotenv>=1.1.1
+termcolor>=3.1.0
+
+# Jupyter support
+ipykernel>=6.29.5
+jupyter>=1.1.1
+
+# LangChain and AI tools
+langchain>=0.3.27
+
+# Streamlit (for potential web interface)
+streamlit==1.48.1

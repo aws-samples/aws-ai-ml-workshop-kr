@@ -31,7 +31,7 @@ def log_io(func: Callable) -> Callable:
 
         # Note: Tool results are now handled through Strands SDK message wrapper
         # No need to put events in queue here
-
+        
         return result
 
     return wrapper
