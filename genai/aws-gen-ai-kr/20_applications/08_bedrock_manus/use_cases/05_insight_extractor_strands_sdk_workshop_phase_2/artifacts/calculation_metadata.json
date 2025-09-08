@@ -1,0 +1,468 @@
+{
+  "metadata": {
+    "generated_at": "2025-09-07 15:09:06",
+    "data_source": "./data/Dat-fresh-food-claude.csv",
+    "total_records": 1220
+  },
+  "calculations": [
+    {
+      "id": "calc_total_sales",
+      "description": "총 매출액",
+      "value": 8619150.0,
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_total_quantity",
+      "description": "총 판매량",
+      "value": 2189,
+      "formula": "SUM(Qty)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Qty"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_avg_order",
+      "description": "평균 주문 금액",
+      "value": 7064.877049180328,
+      "formula": "MEAN(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_category_pct_과일",
+      "description": "과일 카테고리 매출 비중",
+      "value": 46.0,
+      "formula": "SUM(Amount where Category='과일') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category='과일'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_category_pct_채소",
+      "description": "채소 카테고리 매출 비중",
+      "value": 27.7,
+      "formula": "SUM(Amount where Category='채소') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category='채소'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_category_pct_유제품",
+      "description": "유제품 카테고리 매출 비중",
+      "value": 26.2,
+      "formula": "SUM(Amount where Category='유제품') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category='유제품'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_product_sales_FR-WML-020",
+      "description": "FR-WML-020 제품 매출액",
+      "value": 25800.0,
+      "formula": "SUM(Amount where SKU='FR-WML-020')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-WML-020'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_product_sales_FR-WML-021",
+      "description": "FR-WML-021 제품 매출액",
+      "value": 25800.0,
+      "formula": "SUM(Amount where SKU='FR-WML-021')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-WML-021'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_product_sales_FR-STB-023",
+      "description": "FR-STB-023 제품 매출액",
+      "value": 25800.0,
+      "formula": "SUM(Amount where SKU='FR-STB-023')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-STB-023'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_product_sales_FR-STB-021",
+      "description": "FR-STB-021 제품 매출액",
+      "value": 25800.0,
+      "formula": "SUM(Amount where SKU='FR-STB-021')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-STB-021'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_product_sales_FR-STB-022",
+      "description": "FR-STB-022 제품 매출액",
+      "value": 25800.0,
+      "formula": "SUM(Amount where SKU='FR-STB-022')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-STB-022'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_month_pct_1",
+      "description": "1월 매출 비중",
+      "value": 15.8,
+      "formula": "SUM(Amount where Month=1) / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month=1",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_month_pct_2",
+      "description": "2월 매출 비중",
+      "value": 15.1,
+      "formula": "SUM(Amount where Month=2) / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month=2",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_month_pct_3",
+      "description": "3월 매출 비중",
+      "value": 15.7,
+      "formula": "SUM(Amount where Month=3) / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month=3",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_month_pct_4",
+      "description": "4월 매출 비중",
+      "value": 16.5,
+      "formula": "SUM(Amount where Month=4) / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month=4",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_month_pct_5",
+      "description": "5월 매출 비중",
+      "value": 21.3,
+      "formula": "SUM(Amount where Month=5) / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month=5",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_month_pct_6",
+      "description": "6월 매출 비중",
+      "value": 15.6,
+      "formula": "SUM(Amount where Month=6) / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month=6",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_age_pct_20대",
+      "description": "20대 연령대 매출 비중",
+      "value": 8.8,
+      "formula": "SUM(Amount where Age Group='20대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='20대'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_age_pct_30대",
+      "description": "30대 연령대 매출 비중",
+      "value": 34.7,
+      "formula": "SUM(Amount where Age Group='30대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='30대'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_age_pct_40",
+      "description": "40 연령대 매출 비중",
+      "value": 0.0,
+      "formula": "SUM(Amount where Age Group='40') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='40'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_age_pct_40대",
+      "description": "40대 연령대 매출 비중",
+      "value": 20.9,
+      "formula": "SUM(Amount where Age Group='40대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='40대'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_age_pct_50대",
+      "description": "50대 연령대 매출 비중",
+      "value": 29.2,
+      "formula": "SUM(Amount where Age Group='50대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='50대'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_age_pct_60대",
+      "description": "60대 연령대 매출 비중",
+      "value": 6.3,
+      "formula": "SUM(Amount where Age Group='60대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='60대'",
+      "importance": "high",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_SPRING24",
+      "description": "SPRING24 프로모션 평균 주문 금액",
+      "value": 12438.636363636364,
+      "formula": "MEAN(Amount where promotion_ids='SPRING24')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='SPRING24'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_EARLY5",
+      "description": "EARLY5 프로모션 평균 주문 금액",
+      "value": 10898.11320754717,
+      "formula": "MEAN(Amount where promotion_ids='EARLY5')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='EARLY5'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_SUMMERFRUIT",
+      "description": "SUMMERFRUIT 프로모션 평균 주문 금액",
+      "value": 10700.0,
+      "formula": "MEAN(Amount where promotion_ids='SUMMERFRUIT')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='SUMMERFRUIT'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_BUNDLE15",
+      "description": "BUNDLE15 프로모션 평균 주문 금액",
+      "value": 10314.285714285714,
+      "formula": "MEAN(Amount where promotion_ids='BUNDLE15')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='BUNDLE15'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_FRESH10",
+      "description": "FRESH10 프로모션 평균 주문 금액",
+      "value": 9760.0,
+      "formula": "MEAN(Amount where promotion_ids='FRESH10')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='FRESH10'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_FRUITPROMO5",
+      "description": "FRUITPROMO5 프로모션 평균 주문 금액",
+      "value": 7773.90243902439,
+      "formula": "MEAN(Amount where promotion_ids='FRUITPROMO5')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='FRUITPROMO5'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_NONE",
+      "description": "NONE 프로모션 평균 주문 금액",
+      "value": 6054.666666666667,
+      "formula": "MEAN(Amount where promotion_ids='NONE')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='NONE'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_DAIRYPROMO",
+      "description": "DAIRYPROMO 프로모션 평균 주문 금액",
+      "value": 5933.333333333333,
+      "formula": "MEAN(Amount where promotion_ids='DAIRYPROMO')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='DAIRYPROMO'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_VEGGIESALE",
+      "description": "VEGGIESALE 프로모션 평균 주문 금액",
+      "value": 4693.726937269373,
+      "formula": "MEAN(Amount where promotion_ids='VEGGIESALE')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='VEGGIESALE'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "id": "calc_promo_avg_FRESH10OFF",
+      "description": "FRESH10OFF 프로모션 평균 주문 금액",
+      "value": 3000.0,
+      "formula": "MEAN(Amount where promotion_ids='FRESH10OFF')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "promotion_ids='FRESH10OFF'",
+      "importance": "medium",
+      "timestamp": "2025-09-07 15:09:06"
+    }
+  ]
+}

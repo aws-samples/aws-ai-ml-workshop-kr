@@ -1,0 +1,263 @@
+{
+  "metadata": {
+    "generated_at": "2025-09-07 15:10:26",
+    "total_calculations": 33,
+    "cited_calculations": 16,
+    "validation_status": "completed"
+  },
+  "citations": [
+    {
+      "citation_id": "[1]",
+      "calculation_id": "calc_total_sales",
+      "value": 8619150.0,
+      "description": "총 매출액",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[2]",
+      "calculation_id": "calc_total_quantity",
+      "value": 2189,
+      "description": "총 판매량",
+      "formula": "SUM(Qty)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Qty"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[3]",
+      "calculation_id": "calc_category_pct_과일",
+      "value": 46.0,
+      "description": "과일 카테고리 매출 비중",
+      "formula": "SUM(Amount where Category='과일') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category='과일'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[4]",
+      "calculation_id": "calc_category_pct_채소",
+      "value": 27.7,
+      "description": "채소 카테고리 매출 비중",
+      "formula": "SUM(Amount where Category='채소') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category='채소'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[5]",
+      "calculation_id": "calc_category_pct_유제품",
+      "value": 26.2,
+      "description": "유제품 카테고리 매출 비중",
+      "formula": "SUM(Amount where Category='유제품') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category='유제품'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[6]",
+      "calculation_id": "calc_age_pct_20대",
+      "value": 8.8,
+      "description": "20대 연령대 매출 비중",
+      "formula": "SUM(Amount where Age Group='20대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='20대'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[7]",
+      "calculation_id": "calc_age_pct_30대",
+      "value": 34.7,
+      "description": "30대 연령대 매출 비중",
+      "formula": "SUM(Amount where Age Group='30대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='30대'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[8]",
+      "calculation_id": "calc_age_pct_40",
+      "value": 0.0,
+      "description": "40 연령대 매출 비중",
+      "formula": "SUM(Amount where Age Group='40') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='40'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[9]",
+      "calculation_id": "calc_age_pct_40대",
+      "value": 20.9,
+      "description": "40대 연령대 매출 비중",
+      "formula": "SUM(Amount where Age Group='40대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='40대'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[10]",
+      "calculation_id": "calc_age_pct_50대",
+      "value": 29.2,
+      "description": "50대 연령대 매출 비중",
+      "formula": "SUM(Amount where Age Group='50대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='50대'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[11]",
+      "calculation_id": "calc_age_pct_60대",
+      "value": 6.3,
+      "description": "60대 연령대 매출 비중",
+      "formula": "SUM(Amount where Age Group='60대') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group='60대'",
+      "verification_status": "verified",
+      "verification_notes": "백분율 계산 검증 완료",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[12]",
+      "calculation_id": "calc_avg_order",
+      "value": 7064.877049180328,
+      "description": "평균 주문 금액",
+      "formula": "MEAN(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[13]",
+      "calculation_id": "calc_product_sales_FR-WML-020",
+      "value": 25800.0,
+      "description": "FR-WML-020 제품 매출액",
+      "formula": "SUM(Amount where SKU='FR-WML-020')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-WML-020'",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[14]",
+      "calculation_id": "calc_product_sales_FR-WML-021",
+      "value": 25800.0,
+      "description": "FR-WML-021 제품 매출액",
+      "formula": "SUM(Amount where SKU='FR-WML-021')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-WML-021'",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[15]",
+      "calculation_id": "calc_product_sales_FR-STB-023",
+      "value": 25800.0,
+      "description": "FR-STB-023 제품 매출액",
+      "formula": "SUM(Amount where SKU='FR-STB-023')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-STB-023'",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    },
+    {
+      "citation_id": "[16]",
+      "calculation_id": "calc_product_sales_FR-STB-021",
+      "value": 25800.0,
+      "description": "FR-STB-021 제품 매출액",
+      "formula": "SUM(Amount where SKU='FR-STB-021')",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "source_rows": "SKU='FR-STB-021'",
+      "verification_status": "verified",
+      "verification_notes": "",
+      "timestamp": "2025-09-07 15:09:06"
+    }
+  ]
+}

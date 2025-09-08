@@ -2,11 +2,15 @@
 import logging
 import traceback
 import asyncio
+import time
 from src.utils.bedrock import bedrock_info
+from src.utils.common_utils import retry
 from strands import Agent, tool
 from strands.models import BedrockModel
 from botocore.config import Config
+from botocore.exceptions import ClientError
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from strands.types.exceptions import EventLoopException
 
 from datetime import datetime
 
@@ -179,21 +183,55 @@ class strands_utils():
     @staticmethod
     async def process_streaming_response_yield(agent, message, agent_name="coordinator", source=None):
         from src.utils.event_queue import put_event
-        try:
-            session_id = "ABC"
-            
-            agent_stream = agent.stream_async(message)
-            async for event in agent_stream:
-                #Strands 이벤트를 AgentCore 형식으로 변환
-                agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id, source)
-                if agentcore_event: 
-                    # Put event in global queue for unified processing
-                    put_event(agentcore_event)
-                    yield agentcore_event
+        
+        # Retry configuration
+        max_attempts = 5
+        base_delay = 30  # seconds
+        
+        for attempt in range(max_attempts):
+            try:
+                session_id = "ABC"
+                agent_stream = agent.stream_async(message)
 
-        except Exception as e:
-            logger.error(f"Error in streaming response: {e}")
-            logger.error(traceback.format_exc())  # Detailed error logging
+                async for event in agent_stream:
+                    # Strands 이벤트를 AgentCore 형식으로 변환
+                    agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id, source)
+                    if agentcore_event: 
+                        # Put event in global queue for unified processing
+                        put_event(agentcore_event)
+                        yield agentcore_event
+                
+                # If we get here, streaming was successful
+                break
+                
+            except (EventLoopException, ClientError) as e:
+                # Check if it's a throttling error
+                is_throttling = False
+                if isinstance(e, EventLoopException):
+                    # Check if the underlying error is throttling
+                    error_msg = str(e).lower()
+                    is_throttling = 'throttling' in error_msg or 'too many requests' in error_msg
+                elif isinstance(e, ClientError):
+                    error_code = e.response.get('Error', {}).get('Code', '')
+                    is_throttling = error_code == 'ThrottlingException'
+                
+                if is_throttling and attempt < max_attempts - 1:
+                    delay = base_delay * (2 ** attempt)  # Exponential backoff
+                    next_attempt = attempt + 2  # Next attempt number (attempt is 0-indexed)
+                    logger.warning(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
+                    logger.warning(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
+                    await asyncio.sleep(delay)
+                    logger.info(f"🚀 Starting retry attempt {next_attempt}/{max_attempts}")
+                    continue
+                else:
+                    logger.error(f"Error in streaming response (attempt {attempt + 1}/{max_attempts}): {e}")
+                    logger.error(traceback.format_exc())
+                    if attempt == max_attempts - 1:
+                        raise  # Re-raise on final attempt
+            except Exception as e:
+                logger.error(f"Unexpected error in streaming response: {e}")
+                logger.error(traceback.format_exc())
+                raise
 
     # 툴 사용 ID와 툴 이름 매핑을 위한 클래스 변수
     _tool_use_mapping = {}
@@ -363,8 +401,10 @@ class FunctionNode(MultiAgentBase):
     async def invoke_async(self, task=None, **kwargs):
         # Execute function (nodes now use global state for data sharing)  
         # Pass task and kwargs directly to function
-        if asyncio.iscoroutinefunction(self.func): response = await self.func(task=task, **kwargs)
-        else: response = self.func(task=task, **kwargs)
+        if asyncio.iscoroutinefunction(self.func): 
+            response = await self.func(task=task, **kwargs)
+        else: 
+            response = self.func(task=task, **kwargs)
 
         agent_result = AgentResult(
             stop_reason="end_turn",
@@ -377,4 +417,8 @@ class FunctionNode(MultiAgentBase):
         return MultiAgentResult(
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
-        )  
+        )
+
+
+
+
