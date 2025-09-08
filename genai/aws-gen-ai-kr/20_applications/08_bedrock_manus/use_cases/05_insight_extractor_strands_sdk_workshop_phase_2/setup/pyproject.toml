@@ -34,4 +34,7 @@ dependencies = [
     "koreanize-matplotlib>=0.1.1",
     "pillow>=11.3.0",
     "plotly>=6.3.0",
+    "reportlab>=4.4.3",
+    "markdown>=3.9",
+    "fpdf2>=2.8.4",
 ]

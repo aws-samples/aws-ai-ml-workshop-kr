@@ -2,158 +2,261 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+## Validator Agent Integration Plan
 
-Bedrock-Manus is an AI automation framework optimized for Amazon Bedrock that implements a hierarchical multi-agent system using LangGraph. The system orchestrates specialized agents to accomplish complex tasks like data analysis, code generation, and report creation.
+**IMPORTANT**: The Reference Validator Agent system is already VALIDATED and WORKING. This plan is to integrate the proven components from the Reference system into the Target system with minimal modifications.
 
-## Common Development Commands
+### Project Goal
+
+Integrate the **validated** Validator Agent system from Reference system (`/home/ubuntu/Self-Study-Generative-AI/lab/11_bedrock_manus`) into Target system while maintaining existing code structure.
+
+### Reference System Components (ALREADY VALIDATED)
+
+**Core Validated Files**:
+1. `/home/ubuntu/Self-Study-Generative-AI/lab/11_bedrock_manus/src/tools/validator_tools.py`
+   - `OptimizedValidator` class for performance optimization
+   - Priority-based validation (high/medium/low importance)
+   - Batch processing and data caching
+   - Tool specifications for validator agent
+
+2. `/home/ubuntu/Self-Study-Generative-AI/lab/11_bedrock_manus/src/tools/calculation_tracker.py`
+   - `CalculationTracker` class for automatic metadata collection
+   - Decorators for calculation tracking
+   - Manual tracking functions
+
+3. `/home/ubuntu/Self-Study-Generative-AI/lab/11_bedrock_manus/src/prompts/validator.md`
+   - Complete validator agent prompt template
+   - Performance optimization instructions
+   - Citation generation workflow
+
+4. `/home/ubuntu/Self-Study-Generative-AI/lab/11_bedrock_manus/src/graph/nodes.py:validator_node`
+   - Working LangGraph validator node implementation
+   - State management and command structure
+
+### Target System Integration Strategy
+
+**Key Requirement**: Transform Reference LangGraph `validator_node` into Target Strands `validator_agent_tool`
+
+## Code Generation Plan
+
+### 1. Create `src/tools/calculation_tracker.py`
+- **Source**: Copy from Reference system with minimal adaptation
+- **Purpose**: Automatic calculation metadata tracking
+- **Changes**: Adapt import paths for Target system
+
+### 2. Create `src/tools/validator_agent_tool.py` 
+- **Source**: Adapt Reference `validator_node` logic into Strands tool pattern
+- **Pattern**: Follow `src/tools/reporter_agent_tool.py` exactly
+- **Key Adaptations**:
+  - Transform LangGraph Command structure to Strands ToolResult
+  - Adapt state management from LangGraph State to `_global_node_states`
+  - Maintain streaming response and observability patterns
+
+### 3. Create `src/prompts/validator.md`
+- **Source**: Copy Reference validator prompt with TARGET system adaptations
+- **Changes**: Update file paths and tool references for Target system
+
+### 4. Update `src/graph/nodes.py:supervisor_node`
+- **Change**: Add `validator_agent_tool` to tools list
+- **Pattern**: `tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool, validator_agent_tool]`
+
+### 5. Update `src/config/tools.py`
+- **Change**: Register `validator_agent_tool` following existing patterns
+
+### 6. Enhance `src/prompts/coder.md` (Additive only)
+- **Add**: Calculation tracking instructions from Reference system
+- **Include**: 
+  - Importance classification (high/medium/low)
+  - Metadata recording after calculations
+  - `calculation_tracker` integration
+
+### 7. Enhance `src/prompts/reporter.md` (Additive only)
+- **Add**: Citation usage instructions
+- **Include**:
+  - Read `./artifacts/citations.json` 
+  - Citation formatting in reports
+  - Validation result references
+
+## Implementation Requirements
+
+### Code Generation Priorities
+1. **COPY Reference components** - Don't reinvent, use validated code
+2. **ADAPT architecture patterns** - LangGraph → Strands transformation
+3. **PRESERVE Target structure** - No modification to existing functions
+4. **MINIMAL changes** - Only essential adaptations for compatibility
+
+### Critical Adaptations Needed
+
+**From Reference LangGraph to Target Strands**:
+```python
+# Reference pattern (LangGraph):
+def validator_node(state: State) -> Command[Literal["supervisor"]]:
+    # ... validation logic ...
+    return Command(update={...}, goto="supervisor")
+
+# Target pattern (Strands Tool):
+def validator_agent_tool(tool: ToolUse, **_kwargs: Any) -> ToolResult:
+    # ... same validation logic ...
+    return {"toolUseId": tool_use_id, "status": "success", "content": [...]}
+```
+
+**State Management Adaptation**:
+```python
+# Reference: LangGraph state
+state.get("messages", [])
+
+# Target: Global state
+shared_state = _global_node_states.get('shared', {})
+shared_state.get('messages', [])
+```
+
+### File Structure (Target System)
+```
+src/
+├── tools/
+│   ├── calculation_tracker.py          # NEW: Copy from Reference
+│   └── validator_agent_tool.py         # NEW: Adapt from Reference validator_node
+├── prompts/
+│   ├── validator.md                     # NEW: Copy from Reference
+│   ├── coder.md                        # MODIFY: Add tracking instructions
+│   └── reporter.md                     # MODIFY: Add citation instructions
+├── graph/
+│   └── nodes.py                        # MODIFY: Add validator tool to supervisor
+└── config/
+    └── tools.py                        # MODIFY: Register validator tool
+```
+
+### Validation Workflow Integration
+
+**Target System Flow**:
+1. Coordinator → Planner → Supervisor (unchanged)
+2. Supervisor calls `validator_agent_tool` when needed
+3. Validator agent validates calculations and generates citations
+4. Reporter agent uses citations for final report
+5. All artifacts saved to `./artifacts/`
+
+### Success Criteria
+- [ ] `calculation_tracker.py` copied and adapted
+- [ ] `validator_agent_tool.py` created following Strands pattern
+- [ ] `validator.md` prompt copied and adapted
+- [ ] Supervisor node updated with validator tool
+- [ ] Tool registration completed
+- [ ] Existing prompts enhanced with validator instructions
+- [ ] End-to-end validation workflow functioning
+- [ ] Citation generation and usage working
+- [ ] No existing functionality broken
+
+## Key Implementation Notes
+
+1. **REUSE validated code** - Reference system is working, don't recreate
+2. **FOLLOW Target patterns** - Use `reporter_agent_tool.py` as template
+3. **MAINTAIN compatibility** - All existing features must continue working
+4. **PRESERVE performance** - Keep Reference optimization (priority-based, batch processing)
+5. **MINIMAL footprint** - Only necessary changes, maximum code reuse
+
+### Expected Output Files
+- `./artifacts/calculation_metadata.json` - From coder (via calculation_tracker)
+- `./artifacts/citations.json` - From validator agent
+- `./artifacts/validation_report.txt` - Validation summary
+- Enhanced reports with numerical citations
+
+## Testing
 
 ### Environment Setup
+
+**IMPORTANT**: Always use the project's virtual environment for testing and development:
+
 ```bash
-# Create and activate UV environment with dependencies
-cd setup/
-./create-uv-env.sh bedrock-manus
+# Activate virtual environment
+source setup/.venv/bin/activate
 
-# Alternative: Traditional conda environment (as shown in README)
-./create_conda_virtual_env.sh bedrock-manus
-conda activate bedrock-manus
+# Run unit tests as needed
+python -m pytest tests/ -v  # if test directory exists
 
-# Korean fonts are automatically installed by the UV script
-# Manual installation if needed:
-./install_korean_font.sh
+# MANDATORY: Always test template.py after any prompt modifications
+python3 template.py
+
+### Component Unit Testing
+
+#### Korean Font Testing
+```bash
+# Test Korean font setup in coder.md
+source setup/.venv/bin/activate && python3 -c "
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+
+# Test Korean font setup from coder.md
+plt.rcParams['font.family'] = ['NanumGothic']
+plt.rcParams['font.sans-serif'] = ['NanumGothic', 'NanumBarunGothic', 'NanumMyeongjo', 'sans-serif'] 
+plt.rcParams['axes.unicode_minus'] = False
+
+korean_font_prop = fm.FontProperties(family='NanumGothic')
+
+# Create simple test chart
+fig, ax = plt.subplots(figsize=(4, 2))
+ax.text(0.5, 0.5, '한글폰트테스트', fontproperties=korean_font_prop, ha='center', va='center')
+ax.set_title('폰트 확인', fontproperties=korean_font_prop)
+
+os.makedirs('./artifacts', exist_ok=True)
+plt.savefig('./artifacts/font_unit_test.png', dpi=100, bbox_inches='tight')
+plt.close()
+print('✅ Korean font unit test completed: ./artifacts/font_unit_test.png')
+"
 ```
 
-### Running the Application
+#### PDF Generation Testing  
 ```bash
-# Run via Python script
-python main.py
-
-# Run via Jupyter notebook
-jupyter lab main.ipynb
-
-# Run Streamlit UI
-cd app/
-streamlit run app.py
+# Test reporter.md PDF generation capabilities
+source setup/.venv/bin/activate && python3 -c "
+import weasyprint
+import markdown
+print('✅ WeasyPrint available for PDF generation')
+print('✅ Markdown parser available')
+print('✅ Reporter PDF generation dependencies OK')
+"
 ```
 
-### Development Dependencies
-The project uses UV for dependency management. Main dependencies are defined in `setup/pyproject.toml`:
-- **Core**: `strands-agents>=1.4.0`, `bedrock-agentcore==0.1.2`, `boto3>=1.40.10`
-- **Agent Framework**: `strands-agents-tools>=0.2.3`, `bedrock-agentcore-starter-toolkit>=0.1.6`
-- **UI**: `streamlit==1.48.1`
-- **Data Processing**: `matplotlib>=3.10.5`, `seaborn>=0.13.2`, `lovelyplots>=1.0.2`
-- **Document Generation**: `weasyprint>=66.0` for PDF generation (system packages like `pandoc`, `texlive-xetex` auto-installed)
-- **LLM/AI**: `langchain>=0.3.27`, `mcp>=1.13.0`
-- **Testing**: Basic test files available (`test_*.py` files in root directory)
+## Key Code Paths
 
-### Testing
-```bash
-# Run individual test files
-python test_coordinator_integration.py
-python test_state_system.py
-
-# Test Korean font installation
-python setup/test_korean_font.py
+### Target Code Path (Implementation Location)
+```
+/home/ubuntu/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_workshop_phase_2
 ```
 
-## Architecture Overview
+### Reference Code Path (Source of Validated Components)
+```
+/home/ubuntu/Self-Study-Generative-AI/lab/11_bedrock_manus
+```
+### Backup of Original Target Code Path 
+```
+/home/ubuntu/05_insight_extractor_strands_sdk_workshop_phase_2
+```
 
-### Multi-Agent System Design
-The framework implements a LangGraph-based workflow with five specialized agents:
+### File Mapping (Reference → Target)
+```
+Reference System                                    →  Target System
+─────────────────────────────────────────────────────────────────────────────────
+/home/ubuntu/Self-Study-Generative-AI/             →  /home/ubuntu/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/
+lab/11_bedrock_manus/src/tools/                    →  05_insight_extractor_strands_sdk_workshop_phase_2/src/tools/
+├── validator_tools.py                             →  ├── validator_agent_tool.py (ADAPT)
+└── calculation_tracker.py                         →  └── calculation_tracker.py (COPY)
 
-1. **Coordinator** (`src/graph/nodes.py:coordinator_node`) - Entry point that handles initial interactions and routes tasks
-2. **Planner** (`src/graph/nodes.py:planner_node`) - Analyzes tasks and creates execution strategies using reasoning LLM
-3. **Supervisor** (`src/graph/nodes.py:supervisor_node`) - Oversees and manages execution of other agents using reasoning LLM
-4. **Coder** (`src/graph/nodes.py:code_node`) - Handles Python code execution and bash commands via custom tools
-5. **Reporter** (`src/graph/nodes.py:reporter_node`) - Generates reports and summaries using reasoning LLM
+/home/ubuntu/Self-Study-Generative-AI/             →  /home/ubuntu/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/
+lab/11_bedrock_manus/src/prompts/                  →  05_insight_extractor_strands_sdk_workshop_phase_2/src/prompts/
+├── validator.md                                   →  ├── validator.md (COPY + ADAPT)
+├── coder.md (validator sections)                  →  ├── coder.md (ADD validator sections)
+└── reporter.md (citation sections)                →  └── reporter.md (ADD citation sections)
 
-### LLM Tier System
-Agent-LLM mapping is configured in `src/config/agents.py`:
-- **Basic LLM**: Coordinator, Coder (optimized for fast responses)
-- **Reasoning LLM**: Planner, Supervisor, Reporter (supports prompt caching)
-- **Vision LLM**: Browser agent (available but not used in current workflow)
-- **Model Support**: All Amazon Bedrock models (Nova, Claude, DeepSeek, Llama, etc.)
+/home/ubuntu/Self-Study-Generative-AI/             →  /home/ubuntu/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/
+lab/11_bedrock_manus/src/graph/nodes.py            →  05_insight_extractor_strands_sdk_workshop_phase_2/src/graph/nodes.py
+└── validator_node() function                      →  └── supervisor_node() - add validator_agent_tool to tools list
+```
 
-### Prompt System
-Each agent uses role-specific prompts from `src/prompts/*.md` files:
-- Template engine in `src/prompts/template.py` handles variable substitution
-- Supports prompt caching for reasoning agents to improve performance
-
-### Custom Tools Integration
-The system provides specialized tools via Strands SDK:
-- **Python REPL** (`src/tools/python_repl_tool.py`) - Code execution environment
-- **Bash Tool** (`src/tools/bash_tool.py`) - System command execution
-- **Web Crawling** (`src/crawler/`) - Content extraction using Jina API
-
-## Key File Locations
-
-### Core Workflow
-- `src/workflow.py` - Main workflow execution entry point
-- `src/graph/builder.py` - LangGraph construction and node connections
-- `src/graph/types.py` - State management and type definitions
-
-### Agent Configuration  
-- `src/config/agents.py` - Agent-LLM mapping and caching configuration
-- `src/config/tools.py` - Tool specifications and registration
-- `src/agents/llm.py` - LLM initialization using Bedrock models
-
-### Utilities
-- `src/utils/strands_sdk_utils.py` - Strands SDK integration helpers
-- `src/utils/bedrock.py` - AWS Bedrock client configuration
-- `src/utils/common_utils.py` - Message formatting and common utilities
-
-## Development Patterns
-
-### Agent Implementation
-New agents should follow the pattern in `src/graph/nodes.py`:
-1. Use `strands_utils().get_agent_by_name()` to create agent with proper LLM
-2. Apply prompt template from `src/prompts/template.py`
-3. Handle state updates and message passing according to LangGraph conventions
-
-### Tool Registration  
-Custom tools should:
-1. Implement the Strands tool specification format (see `src/config/tools.py`)
-2. Include proper logging using the established logger pattern
-3. Use the `@log_io` decorator from `src/tools/decorators.py`
-4. Follow patterns in existing tools: `python_repl_tool.py`, `bash_tool.py`
-
-### State Management
-The workflow uses a shared state object defined in `src/graph/types.py` that includes:
-- Message history
-- Team member information
-- Request context
-- Intermediate results
-
-## Environment Configuration
-
-### Required Environment Variables
-- `TAVILY_API_KEY` - For web search functionality
-- `JINA_API_KEY` - For content extraction
-- `CHROME_INSTANCE_PATH` - For browser automation (optional)
-- `BROWSER_HEADLESS` - Browser mode configuration
-
-### AWS Configuration
-The framework automatically uses AWS credentials from the environment or AWS CLI configuration for Bedrock access.
-
-## Output and Artifacts
-
-- Generated reports and analysis results are saved to `./artifacts/` directory
-- The system automatically cleans this directory on each run
-- PDF reports require Korean font installation for proper rendering
-- Sample outputs available in `assets/` directory (report.pdf, demo.gif)
-
-## Development Environment
-
-### Tested Environments
-- Amazon SageMaker AI Studio (CodeEditor and JupyterLab)
-- Local development with UV package manager
-
-### File Structure Notes
-- `test.py` - Basic integration testing example
-- `main.py` - CLI entry point  
-- `main.ipynb` - Jupyter notebook interface
-- `app/app.py` - Streamlit web interface
-- Configuration files use both UV (`setup/pyproject.toml`) and traditional Python patterns
-- `final_report.md` - Generated markdown report from workflow execution
-- `report.html` - Generated HTML report output
-- `artifacts/` - Directory where generated reports and analysis results are saved (auto-cleaned)
+### Implementation Priority Order
+1. **COPY**: `calculation_tracker.py` (minimal changes)
+2. **ADAPT**: `validator_agent_tool.py` (LangGraph → Strands pattern)
+3. **COPY+ADAPT**: `validator.md` prompt
+4. **UPDATE**: `supervisor_node` tools list
+5. **REGISTER**: Tool in `config/tools.py`
+6. **ENHANCE**: `coder.md` and `reporter.md` prompts
