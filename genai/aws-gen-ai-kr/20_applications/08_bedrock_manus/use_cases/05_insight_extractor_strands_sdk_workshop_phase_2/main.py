@@ -123,11 +123,17 @@ if __name__ == "__main__":
             "session-id": args.session_id
         }
     else:
-        # Use predefined query for testing
+        # Full comprehensive analysis query (main version):
         payload = {
             "user_query": "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다.",
             "session-id": "insight-extractor-1"
         }
+        
+        # Quick test version (commented - for chart improvements validation):
+        # payload = {
+        #     "user_query": "데이터 './data/Dat-fresh-food-claude.csv'에서 총 판매 금액 계산하고, 차트 3개 정도 만들어서 PDF 리포트 작성해줘. 차트는 1) 카테고리별 매출, 2) 월별 매출 추이, 3) 프로모션별 매출 정도로 해줘. 차트 라벨 개선 테스트용이니 간단하게.",
+        #     "session-id": "insight-extractor-1"
+        # }
 
     #########################
     ## modification END    ##

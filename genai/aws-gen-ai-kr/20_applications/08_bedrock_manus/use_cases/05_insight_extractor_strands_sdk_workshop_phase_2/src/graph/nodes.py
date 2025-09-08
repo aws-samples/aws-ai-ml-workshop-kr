@@ -6,7 +6,7 @@ from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 
 # Tools
-from src.tools import coder_agent_tool, reporter_agent_tool, tracker_agent_tool
+from src.tools import coder_agent_tool, reporter_agent_tool, tracker_agent_tool, validator_agent_tool
 
 # Observability
 from opentelemetry import trace
@@ -204,7 +204,7 @@ async def supervisor_node(task=None, **kwargs):
             agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
             enable_reasoning=False,
             prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
-            tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool],  # Add coder, reporter and tracker agents as tools
+            tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool, validator_agent_tool],  # Add coder, reporter, tracker and validator agents as tools
             streaming=True,
         )
 
