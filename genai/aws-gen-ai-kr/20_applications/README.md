@@ -13,8 +13,8 @@
 - - -
 
 ## <div id="Contents">**Updated**</div>
-- [25.7.17]
-    - 26_GenAI_Menuboard_Generator, Kyutae Park: [AI 메뉴보드 생성기 (AI Menu Board Generator)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/26_GenAI_Menuboard_Generator)
+- [25.9.09]
+    - 27_multimodal_document_ai_pipeline, Hyeonsang Jeon, [GPU 기반 PDF 문서 QA 데이터셋 자동 생성 파이프라인 with SageMaker Processing & Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/27_multimodal_document_ai_pipeline)
 - [25.7.14]
     - 25_Drug Discovery Agent, Hasun Yu: [Drug Discovery Agent based on Amazon Bedrock and Strands Agents](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/25_drug_discovery_agent)
 - [25.5.20]
@@ -64,7 +64,7 @@
 - <span style="#FF69B4;"> **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)</span>
 - <span style="#FF69B4;"> **Gonsoo Moon** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:moongons@amazon.com) | [Linkedin](https://www.linkedin.com/in/gonsoomoon/) | [Git](https://github.com/gonsoomoon-ml) | </span>
 - <span style="#FF69B4;"> **Hyeryeong Joo** (AWS Solutions Architect) | [Mail](mailto:joohyery@amazon.com) |</span>
-- <span style="#FF69B4;"> **HyeonSang Jeon** (AWS Solutions Architect) | [Mail](mailto:hsjeon@amazon.com) |</span>
+- <span style="#FF69B4;"> **HyeonSang Jeon** (AWS Solutions Architect) | [Mail](mailto:hsjeon@amazon.com) |[Git](https://github.com/hyeonsangjeon)|</span>
 - <span style="#FF69B4;"> **Hannah Uh** (AWS Solutions Architect) | [Mail](mailto:hannahuh@amazon.com) |</span>
 - <span style="#FF69B4;"> **Youngjin Kim** (AWS Solutions Architect) | [Mail](mailto:youngjik@amazon.com) | [Linkedin](https://www.linkedin.com/in/zerojin/) | [Git](https://github.com/comeddy) | </span>
 - <span style="#FF69B4;"> **Jesam Kim** (AWS Solutions Architect) | [Mail](mailto:jesamkim@amazon.com) | </span>

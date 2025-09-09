@@ -1,0 +1,19 @@
+
+# 핵심 의존성 먼저
+pydantic
+
+# LangChain 최신 버전 
+langchain-core
+#langchain
+langchain-aws
+#langchain-community
+
+# 기본 패키지들
+unstructured[base]
+opencv-python
+pdf2image
+pdfminer.six>=20250506
+pytesseract
+python-dotenv
+unstructured[pdf]
+boto3
