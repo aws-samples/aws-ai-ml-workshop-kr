@@ -15,6 +15,8 @@
 ## <div id="Contents">**Updated**</div>
 - [25.9.09]
     - 27_multimodal_document_ai_pipeline, Hyeonsang Jeon, [GPU 기반 PDF 문서 QA 데이터셋 자동 생성 파이프라인 with SageMaker Processing & Bedrock](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/27_multimodal_document_ai_pipeline)
+- [25.7.17]
+    - 26_GenAI_Menuboard_Generator, Kyutae Park: [AI 메뉴보드 생성기 (AI Menu Board Generator)](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/26_GenAI_Menuboard_Generator)
 - [25.7.14]
     - 25_Drug Discovery Agent, Hasun Yu: [Drug Discovery Agent based on Amazon Bedrock and Strands Agents](https://github.com/aws-samples/aws-ai-ml-workshop-kr/tree/master/genai/aws-gen-ai-kr/20_applications/25_drug_discovery_agent)
 - [25.5.20]
