@@ -11,7 +11,7 @@
 
 ## 시스템 흐름도
 
-![GPU Container Process](../assets/images/flow.png)
+![GPU Container Process](./assets/images/flow.png)
 
 *위 다이어그램은 PDF에서 QA 데이터를 추출하는 전체 프로세스를 보여줍니다. PDF 문서가 입력되면 Unstructured 파티션 추출기를 통해 텍스트 블록으로 변환되고, 이 데이터는 Claude LLM을 활용하여 구조화된 JSONL QA 데이터로 가공됩니다.*
 

@@ -8,7 +8,7 @@ This tool leverages GPU acceleration to extract text blocks from PDF documents a
 
 ## System Flow Diagram
 
-![GPU Container Process](../assets/images/flow.png)
+![GPU Container Process](./assets/images/flow.png)
 
 *The above diagram shows the complete process of extracting QA data from PDF documents. When a PDF document is input, it is converted into text blocks through the Unstructured partition extractor, and this data is processed into structured JSONL QA data using the Claude LLM.*
 
