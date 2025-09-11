@@ -398,7 +398,7 @@ class FunctionNode(MultiAgentBase):
             return self.func(task=task, **kwargs)
 
     # Execute function and return standard MultiAgentResult
-    async def invoke_async(self, task=None, **kwargs):
+    async def invoke_async(self, task=None, invocation_state=None, **kwargs):
         # Execute function (nodes now use global state for data sharing)  
         # Pass task and kwargs directly to function
         if asyncio.iscoroutinefunction(self.func): 
