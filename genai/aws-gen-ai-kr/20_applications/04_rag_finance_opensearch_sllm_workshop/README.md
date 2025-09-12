@@ -115,3 +115,12 @@ https://t0r5tpibtvoywyw.studio.us-east-1.sagemaker.aws/jupyterlab/default/lab?
 https://t0r5tpibtvoywyw.studio.us-east-1.sagemaker.aws/jupyterlab/default/proxy/8501/ 입니다. 
 (lab이 proxy/8501/로 대체됩니다. 8501/ 마지막 슬레시를 꼭 붙여줍니다.) 이전 단계에서 확인된 포트 번호가 8501과 다른 경우 Streamlit 앱의 URL에 8501 대신 해당 포트 번호를 사용하세요.
 ```
+
+
+## 👥 Contributors
+- **HyeonSang Jeon** (AWS Solutions Architect) | [Mail](mailto:hsjeon@amazon.com) | [Git](https://github.com/hyeonsangjeon) |
+
+- - -
+
+## 🔑 License
+- This is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE).
