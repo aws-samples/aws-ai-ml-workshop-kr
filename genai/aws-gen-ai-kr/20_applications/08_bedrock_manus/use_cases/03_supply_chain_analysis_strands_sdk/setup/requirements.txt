@@ -1,7 +1,7 @@
 boto3==1.38.36
 langgraph==0.4.8
 langchain
-langchain-community==0.3.25
+langchain-community>=0.3.27
 langchain-experimental==0.3.4
 langchain-aws==0.2.25
 langfuse==2.60.3
