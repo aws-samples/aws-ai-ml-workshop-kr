@@ -1,16 +1,19 @@
-FROM public.ecr.aws/docker/library/python:3.12-slim
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 WORKDIR /app
+
+# Configure UV for container environment
+ENV UV_SYSTEM_PYTHON=1 UV_COMPILE_BYTECODE=1
 
 
 
 COPY requirements.txt requirements.txt
 # Install from requirements file
-RUN pip install -r requirements.txt
+RUN uv pip install -r requirements.txt
 
 
 
 
-RUN pip install aws-opentelemetry-distro>=0.10.1
+RUN uv pip install aws-opentelemetry-distro>=0.10.1
 
 
 # Set AWS region environment variable

@@ -4,156 +4,177 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Bedrock-Manus is an AI automation framework optimized for Amazon Bedrock that implements a hierarchical multi-agent system using LangGraph. The system orchestrates specialized agents to accomplish complex tasks like data analysis, code generation, and report creation.
+Bedrock-Manus is an AI automation framework optimized for Amazon Bedrock that implements a hierarchical multi-agent system using the Strands SDK. The system orchestrates three core agents in a streaming workflow to accomplish complex tasks like data analysis, code generation, and report creation.
 
 ## Common Development Commands
 
 ### Environment Setup
 ```bash
-# Create and activate UV environment with dependencies
+# Create and activate UV environment with dependencies (recommended)
 cd setup/
-./create-uv-env.sh bedrock-manus
+./create-uv-env.sh bedrock-manus-agentcore 3.12
 
-# Alternative: Traditional conda environment (as shown in README)
-./create_conda_virtual_env.sh bedrock-manus
-conda activate bedrock-manus
+# Run from root directory (UV creates symlinks automatically)
+cd ..
+uv run python main.py
 
-# Korean fonts are automatically installed by the UV script
-# Manual installation if needed:
-./install_korean_font.sh
+# Test Korean font installation (required for PDF reports)
+python setup/test_korean_font.py
 ```
 
 ### Running the Application
 ```bash
-# Run via Python script
+# CLI execution with custom query
+python main.py --user_query "Your analysis request" --session_id "session-1"
+
+# Run with default predefined query
 python main.py
 
-# Run via Jupyter notebook
-jupyter lab main.ipynb
-
-# Run Streamlit UI
+# Streamlit UI
 cd app/
 streamlit run app.py
+
+# Jupyter notebook interface
+jupyter lab main.ipynb
 ```
 
 ### Development Dependencies
-The project uses UV for dependency management. Main dependencies are defined in `setup/pyproject.toml`:
-- **Core**: `strands-agents>=1.4.0`, `bedrock-agentcore==0.1.2`, `boto3>=1.40.10`
-- **Agent Framework**: `strands-agents-tools>=0.2.3`, `bedrock-agentcore-starter-toolkit>=0.1.6`
+The project uses UV for dependency management. Key dependencies in `setup/pyproject.toml`:
+- **Core Framework**: `strands-agents>=1.7.0`, `bedrock-agentcore>=0.1.2`, `bedrock-agentcore-starter-toolkit>=0.1.8`
+- **LLM Integration**: `boto3>=1.40.10`, `langchain>=0.3.27`, `mcp>=1.13.0`
+- **Data Analysis**: `pandas>=2.3.1`, `numpy>=1.26.4`, `scikit-learn>=1.7.1`
+- **Visualization**: `matplotlib>=3.10.5`, `seaborn>=0.13.2`, `plotly>=6.3.0`, `lovelyplots>=1.0.2`
+- **Document Generation**: `weasyprint>=66.0` for PDF reports, `koreanize-matplotlib>=0.1.1`
 - **UI**: `streamlit==1.48.1`
-- **Data Processing**: `matplotlib>=3.10.5`, `seaborn>=0.13.2`, `lovelyplots>=1.0.2`
-- **Document Generation**: `weasyprint>=66.0` for PDF generation (system packages like `pandoc`, `texlive-xetex` auto-installed)
-- **LLM/AI**: `langchain>=0.3.27`, `mcp>=1.13.0`
-- **Testing**: Basic test files available (`test_*.py` files in root directory)
+- **Observability**: `aws-opentelemetry-distro==0.12.0`
 
 ### Testing
 ```bash
-# Run individual test files
-python test_coordinator_integration.py
-python test_state_system.py
-
-# Test Korean font installation
+# Run available test files
+python test_stream_graph.py
 python setup/test_korean_font.py
 ```
 
 ## Architecture Overview
 
-### Multi-Agent System Design
-The framework implements a LangGraph-based workflow with five specialized agents:
+### Three-Agent Streaming Workflow
+The framework implements a **Strands-based streaming workflow** with three core agents:
 
-1. **Coordinator** (`src/graph/nodes.py:coordinator_node`) - Entry point that handles initial interactions and routes tasks
-2. **Planner** (`src/graph/nodes.py:planner_node`) - Analyzes tasks and creates execution strategies using reasoning LLM
-3. **Supervisor** (`src/graph/nodes.py:supervisor_node`) - Oversees and manages execution of other agents using reasoning LLM
-4. **Coder** (`src/graph/nodes.py:code_node`) - Handles Python code execution and bash commands via custom tools
-5. **Reporter** (`src/graph/nodes.py:reporter_node`) - Generates reports and summaries using reasoning LLM
+1. **Coordinator** (`src/graph/nodes.py:coordinator_node`) - Entry point that handles user requests and determines if handoff to planner is needed
+2. **Planner** (`src/graph/nodes.py:planner_node`) - Creates detailed execution plans using reasoning capabilities
+3. **Supervisor** (`src/graph/nodes.py:supervisor_node`) - Orchestrates specialized tools (Coder, Reporter, Tracker) to execute the plan
 
-### LLM Tier System
-Agent-LLM mapping is configured in `src/config/agents.py`:
-- **Basic LLM**: Coordinator, Coder (optimized for fast responses)
-- **Reasoning LLM**: Planner, Supervisor, Reporter (supports prompt caching)
-- **Vision LLM**: Browser agent (available but not used in current workflow)
-- **Model Support**: All Amazon Bedrock models (Nova, Claude, DeepSeek, Llama, etc.)
+### Agent Tool Integration via Supervisor
+The Supervisor agent has access to three specialized tools:
+- **Coder Agent Tool** (`src/tools/coder_agent_tool.py`) - Python execution, bash commands, data analysis
+- **Reporter Agent Tool** (`src/tools/reporter_agent_tool.py`) - Report generation and formatting
+- **Tracker Agent Tool** (`src/tools/tracker_agent_tool.py`) - Progress monitoring and workflow state
 
-### Prompt System
-Each agent uses role-specific prompts from `src/prompts/*.md` files:
-- Template engine in `src/prompts/template.py` handles variable substitution
-- Supports prompt caching for reasoning agents to improve performance
+### LLM Configuration System
+Agent-LLM mapping in actual codebase:
+- **Coordinator**: `claude-sonnet-3-5-v-2` (fast responses, no reasoning)
+- **Planner**: `claude-sonnet-3-7` (reasoning enabled, prompt caching disabled)
+- **Supervisor**: `claude-sonnet-3-7` (no reasoning, prompt caching enabled as "default")
 
-### Custom Tools Integration
-The system provides specialized tools via Strands SDK:
-- **Python REPL** (`src/tools/python_repl_tool.py`) - Code execution environment
-- **Bash Tool** (`src/tools/bash_tool.py`) - System command execution
-- **Web Crawling** (`src/crawler/`) - Content extraction using Jina API
+### Streaming Architecture
+The system uses `StreamableGraph` (`src/graph/builder.py`) which:
+- Wraps Strands GraphBuilder with streaming capability
+- Uses background task execution with event queue pattern (`src/utils/event_queue.py`)
+- Provides real-time event streaming via `graph.stream_async()`
+
+### Global State Management
+The workflow uses a **global state system** (`_global_node_states` in `src/graph/nodes.py`):
+- Shared state storage between all nodes
+- Maintains conversation history, messages, plans, and clues
+- Enables stateful communication across the agent workflow
 
 ## Key File Locations
 
-### Core Workflow
-- `src/workflow.py` - Main workflow execution entry point
-- `src/graph/builder.py` - LangGraph construction and node connections
-- `src/graph/types.py` - State management and type definitions
+### Core Architecture
+- `main.py` - Main entry point with streaming execution
+- `src/graph/builder.py` - StreamableGraph and LangGraph construction
+- `src/graph/nodes.py` - Agent nodes and global state management
+- `src/utils/event_queue.py` - Event streaming infrastructure
 
-### Agent Configuration  
-- `src/config/agents.py` - Agent-LLM mapping and caching configuration
-- `src/config/tools.py` - Tool specifications and registration
-- `src/agents/llm.py` - LLM initialization using Bedrock models
+### Agent Infrastructure
+- `src/agents/llm.py` - Bedrock LLM initialization
+- `src/utils/strands_sdk_utils.py` - Strands SDK integration and utilities
+- `src/utils/agentcore_observability.py` - OpenTelemetry observability integration
 
-### Utilities
-- `src/utils/strands_sdk_utils.py` - Strands SDK integration helpers
-- `src/utils/bedrock.py` - AWS Bedrock client configuration
-- `src/utils/common_utils.py` - Message formatting and common utilities
+### Specialized Tools
+- `src/tools/python_repl_tool.py` - Python code execution environment
+- `src/tools/bash_tool.py` - System command execution
+- `src/tools/code_interpreter_tool.py` - Enhanced code interpretation
+- `src/tools/decorators.py` - Logging and instrumentation decorators
+
+### Configuration and Environment
+- `.bedrock_agentcore.yaml` - Bedrock AgentCore runtime configuration
+- `setup/pyproject.toml` - UV dependency management
+- `.env.example` - Required environment variables template
 
 ## Development Patterns
 
-### Agent Implementation
-New agents should follow the pattern in `src/graph/nodes.py`:
-1. Use `strands_utils().get_agent_by_name()` to create agent with proper LLM
-2. Apply prompt template from `src/prompts/template.py`
-3. Handle state updates and message passing according to LangGraph conventions
+### Agent Implementation Pattern
+All agents in `src/graph/nodes.py` follow this pattern:
+```python
+# 1. OpenTelemetry tracing setup
+tracer = trace.get_tracer(...)
+with tracer.start_as_current_span("agent_name") as span:
+    
+# 2. Create agent via Strands SDK
+agent = strands_utils.get_agent(
+    agent_name="agent_name",
+    system_prompts=apply_prompt_template(...),
+    agent_type="claude-sonnet-3-7",
+    enable_reasoning=True/False,
+    prompt_cache_info=(True/False, "default"),
+    tools=[...] if needed
+)
 
-### Tool Registration  
-Custom tools should:
-1. Implement the Strands tool specification format (see `src/config/tools.py`)
-2. Include proper logging using the established logger pattern
-3. Use the `@log_io` decorator from `src/tools/decorators.py`
-4. Follow patterns in existing tools: `python_repl_tool.py`, `bash_tool.py`
+# 3. Stream processing
+async for event in strands_utils.process_streaming_response_yield(...):
+    # Process streaming events
+    
+# 4. Update global state
+_global_node_states['shared'].update(...)
+```
 
-### State Management
-The workflow uses a shared state object defined in `src/graph/types.py` that includes:
-- Message history
-- Team member information
-- Request context
-- Intermediate results
+### Tool Development Pattern
+Custom tools should implement the Strands tool specification:
+1. Use `@log_io` decorator from `src/tools/decorators.py` for instrumentation
+2. Follow patterns in existing tools (`python_repl_tool.py`, `bash_tool.py`)
+3. Include proper error handling and logging
+
+### Workflow Control Flow
+The workflow uses conditional edges:
+- `should_handoff_to_planner()` determines Coordinator → Planner transition
+- Fixed edge from Planner → Supervisor
+- Supervisor executes tools and completes workflow
 
 ## Environment Configuration
 
-### Required Environment Variables
-- `TAVILY_API_KEY` - For web search functionality
-- `JINA_API_KEY` - For content extraction
-- `CHROME_INSTANCE_PATH` - For browser automation (optional)
-- `BROWSER_HEADLESS` - Browser mode configuration
+### AWS and Observability
+- Uses AWS credentials from environment/CLI for Bedrock access
+- OpenTelemetry integration with configurable spans and events
+- AgentCore observability with session context management
 
-### AWS Configuration
-The framework automatically uses AWS credentials from the environment or AWS CLI configuration for Bedrock access.
+### Required Configuration
+Based on `.env.example`:
+- `AWS_REGION` and `AWS_DEFAULT_REGION` (us-west-2)
+- `BEDROCK_MODEL_ID` (default: anthropic.claude-3-haiku-20240307-v1:0)
+- OpenTelemetry configuration for AWS CloudWatch integration
 
 ## Output and Artifacts
 
-- Generated reports and analysis results are saved to `./artifacts/` directory
-- The system automatically cleans this directory on each run
-- PDF reports require Korean font installation for proper rendering
-- Sample outputs available in `assets/` directory (report.pdf, demo.gif)
+- `./artifacts/` directory: Generated reports and analysis results (auto-cleaned on each run)
+- PDF report generation requires Korean font installation via `setup/install_korean_font.sh`
+- Sample outputs in `assets/` directory including demo.gif and report.pdf
+- Reports generated in multiple formats: PDF, HTML, Markdown
 
-## Development Environment
+## AgentCore Integration
 
-### Tested Environments
-- Amazon SageMaker AI Studio (CodeEditor and JupyterLab)
-- Local development with UV package manager
-
-### File Structure Notes
-- `test.py` - Basic integration testing example
-- `main.py` - CLI entry point  
-- `main.ipynb` - Jupyter notebook interface
-- `app/app.py` - Streamlit web interface
-- Configuration files use both UV (`setup/pyproject.toml`) and traditional Python patterns
-- `final_report.md` - Generated markdown report from workflow execution
-- `report.html` - Generated HTML report output
-- `artifacts/` - Directory where generated reports and analysis results are saved (auto-cleaned)
+The project integrates with **Amazon Bedrock AgentCore**:
+- Runtime configuration in `.bedrock_agentcore.yaml`
+- Containerized deployment support with Docker
+- AWS execution role and ECR repository integration
+- CodeBuild project for automated builds

@@ -347,7 +347,7 @@ wheels = [
 
 [[package]]
 name = "awscli"
-version = "1.42.10"
+version = "1.42.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
@@ -357,9 +357,9 @@ dependencies = [
     { name = "rsa" },
     { name = "s3transfer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1a/43/56fa4f051977da11fffb2a92cbaf97f3f3b8d63936547d1efb575b7cc209/awscli-1.42.10.tar.gz", hash = "sha256:b27a55ddeb41f6d272607bdaa62bfd36d4f144a09af2045aaa8fc98b587bbd1b", size = 1913747, upload-time = "2025-08-14T19:25:18.52Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/78/a76af89b688479a23d4fdefad7d63d3b3789184f69df81e747274d61f1ce/awscli-1.42.35.tar.gz", hash = "sha256:122895d08104d58f879fb1faeb7b7be545ecd9ad82e78e2bbaef250f6f995425", size = 1889488, upload-time = "2025-09-19T19:41:03.944Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b9/80/23d087fdb9ce505c81d122c6340ed561f64fad90146afd0ed8e2fb9cc33a/awscli-1.42.10-py3-none-any.whl", hash = "sha256:59dc268cbbcbab33d37ea8ba15e4317a2a8e6a3ee8afdf49e823c533a222e6bb", size = 4716167, upload-time = "2025-08-14T19:25:16.721Z" },
+    { url = "https://files.pythonhosted.org/packages/89/e3/53af7bd9b3a0f52460e3e3df9a8b8200a777f2faa34d8fa7ebefc0dd4684/awscli-1.42.35-py3-none-any.whl", hash = "sha256:ee96031833fef4519ca674a66a408a64555dec94e54cfcae77a1e416dba5026f", size = 4663621, upload-time = "2025-09-19T19:41:01.107Z" },
 ]
 
 [[package]]
@@ -386,7 +386,7 @@ wheels = [
 
 [[package]]
 name = "bedrock-agentcore"
-version = "0.1.2"
+version = "0.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -397,14 +397,14 @@ dependencies = [
     { name = "urllib3" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fe/7c/2de54122abd86ad73cf42b5ba3f26410bb043cca685edc3f90d166b8bc38/bedrock_agentcore-0.1.2.tar.gz", hash = "sha256:9063dddef43c0f6c492d8fec852a6a8c1c630f7bcee07aa3f0d218290370988b", size = 204302, upload-time = "2025-08-11T21:27:50.053Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b9/23/be1672a79632a1c36b049fc29103732f6ca2dd8596ffcc3a59a1d6e59f4c/bedrock_agentcore-0.1.4.tar.gz", hash = "sha256:59c513df840ef66843915c7c229603732a3e7d7e76cb9d618be5663dbe1cc863", size = 229574, upload-time = "2025-09-17T18:29:23.327Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/63/e0/d66fbc2f7620214964039ffe9a675dd1e8e23245c61cd7b280f78d606d02/bedrock_agentcore-0.1.2-py3-none-any.whl", hash = "sha256:2e45b5e3d14ac1828881f089456fb35c48233ab7aad8c4d83c525cf4b2ab92c2", size = 48747, upload-time = "2025-08-11T21:27:48.804Z" },
+    { url = "https://files.pythonhosted.org/packages/1b/82/c6ac88e118447c054c28147b3be1577cf9e9fbf5529919c39262ca2d8b50/bedrock_agentcore-0.1.4-py3-none-any.whl", hash = "sha256:d372ca4d522173be6baab5723efd3c27cc2746b73b711ead1329902a98bc9a43", size = 62284, upload-time = "2025-09-17T18:29:21.769Z" },
 ]
 
 [[package]]
 name = "bedrock-agentcore-starter-toolkit"
-version = "0.1.8"
+version = "0.1.12"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "autopep8" },
@@ -424,15 +424,16 @@ dependencies = [
     { name = "requests" },
     { name = "rich" },
     { name = "ruamel-yaml" },
+    { name = "strands-agents" },
     { name = "toml" },
     { name = "typer" },
     { name = "typing-extensions" },
     { name = "urllib3" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6e/7d/269cff825734552f219b8a9a81eea7ac7dacf2bad23e5e17336805eb51bf/bedrock_agentcore_starter_toolkit-0.1.8.tar.gz", hash = "sha256:282b0562a369df8afb29574a47fd82cc59625794ddfabc1844bd57dbb7b9fd78", size = 360841, upload-time = "2025-09-02T16:51:12.215Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/4b/48494d013cae9843dd11f8a3e097e970c02648f932022136deeb95b4411b/bedrock_agentcore_starter_toolkit-0.1.12.tar.gz", hash = "sha256:d2eab0e7659314dd6bec1297c751c4427ffc01bd8d4bb16a5855ae4ea89a1f78", size = 419397, upload-time = "2025-09-18T17:20:00.156Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/f2/a16494c0963b62a4a811045002fcc96fbe7e2b8465e3a5873a495f980ab8/bedrock_agentcore_starter_toolkit-0.1.8-py3-none-any.whl", hash = "sha256:7c94b216965bc70b91ae2dd57f26914fede1ce299a26dd2978828320bced714e", size = 138803, upload-time = "2025-09-02T16:51:10.909Z" },
+    { url = "https://files.pythonhosted.org/packages/49/9d/b9f3d84fcba93efe360ef3c1dd90aafac83b5488f83580ca66e29a748b65/bedrock_agentcore_starter_toolkit-0.1.12-py3-none-any.whl", hash = "sha256:4a8c59d68d42e28c45eb624ce59ed1cb39e76655797f7da2baf28557df1706fa", size = 151110, upload-time = "2025-09-18T17:19:58.864Z" },
 ]
 
 [[package]]
@@ -476,9 +477,9 @@ dependencies = [
 requires-dist = [
     { name = "aws-opentelemetry-distro", specifier = "==0.12.0" },
     { name = "awscli", specifier = ">=1.42.10" },
-    { name = "bedrock-agentcore", specifier = ">=0.1.2" },
-    { name = "bedrock-agentcore-starter-toolkit", specifier = ">=0.1.8" },
-    { name = "boto3", specifier = ">=1.40.10" },
+    { name = "bedrock-agentcore", specifier = ">=0.1.4" },
+    { name = "bedrock-agentcore-starter-toolkit", specifier = ">=0.1.12" },
+    { name = "boto3", specifier = ">=1.40.35" },
     { name = "fpdf2", specifier = ">=2.8.4" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "jupyter", specifier = ">=1.1.1" },
@@ -499,8 +500,8 @@ requires-dist = [
     { name = "sagemaker", specifier = ">=2.251.1" },
     { name = "scikit-learn", specifier = ">=1.7.1" },
     { name = "seaborn", specifier = ">=0.13.2" },
-    { name = "strands-agents", specifier = ">=1.8.0" },
-    { name = "strands-agents-tools", specifier = ">=0.2.6" },
+    { name = "strands-agents", specifier = ">=1.9.1" },
+    { name = "strands-agents-tools", specifier = ">=0.2.8" },
     { name = "streamlit", specifier = "==1.48.1" },
     { name = "termcolor", specifier = ">=3.1.0" },
     { name = "weasyprint", specifier = ">=66.0" },
@@ -534,30 +535,30 @@ wheels = [
 
 [[package]]
 name = "boto3"
-version = "1.40.10"
+version = "1.40.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
     { name = "jmespath" },
     { name = "s3transfer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/97/59e7471900947560a47c6ceb18ae555e2f13a6c07af2713fb04646e0f5d6/boto3-1.40.10.tar.gz", hash = "sha256:ed64d63cb24721ff603547caf099f3abf82783472910a3650ce8764c78396e7a", size = 112010, upload-time = "2025-08-14T19:25:22.188Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/08/d0/9082261eb9afbb88896fa2ce018fa10750f32572ab356f13f659761bc5b5/boto3-1.40.35.tar.gz", hash = "sha256:d718df3591c829bcca4c498abb7b09d64d1eecc4e5a2b6cef14b476501211b8a", size = 111563, upload-time = "2025-09-19T19:41:07.704Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/19/18/33047424f098d5b832362c23404800f607b601a0ad08d7ccb0ddc285efba/boto3-1.40.10-py3-none-any.whl", hash = "sha256:222b44ee4d6e4e8a9a2a4bada4c683c38f37481e545f7997aee7bc40a7fb4489", size = 140073, upload-time = "2025-08-14T19:25:20.769Z" },
+    { url = "https://files.pythonhosted.org/packages/db/26/08d814db09dc46eab747c7ebe1d4af5b5158b68e1d7de82ecc71d419eab3/boto3-1.40.35-py3-none-any.whl", hash = "sha256:f4c1b01dd61e7733b453bca38b004ce030e26ee36e7a3d4a9e45a730b67bc38d", size = 139346, upload-time = "2025-09-19T19:41:05.929Z" },
 ]
 
 [[package]]
 name = "botocore"
-version = "1.40.10"
+version = "1.40.35"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jmespath" },
     { name = "python-dateutil" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8e/c6/ea11cf400084a36dff8960a64ebbfec5c28ef740d72cd3465b693fdda58e/botocore-1.40.10.tar.gz", hash = "sha256:db3b14043bc90fe4220edbc2e89e8f5af1d2d4aacc16bab3c30dacd98b0073e3", size = 14339500, upload-time = "2025-08-14T19:25:12.947Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/da/6f/37f40da07f3cdde367f620874f76b828714409caf8466def65aede6bdf59/botocore-1.40.35.tar.gz", hash = "sha256:67e062752ff579c8cc25f30f9c3a84c72d692516a41a9ee1cf17735767ca78be", size = 14350022, upload-time = "2025-09-19T19:40:56.781Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a4/f5/2f30a927a30c1d04763bfe8a8ec5f9ad635047078ca630233b1888a7f39f/botocore-1.40.10-py3-none-any.whl", hash = "sha256:22aff400250a0125be92e0d43011eb42414a64f999d5215827af91d8584b4476", size = 14004351, upload-time = "2025-08-14T19:25:08.563Z" },
+    { url = "https://files.pythonhosted.org/packages/42/f4/9942dfb01a8a849daac34b15d5b7ca994c52ef131db2fa3f6e6995f61e0a/botocore-1.40.35-py3-none-any.whl", hash = "sha256:c545de2cbbce161f54ca589fbb677bae14cdbfac7d5f1a27f6a620cb057c26f4", size = 14020774, upload-time = "2025-09-19T19:40:53.498Z" },
 ]
 
 [[package]]
@@ -4310,14 +4311,14 @@ wheels = [
 
 [[package]]
 name = "s3transfer"
-version = "0.13.1"
+version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "botocore" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6d/05/d52bf1e65044b4e5e27d4e63e8d1579dbdec54fce685908ae09bc3720030/s3transfer-0.13.1.tar.gz", hash = "sha256:c3fdba22ba1bd367922f27ec8032d6a1cf5f10c934fb5d68cf60fd5a23d936cf", size = 150589, upload-time = "2025-07-18T19:22:42.31Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/62/74/8d69dcb7a9efe8baa2046891735e5dfe433ad558ae23d9e3c14c633d1d58/s3transfer-0.14.0.tar.gz", hash = "sha256:eff12264e7c8b4985074ccce27a3b38a485bb7f7422cc8046fee9be4983e4125", size = 151547, upload-time = "2025-09-09T19:23:31.089Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/4f/d073e09df851cfa251ef7840007d04db3293a0482ce607d2b993926089be/s3transfer-0.13.1-py3-none-any.whl", hash = "sha256:a981aa7429be23fe6dfc13e80e4020057cbab622b08c0315288758d67cabc724", size = 85308, upload-time = "2025-07-18T19:22:40.947Z" },
+    { url = "https://files.pythonhosted.org/packages/48/f0/ae7ca09223a81a1d890b2557186ea015f6e0502e9b8cb8e1813f1d8cfa4e/s3transfer-0.14.0-py3-none-any.whl", hash = "sha256:ea3b790c7077558ed1f02a3072fb3cb992bbbd253392f4b6e9e8976941c7d456", size = 85712, upload-time = "2025-09-09T19:23:30.041Z" },
 ]
 
 [[package]]
@@ -4647,7 +4648,7 @@ wheels = [
 
 [[package]]
 name = "strands-agents"
-version = "1.8.0"
+version = "1.9.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "boto3" },
@@ -4661,14 +4662,14 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4b/6b/fbe6bbdb7796a40cdf48aa1d4bda3544276154fbcbdc842a1f1e956af0c7/strands_agents-1.8.0.tar.gz", hash = "sha256:130e71d209f3bd46d11f7992b4d2d81201853323293d2b7fb8264435ac8c9fc4", size = 388973, upload-time = "2025-09-10T20:22:21.405Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/3b/80/de6a83822d2113cddf7d8f69ba4236042195089d4d18c6b8babfbdae83fc/strands_agents-1.9.1.tar.gz", hash = "sha256:224e2736c1562da28378ee928934c3b618558f0af6bb930e0befb7ecb9246701", size = 397329, upload-time = "2025-09-19T19:44:45.002Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d9/99/1e513ad1c0131cc08f069a40d2b03897f6eaaa03f821688f95245e943c77/strands_agents-1.8.0-py3-none-any.whl", hash = "sha256:20c930b0e9a3bddf05c0018e7adb917f8d3c9130c4658bf31fb47fa062b31bee", size = 203846, upload-time = "2025-09-10T20:22:19.608Z" },
+    { url = "https://files.pythonhosted.org/packages/3b/72/2ffc2a3972188137b6cdf82dca2e5da667040c61e3b0694583eb8527dc89/strands_agents-1.9.1-py3-none-any.whl", hash = "sha256:aee4944b3fda370b198a7bdaec97e55aa5d8475f7df4b52f2f0e33945d149a4a", size = 206723, upload-time = "2025-09-19T19:44:43.21Z" },
 ]
 
 [[package]]
 name = "strands-agents-tools"
-version = "0.2.6"
+version = "0.2.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aiohttp" },
@@ -4689,9 +4690,9 @@ dependencies = [
     { name = "tzdata", marker = "sys_platform == 'win32'" },
     { name = "watchdog" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/7d/63/8e68dc6d52493bc47b4c8872f08d0801bf40ac52c7d792ab5e8f1c9e0dae/strands_agents_tools-0.2.6.tar.gz", hash = "sha256:170034dae50845ae86e33d259701ccff692122d8248fe6dfc9feff5ca8bdc9b0", size = 416997, upload-time = "2025-09-02T19:02:13.195Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b4/50/6d5015c17b4522fd5ce146fc983a2058c9d0374b3982756bac0837bcd6d7/strands_agents_tools-0.2.8.tar.gz", hash = "sha256:73b960a4d2c18dd9aed07bdccab37cc2cd7cbc8f2d470017c0a4122b7d0d4338", size = 419250, upload-time = "2025-09-17T19:48:16.602Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/05/99/d1b69a1e41f0224adfb66ad643ab5a1a4ed6648f9430165c70e2151b402d/strands_agents_tools-0.2.6-py3-none-any.whl", hash = "sha256:0a0519ce5e8d75f111d90be6b06c3cf96ca53c11cb8f73bf7fd4a66b6f4276fc", size = 283972, upload-time = "2025-09-02T19:02:11.347Z" },
+    { url = "https://files.pythonhosted.org/packages/1e/f1/6a3a2e6888793db2a9fdce4136d01293bca400af808e294a98220e96e061/strands_agents_tools-0.2.8-py3-none-any.whl", hash = "sha256:3f01617566b5afd5d5474afc6a96c2c25ce278cb40e69fbc216ce26bc30425ca", size = 282708, upload-time = "2025-09-17T19:48:14.704Z" },
 ]
 
 [[package]]

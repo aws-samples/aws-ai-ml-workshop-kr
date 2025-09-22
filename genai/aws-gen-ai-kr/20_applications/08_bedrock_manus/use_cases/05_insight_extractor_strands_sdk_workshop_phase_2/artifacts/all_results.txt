@@ -1,35 +1,35 @@
 
 ==================================================
-## Analysis Stage: 기본 판매 통계 분석
-## Execution Time: 2025-09-11 00:17:42
+## Analysis Stage: 데이터 전처리 및 정리
+## Execution Time: 2025-09-22 04:11:20
 --------------------------------------------------
 Result Description: 
-Moon Market의 총 판매량, 매출, 카테고리별/월별/프로모션별/성별/연령대별 판매 현황 분석
+데이터 로드, 결측치 처리, 날짜 형식 변환, 이상값 확인
 --------------------------------------------------
 Key Findings & Insights:
 
 [DISCOVERY & INSIGHTS]:
-- Discovery 1: 총 판매 수량은 2,189개이며, 총 매출액은 8,619,150원입니다.
-- Insight 1: 채소 카테고리가 458건으로 가장 많은 판매 건수를 기록했으며, 과일(414건)과 유제품(348건)이 뒤를 이었습니다.
-- Discovery 2: 카테고리별 매출액은 과일(3,967,350원), 채소(2,389,700원), 유제품(2,262,100원) 순으로 높았습니다.
-- Insight 2: 과일 카테고리는 판매 건수는 채소보다 적지만 매출액은 더 높아 단가가 높은 제품군임을 알 수 있습니다.
+- Discovery 1: 데이터셋은 1,220개의 행과 18개의 열로 구성되어 있습니다.
+- Insight 1: 모든 컬럼이 완전하게 채워져 있으며, promotion-ids 컬럼만 103개의 결측치가 있습니다.
+- Discovery 2: 주문 수량(Qty)은 1~3개 사이에 분포하며, 금액(Amount)은 2,900원부터 23,700원까지 다양합니다.
+- Insight 2: 금액 분포에서 일부 고가 상품이 있으나 극단적인 이상값은 보이지 않습니다.
 
 [METHODOLOGY INSIGHTS]:
-- Methodology Choice: 기본적인 집계 분석을 통해 전체적인 판매 현황을 파악했습니다.
-- Technical Insight: 프로모션 데이터에 결측치가 있어 'NO_PROMO'로 대체하여 분석의 정확성을 높였습니다.
-- Alternative Approach: 시계열 분석을 통해 판매 추세를 더 자세히 파악할 수 있을 것입니다.
+- Methodology Choice: 결측치는 'NO_PROMO'로 대체하여 프로모션이 적용되지 않은 주문으로 처리했습니다.
+- Technical Insight: 날짜 데이터는 datetime 형식으로 변환하여 시계열 분석이 가능하도록 했습니다.
+- Alternative Approach: 금액 데이터의 경우 로그 변환을 통해 분포를 정규화할 수도 있습니다.
 
 [BUSINESS IMPLICATIONS]:
-- Strategic Implication: 과일 카테고리의 높은 매출액을 고려하여 마케팅 전략을 수립할 필요가 있습니다.
-- Competitive Advantage: 프로모션별 매출 분석을 통해 효과적인 프로모션 전략을 도출할 수 있습니다.
-- Decision Support: 성별 및 연령대별 판매 현황을 통해 타겟 고객층을 파악하고 맞춤형 마케팅 전략을 수립할 수 있습니다.
+- Strategic Implication: 프로모션이 적용되지 않은 주문이 약 8.5%를 차지하므로, 프로모션 전략 개선의 여지가 있습니다.
+- Decision Support: 데이터 품질이 전반적으로 양호하여 신뢰할 수 있는 분석 결과를 제공할 수 있습니다.
 
 [RECOMMENDED NEXT STEPS]:
-- Further Analysis: 제품별 판매 추세와 수익성 분석을 통해 더 자세한 인사이트를 도출할 필요가 있습니다.
-- Action Items: 효과적인 프로모션 전략을 수립하고, 고객 세그먼트별 맞춤형 마케팅 전략을 개발해야 합니다.
-- Monitoring: 월별 판매 추세를 지속적으로 모니터링하여 시즌별 판매 전략을 조정할 필요가 있습니다.
+- Further Analysis: 카테고리별, 성별, 연령대별 판매 패턴 분석이 필요합니다.
+- Action Items: 프로모션 효과성 분석을 통해 마케팅 전략을 개선할 수 있습니다.
 
 --------------------------------------------------
 Generated Files:
-- None
+- ./artifacts/processed_data.csv : 전처리된 데이터 파일
+- ./artifacts/amount_boxplot.png : 금액 분포 박스플롯
+- ./artifacts/qty_boxplot.png : 수량 분포 박스플롯
 ==================================================
