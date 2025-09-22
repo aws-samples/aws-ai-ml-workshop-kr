@@ -59,10 +59,14 @@ class strands_utils():
         cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
 
-        if llm_type == "claude-sonnet-3-7":    
+        if llm_type in ["claude-sonnet-3-7", "claude-sonnet-4"]:
+            
+            if llm_type == "claude-sonnet-3-7": model_name = "Claude-V3-7-Sonnet-CRI"
+            elif llm_type == "claude-sonnet-4": model_name = "Claude-V4-Sonnet-CRI"
+
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
-                model_id=bedrock_info.get_model_id(model_name="Claude-V3-7-Sonnet-CRI"),
+                model_id=bedrock_info.get_model_id(model_name=model_name),
                 streaming=True,
                 max_tokens=8192*5,
                 stop_sequences=["\n\nHuman"],
@@ -327,10 +331,6 @@ class strands_utils():
 
         return output  
 
-    #########################
-    ## modification STRART ##
-    #########################
-
     @staticmethod
     def process_event_for_display(event):
         """Process events for colored terminal output"""
@@ -376,10 +376,6 @@ class strands_utils():
                     callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
                     #callback_default.on_llm_new_token(f"Output: {output}\n")
                     #pass
-
-    #########################
-    ## modification END    ##
-    #########################
 
 class FunctionNode(MultiAgentBase):
     """Execute deterministic Python functions as graph nodes."""

@@ -1,4 +1,3 @@
-import os
 import logging
 import asyncio
 from typing import Any, Annotated, Dict, List
@@ -6,17 +5,13 @@ from strands.types.tools import ToolResult, ToolUse
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
-import json
 import pandas as pd
 from datetime import datetime
 
 from src.tools import python_repl_tool, bash_tool
 from strands_tools import file_read
 
-# Observability
 from dotenv import load_dotenv
-from opentelemetry import trace
-from src.utils.agentcore_observability import add_span_event
 load_dotenv()
 
 # Simple logger setup
@@ -114,91 +109,81 @@ class OptimizedValidator:
 def handle_validator_agent_tool(_task: Annotated[str, "The validation task or instruction for validating calculations and generating citations."]):
     """
     Validate numerical calculations and generate citation metadata for reports.
-    
+
     This tool provides access to a validator agent that can:
     - Validate calculations performed by the Coder agent
     - Re-verify important calculations using original data sources
     - Generate citation metadata for numerical accuracy
     - Create reference documentation for transparency
     - Optimize validation for large datasets using priority filtering
-    
+
     Args:
         task: The validation task or instruction for validating calculations and generating citations
-        
+
     Returns:
         The validation results and confirmation of citation generation
     """
-    tracer = trace.get_tracer(
-        instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
-        instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
+    print()  # Add newline before log
+    logger.info(f"\n{Colors.GREEN}Validator Agent Tool starting{Colors.END}")
+
+    # Try to extract shared state from global storage
+    from src.graph.nodes import _global_node_states
+    shared_state = _global_node_states.get('shared', None)
+
+    if not shared_state:
+        logger.warning("No shared state found")
+        return "Error: No shared state available"
+
+    request_prompt, full_plan = shared_state.get("request_prompt", ""), shared_state.get("full_plan", "")
+    clues, messages = shared_state.get("clues", ""), shared_state.get("messages", [])
+
+    # Create validator agent with specialized tools using consistent pattern
+    validator_agent = strands_utils.get_agent(
+        agent_name="validator",
+        system_prompts=apply_prompt_template(prompt_name="validator", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
+        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        enable_reasoning=False,
+        prompt_cache_info=(True, None), # reasoning agent uses prompt caching
+        tools=[python_repl_tool, bash_tool, file_read],
+        streaming=True  # Enable streaming for consistency
     )
-    with tracer.start_as_current_span("validator_agent_tool") as span:
-        print()  # Add newline before log
-        logger.info(f"\n{Colors.GREEN}Validator Agent Tool starting{Colors.END}")
-        
-        # Try to extract shared state from global storage
-        from src.graph.nodes import _global_node_states
-        shared_state = _global_node_states.get('shared', None)
-        
-        if not shared_state:
-            logger.warning("No shared state found")
-            return "Error: No shared state available" 
-                        
-        request_prompt, full_plan = shared_state.get("request_prompt", ""), shared_state.get("full_plan", "")
-        clues, messages = shared_state.get("clues", ""), shared_state.get("messages", [])
-        
-        # Create validator agent with specialized tools using consistent pattern
-        validator_agent = strands_utils.get_agent(
-            agent_name="validator",
-            system_prompts=apply_prompt_template(prompt_name="validator", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
-            agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
-            enable_reasoning=False,
-            prompt_cache_info=(True, None), # reasoning agent uses prompt caching
-            tools=[python_repl_tool, bash_tool, file_read],
-            streaming=True  # Enable streaming for consistency
-        )
-        
-        # Prepare message with context if available
-        message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
-        
-        # Process streaming response
-        async def process_validator_stream():
-            streaming_events = []
-            async for event in strands_utils.process_streaming_response_yield(
-                validator_agent, message, agent_name="validator", source="validator_tool"
-            ):
-                streaming_events.append(event)
-                
-            # Reconstruct response from streaming events for return value
-            response = {"text": ""}
-            for event in streaming_events:
-                if event.get("event_type") == "text_chunk":
-                    response["text"] += event.get("data", "")
-            
-            return validator_agent, response
-        
-        validator_agent, response = asyncio.run(process_validator_stream())
-        result_text = response['text']
-        
-        # Update clues
-        clues = '\n\n'.join([clues, CLUES_FORMAT.format("validator", response["text"])])
-        
-        # Update history
-        history = shared_state.get("history", [])
-        history.append({"agent":"validator", "message": response["text"]})
-        
-        # Update shared state
-        shared_state['messages'] = [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("validator", response["text"]), imgs=[])]
-        shared_state['clues'] = clues
-        shared_state['history'] = history
-        
-        logger.info(f"\n{Colors.GREEN}Validator Agent Tool completed{Colors.END}")
 
-        # Add Event
-        add_span_event(span, "input_message", {"message": str(request_prompt)})
-        add_span_event(span, "response", {"response": str(response["text"])})
+    # Prepare message with context if available
+    message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
 
-        return result_text
+    # Process streaming response
+    async def process_validator_stream():
+        streaming_events = []
+        async for event in strands_utils.process_streaming_response_yield(
+            validator_agent, message, agent_name="validator", source="validator_tool"
+        ):
+            streaming_events.append(event)
+
+        # Reconstruct response from streaming events for return value
+        response = {"text": ""}
+        for event in streaming_events:
+            if event.get("event_type") == "text_chunk":
+                response["text"] += event.get("data", "")
+
+        return validator_agent, response
+
+    validator_agent, response = asyncio.run(process_validator_stream())
+    result_text = response['text']
+
+    # Update clues
+    clues = '\n\n'.join([clues, CLUES_FORMAT.format("validator", response["text"])])
+
+    # Update history
+    history = shared_state.get("history", [])
+    history.append({"agent":"validator", "message": response["text"]})
+
+    # Update shared state
+    shared_state['messages'] = [get_message_from_string(role="user", string=RESPONSE_FORMAT.format("validator", response["text"]), imgs=[])]
+    shared_state['clues'] = clues
+    shared_state['history'] = history
+
+    logger.info(f"\n{Colors.GREEN}Validator Agent Tool completed{Colors.END}")
+    return result_text
 
 # Function name must match tool name
 def validator_agent_tool(tool: ToolUse, **_kwargs: Any) -> ToolResult:

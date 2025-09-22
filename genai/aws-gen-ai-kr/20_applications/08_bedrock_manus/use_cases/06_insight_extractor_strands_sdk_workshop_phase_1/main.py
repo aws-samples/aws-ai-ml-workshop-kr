@@ -13,10 +13,6 @@ from src.graph.builder import build_graph
 # Load environment variables
 load_dotenv()
 
-# Observability
-from opentelemetry import trace, context
-from src.utils.agentcore_observability import set_session_context, add_span_event
-
 # Import event queue for unified event processing
 from src.utils.event_queue import clear_queue 
 
@@ -42,7 +38,6 @@ def _setup_execution():
     clear_queue()
     print("\n=== Starting Queue-Only Event Stream ===")
 
-
 def _print_conversation_history():
     """Print final conversation history"""
     print("\n=== Conversation History ===")
@@ -63,45 +58,29 @@ async def graph_streaming_execution(payload):
 
     # Get user query from payload
     user_query = payload.get("user_query", "")
-    session_id = payload.get("session-id", "default")
-    context_token = set_session_context(session_id)
+        
+    # Build graph and use stream_async method
+    graph = build_graph()
+    
+    #########################
+    ## modification START  ##
+    #########################
 
-    try:
-        # Get tracer for main application
-        tracer = trace.get_tracer(
-            instrumenting_module_name=os.getenv("TRACER_MODULE_NAME", "insight_extractor_agent"),
-            instrumenting_library_version=os.getenv("TRACER_LIBRARY_VERSION", "1.0.0")
-        )
-        with tracer.start_as_current_span("insight_extractor_session") as span:   
-            
-            # Build graph and use stream_async method
-            graph = build_graph()
-            
-            #########################
-            ## modification START  ##
-            #########################
+    # Stream events from graph execution
+    async for event in graph.stream_async(
+        {
+            "request": user_query,
+            "request_prompt": f"Here is a user request: <user_request>{user_query}</user_request>"
+        }
+    ):
+        yield event
 
-            # Stream events from graph execution
-            async for event in graph.stream_async(
-                {
-                    "request": user_query,
-                    "request_prompt": f"Here is a user request: <user_request>{user_query}</user_request>"
-                }
-            ):
-                yield event
-
-            #########################
-            ## modification END    ##
-            #########################
-            
-            _print_conversation_history()
-            print("=== Queue-Only Event Stream Complete ===")
-
-            # Add Event
-            add_span_event(span, "user_query", {"user-query": str(user_query)}) 
-
-    finally:
-        context.detach(context_token)
+    #########################
+    ## modification END    ##
+    #########################
+    
+    _print_conversation_history()
+    print("=== Queue-Only Event Stream Complete ===")
 
 if __name__ == "__main__":
     # Parse command line arguments
@@ -111,7 +90,6 @@ if __name__ == "__main__":
 
     args, unknown = parser.parse_known_args()
 
-
     #########################
     ## modification START  ##
     #########################
@@ -120,20 +98,12 @@ if __name__ == "__main__":
     if args.user_query:
         payload = {
             "user_query": args.user_query,
-            "session-id": args.session_id
         }
     else:
         # Full comprehensive analysis query (main version):
         payload = {
             "user_query": "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다.",
-            "session-id": "insight-extractor-1"
         }
-        
-        # Quick test version (commented - for chart improvements validation):
-        # payload = {
-        #     "user_query": "데이터 './data/Dat-fresh-food-claude.csv'에서 총 판매 금액 계산하고, 차트 3개 정도 만들어서 PDF 리포트 작성해줘. 차트는 1) 카테고리별 매출, 2) 월별 매출 추이, 3) 프로모션별 매출 정도로 해줘. 차트 라벨 개선 테스트용이니 간단하게.",
-        #     "session-id": "insight-extractor-1"
-        # }
 
     #########################
     ## modification END    ##
@@ -147,4 +117,3 @@ if __name__ == "__main__":
             strands_utils.process_event_for_display(event)
 
     asyncio.run(run_streaming())
-

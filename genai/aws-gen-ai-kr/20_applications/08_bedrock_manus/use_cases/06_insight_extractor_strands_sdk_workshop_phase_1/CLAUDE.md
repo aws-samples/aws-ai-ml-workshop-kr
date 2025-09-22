@@ -46,7 +46,6 @@ The project uses UV for dependency management. Key dependencies in `setup/pyproj
 - **Visualization**: `matplotlib>=3.10.5`, `seaborn>=0.13.2`, `plotly>=6.3.0`, `lovelyplots>=1.0.2`
 - **Document Generation**: `weasyprint>=66.0` for PDF reports, `koreanize-matplotlib>=0.1.1`
 - **UI**: `streamlit==1.48.1`
-- **Observability**: `aws-opentelemetry-distro==0.12.0`
 
 ### Testing
 ```bash
@@ -99,7 +98,6 @@ The workflow uses a **global state system** (`_global_node_states` in `src/graph
 ### Agent Infrastructure
 - `src/agents/llm.py` - Bedrock LLM initialization
 - `src/utils/strands_sdk_utils.py` - Strands SDK integration and utilities
-- `src/utils/agentcore_observability.py` - OpenTelemetry observability integration
 
 ### Specialized Tools
 - `src/tools/python_repl_tool.py` - Python code execution environment
@@ -117,9 +115,7 @@ The workflow uses a **global state system** (`_global_node_states` in `src/graph
 ### Agent Implementation Pattern
 All agents in `src/graph/nodes.py` follow this pattern:
 ```python
-# 1. OpenTelemetry tracing setup
-tracer = trace.get_tracer(...)
-with tracer.start_as_current_span("agent_name") as span:
+# 1. Create agent via Strands SDK
     
 # 2. Create agent via Strands SDK
 agent = strands_utils.get_agent(
@@ -153,16 +149,13 @@ The workflow uses conditional edges:
 
 ## Environment Configuration
 
-### AWS and Observability
+### AWS Configuration
 - Uses AWS credentials from environment/CLI for Bedrock access
-- OpenTelemetry integration with configurable spans and events
-- AgentCore observability with session context management
 
 ### Required Configuration
 Based on `.env.example`:
 - `AWS_REGION` and `AWS_DEFAULT_REGION` (us-west-2)
 - `BEDROCK_MODEL_ID` (default: anthropic.claude-3-haiku-20240307-v1:0)
-- OpenTelemetry configuration for AWS CloudWatch integration
 
 ## Output and Artifacts
 

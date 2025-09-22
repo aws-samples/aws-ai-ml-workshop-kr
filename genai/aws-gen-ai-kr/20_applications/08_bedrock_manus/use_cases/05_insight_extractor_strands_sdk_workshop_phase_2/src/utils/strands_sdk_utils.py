@@ -59,10 +59,14 @@ class strands_utils():
         cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
 
-        if llm_type == "claude-sonnet-3-7":    
+        if llm_type in ["claude-sonnet-3-7", "claude-sonnet-4"]:
+            
+            if llm_type == "claude-sonnet-3-7": model_name = "Claude-V3-7-Sonnet-CRI"
+            elif llm_type == "claude-sonnet-4": model_name = "Claude-V4-Sonnet-CRI"
+
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
-                model_id=bedrock_info.get_model_id(model_name="Claude-V3-7-Sonnet-CRI"),
+                model_id=bedrock_info.get_model_id(model_name=model_name),
                 streaming=True,
                 max_tokens=8192*5,
                 stop_sequences=["\n\nHuman"],

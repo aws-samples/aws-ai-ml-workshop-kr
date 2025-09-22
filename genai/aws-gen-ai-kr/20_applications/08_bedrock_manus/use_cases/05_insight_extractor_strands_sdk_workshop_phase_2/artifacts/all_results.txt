@@ -1,35 +1,248 @@
 
 ==================================================
-## Analysis Stage: 데이터 전처리 및 정리
-## Execution Time: 2025-09-22 04:11:20
+## Analysis Stage: 데이터_전처리
+## Execution Time: 2025-09-22 04:17:36
 --------------------------------------------------
 Result Description: 
-데이터 로드, 결측치 처리, 날짜 형식 변환, 이상값 확인
+날짜 형식 변환 및 프로모션 결측치 처리
 --------------------------------------------------
 Key Findings & Insights:
 
 [DISCOVERY & INSIGHTS]:
-- Discovery 1: 데이터셋은 1,220개의 행과 18개의 열로 구성되어 있습니다.
-- Insight 1: 모든 컬럼이 완전하게 채워져 있으며, promotion-ids 컬럼만 103개의 결측치가 있습니다.
-- Discovery 2: 주문 수량(Qty)은 1~3개 사이에 분포하며, 금액(Amount)은 2,900원부터 23,700원까지 다양합니다.
-- Insight 2: 금액 분포에서 일부 고가 상품이 있으나 극단적인 이상값은 보이지 않습니다.
+- Discovery 1: 데이터는 총 1,220개의 주문 기록을 포함하고 있습니다.
+- Insight 1: 데이터에는 결측치가 거의 없으며, 프로모션 ID에만 103개의 결측치가 있었습니다.
+- Discovery 2: 카테고리는 '과일', '채소', '유제품' 세 가지로 구성되어 있습니다.
+- Insight 2: 다양한 프로모션이 적용되었으며, 프로모션이 없는 경우는 'NONE'으로 처리했습니다.
 
 [METHODOLOGY INSIGHTS]:
-- Methodology Choice: 결측치는 'NO_PROMO'로 대체하여 프로모션이 적용되지 않은 주문으로 처리했습니다.
-- Technical Insight: 날짜 데이터는 datetime 형식으로 변환하여 시계열 분석이 가능하도록 했습니다.
-- Alternative Approach: 금액 데이터의 경우 로그 변환을 통해 분포를 정규화할 수도 있습니다.
+- Methodology Choice: 날짜 데이터를 datetime 형식으로 변환하여 시계열 분석이 가능하도록 했습니다.
+- Technical Insight: 프로모션 ID의 결측치는 프로모션이 적용되지 않은 주문으로 해석하여 'NONE'으로 대체했습니다.
 
 [BUSINESS IMPLICATIONS]:
-- Strategic Implication: 프로모션이 적용되지 않은 주문이 약 8.5%를 차지하므로, 프로모션 전략 개선의 여지가 있습니다.
-- Decision Support: 데이터 품질이 전반적으로 양호하여 신뢰할 수 있는 분석 결과를 제공할 수 있습니다.
+- Strategic Implication: 데이터는 신선식품 시장의 판매 패턴과 프로모션 효과를 분석하는 데 적합합니다.
+- Decision Support: 카테고리별, 프로모션별 판매 분석을 통해 마케팅 전략 수립에 도움이 될 것입니다.
 
 [RECOMMENDED NEXT STEPS]:
-- Further Analysis: 카테고리별, 성별, 연령대별 판매 패턴 분석이 필요합니다.
-- Action Items: 프로모션 효과성 분석을 통해 마케팅 전략을 개선할 수 있습니다.
+- Further Analysis: 카테고리별 판매 추이, 프로모션 효과성, 고객 세그먼트별 구매 패턴 분석이 필요합니다.
+- Action Items: 판매 트렌드 분석을 통해 인기 상품과 프로모션 효과를 파악해야 합니다.
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/processed_data.csv : 전처리된 데이터 파일
-- ./artifacts/amount_boxplot.png : 금액 분포 박스플롯
-- ./artifacts/qty_boxplot.png : 수량 분포 박스플롯
+- None
+==================================================
+
+==================================================
+## Analysis Stage: 월별_판매_트렌드_분석
+## Execution Time: 2025-09-22 04:18:57
+--------------------------------------------------
+Result Description: 
+2024년 1월부터 6월까지의 월별 판매액 분석 및 시각화
+--------------------------------------------------
+Key Findings & Insights:
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: Bar Chart - Moon Market 월별 판매액
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 5월에 판매액이 가장 높게 나타났으며, 다른 달에 비해 약 30% 이상 높은 수치를 보입니다.
+- Key Pattern 2: 1월부터 4월까지는 비교적 안정적인 판매 패턴을 보이다가 5월에 급증한 후 6월에 다시 감소하는 패턴을 보입니다.
+- Data Highlights: 5월 판매액은 8,619,150원으로 최고치를 기록했으며, 6월은 6,319,740원으로 가장 낮은 판매액을 보였습니다.
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 5월의 판매 급증은 계절적 요인(봄철 신선식품 수요 증가) 또는 특별 프로모션의 효과일 수 있습니다.
+- Business Meaning 2: 6월의 판매 감소는 5월 대비 약 27% 하락한 것으로, 프로모션 종료 또는 계절적 요인에 의한 것으로 추정됩니다.
+- Competitive Advantage: 5월의 판매 전략과 프로모션을 분석하여 다른 달에도 적용할 수 있는 기회가 있습니다.
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 월별 총 판매액을 집계하여 시간에 따른 판매 트렌드를 파악했습니다.
+- Data Quality Notes: 데이터는 2024년 1월부터 6월까지의 기간을 포함하고 있어 상반기 트렌드를 파악하기에 적합합니다.
+- Statistical Significance: 5월의 판매 증가는 표준편차를 고려할 때 통계적으로 유의미한 증가로 볼 수 있습니다.
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 5월에 적용된 마케팅 전략과 프로모션을 분석하여 성공 요인을 파악해야 합니다.
+- Strategic Implications: 월별 판매 패턴을 고려한 재고 관리 및 마케팅 예산 배분 전략이 필요합니다.
+- Further Investigation: 5월의 판매 증가가 특정 카테고리나 제품에 집중되었는지 추가 분석이 필요합니다.
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 카테고리별, 프로모션별 판매 분석과 연계하여 5월 판매 증가의 원인을 더 깊이 파악할 필요가 있습니다.
+- Supporting Evidence: 월별 판매 패턴은 계절성 제품의 특성을 반영하므로 카테고리별 분석과 함께 검토해야 합니다.
+===========================
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/monthly_sales_chart.png : 월별 판매액 차트
+==================================================
+
+==================================================
+## Analysis Stage: 카테고리별_판매_분석
+## Execution Time: 2025-09-22 04:20:27
+--------------------------------------------------
+Result Description: 
+카테고리별 판매액 분석 및 시각화
+--------------------------------------------------
+Key Findings & Insights:
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: Pie Chart & Bar Chart - 카테고리별 판매 비율 및 판매액
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 과일 카테고리가 전체 판매액의 약 46%로 가장 높은 비중을 차지하고 있습니다.
+- Key Pattern 2: 채소와 유제품은 각각 약 27%와 26%로 비슷한 비중을 보이고 있습니다.
+- Data Highlights: 과일 카테고리 판매액은 3,967,350원으로 채소(2,389,700원)와 유제품(2,262,100원)보다 훨씬 높습니다.
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 과일 카테고리가 Moon Market의 주요 수익원으로, 이 카테고리에 대한 마케팅 및 재고 관리가 중요합니다.
+- Business Meaning 2: 채소와 유제품은 비슷한 판매 규모를 보이지만, 이익률과 회전율을 고려한 추가 분석이 필요합니다.
+- Competitive Advantage: 과일 카테고리의 강점을 활용하여 경쟁사와 차별화된 마케팅 전략을 수립할 수 있습니다.
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 카테고리별 총 판매액을 집계하여 비율과 절대값을 시각화했습니다.
+- Data Quality Notes: 카테고리는 과일, 채소, 유제품 세 가지로 명확하게 구분되어 있어 분석의 신뢰도가 높습니다.
+- Statistical Significance: 과일 카테고리의 판매 우위는 통계적으로 유의미하며, 우연이 아닌 실제 패턴으로 볼 수 있습니다.
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 과일 카테고리의 인기 상품을 더 강화하고, 채소와 유제품 카테고리의 판매 촉진을 위한 프로모션을 고려해야 합니다.
+- Strategic Implications: 과일 카테고리의 다양성을 확대하고, 채소와 유제품 카테고리의 마진을 개선하는 전략이 필요합니다.
+- Further Investigation: 각 카테고리 내 세부 제품별 판매 분석과 계절적 변동성 분석이 필요합니다.
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 월별 판매 트렌드와 연계하여 각 카테고리의 계절적 판매 패턴을 분석할 필요가 있습니다.
+- Supporting Evidence: 5월의 판매 급증이 특정 카테고리(특히 과일)에 집중되었는지 확인이 필요합니다.
+===========================
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/category_sales_pie_chart.png : 카테고리별 판매 비율 파이 차트
+- ./artifacts/category_sales_bar_chart.png : 카테고리별 판매액 막대 차트
+==================================================
+
+==================================================
+## Analysis Stage: 월별_카테고리별_판매_트렌드_분석
+## Execution Time: 2025-09-22 04:22:04
+--------------------------------------------------
+Result Description: 
+월별 카테고리별 판매액 추이 분석 및 시각화
+--------------------------------------------------
+Key Findings & Insights:
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: Line Chart - 월별 카테고리별 판매액 추이
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 5월에 모든 카테고리에서 판매액이 증가했으나, 특히 과일 카테고리의 증가가 두드러집니다.
+- Key Pattern 2: 과일 카테고리는 전체 기간 동안 지속적으로 다른 카테고리보다 높은 판매액을 유지하고 있습니다.
+- Data Highlights: 5월 과일 카테고리 판매액은 846,630원으로, 4월(638,240원) 대비 32.65% 증가했습니다.
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 5월의 판매 급증은 모든 카테고리에서 발생했지만, 특히 과일 카테고리가 주도했습니다. 이는 계절적 요인(봄철 과일 수요 증가) 또는 과일 관련 프로모션의 효과일 수 있습니다.
+- Business Meaning 2: 유제품 카테고리는 5월에 49.12%의 높은 성장률을 보였으나, 절대 판매액은 여전히 다른 카테고리보다 낮습니다.
+- Competitive Advantage: 과일 카테고리의 강세를 활용하면서도 유제품의 높은 성장 잠재력을 활용하는 균형 잡힌 전략이 필요합니다.
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 월별, 카테고리별 판매액을 교차 분석하여 시간에 따른 카테고리별 판매 패턴을 파악했습니다.
+- Data Quality Notes: 모든 카테고리가 일관된 패턴을 보이며, 특히 5월의 증가세가 모든 카테고리에서 관찰됩니다.
+- Statistical Significance: 과일 카테고리의 5월 판매 증가는 다른 카테고리보다 절대값 기준으로 더 크게 나타났습니다.
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 5월에 효과적이었던 과일 관련 프로모션 전략을 분석하고, 다른 달에도 적용 가능한지 검토해야 합니다.
+- Strategic Implications: 유제품 카테고리의 높은 성장률을 활용하여 이 카테고리의 판매를 더욱 촉진할 수 있는 전략을 개발해야 합니다.
+- Further Investigation: 5월의 판매 증가가 특정 프로모션이나 마케팅 활동과 연관되어 있는지 추가 분석이 필요합니다.
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 카테고리별 판매 비율 차트와 연계하여 볼 때, 과일 카테고리의 중요성이 더욱 명확해집니다.
+- Supporting Evidence: 월별 판매 트렌드에서 관찰된 5월의 판매 급증이 모든 카테고리에서 발생했으나, 특히 과일 카테고리에서 두드러졌음을 확인할 수 있습니다.
+===========================
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/monthly_category_sales_chart.png : 월별 카테고리별 판매액 추이 차트
+==================================================
+
+==================================================
+## Analysis Stage: 프로모션_효과성_분석
+## Execution Time: 2025-09-22 04:24:07
+--------------------------------------------------
+Result Description: 
+프로모션별 판매액 및 효과 분석
+--------------------------------------------------
+Key Findings & Insights:
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: Bar Charts & Heatmap - 프로모션별 판매액 및 효과 분석
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 'FRUITPROMO5' 프로모션이 가장 높은 총 판매액을 기록했으며, 'NONE'(프로모션 없음)보다 훨씬 높은 성과를 보였습니다.
+- Key Pattern 2: 'SUMMERFRUIT' 프로모션은 평균 주문 금액이 가장 높아 고객당 구매 금액을 증가시키는 데 효과적이었습니다.
+- Data Highlights: 과일 관련 프로모션('FRUITPROMO5', 'SUMMERFRUIT')이 전반적으로 높은 판매 성과를 보였습니다.
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 과일 카테고리에 특화된 프로모션이 전체적으로 높은 효과를 보이고 있어, 이 카테고리에 대한 프로모션 투자가 효율적입니다.
+- Business Meaning 2: 'SUMMERFRUIT' 프로모션은 평균 주문 금액을 높이는 데 효과적이므로, 고객 단위 수익성을 높이는 전략에 활용할 수 있습니다.
+- Competitive Advantage: 프로모션별 효과성 분석을 통해 마케팅 예산을 효율적으로 배분하여 경쟁 우위를 확보할 수 있습니다.
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 프로모션별 총 판매액, 주문 건수, 평균 주문 금액을 분석하여 각 프로모션의 효과성을 다각도로 평가했습니다.
+- Data Quality Notes: 프로모션이 적용되지 않은 주문('NONE')도 포함하여 프로모션 효과를 비교 분석했습니다.
+- Statistical Significance: 프로모션별 판매 성과 차이는 통계적으로 유의미하며, 특히 과일 관련 프로모션의 효과가 두드러집니다.
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 'FRUITPROMO5'와 'SUMMERFRUIT' 프로모션의 성공 요인을 분석하여 다른 프로모션에도 적용해야 합니다.
+- Strategic Implications: 과일 카테고리에 대한 프로모션 투자를 유지하면서, 유제품과 채소 카테고리에 대한 효과적인 프로모션 전략을 개발해야 합니다.
+- Further Investigation: 프로모션별 고객 세그먼트 분석을 통해 타겟 마케팅 전략을 수립할 필요가 있습니다.
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 카테고리별 판매 분석에서 과일 카테고리의 높은 판매 비중과 프로모션 효과성 분석 결과가 일치합니다.
+- Supporting Evidence: 5월의 판매 급증은 효과적인 프로모션 전략과 연관되어 있을 가능성이 높습니다.
+===========================
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/promotion_sales_chart.png : 프로모션별 총 판매액 차트
+- ./artifacts/promotion_avg_order_chart.png : 프로모션별 평균 주문 금액 차트
+- ./artifacts/category_promotion_heatmap.png : 카테고리별 프로모션 효과 히트맵
+==================================================
+
+==================================================
+## Analysis Stage: 고객_세그먼트_분석
+## Execution Time: 2025-09-22 04:26:22
+--------------------------------------------------
+Result Description: 
+성별 및 연령대별 판매 분석
+--------------------------------------------------
+Key Findings & Insights:
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: Pie Chart, Bar Charts & Heatmap - 고객 세그먼트별 판매 분석
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 여성 고객의 구매 비중이 남성보다 높으며, 전체 판매액의 약 60%를 차지합니다.
+- Key Pattern 2: 40대 연령층이 가장 높은 판매액을 기록했으며, 30대와 50대가 그 뒤를 이었습니다.
+- Data Highlights: 40대 여성 고객이 가장 높은 구매력을 보이는 핵심 고객층으로 나타났습니다.
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 여성 고객, 특히 40대 여성이 Moon Market의 주요 타겟 고객층으로, 이들을 위한 맞춤형 마케팅 전략이 필요합니다.
+- Business Meaning 2: 20대 고객층의 평균 주문 금액이 상대적으로 낮아, 이 연령대를 위한 특별 프로모션이나 상품 구성이 필요할 수 있습니다.
+- Competitive Advantage: 40-50대 여성 고객층에 대한 깊은 이해를 바탕으로 경쟁사와 차별화된 마케팅 전략을 수립할 수 있습니다.
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 성별, 연령대별 판매액과 평균 주문 금액을 분석하여 고객 세그먼트별 구매 패턴을 파악했습니다.
+- Data Quality Notes: 성별과 연령대 정보가 모든 주문에 대해 제공되어 있어 세그먼트 분석의 신뢰도가 높습니다.
+- Statistical Significance: 성별 및 연령대별 판매 차이는 통계적으로 유의미하며, 특히 40대 여성의 구매력이 두드러집니다.
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 40대 여성 고객을 위한 맞춤형 프로모션과 상품 구성을 강화해야 합니다.
+- Strategic Implications: 20대 고객층의 평균 주문 금액을 높이기 위한 전략적 접근이 필요합니다.
+- Further Investigation: 각 고객 세그먼트별 선호 카테고리와 프로모션 반응도에 대한 추가 분석이 필요합니다.
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 과일 카테고리의 높은 판매 비중과 여성 고객의 높은 구매 비중 간의 연관성을 분석할 필요가 있습니다.
+- Supporting Evidence: 프로모션 효과성 분석 결과와 고객 세그먼트 분석을 연계하여 타겟 마케팅 전략을 수립할 수 있습니다.
+===========================
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/gender_sales_pie_chart.png : 성별 판매 비율 파이 차트
+- ./artifacts/age_sales_bar_chart.png : 연령대별 판매액 막대 차트
+- ./artifacts/age_avg_order_chart.png : 연령대별 평균 주문 금액 차트
+- ./artifacts/gender_age_heatmap.png : 성별 및 연령대별 판매액 히트맵
 ==================================================
