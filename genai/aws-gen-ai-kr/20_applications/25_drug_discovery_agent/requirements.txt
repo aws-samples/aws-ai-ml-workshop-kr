@@ -24,3 +24,4 @@ feedparser==6.0.11
 sqlalchemy==2.0.41
 tqdm==4.67.1
 fpdf==1.7.2
+defusedxml==0.7.1
