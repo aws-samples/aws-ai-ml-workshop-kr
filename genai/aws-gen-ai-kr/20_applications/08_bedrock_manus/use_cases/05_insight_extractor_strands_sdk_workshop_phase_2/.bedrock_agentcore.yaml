@@ -1,4 +1,4 @@
-default_agent: runtime
+default_agent: bedrock_manus_runtime
 agents:
   runtime:
     name: runtime
@@ -25,6 +25,34 @@ agents:
     codebuild:
       project_name: bedrock-agentcore-runtime-builder
       execution_role: arn:aws:iam::615299776985:role/AmazonBedrockAgentCoreSDKCodeBuild-us-west-2-d92c6a81b2
+      source_bucket: bedrock-agentcore-codebuild-sources-615299776985-us-west-2
+    authorizer_configuration: null
+    oauth_configuration: null
+  bedrock_manus_runtime:
+    name: bedrock_manus_runtime
+    entrypoint: /home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_workshop_phase_2/agentcore_runtime.py
+    platform: linux/arm64
+    container_runtime: docker
+    aws:
+      execution_role: arn:aws:iam::615299776985:role/agentcore-bedrock_manus_runtime-role
+      execution_role_auto_create: false
+      account: '615299776985'
+      region: us-west-2
+      ecr_repository: 615299776985.dkr.ecr.us-west-2.amazonaws.com/bedrock-agentcore-bedrock_manus_runtime
+      ecr_auto_create: false
+      network_configuration:
+        network_mode: PUBLIC
+      protocol_configuration:
+        server_protocol: HTTP
+      observability:
+        enabled: true
+    bedrock_agentcore:
+      agent_id: bedrock_manus_runtime-4EkPSt4ohK
+      agent_arn: arn:aws:bedrock-agentcore:us-west-2:615299776985:runtime/bedrock_manus_runtime-4EkPSt4ohK
+      agent_session_id: null
+    codebuild:
+      project_name: bedrock-agentcore-bedrock_manus_runtime-builder
+      execution_role: arn:aws:iam::615299776985:role/AmazonBedrockAgentCoreSDKCodeBuild-us-west-2-b015ee5cd0
       source_bucket: bedrock-agentcore-codebuild-sources-615299776985-us-west-2
     authorizer_configuration: null
     oauth_configuration: null

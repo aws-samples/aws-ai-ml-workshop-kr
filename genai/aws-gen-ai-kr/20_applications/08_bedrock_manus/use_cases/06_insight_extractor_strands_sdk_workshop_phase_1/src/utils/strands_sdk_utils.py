@@ -185,29 +185,27 @@ class strands_utils():
         return agent, response
 
     @staticmethod
-    async def process_streaming_response_yield(agent, message, agent_name="coordinator", source=None):
-        from src.utils.event_queue import put_event
-        
-        # Retry configuration
-        max_attempts = 5
-        base_delay = 30  # seconds
-        
+    async def _retry_agent_streaming(agent, message, max_attempts=5, base_delay=2):
+        """
+        Agent streaming with throttling retry logic
+
+        Args:
+            agent: The Strands agent instance
+            message: Message to send to agent
+            max_attempts: Maximum number of retry attempts
+            base_delay: Base delay in seconds for exponential backoff
+
+        Yields:
+            Raw agent streaming events
+        """
         for attempt in range(max_attempts):
             try:
-                session_id = "ABC"
                 agent_stream = agent.stream_async(message)
-
                 async for event in agent_stream:
-                    # Strands 이벤트를 AgentCore 형식으로 변환
-                    agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id, source)
-                    if agentcore_event: 
-                        # Put event in global queue for unified processing
-                        put_event(agentcore_event)
-                        yield agentcore_event
-                
+                    yield event
                 # If we get here, streaming was successful
-                break
-                
+                return
+
             except (EventLoopException, ClientError) as e:
                 # Check if it's a throttling error
                 is_throttling = False
@@ -218,12 +216,12 @@ class strands_utils():
                 elif isinstance(e, ClientError):
                     error_code = e.response.get('Error', {}).get('Code', '')
                     is_throttling = error_code == 'ThrottlingException'
-                
+
                 if is_throttling and attempt < max_attempts - 1:
                     delay = base_delay * (2 ** attempt)  # Exponential backoff
                     next_attempt = attempt + 2  # Next attempt number (attempt is 0-indexed)
-                    logger.warning(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
-                    logger.warning(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
+                    logger.info(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
+                    logger.info(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
                     await asyncio.sleep(delay)
                     logger.info(f"🚀 Starting retry attempt {next_attempt}/{max_attempts}")
                     continue
@@ -236,6 +234,33 @@ class strands_utils():
                 logger.error(f"Unexpected error in streaming response: {e}")
                 logger.error(traceback.format_exc())
                 raise
+
+    @staticmethod
+    async def process_streaming_response_yield(agent, message, agent_name="coordinator", source=None):
+        """
+        Process streaming response from agent with event conversion and global queue management
+
+        Args:
+            agent: The Strands agent instance
+            message: Message to send to agent
+            agent_name: Name of the agent for event tagging
+            source: Source identifier for the event
+
+        Yields:
+            AgentCore formatted events
+        """
+        from src.utils.event_queue import put_event
+
+        session_id = "ABC"
+
+        # Use retry helper for robust streaming
+        async for event in strands_utils._retry_agent_streaming(agent, message):
+            # Convert Strands events to AgentCore format
+            agentcore_event = await strands_utils._convert_to_agentcore_event(event, agent_name, session_id, source)
+            if agentcore_event:
+                # Put event in global queue for unified processing
+                put_event(agentcore_event)
+                yield agentcore_event
 
     # 툴 사용 ID와 툴 이름 매핑을 위한 클래스 변수
     _tool_use_mapping = {}
@@ -414,7 +439,3 @@ class FunctionNode(MultiAgentBase):
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
         )
-
-
-
-
