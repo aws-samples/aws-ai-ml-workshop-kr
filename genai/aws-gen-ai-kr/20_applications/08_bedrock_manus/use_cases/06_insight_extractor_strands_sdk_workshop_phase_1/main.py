@@ -86,8 +86,7 @@ if __name__ == "__main__":
     # Parse command line arguments
     parser = argparse.ArgumentParser(description='Strands Agent Demo')
     parser.add_argument('--user_query', type=str, help='User query for the agent')
-    parser.add_argument('--session_id', type=str, default='insight-extractor-1', help='Session ID')
-
+    
     args, unknown = parser.parse_known_args()
 
     #########################
