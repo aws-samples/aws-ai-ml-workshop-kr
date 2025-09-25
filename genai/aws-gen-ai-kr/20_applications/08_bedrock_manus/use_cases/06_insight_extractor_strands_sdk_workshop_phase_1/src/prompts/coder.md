@@ -301,10 +301,10 @@ print("Calculation metadata saved to ./artifacts/calculation_metadata.json")
   - Font sizes: title: 16-18 (fontweight='bold', increased 33%), axis labels: 12-13, tick labels: 10-11, legend: 14 (increased for better readability), data labels: 12-13 (all increased for better readability)
   - Use subplot() when necessary to compare related data
 - **[CRITICAL] PDF-Optimized Chart Size Requirements (MANDATORY):**
-  - **STRICT figsize limits for PDF compatibility**: 
+  - **STRICT figsize limits for PDF compatibility**:
     * Pie charts: `figsize=(12, 7.2)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
     * Bar charts: `figsize=(9.6, 6)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
-    * Line/trend charts: `figsize=(7.2, 4.8)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED  
+    * Line/trend charts: `figsize=(7.2, 4.8)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
     * Simple charts: `figsize=(5, 3)` MAXIMUM - DO NOT EXCEED
   - **MANDATORY DPI for high-quality images**: `dpi=200` (crisp, clear visualization)
   - **CRITICAL**: Charts larger than these sizes will overflow PDF pages
@@ -501,10 +501,10 @@ plt.close()
 - **CRITICAL for tick labels:**
   - X축 한글 레이블: Use `ax.set_xticks()` then `ax.set_xticklabels(labels, fontproperties=korean_font)`
   - Y축 한글 단위: `plt.yticks(fontproperties=korean_font)` (예: "원", "개", "%")
-- **ESSENTIAL for data labels (이미지 내부 텍스트):**
-  - 막대 위 값: `plt.text(x, y, text, fontproperties=korean_font, fontsize=10)`
-  - 파이 차트 범례: `plt.legend(labels, prop=korean_font)`
-  - 주석/화살표: `plt.annotate(text, fontproperties=korean_font, fontsize=9)`
+- **ESSENTIAL for data labels (이미지 내부 텍스트) - 크기별 최적화:**
+  - 막대 위 값: `plt.text(x, y, text, fontproperties=korean_font, fontsize=max(8, min(14, fig.get_figwidth()*2)))`
+  - 파이 차트 범례: `plt.legend(labels, prop=korean_font, fontsize=max(9, min(16, fig.get_figwidth()*2.5)))`
+  - 주석/화살표: `plt.annotate(text, fontproperties=korean_font, fontsize=max(7, min(12, fig.get_figwidth()*1.8)))`
 </matplotlib_requirements>
 
 <chart_insight_analysis_requirements>

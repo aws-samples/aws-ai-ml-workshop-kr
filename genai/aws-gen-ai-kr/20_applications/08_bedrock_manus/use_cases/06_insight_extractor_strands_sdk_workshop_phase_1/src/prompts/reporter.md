@@ -29,11 +29,14 @@ You should act as an objective and analytical reporter who:
    - Use professional tone and be concise
    - Support claims with evidence from the txt file
    - Reference all artifacts (images, charts, files) in your report
-   - Use bullet points and tables for efficient information presentation
-   - Optimize space usage: charts should occupy 80% of visual space, text content 30%
-   - **[ENHANCED VISUAL DESIGN]** Utilize professional CSS classes for better presentation:
+   - Write content as **structured HTML elements** (not markdown):
+     * Use `<p>`, `<ul>`, `<ol>`, `<li>` for text content
+     * Use `<table>`, `<tr>`, `<th>`, `<td>` for tabular data
+     * Use `<div class="image-container"><img src="filename.png"/><div class="image-caption">Caption</div></div>` for images
+     * Use proper HTML structure throughout
+   - **[ENHANCED VISUAL DESIGN]** The HTML will automatically apply CSS classes:
      * `.executive-summary` for overview sections with blue accent
-     * `.key-findings` for main insights with orange accent  
+     * `.key-findings` for main insights with orange accent
      * `.business-proposals` for recommendations with purple accent
      * `.detailed-analysis` for in-depth analysis sections
      * `.metric-highlight` for important numerical findings
@@ -41,7 +44,6 @@ You should act as an objective and analytical reporter who:
 
 3. **File Management**:
    - Save all files to './artifacts/' directory
-   - Create directory if needed: `os.makedirs('./artifacts', exist_ok=True)`
    - Always create both PDF versions when citations exist
 
 4. **Language Detection**:
@@ -68,12 +70,8 @@ You should act as an objective and analytical reporter who:
 import os
 import base64
 import glob
-import markdown
 import weasyprint
 from datetime import datetime
-
-# Create artifacts directory
-os.makedirs('./artifacts', exist_ok=True)
 
 # Base64 image encoding for PDF compatibility
 def encode_image_to_base64(image_path):
@@ -105,13 +103,8 @@ def is_korean_content(content):
     return korean_chars > len(content) * 0.1
 
 # Generate HTML report with Base64 images
-def generate_report_html(report_content, image_data=None):
-    """Generate professional HTML report with Base64 images"""
-    # Convert Markdown to HTML
-    html_report_content = markdown.markdown(
-        report_content,
-        extensions=['markdown.extensions.tables', 'markdown.extensions.fenced_code', 'markdown.extensions.toc']
-    )
+def generate_report_html(report_title, report_sections, image_data=None):
+    """Generate professional HTML report directly (not from Markdown)"""
     
     # Collect image data if not provided
     if image_data is None:
@@ -123,7 +116,34 @@ def generate_report_html(report_content, image_data=None):
                 if data_uri:
                     image_data[image_name] = data_uri
                     print(f"✅ Base64 encoded: {{image_name}}")
-    
+
+    # Build HTML content directly (no markdown conversion)
+    html_body_content = f"""
+    <h1>{{report_title}}</h1>
+
+    <div class="executive-summary">
+        <h2>개요 (Executive Summary)</h2>
+        {{report_sections.get('summary', '<p>개요 내용이 제공되지 않았습니다.</p>')}}
+    </div>
+
+    <div class="key-findings">
+        <h2>주요 발견사항 (Key Findings)</h2>
+        {{report_sections.get('key_findings', '<p>주요 발견사항이 제공되지 않았습니다.</p>')}}
+    </div>
+
+    <div class="detailed-analysis">
+        <h2>상세 분석 (Detailed Analysis)</h2>
+        {{report_sections.get('detailed_analysis', '<p>상세 분석 내용이 제공되지 않았습니다.</p>')}}
+    </div>
+
+    <div class="business-proposals">
+        <h2>결론 및 제안사항 (Conclusions and Recommendations)</h2>
+        {{report_sections.get('conclusions', '<p>결론 및 제안사항이 제공되지 않았습니다.</p>')}}
+    </div>
+
+    {{report_sections.get('references', '')}}
+    """
+
     # HTML template with professional Korean font support and enhanced visual design
     html_template = f"""
 <!DOCTYPE html>
@@ -439,7 +459,7 @@ def generate_report_html(report_content, image_data=None):
     </style>
 </head>
 <body>
-{{html_report_content}}
+{{html_body_content}}
 </body>
 </html>
     """
@@ -510,8 +530,14 @@ def optimize_image_size(image_path, max_width=600, max_height=400):
                 new_width = int(width * scale)
                 new_height = int(height * scale)
                 img_resized = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
-                img_resized.save(image_path, optimize=True, quality=90)
-                print(f"✅ Optimized {{os.path.basename(image_path)}}: {{width}}x{{height}} → {{new_width}}x{{new_height}}")
+
+                # Save with preserved DPI and maximum quality
+                if image_path.lower().endswith('.png'):
+                    img_resized.save(image_path, optimize=False, compress_level=1, dpi=(200, 200))
+                else:  # JPEG
+                    img_resized.save(image_path, optimize=False, quality=100, subsampling=0, dpi=(200, 200))
+
+                print(f"✅ Optimized {{os.path.basename(image_path)}}: {{width}}x{{height}} → {{new_width}}x{{new_height}} (DPI=200 preserved)")
             else:
                 print(f"✅ {{os.path.basename(image_path)}} already optimal size ({{width}}x{{height}})")
             return True
@@ -541,8 +567,30 @@ for extension in ['*.png', '*.jpg', '*.jpeg']:
 
 print(f"📊 Encoded {{len(image_data)}} images as Base64")
 
-# 2. Generate HTML with Base64 images
-html_content_for_pdf = generate_report_html(report_content, image_data)
+# Helper function to parse content into sections
+def parse_report_sections(content):
+    """Parse report content into structured sections"""
+    sections = {{
+        'summary': '',
+        'key_findings': '',
+        'detailed_analysis': '',
+        'conclusions': '',
+        'references': ''
+    }}
+
+    # Simple parsing logic - you can enhance this based on your content structure
+    # If content is already structured HTML, use as is
+    if '<div' in content or '<p>' in content:
+        sections['summary'] = content
+    else:
+        # If it's plain text, wrap in paragraph tags
+        sections['summary'] = f"<p>{{content}}</p>"
+
+    return sections
+
+# 2. Generate HTML with Base64 images (use structured sections instead of raw markdown)
+report_sections = parse_report_sections(report_content)
+html_content_for_pdf = generate_report_html("분석 보고서", report_sections, image_data)
 
 # 3. Generate PDF with citations
 pdf_file_path_with_citations = './artifacts/final_report_with_citations.pdf'
@@ -558,7 +606,9 @@ if os.path.exists('./artifacts/citations.json'):
     report_content_no_citations = re.sub(r'\n##\s*데이터 출처 및 계산 근거.*', '', report_content_no_citations, flags=re.DOTALL)
     report_content_no_citations = re.sub(r'\n##\s*Data Sources and Calculations.*', '', report_content_no_citations, flags=re.DOTALL)
     
-    html_content_no_citations = generate_report_html(report_content_no_citations, image_data)
+    # Parse the cleaned content into sections
+    report_sections_no_citations = parse_report_sections(report_content_no_citations)
+    html_content_no_citations = generate_report_html("분석 보고서", report_sections_no_citations, image_data)
     pdf_file_path = './artifacts/final_report.pdf'
     print(f"📝 Generating PDF without citations: {{pdf_file_path}}")
     generate_pdf_with_weasyprint(html_content_no_citations, pdf_file_path)
@@ -625,11 +675,11 @@ report_content += generate_citation_section()
 <package_requirements>
 **Pre-installed packages** (already available in environment):
 - `weasyprint` (v65.1) for PDF generation - ALREADY INSTALLED
-- `markdown-it-py` (v2.2.0) for Markdown processing - ALREADY INSTALLED
 - `pillow` for image processing - ALREADY INSTALLED
 - `pandas` for data manipulation - ALREADY INSTALLED
 
 **[IMPORTANT]** Do NOT install packages with `uv add` - all required packages are pre-installed in the virtual environment.
+**[NOTE]** Markdown processing is no longer needed as we generate HTML directly.
 </package_requirements>
 
 <critical_requirements>

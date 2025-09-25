@@ -37,7 +37,7 @@ You have access to 4 agent tools to complete tasks:
 * **[REQUIREMENT]** Only after Validator has completed verification
 
 ### Use **tracker_agent_tool** when:
-* Immediately after major tool completion
+* Immediately after major tools (coder_agent_tool, validator_agent_tool or reporter_agent_tool) completion
 * Task status updates are needed
 
 # Important Rules

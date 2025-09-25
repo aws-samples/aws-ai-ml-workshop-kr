@@ -1,0 +1,247 @@
+{
+  "metadata": {
+    "generated_at": "2025-09-25 13:05:17",
+    "total_calculations": 34,
+    "cited_calculations": 15,
+    "validation_status": "completed"
+  },
+  "citations": [
+    {
+      "citation_id": "[1]",
+      "calculation_id": "calc_total_sales",
+      "value": 8619150.0,
+      "description": "총 판매 금액",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[2]",
+      "calculation_id": "calc_total_orders",
+      "value": 1220,
+      "description": "총 주문 수",
+      "formula": "COUNT(*)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "index"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[3]",
+      "calculation_id": "calc_avg_order",
+      "value": 7064.877049180328,
+      "description": "평균 주문 금액",
+      "formula": "SUM(Amount)/COUNT(*)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[4]",
+      "calculation_id": "calc_category_sales_과일",
+      "value": 3967350.0,
+      "description": "과일 카테고리 판매 금액",
+      "formula": "SUM(Amount) WHERE Category='과일'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[5]",
+      "calculation_id": "calc_category_sales_채소",
+      "value": 2389700.0,
+      "description": "채소 카테고리 판매 금액",
+      "formula": "SUM(Amount) WHERE Category='채소'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[6]",
+      "calculation_id": "calc_category_sales_유제품",
+      "value": 2262100.0,
+      "description": "유제품 카테고리 판매 금액",
+      "formula": "SUM(Amount) WHERE Category='유제품'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[7]",
+      "calculation_id": "calc_promo_avg_order",
+      "value": 7369.247985675917,
+      "description": "프로모션 적용 시 평균 주문 금액",
+      "formula": "MEAN(Amount) WHERE has_promotion=True",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[8]",
+      "calculation_id": "calc_no_promo_avg_order",
+      "value": 3764.0776699029125,
+      "description": "프로모션 미적용 시 평균 주문 금액",
+      "formula": "MEAN(Amount) WHERE has_promotion=False",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[9]",
+      "calculation_id": "calc_category_pct_과일",
+      "value": 46.0,
+      "description": "과일 카테고리 판매 비중",
+      "formula": "SUM(Amount WHERE Category='과일') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[10]",
+      "calculation_id": "calc_category_pct_채소",
+      "value": 27.7,
+      "description": "채소 카테고리 판매 비중",
+      "formula": "SUM(Amount WHERE Category='채소') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[11]",
+      "calculation_id": "calc_category_pct_유제품",
+      "value": 26.2,
+      "description": "유제품 카테고리 판매 비중",
+      "formula": "SUM(Amount WHERE Category='유제품') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[12]",
+      "calculation_id": "calc_gender_sales_F",
+      "value": 3963350.0,
+      "description": "F 성별 판매 금액",
+      "formula": "SUM(Amount) WHERE Gender='F'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[13]",
+      "calculation_id": "calc_gender_pct_F",
+      "value": 46.0,
+      "description": "F 성별 판매 비중",
+      "formula": "SUM(Amount WHERE Gender='F') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[14]",
+      "calculation_id": "calc_gender_sales_M",
+      "value": 4655800.0,
+      "description": "M 성별 판매 금액",
+      "formula": "SUM(Amount) WHERE Gender='M'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    },
+    {
+      "citation_id": "[15]",
+      "calculation_id": "calc_gender_pct_M",
+      "value": 54.0,
+      "description": "M 성별 판매 비중",
+      "formula": "SUM(Amount WHERE Gender='M') / SUM(Amount) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "source_rows": "all",
+      "verification_status": "verified",
+      "verification_notes": "원본 데이터로부터 직접 계산하여 검증됨",
+      "timestamp": "2025-09-25 13:04:32"
+    }
+  ]
+}
