@@ -68,20 +68,11 @@ os.makedirs(artifacts_dir, exist_ok=True)
 metadata_file = os.path.join(artifacts_dir, 'calculation_metadata.json')
 print(f"Loading calculation metadata from: {{metadata_file}}")
 
-# [CRITICAL] Initialize calc_metadata variable BEFORE try block to avoid NameError
-calc_metadata = {{'calculations': []}}  # Default empty structure
+# Load calculation metadata
+with open(metadata_file, 'r', encoding='utf-8') as f:
+    calc_metadata = json.load(f)
 
-# Load calculation metadata with error handling
-try:
-    with open(metadata_file, 'r', encoding='utf-8') as f:
-        calc_metadata = json.load(f)
-    print(f"Found {{len(calc_metadata.get('calculations', []))}} calculations to validate")
-except FileNotFoundError:
-    print(f"Warning: {{metadata_file}} not found. Using empty metadata structure.")
-    # calc_metadata already initialized above
-except Exception as e:
-    print(f"Error loading metadata: {{e}}. Using empty metadata structure.")
-    # calc_metadata already initialized above
+print(f"Found {{len(calc_metadata.get('calculations', []))}} calculations to validate")
 
 # Configurable validation thresholds - MAXIMUM 20 validations total
 VALIDATION_THRESHOLDS = {{
@@ -101,18 +92,12 @@ print(f"Dataset size: {{total_calculations}} items. Maximum validations allowed:
 
 2. **Smart Batch Validation Process**:
 ```python
-# [CRITICAL] Initialize variables BEFORE use to avoid NameError
-verified_results = {{}}  # Initialize validation results dictionary
-data_cache = {{}}         # Initialize data caching dictionary
+# Re-load original data ONCE for efficiency
+data_cache = {{}}
 def load_data_once(file_path):
     if file_path not in data_cache:
         data_cache[file_path] = pd.read_csv(file_path)
     return data_cache[file_path]
-
-# [CRITICAL] Initialize priority lists BEFORE use to avoid NameError
-high_priority = []      # Initialize high priority list
-medium_priority = []    # Initialize medium priority list
-priority_calcs = []     # Initialize selected calculations list
 
 # Filter calculations by importance to reduce processing
 high_priority = [calc for calc in calc_metadata.get('calculations', []) if calc['importance'] == 'high']
@@ -181,7 +166,7 @@ for pattern_name, calcs in batch_patterns.items():
 print(f"Created {{len(calc_groups)}} optimized processing groups:")
 
 # Batch execute calculations by group
-# NOTE: verified_results already initialized above
+verified_results = {{}}
 for group_key, calcs in calc_groups.items():
     # Load data once per file
     source_file = calcs[0]['source_file']
@@ -211,9 +196,6 @@ for group_key, calcs in calc_groups.items():
 
 3. **Optimized Citation Selection**:
 ```python
-# [CRITICAL] Initialize citation_candidates BEFORE use to avoid NameError
-citation_candidates = []    # Initialize citation candidates list
-
 # Use already filtered priority calculations from step 2
 # This avoids re-filtering and ensures consistency with validation results
 citation_candidates = priority_calcs  # Already filtered high + limited medium priority
@@ -223,9 +205,6 @@ print(f"Selected {{len(citation_candidates)}} calculations for citation (optimiz
 
 4. **Generate Citation Metadata**:
 ```python
-# [CRITICAL] Initialize citations dictionary BEFORE use to avoid NameError
-citations = {{"citations": []}}  # Initialize with empty structure
-
 citations = {{
     "metadata": {{
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -261,38 +240,9 @@ validation_report_file = os.path.join(artifacts_dir, 'validation_report.txt')
 print(f"Saving citations to: {{citations_file}}")
 print(f"Saving validation report to: {{validation_report_file}}")
 
-# JSON serialization helper function for numpy/pandas types
-def convert_numpy_types(obj):
-    """Convert numpy/pandas types to native Python types for JSON serialization"""
-    if hasattr(obj, 'item'):  # numpy scalar
-        return obj.item()
-    elif hasattr(obj, 'tolist'):  # numpy array
-        return obj.tolist()
-    elif str(type(obj)).startswith("<class 'numpy."):  # numpy types
-        return obj.item() if hasattr(obj, 'item') else str(obj)
-    elif str(type(obj)).startswith("<class 'pandas."):  # pandas types
-        if hasattr(obj, 'item'):
-            return obj.item()
-        else:
-            return str(obj)
-    return obj
-
-# Recursively convert all numpy/pandas types in citations data
-def clean_for_json(data):
-    """Recursively clean data structure for JSON serialization"""
-    if isinstance(data, dict):
-        return {{k: clean_for_json(v) for k, v in data.items()}}
-    elif isinstance(data, list):
-        return [clean_for_json(item) for item in data]
-    else:
-        return convert_numpy_types(data)
-
-# Clean citations data before saving
-citations_cleaned = clean_for_json(citations)
-
-# Save citations.json with proper type conversion
+# Save citations.json
 with open(citations_file, 'w', encoding='utf-8') as f:
-    json.dump(citations_cleaned, f, indent=2, ensure_ascii=False)
+    json.dump(citations, f, indent=2, ensure_ascii=False)
 
 # Save detailed validation_report.txt
 with open(validation_report_file, 'w', encoding='utf-8') as f:
@@ -410,323 +360,6 @@ print("Validation completed successfully!")
 print(f"Citations file created: {{citations_file}}")
 print(f"Validation report created: {{validation_report_file}}")
 ```
-6. **Complete Self-Contained Example**:
-```python
-# COMPLETE SELF-CONTAINED VALIDATION SCRIPT
-# All variables defined in single execution block to avoid NameError issues
-
-import json
-import pandas as pd
-import numpy as np
-import os
-from datetime import datetime
-
-def main_validation_process():
-    """Complete validation process in single function to avoid variable reference issues"""
-
-    # [CRITICAL] Working directory verification and dynamic path setup
-    print(f"Validator working directory: {{os.getcwd()}}")
-    project_root = os.path.abspath('.')
-    artifacts_dir = os.path.join(project_root, 'artifacts')
-    print(f"Project root: {{project_root}}")
-    print(f"Artifacts directory: {{artifacts_dir}}")
-
-    # Ensure artifacts directory exists
-    os.makedirs(artifacts_dir, exist_ok=True)
-
-    # Dynamic path generation for all file operations
-    metadata_file = os.path.join(artifacts_dir, 'calculation_metadata.json')
-    print(f"Loading calculation metadata from: {{metadata_file}}")
-
-    # [CRITICAL] Initialize calc_metadata variable BEFORE try block to avoid NameError
-    calc_metadata = {{'calculations': []}}  # Default empty structure
-
-    # Load calculation metadata with error handling
-    try:
-        with open(metadata_file, 'r', encoding='utf-8') as f:
-            calc_metadata = json.load(f)
-        print(f"Found {{len(calc_metadata.get('calculations', []))}} calculations to validate")
-    except FileNotFoundError:
-        print(f"Warning: {{metadata_file}} not found. Using empty metadata structure.")
-        # calc_metadata already initialized above
-    except Exception as e:
-        print(f"Error loading metadata: {{e}}. Using empty metadata structure.")
-        # calc_metadata already initialized above
-
-    # Configurable validation thresholds - MAXIMUM 20 validations total
-    VALIDATION_THRESHOLDS = {{
-        'max_validations_total': 20,      # ABSOLUTE MAXIMUM validations regardless of dataset size
-        'small_dataset_max': 15,          # datasets with <= 15 calculations (validate all)
-        'medium_dataset_max': 30,         # datasets with 16-30 calculations
-        'large_dataset_high_limit': 15,   # max high-priority for any dataset
-        'large_dataset_medium_limit': 5,  # max medium-priority for large datasets
-        'medium_dataset_medium_limit': 8, # max medium-priority for medium datasets
-    }}
-
-    total_calculations = len(calc_metadata.get('calculations', []))
-    print(f"Dataset size: {{total_calculations}} items. Maximum validations allowed: {{VALIDATION_THRESHOLDS['max_validations_total']}}")
-
-    # [CRITICAL] Initialize all variables BEFORE use to avoid NameError
-    calculations = []      # Initialize calculations list
-    high_priority = []     # Initialize high priority list
-    medium_priority = []   # Initialize medium priority list
-    low_priority = []      # Initialize low priority list
-    priority_calcs = []    # Initialize selected calculations list
-
-    # Smart selection of priority calculations
-    calculations = calc_metadata.get('calculations', [])
-    high_priority = [c for c in calculations if c.get('importance') == 'high']
-    medium_priority = [c for c in calculations if c.get('importance') == 'medium']
-    low_priority = [c for c in calculations if c.get('importance') == 'low']
-
-    print(f"Priority breakdown: High={{len(high_priority)}}, Medium={{len(medium_priority)}}, Low={{len(low_priority)}}")
-
-    # Intelligent selection based on dataset size
-    if total_calculations <= VALIDATION_THRESHOLDS['small_dataset_max']:
-        # Small dataset: validate ALL
-        priority_calcs = calculations[:VALIDATION_THRESHOLDS['max_validations_total']]
-        print(f"Small dataset detected. Validating all {{len(priority_calcs)}} calculations.")
-    elif total_calculations <= VALIDATION_THRESHOLDS['medium_dataset_max']:
-        # Medium dataset: high + limited medium
-        selected_medium = medium_priority[:VALIDATION_THRESHOLDS['medium_dataset_medium_limit']]
-        priority_calcs = (high_priority + selected_medium)[:VALIDATION_THRESHOLDS['max_validations_total']]
-        print(f"Medium dataset detected. Validating {{len(high_priority)}} high + {{len(selected_medium)}} medium priority items.")
-    else:
-        # Large dataset: strict limits
-        selected_medium = medium_priority[:VALIDATION_THRESHOLDS['large_dataset_medium_limit']]
-        high_limited = high_priority[:VALIDATION_THRESHOLDS['large_dataset_high_limit']]
-        priority_calcs = (high_limited + selected_medium)[:VALIDATION_THRESHOLDS['max_validations_total']]
-        print(f"Large dataset detected. Validating {{len(high_limited)}} high + {{len(selected_medium)}} medium priority items ({{len(priority_calcs)}} total).")
-
-    # [CRITICAL] Initialize dictionaries BEFORE use to avoid NameError
-    verified_results = {{}}    # Initialize validation results dictionary
-    data_cache = {{}}          # Initialize data caching dictionary
-
-    def load_data_once(file_path):
-        """Load data file once and cache for efficiency"""
-        if file_path not in data_cache:
-            try:
-                if file_path.endswith('.csv'):
-                    data_cache[file_path] = pd.read_csv(file_path)
-                elif file_path.endswith('.xlsx'):
-                    data_cache[file_path] = pd.read_excel(file_path)
-                else:
-                    print(f"Unsupported file format: {{file_path}}")
-                    return None
-            except Exception as e:
-                print(f"Error loading {{file_path}}: {{e}}")
-                return None
-        return data_cache[file_path]
-
-    # Validation process
-    print(f"\\n=== Starting Validation of {{len(priority_calcs)}} Priority Calculations ===")
-
-    for calc in priority_calcs:
-        calc_id = calc['id']
-        description = calc['description']
-        formula = calc['formula']
-        expected_value = calc['value']
-        source_file = calc.get('source_file', '')
-        source_columns = calc.get('source_columns', [])
-
-        print(f"\\nValidating {{calc_id}}: {{description}}")
-
-        try:
-            # Load source data
-            if source_file and os.path.exists(source_file):
-                df = load_data_once(source_file)
-                if df is not None:
-                    # Perform validation based on formula
-                    if 'SUM' in formula and source_columns:
-                        actual_value = df[source_columns[0]].sum()
-                    elif 'MEAN' in formula and source_columns:
-                        actual_value = df[source_columns[0]].mean()
-                    elif 'COUNT' in formula:
-                        actual_value = len(df)
-                    elif 'MAX' in formula and source_columns:
-                        actual_value = df[source_columns[0]].max()
-                    elif 'MIN' in formula and source_columns:
-                        actual_value = df[source_columns[0]].min()
-                    else:
-                        actual_value = expected_value  # Fallback
-
-                    # Compare values with tolerance
-                    tolerance = 0.01
-                    if isinstance(expected_value, (int, float)) and isinstance(actual_value, (int, float)):
-                        match = abs(expected_value - actual_value) < tolerance
-                    else:
-                        match = str(expected_value) == str(actual_value)
-
-                    verified_results[calc_id] = {{
-                        'match': match,
-                        'expected': expected_value,
-                        'actual': actual_value,
-                        'formula': formula
-                    }}
-
-                    status = "✓ VERIFIED" if match else "⚠ MISMATCH"
-                    print(f"  {{status}} - Expected: {{expected_value}}, Actual: {{actual_value}}")
-                else:
-                    verified_results[calc_id] = {{
-                        'match': False,
-                        'expected': expected_value,
-                        'actual': 'Data load failed',
-                        'formula': formula
-                    }}
-            else:
-                print(f"  ⚠ Source file not found: {{source_file}}")
-                verified_results[calc_id] = {{
-                    'match': False,
-                    'expected': expected_value,
-                    'actual': 'Source file missing',
-                    'formula': formula
-                }}
-
-        except Exception as e:
-            print(f"  ❌ Error validating {{calc_id}}: {{e}}")
-            verified_results[calc_id] = {{
-                'match': False,
-                'expected': expected_value,
-                'actual': f'Error: {{str(e)}}',
-                'formula': formula
-            }}
-
-    # [CRITICAL] Initialize citation_candidates BEFORE use to avoid NameError
-    citation_candidates = []    # Initialize citation candidates list
-
-    # Generate citation candidates (same as validated items for consistency)
-    citation_candidates = priority_calcs
-    print(f"\\nSelected {{len(citation_candidates)}} calculations for citation (optimized from {{len(calc_metadata.get('calculations', []))}} total)")
-
-    # [CRITICAL] Initialize citations dictionary BEFORE use to avoid NameError
-    citations = {{"citations": []}}  # Initialize with empty structure
-
-    # Generate citation metadata
-    citations = {{
-        "metadata": {{
-            "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "total_calculations": len(calc_metadata.get('calculations', [])),
-            "cited_calculations": len(citation_candidates),
-            "validation_status": "completed"
-        }},
-        "citations": []
-    }}
-
-    for i, calc in enumerate(citation_candidates, 1):
-        citation_id = f"[{{i}}]"
-        citations["citations"].append({{
-            "citation_id": citation_id,
-            "calculation_id": calc['id'],
-            "value": calc['value'],
-            "description": calc['description'],
-            "formula": calc['formula'],
-            "source_file": calc['source_file'],
-            "source_columns": calc['source_columns'],
-            "source_rows": calc['source_rows'],
-            "verification_status": "verified" if verified_results.get(calc['id'], {{}}).get('match', False) else "needs_review",
-            "verification_notes": calc.get('verification_notes', ''),
-            "timestamp": calc['timestamp']
-        }})
-
-    # JSON serialization helper function for numpy/pandas types
-    def convert_numpy_types(obj):
-        """Convert numpy/pandas types to native Python types for JSON serialization"""
-        if hasattr(obj, 'item'):  # numpy scalar
-            return obj.item()
-        elif hasattr(obj, 'tolist'):  # numpy array
-            return obj.tolist()
-        elif str(type(obj)).startswith("<class 'numpy."):  # numpy types
-            return obj.item() if hasattr(obj, 'item') else str(obj)
-        elif str(type(obj)).startswith("<class 'pandas."):  # pandas types
-            if hasattr(obj, 'item'):
-                return obj.item()
-            else:
-                return str(obj)
-        return obj
-
-    # Recursively convert all numpy/pandas types in citations data
-    def clean_for_json(data):
-        """Recursively clean data structure for JSON serialization"""
-        if isinstance(data, dict):
-            return {{k: clean_for_json(v) for k, v in data.items()}}
-        elif isinstance(data, list):
-            return [clean_for_json(item) for item in data]
-        else:
-            return convert_numpy_types(data)
-
-    # Clean citations data before saving
-    citations_cleaned = clean_for_json(citations)
-
-    # Save results with dynamic paths
-    citations_file = os.path.join(artifacts_dir, 'citations.json')
-    validation_report_file = os.path.join(artifacts_dir, 'validation_report.txt')
-
-    print(f"\\nSaving citations to: {{citations_file}}")
-    print(f"Saving validation report to: {{validation_report_file}}")
-
-    # Save citations.json with proper type conversion
-    try:
-        with open(citations_file, 'w', encoding='utf-8') as f:
-            json.dump(citations_cleaned, f, indent=2, ensure_ascii=False)
-        print("✅ Citations saved successfully")
-    except Exception as e:
-        print(f"❌ Error saving citations: {{e}}")
-
-    # Save detailed validation_report.txt
-    try:
-        with open(validation_report_file, 'w', encoding='utf-8') as f:
-            successful_verifications = sum(1 for result in verified_results.values() if result['match'])
-            needs_review = sum(1 for result in verified_results.values() if not result['match'])
-
-            f.write(f"""==================================================
-## 검증 보고서: 데이터 검증 및 인용 생성
-## 실행 시간: {{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}}
---------------------------------------------------
-검증 요약:
-- 총 계산 항목: {{len(calc_metadata.get('calculations', []))}}개
-- 성공적으로 검증됨: {{successful_verifications}}개
-- 검토 필요: {{needs_review}}개
-- 인용 생성됨: {{len(citation_candidates)}}개
-
-검증 결과:
-""")
-
-            # Detailed verification results
-            for calc_id, result in verified_results.items():
-                calc_info = next((c for c in calc_metadata.get('calculations', []) if c['id'] == calc_id), {{}})
-                description = calc_info.get('description', 'Unknown')
-                formula = calc_info.get('formula', 'Unknown')
-                importance = calc_info.get('importance', 'medium')
-                source_file = calc_info.get('source_file', 'Unknown')
-
-                status = "✓ 검증됨" if result['match'] else "⚠ 검토 필요"
-                f.write(f"- {{calc_id}} ({{description}}): {{status}}")
-
-                if result['match']:
-                    if isinstance(result['actual'], (int, float)) and result['actual'] > 1000:
-                        f.write(f" ({{result['actual']:,.2f}})\\n")
-                    elif isinstance(result['actual'], float) and 0 < result['actual'] < 100:
-                        f.write(f" ({{result['actual']:.2f}}%)\\n")
-                    else:
-                        f.write(f" (값: {{result['actual']}})\\n")
-                else:
-                    f.write(f" (예상: {{result['expected']}}, 실제: {{result['actual']}})\\n")
-                    f.write(f"  → 공식: {{formula}}\\n")
-                    f.write(f"  → 데이터 소스: {{source_file}}\\n")
-                    f.write(f"  → 중요도: {{importance}}\\n")
-
-        print("✅ Validation report saved successfully")
-    except Exception as e:
-        print(f"❌ Error saving validation report: {{e}}")
-
-    print(f"\\n=== Validation Complete ===")
-    print(f"Citations generated: {{len(citation_candidates)}}")
-    print(f"Verification success rate: {{successful_verifications}}/{{len(verified_results)}} ({{successful_verifications/len(verified_results)*100:.1f}}%)" if verified_results else "No verifications performed")
-
-# Execute the main validation process
-main_validation_process()
-```
-
 </validation_process>
 
 <error_handling>
