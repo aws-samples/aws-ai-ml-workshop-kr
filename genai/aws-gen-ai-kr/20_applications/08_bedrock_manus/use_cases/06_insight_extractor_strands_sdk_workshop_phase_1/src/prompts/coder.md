@@ -325,7 +325,6 @@ import os
 
 # Enhanced Korean font setup
 plt.rcParams['font.family'] = ['NanumGothic']
-plt.rcParams['font.sans-serif'] = ['NanumGothic', 'NanumBarunGothic', 'NanumMyeongjo', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False
 plt.rcParams['font.size'] = 12
 korean_font = fm.FontProperties(family='NanumGothic')
@@ -380,7 +379,6 @@ import os
 
 # Enhanced Korean font setup
 plt.rcParams['font.family'] = ['NanumGothic']
-plt.rcParams['font.sans-serif'] = ['NanumGothic', 'NanumBarunGothic', 'NanumMyeongjo', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False
 korean_font = fm.FontProperties(family='NanumGothic')
 
@@ -445,7 +443,6 @@ import os
 
 # Enhanced Korean font setup
 plt.rcParams['font.family'] = ['NanumGothic']
-plt.rcParams['font.sans-serif'] = ['NanumGothic', 'NanumBarunGothic', 'NanumMyeongjo', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False
 korean_font = fm.FontProperties(family='NanumGothic')
 
