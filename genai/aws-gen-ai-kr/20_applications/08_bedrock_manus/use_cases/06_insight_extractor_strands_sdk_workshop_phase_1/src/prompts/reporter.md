@@ -34,6 +34,7 @@ You should act as an obje*ctive and analytical reporter who:
      * Cross-chart connections and supporting evidence
      * Quantitative findings with specific numbers and percentages
    - Reference all artifacts (images, charts, files) in your report
+   - **[CRITICAL] Image Layout Rule**: NEVER place images consecutively. ALWAYS follow this pattern: Image → Detailed Analysis → Next Image → Detailed Analysis
    - Write content as **structured HTML** following the `<html_structure_sample>` section below
    
 3. **File Management**:
@@ -105,6 +106,21 @@ td {{
 .status-positive {{ color: #27ae60; font-weight: bold; }}
 .status-negative {{ color: #e74c3c; font-weight: bold; }}
 
+/* Image container layout */
+.image-container {{
+    text-align: center;
+    margin: 20px 0;
+}}
+
+.image-container img {{
+    width: 80%;
+    max-height: 350px;
+    object-fit: contain;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}}
+
 /* Main section classes */
 .executive-summary {{
     background: linear-gradient(135deg, #e3f2fd 0%, #e8f4f8 100%);
@@ -172,23 +188,18 @@ td {{
     <h2>주요 발견사항 (Key Findings)</h2>
     <p>여기에 주요 발견사항...</p>
 
-    <!-- Single image -->
+    <!-- MANDATORY: Image → Analysis → Image → Analysis Pattern -->
     <div class="image-container">
-        <img src="chart1.png" style="max-width: 100%; height: auto; max-height: 400px;"/>
+        <img src="chart1.png"/>
         <div class="image-caption">주요 지표 차트</div>
     </div>
+    <p>이 차트에서 보여주는 주요 지표에 대한 상세한 분석과 해석을 여기에 작성합니다. 데이터의 패턴, 트렌드, 이상치 등을 구체적으로 설명합니다.</p>
 
-    <!-- Multiple images grid -->
-    <div class="charts-grid">
-        <div class="chart-item">
-            <img src="monthly_chart.png" style="max-width: 100%; height: auto; max-height: 400px;"/>
-            <div class="image-caption">월별 추이</div>
-        </div>
-        <div class="chart-item">
-            <img src="category_chart.png" style="max-width: 100%; height: auto; max-height: 400px;"/>
-            <div class="image-caption">카테고리별 분석</div>
-        </div>
+    <div class="image-container">
+        <img src="monthly_chart.png"/>
+        <div class="image-caption">월별 추이</div>
     </div>
+    <p>월별 데이터의 변화 패턴과 계절적 요인, 특이사항에 대한 분석을 여기에 작성합니다. 증감률과 원인 분석을 포함합니다.</p>
 
     <div class="data-insight">
         핵심 인사이트: 고객 만족도가 15% 향상되었습니다.
