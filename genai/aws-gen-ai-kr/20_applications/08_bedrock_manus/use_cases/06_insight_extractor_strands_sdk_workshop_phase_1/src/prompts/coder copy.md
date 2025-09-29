@@ -285,7 +285,13 @@ print("Calculation metadata saved to ./artifacts/calculation_metadata.json")
   - Best styles for Korean text: `plt.style.use(['seaborn-v0_8-whitegrid'])` or `plt.style.use('ggplot')`
   - Apply grid lines (alpha=0.3), moderate DPI for PDF compatibility
   - Font sizes: title: 16-18 (fontweight='bold', increased 33%), axis labels: 12-13, tick labels: 10-11, legend: 14 (increased for better readability), data labels: 12-13 (all increased for better readability)
-  - Use subplot() when necessary to compare related data
+  - **[CRITICAL] RELATED CHART COMBINATION STRATEGY**: When creating charts that will be displayed together in the report (same context/analysis), ALWAYS combine them into a single image using subplots
+  - **[MANDATORY] Subplot Usage Guidelines**:
+    * Charts comparing same categories (e.g., sales by category + quantity by category): Use `plt.subplots(1, 2)`
+    * Charts showing different perspectives of same data (e.g., monthly trends + monthly growth rates): Use `plt.subplots(1, 2)` or `plt.subplots(2, 1)`
+    * Multiple category breakdowns (e.g., gender analysis + age analysis): Use `plt.subplots(1, 2)`
+    * Time series comparisons (e.g., sales trends + order volume trends): Use `plt.subplots(2, 1)` for vertical layout
+  - **[REQUIRED] Combined Chart Benefits**: Perfect alignment, consistent sizing, single file management, optimal PDF layout
 - **[CRITICAL] PDF-Optimized Chart Size Requirements (MANDATORY):**
   - **STRICT figsize limits for PDF compatibility**:
     * Pie charts: `figsize=(12, 7.2)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
@@ -302,237 +308,47 @@ print("Calculation metadata saved to ./artifacts/calculation_metadata.json")
   - **High-resolution save parameters**: bbox_inches='tight', dpi=200, facecolor='white', edgecolor='none'
   - ALWAYS close figures with plt.close() to prevent memory issues
 
-- **[CRITICAL] Korean Font Setup:**
-  ```python
-  import matplotlib.pyplot as plt
-  import matplotlib.font_manager as fm
-  
-  # Enhanced Korean font setup (MANDATORY for all charts)
-  plt.rcParams['font.family'] = ['NanumGothic']
-  plt.rcParams['font.sans-serif'] = ['NanumGothic', 'NanumBarunGothic', 'NanumMyeongjo', 'sans-serif']
-  plt.rcParams['axes.unicode_minus'] = False
-  plt.rcParams['font.size'] = 10  # Reduced for smaller charts
-  
-  # CRITICAL: Enforce PDF-compatible default chart size (MANDATORY)
-  plt.rcParams['figure.figsize'] = [6, 4]  # Smaller default size for PDF
-  plt.rcParams['figure.dpi'] = 200         # High-resolution DPI for crisp images
-  
-  # Define font property for direct use in all text elements
-  korean_font = fm.FontProperties(family='NanumGothic')
-  print("✅ Korean font and PDF-optimized chart size ready")
-  ```
-- **[CRITICAL] Chart Style and Import Requirements:**
-  - Must import lovelyplots: `import lovelyplots`
-  - Best styles for Korean text: `plt.style.use(['seaborn-v0_8-whitegrid'])` or `plt.style.use('ggplot')`
-  - Apply grid lines (alpha=0.3), moderate DPI for PDF compatibility
-  - Font sizes: title: 16-18 (fontweight='bold', increased 33%), axis labels: 12-13, tick labels: 10-11, legend: 14 (increased for better readability), data labels: 12-13 (all increased for better readability)
-  - Use subplot() when necessary to compare related data
-- **[CRITICAL] PDF-Optimized Chart Size Requirements (MANDATORY):**
-  - **STRICT figsize limits for PDF compatibility**:
-    * Pie charts: `figsize=(12, 7.2)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
-    * Bar charts: `figsize=(9.6, 6)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
-    * Line/trend charts: `figsize=(7.2, 4.8)` MAXIMUM - 20% larger for better visibility - DO NOT EXCEED
-    * Simple charts: `figsize=(5, 3)` MAXIMUM - DO NOT EXCEED
-  - **MANDATORY DPI for high-quality images**: `dpi=200` (crisp, clear visualization)
-  - **CRITICAL**: Charts larger than these sizes will overflow PDF pages
-  - **Layout optimization**: Always use `plt.tight_layout()` before saving
-  - **GLOBAL figsize enforcement**: Set plt.rcParams['figure.figsize'] at the start
-- **[CRITICAL] Chart Saving Requirements:**
-  - ALWAYS verify working directory and create artifacts directory
-  - Use descriptive Korean-safe filenames (avoid Korean characters in filenames)
-  - **High-resolution save parameters**: bbox_inches='tight', dpi=200, facecolor='white', edgecolor='none'
-  - ALWAYS close figures with plt.close() to prevent memory issues
-
-- **[EXAMPLE] Korean Pie Chart (COMPLETE):**
+- **[CHART CREATION TEMPLATE]:**
 ```python
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import lovelyplots
 import os
 
-# Enhanced Korean font setup
-plt.rcParams['font.family'] = ['NanumGothic']
-plt.rcParams['axes.unicode_minus'] = False
-plt.rcParams['font.size'] = 12
-korean_font = fm.FontProperties(family='NanumGothic')
-
-# Create pie chart with high-resolution sizing
-fig, ax = plt.subplots(figsize=(6, 4), dpi=200)  # High-resolution for crisp images
-categories = ['과일', '채소', '유제품']
-values = [3967350, 2389700, 2262100]
-colors = ['#ff9999', '#66b3ff', '#99ff99']
-
-# Create pie chart with Korean font in all text elements (smaller font)
-wedges, texts, autotexts = ax.pie(values, labels=categories, autopct='%1.1f%%', 
-                                  colors=colors, startangle=90,
-                                  textprops={{'fontproperties': korean_font, 'fontsize': 10}})
-
-# Apply Korean font to all text elements explicitly
-for text in texts:
-    text.set_fontproperties(korean_font)
-for autotext in autotexts:
-    autotext.set_color('white')
-    autotext.set_fontweight('bold')
-
-# Add title and legend with Korean font (smaller sizes)
-ax.set_title('카테고리별 판매 비율', fontproperties=korean_font, fontsize=16, fontweight='bold', pad=20)
-# Improved pie chart labeling to avoid overlap
-# Use percentage labels on pie slices and detailed legend outside
-def make_autopct(values):
-    def my_autopct(pct):
-        total = sum(values)
-        val = int(round(pct*total/100.0))
-        return f'{{pct:.1f}}%' if pct > 5 else ''  # Only show percentage if slice > 5%
-    return my_autopct
-
-wedges, texts, autotexts = ax.pie(values, labels=None, autopct=make_autopct(values),
-                                  startangle=90, colors=colors, textprops={{'fontproperties': korean_font, 'fontsize': 12}})
-
-# Create detailed legend outside the pie chart
-legend_labels = [f'{{cat}}: {{val:,}}원 ({{val/sum(values)*100:.1f}}%)' for cat, val in zip(categories, values)]
-ax.legend(legend_labels, prop=korean_font, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=14)
-
-plt.tight_layout()
-os.makedirs('./artifacts', exist_ok=True)
-plt.savefig('./artifacts/pie_chart.png', bbox_inches='tight', dpi=200, facecolor='white')
-plt.close()
-```
-
-- **[EXAMPLE] Korean Bar Chart (COMPLETE):**
-```python
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-import os
-
-# Enhanced Korean font setup
+# Setup (use for all charts)
 plt.rcParams['font.family'] = ['NanumGothic']
 plt.rcParams['axes.unicode_minus'] = False
 korean_font = fm.FontProperties(family='NanumGothic')
 
-# Create bar chart with high-resolution sizing
-fig, ax = plt.subplots(figsize=(8, 5), dpi=200)  # High-resolution for crisp images
-categories = ['과일', '채소', '유제품']
-values = [3967350, 2389700, 2262100]
+# Create chart with standard sizing
+fig, ax = plt.subplots(figsize=(6, 4), dpi=200)  # Adjust figsize per chart type limits
 
-bars = ax.bar(categories, values, color=['#ff9999', '#66b3ff', '#99ff99'])
+# Chart creation with Korean font
+# - Use textprops={{'fontproperties': korean_font}} for pie charts
+# - Use fontproperties=korean_font for titles, labels, annotations
+# - Use prop=korean_font for legends
+# - Apply korean_font to tick labels individually
 
-# Apply Korean font to all text elements (smaller sizes)
-ax.set_title('카테고리별 판매 금액', fontproperties=korean_font, fontsize=16, fontweight='bold')
-ax.set_xlabel('카테고리', fontproperties=korean_font, fontsize=12)
-ax.set_ylabel('판매 금액 (원)', fontproperties=korean_font, fontsize=12)
-
-# Set Korean tick labels properly (smaller size)
-ax.set_xticks(range(len(categories)))
-ax.set_xticklabels(categories, fontproperties=korean_font, fontsize=10)
-
-# Format y-axis with Korean currency (smaller font)
-ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{{x:,.0f}}원'))
-for label in ax.get_yticklabels():
-    label.set_fontproperties(korean_font)
-    label.set_fontsize(10)
-
-# Add value labels on bars (optimized positioning and rotation)
-for bar, value in zip(bars, values):
-    height = bar.get_height()
-    # Use minimal offset and check if label would exceed plot area
-    y_max = ax.get_ylim()[1]  # Get current y-axis maximum
-    offset = min(height * 0.003, y_max * 0.02)  # Smaller, bounded offset
-    
-    # If label would be too high, place it inside the bar
-    if height + offset > y_max * 0.95:
-        # Place inside bar, near the top
-        y_pos = height - height * 0.1
-        text_color = 'white'
-        va_align = 'center'
-    else:
-        # Place above bar with minimal offset
-        y_pos = height + offset
-        text_color = 'black'
-        va_align = 'bottom'
-    
-    ax.text(bar.get_x() + bar.get_width()/2., y_pos,
-            f'{{value:,}}원', ha='center', va=va_align, color=text_color,
-            fontproperties=korean_font, fontsize=13, rotation=0)  # rotation=0 for horizontal text, 20% larger
-
+# Standard save and cleanup
 plt.tight_layout()
-# Ensure adequate space for labels and title
-plt.subplots_adjust(bottom=0.12, top=0.85, left=0.1, right=0.95)  # More top margin
 os.makedirs('./artifacts', exist_ok=True)
-plt.savefig('./artifacts/bar_chart.png', bbox_inches='tight', dpi=200, facecolor='white')
+plt.savefig('./artifacts/chart_name.png', bbox_inches='tight', dpi=200, facecolor='white')
 plt.close()
 ```
 
-- **[EXAMPLE] Korean Line Chart (COMPLETE):**
-```python
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-import os
-
-# Enhanced Korean font setup
-plt.rcParams['font.family'] = ['NanumGothic']
-plt.rcParams['axes.unicode_minus'] = False
-korean_font = fm.FontProperties(family='NanumGothic')
-
-# Create line chart with high-resolution sizing
-fig, ax = plt.subplots(figsize=(7.2, 4.8), dpi=200)  # High-resolution for crisp images
-months = ['1월', '2월', '3월', '4월', '5월', '6월']
-values = [1357640, 1301850, 1355050, 1423340, 1834730, 1346540]
-
-# Create line plot with Korean styling
-line = ax.plot(months, values, marker='o', linewidth=2.5, markersize=8, 
-               color='#2E86AB', markerfacecolor='#A23B72', markeredgecolor='white', markeredgewidth=2)
-
-# Apply Korean font to all text elements
-ax.set_title('월별 매출 추이', fontproperties=korean_font, fontsize=16, fontweight='bold')
-ax.set_xlabel('월', fontproperties=korean_font, fontsize=12)
-ax.set_ylabel('매출 금액 (원)', fontproperties=korean_font, fontsize=12)
-
-# CRITICAL: Format y-axis to avoid scientific notation (1e6)
-ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{{x:,.0f}}원'))
-for label in ax.get_yticklabels():
-    label.set_fontproperties(korean_font)
-    label.set_fontsize(10)
-
-# Set Korean tick labels properly
-ax.set_xticks(range(len(months)))
-ax.set_xticklabels(months, fontproperties=korean_font, fontsize=10)
-
-# Add data point labels with values
-for i, (month, value) in enumerate(zip(months, values)):
-    ax.annotate(f'{{value:,}}원', 
-                xy=(i, value), 
-                xytext=(0, 10), 
-                textcoords='offset points',
-                ha='center', va='bottom',
-                fontproperties=korean_font, fontsize=11,
-                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8, edgecolor='none'))
-
-# Add grid for better readability
-ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
-ax.set_facecolor('#fafafa')
-
-plt.tight_layout()
-os.makedirs('./artifacts', exist_ok=True)
-plt.savefig('./artifacts/line_chart.png', bbox_inches='tight', dpi=200, facecolor='white')
-plt.close()
-```
 **[MANDATORY] Korean Text in Charts:**
 - **ALWAYS use `fontproperties=korean_font`** for ALL Korean text elements
 - **REQUIRED for titles/labels:** plt.title(), plt.xlabel(), plt.ylabel(), plt.text()
 - **CRITICAL for legends:** `plt.legend(prop=korean_font)` or `ax.legend(prop=korean_font)`
 - **ESSENTIAL for pie charts:** `textprops={{'fontproperties': korean_font}}` in plt.pie()
 - **CRITICAL for tick labels:**
-  - X축 한글 레이블: Use `ax.set_xticks()` then `ax.set_xticklabels(labels, fontproperties=korean_font)`
-  - Y축 한글 단위: `plt.yticks(fontproperties=korean_font)` (예: "원", "개", "%")
-- **ESSENTIAL for data labels (이미지 내부 텍스트) - 크기별 최적화:**
-  - 막대 위 값: `plt.text(x, y, text, fontproperties=korean_font, fontsize=max(8, min(14, fig.get_figwidth()*2)))`
-  - 파이 차트 범례: `plt.legend(labels, prop=korean_font, fontsize=max(9, min(16, fig.get_figwidth()*2.5)))`
-  - 주석/화살표: `plt.annotate(text, fontproperties=korean_font, fontsize=max(7, min(12, fig.get_figwidth()*1.8)))`
+  - X-axis Korean labels: Use `ax.set_xticks()` then `ax.set_xticklabels(labels, fontproperties=korean_font)`
+  - Y-axis Korean units: `plt.yticks(fontproperties=korean_font)` (e.g., "KRW", "units", "%")
+- **ESSENTIAL for data labels (text inside images) - size optimization:**
+  - Bar values: `plt.text(x, y, text, fontproperties=korean_font, fontsize=max(8, min(14, fig.get_figwidth()*2)))`
+  - Pie chart legend: `plt.legend(labels, prop=korean_font, fontsize=max(9, min(16, fig.get_figwidth()*2.5)))`
+  - Annotations/arrows: `plt.annotate(text, fontproperties=korean_font, fontsize=max(7, min(12, fig.get_figwidth()*1.8)))`
 </matplotlib_requirements>
-
-<chart_insight_analysis_requirements>
-- [CRITICAL] **MANDATORY CHART INSIGHT ANALYSIS**: After generating each chart, you MUST provide detailed insights and interpretations
-- [REQUIRED] **STRUCTURED ANALYSIS PATTERN**: For every chart/visualization, follow this exact pattern:
 
 <chart_insight_analysis_requirements>
 - [CRITICAL] **MANDATORY CHART INSIGHT ANALYSIS**: After generating each chart, you MUST provide detailed insights and interpretations
