@@ -1,0 +1,22 @@
+# PyTorch with CUDA 12.1 support
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.5.0
+
+# Transformers and NLP
+transformers>=4.30.0
+tokenizers>=0.13.0
+
+# Core ML/AI libraries
+numpy<2.0
+
+# SageMaker and AWS
+sagemaker>=2.251.0
+sagemaker-core>=1.0.0
+boto3>=1.26.0
+botocore>=1.29.0
+
+# Jupyter and IPython (ipykernel만 설치, 나머지는 SageMaker 기본 환경 사용)
+ipykernel>=6.20.0
+
+# Utilities
+python-dotenv>=1.0.0
