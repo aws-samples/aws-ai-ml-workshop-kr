@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large dependency files
+uv.lock
+poetry.lock
+Pipfile.lock
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+setup/.venv/
+
+# Model files (if large)
+*.bin
+*.safetensors
+*.h5
+*.pkl
+*.joblib
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
