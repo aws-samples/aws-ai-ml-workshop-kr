@@ -101,6 +101,29 @@ print(f"Dataset size: {{total_calculations}} items. Maximum validations allowed:
 
 2. **Smart Batch Validation Process**:
 ```python
+# [CRITICAL] Load metadata and define variables (required if running separately from Step 1)
+import json
+import pandas as pd
+import os
+
+calc_metadata = {{'calculations': []}}
+try:
+    with open('./artifacts/calculation_metadata.json', 'r', encoding='utf-8') as f:
+        calc_metadata = json.load(f)
+except:
+    pass
+
+VALIDATION_THRESHOLDS = {{
+    'max_validations_total': 20,
+    'small_dataset_max': 15,
+    'medium_dataset_max': 30,
+    'large_dataset_high_limit': 15,
+    'large_dataset_medium_limit': 5,
+    'medium_dataset_medium_limit': 8,
+}}
+
+total_calculations = len(calc_metadata.get('calculations', []))
+
 # [CRITICAL] Initialize variables BEFORE use to avoid NameError
 verified_results = {{}}  # Initialize validation results dictionary
 data_cache = {{}}         # Initialize data caching dictionary

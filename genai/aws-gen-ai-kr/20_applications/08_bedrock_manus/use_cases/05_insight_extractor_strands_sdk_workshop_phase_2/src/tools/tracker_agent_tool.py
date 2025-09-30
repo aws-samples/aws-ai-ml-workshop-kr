@@ -76,7 +76,7 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
     tracker_agent = strands_utils.get_agent(
         agent_name="tracker",
         system_prompts=apply_prompt_template(
-            prompt_name="tacker", 
+            prompt_name="tracker", 
             prompt_context={
                 "USER_REQUEST": request_prompt, 
                 "FULL_PLAN": full_plan
