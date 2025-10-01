@@ -1,192 +1,1030 @@
 {
-  "metadata": {
-    "generated_at": "2025-09-30 15:59:04",
-    "data_sources": [
-      "data/Dat-fresh-food-claude.csv",
-      "data/youtube_search_results.txt"
-    ],
-    "total_records": 1220
-  },
   "calculations": [
     {
-      "id": "calc_category_sales",
-      "description": "카테고리별 판매 비율",
-      "formula": "SUM(Amount) BY Category / SUM(Amount) * 100",
-      "value": {
-        "과일": 46.03,
-        "유제품": 26.25,
-        "채소": 27.73
-      },
-      "source_file": "data/Dat-fresh-food-claude.csv",
+      "id": "calc_001",
+      "value": "8619150",
+      "description": "총 판매액",
+      "formula": "SUM(Amount column)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Category",
         "Amount"
       ],
-      "source_rows": "all",
+      "source_rows": "all rows",
       "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "전체 판매액 - 핵심 비즈니스 지표"
     },
     {
-      "id": "calc_monthly_sales",
-      "description": "월별 판매액",
-      "formula": "SUM(Amount) BY Month",
-      "value": {
-        "1": 1357640,
-        "2": 1301850,
-        "3": 1355050,
-        "4": 1423340,
-        "5": 1834730,
-        "6": 1346540
-      },
-      "source_file": "data/Dat-fresh-food-claude.csv",
+      "id": "cat_sales_0",
+      "value": 3967350.0,
+      "description": "카테고리 '과일' 총 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Date",
-        "Amount"
+        "Amount",
+        "Category"
       ],
-      "source_rows": "all",
+      "source_rows": "Category = 과일",
       "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "카테고리별 판매액 - 과일 카테고리의 총 판매액"
     },
     {
-      "id": "calc_may_sales_peak",
-      "description": "5월 판매액 피크",
-      "formula": "SUM(Amount) WHERE Month = 5",
+      "id": "cat_sales_1",
+      "value": 2262100.0,
+      "description": "카테고리 '유제품' 총 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category = 유제품",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "카테고리별 판매액 - 유제품 카테고리의 총 판매액"
+    },
+    {
+      "id": "cat_sales_2",
+      "value": 2389700.0,
+      "description": "카테고리 '채소' 총 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "source_rows": "Category = 채소",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "카테고리별 판매액 - 채소 카테고리의 총 판매액"
+    },
+    {
+      "id": "gender_sales_0",
+      "value": 3963350.0,
+      "description": "성별 'F' 총 판매액",
+      "formula": "SUM(Amount) WHERE Gender = gender_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "source_rows": "Gender = F",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "성별 판매액 - F 성별의 총 판매액"
+    },
+    {
+      "id": "gender_sales_1",
+      "value": 4655800.0,
+      "description": "성별 'M' 총 판매액",
+      "formula": "SUM(Amount) WHERE Gender = gender_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "source_rows": "Gender = M",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "성별 판매액 - M 성별의 총 판매액"
+    },
+    {
+      "id": "age_sales_0",
+      "value": 761340.0,
+      "description": "연령대 '20대' 총 판매액",
+      "formula": "SUM(Amount) WHERE Age Group = age_group_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group = 20대",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "연령대별 판매액 - 20대 연령대의 총 판매액"
+    },
+    {
+      "id": "age_sales_1",
+      "value": 2989690.0,
+      "description": "연령대 '30대' 총 판매액",
+      "formula": "SUM(Amount) WHERE Age Group = age_group_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group = 30대",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "연령대별 판매액 - 30대 연령대의 총 판매액"
+    },
+    {
+      "id": "age_sales_2",
+      "value": 3500.0,
+      "description": "연령대 '40' 총 판매액",
+      "formula": "SUM(Amount) WHERE Age Group = age_group_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group = 40",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "연령대별 판매액 - 40 연령대의 총 판매액"
+    },
+    {
+      "id": "age_sales_3",
+      "value": 1803290.0,
+      "description": "연령대 '40대' 총 판매액",
+      "formula": "SUM(Amount) WHERE Age Group = age_group_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group = 40대",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "연령대별 판매액 - 40대 연령대의 총 판매액"
+    },
+    {
+      "id": "age_sales_4",
+      "value": 2517900.0,
+      "description": "연령대 '50대' 총 판매액",
+      "formula": "SUM(Amount) WHERE Age Group = age_group_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group = 50대",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "연령대별 판매액 - 50대 연령대의 총 판매액"
+    },
+    {
+      "id": "age_sales_5",
+      "value": 543430.0,
+      "description": "연령대 '60대' 총 판매액",
+      "formula": "SUM(Amount) WHERE Age Group = age_group_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "source_rows": "Age Group = 60대",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "연령대별 판매액 - 60대 연령대의 총 판매액"
+    },
+    {
+      "id": "promo_lift",
+      "value": 95.78,
+      "description": "프로모션 적용 시 평균 주문 금액 증가율",
+      "formula": "(promo_avg - no_promo_avg) / no_promo_avg * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "source_rows": "all rows",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:54:03",
+      "verification_notes": "프로모션 효과 측정 - 프로모션 적용 시 평균 주문 금액 증가율"
+    },
+    {
+      "id": "monthly_sales_0",
+      "value": 1357640.0,
+      "description": "1월 판매액",
+      "formula": "SUM(Amount) WHERE Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 1",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 판매액 - 1월의 총 판매액"
+    },
+    {
+      "id": "monthly_sales_1",
+      "value": 1301850.0,
+      "description": "2월 판매액",
+      "formula": "SUM(Amount) WHERE Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 2",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 판매액 - 2월의 총 판매액"
+    },
+    {
+      "id": "monthly_growth_1",
+      "value": -4.11,
+      "description": "2월 성장률",
+      "formula": "(current_month_sales - previous_month_sales) / previous_month_sales * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 2",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 성장률 - 2월의 전월 대비 성장률"
+    },
+    {
+      "id": "monthly_sales_2",
+      "value": 1355050.0,
+      "description": "3월 판매액",
+      "formula": "SUM(Amount) WHERE Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 3",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 판매액 - 3월의 총 판매액"
+    },
+    {
+      "id": "monthly_growth_2",
+      "value": 4.09,
+      "description": "3월 성장률",
+      "formula": "(current_month_sales - previous_month_sales) / previous_month_sales * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 3",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 성장률 - 3월의 전월 대비 성장률"
+    },
+    {
+      "id": "monthly_sales_3",
+      "value": 1423340.0,
+      "description": "4월 판매액",
+      "formula": "SUM(Amount) WHERE Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 4",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 판매액 - 4월의 총 판매액"
+    },
+    {
+      "id": "monthly_growth_3",
+      "value": 5.04,
+      "description": "4월 성장률",
+      "formula": "(current_month_sales - previous_month_sales) / previous_month_sales * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 4",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 성장률 - 4월의 전월 대비 성장률"
+    },
+    {
+      "id": "monthly_sales_4",
       "value": 1834730.0,
-      "source_file": "data/Dat-fresh-food-claude.csv",
+      "description": "5월 판매액",
+      "formula": "SUM(Amount) WHERE Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Date",
-        "Amount"
+        "Amount",
+        "Date"
       ],
       "source_rows": "Month = 5",
       "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 판매액 - 5월의 총 판매액"
     },
     {
-      "id": "calc_june_decrease",
-      "description": "6월 판매액 감소율",
-      "formula": "(June_Sales - May_Sales) / May_Sales * 100",
-      "value": -26.61,
-      "source_file": "data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Date",
-        "Amount"
-      ],
-      "source_rows": "Month = 5 or Month = 6",
-      "importance": "medium",
-      "timestamp": "2025-09-30 15:59:04"
-    },
-    {
-      "id": "calc_age_sales",
-      "description": "연령대별 판매액",
-      "formula": "SUM(Amount) BY Age Group",
-      "value": {
-        "30대": 2989690,
-        "50대": 2517900,
-        "40대": 1803290,
-        "20대": 761340,
-        "60대": 543430,
-        "40": 3500
-      },
-      "source_file": "data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Age Group",
-        "Amount"
-      ],
-      "source_rows": "all",
-      "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
-    },
-    {
-      "id": "calc_gender_sales",
-      "description": "성별 판매액",
-      "formula": "SUM(Amount) BY Gender",
-      "value": {
-        "F": 3963350,
-        "M": 4655800
-      },
-      "source_file": "data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Gender",
-        "Amount"
-      ],
-      "source_rows": "all",
-      "importance": "medium",
-      "timestamp": "2025-09-30 15:59:04"
-    },
-    {
-      "id": "calc_40s_female_sales",
-      "description": "40대 여성 판매액 비율",
-      "formula": "SUM(Amount WHERE Age Group = '40대' AND Gender = 'F') / SUM(Amount) * 100",
-      "value": 7.57,
-      "source_file": "data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Age Group",
-        "Gender",
-        "Amount"
-      ],
-      "source_rows": "Age Group = '40대' AND Gender = 'F'",
-      "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
-    },
-    {
-      "id": "calc_youtube_monthly",
-      "description": "YouTube 콘텐츠 월별 분포",
-      "formula": "COUNT(videos) BY Month",
-      "value": {
-        "1": 0,
-        "2": 2,
-        "3": 0,
-        "4": 3,
-        "5": 1,
-        "6": 0,
-        "7": 1,
-        "8": 1,
-        "9": 1,
-        "10": 0,
-        "11": 4,
-        "12": 4
-      },
-      "source_file": "data/youtube_search_results.txt",
-      "source_columns": [
-        "업로드 날짜"
-      ],
-      "source_rows": "all",
-      "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
-    },
-    {
-      "id": "calc_sales_youtube_correlation",
-      "description": "판매액과 YouTube 업로드 수 간의 상관계수",
-      "formula": "CORRELATION(monthly_sales, youtube_uploads)",
-      "value": -0.2775672405095436,
-      "source_file": "data/Dat-fresh-food-claude.csv, data/youtube_search_results.txt",
+      "id": "monthly_growth_4",
+      "value": 28.9,
+      "description": "5월 성장률",
+      "formula": "(current_month_sales - previous_month_sales) / previous_month_sales * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
         "Amount",
-        "업로드 날짜"
+        "Date"
       ],
-      "source_rows": "all",
-      "importance": "high",
-      "timestamp": "2025-09-30 15:59:04"
+      "source_rows": "Month = 5",
+      "importance": "medium",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 성장률 - 5월의 전월 대비 성장률"
     },
     {
-      "id": "calc_keyword_frequency",
-      "description": "주요 키워드 빈도",
-      "formula": "COUNT(keyword) IN youtube_content",
-      "value": {
-        "시장": 21,
-        "트렌드": 10,
-        "전망": 21,
-        "농식품": 11,
-        "유통": 19,
-        "이커머스": 3
-      },
-      "source_file": "data/youtube_search_results.txt",
+      "id": "monthly_sales_5",
+      "value": 1346540.0,
+      "description": "6월 판매액",
+      "formula": "SUM(Amount) WHERE Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "content"
+        "Amount",
+        "Date"
       ],
-      "source_rows": "all",
+      "source_rows": "Month = 6",
+      "importance": "high",
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 판매액 - 6월의 총 판매액"
+    },
+    {
+      "id": "monthly_growth_5",
+      "value": -26.61,
+      "description": "6월 성장률",
+      "formula": "(current_month_sales - previous_month_sales) / previous_month_sales * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "source_rows": "Month = 6",
       "importance": "medium",
-      "timestamp": "2025-09-30 15:59:04"
+      "timestamp": "2025-10-01 13:57:38",
+      "verification_notes": "월별 성장률 - 6월의 전월 대비 성장률"
+    },
+    {
+      "id": "cat_month_과일_1월",
+      "value": "639540",
+      "description": "1월 과일 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 과일, Month = 1",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 1월의 과일 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_과일_2월",
+      "value": "644650",
+      "description": "2월 과일 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 과일, Month = 2",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 2월의 과일 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_과일_3월",
+      "value": "585150",
+      "description": "3월 과일 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 과일, Month = 3",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 3월의 과일 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_과일_4월",
+      "value": "638240",
+      "description": "4월 과일 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 과일, Month = 4",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 4월의 과일 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_과일_5월",
+      "value": "846630",
+      "description": "5월 과일 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 과일, Month = 5",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 5월의 과일 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_과일_6월",
+      "value": "613140",
+      "description": "6월 과일 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 과일, Month = 6",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 6월의 과일 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_유제품_1월",
+      "value": "361400",
+      "description": "1월 유제품 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 유제품, Month = 1",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 1월의 유제품 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_유제품_2월",
+      "value": "332800",
+      "description": "2월 유제품 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 유제품, Month = 2",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 2월의 유제품 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_유제품_3월",
+      "value": "396700",
+      "description": "3월 유제품 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 유제품, Month = 3",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 3월의 유제품 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_유제품_4월",
+      "value": "329400",
+      "description": "4월 유제품 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 유제품, Month = 4",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 4월의 유제품 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_유제품_5월",
+      "value": "491200",
+      "description": "5월 유제품 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 유제품, Month = 5",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 5월의 유제품 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_유제품_6월",
+      "value": "350600",
+      "description": "6월 유제품 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 유제품, Month = 6",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 6월의 유제품 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_채소_1월",
+      "value": "356700",
+      "description": "1월 채소 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 채소, Month = 1",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 1월의 채소 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_채소_2월",
+      "value": "324400",
+      "description": "2월 채소 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 채소, Month = 2",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 2월의 채소 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_채소_3월",
+      "value": "373200",
+      "description": "3월 채소 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 채소, Month = 3",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 3월의 채소 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_채소_4월",
+      "value": "455700",
+      "description": "4월 채소 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 채소, Month = 4",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 4월의 채소 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_채소_5월",
+      "value": "496900",
+      "description": "5월 채소 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 채소, Month = 5",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 5월의 채소 카테고리 판매액"
+    },
+    {
+      "id": "cat_month_채소_6월",
+      "value": "382800",
+      "description": "6월 채소 판매액",
+      "formula": "SUM(Amount) WHERE Category = category_name AND Month = month_value",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category",
+        "Date"
+      ],
+      "source_rows": "Category = 채소, Month = 6",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "카테고리별 월별 판매액 - 6월의 채소 카테고리 판매액"
+    },
+    {
+      "id": "gender_cat_pref_F_과일",
+      "value": 47.8,
+      "description": "F 성별의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender",
+        "Category"
+      ],
+      "source_rows": "Gender = F, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "성별 카테고리 선호도 - F 성별의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "gender_cat_pref_F_유제품",
+      "value": 24.31,
+      "description": "F 성별의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender",
+        "Category"
+      ],
+      "source_rows": "Gender = F, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "성별 카테고리 선호도 - F 성별의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "gender_cat_pref_F_채소",
+      "value": 27.89,
+      "description": "F 성별의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender",
+        "Category"
+      ],
+      "source_rows": "Gender = F, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "성별 카테고리 선호도 - F 성별의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "gender_cat_pref_M_과일",
+      "value": 44.52,
+      "description": "M 성별의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender",
+        "Category"
+      ],
+      "source_rows": "Gender = M, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "성별 카테고리 선호도 - M 성별의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "gender_cat_pref_M_유제품",
+      "value": 27.89,
+      "description": "M 성별의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender",
+        "Category"
+      ],
+      "source_rows": "Gender = M, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "성별 카테고리 선호도 - M 성별의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "gender_cat_pref_M_채소",
+      "value": 27.58,
+      "description": "M 성별의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender",
+        "Category"
+      ],
+      "source_rows": "Gender = M, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "성별 카테고리 선호도 - M 성별의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_20대_과일",
+      "value": 34.31,
+      "description": "20대 연령대의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 20대, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 20대 연령대의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_20대_유제품",
+      "value": 53.97,
+      "description": "20대 연령대의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 20대, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 20대 연령대의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_20대_채소",
+      "value": 11.72,
+      "description": "20대 연령대의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 20대, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 20대 연령대의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_30대_과일",
+      "value": 53.62,
+      "description": "30대 연령대의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 30대, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 30대 연령대의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_30대_유제품",
+      "value": 9.31,
+      "description": "30대 연령대의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 30대, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 30대 연령대의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_30대_채소",
+      "value": 37.07,
+      "description": "30대 연령대의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 30대, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 30대 연령대의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_40대_과일",
+      "value": 15.93,
+      "description": "40대 연령대의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 40대, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 40대 연령대의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_40대_유제품",
+      "value": 39.36,
+      "description": "40대 연령대의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 40대, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 40대 연령대의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_40대_채소",
+      "value": 44.72,
+      "description": "40대 연령대의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 40대, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 40대 연령대의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_50대_과일",
+      "value": 65.21,
+      "description": "50대 연령대의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 50대, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 50대 연령대의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_50대_유제품",
+      "value": 21.18,
+      "description": "50대 연령대의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 50대, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 50대 연령대의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_50대_채소",
+      "value": 13.61,
+      "description": "50대 연령대의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 50대, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 50대 연령대의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_60대_과일",
+      "value": 32.01,
+      "description": "60대 연령대의 과일 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 60대, Category = 과일",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 60대 연령대의 과일 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_60대_유제품",
+      "value": 60.73,
+      "description": "60대 연령대의 유제품 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 60대, Category = 유제품",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 60대 연령대의 유제품 카테고리 선호도 (%)"
+    },
+    {
+      "id": "age_cat_pref_60대_채소",
+      "value": 7.27,
+      "description": "60대 연령대의 채소 카테고리 선호도",
+      "formula": "(category_sales / total_sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group",
+        "Category"
+      ],
+      "source_rows": "Age Group = 60대, Category = 채소",
+      "importance": "medium",
+      "timestamp": "2025-10-01 14:01:15",
+      "verification_notes": "연령대별 카테고리 선호도 - 60대 연령대의 채소 카테고리 선호도 (%)"
+    },
+    {
+      "id": "total_sales",
+      "value": "8619150",
+      "description": "총 판매액",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "importance": "high",
+      "timestamp": "2025-10-01 14:04:16",
+      "verification_notes": "전체 판매액 - 핵심 비즈니스 지표"
+    },
+    {
+      "id": "total_orders",
+      "value": 1220.0,
+      "description": "총 주문 수",
+      "formula": "COUNT(index)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "index"
+      ],
+      "source_rows": "all rows",
+      "importance": "high",
+      "timestamp": "2025-10-01 14:04:16",
+      "verification_notes": "전체 주문 수 - 핵심 비즈니스 지표"
+    },
+    {
+      "id": "avg_order_value",
+      "value": 7064.877049180328,
+      "description": "평균 주문 금액",
+      "formula": "SUM(Amount) / COUNT(index)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "index"
+      ],
+      "source_rows": "all rows",
+      "importance": "high",
+      "timestamp": "2025-10-01 14:04:16",
+      "verification_notes": "평균 주문 금액 - 핵심 비즈니스 지표"
     }
   ]
 }

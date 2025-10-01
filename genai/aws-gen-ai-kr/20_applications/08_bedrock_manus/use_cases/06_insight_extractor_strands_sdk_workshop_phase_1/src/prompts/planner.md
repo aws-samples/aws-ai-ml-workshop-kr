@@ -143,12 +143,12 @@ For ANY data analysis request, the Coder should explore these PRIORITY dimension
 </execution_principles>
 
 <creative_prompting_examples>
-Instead of just "분석해주세요", expand to:
-- "이 데이터에서 숨겨진 패턴이나 예상치 못한 연관성은 무엇인가?"
-- "다양한 각도에서 세분화했을 때 어떤 인사이트가 나타나는가?"
-- "시간별, 카테고리별, 세그먼트별로 나누면 어떤 차이점이 보이는가?"
-- "이 결과가 비즈니스 전략에 어떤 영향을 미칠 수 있는가?"
-- "경쟁사나 업계 트렌드와 비교했을 때 어떤 위치에 있는가?"
+Instead of just "Please analyze", expand to:
+- "What hidden patterns or unexpected correlations exist in this data?"
+- "What insights emerge when segmented from various angles?"
+- "What differences appear when broken down by time, category, and segment?"
+- "How might these results impact business strategy?"
+- "Where do we stand compared to competitors or industry trends?"
 </creative_prompting_examples>
 
 <plan_example>

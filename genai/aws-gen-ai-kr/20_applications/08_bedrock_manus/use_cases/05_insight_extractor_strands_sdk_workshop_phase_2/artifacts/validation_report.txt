@@ -1,58 +1,53 @@
 ==================================================
-## 검증 보고서: 신선식품 동향 데이터 검증 및 인용 생성
-## 실행 시간: 2025-09-30 16:00:28
+## 검증 보고서: Moon Market 판매 현황 데이터 검증 및 인용 생성
+## 실행 시간: 2025-10-01 14:07:12
 --------------------------------------------------
 검증 요약:
-- 총 계산 항목: 10개
-- 성공적으로 검증됨: 8개
-- 검토 필요: 2개
-- 인용 생성됨: 10개
+- 총 계산 항목: 66개
+- 성공적으로 검증됨: 20개
+- 검토 필요: 0개
+- 인용 생성됨: 15개
 
 검증 결과:
-- calc_category_sales (카테고리별 판매 비율): ✓ 검증됨
-  * 과일: 46.03%
-  * 유제품: 26.25%
-  * 채소: 27.73%
-- calc_monthly_sales (월별 판매액): ⚠ 검토 필요 (예상: {'1': 1357640, '2': 1301850, '3': 1355050, '4': 1423340, '5': 1834730, '6': 1346540}, 실제: {1: 1357640, 2: 1301850, 3: 1355050, 4: 1423340, 5: 1834730, 6: 1346540})
-  → 공식: SUM(Amount) BY Month
-  → 데이터 소스: data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_may_sales_peak (5월 판매액 피크): ✓ 검증됨 (1,834,730.00)
-- calc_june_decrease (6월 판매액 감소율): ✓ 검증됨 (값: -26.61)
-- calc_youtube_monthly (YouTube 콘텐츠 월별 분포): ⚠ 검토 필요 (예상: {'1': 0, '2': 2, '3': 0, '4': 3, '5': 1, '6': 0, '7': 1, '8': 1, '9': 1, '10': 0, '11': 4, '12': 4}, 실제: {1: 0, 2: 2, 3: 0, 4: 3, 5: 1, 6: 0, 7: 1, 8: 1, 9: 1, 10: 0, 11: 4, 12: 4})
-  → 공식: COUNT(videos) BY Month
-  → 데이터 소스: data/youtube_search_results.txt
-  → 중요도: high
-- calc_age_sales (연령대별 판매액): ✓ 검증됨
-  * 30대: 2,989,690
-  * 50대: 2,517,900
-  * 40대: 1,803,290
-  * 20대: 761,340
-  * 60대: 543,430
-  * 40: 3,500
-- calc_40s_female_sales (40대 여성 판매액 비율): ✓ 검증됨 (7.57%)
-- calc_gender_sales (성별 판매액): ✓ 검증됨
-  * F: 3,963,350
-  * M: 4,655,800
-- calc_keyword_frequency (주요 키워드 빈도): ✓ 검증됨
-  * 시장: 21
-  * 트렌드: 10
-  * 전망: 21
-  * 농식품: 11
-  * 유통: 19
-  * 이커머스: 3
-- calc_sales_youtube_correlation (판매액과 YouTube 업로드 수 간의 상관계수): ✓ 검증됨 (값: -0.28)
+- calc_001 (총 판매액): ✓ 검증됨 (8,619,150.00)
+- cat_sales_0 (카테고리 '과일' 총 판매액): ✓ 검증됨 (3,967,350.00)
+- cat_sales_1 (카테고리 '유제품' 총 판매액): ✓ 검증됨 (2,262,100.00)
+- cat_sales_2 (카테고리 '채소' 총 판매액): ✓ 검증됨 (2,389,700.00)
+- gender_sales_0 (성별 'F' 총 판매액): ✓ 검증됨 (3,963,350.00)
+- gender_sales_1 (성별 'M' 총 판매액): ✓ 검증됨 (4,655,800.00)
+- promo_lift (프로모션 적용 시 평균 주문 금액 증가율): ✓ 검증됨 (95.78%)
+- monthly_sales_0 (1월 판매액): ✓ 검증됨 (1,357,640.00)
+- monthly_sales_1 (2월 판매액): ✓ 검증됨 (1,301,850.00)
+- monthly_growth_1 (2월 성장률): ✓ 검증됨 (값: -4.11)
+- monthly_sales_2 (3월 판매액): ✓ 검증됨 (1,355,050.00)
+- monthly_growth_2 (3월 성장률): ✓ 검증됨 (4.09%)
+- monthly_sales_3 (4월 판매액): ✓ 검증됨 (1,423,340.00)
+- monthly_growth_3 (4월 성장률): ✓ 검증됨 (5.04%)
+- monthly_sales_4 (5월 판매액): ✓ 검증됨 (1,834,730.00)
+- monthly_growth_4 (5월 성장률): ✓ 검증됨 (28.90%)
+- monthly_sales_5 (6월 판매액): ✓ 검증됨 (1,346,540.00)
+- monthly_growth_5 (6월 성장률): ✓ 검증됨 (값: -26.61)
+- total_orders (총 주문 수): ✓ 검증됨 (1,220.00)
+- avg_order_value (평균 주문 금액): ✓ 검증됨 (7,064.88)
+
+차트 검증:
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_sales_bar.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_category_preference.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_pie.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_age_heatmap.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_monthly_trend.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/top_promotions.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_sales_bar.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_category_preference.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/summary_dashboard.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/promotion_effect.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_sales_trend.png)
 
 데이터 품질 평가:
-- 데이터 소스: data/Dat-fresh-food-claude.csv
+- 데이터 소스: ./data/Dat-fresh-food-claude.csv
 - 총 레코드 수: 1,220개
 - 데이터 컬럼 수: 18개
-- 데이터 완성도: 99.5% (결측치 0.5%)
-
-성능 지표:
-- 검증 소요 시간: 약 10초
-- 메모리 사용량: 최적화됨
-- 처리 효율성: ✓ 양호
+- 결측치: 103개
 
 생성된 파일:
 - ./artifacts/citations.json : Reporter 에이전트를 위한 인용 메타데이터

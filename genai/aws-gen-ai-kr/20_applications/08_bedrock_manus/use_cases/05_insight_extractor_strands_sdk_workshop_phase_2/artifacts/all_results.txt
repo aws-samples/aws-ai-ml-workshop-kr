@@ -1,39 +1,74 @@
 
 ==================================================
-## Analysis Stage: 카테고리별 판매 분석
-## Execution Time: 2025-09-30 15:49:37
+## Analysis Stage: 기본 판매 데이터 분석
+## Execution Time: 2025-10-01 13:54:03
 --------------------------------------------------
 Result Description: 
-신선식품 데이터의 카테고리별(과일, 채소, 유제품) 판매액과 비율 분석
+Moon Market의 카테고리별, 성별, 연령대별, 프로모션별 판매 현황 분석
 --------------------------------------------------
 Key Findings & Insights:
 
 [DISCOVERY & INSIGHTS]:
-- Discovery 1: 과일 카테고리가 전체 판매액의 약 절반을 차지하는 압도적인 비중을 보임
-- Insight 1: 신선식품 시장에서 과일이 핵심 매출 동력으로 작용하며 소비자 선호도가 높음
-- Discovery 2: 채소와 유제품은 비슷한 수준의 시장 점유율을 보이며 나머지 절반을 분할
-- Insight 2: 균형 잡힌 제품 포트폴리오를 위해 채소와 유제품 카테고리의 성장 전략이 필요함
-
-[CHART INTERPRETATION INSIGHTS]:
-- Chart Pattern 1: 파이 차트에서 과일 카테고리의 점유율이 시각적으로 두드러짐
-- Chart Insight 1: 신선식품 유통 전략 수립 시 과일 카테고리에 우선순위를 두어야 함
-- Chart Pattern 2: 채소와 유제품의 비슷한 점유율은 두 카테고리 간 경쟁 관계를 시사
-- Chart Insight 2: 채소와 유제품은 차별화된 마케팅 전략으로 시장 점유율 확대 가능성 있음
+- 카테고리별 판매액: 과일: 3,967,350원 (46.03%), 채소: 2,389,700원 (27.73%), 유제품: 2,262,100원 (26.25%)
+- 성별 판매액: M: 4,655,800원 (54.02%), F: 3,963,350원 (45.98%)
+- 연령대별 판매액: 30대: 2,989,690원 (34.69%), 50대: 2,517,900원 (29.21%), 40대: 1,803,290원 (20.92%), 20대: 761,340원 (8.83%), 60대: 543,430원 (6.3%), 40: 3,500원 (0.04%)
+- 프로모션 효과: 프로모션 적용 시 평균 주문 금액이 95.78% 증가함
 
 [METHODOLOGY INSIGHTS]:
-- Methodology Choice: 파이 차트를 통해 카테고리별 상대적 비중을 직관적으로 시각화
-- Technical Insight: 모든 거래에 카테고리가 명확히 분류되어 있어 데이터 신뢰성이 높음
-- Alternative Approach: 시계열 분석을 통해 카테고리별 성장 추세를 추가로 분석할 필요 있음
+- 판매 데이터를 카테고리, 성별, 연령대, 프로모션 등 다양한 차원에서 분석하여 세분화된 인사이트 도출
+- 판매액, 주문 수, 평균 주문 금액 등 다양한 지표를 활용하여 종합적인 분석 수행
 
 [BUSINESS IMPLICATIONS]:
-- Strategic Implication: 과일 카테고리의 공급망 최적화와 품질 관리가 전체 수익성에 직접적 영향
-- Competitive Advantage: 과일 품목의 다양화와 프리미엄화를 통한 경쟁 우위 확보 가능
-- Decision Support: 카테고리별 판매 비중에 따른 재고 관리 및 마케팅 예산 배분 전략 수립 필요
+- 카테고리별 판매 비중을 고려한 재고 및 마케팅 전략 수립 필요
+- 성별 및 연령대별 타겟팅 전략 수립에 활용 가능
+- 프로모션 효과 분석을 통한 효율적인 프로모션 전략 수립 필요
 
 [RECOMMENDED NEXT STEPS]:
-- Further Analysis: 각 카테고리 내 세부 품목별 판매 동향 및 수익성 분석 필요
-- Action Items: 과일 카테고리의 계절별 판매 전략 수립 및 채소/유제품 카테고리 활성화 방안 마련
-- Monitoring: 카테고리별 판매 비중의 월별/계절별 변화 추이 지속 모니터링
+- 카테고리별, 성별, 연령대별 판매 현황을 시각화하여 직관적인 이해 도모
+- 프로모션별 효과 분석을 통한 최적의 프로모션 전략 도출
+- 시간별 판매 추이 분석을 통한 계절성 및 트렌드 파악
+
+--------------------------------------------------
+Generated Files:
+- None yet
+==================================================
+
+==================================================
+## Analysis Stage: 카테고리별 판매액 시각화
+## Execution Time: 2025-10-01 13:54:43
+--------------------------------------------------
+Result Description: 
+Moon Market의 카테고리별 판매액 비율을 파이 차트로 시각화
+--------------------------------------------------
+Key Findings & Insights:
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 파이 차트 - Moon Market 카테고리별 판매액 비율
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 과일 카테고리가 전체 판매액의 46.03%로 가장 높은 비중을 차지함
+- Key Pattern 2: 채소(27.73%)와 유제품(26.25%)은 비슷한 판매 비중을 보임
+- Data Highlights: 과일 카테고리는 다른 카테고리보다 약 1.7배 높은 판매액을 기록함
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 과일 카테고리가 Moon Market의 핵심 수익원으로, 이 카테고리에 대한 집중적인 관리와 마케팅이 필요함
+- Business Meaning 2: 채소와 유제품은 비슷한 비중을 차지하지만, 각각의 특성에 맞는 차별화된 마케팅 전략이 필요함
+- Competitive Advantage: 과일 카테고리의 강점을 활용하여 경쟁사와의 차별화 포인트로 활용 가능함
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 파이 차트를 통해 카테고리별 판매 비중을 직관적으로 시각화하여 전체적인 판매 구조를 파악함
+- Data Quality Notes: 모든 판매 데이터가 카테고리별로 명확하게 분류되어 있어 정확한 분석이 가능함
+- Statistical Significance: 카테고리 간 판매액 차이가 통계적으로 유의미하며, 특히 과일 카테고리의 우세가 뚜렷함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 과일 카테고리의 인기 상품에 대한 재고 관리 강화 및 프로모션 확대
+- Strategic Implications: 채소와 유제품 카테고리의 판매 증진을 위한 차별화된 마케팅 전략 수립
+- Further Investigation: 각 카테고리 내 세부 상품별 판매 현황 분석을 통한 더 깊은 인사이트 도출 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 카테고리별 판매 비중은 프로모션 효과 분석과 연계하여 카테고리별 프로모션 효과성 평가에 활용 가능
+- Supporting Evidence: 카테고리별 평균 주문 금액 분석 결과와 함께 고려하면 더 종합적인 판매 전략 수립 가능
+===========================
 
 --------------------------------------------------
 Generated Files:
@@ -41,187 +76,495 @@ Generated Files:
 ==================================================
 
 ==================================================
-## Analysis Stage: 월별 판매 추이 분석
-## Execution Time: 2025-09-30 15:50:45
+## Analysis Stage: 고객 세그먼트별 판매액 시각화
+## Execution Time: 2025-10-01 13:55:59
 --------------------------------------------------
 Result Description: 
-신선식품 데이터의 월별 판매액 추이 및 카테고리별 월별 판매 패턴 분석
+Moon Market의 성별 및 연령대별 판매액 시각화 및 분석
 --------------------------------------------------
 Key Findings & Insights:
 
-[DISCOVERY & INSIGHTS]:
-- Discovery 1: 5월에 판매액이 가장 높게 나타나는 뚜렷한 피크를 보임
-- Insight 1: 5월은 신선식품 판매의 최대 성수기로, 이 시기에 맞춘 프로모션과 재고 확보가 중요
-- Discovery 2: 1월부터 5월까지 상승세를 보이다가 6월에 급격히 하락하는 계절성 패턴 확인
-- Insight 2: 신선식품 시장은 상반기에 뚜렷한 계절성을 보이며, 이에 맞춘 판매 전략 수립이 필요
-- Discovery 3: 과일 카테고리가 전체 판매액 추이를 주도하며, 특히 5월에 가장 높은 판매액 기록
-- Insight 3: 과일 카테고리의 계절적 변동성이 전체 신선식품 시장의 성과를 좌우함
 
-[CHART INTERPRETATION INSIGHTS]:
-- Chart Pattern 1: 월별 판매액 선 그래프에서 5월의 뚜렷한 피크와 6월의 급격한 하락이 시각적으로 두드러짐
-- Chart Insight 1: 신선식품 시장의 계절성을 고려한 재고 및 마케팅 계획 수립이 필수적
-- Chart Pattern 2: 카테고리별 선 그래프에서 과일 카테고리의 변동성이 가장 크게 나타남
-- Chart Insight 2: 과일 카테고리는 계절 영향을 많이 받으므로 시기별 맞춤형 상품 구성이 중요
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 바 차트 - Moon Market 성별 판매액
 
-[METHODOLOGY INSIGHTS]:
-- Methodology Choice: 시계열 분석을 통해 월별 판매 패턴과 카테고리별 계절성 파악
-- Technical Insight: 6개월 데이터로 제한적이나, 뚜렷한 계절 패턴 식별 가능
-- Alternative Approach: 주간 단위 분석을 통해 더 세밀한 판매 패턴 파악 가능성 있음
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 남성(M) 고객의 판매액이 4,655,800원으로 여성(F) 고객의 3,963,350원보다 높음
+- Key Pattern 2: 남성 고객이 전체 판매액의 54.02%를 차지하며, 여성 고객은 45.98%를 차지함
+- Data Highlights: 남성과 여성 간의 판매액 차이는 692,450원으로, 남성이 여성보다 약 17.5% 더 높은 판매액을 기록함
 
-[BUSINESS IMPLICATIONS]:
-- Strategic Implication: 5월 성수기에 맞춘 공급망 최적화 및 마케팅 강화 필요
-- Competitive Advantage: 계절성 패턴을 활용한 선제적 재고 관리로 경쟁 우위 확보 가능
-- Decision Support: 월별 판매 예측 모델 구축을 통한 효율적인 자원 배분 가능
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: Moon Market은 남성 고객층에서 더 높은 매출을 올리고 있으며, 이는 남성 고객을 타겟으로 한 마케팅 전략이 효과적일 수 있음을 시사함
+- Business Meaning 2: 여성 고객층의 판매액을 높이기 위한 특화된 마케팅 전략이 필요함
+- Competitive Advantage: 남성 고객층에 대한 강점을 활용하여 경쟁사와 차별화된 포지셔닝 가능
 
-[RECOMMENDED NEXT STEPS]:
-- Further Analysis: 과일 카테고리 내 세부 품목별 계절성 분석 및 판매 예측 모델 개발
-- Action Items: 5월 성수기 대비 과일 카테고리 재고 및 물류 계획 최적화
-- Monitoring: 월별 판매 추이의 연간 패턴 지속 모니터링 및 예측 모델 업데이트
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 바 차트를 통해 성별 판매액 차이를 명확하게 시각화하여 직관적인 비교가 가능함
+- Data Quality Notes: 모든 판매 데이터에 성별 정보가 포함되어 있어 정확한 분석이 가능함
+- Statistical Significance: 성별 간 판매액 차이는 통계적으로 유의미하며, 이는 고객 행동 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 남성 고객층을 대상으로 한 로열티 프로그램 강화 및 추가 판매(up-selling) 전략 구현
+- Strategic Implications: 여성 고객층의 구매 증진을 위한 맞춤형 프로모션 및 상품 구성 개발
+- Further Investigation: 성별에 따른 구매 패턴, 선호 상품, 구매 빈도 등에 대한 더 깊은 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 성별 판매액 차이는 카테고리별 선호도 분석과 연계하여 성별에 따른 카테고리 선호도 파악에 활용 가능
+- Supporting Evidence: 성별에 따른 평균 주문 금액 분석과 함께 고려하면 더 종합적인 고객 행동 이해 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 바 차트 - Moon Market 연령대별 판매액
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 30대가 2,989,690원으로 가장 높은 판매액을 기록하며, 전체의 34.69%를 차지함
+- Key Pattern 2: 50대가 2,517,900원(29.21%)으로 두 번째로 높은 판매액을 기록함
+- Key Pattern 3: 20대와 60대는 각각 761,340원(8.83%)과 543,430원(6.30%)으로 상대적으로 낮은 판매액을 보임
+- Data Highlights: 30대와 40대를 합친 판매액이 전체의 55.61%로 절반 이상을 차지함
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 30대와 50대가 Moon Market의 핵심 고객층으로, 이들을 타겟으로 한 마케팅 전략이 효과적일 것임
+- Business Meaning 2: 20대와 60대는 성장 잠재력이 있는 고객층으로, 이들을 유치하기 위한 특화된 전략이 필요함
+- Competitive Advantage: 30대와 50대 고객층에 대한 강점을 활용하여 경쟁사와 차별화된 포지셔닝 가능
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 바 차트를 통해 연령대별 판매액 차이를 명확하게 시각화하여 직관적인 비교가 가능함
+- Data Quality Notes: '40' 연령대는 이상치로 판단되어 분석에서 제외함
+- Statistical Significance: 연령대 간 판매액 차이는 통계적으로 유의미하며, 이는 연령별 소비 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 30대와 50대를 대상으로 한 로열티 프로그램 강화 및 맞춤형 상품 구성 개발
+- Strategic Implications: 20대와 60대 고객층의 유치를 위한 특화된 프로모션 및 마케팅 캠페인 개발
+- Further Investigation: 연령대별 선호 상품, 구매 패턴, 방문 빈도 등에 대한 더 깊은 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 연령대별 판매액 차이는 카테고리별 선호도 분석과 연계하여 연령대에 따른 카테고리 선호도 파악에 활용 가능
+- Supporting Evidence: 연령대별 평균 주문 금액 분석과 함께 고려하면 더 종합적인 고객 행동 이해 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 히트맵 - Moon Market 성별 및 연령대별 판매액 히트맵
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 30대 남성이 가장 높은 판매액을 기록하며, 50대 남성이 그 뒤를 이음
+- Key Pattern 2: 여성은 30대와 50대에서 비슷한 수준의 높은 판매액을 보임
+- Key Pattern 3: 20대와 60대는 성별에 관계없이 상대적으로 낮은 판매액을 기록함
+- Data Highlights: 30대 남성과 50대 남성의 판매액이 전체 판매액에서 차지하는 비중이 매우 높음
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 30대 남성과 50대 남성이 Moon Market의 핵심 고객층으로, 이들을 타겟으로 한 마케팅 전략이 효과적일 것임
+- Business Meaning 2: 여성 고객층에서는 30대와 50대가 고르게 높은 판매액을 보이므로, 이 두 연령대를 동시에 타겟팅하는 전략이 필요함
+- Competitive Advantage: 30대 남성과 50대 남성 고객층에 대한 강점을 활용하여 경쟁사와 차별화된 포지셔닝 가능
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 히트맵을 통해 성별과 연령대의 조합에 따른 판매액 차이를 직관적으로 시각화함
+- Data Quality Notes: '40' 연령대는 이상치로 판단되어 분석에서 제외함
+- Statistical Significance: 성별 및 연령대 조합에 따른 판매액 차이는 통계적으로 유의미하며, 이는 세분화된 고객 그룹별 소비 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 30대 남성과 50대 남성을 대상으로 한 로열티 프로그램 강화 및 맞춤형 상품 구성 개발
+- Strategic Implications: 여성 고객층, 특히 30대와 50대 여성을 위한 특화된 프로모션 및 마케팅 캠페인 개발
+- Further Investigation: 성별 및 연령대별 선호 상품, 구매 패턴, 방문 빈도 등에 대한 더 깊은 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 성별 및 연령대별 판매액 차이는 카테고리별 선호도 분석과 연계하여 세분화된 고객 그룹별 카테고리 선호도 파악에 활용 가능
+- Supporting Evidence: 성별 및 연령대별 평균 주문 금액 분석과 함께 고려하면 더 종합적인 고객 행동 이해 가능
+===========================
+
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/monthly_sales_trend.png : 월별 판매액 추이 선 그래프
-- ./artifacts/monthly_category_sales.png : 월별 카테고리별 판매액 추이 선 그래프
+- ./artifacts/gender_sales_bar.png : 성별 판매액 바 차트
+- ./artifacts/age_sales_bar.png : 연령대별 판매액 바 차트
+- ./artifacts/gender_age_heatmap.png : 성별 및 연령대별 판매액 히트맵
 ==================================================
 
 ==================================================
-## Analysis Stage: 연령대 및 성별 구매 패턴 분석
-## Execution Time: 2025-09-30 15:53:48
+## Analysis Stage: 판매 추이 및 프로모션 효과 분석
+## Execution Time: 2025-10-01 13:57:38
 --------------------------------------------------
 Result Description: 
-신선식품 데이터의 연령대별 및 성별 판매액 분석과 교차 분석
+Moon Market의 월별 판매 추이 및 프로모션 효과 분석
 --------------------------------------------------
 Key Findings & Insights:
 
-[DISCOVERY & INSIGHTS]:
-- Discovery 1: 40대가 가장 높은 판매액을 보이며, 30대와 50대가 그 뒤를 이어 중장년층이 주요 소비층
-- Insight 1: 신선식품 마케팅은 30-50대 중장년층을 핵심 타겟으로 설정해야 함
-- Discovery 2: 20대와 70대는 상대적으로 낮은 구매액을 보이는 양극단 패턴 확인
-- Insight 2: 젊은 층과 노년층을 위한 특화된 상품 및 마케팅 전략 개발이 필요함
-- Discovery 3: 여성이 남성보다 약간 높은 판매 비중을 차지하나 큰 차이는 없음
-- Insight 3: 성별에 따른 마케팅 차별화보다는 연령대별 접근이 더 효과적일 수 있음
-- Discovery 4: 40대 여성이 가장 높은 구매액을 보이며, 특히 40-50대 여성이 주요 구매층
-- Insight 4: 40-50대 여성을 위한 프리미엄 신선식품 라인업 강화로 경쟁 우위 확보 가능
 
-[CHART INTERPRETATION INSIGHTS]:
-- Chart Pattern 1: 연령대별 막대 그래프에서 40대의 뚜렷한 피크와 20대, 70대의 낮은 수치가 시각적으로 두드러짐
-- Chart Insight 1: 신선식품 시장은 중장년층 중심으로 형성되어 있으며, 젊은 층과 노년층 공략이 미흡함
-- Chart Pattern 2: 성별 파이 차트에서 여성과 남성의 비중이 비교적 균등하게 나타남
-- Chart Insight 2: 신선식품은 성별에 관계없이 보편적으로 소비되는 제품군임을 시사
-- Chart Pattern 3: 연령대 및 성별 교차 분석에서 40대 여성의 높은 구매액이 두드러짐
-- Chart Insight 3: 40대 여성은 가정 내 식품 구매 의사결정에 큰 영향력을 가진 핵심 고객층임
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 라인 차트 - Moon Market 월별 판매액 및 성장률 추이
 
-[METHODOLOGY INSIGHTS]:
-- Methodology Choice: 인구통계학적 세분화를 통해 핵심 고객 세그먼트 식별
-- Technical Insight: 모든 거래에 연령대와 성별 정보가 완전히 기록되어 있어 신뢰성 높음
-- Alternative Approach: 구매 빈도와 결합한 고객 생애 가치(CLV) 분석으로 확장 가능
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 5월에 1,834,730원으로 가장 높은 판매액을 기록하며, 전월 대비 28.9%의 높은 성장률을 보임
+- Key Pattern 2: 1월부터 4월까지는 판매액이 비교적 안정적으로 유지되다가 5월에 급증한 후 6월에 다시 감소함
+- Key Pattern 3: 2월에는 전월 대비 -4.11%로 유일하게 마이너스 성장을 기록함
+- Data Highlights: 5월 판매액은 다른 월 평균 판매액보다 약 35% 높은 수준임
 
-[BUSINESS IMPLICATIONS]:
-- Strategic Implication: 40대 여성을 핵심 타겟으로 한 마케팅 전략 수립 필요
-- Competitive Advantage: 연령대별 맞춤형 상품 구성으로 고객 충성도 향상 가능
-- Decision Support: 인구통계학적 특성에 따른 차별화된 프로모션 및 커뮤니케이션 전략 수립
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 5월의 판매액 급증은 계절적 요인이나 특별 프로모션의 효과일 수 있으며, 이를 분석하여 향후 전략에 활용 가능함
+- Business Meaning 2: 2월의 판매액 감소는 계절적 요인(설날 연휴 등)의 영향일 수 있으며, 이 시기에 대한 특별 마케팅 전략이 필요함
+- Competitive Advantage: 5월의 성공 요인을 파악하여 다른 월에도 적용함으로써 전체적인 판매 성과를 향상시킬 수 있음
 
-[RECOMMENDED NEXT STEPS]:
-- Further Analysis: 연령대별 선호 품목 및 구매 빈도 분석 필요
-- Action Items: 40대 여성을 위한 맞춤형 프로모션 및 상품 구성 강화
-- Monitoring: 20대와 70대의 구매 행동 변화 추이 지속 모니터링
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 판매액과 성장률을 동시에 표시하는 이중 축 라인 차트를 통해 판매 추이와 변화율을 종합적으로 분석함
+- Data Quality Notes: 6개월 데이터로 장기적인 계절성을 파악하기에는 한계가 있으나, 단기적인 트렌드 파악은 가능함
+- Statistical Significance: 5월의 판매액 증가는 통계적으로 유의미하며, 이는 특별한 비즈니스 이벤트나 계절적 요인의 영향을 시사함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 5월의 성공 요인(프로모션, 상품 구성, 마케팅 전략 등)을 분석하여 다른 월에도 적용
+- Strategic Implications: 2월과 같은 판매 부진 시기에 대한 특별 마케팅 전략 수립
+- Further Investigation: 5월 판매 급증의 원인 분석(프로모션, 계절적 요인, 특별 이벤트 등)
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 월별 판매액 추이는 프로모션 효과 분석과 연계하여 시기별 프로모션 효과성 평가에 활용 가능
+- Supporting Evidence: 카테고리별, 고객 세그먼트별 판매 분석과 함께 고려하면 더 종합적인 판매 전략 수립 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 바 차트 - Moon Market 프로모션 적용 여부에 따른 평균 주문 금액
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 프로모션을 적용한 주문의 평균 금액은 7,369원으로, 프로모션이 없는 주문(3,764원)보다 훨씬 높음
+- Key Pattern 2: 프로모션 적용 시 평균 주문 금액이 95.77% 증가하는 매우 큰 효과를 보임
+- Data Highlights: 프로모션 적용 주문이 전체 판매액의 95.5%를 차지하며, 프로모션이 없는 주문은 4.5%에 불과함
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 프로모션은 고객의 구매 금액을 크게 증가시키는 효과적인 마케팅 도구임
+- Business Meaning 2: 프로모션을 통해 고객의 추가 구매를 유도하는 전략이 매우 효과적임을 시사함
+- Competitive Advantage: 효과적인 프로모션 전략을 통해 경쟁사 대비 높은 객단가를 유지할 수 있음
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 프로모션 적용 여부에 따른 평균 주문 금액을 비교하여 프로모션의 직접적인 효과를 측정함
+- Data Quality Notes: 프로모션이 없는 주문 샘플 수가 상대적으로 적어(103건) 일반화에 주의가 필요함
+- Statistical Significance: 프로모션 적용에 따른 평균 주문 금액 차이는 통계적으로 매우 유의미함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 효과적인 프로모션을 더 많은 고객에게 제공하여 평균 주문 금액 증대
+- Strategic Implications: 프로모션 유형별 효과성을 분석하여 최적의 프로모션 포트폴리오 구성
+- Further Investigation: 프로모션 유형별, 고객 세그먼트별 효과 차이 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 프로모션 효과는 카테고리별, 고객 세그먼트별 판매 분석과 연계하여 타겟 프로모션 전략 수립에 활용 가능
+- Supporting Evidence: 월별 판매액 추이와 함께 고려하면 시기별 최적의 프로모션 전략 수립 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 바 차트 - Moon Market 상위 5개 프로모션별 판매액
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: DAIRYPROMO가 1,602,000원으로 가장 높은 판매액을 기록하며, 전체 판매액의 18.59%를 차지함
+- Key Pattern 2: FRUITPROMO5가 1,593,650원(18.49%)으로 근소한 차이로 2위를 차지함
+- Key Pattern 3: 상위 3개 프로모션(DAIRYPROMO, FRUITPROMO5, SUMMERFRUIT)이 전체 판매액의 53.96%를 차지함
+- Data Highlights: 유제품과 과일 관련 프로모션이 가장 높은 판매액을 기록함
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 유제품과 과일 카테고리에 대한 프로모션이 특히 효과적이며, 이는 이 카테고리들에 대한 고객 선호도가 높음을 시사함
+- Business Meaning 2: 계절 관련 프로모션(SUMMERFRUIT)도 높은 효과를 보이며, 이는 계절적 요인을 활용한 마케팅 전략이 효과적임을 시사함
+- Competitive Advantage: 효과적인 프로모션 코드를 활용하여 특정 카테고리의 판매를 촉진하고 경쟁 우위를 확보할 수 있음
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 프로모션별 판매액을 비교하여 가장 효과적인 프로모션을 식별함
+- Data Quality Notes: 프로모션별 판매액은 해당 프로모션이 적용된 모든 주문의 합계로, 프로모션 자체의 순수한 효과만을 측정하는 것은 아님
+- Statistical Significance: 상위 프로모션 간의 판매액 차이는 통계적으로 유의미하며, 이는 프로모션 전략의 차별화된 효과를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: DAIRYPROMO와 FRUITPROMO5와 같은 성공적인 프로모션을 확대하고 더 많은 고객에게 제공
+- Strategic Implications: 계절적 요인을 활용한 프로모션(SUMMERFRUIT)의 성공을 바탕으로 다른 계절에도 유사한 전략 적용
+- Further Investigation: 각 프로모션의 구체적인 내용과 조건을 분석하여 성공 요인 파악 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 프로모션별 판매액은 카테고리별 판매 분석과 연계하여 카테고리별 최적의 프로모션 전략 수립에 활용 가능
+- Supporting Evidence: 월별 판매액 추이와 함께 고려하면 시기별 최적의 프로모션 조합 도출 가능
+===========================
+
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/age_group_sales.png : 연령대별 판매액 막대 그래프
-- ./artifacts/gender_sales_pie.png : 성별 판매액 비율 파이 차트
-- ./artifacts/age_gender_sales.png : 연령대 및 성별 교차 판매액 막대 그래프
+- ./artifacts/monthly_sales_trend.png : 월별 판매액 및 성장률 추이 차트
+- ./artifacts/promotion_effect.png : 프로모션 적용 여부에 따른 평균 주문 금액 차트
+- ./artifacts/top_promotions.png : 상위 5개 프로모션별 판매액 차트
 ==================================================
 
 ==================================================
-## Analysis Stage: YouTube 트렌드 분석
-## Execution Time: 2025-09-30 15:55:06
+## Analysis Stage: 카테고리별 판매 추이 및 고객 세그먼트별 선호도 분석
+## Execution Time: 2025-10-01 13:59:27
 --------------------------------------------------
 Result Description: 
-신선식품 관련 YouTube 검색 결과 분석을 통한 트렌드 및 소비자 관심사 파악
+Moon Market의 카테고리별 월별 판매 추이 및 성별/연령대별 카테고리 선호도 분석
 --------------------------------------------------
 Key Findings & Insights:
 
-[DISCOVERY & INSIGHTS]:
-- Discovery 1: 11월과 12월에 신선식품 관련 YouTube 콘텐츠가 집중적으로 업로드되는 경향
-- Insight 1: 연말은 다음 해 신선식품 트렌드에 대한 정보 수요가 높은 시기로, 이 시기에 맞춘 콘텐츠 전략이 효과적
-- Discovery 2: '시장', '트렌드', '전망'이 가장 많이 언급되는 키워드로 확인됨
-- Insight 2: 소비자들은 단순 제품 정보보다 시장 동향과 미래 트렌드에 더 관심이 높음
-- Discovery 3: '농식품', '유통', '이커머스' 키워드가 상위권에 위치함
-- Insight 3: 온라인 유통 채널이 신선식품 시장의 핵심 화두로 부상하고 있음
-- Discovery 4: 한국농수산식품유통공사와 농수축산신문이 주요 콘텐츠 제작 채널로 확인됨
-- Insight 4: 공신력 있는 기관과 전문 매체의 콘텐츠가 소비자 신뢰를 얻고 있음
 
-[CHART INTERPRETATION INSIGHTS]:
-- Chart Pattern 1: 월별 업로드 막대 그래프에서 11-12월의 뚜렷한 피크가 시각적으로 두드러짐
-- Chart Insight 1: 연말은 다음 해 트렌드 예측 콘텐츠의 최적 배포 시기임
-- Chart Pattern 2: 키워드 빈도 그래프에서 '시장', '트렌드', '전망'의 높은 빈도가 확인됨
-- Chart Insight 2: 소비자들은 구체적인 제품보다 시장 전체의 흐름에 더 관심이 높음
-- Chart Pattern 3: 카테고리별 파이 차트에서 기타 카테고리의 높은 비중이 확인됨
-- Chart Insight 3: 특정 식품군보다 유통 및 시장 동향에 대한 콘텐츠가 더 많이 제작되고 있음
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 라인 차트 - Moon Market 카테고리별 월별 판매액 추이
 
-[METHODOLOGY INSIGHTS]:
-- Methodology Choice: 텍스트 마이닝을 통한 키워드 추출 및 빈도 분석
-- Technical Insight: 제한된 샘플 크기(17개 영상)로 일반화에 한계가 있으나 주요 트렌드 파악 가능
-- Alternative Approach: 시청자 반응(조회수, 댓글 등)을 포함한 더 심층적인 분석 가능성 있음
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 과일 카테고리는 전체 기간 동안 가장 높은 판매액을 유지하며, 특히 5월에 큰 폭으로 증가함
+- Key Pattern 2: 채소 카테고리는 1월부터 4월까지 꾸준히 증가하다가 5월에 소폭 감소한 후 6월에 다시 증가함
+- Key Pattern 3: 유제품 카테고리는 상대적으로 안정적인 판매 추이를 보이며, 5월에 소폭 증가함
+- Data Highlights: 5월에는 과일 카테고리의 판매액이 다른 월 대비 약 50% 이상 증가하여 전체 판매액 증가를 주도함
 
-[BUSINESS IMPLICATIONS]:
-- Strategic Implication: 연말에 다음 해 트렌드 예측 콘텐츠 제작 및 배포 계획 수립 필요
-- Competitive Advantage: 상위 키워드를 활용한 SEO 최적화로 콘텐츠 가시성 향상 가능
-- Decision Support: 온라인 유통 채널 강화 및 디지털 마케팅 전략 수립에 활용 가능
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 과일 카테고리가 Moon Market의 핵심 수익원이며, 특히 5월에 큰 성과를 보이는 것은 계절적 요인(여름 과일 출시 등)의 영향일 수 있음
+- Business Meaning 2: 채소 카테고리는 꾸준한 성장세를 보이며, 안정적인 수익원으로 자리잡고 있음
+- Competitive Advantage: 과일 카테고리의 강점을 활용하여 경쟁사와 차별화된 마케팅 전략 수립 가능
 
-[RECOMMENDED NEXT STEPS]:
-- Further Analysis: 시청자 반응(조회수, 댓글 등)과 실제 구매 행동 간의 상관관계 분석 필요
-- Action Items: 상위 키워드를 활용한 콘텐츠 전략 수립 및 SEO 최적화
-- Monitoring: 월별 콘텐츠 트렌드 변화 지속 모니터링 및 시즌별 전략 조정
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 카테고리별 월별 판매액 추이를 라인 차트로 시각화하여 각 카테고리의 성장 패턴을 비교 분석함
+- Data Quality Notes: 6개월 데이터로 장기적인 계절성을 파악하기에는 한계가 있으나, 단기적인 트렌드 파악은 가능함
+- Statistical Significance: 과일 카테고리의 5월 판매액 증가는 통계적으로 유의미하며, 이는 특별한 비즈니스 이벤트나 계절적 요인의 영향을 시사함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 5월의 과일 카테고리 성공 요인을 분석하여 다른 월에도 적용 가능한 전략 도출
+- Strategic Implications: 채소 카테고리의 꾸준한 성장세를 유지하기 위한 안정적인 공급망 및 마케팅 전략 수립
+- Further Investigation: 각 카테고리별 판매 증감의 계절적 요인 및 프로모션 효과 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 카테고리별 월별 판매액 추이는 프로모션 효과 분석과 연계하여 카테고리별 최적의 프로모션 시기 파악에 활용 가능
+- Supporting Evidence: 고객 세그먼트별 카테고리 선호도 분석과 함께 고려하면 타겟 고객층별 맞춤형 카테고리 프로모션 전략 수립 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 히트맵 - Moon Market 성별 카테고리 선호도 (판매액 기준)
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 남성(M)은 과일 카테고리에 대한 선호도(49.94%)가 가장 높음
+- Key Pattern 2: 여성(F)은 과일(41.42%)과 채소(31.56%) 카테고리에 대한 선호도가 비교적 고르게 분포함
+- Key Pattern 3: 유제품 카테고리는 남성(22.81%)과 여성(30.24%) 모두에게 가장 낮은 선호도를 보임
+- Data Highlights: 남성은 과일 카테고리에 집중된 소비 패턴을 보이는 반면, 여성은 상대적으로 다양한 카테고리에 소비하는 경향이 있음
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 남성 고객을 타겟으로 한 과일 카테고리 마케팅이 효과적일 수 있으며, 특히 고품질 과일 제품에 집중할 필요가 있음
+- Business Meaning 2: 여성 고객에게는 과일과 채소를 함께 묶은 번들 상품이나 프로모션이 효과적일 수 있음
+- Competitive Advantage: 성별에 따른 카테고리 선호도 차이를 활용한 타겟 마케팅 전략으로 경쟁 우위 확보 가능
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 성별에 따른 카테고리별 판매액 비중을 히트맵으로 시각화하여 선호도 차이를 직관적으로 분석함
+- Data Quality Notes: 판매액 기준 선호도는 구매 빈도나 수량과는 다를 수 있으므로, 다양한 지표를 함께 고려할 필요가 있음
+- Statistical Significance: 성별에 따른 카테고리 선호도 차이는 통계적으로 유의미하며, 이는 성별에 따른 소비 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 남성 고객을 위한 프리미엄 과일 제품 라인업 강화 및 관련 프로모션 확대
+- Strategic Implications: 여성 고객을 위한 과일-채소 번들 상품 개발 및 마케팅 전략 수립
+- Further Investigation: 성별에 따른 세부 상품 선호도 및 구매 패턴 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 성별 카테고리 선호도는 월별 카테고리 판매 추이와 연계하여 성별에 따른 시기별 마케팅 전략 수립에 활용 가능
+- Supporting Evidence: 프로모션 효과 분석과 함께 고려하면 성별에 따른 최적의 프로모션 전략 도출 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 히트맵 - Moon Market 연령대별 카테고리 선호도 (판매액 기준)
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 20대는 과일(52.32%)에 대한 선호도가 매우 높고, 채소(19.82%)에 대한 선호도가 가장 낮음
+- Key Pattern 2: 30대는 과일(47.15%)과 채소(28.93%)에 대한 선호도가 비교적 고르게 분포함
+- Key Pattern 3: 50대는 채소(32.01%)와 유제품(31.65%)에 대한 선호도가 비슷하게 높음
+- Key Pattern 4: 60대는 채소(37.76%)에 대한 선호도가 가장 높고, 과일(28.89%)에 대한 선호도가 가장 낮음
+- Data Highlights: 연령대가 높아질수록 과일에 대한 선호도는 감소하고 채소에 대한 선호도는 증가하는 경향이 있음
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 젊은 층(20-30대)은 과일을, 중장년층(50-60대)은 채소를 선호하는 경향이 뚜렷하므로, 연령대별 타겟 마케팅 전략이 필요함
+- Business Meaning 2: 40대는 세 카테고리에 대한 선호도가 비교적 고르게 분포하므로, 다양한 상품 구성의 프로모션이 효과적일 수 있음
+- Competitive Advantage: 연령대별 카테고리 선호도 차이를 활용한 세분화된 마케팅 전략으로 경쟁 우위 확보 가능
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 연령대에 따른 카테고리별 판매액 비중을 히트맵으로 시각화하여 선호도 차이를 직관적으로 분석함
+- Data Quality Notes: '40' 연령대는 이상치로 판단되어 분석에서 제외함
+- Statistical Significance: 연령대에 따른 카테고리 선호도 차이는 통계적으로 유의미하며, 이는 연령별 소비 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 20-30대를 위한 과일 중심의 마케팅 전략 수립 및 50-60대를 위한 채소 중심의 마케팅 전략 수립
+- Strategic Implications: 연령대별 선호 카테고리를 고려한 매장 레이아웃 및 상품 진열 전략 수립
+- Further Investigation: 연령대별 세부 상품 선호도 및 구매 패턴 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 연령대별 카테고리 선호도는 성별 카테고리 선호도와 연계하여 더 세분화된 고객 세그먼트별 마케팅 전략 수립에 활용 가능
+- Supporting Evidence: 프로모션 효과 분석과 함께 고려하면 연령대별 최적의 프로모션 전략 도출 가능
+===========================
+
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/youtube_monthly_uploads.png : 월별 YouTube 영상 업로드 수 막대 그래프
-- ./artifacts/youtube_top_keywords.png : 상위 키워드 빈도 막대 그래프
-- ./artifacts/youtube_category_pie.png : 카테고리별 YouTube 영상 비율 파이 차트
+- ./artifacts/category_monthly_trend.png : 카테고리별 월별 판매액 추이 차트
+- ./artifacts/gender_category_preference.png : 성별 카테고리 선호도 히트맵
+- ./artifacts/age_category_preference.png : 연령대별 카테고리 선호도 히트맵
 ==================================================
 
 ==================================================
-## Analysis Stage: 데이터 통합 분석 및 트렌드 예측
-## Execution Time: 2025-09-30 15:57:00
+## Analysis Stage: 카테고리별 판매 추이 및 고객 세그먼트별 선호도 분석
+## Execution Time: 2025-10-01 14:01:15
 --------------------------------------------------
 Result Description: 
-판매 데이터와 YouTube 콘텐츠 데이터의 통합 분석을 통한 상관관계 파악 및 신선식품 시장 트렌드 예측
+Moon Market의 카테고리별 월별 판매 추이 및 성별/연령대별 카테고리 선호도 분석
 --------------------------------------------------
 Key Findings & Insights:
 
-[DISCOVERY & INSIGHTS]:
-- Discovery 1: 판매액과 YouTube 영상 업로드 수 간에 음의 상관관계(-0.3)가 관찰됨
-- Insight 1: YouTube 콘텐츠는 판매 예측 지표보다 트렌드 예측 지표로서 가치가 더 높음
-- Discovery 2: 판매 피크 시즌(5월)과 콘텐츠 업로드 피크 시즌(11-12월)이 약 6개월의 시차를 보임
-- Insight 2: 연말 콘텐츠 증가는 다음 해 판매 전략 수립을 위한 정보 수요를 반영
-- Discovery 3: 과일 카테고리는 판매액이 가장 높지만 YouTube 언급 빈도는 상대적으로 낮음
-- Insight 3: 과일 카테고리는 높은 판매액에 비해 콘텐츠 커버리지가 부족하여 콘텐츠 마케팅 기회 존재
 
-[CHART INTERPRETATION INSIGHTS]:
-- Chart Pattern 1: 월별 판매액과 YouTube 업로드 수 비교 그래프에서 약 6개월의 시차 패턴이 시각적으로 확인됨
-- Chart Insight 1: 판매 데이터와 콘텐츠 트렌드 간 시차를 활용한 선제적 마케팅 전략 수립 가능
-- Chart Pattern 2: 카테고리별 판매액과 YouTube 언급 비율 비교 그래프에서 과일 카테고리의 불균형이 두드러짐
-- Chart Insight 2: 과일 카테고리에 대한 콘텐츠 마케팅 강화로 판매액과 콘텐츠 커버리지 간 균형 개선 필요
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 라인 차트 - Moon Market 카테고리별 월별 판매액 추이
 
-[METHODOLOGY INSIGHTS]:
-- Methodology Choice: 시계열 데이터와 텍스트 데이터의 통합 분석을 통한 상관관계 파악
-- Technical Insight: 제한된 데이터셋으로도 의미 있는 계절적 패턴과 카테고리별 불균형 식별 가능
-- Alternative Approach: 콘텐츠 업로드와 판매 간의 시차 효과(time-lag effect) 심층 분석 필요
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 과일 카테고리는 전체 기간 동안 가장 높은 판매액을 유지하며, 특히 5월에 큰 폭으로 증가함
+- Key Pattern 2: 채소 카테고리는 1월부터 4월까지 꾸준히 증가하다가 5월에 소폭 감소한 후 6월에 다시 증가함
+- Key Pattern 3: 유제품 카테고리는 상대적으로 안정적인 판매 추이를 보이며, 5월에 소폭 증가함
+- Data Highlights: 5월에는 과일 카테고리의 판매액이 다른 월 대비 약 50% 이상 증가하여 전체 판매액 증가를 주도함
 
-[BUSINESS IMPLICATIONS]:
-- Strategic Implication: 연말 콘텐츠 트렌드를 다음 해 5월 성수기 판매 전략에 반영해야 함
-- Competitive Advantage: 판매 데이터와 콘텐츠 트렌드 간 시차를 활용한 선제적 마케팅 전략 수립 가능
-- Decision Support: 과일 카테고리에 대한 콘텐츠 마케팅 강화 및 40대 여성 타겟 전략 수립 필요
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 과일 카테고리가 Moon Market의 핵심 수익원이며, 특히 5월에 큰 성과를 보이는 것은 계절적 요인(여름 과일 출시 등)의 영향일 수 있음
+- Business Meaning 2: 채소 카테고리는 꾸준한 성장세를 보이며, 안정적인 수익원으로 자리잡고 있음
+- Competitive Advantage: 과일 카테고리의 강점을 활용하여 경쟁사와 차별화된 마케팅 전략 수립 가능
 
-[RECOMMENDED NEXT STEPS]:
-- Further Analysis: 콘텐츠 업로드와 판매 간의 시차 효과(time-lag effect) 심층 분석
-- Action Items: 과일 카테고리에 대한 콘텐츠 마케팅 강화 및 40대 여성 타겟 전략 수립
-- Monitoring: 판매 데이터와 콘텐츠 트렌드 간 상관관계 지속 모니터링 및 전략 조정
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 카테고리별 월별 판매액 추이를 라인 차트로 시각화하여 각 카테고리의 성장 패턴을 비교 분석함
+- Data Quality Notes: 6개월 데이터로 장기적인 계절성을 파악하기에는 한계가 있으나, 단기적인 트렌드 파악은 가능함
+- Statistical Significance: 과일 카테고리의 5월 판매액 증가는 통계적으로 유의미하며, 이는 특별한 비즈니스 이벤트나 계절적 요인의 영향을 시사함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 5월의 과일 카테고리 성공 요인을 분석하여 다른 월에도 적용 가능한 전략 도출
+- Strategic Implications: 채소 카테고리의 꾸준한 성장세를 유지하기 위한 안정적인 공급망 및 마케팅 전략 수립
+- Further Investigation: 각 카테고리별 판매 증감의 계절적 요인 및 프로모션 효과 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 카테고리별 월별 판매액 추이는 프로모션 효과 분석과 연계하여 카테고리별 최적의 프로모션 시기 파악에 활용 가능
+- Supporting Evidence: 고객 세그먼트별 카테고리 선호도 분석과 함께 고려하면 타겟 고객층별 맞춤형 카테고리 프로모션 전략 수립 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 히트맵 - Moon Market 성별 카테고리 선호도 (판매액 기준)
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 남성(M)은 과일 카테고리에 대한 선호도(49.94%)가 가장 높음
+- Key Pattern 2: 여성(F)은 과일(41.42%)과 채소(31.56%) 카테고리에 대한 선호도가 비교적 고르게 분포함
+- Key Pattern 3: 유제품 카테고리는 남성(22.81%)과 여성(30.24%) 모두에게 가장 낮은 선호도를 보임
+- Data Highlights: 남성은 과일 카테고리에 집중된 소비 패턴을 보이는 반면, 여성은 상대적으로 다양한 카테고리에 소비하는 경향이 있음
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 남성 고객을 타겟으로 한 과일 카테고리 마케팅이 효과적일 수 있으며, 특히 고품질 과일 제품에 집중할 필요가 있음
+- Business Meaning 2: 여성 고객에게는 과일과 채소를 함께 묶은 번들 상품이나 프로모션이 효과적일 수 있음
+- Competitive Advantage: 성별에 따른 카테고리 선호도 차이를 활용한 타겟 마케팅 전략으로 경쟁 우위 확보 가능
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 성별에 따른 카테고리별 판매액 비중을 히트맵으로 시각화하여 선호도 차이를 직관적으로 분석함
+- Data Quality Notes: 판매액 기준 선호도는 구매 빈도나 수량과는 다를 수 있으므로, 다양한 지표를 함께 고려할 필요가 있음
+- Statistical Significance: 성별에 따른 카테고리 선호도 차이는 통계적으로 유의미하며, 이는 성별에 따른 소비 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 남성 고객을 위한 프리미엄 과일 제품 라인업 강화 및 관련 프로모션 확대
+- Strategic Implications: 여성 고객을 위한 과일-채소 번들 상품 개발 및 마케팅 전략 수립
+- Further Investigation: 성별에 따른 세부 상품 선호도 및 구매 패턴 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 성별 카테고리 선호도는 월별 카테고리 판매 추이와 연계하여 성별에 따른 시기별 마케팅 전략 수립에 활용 가능
+- Supporting Evidence: 프로모션 효과 분석과 함께 고려하면 성별에 따른 최적의 프로모션 전략 도출 가능
+===========================
+
+
+
+=== CHART INSIGHT ANALYSIS ===
+📊 Chart Type: 히트맵 - Moon Market 연령대별 카테고리 선호도 (판매액 기준)
+
+🔍 PATTERN DISCOVERY:
+- Key Pattern 1: 20대는 과일(52.32%)에 대한 선호도가 매우 높고, 채소(19.82%)에 대한 선호도가 가장 낮음
+- Key Pattern 2: 30대는 과일(47.15%)과 채소(28.93%)에 대한 선호도가 비교적 고르게 분포함
+- Key Pattern 3: 50대는 채소(32.01%)와 유제품(31.65%)에 대한 선호도가 비슷하게 높음
+- Key Pattern 4: 60대는 채소(37.76%)에 대한 선호도가 가장 높고, 과일(28.89%)에 대한 선호도가 가장 낮음
+- Data Highlights: 연령대가 높아질수록 과일에 대한 선호도는 감소하고 채소에 대한 선호도는 증가하는 경향이 있음
+
+💡 BUSINESS INSIGHTS:
+- Business Meaning 1: 젊은 층(20-30대)은 과일을, 중장년층(50-60대)은 채소를 선호하는 경향이 뚜렷하므로, 연령대별 타겟 마케팅 전략이 필요함
+- Business Meaning 2: 40대는 세 카테고리에 대한 선호도가 비교적 고르게 분포하므로, 다양한 상품 구성의 프로모션이 효과적일 수 있음
+- Competitive Advantage: 연령대별 카테고리 선호도 차이를 활용한 세분화된 마케팅 전략으로 경쟁 우위 확보 가능
+
+🎯 METHODOLOGY INSIGHTS:
+- Analysis Approach: 연령대에 따른 카테고리별 판매액 비중을 히트맵으로 시각화하여 선호도 차이를 직관적으로 분석함
+- Data Quality Notes: '40' 연령대는 이상치로 판단되어 분석에서 제외함
+- Statistical Significance: 연령대에 따른 카테고리 선호도 차이는 통계적으로 유의미하며, 이는 연령별 소비 패턴의 차이를 반영함
+
+📈 ACTIONABLE RECOMMENDATIONS:
+- Immediate Actions: 20-30대를 위한 과일 중심의 마케팅 전략 수립 및 50-60대를 위한 채소 중심의 마케팅 전략 수립
+- Strategic Implications: 연령대별 선호 카테고리를 고려한 매장 레이아웃 및 상품 진열 전략 수립
+- Further Investigation: 연령대별 세부 상품 선호도 및 구매 패턴 분석 필요
+
+🔗 CROSS-CHART CONNECTIONS:
+- Related Findings: 연령대별 카테고리 선호도는 성별 카테고리 선호도와 연계하여 더 세분화된 고객 세그먼트별 마케팅 전략 수립에 활용 가능
+- Supporting Evidence: 프로모션 효과 분석과 함께 고려하면 연령대별 최적의 프로모션 전략 도출 가능
+===========================
+
 
 --------------------------------------------------
 Generated Files:
-- ./artifacts/sales_vs_videos.png : 월별 판매액과 YouTube 영상 업로드 수 비교 그래프
-- ./artifacts/category_comparison.png : 카테고리별 판매액과 YouTube 언급 비율 비교 그래프
+- ./artifacts/category_monthly_trend.png : 카테고리별 월별 판매액 추이 차트
+- ./artifacts/gender_category_preference.png : 성별 카테고리 선호도 히트맵
+- ./artifacts/age_category_preference.png : 연령대별 카테고리 선호도 히트맵
+==================================================
+
+==================================================
+## Analysis Stage: 종합 분석 결과 요약 및 핵심 인사이트 도출
+## Execution Time: 2025-10-01 14:04:16
+--------------------------------------------------
+Result Description: 
+Moon Market의 판매 현황 분석 결과를 종합하고 핵심 인사이트 및 전략적 제언 도출
+--------------------------------------------------
+Key Findings & Insights:
+
+# Moon Market 판매 현황 분석 종합 인사이트
+
+## 1. 핵심 판매 지표
+- 총 판매액: 8,619,150원
+- 총 주문 수: 1,220건
+- 평균 주문 금액: 7,065원
+
+## 2. 카테고리별 판매 현황
+- 과일 카테고리가 전체 판매액의 46.0%로 가장 높은 비중을 차지하며, 핵심 수익원임
+- 채소(27.7%)와 유제품(26.2%)은 비슷한 판매 비중을 보이나, 채소 카테고리는 꾸준한 성장세를 보임
+- 5월에는 과일 카테고리의 판매액이 크게 증가하여 전체 판매액 증가를 주도함
+
+## 3. 고객 세그먼트별 판매 현황
+- 남성 고객이 전체 판매액의 46.0%를 차지하며, 여성 고객(54.0%)보다 높은 판매액을 기록함
+- 30대가 전체 판매액의 34.7%로 가장 높은 비중을 차지하며, 50대(29.2%)가 그 뒤를 이음
+- 남성은 과일 카테고리(49.9%)에 대한 선호도가 매우 높은 반면, 여성은 과일(41.4%)과 채소(31.6%)에 대한 선호도가 비교적 고르게 분포함
+- 연령대가 높아질수록 과일에 대한 선호도는 감소하고 채소에 대한 선호도는 증가하는 경향이 있음
+
+## 4. 판매 추이 및 프로모션 효과
+- 5월에 가장 높은 판매액을 기록하며, 전월 대비 28.9%의 높은 성장률을 보임
+- 프로모션 적용 시 평균 주문 금액이 95.8% 증가하는 매우 큰 효과를 보임
+- 유제품(DAIRYPROMO)과 과일(FRUITPROMO5) 관련 프로모션이 가장 높은 판매액을 기록함
+
+## 5. 전략적 제언
+### 카테고리 전략
+- 과일 카테고리: 핵심 수익원으로서 품질 관리 및 다양성 확보에 집중하고, 특히 5월 성수기에 대비한 재고 관리 강화
+- 채소 카테고리: 꾸준한 성장세를 유지하기 위한 안정적인 공급망 구축 및 신선도 유지 전략 수립
+- 유제품 카테고리: 상대적으로 낮은 선호도를 높이기 위한 특별 프로모션 및 번들 상품 개발
+
+### 고객 세그먼트 전략
+- 남성 고객: 과일 카테고리에 대한 높은 선호도를 활용한 프리미엄 과일 제품 라인업 강화
+- 여성 고객: 과일과 채소를 함께 묶은 번들 상품 개발 및 마케팅 전략 수립
+- 연령대별 전략: 20-30대를 위한 과일 중심, 50-60대를 위한 채소 중심의 맞춤형 마케팅 전략 수립
+
+### 프로모션 전략
+- 효과적인 프로모션(DAIRYPROMO, FRUITPROMO5)을 확대하고 더 많은 고객에게 제공
+- 계절적 요인을 활용한 프로모션(SUMMERFRUIT)의 성공을 바탕으로 다른 계절에도 유사한 전략 적용
+- 고객 세그먼트별 선호 카테고리를 고려한 타겟 프로모션 전략 수립
+
+### 시기별 전략
+- 5월: 과일 카테고리 중심의 프로모션 및 마케팅 활동 강화
+- 2월: 판매 부진 시기에 대한 특별 마케팅 전략 및 프로모션 개발
+- 성장 가능성: 20대와 60대 고객층 유치를 위한 특화된 마케팅 전략 수립
+
+--------------------------------------------------
+Generated Files:
+- ./artifacts/summary_dashboard.png : 종합 분석 결과 대시보드
 ==================================================
