@@ -566,7 +566,18 @@ print(chart_insights)
   - **Combo charts**: Use for complementary metrics with different scales (volume + rate, sales + growth)
   - **Styled table**: Use when exact numbers matter most OR when data points are too few for visualization
     - Preferred for 2-4 data points with simple comparison
-    - Save as simple text summary in all_results.txt instead of creating charts
+    - **[CRITICAL] Table Format for all_results.txt**: Use markdown table with `[TABLE]` markers
+    - **[MANDATORY]** When saving tables to all_results.txt, use this format:
+      ```
+      [TABLE]
+      Table Title: Category Sales Comparison
+      | Category | Amount | Percentage |
+      |----------|--------|------------|
+      | Male     | 4,655,800원 | 54.02% |
+      | Female   | 3,963,350원 | 45.98% |
+      [/TABLE]
+      ```
+    - The `[TABLE]...[/TABLE]` markers allow Reporter agent to detect and render tables properly in PDF/HTML
 
 - **[SPACE EFFICIENCY CHECK]**:
   - Will this chart occupy >1/4 of a report page?

@@ -241,31 +241,6 @@ td {{
 - **[MANDATORY] Use citations from Validator agent**: Read `./artifacts/citations.json` for numerical references
 - Add citation numbers [1], [2], [3] etc. next to important numbers when citations are available
 - [CRITICAL] Must use and incorporate the generated artifacts (images, charts) to explain the analysis results
-
-**[CRITICAL] Table Detection and Rendering**:
-- **Detect `[TABLE]...[/TABLE]` markers** in `all_results.txt`
-- When found, convert markdown tables to HTML `<table>` elements
-- **Example transformation**:
-  ```
-  Input from all_results.txt:
-  [TABLE]
-  Table Title: Gender Sales Comparison
-  | Gender | Amount | Percentage |
-  |--------|--------|------------|
-  | Male   | 4,655,800원 | 54.02% |
-  | Female | 3,963,350원 | 45.98% |
-  [/TABLE]
-
-  Output HTML:
-  <h3>Gender Sales Comparison</h3>
-  <table>
-    <tr><th>Gender</th><th>Amount</th><th>Percentage</th></tr>
-    <tr><td>Male</td><td>4,655,800원</td><td>54.02%</td></tr>
-    <tr><td>Female</td><td>3,963,350원</td><td>45.98%</td></tr>
-  </table>
-  ```
-- Apply existing table CSS styles for proper rendering
-- Tables should be rendered in place of charts when Coder agent chose table format
 </data_requirements>
 
 <pdf_generation>

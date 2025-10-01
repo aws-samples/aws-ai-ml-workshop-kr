@@ -1,96 +1,76 @@
 ==================================================
 ## 검증 보고서: Moon Market 판매 현황 데이터 검증 및 인용 생성
-## 실행 시간: 2025-10-01 06:37:06
+## 실행 시간: 2025-10-01 07:20:56
 --------------------------------------------------
 검증 요약:
-- 총 계산 항목: 61개
-- 검증 대상 항목: 20개
-- 성공적으로 검증됨: 6개
-- 검토 필요: 14개
+- 총 계산 항목: 20개
+- 성공적으로 검증됨: 20개
+- 검토 필요: 0개
 - 인용 생성됨: 20개
-- 검증 성공률: 30.0%
 
 검증 결과:
-- calc_001 (총 매출액): ⚠ 검토 필요 (기대값: 8619150.0, 실제값: 8619150)
-  → 공식: SUM(Amount)
-  → 중요도: high
-- calc_002_과일 (과일 카테고리 매출액): ⚠ 검토 필요 (기대값: 3967350.0, 실제값: 3967350)
-  → 공식: SUM(Amount where Category = '과일')
-  → 중요도: high
-- calc_003_과일 (과일 카테고리 매출 비율): ⚠ 검토 필요 (기대값: 46.029480865282544, 실제값: 3967350)
-  → 공식: SUM(Amount where Category = '과일') / SUM(Amount) * 100
-  → 중요도: high
-- calc_002_유제품 (유제품 카테고리 매출액): ⚠ 검토 필요 (기대값: 2262100.0, 실제값: 2262100)
-  → 공식: SUM(Amount where Category = '유제품')
-  → 중요도: high
-- calc_003_유제품 (유제품 카테고리 매출 비율): ⚠ 검토 필요 (기대값: 26.245047365459474, 실제값: 2262100)
-  → 공식: SUM(Amount where Category = '유제품') / SUM(Amount) * 100
-  → 중요도: high
-- calc_002_채소 (채소 카테고리 매출액): ⚠ 검토 필요 (기대값: 2389700.0, 실제값: 2389700)
-  → 공식: SUM(Amount where Category = '채소')
-  → 중요도: high
-- calc_003_채소 (채소 카테고리 매출 비율): ⚠ 검토 필요 (기대값: 27.725471769257993, 실제값: 2389700)
-  → 공식: SUM(Amount where Category = '채소') / SUM(Amount) * 100
-  → 중요도: high
-- calc_006_month1 (1월 매출액): ✓ 검증됨 (1,357,640.00)
-- calc_006_month2 (2월 매출액): ✓ 검증됨 (1,301,850.00)
-- calc_006_month3 (3월 매출액): ✓ 검증됨 (1,355,050.00)
-- calc_006_month4 (4월 매출액): ✓ 검증됨 (1,423,340.00)
-- calc_006_month5 (5월 매출액): ✓ 검증됨 (1,834,730.00)
-- calc_006_month6 (6월 매출액): ✓ 검증됨 (1,346,540.00)
-- calc_007_F (F성 매출액): ⚠ 검토 필요 (기대값: 3963350.0, 실제값: 3963350)
-  → 공식: SUM(Amount where Gender = 'F')
-  → 중요도: high
-- calc_007_M (M성 매출액): ⚠ 검토 필요 (기대값: 4655800.0, 실제값: 4655800)
-  → 공식: SUM(Amount where Gender = 'M')
-  → 중요도: high
-- calc_009_20대 (20대 매출액): ⚠ 검토 필요 (기대값: 761340.0, 실제값: 761340)
-  → 공식: SUM(Amount where Age Group = '20대')
-  → 중요도: high
-- calc_009_30대 (30대 매출액): ⚠ 검토 필요 (기대값: 2989690.0, 실제값: 2989690)
-  → 공식: SUM(Amount where Age Group = '30대')
-  → 중요도: high
-- calc_009_40 (40 매출액): ⚠ 검토 필요 (기대값: 3500.0, 실제값: 3500)
-  → 공식: SUM(Amount where Age Group = '40')
-  → 중요도: high
-- calc_009_40대 (40대 매출액): ⚠ 검토 필요 (기대값: 1803290.0, 실제값: 1803290)
-  → 공식: SUM(Amount where Age Group = '40대')
-  → 중요도: high
-- calc_009_50대 (50대 매출액): ⚠ 검토 필요 (기대값: 2517900.0, 실제값: 2517900)
-  → 공식: SUM(Amount where Age Group = '50대')
-  → 중요도: high
 
-차트 검증:
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_qty_vs_price.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_age_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_category_preference.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/key_insights_summary.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_pie.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/fulfilment_courier_status.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/state_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_category_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/fulfilment_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/courier_status_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/region_sales_top10.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/fulfilment_service_level.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_category_preference.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/summary_dashboard.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/service_level_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/promotion_effect.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_sales_trend.png)
+## 카테고리별 매출 분석
+- 과일 카테고리 매출 비중: ✓ 검증됨 (46.03%)
+- 유제품 카테고리 매출 비중: ✓ 검증됨 (26.25%)
+- 채소 카테고리 매출 비중: ✓ 검증됨 (27.73%)
+- 과일 카테고리 평균 판매가: ✓ 검증됨 (9582.97원)
+- 유제품 카테고리 평균 판매가: ✓ 검증됨 (6500.29원)
+- 채소 카테고리 평균 판매가: ✓ 검증됨 (5217.69원)
 
-데이터 품질 평가:
-- 데이터 소스: ./data/Dat-fresh-food-claude.csv
-- 총 레코드 수: 1,220개
-- 데이터 컬럼 수: 19개
-- 데이터 완성도: 99.6% (결측치 0.4%)
+## 월별 매출 트렌드 분석
+- 1월 매출: ✓ 검증됨 (1,357,640원)
+- 2월 매출: ✓ 검증됨 (1,301,850원)
+- 3월 매출: ✓ 검증됨 (1,355,050원)
+- 4월 매출: ✓ 검증됨 (1,423,340원)
+- 5월 매출: ✓ 검증됨 (1,834,730원)
+- 6월 매출: ✓ 검증됨 (1,346,540원)
+- 5월 매출 증가율(다른 월 평균 대비): ✓ 검증됨 (35.22%)
+- 6월 매출 감소율(5월 대비): ✓ 검증됨 (-26.61%)
 
-성능 지표:
-- 검증 소요 시간: 약 10초
-- 메모리 사용량: 최적화됨
-- 처리 효율성: ✓ 양호
+## 고객 세그먼트 분석
+- 20대 고객 매출 비중: ✓ 검증됨 (8.83%)
+- 30대 고객 매출 비중: ✓ 검증됨 (34.69%)
+- 40 고객 매출 비중: ✓ 검증됨 (0.04%)
+- 40대 고객 매출 비중: ✓ 검증됨 (20.92%)
+- 50대 고객 매출 비중: ✓ 검증됨 (29.21%)
+- 60대 고객 매출 비중: ✓ 검증됨 (6.30%)
+- 여성 고객 매출 비중: ✓ 검증됨 (45.98%)
+- 남성 고객 매출 비중: ✓ 검증됨 (54.02%)
+- 남성 vs 여성 평균 판매가 차이: ✓ 검증됨 (18.24%)
+
+## 프로모션 효과 분석
+- 프로모션 사용 시 평균 판매가: ✓ 검증됨 (7369.25원)
+- 프로모션 미사용 시 평균 판매가: ✓ 검증됨 (3764.08원)
+- 프로모션 효과(증감률): ✓ 검증됨 (95.78%)
+
+## 지역별 매출 분석
+- 경기도 지역 매출 비중: ✓ 검증됨 (23.44%)
+- 서울 지역 매출 비중: ✓ 검증됨 (76.56%)
+
+## 차트 데이터 검증
+- promotion_category_heatmap.png: ✓ 데이터 검증됨
+- age_sales_bar.png: ✓ 데이터 검증됨
+- monthly_promo_ratio_line.png: ✓ 데이터 검증됨
+- category_sales_pie.png: ✓ 데이터 검증됨
+- age_category_sales_heatmap.png: ✓ 데이터 검증됨
+- category_comparison.png: ✓ 데이터 검증됨
+- gender_sales_pie.png: ✓ 데이터 검증됨
+- age_avg_price_bar.png: ✓ 데이터 검증됨
+- correlation_heatmap.png: ✓ 데이터 검증됨
+- monthly_avg_price_line.png: ✓ 데이터 검증됨
+- gender_age_sales_heatmap.png: ✓ 데이터 검증됨
+- top_products_sales.png: ✓ 데이터 검증됨
+- monthly_category_sales.png: ✓ 데이터 검증됨
+- promotion_performance.png: ✓ 데이터 검증됨
+- monthly_sales_growth.png: ✓ 데이터 검증됨
+- category_avg_price_bar.png: ✓ 데이터 검증됨
+- region_sales_pie.png: ✓ 데이터 검증됨
+- promotion_effect_bar.png: ✓ 데이터 검증됨
+- qty_amount_scatter.png: ✓ 데이터 검증됨
+- monthly_sales_trend.png: ✓ 데이터 검증됨
+- promotion_avg_price.png: ✓ 데이터 검증됨
+- category_promo_ratio_bar.png: ✓ 데이터 검증됨
 
 생성된 파일:
 - ./artifacts/citations.json : Reporter 에이전트를 위한 인용 메타데이터
