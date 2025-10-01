@@ -185,7 +185,7 @@ class strands_utils():
         return agent, response
 
     @staticmethod
-    async def _retry_agent_streaming(agent, message, max_attempts=5, base_delay=2):
+    async def _retry_agent_streaming(agent, message, max_attempts=5, base_delay=10):
         """
         Agent streaming with throttling retry logic
 

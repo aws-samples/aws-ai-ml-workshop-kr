@@ -241,6 +241,31 @@ td {{
 - **[MANDATORY] Use citations from Validator agent**: Read `./artifacts/citations.json` for numerical references
 - Add citation numbers [1], [2], [3] etc. next to important numbers when citations are available
 - [CRITICAL] Must use and incorporate the generated artifacts (images, charts) to explain the analysis results
+
+**[CRITICAL] Table Detection and Rendering**:
+- **Detect `[TABLE]...[/TABLE]` markers** in `all_results.txt`
+- When found, convert markdown tables to HTML `<table>` elements
+- **Example transformation**:
+  ```
+  Input from all_results.txt:
+  [TABLE]
+  Table Title: Gender Sales Comparison
+  | Gender | Amount | Percentage |
+  |--------|--------|------------|
+  | Male   | 4,655,800원 | 54.02% |
+  | Female | 3,963,350원 | 45.98% |
+  [/TABLE]
+
+  Output HTML:
+  <h3>Gender Sales Comparison</h3>
+  <table>
+    <tr><th>Gender</th><th>Amount</th><th>Percentage</th></tr>
+    <tr><td>Male</td><td>4,655,800원</td><td>54.02%</td></tr>
+    <tr><td>Female</td><td>3,963,350원</td><td>45.98%</td></tr>
+  </table>
+  ```
+- Apply existing table CSS styles for proper rendering
+- Tables should be rendered in place of charts when Coder agent chose table format
 </data_requirements>
 
 <pdf_generation>
@@ -340,10 +365,13 @@ def generate_pdf_with_weasyprint(html_content, pdf_path):
         return False
 
 # Simplified workflow for PDF generation:
-# 1. Generate HTML content using the html_structure_sample above
+# 1. Generate HTML content using the html_structure_sample above (WITH citations and references section)
 # 2. Embed images: html_with_images = embed_images_in_html(html_content)
-# 3. Generate PDF: generate_pdf_with_weasyprint(html_with_images, './artifacts/final_report_with_citations.pdf')
-# 4. For PDF without citations, remove [1], [2] etc. from HTML first, then repeat steps 2-3
+# 3. Generate PDF with citations: generate_pdf_with_weasyprint(html_with_images, './artifacts/final_report_with_citations.pdf')
+# 4. For PDF without citations:
+#    a. Remove [1], [2], [3] etc. citation markers from HTML
+#    b. Remove entire references section (div class="references")
+#    c. Embed images and generate PDF: './artifacts/final_report.pdf'
 ```
 </pdf_generation>
 
@@ -377,28 +405,35 @@ def format_with_citation(value, calc_id):
 **Generate References Section**:
 ```python
 def generate_citation_section():
+    """Generate references section HTML for PDF with citations"""
     if not os.path.exists('./artifacts/citations.json'):
         return ""
-    
+
     with open('./artifacts/citations.json', 'r', encoding='utf-8') as f:
         citations_json = json.load(f)
-    
-    references = "\n## 데이터 출처 및 계산 근거\n\n" if is_korean_content(report_content) else "\n## Data Sources and Calculations\n\n"
-    
+
+    # Generate HTML div for references section
+    references_html = '<div class="references">\n'
+    references_html += '<h2>데이터 출처 및 계산 근거</h2>\n' if is_korean_content(report_content) else '<h2>Data Sources and Calculations</h2>\n'
+
     for citation in citations_json.get('citations', []):
         citation_id = citation.get('citation_id', '')
         description = citation.get('description', '')
         formula = citation.get('formula', '')
         source_file = citation.get('source_file', '')
         source_columns = citation.get('source_columns', [])
-        
-        references += f"{{citation_id}} {{description}}: {{value:,}}원, 계산식: {{formula}}, "
-        references += f"출처: {{source_file}} ({{', '.join(source_columns)}} 컬럼)\n\n"
-    
-    return references
 
-# Add references to the end of your report
-report_content += generate_citation_section()
+        references_html += f"<p>{{citation_id}} {{description}}: 계산식: {{formula}}, "
+        references_html += f"출처: {{source_file}} ({{', '.join(source_columns)}} 컬럼)</p>\n"
+
+    references_html += '</div>\n'
+    return references_html
+
+# Add references to the end of your report (for WITH citations version)
+report_with_citations = report_content + generate_citation_section()
+
+# For without citations version, DO NOT add references section
+report_without_citations = report_content  # No references section
 ```
 </citation_usage>
 
@@ -414,7 +449,10 @@ report_content += generate_citation_section()
 
 <critical_requirements>
 - [MANDATORY] Always create './artifacts/citations.json' integration
-- [MANDATORY] Always create both PDF versions when citations exist
+- [MANDATORY] Always create both PDF versions when citations exist:
+  1. **WITH citations** (`final_report_with_citations.pdf`): Include [1], [2], [3] markers AND references section
+  2. **WITHOUT citations** (`final_report.pdf`): Remove all [1], [2], [3] markers AND remove entire references section
+- [CRITICAL] References section must ONLY appear in the WITH citations version
 - [MANDATORY] Use Base64 encoding for all images in PDF
 - [MANDATORY] Follow the language of the USER_REQUEST
 - [CRITICAL] Include all analysis results and generated artifacts

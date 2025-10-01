@@ -317,29 +317,43 @@ import os
 plt.rcParams['font.family'] = ['NanumGothic']
 plt.rcParams['axes.unicode_minus'] = False
 korean_font = fm.FontProperties(family='NanumGothic')
-fig, ax = plt.subplots(figsize=(12, 7.2), dpi=200)
+
+# [CRITICAL] Space Efficiency: Reduce figsize for compact layout
+fig, ax = plt.subplots(figsize=(8, 5), dpi=200)
 categories = ['과일', '채소', '유제품']
 values = [3967350, 2389700, 2262100]
 colors = ['#ff9999', '#66b3ff', '#99ff99']
 
+# [RECOMMENDED] Enhanced labels: Include category name + percentage in pie slice
 def make_autopct(values):
     def my_autopct(pct):
         return f'{{pct:.1f}}%' if pct > 5 else ''
     return my_autopct
 
-wedges, texts, autotexts = ax.pie(values, labels=None, autopct=make_autopct(values),
+wedges, texts, autotexts = ax.pie(values, labels=categories, autopct=make_autopct(values),
                                   startangle=90, colors=colors,
-                                  textprops={{'fontproperties': korean_font, 'fontsize': 12}})
+                                  textprops={{'fontproperties': korean_font, 'fontsize': 11}},
+                                  labeldistance=1.1)
 
+# Style percentage labels
 for autotext in autotexts:
     autotext.set_color('white')
     autotext.set_fontweight('bold')
+    autotext.set_fontsize(12)
+
+# Style category labels
+for text in texts:
+    text.set_fontproperties(korean_font)
+    text.set_fontsize(11)
+    text.set_fontweight('bold')
 
 ax.set_title('카테고리별 판매 비율', fontproperties=korean_font, fontsize=16, fontweight='bold', pad=20)
 
+# [RECOMMENDED] Compact legend: Simplified format, positioned efficiently
 legend_labels = [f'{{cat}}: {{val:,}}원 ({{val/sum(values)*100:.1f}}%)'
                  for cat, val in zip(categories, values)]
-ax.legend(legend_labels, prop=korean_font, loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=14)
+ax.legend(legend_labels, prop=korean_font, loc="lower left", bbox_to_anchor=(0, -0.15),
+          fontsize=10, ncol=1, frameon=False)
 
 plt.tight_layout()
 os.makedirs('./artifacts', exist_ok=True)
@@ -362,16 +376,26 @@ fig, ax = plt.subplots(figsize=(9.6, 6), dpi=200)
 categories = ['과일', '채소', '유제품']
 values = [3967350, 2389700, 2262100]
 
-bars = ax.bar(categories, values, color=['#ff9999', '#66b3ff', '#99ff99'])
+colors = ['#ff9999', '#ff9999', '#ff9999']  # Consistent single color
+bars = ax.bar(categories, values, color=colors)
 
 ax.set_title('카테고리별 판매 금액', fontproperties=korean_font, fontsize=16, fontweight='bold')
 ax.set_xlabel('카테고리', fontproperties=korean_font, fontsize=12)
 ax.set_ylabel('판매 금액 (원)', fontproperties=korean_font, fontsize=12)
 
+min_val = min(values)
+max_val = max(values)
+ax.set_ylim([min_val * 0.8, max_val * 1.1])  # Start at 80% of min, end at 110% of max
+# Only use ylim(0, max) when comparing absolute magnitudes or showing growth from zero
+
+# [RECOMMENDED] Add reference line for average/context
+avg_value = sum(values) / len(values)
+ax.axhline(y=avg_value, color='gray', linestyle='--', alpha=0.7, linewidth=1.5, label=f'평균: {{avg_value:,.0f}}원')
+
 ax.set_xticks(range(len(categories)))
 ax.set_xticklabels(categories, fontproperties=korean_font, fontsize=10)
-
 ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{{x:,.0f}}원'))
+
 for label in ax.get_yticklabels():
     label.set_fontproperties(korean_font)
     label.set_fontsize(10)
@@ -381,6 +405,20 @@ for bar, value in zip(bars, values):
     ax.text(bar.get_x() + bar.get_width()/2., height,
             f'{{value:,}}원', ha='center', va='bottom',
             fontproperties=korean_font, fontsize=13)
+
+# [CRITICAL] Annotation Positioning: Avoid overlaps with title, legend, and other elements
+# When adding annotations (e.g., percentage, growth rate), check positioning carefully:
+# - Use bbox parameter to add background for better readability
+# - Adjust xy and xytext coordinates to avoid title/legend overlap
+# - Test different positions: 'upper left', 'upper right', 'lower center', etc.
+# Example of safe annotation with background:
+# ax.annotate('증가율: 8%', xy=(0.5, 0.85), xycoords='axes fraction',
+#             ha='center', va='top', fontproperties=korean_font, fontsize=12,
+#             bbox=dict(boxstyle='round,pad=0.5', facecolor='yellow', alpha=0.7, edgecolor='orange'))
+# Note: xy=(0.5, 0.85) places text at 50% horizontal, 85% vertical (safe distance from title)
+# Avoid y > 0.90 to prevent title collision, avoid overlapping with legend position
+
+ax.legend(prop=korean_font, fontsize=11, loc='upper right')
 
 plt.tight_layout()
 os.makedirs('./artifacts', exist_ok=True)
@@ -517,20 +555,42 @@ print("CHART INSIGHT ANALYSIS:")
 print(chart_insights)
 ```
 
-- **[ADVANCED CHART TYPES RECOMMENDATION]**:
-  - **Combo Charts (Bar + Line)**: Use dual y-axes for related metrics with different scales (sales volume vs growth rate)
-  - **Heatmaps**: Perfect for correlation analysis, category performance matrices, time-based patterns
-  - **Scatter Plots**: Show relationships between continuous variables, identify outliers and clusters
-  - **Stacked Charts**: Display part-to-whole relationships over time or across categories
-  - **Box Plots**: Statistical distribution analysis with quartiles and outliers
-  - **Area Charts**: Emphasize cumulative totals and trending patterns over time
-
 - **[CHART SELECTION GUIDELINES]**:
-  - Choose **combo charts** for complementary metrics (volume + rate, sales + growth)
-  - Use **heatmaps** for correlation matrices, performance grids, time-series intensity
-  - Apply **scatter plots** to explore relationships, detect patterns, identify anomalies
-  - Consider **stacked charts** for composition changes over time
-  - Implement **multiple chart types** in single analysis for comprehensive insights
+  - **Bar chart**: Use ONLY for discrete comparisons (5-15 categories optimal)
+    - ❌ **DO NOT USE for 2-3 items**: Use styled table or simple text instead
+    - Example: "Male: 4.66M (54%), Female: 3.96M (46%)" is better than a chart
+  - **Pie chart**: Use ONLY when showing parts of 100% (3-6 segments optimal)
+  - **Line chart**: Use ONLY for continuous trends over time (minimum 4-5 time points)
+  - **Scatter plot**: Use ONLY when showing correlation/distribution
+  - **Heatmap**: Use ONLY for matrix/multi-dimensional patterns
+  - **Combo charts**: Use for complementary metrics with different scales (volume + rate, sales + growth)
+  - **Styled table**: Use when exact numbers matter most OR when data points are too few for visualization
+    - Preferred for 2-4 data points with simple comparison
+    - **[CRITICAL] Table Format for all_results.txt**: Use markdown table with `[TABLE]` markers
+    - **[MANDATORY]** When saving tables to all_results.txt, use this format:
+      ```
+      [TABLE]
+      Table Title: Category Sales Comparison
+      | Category | Amount | Percentage |
+      |----------|--------|------------|
+      | Male     | 4,655,800원 | 54.02% |
+      | Female   | 3,963,350원 | 45.98% |
+      [/TABLE]
+      ```
+    - The `[TABLE]...[/TABLE]` markers allow Reporter agent to detect and render tables properly in PDF/HTML
+
+- **[SPACE EFFICIENCY CHECK]**:
+  - Will this chart occupy >1/4 of a report page?
+  - Could this be a smaller inline chart or sparkline?
+  - Is the insight-to-space ratio high enough?
+
+- **[ANTI-PATTERNS] DO NOT CREATE:**
+  - ❌ Bar chart with 2-3 items (use styled table or text: "X is 45%, Y is 30%, Z is 25%")
+  - ❌ Pie chart showing one dominant segment (>80%)
+  - ❌ Line chart with < 4 time points (use table instead)
+  - ❌ Multiple charts showing the same ranking in different formats
+  - ❌ Charts that could be replaced by: "Top 3 are X, Y, Z accounting for 70%"
+  - ❌ Oversized charts for simple comparisons (2 gender categories doesn't need a full-page chart)
 
 - [MANDATORY] **CHART-SPECIFIC INSIGHT REQUIREMENTS**:
   - **Bar Charts**: Compare values, identify leaders/laggards, explain significant differences
@@ -647,7 +707,6 @@ with open("./artifacts/solution.py", "w") as f:
 print("Code saved to ./artifacts/solution.py")
 ```
 </code_saving_requirements>
-
 
 <note>
 

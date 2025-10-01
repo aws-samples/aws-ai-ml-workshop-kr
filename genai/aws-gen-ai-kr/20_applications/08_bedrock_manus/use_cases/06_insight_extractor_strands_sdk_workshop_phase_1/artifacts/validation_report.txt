@@ -1,65 +1,94 @@
 ==================================================
-## 검증 보고서: 데이터 검증 및 인용 생성
-## 실행 시간: 2025-09-30 02:58:37
+## 검증 보고서: Moon Market 판매 현황 데이터 검증 및 인용 생성
+## 실행 시간: 2025-10-01 06:37:06
 --------------------------------------------------
 검증 요약:
-- 총 계산 항목: 75개
-- 성공적으로 검증됨: 20개
-- 검토 필요: 0개
+- 총 계산 항목: 61개
+- 검증 대상 항목: 20개
+- 성공적으로 검증됨: 6개
+- 검토 필요: 14개
 - 인용 생성됨: 20개
+- 검증 성공률: 30.0%
 
 검증 결과:
-- calc_001 (총 매출): ✓ 검증됨 (값: 8619150)
-- calc_002 (총 주문 수): ✓ 검증됨 (1,220.00)
-- calc_003 (총 판매 상품 수): ✓ 검증됨 (값: 2189)
-- calc_004 (평균 주문 금액): ✓ 검증됨 (7,064.88)
-- calc_cat_sales_1 (과일 카테고리 총 판매 금액): ✓ 검증됨 (3,967,350.00)
-- calc_cat_sales_3 (채소 카테고리 총 판매 금액): ✓ 검증됨 (2,389,700.00)
-- calc_cat_sales_2 (유제품 카테고리 총 판매 금액): ✓ 검증됨 (2,262,100.00)
-- calc_monthly_sales_1 (2024-01 월 총 판매 금액): ✓ 검증됨 (1,357,640.00)
-- calc_monthly_sales_2 (2024-02 월 총 판매 금액): ✓ 검증됨 (1,301,850.00)
-- calc_monthly_growth_2 (2024-02 월 매출 성장률): ✓ 검증됨 (값: -4.109336790312601)
-- calc_monthly_sales_3 (2024-03 월 총 판매 금액): ✓ 검증됨 (1,355,050.00)
-- calc_monthly_growth_3 (2024-03 월 매출 성장률): ✓ 검증됨 (4.09%)
-- calc_monthly_sales_4 (2024-04 월 총 판매 금액): ✓ 검증됨 (1,423,340.00)
-- calc_monthly_growth_4 (2024-04 월 매출 성장률): ✓ 검증됨 (5.04%)
-- calc_monthly_sales_5 (2024-05 월 총 판매 금액): ✓ 검증됨 (1,834,730.00)
-- calc_cat_avg_1 (과일 카테고리 평균 주문 금액): ✓ 검증됨 (9,582.97)
-- calc_cat_avg_2 (유제품 카테고리 평균 주문 금액): ✓ 검증됨 (6,500.29)
-- calc_cat_avg_3 (채소 카테고리 평균 주문 금액): ✓ 검증됨 (5,217.69)
-- calc_gender_avg_1 (F 성별 평균 주문 금액): ✓ 검증됨 (6,476.06)
-- calc_gender_avg_2 (M 성별 평균 주문 금액): ✓ 검증됨 (7,657.57)
+- calc_001 (총 매출액): ⚠ 검토 필요 (기대값: 8619150.0, 실제값: 8619150)
+  → 공식: SUM(Amount)
+  → 중요도: high
+- calc_002_과일 (과일 카테고리 매출액): ⚠ 검토 필요 (기대값: 3967350.0, 실제값: 3967350)
+  → 공식: SUM(Amount where Category = '과일')
+  → 중요도: high
+- calc_003_과일 (과일 카테고리 매출 비율): ⚠ 검토 필요 (기대값: 46.029480865282544, 실제값: 3967350)
+  → 공식: SUM(Amount where Category = '과일') / SUM(Amount) * 100
+  → 중요도: high
+- calc_002_유제품 (유제품 카테고리 매출액): ⚠ 검토 필요 (기대값: 2262100.0, 실제값: 2262100)
+  → 공식: SUM(Amount where Category = '유제품')
+  → 중요도: high
+- calc_003_유제품 (유제품 카테고리 매출 비율): ⚠ 검토 필요 (기대값: 26.245047365459474, 실제값: 2262100)
+  → 공식: SUM(Amount where Category = '유제품') / SUM(Amount) * 100
+  → 중요도: high
+- calc_002_채소 (채소 카테고리 매출액): ⚠ 검토 필요 (기대값: 2389700.0, 실제값: 2389700)
+  → 공식: SUM(Amount where Category = '채소')
+  → 중요도: high
+- calc_003_채소 (채소 카테고리 매출 비율): ⚠ 검토 필요 (기대값: 27.725471769257993, 실제값: 2389700)
+  → 공식: SUM(Amount where Category = '채소') / SUM(Amount) * 100
+  → 중요도: high
+- calc_006_month1 (1월 매출액): ✓ 검증됨 (1,357,640.00)
+- calc_006_month2 (2월 매출액): ✓ 검증됨 (1,301,850.00)
+- calc_006_month3 (3월 매출액): ✓ 검증됨 (1,355,050.00)
+- calc_006_month4 (4월 매출액): ✓ 검증됨 (1,423,340.00)
+- calc_006_month5 (5월 매출액): ✓ 검증됨 (1,834,730.00)
+- calc_006_month6 (6월 매출액): ✓ 검증됨 (1,346,540.00)
+- calc_007_F (F성 매출액): ⚠ 검토 필요 (기대값: 3963350.0, 실제값: 3963350)
+  → 공식: SUM(Amount where Gender = 'F')
+  → 중요도: high
+- calc_007_M (M성 매출액): ⚠ 검토 필요 (기대값: 4655800.0, 실제값: 4655800)
+  → 공식: SUM(Amount where Gender = 'M')
+  → 중요도: high
+- calc_009_20대 (20대 매출액): ⚠ 검토 필요 (기대값: 761340.0, 실제값: 761340)
+  → 공식: SUM(Amount where Age Group = '20대')
+  → 중요도: high
+- calc_009_30대 (30대 매출액): ⚠ 검토 필요 (기대값: 2989690.0, 실제값: 2989690)
+  → 공식: SUM(Amount where Age Group = '30대')
+  → 중요도: high
+- calc_009_40 (40 매출액): ⚠ 검토 필요 (기대값: 3500.0, 실제값: 3500)
+  → 공식: SUM(Amount where Age Group = '40')
+  → 중요도: high
+- calc_009_40대 (40대 매출액): ⚠ 검토 필요 (기대값: 1803290.0, 실제값: 1803290)
+  → 공식: SUM(Amount where Age Group = '40대')
+  → 중요도: high
+- calc_009_50대 (50대 매출액): ⚠ 검토 필요 (기대값: 2517900.0, 실제값: 2517900)
+  → 공식: SUM(Amount where Age Group = '50대')
+  → 중요도: high
 
 차트 검증:
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_sales_bar.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_bar.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_qty_vs_price.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_age_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_category_preference.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/key_insights_summary.png)
 - 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_pie.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_sales_pie.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_age_sales_bar.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_promo_heatmap.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_avg_order_diff.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_avg_order_bar.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/top10_bestsellers.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/top5_promo_avg_order.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/top5_promo_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_orders_and_avg.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/top10_revenue.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_promo_effect.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_growth_rate.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_growth_rate.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_avg_order_diff.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/product_matrix.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/fulfilment_courier_status.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/state_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_category_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/fulfilment_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/courier_status_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/region_sales_top10.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/fulfilment_service_level.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_category_preference.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/summary_dashboard.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/service_level_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/promotion_effect.png)
 - 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_sales_trend.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_opportunity_matrix.png)
 
 데이터 품질 평가:
 - 데이터 소스: ./data/Dat-fresh-food-claude.csv
 - 총 레코드 수: 1,220개
-- 데이터 컬럼 수: 18개
-- 데이터 완성도: 99.5% (결측치 0.5%)
+- 데이터 컬럼 수: 19개
+- 데이터 완성도: 99.6% (결측치 0.4%)
 
 성능 지표:
-- 검증 소요 시간: 약 15초
+- 검증 소요 시간: 약 10초
 - 메모리 사용량: 최적화됨
 - 처리 효율성: ✓ 양호
 
