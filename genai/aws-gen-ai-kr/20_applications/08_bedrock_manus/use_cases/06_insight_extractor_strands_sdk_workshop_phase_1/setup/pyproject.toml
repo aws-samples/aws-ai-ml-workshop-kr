@@ -34,4 +34,5 @@ dependencies = [
     "markdown>=3.9",
     "fpdf2>=2.8.4",
     "matplotlib-inline>=0.1.7",
+    "strands-agents-tools==0.2.9",
 ]
