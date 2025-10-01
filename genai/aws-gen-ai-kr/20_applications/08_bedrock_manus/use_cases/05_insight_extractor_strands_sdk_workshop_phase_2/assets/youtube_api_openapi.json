@@ -1,0 +1,224 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "YouTube Data API",
+    "version": "v3",
+    "description": "YouTube Data API for searching videos and getting detailed information"
+  },
+  "servers": [
+    {
+      "url": "https://www.googleapis.com/youtube/v3"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "operationId": "searchVideos",
+        "summary": "Search for YouTube videos with detailed information",
+        "parameters": [
+          {
+            "name": "part",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "snippet"
+            },
+            "description": "Specifies the resource properties that the API response will include"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query term"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "video"
+            },
+            "description": "Restricts a search query to only retrieve a particular type of resource"
+          },
+          {
+            "name": "maxResults",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 25,
+              "minimum": 1,
+              "maximum": 50
+            },
+            "description": "Maximum number of items to return"
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "relevance",
+              "enum": ["date", "rating", "relevance", "title", "videoCount", "viewCount"]
+            },
+            "description": "Order of the returned search results"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful search response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "example": "youtube#searchListResponse"
+                    },
+                    "etag": {
+                      "type": "string"
+                    },
+                    "nextPageToken": {
+                      "type": "string"
+                    },
+                    "regionCode": {
+                      "type": "string"
+                    },
+                    "pageInfo": {
+                      "type": "object",
+                      "properties": {
+                        "totalResults": {
+                          "type": "integer"
+                        },
+                        "resultsPerPage": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "type": "string",
+                            "example": "youtube#searchResult"
+                          },
+                          "etag": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "type": "object",
+                            "properties": {
+                              "kind": {
+                                "type": "string",
+                                "example": "youtube#video"
+                              },
+                              "videoId": {
+                                "type": "string",
+                                "description": "YouTube video ID"
+                              }
+                            }
+                          },
+                          "snippet": {
+                            "type": "object",
+                            "properties": {
+                              "publishedAt": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Video publish date"
+                              },
+                              "channelId": {
+                                "type": "string",
+                                "description": "Channel ID"
+                              },
+                              "title": {
+                                "type": "string",
+                                "description": "Video title"
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "Video description"
+                              },
+                              "thumbnails": {
+                                "type": "object",
+                                "properties": {
+                                  "default": {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "string"
+                                      },
+                                      "width": {
+                                        "type": "integer"
+                                      },
+                                      "height": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  },
+                                  "medium": {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "string"
+                                      },
+                                      "width": {
+                                        "type": "integer"
+                                      },
+                                      "height": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  },
+                                  "high": {
+                                    "type": "object",
+                                    "properties": {
+                                      "url": {
+                                        "type": "string"
+                                      },
+                                      "width": {
+                                        "type": "integer"
+                                      },
+                                      "height": {
+                                        "type": "integer"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "channelTitle": {
+                                "type": "string",
+                                "description": "Channel name"
+                              },
+                              "liveBroadcastContent": {
+                                "type": "string"
+                              },
+                              "publishTime": {
+                                "type": "string",
+                                "format": "date-time"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden - API key issues"
+          }
+        }
+      }
+    }
+  }
+}

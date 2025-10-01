@@ -1,0 +1,192 @@
+{
+  "metadata": {
+    "generated_at": "2025-09-30 15:59:04",
+    "data_sources": [
+      "data/Dat-fresh-food-claude.csv",
+      "data/youtube_search_results.txt"
+    ],
+    "total_records": 1220
+  },
+  "calculations": [
+    {
+      "id": "calc_category_sales",
+      "description": "카테고리별 판매 비율",
+      "formula": "SUM(Amount) BY Category / SUM(Amount) * 100",
+      "value": {
+        "과일": 46.03,
+        "유제품": 26.25,
+        "채소": 27.73
+      },
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_monthly_sales",
+      "description": "월별 판매액",
+      "formula": "SUM(Amount) BY Month",
+      "value": {
+        "1": 1357640,
+        "2": 1301850,
+        "3": 1355050,
+        "4": 1423340,
+        "5": 1834730,
+        "6": 1346540
+      },
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_may_sales_peak",
+      "description": "5월 판매액 피크",
+      "formula": "SUM(Amount) WHERE Month = 5",
+      "value": 1834730.0,
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "Month = 5",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_june_decrease",
+      "description": "6월 판매액 감소율",
+      "formula": "(June_Sales - May_Sales) / May_Sales * 100",
+      "value": -26.61,
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "Month = 5 or Month = 6",
+      "importance": "medium",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_age_sales",
+      "description": "연령대별 판매액",
+      "formula": "SUM(Amount) BY Age Group",
+      "value": {
+        "30대": 2989690,
+        "50대": 2517900,
+        "40대": 1803290,
+        "20대": 761340,
+        "60대": 543430,
+        "40": 3500
+      },
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Age Group",
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_gender_sales",
+      "description": "성별 판매액",
+      "formula": "SUM(Amount) BY Gender",
+      "value": {
+        "F": 3963350,
+        "M": 4655800
+      },
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Gender",
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "medium",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_40s_female_sales",
+      "description": "40대 여성 판매액 비율",
+      "formula": "SUM(Amount WHERE Age Group = '40대' AND Gender = 'F') / SUM(Amount) * 100",
+      "value": 7.57,
+      "source_file": "data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Age Group",
+        "Gender",
+        "Amount"
+      ],
+      "source_rows": "Age Group = '40대' AND Gender = 'F'",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_youtube_monthly",
+      "description": "YouTube 콘텐츠 월별 분포",
+      "formula": "COUNT(videos) BY Month",
+      "value": {
+        "1": 0,
+        "2": 2,
+        "3": 0,
+        "4": 3,
+        "5": 1,
+        "6": 0,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 0,
+        "11": 4,
+        "12": 4
+      },
+      "source_file": "data/youtube_search_results.txt",
+      "source_columns": [
+        "업로드 날짜"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_sales_youtube_correlation",
+      "description": "판매액과 YouTube 업로드 수 간의 상관계수",
+      "formula": "CORRELATION(monthly_sales, youtube_uploads)",
+      "value": -0.2775672405095436,
+      "source_file": "data/Dat-fresh-food-claude.csv, data/youtube_search_results.txt",
+      "source_columns": [
+        "Amount",
+        "업로드 날짜"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-09-30 15:59:04"
+    },
+    {
+      "id": "calc_keyword_frequency",
+      "description": "주요 키워드 빈도",
+      "formula": "COUNT(keyword) IN youtube_content",
+      "value": {
+        "시장": 21,
+        "트렌드": 10,
+        "전망": 21,
+        "농식품": 11,
+        "유통": 19,
+        "이커머스": 3
+      },
+      "source_file": "data/youtube_search_results.txt",
+      "source_columns": [
+        "content"
+      ],
+      "source_rows": "all",
+      "importance": "medium",
+      "timestamp": "2025-09-30 15:59:04"
+    }
+  ]
+}
