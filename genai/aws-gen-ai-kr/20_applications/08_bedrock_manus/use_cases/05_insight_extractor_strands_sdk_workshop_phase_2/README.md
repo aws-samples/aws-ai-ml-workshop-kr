@@ -48,7 +48,7 @@ Bedrock-Manus is based on the open-source project [LangManus](https://github.com
 ```bash
 # Clone the repository
 git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
-cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_agentcore/
+cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_workshop_phase_2/
 
 # Create UV environment (automatically creates symlinks in root)
 cd setup/
