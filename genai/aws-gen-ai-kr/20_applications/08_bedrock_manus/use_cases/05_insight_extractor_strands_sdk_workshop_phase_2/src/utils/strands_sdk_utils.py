@@ -2,21 +2,20 @@
 import logging
 import traceback
 import asyncio
-import time
+from datetime import datetime
 from src.utils.bedrock import bedrock_info
-from src.utils.common_utils import retry
-from strands import Agent, tool
+from strands import Agent
 from strands.models import BedrockModel
 from botocore.config import Config
 from botocore.exceptions import ClientError
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from strands.types.exceptions import EventLoopException
 
-from datetime import datetime
-
 from strands.agent.agent_result import AgentResult
 from strands.types.content import ContentBlock, Message
 from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
+
+from strands.agent.conversation_manager import SlidingWindowConversationManager
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -115,6 +114,8 @@ class strands_utils():
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
+        context_overflow_window_size = kwargs.get("context_overflow_window_size", 7)
+        context_overflow_should_truncate_results = kwargs.get("context_overflow_should_truncate_results", False)
 
         prompt_cache, cache_type = prompt_cache_info
         if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
@@ -127,6 +128,10 @@ class strands_utils():
             model=llm,
             system_prompt=system_prompts,
             tools=tools,
+            conversation_manager=CustomConversationManager(
+                window_size=context_overflow_window_size,
+                should_truncate_results=context_overflow_should_truncate_results
+            ),
             callback_handler=None # async iterator로 대체 하기 때문에 None 설정
         )
 
@@ -439,3 +444,37 @@ class FunctionNode(MultiAgentBase):
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
         )
+
+class CustomConversationManager(SlidingWindowConversationManager):
+    
+    """
+    Manager that only operates on overflow.
+        
+        Args:
+            window_size (int, optional): Maximum number of messages to retain when 
+                context overflow occurs. Defaults to 20.
+            should_truncate_results (bool, optional): If True, truncate large tool 
+                results with a placeholder message when overflow happens. If False, 
+                preserve full tool results but remove more historical messages. 
+                Defaults to True.
+    """
+    
+    def __init__(self, window_size=7, should_truncate_results=False):
+        super().__init__(
+            window_size=window_size,
+            should_truncate_results=should_truncate_results
+        )
+    
+    def apply_management(self, agent, **kwargs):
+        """After each event loop - do nothing"""
+        print("None")
+        pass  
+    
+    def reduce_context(self, agent, e=None, **kwargs):
+        """Only on overflow - use parent class's reduce_context"""
+        print(f"⚠️ Overflow occurred! Cleaning up {len(agent.messages)} messages...")
+    
+        # 부모 클래스의 reduce_context는 should_truncate_results를 자동으로 처리
+        super().reduce_context(agent, e, **kwargs)
+        
+        print(f"✅ Cleanup complete: {len(agent.messages)} messages remaining")
