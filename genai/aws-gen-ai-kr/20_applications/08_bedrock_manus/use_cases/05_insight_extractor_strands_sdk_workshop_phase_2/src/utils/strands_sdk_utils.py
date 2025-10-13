@@ -53,7 +53,7 @@ class strands_utils():
 
     @staticmethod
     def get_model(**kwargs):
-
+        
         llm_type = kwargs["llm_type"]
         cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
