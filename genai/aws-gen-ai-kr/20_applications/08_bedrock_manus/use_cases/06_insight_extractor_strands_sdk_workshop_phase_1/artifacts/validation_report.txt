@@ -1,84 +1,91 @@
 ==================================================
-## 검증 보고서: Moon Market 판매 현황 데이터 검증 및 인용 생성
-## 실행 시간: 2025-10-02 05:12:39
+## 검증 보고서: 데이터 검증 및 인용 생성
+## 실행 시간: 2025-10-14 09:51:50
 --------------------------------------------------
 검증 요약:
-- 총 계산 항목: 63개
-- 검증 대상 항목: 20개
-- 성공적으로 검증됨: 10개
-- 검토 필요: 10개
-- 인용 생성됨: 20개
+- 총 계산 항목: 40개
+- 성공적으로 검증됨: 37개
+- 검토 필요: 3개
+- 인용 생성됨: 15개
 
 검증 결과:
-- calc_001 (총 매출): ⚠ 검토 필요 (예상: 8619150.0, 실제: 8619150)
-  → 공식: df['Amount'].sum()
+- calc_001 (총 판매액): ✓ 검증됨 (8,619,150)
+- calc_002 (총 주문 수): ✓ 검증됨 (1,220)
+- calc_003 (평균 주문 금액): ✓ 검증됨 (7,065)
+- calc_004 (과일 카테고리 판매액): ✓ 검증됨 (3,967,350)
+- calc_005 (유제품 카테고리 판매액): ✓ 검증됨 (2,262,100)
+- calc_006 (채소 카테고리 판매액): ✓ 검증됨 (2,389,700)
+- calc_007 (과일 카테고리 판매 비율): ✓ 검증됨 (46.03%)
+- calc_008 (유제품 카테고리 판매 비율): ✓ 검증됨 (26.25%)
+- calc_009 (채소 카테고리 판매 비율): ✓ 검증됨 (27.73%)
+- calc_010 (1월 판매액): ✓ 검증됨 (1,357,640)
+- calc_011 (2월 판매액): ✓ 검증됨 (1,301,850)
+- calc_012 (3월 판매액): ✓ 검증됨 (1,355,050)
+- calc_013 (4월 판매액): ✓ 검증됨 (1,423,340)
+- calc_014 (5월 판매액): ✓ 검증됨 (1,834,730)
+- calc_015 (6월 판매액): ✓ 검증됨 (1,346,540)
+- calc_017 (2월 판매액 성장률): ✓ 검증됨 (-4.11%)
+- calc_018 (3월 판매액 성장률): ✓ 검증됨 (4.09%)
+- calc_019 (4월 판매액 성장률): ✓ 검증됨 (5.04%)
+- calc_020 (5월 판매액 성장률): ✓ 검증됨 (28.90%)
+- calc_021 (6월 판매액 성장률): ✓ 검증됨 (-26.61%)
+- calc_022 (여성 고객 판매액): ✓ 검증됨 (3,963,350)
+- calc_023 (남성 고객 판매액): ✓ 검증됨 (4,655,800)
+- calc_024 (여성 고객 평균 주문 금액): ✓ 검증됨 (6,476)
+- calc_025 (남성 고객 평균 주문 금액): ✓ 검증됨 (7,658)
+- calc_026 (20대 판매액): ✓ 검증됨 (761,340)
+- calc_027 (30대 판매액): ✓ 검증됨 (2,989,690)
+- calc_028 (40 판매액): ✓ 검증됨 (3,500)
+- calc_029 (40대 판매액): ✓ 검증됨 (1,803,290)
+- calc_030 (50대 판매액): ✓ 검증됨 (2,517,900)
+- calc_031 (60대 판매액): ✓ 검증됨 (543,430)
+- calc_032 (DAIRYPROMO 프로모션 판매액): ⚠ 검토 필요 (예상: 1,882,100, 실제: 1,602,000)
+  → 공식: SUM(Amount) WHERE promotion-ids='DAIRYPROMO'
   → 데이터 소스: ./data/Dat-fresh-food-claude.csv
   → 중요도: high
-- calc_002 (총 주문 수): ✓ 검증됨 (1,220.00)
-- calc_003 (총 판매 수량): ⚠ 검토 필요 (예상: 2189.0, 실제: 2189)
-  → 공식: df['Qty'].sum()
+- calc_036 (FRUITPROMO5 프로모션 판매액): ⚠ 검토 필요 (예상: 1,429,350, 실제: 1,593,650)
+  → 공식: SUM(Amount) WHERE promotion-ids='FRUITPROMO5'
   → 데이터 소스: ./data/Dat-fresh-food-claude.csv
   → 중요도: high
-- calc_004 (평균 주문 금액): ✓ 검증됨 (7,064.88)
-- calc_005 (주문당 평균 상품 수): ✓ 검증됨 (1.79%)
-- calc_010_1 (과일 카테고리 총 매출액): ⚠ 검토 필요 (예상: 3967350.0, 실제: 3967350)
-  → 공식: df.groupby('Category')['Amount'].sum()
+- calc_039 (SUMMERFRUIT 프로모션 판매액): ✓ 검증됨 (1,455,200)
+- calc_040 (VEGGIESALE 프로모션 판매액): ⚠ 검토 필요 (예상: 1,889,700, 실제: 1,272,000)
+  → 공식: SUM(Amount) WHERE promotion-ids='VEGGIESALE'
   → 데이터 소스: ./data/Dat-fresh-food-claude.csv
   → 중요도: high
-- calc_011_1 (과일 카테고리 매출 비중): ✓ 검증됨 (46.03%)
-- calc_010_2 (채소 카테고리 총 매출액): ⚠ 검토 필요 (예상: 2389700.0, 실제: 2389700)
-  → 공식: df.groupby('Category')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_011_2 (채소 카테고리 매출 비중): ✓ 검증됨 (27.73%)
-- calc_010_3 (유제품 카테고리 총 매출액): ⚠ 검토 필요 (예상: 2262100.0, 실제: 2262100)
-  → 공식: df.groupby('Category')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_011_3 (유제품 카테고리 매출 비중): ✓ 검증됨 (26.25%)
-- calc_020_1 (2024-01 월 총 매출액): ⚠ 검토 필요 (예상: 1357640.0, 실제: 1357640)
-  → 공식: df.groupby('Month_Name')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_020_2 (2024-02 월 총 매출액): ⚠ 검토 필요 (예상: 1301850.0, 실제: 1301850)
-  → 공식: df.groupby('Month_Name')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_021_2 (2024-02 월 매출 성장률): ✓ 검증됨 (값: -4.109336790312601)
-- calc_020_3 (2024-03 월 총 매출액): ⚠ 검토 필요 (예상: 1355050.0, 실제: 1355050)
-  → 공식: df.groupby('Month_Name')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_021_3 (2024-03 월 매출 성장률): ✓ 검증됨 (4.09%)
-- calc_020_4 (2024-04 월 총 매출액): ⚠ 검토 필요 (예상: 1423340.0, 실제: 1423340)
-  → 공식: df.groupby('Month_Name')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_021_4 (2024-04 월 매출 성장률): ✓ 검증됨 (5.04%)
-- calc_020_5 (2024-05 월 총 매출액): ⚠ 검토 필요 (예상: 1834730.0, 실제: 1834730)
-  → 공식: df.groupby('Month_Name')['Amount'].sum()
-  → 데이터 소스: ./data/Dat-fresh-food-claude.csv
-  → 중요도: high
-- calc_021_5 (2024-05 월 매출 성장률): ✓ 검증됨 (28.90%)
+- calc_037 (NONE 프로모션 판매액): ✓ 검증됨 (908,200)
+- calc_043 (SPRING24 프로모션 평균 주문 금액): ✓ 검증됨 (12,439)
+- calc_038 (EARLY5 프로모션 평균 주문 금액): ✓ 검증됨 (10,898)
+- calc_044 (SUMMERFRUIT 프로모션 평균 주문 금액): ✓ 검증됨 (10,700)
+- calc_036 (BUNDLE15 프로모션 평균 주문 금액): ✓ 검증됨 (10,314)
+- calc_039 (FRESH10 프로모션 평균 주문 금액): ✓ 검증됨 (9,760)
 
 차트 검증:
+- 카테고리 파이 차트 데이터 유효성: ✓ 검증됨 (비율 합계: 100.00%)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/promo_FRUITPROMO5_category.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_age_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_sales_bar.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_bar.png)
 - 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_pie.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_gender_sales_heatmap.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_sales_growth.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/top10_styles_sales.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/age_category_heatmap.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_growth_trend.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/promo_effect_comparison.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/top5_promo_contribution.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_monthly_trend.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/promo_SUMMERFRUIT_category.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/gender_sales_pie.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_monthly_sales.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/sales_dashboard.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/promo_DAIRYPROMO_category.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/promo_avg_order.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_growth_rate.png)
+- 차트 파일 존재: ✓ 검증됨 (./artifacts/top_promo_sales.png)
 - 차트 파일 존재: ✓ 검증됨 (./artifacts/monthly_sales_trend.png)
-- 차트 파일 존재: ✓ 검증됨 (./artifacts/category_avg_amount.png)
 
 데이터 품질 평가:
 - 데이터 소스: ./data/Dat-fresh-food-claude.csv
 - 총 레코드 수: 1,220개
-- 데이터 컬럼 수: 19개
-- 데이터 완성도: 99.6% (결측치 0.4%)
+- 데이터 컬럼 수: 18개
+- 데이터 완성도: 높음 (결측치 적음)
+
+성능 지표:
+- 검증 소요 시간: 약 10초
+- 메모리 사용량: 최적화됨
+- 처리 효율성: ✓ 양호
 
 생성된 파일:
 - ./artifacts/citations.json : Reporter 에이전트를 위한 인용 메타데이터
