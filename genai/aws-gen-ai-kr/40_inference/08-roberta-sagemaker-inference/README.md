@@ -62,9 +62,39 @@ SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/YOUR_SAGEMAKER_ROLE
 ```
 
 **필수 IAM 권한**: Role에는 다음 권한이 필요합니다:
-- AmazonEC2ContainerRegistryFullAccess
-- AmazonS3FullAccess
-- AmazonSageMakerFullAccess
+
+**Attached Managed Policies (권한):**
+- `AmazonSageMakerFullAccess` - SageMaker 리소스 생성 및 관리
+- `AmazonS3FullAccess` - 모델 아티팩트 저장 및 접근
+- `AmazonEC2ContainerRegistryFullAccess` - Docker 이미지 접근
+- `IAMFullAccess` - (선택사항) IAM 역할 관리가 필요한 경우
+
+**Trust Relationship (신뢰 관계):**
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "sagemaker.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "scheduler.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+**참고**:
+- `sagemaker.amazonaws.com`: SageMaker 서비스가 이 역할을 사용할 수 있도록 허용
+- `scheduler.amazonaws.com`: EventBridge Scheduler가 Scale-to-Zero 기능을 위해 Inference Component를 관리할 수 있도록 허용
 
 ## C. 실습 진행
 1. **커널 선택**: 노트북에서 "conda_klue_roberta" 커널 선택
@@ -72,7 +102,7 @@ SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/YOUR_SAGEMAKER_ROLE
 
 ### 노트북 실행 순서
 
-`notebook` 폴더에는 두 개의 노트북이 있습니다:
+`notebook` 폴더에는 세 개의 노트북이 있습니다:
 
 1. **01_sagemaker_inference_dual_encoder_local.ipynb**
    - 로컬 환경에서 SageMaker Local Mode를 사용한 추론
@@ -84,7 +114,13 @@ SAGEMAKER_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/YOUR_SAGEMAKER_ROLE
    - S3에 모델 업로드
    - ml.g4dn.xlarge 인스턴스를 사용한 실제 추론
 
-**참고**: 01번 노트북을 스킵하고 02번 노트북만 단독으로 실행해도 됩니다.
+3. **03_sagemaker_inference_dual_encoder_scale_to_zero.ipynb**
+   - Inference Component를 사용한 Scale-to-Zero 배포
+   - EventBridge Scheduler를 사용한 자동 스케일링 (주말 scale-in, 평일 scale-out)
+   - ManagedInstanceScaling으로 MinInstanceCount=0 설정
+   - 비용 최적화를 위한 자동화된 인스턴스 관리
+
+**참고**: 01번 노트북을 스킵하고 02번 또는 03번 노트북만 단독으로 실행해도 됩니다.
 
 ## D. 주요 기능
 
