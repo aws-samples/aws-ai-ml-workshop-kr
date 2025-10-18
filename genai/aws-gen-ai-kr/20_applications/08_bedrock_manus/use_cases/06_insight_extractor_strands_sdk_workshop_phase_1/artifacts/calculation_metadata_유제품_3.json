@@ -1,0 +1,20 @@
+{
+  "calculations": [
+    {
+      "id": "cat_month_유제품_3",
+      "value": 396700.0,
+      "description": "3월 유제품 카테고리 매출",
+      "formula": "SUM(Amount) WHERE Category = {category} AND Month = {month}",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "Category = 유제품, Month = 3",
+      "importance": "medium",
+      "timestamp": "2025-10-18 13:16:10",
+      "verification_notes": "3월 유제품 카테고리의 총 매출액"
+    }
+  ]
+}

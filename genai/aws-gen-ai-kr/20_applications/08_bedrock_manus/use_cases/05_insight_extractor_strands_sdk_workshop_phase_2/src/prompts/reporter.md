@@ -370,11 +370,22 @@ if os.path.exists(citations_file):
 
 # Add citations to numbers in your report
 def format_with_citation(value, calc_id):
+    """Format number with citation marker - NEVER duplicate the number"""
     citation_ref = citations_data.get(calc_id, '')
+    # CRITICAL: Return the number ONLY ONCE with citation marker
     return f"{{value:,}}{{citation_ref}}" if citation_ref else f"{{value:,}}"
 
 # Example usage:
-# total_sales = format_with_citation(417166008, "calc_001")  # → "417,166,008[1]"
+# CORRECT: total_sales = format_with_citation(417166008, "calc_001")  # → "417,166,008[1]"
+# WRONG: "total sales is " + str(value) + format_with_citation(value, "calc_001")  # → duplicates number!
+#
+# [CRITICAL RULE] When writing reports with citations:
+# - WRITE THE NUMBER ONLY ONCE using format_with_citation()
+# - DO NOT write the number before calling format_with_citation()
+# - Example CORRECT: "과일 카테고리가 {{format_with_citation(3967350, 'calc_018')}}원"
+#   → Result: "과일 카테고리가 3,967,350[1]원"
+# - Example WRONG: "과일 카테고리가 3,967,350원{{citations_data.get('calc_018')}}"
+#   → Result: "과일 카테고리가 3,967,350원3,967,350원[1]" (DUPLICATE NUMBER!)
 ```
 
 **Generate References Section**:

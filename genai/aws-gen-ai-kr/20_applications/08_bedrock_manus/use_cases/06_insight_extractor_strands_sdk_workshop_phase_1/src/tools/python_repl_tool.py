@@ -74,8 +74,15 @@ def handle_python_repl_tool(code: Annotated[str, "The python code to execute to 
         logger.debug(f"{Colors.RED}Failed to execute. Error: {repr(e)}{Colors.END}")
         return error_msg
 
-    #result_str = f"Successfully executed:\n||```python\n{code}\n```\n||Stdout: {result}"
-    result_str = f"Successfully executed:\n||{code}||{result}"
+    # Truncate code to first 7 lines for context efficiency
+    code_lines = code.split('\n')
+    if len(code_lines) > 7:
+        code_preview = '\n'.join(code_lines[:7])
+        code_summary = f"{code_preview}\n... ({len(code_lines) - 7} more lines omitted)"
+    else:
+        code_summary = code
+
+    result_str = f"Successfully executed:\n||{code_summary}||{result}"
     logger.info(f"{Colors.GREEN}===== Code execution successful ====={Colors.END}")
     return result_str
 

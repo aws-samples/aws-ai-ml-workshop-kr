@@ -1,609 +1,194 @@
 {
   "calculations": [
     {
-      "id": "calc_001",
-      "value": 8619150,
-      "description": "총 판매액",
-      "formula": "SUM(Amount)",
+      "id": "calc_category_sales",
+      "description": "카테고리별 매출 합계 및 비율",
+      "value": {
+        "과일": "7,657,140원 (45.3%)",
+        "채소": "4,708,900원 (27.8%)",
+        "유제품": "4,555,800원 (26.9%)"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY Category",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
+        "Category",
+        "Qty",
         "Amount"
       ],
-      "source_rows": "all rows",
+      "source_rows": "all",
       "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "전체 매출 규모를 나타내는 핵심 지표"
+      "timestamp": "2025-10-18 13:24:27"
     },
     {
-      "id": "calc_002",
-      "value": 1220,
-      "description": "총 주문 수",
-      "formula": "COUNT(index)",
+      "id": "calc_category_avg",
+      "description": "카테고리별 평균 구매 금액",
+      "value": {
+        "과일": "9,583원",
+        "채소": "5,218원",
+        "유제품": "6,500원"
+      },
+      "formula": "AVG(Amount) GROUP BY Category",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "index"
+        "Category",
+        "Amount"
       ],
-      "source_rows": "all rows",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "전체 주문 건수"
-    },
-    {
-      "id": "calc_003",
-      "value": 7064.877049180328,
-      "description": "평균 주문 금액",
-      "formula": "SUM(Amount) / COUNT(index)",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "index"
-      ],
-      "source_rows": "all rows",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "고객 1회 주문당 평균 금액"
-    },
-    {
-      "id": "calc_004",
-      "value": 3967350,
-      "description": "과일 카테고리 판매액",
-      "formula": "SUM(Amount) WHERE Category='과일'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Category"
-      ],
-      "source_rows": "Category='과일'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "과일 카테고리의 총 판매액"
-    },
-    {
-      "id": "calc_005",
-      "value": 2262100,
-      "description": "유제품 카테고리 판매액",
-      "formula": "SUM(Amount) WHERE Category='유제품'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Category"
-      ],
-      "source_rows": "Category='유제품'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "유제품 카테고리의 총 판매액"
-    },
-    {
-      "id": "calc_006",
-      "value": 2389700,
-      "description": "채소 카테고리 판매액",
-      "formula": "SUM(Amount) WHERE Category='채소'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Category"
-      ],
-      "source_rows": "Category='채소'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "채소 카테고리의 총 판매액"
-    },
-    {
-      "id": "calc_007",
-      "value": 46.029480865282544,
-      "description": "과일 카테고리 판매 비율",
-      "formula": "(SUM(Amount) WHERE Category='과일') / SUM(Amount) * 100",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Category"
-      ],
-      "source_rows": "Category='과일'",
+      "source_rows": "all",
       "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "과일 카테고리의 전체 매출 대비 비율"
+      "timestamp": "2025-10-18 13:24:27"
     },
     {
-      "id": "calc_008",
-      "value": 26.245047365459474,
-      "description": "유제품 카테고리 판매 비율",
-      "formula": "(SUM(Amount) WHERE Category='유제품') / SUM(Amount) * 100",
+      "id": "calc_monthly_sales",
+      "description": "월별 매출 합계",
+      "value": {
+        "1월": "2,746,230원",
+        "2월": "2,611,250원",
+        "3월": "2,634,650원",
+        "4월": "2,742,440원",
+        "5월": "3,622,530원",
+        "6월": "2,564,740원"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY Month",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Amount",
-        "Category"
+        "Date",
+        "Qty",
+        "Amount"
       ],
-      "source_rows": "Category='유제품'",
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:24:27"
+    },
+    {
+      "id": "calc_may_growth",
+      "description": "5월 매출 증가율 (4월 대비)",
+      "value": "32.09%",
+      "formula": "((May_Sales - April_Sales) / April_Sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Date",
+        "Qty",
+        "Amount"
+      ],
+      "source_rows": "Month = 4 or Month = 5",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:24:27"
+    },
+    {
+      "id": "calc_promo_sales",
+      "description": "프로모션별 매출 비율",
+      "value": {
+        "DAIRYPROMO": "18.1%",
+        "SUMMERFRUIT": "17.6%",
+        "FRUITPROMO5": "15.0%",
+        "NONE": "10.6%"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY promotion-ids",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "promotion-ids",
+        "Qty",
+        "Amount"
+      ],
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:24:27"
+    },
+    {
+      "id": "calc_age_sales",
+      "description": "연령대별 매출 비율",
+      "value": {
+        "30대": "35.4%",
+        "40대": "25.6%",
+        "50대": "26.8%",
+        "20대": "7.8%",
+        "60대": "4.3%"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY Age Group",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Age Group",
+        "Qty",
+        "Amount"
+      ],
+      "source_rows": "all",
       "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "유제품 카테고리의 전체 매출 대비 비율"
+      "timestamp": "2025-10-18 13:24:27"
     },
     {
-      "id": "calc_009",
-      "value": 27.725471769257993,
-      "description": "채소 카테고리 판매 비율",
-      "formula": "(SUM(Amount) WHERE Category='채소') / SUM(Amount) * 100",
+      "id": "calc_gender_sales",
+      "description": "성별 매출 비율",
+      "value": {
+        "남성(M)": "68.1%",
+        "여성(F)": "31.9%"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY Gender",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Amount",
-        "Category"
-      ],
-      "source_rows": "Category='채소'",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "채소 카테고리의 전체 매출 대비 비율"
-    },
-    {
-      "id": "calc_010",
-      "value": 1357640,
-      "description": "1월 판매액",
-      "formula": "SUM(Amount) WHERE Month=1",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=1",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "1월의 총 판매액"
-    },
-    {
-      "id": "calc_011",
-      "value": 1301850,
-      "description": "2월 판매액",
-      "formula": "SUM(Amount) WHERE Month=2",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=2",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "2월의 총 판매액"
-    },
-    {
-      "id": "calc_012",
-      "value": 1355050,
-      "description": "3월 판매액",
-      "formula": "SUM(Amount) WHERE Month=3",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=3",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "3월의 총 판매액"
-    },
-    {
-      "id": "calc_013",
-      "value": 1423340,
-      "description": "4월 판매액",
-      "formula": "SUM(Amount) WHERE Month=4",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=4",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "4월의 총 판매액"
-    },
-    {
-      "id": "calc_014",
-      "value": 1834730,
-      "description": "5월 판매액",
-      "formula": "SUM(Amount) WHERE Month=5",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=5",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "5월의 총 판매액"
-    },
-    {
-      "id": "calc_015",
-      "value": 1346540,
-      "description": "6월 판매액",
-      "formula": "SUM(Amount) WHERE Month=6",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=6",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "6월의 총 판매액"
-    },
-    {
-      "id": "calc_017",
-      "value": -4.109336790312601,
-      "description": "2.0월 판매액 성장률",
-      "formula": "((Amount in Month 2.0 - Amount in Month 1.0) / Amount in Month 1.0) * 100",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=2.0 and Month=1.0",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "2.0월의 전월 대비 판매액 성장률"
-    },
-    {
-      "id": "calc_018",
-      "value": 4.086492299420064,
-      "description": "3.0월 판매액 성장률",
-      "formula": "((Amount in Month 3.0 - Amount in Month 2.0) / Amount in Month 2.0) * 100",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=3.0 and Month=2.0",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "3.0월의 전월 대비 판매액 성장률"
-    },
-    {
-      "id": "calc_019",
-      "value": 5.039666432972956,
-      "description": "4.0월 판매액 성장률",
-      "formula": "((Amount in Month 4.0 - Amount in Month 3.0) / Amount in Month 3.0) * 100",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=4.0 and Month=3.0",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "4.0월의 전월 대비 판매액 성장률"
-    },
-    {
-      "id": "calc_020",
-      "value": 28.903143310804168,
-      "description": "5.0월 판매액 성장률",
-      "formula": "((Amount in Month 5.0 - Amount in Month 4.0) / Amount in Month 4.0) * 100",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=5.0 and Month=4.0",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "5.0월의 전월 대비 판매액 성장률"
-    },
-    {
-      "id": "calc_021",
-      "value": -26.608274787025888,
-      "description": "6.0월 판매액 성장률",
-      "formula": "((Amount in Month 6.0 - Amount in Month 5.0) / Amount in Month 5.0) * 100",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Date"
-      ],
-      "source_rows": "Month=6.0 and Month=5.0",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "6.0월의 전월 대비 판매액 성장률"
-    },
-    {
-      "id": "calc_022",
-      "value": 3963350,
-      "description": "여성 고객 판매액",
-      "formula": "SUM(Amount) WHERE Gender='F'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Gender"
-      ],
-      "source_rows": "Gender='F'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "여성 고객의 총 판매액"
-    },
-    {
-      "id": "calc_023",
-      "value": 4655800,
-      "description": "남성 고객 판매액",
-      "formula": "SUM(Amount) WHERE Gender='M'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Gender"
-      ],
-      "source_rows": "Gender='M'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "남성 고객의 총 판매액"
-    },
-    {
-      "id": "calc_024",
-      "value": 6476.062091503268,
-      "description": "여성 고객 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE Gender='F' / COUNT(index) WHERE Gender='F'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
         "Gender",
-        "index"
+        "Qty",
+        "Amount"
       ],
-      "source_rows": "Gender='F'",
+      "source_rows": "all",
       "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "여성 고객의 1회 주문당 평균 금액"
+      "timestamp": "2025-10-18 13:24:27"
     },
     {
-      "id": "calc_025",
-      "value": 7657.565789473684,
-      "description": "남성 고객 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE Gender='M' / COUNT(index) WHERE Gender='M'",
+      "id": "calc_top_products",
+      "description": "상위 3개 베스트셀러 상품",
+      "value": {
+        "1위": "딸기 (1,523,800원)",
+        "2위": "복숭아 (1,016,100원)",
+        "3위": "블루베리 (823,200원)"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY Style ORDER BY Total_Amount DESC",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Amount",
-        "Gender",
-        "index"
+        "Style",
+        "Qty",
+        "Amount"
       ],
-      "source_rows": "Gender='M'",
+      "source_rows": "all",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:24:27"
+    },
+    {
+      "id": "calc_region_sales",
+      "description": "지역별 매출 비율",
+      "value": {
+        "서울": "73.5%",
+        "경기도": "26.5%"
+      },
+      "formula": "SUM(Qty * Amount) GROUP BY ship-state",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "ship-state",
+        "Qty",
+        "Amount"
+      ],
+      "source_rows": "all",
       "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "남성 고객의 1회 주문당 평균 금액"
+      "timestamp": "2025-10-18 13:24:27"
     },
     {
-      "id": "calc_026",
-      "value": 761340,
-      "description": "20대 판매액",
-      "formula": "SUM(Amount) WHERE Age Group='20대'",
+      "id": "calc_seoul_districts",
+      "description": "서울 내 상위 3개 매출 지역",
+      "value": {
+        "1위": "중구 (982,100원)",
+        "2위": "성북구 (917,300원)",
+        "3위": "성동구 (911,800원)"
+      },
+      "formula": "SUM(Qty * Amount) WHERE ship-state = '서울' GROUP BY ship-city ORDER BY Total_Amount DESC",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Amount",
-        "Age Group"
+        "ship-state",
+        "ship-city",
+        "Qty",
+        "Amount"
       ],
-      "source_rows": "Age Group='20대'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "20대 연령대의 총 판매액"
-    },
-    {
-      "id": "calc_027",
-      "value": 2989690,
-      "description": "30대 판매액",
-      "formula": "SUM(Amount) WHERE Age Group='30대'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Age Group"
-      ],
-      "source_rows": "Age Group='30대'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "30대 연령대의 총 판매액"
-    },
-    {
-      "id": "calc_028",
-      "value": 3500,
-      "description": "40 판매액",
-      "formula": "SUM(Amount) WHERE Age Group='40'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Age Group"
-      ],
-      "source_rows": "Age Group='40'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "40 연령대의 총 판매액"
-    },
-    {
-      "id": "calc_029",
-      "value": 1803290,
-      "description": "40대 판매액",
-      "formula": "SUM(Amount) WHERE Age Group='40대'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Age Group"
-      ],
-      "source_rows": "Age Group='40대'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "40대 연령대의 총 판매액"
-    },
-    {
-      "id": "calc_030",
-      "value": 2517900,
-      "description": "50대 판매액",
-      "formula": "SUM(Amount) WHERE Age Group='50대'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Age Group"
-      ],
-      "source_rows": "Age Group='50대'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "50대 연령대의 총 판매액"
-    },
-    {
-      "id": "calc_031",
-      "value": 543430,
-      "description": "60대 판매액",
-      "formula": "SUM(Amount) WHERE Age Group='60대'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "Age Group"
-      ],
-      "source_rows": "Age Group='60대'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "60대 연령대의 총 판매액"
-    },
-    {
-      "id": "calc_032",
-      "value": 1602000,
-      "description": "DAIRYPROMO 프로모션 판매액",
-      "formula": "SUM(Amount) WHERE promotion-ids='DAIRYPROMO'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids"
-      ],
-      "source_rows": "promotion-ids='DAIRYPROMO'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "DAIRYPROMO 프로모션의 총 판매액"
-    },
-    {
-      "id": "calc_036",
-      "value": 1593650,
-      "description": "FRUITPROMO5 프로모션 판매액",
-      "formula": "SUM(Amount) WHERE promotion-ids='FRUITPROMO5'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids"
-      ],
-      "source_rows": "promotion-ids='FRUITPROMO5'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "FRUITPROMO5 프로모션의 총 판매액"
-    },
-    {
-      "id": "calc_039",
-      "value": 1455200,
-      "description": "SUMMERFRUIT 프로모션 판매액",
-      "formula": "SUM(Amount) WHERE promotion-ids='SUMMERFRUIT'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids"
-      ],
-      "source_rows": "promotion-ids='SUMMERFRUIT'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "SUMMERFRUIT 프로모션의 총 판매액"
-    },
-    {
-      "id": "calc_040",
-      "value": 1272000,
-      "description": "VEGGIESALE 프로모션 판매액",
-      "formula": "SUM(Amount) WHERE promotion-ids='VEGGIESALE'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids"
-      ],
-      "source_rows": "promotion-ids='VEGGIESALE'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "VEGGIESALE 프로모션의 총 판매액"
-    },
-    {
-      "id": "calc_037",
-      "value": 908200,
-      "description": "NONE 프로모션 판매액",
-      "formula": "SUM(Amount) WHERE promotion-ids='NONE'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids"
-      ],
-      "source_rows": "promotion-ids='NONE'",
-      "importance": "high",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "NONE 프로모션의 총 판매액"
-    },
-    {
-      "id": "calc_043",
-      "value": 12438.636363636364,
-      "description": "SPRING24 프로모션 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE promotion-ids='SPRING24' / COUNT(index) WHERE promotion-ids='SPRING24'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids",
-        "index"
-      ],
-      "source_rows": "promotion-ids='SPRING24'",
+      "source_rows": "ship-state = '서울'",
       "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "SPRING24 프로모션의 1회 주문당 평균 금액"
-    },
-    {
-      "id": "calc_038",
-      "value": 10898.11320754717,
-      "description": "EARLY5 프로모션 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE promotion-ids='EARLY5' / COUNT(index) WHERE promotion-ids='EARLY5'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids",
-        "index"
-      ],
-      "source_rows": "promotion-ids='EARLY5'",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "EARLY5 프로모션의 1회 주문당 평균 금액"
-    },
-    {
-      "id": "calc_044",
-      "value": 10700.0,
-      "description": "SUMMERFRUIT 프로모션 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE promotion-ids='SUMMERFRUIT' / COUNT(index) WHERE promotion-ids='SUMMERFRUIT'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids",
-        "index"
-      ],
-      "source_rows": "promotion-ids='SUMMERFRUIT'",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "SUMMERFRUIT 프로모션의 1회 주문당 평균 금액"
-    },
-    {
-      "id": "calc_036",
-      "value": 10314.285714285714,
-      "description": "BUNDLE15 프로모션 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE promotion-ids='BUNDLE15' / COUNT(index) WHERE promotion-ids='BUNDLE15'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids",
-        "index"
-      ],
-      "source_rows": "promotion-ids='BUNDLE15'",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "BUNDLE15 프로모션의 1회 주문당 평균 금액"
-    },
-    {
-      "id": "calc_039",
-      "value": 9760.0,
-      "description": "FRESH10 프로모션 평균 주문 금액",
-      "formula": "SUM(Amount) WHERE promotion-ids='FRESH10' / COUNT(index) WHERE promotion-ids='FRESH10'",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [
-        "Amount",
-        "promotion-ids",
-        "index"
-      ],
-      "source_rows": "promotion-ids='FRESH10'",
-      "importance": "medium",
-      "timestamp": "2025-10-14 09:49:52",
-      "verification_notes": "FRESH10 프로모션의 1회 주문당 평균 금액"
+      "timestamp": "2025-10-18 13:24:27"
     }
   ]
 }

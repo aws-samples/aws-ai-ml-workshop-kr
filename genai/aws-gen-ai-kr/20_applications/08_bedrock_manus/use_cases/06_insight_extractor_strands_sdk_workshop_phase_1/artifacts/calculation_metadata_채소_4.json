@@ -1,0 +1,20 @@
+{
+  "calculations": [
+    {
+      "id": "cat_month_채소_4",
+      "value": 455700.0,
+      "description": "4월 채소 카테고리 매출",
+      "formula": "SUM(Amount) WHERE Category = {category} AND Month = {month}",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "Category = 채소, Month = 4",
+      "importance": "medium",
+      "timestamp": "2025-10-18 13:16:10",
+      "verification_notes": "4월 채소 카테고리의 총 매출액"
+    }
+  ]
+}

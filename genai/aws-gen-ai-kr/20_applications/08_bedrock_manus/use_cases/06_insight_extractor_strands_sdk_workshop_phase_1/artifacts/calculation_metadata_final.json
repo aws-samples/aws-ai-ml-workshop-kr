@@ -1,0 +1,168 @@
+{
+  "calculations": [
+    {
+      "id": "total_sales_final",
+      "value": "8615650",
+      "description": "총 매출액",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "전체 기간 동안의 총 매출액"
+    },
+    {
+      "id": "monthly_avg_sales",
+      "value": 1435941.6666666667,
+      "description": "월 평균 매출액",
+      "formula": "AVG(SUM(Amount) GROUP BY Month)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Month",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "월별 평균 매출액"
+    },
+    {
+      "id": "category_percentage_1",
+      "value": 46.04817976589114,
+      "description": "과일 카테고리 매출 비중",
+      "formula": "(3967350 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Amount"
+      ],
+      "source_rows": "Category = 과일",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "과일 카테고리의 매출 비중 (%)"
+    },
+    {
+      "id": "category_percentage_2",
+      "value": 26.25570908753257,
+      "description": "유제품 카테고리 매출 비중",
+      "formula": "(2262100 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Amount"
+      ],
+      "source_rows": "Category = 유제품",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "유제품 카테고리의 매출 비중 (%)"
+    },
+    {
+      "id": "category_percentage_3",
+      "value": 27.696111146576293,
+      "description": "채소 카테고리 매출 비중",
+      "formula": "(2386200 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Amount"
+      ],
+      "source_rows": "Category = 채소",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "채소 카테고리의 매출 비중 (%)"
+    },
+    {
+      "id": "promotion_percentage_2",
+      "value": 18.594070093376587,
+      "description": "DAIRYPROMO 프로모션 매출 비중",
+      "formula": "(1602000 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "promotion-ids",
+        "Amount"
+      ],
+      "source_rows": "promotion-ids = DAIRYPROMO",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "DAIRYPROMO 프로모션의 매출 비중 (%)"
+    },
+    {
+      "id": "promotion_percentage_6",
+      "value": 18.497153435898625,
+      "description": "FRUITPROMO5 프로모션 매출 비중",
+      "formula": "(1593650 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "promotion-ids",
+        "Amount"
+      ],
+      "source_rows": "promotion-ids = FRUITPROMO5",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "FRUITPROMO5 프로모션의 매출 비중 (%)"
+    },
+    {
+      "id": "promotion_percentage_9",
+      "value": 16.89019400741674,
+      "description": "SUMMERFRUIT 프로모션 매출 비중",
+      "formula": "(1455200 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "promotion-ids",
+        "Amount"
+      ],
+      "source_rows": "promotion-ids = SUMMERFRUIT",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "SUMMERFRUIT 프로모션의 매출 비중 (%)"
+    },
+    {
+      "id": "core_segment_percentage",
+      "value": 84.85581470927904,
+      "description": "핵심 고객 세그먼트(30-50대) 매출 비중",
+      "formula": "(7310880 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Age Group",
+        "Amount"
+      ],
+      "source_rows": "Age Group in ['30대', '40대', '50대']",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "핵심 고객 세그먼트(30-50대)의 매출 비중 (%)"
+    },
+    {
+      "id": "seoul_percentage",
+      "value": 76.59178355666722,
+      "description": "서울 지역 매출 비중",
+      "formula": "(6598880 / 8615650) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "ship-state",
+        "Amount"
+      ],
+      "source_rows": "ship-state = '서울'",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "서울 지역의 매출 비중 (%)"
+    },
+    {
+      "id": "may_growth_rate",
+      "value": 29.22089812936669,
+      "description": "5월 매출 증가율 (4월 대비)",
+      "formula": "((1834730 - 1419840) / 1419840) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Month",
+        "Amount"
+      ],
+      "source_rows": "Month in [4, 5]",
+      "importance": "high",
+      "timestamp": "2025-10-18 13:21:08",
+      "verification_notes": "5월의 4월 대비 매출 증가율 (%)"
+    }
+  ]
+}

@@ -114,7 +114,7 @@ class strands_utils():
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
-        context_overflow_window_size = kwargs.get("context_overflow_window_size", 7)
+        context_overflow_window_size = kwargs.get("context_overflow_window_size", 15)
         context_overflow_should_truncate_results = kwargs.get("context_overflow_should_truncate_results", False)
 
         prompt_cache, cache_type = prompt_cache_info

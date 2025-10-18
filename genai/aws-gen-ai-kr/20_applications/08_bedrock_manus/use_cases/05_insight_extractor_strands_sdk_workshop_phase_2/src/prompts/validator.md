@@ -223,11 +223,16 @@ for group_key, calcs in calc_groups.items():
         elif "COUNT" in calc['formula']:
             actual_value = len(original_data[calc['source_columns'][0]])
         
-        # Compare results with tolerance
+        # Compare results with tolerance (handle int/float type differences)
+        if isinstance(expected_value, (int, float)) and isinstance(actual_value, (int, float)):
+            match = abs(float(expected_value) - float(actual_value)) < 0.01
+        else:
+            match = str(expected_value) == str(actual_value)
+
         verified_results[calc_id] = {{
             "expected": expected_value,
             "actual": actual_value,
-            "match": abs(expected_value - actual_value) < 0.01,
+            "match": match,
             "calculation": calc
         }}
 ```
@@ -573,10 +578,13 @@ def main_validation_process():
                     else:
                         actual_value = expected_value  # Fallback
 
-                    # Compare values with tolerance
+                    # Compare values with tolerance (handle int/float type differences)
+                    # Convert both to float for comparison to handle type mismatches
                     tolerance = 0.01
                     if isinstance(expected_value, (int, float)) and isinstance(actual_value, (int, float)):
-                        match = abs(expected_value - actual_value) < tolerance
+                        expected_float = float(expected_value)
+                        actual_float = float(actual_value)
+                        match = abs(expected_float - actual_float) < tolerance
                     else:
                         match = str(expected_value) == str(actual_value)
 

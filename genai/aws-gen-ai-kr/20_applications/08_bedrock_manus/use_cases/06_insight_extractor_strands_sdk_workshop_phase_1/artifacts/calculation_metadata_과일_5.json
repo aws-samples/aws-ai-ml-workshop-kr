@@ -1,0 +1,20 @@
+{
+  "calculations": [
+    {
+      "id": "cat_month_과일_5",
+      "value": 846630.0,
+      "description": "5월 과일 카테고리 매출",
+      "formula": "SUM(Amount) WHERE Category = {category} AND Month = {month}",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "Category = 과일, Month = 5",
+      "importance": "medium",
+      "timestamp": "2025-10-18 13:16:10",
+      "verification_notes": "5월 과일 카테고리의 총 매출액"
+    }
+  ]
+}
