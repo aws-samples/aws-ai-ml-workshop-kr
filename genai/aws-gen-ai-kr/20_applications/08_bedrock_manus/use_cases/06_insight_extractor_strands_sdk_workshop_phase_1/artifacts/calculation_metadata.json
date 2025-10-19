@@ -1,0 +1,81 @@
+{
+  "calculations": [
+    {
+      "id": "kpi_001",
+      "value": "8619150",
+      "description": "총 매출",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-19 08:42:31",
+      "verification_notes": ""
+    },
+    {
+      "id": "kpi_002",
+      "value": 1220.0,
+      "description": "총 주문 수",
+      "formula": "COUNT(*)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [],
+      "importance": "high",
+      "timestamp": "2025-10-19 08:42:31",
+      "verification_notes": ""
+    },
+    {
+      "id": "kpi_003",
+      "value": 7064.877049180328,
+      "description": "평균 주문 금액",
+      "formula": "AVG(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-19 08:42:31",
+      "verification_notes": ""
+    },
+    {
+      "id": "kpi_004",
+      "value": "2189",
+      "description": "총 판매 수량",
+      "formula": "SUM(Qty)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Qty"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-19 08:42:31",
+      "verification_notes": ""
+    },
+    {
+      "id": "kpi_005",
+      "value": 1.794262295081967,
+      "description": "주문당 평균 아이템 수",
+      "formula": "SUM(Qty) / COUNT(*)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Qty"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-19 08:42:31",
+      "verification_notes": ""
+    },
+    {
+      "id": "kpi_006",
+      "value": -26.608274787025888,
+      "description": "최근 월 성장률 (%)",
+      "formula": "((Current Month Sales - Previous Month Sales) / Previous Month Sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-19 08:42:31",
+      "verification_notes": ""
+    }
+  ]
+}
