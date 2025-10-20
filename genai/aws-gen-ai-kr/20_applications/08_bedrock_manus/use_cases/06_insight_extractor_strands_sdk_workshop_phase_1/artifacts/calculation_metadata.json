@@ -1,44 +1,33 @@
 {
   "calculations": [
     {
-      "id": "kpi_001",
+      "id": "calc_001",
       "value": "8619150",
-      "description": "총 매출",
+      "description": "총 매출액",
       "formula": "SUM(Amount)",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
         "Amount"
       ],
       "importance": "high",
-      "timestamp": "2025-10-19 08:42:31",
+      "timestamp": "2025-10-20 07:56:14",
       "verification_notes": ""
     },
     {
-      "id": "kpi_002",
+      "id": "calc_002",
       "value": 1220.0,
-      "description": "총 주문 수",
-      "formula": "COUNT(*)",
-      "source_file": "./data/Dat-fresh-food-claude.csv",
-      "source_columns": [],
-      "importance": "high",
-      "timestamp": "2025-10-19 08:42:31",
-      "verification_notes": ""
-    },
-    {
-      "id": "kpi_003",
-      "value": 7064.877049180328,
-      "description": "평균 주문 금액",
-      "formula": "AVG(Amount)",
+      "description": "총 거래 건수",
+      "formula": "COUNT(index)",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Amount"
+        "index"
       ],
       "importance": "high",
-      "timestamp": "2025-10-19 08:42:31",
+      "timestamp": "2025-10-20 07:56:14",
       "verification_notes": ""
     },
     {
-      "id": "kpi_004",
+      "id": "calc_003",
       "value": "2189",
       "description": "총 판매 수량",
       "formula": "SUM(Qty)",
@@ -47,34 +36,435 @@
         "Qty"
       ],
       "importance": "high",
-      "timestamp": "2025-10-19 08:42:31",
+      "timestamp": "2025-10-20 07:56:14",
       "verification_notes": ""
     },
     {
-      "id": "kpi_005",
-      "value": 1.794262295081967,
-      "description": "주문당 평균 아이템 수",
-      "formula": "SUM(Qty) / COUNT(*)",
+      "id": "calc_004",
+      "value": 7064.877049180328,
+      "description": "평균 주문 금액",
+      "formula": "total_sales / total_transactions",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
-        "Qty"
+        "Amount"
       ],
-      "importance": "high",
-      "timestamp": "2025-10-19 08:42:31",
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:56:14",
       "verification_notes": ""
     },
     {
-      "id": "kpi_006",
-      "value": -26.608274787025888,
-      "description": "최근 월 성장률 (%)",
-      "formula": "((Current Month Sales - Previous Month Sales) / Previous Month Sales) * 100",
+      "id": "calc_005",
+      "value": 3937.4828688899042,
+      "description": "평균 상품 가격",
+      "formula": "total_sales / total_quantity",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Qty"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:56:14",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_006",
+      "value": "1834730",
+      "description": "월별 최대 매출액",
+      "formula": "MAX(monthly_sales)",
       "source_file": "./data/Dat-fresh-food-claude.csv",
       "source_columns": [
         "Amount",
         "Date"
       ],
       "importance": "high",
-      "timestamp": "2025-10-19 08:42:31",
+      "timestamp": "2025-10-20 07:56:14",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_007",
+      "value": "5",
+      "description": "최대 매출 월",
+      "formula": "IDXMAX(monthly_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:56:14",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_008",
+      "value": "148490",
+      "description": "일별 최대 매출액",
+      "formula": "MAX(daily_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:56:46",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_009",
+      "value": "495580",
+      "description": "주별 최대 매출액",
+      "formula": "MAX(weekly_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:56:46",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_010",
+      "value": "1337340",
+      "description": "요일별 최대 매출액",
+      "formula": "MAX(weekday_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:56:46",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_011",
+      "value": "6",
+      "description": "최대 매출 요일 인덱스",
+      "formula": "IDXMAX(weekday_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:56:46",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_012",
+      "value": "3967350",
+      "description": "최고 매출 카테고리 금액",
+      "formula": "MAX(category_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:57:23",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_013",
+      "value": "과일",
+      "description": "최고 매출 카테고리",
+      "formula": "IDXMAX(category_sales)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:57:23",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_014",
+      "value": 46.029480865282544,
+      "description": "최고 매출 카테고리 비중(%)",
+      "formula": "category_sales.iloc[0] / category_sales.sum() * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:57:23",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_015",
+      "value": "25800",
+      "description": "최고 매출 제품 금액",
+      "formula": "MAX(product_sales['Amount'])",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:57:23",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_016",
+      "value": "FR-WML-020",
+      "description": "최고 매출 제품",
+      "formula": "product_sales.iloc[0]['SKU']",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "SKU"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:57:23",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_017",
+      "value": 28.903143310804168,
+      "description": "최대 매출 성장률(%)",
+      "formula": "MAX(monthly_sales['Sales_Growth'])",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:57:58",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_018",
+      "value": "5",
+      "description": "최대 매출 성장 월",
+      "formula": "IDXMAX(monthly_sales['Sales_Growth'])",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:57:58",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_019",
+      "value": 7069.215091067905,
+      "description": "평균 주문 금액",
+      "formula": "MEAN(monthly_sales['Avg_Order_Value'])",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:57:58",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_020",
+      "value": 45.983072576762204,
+      "description": "여성 고객 매출 비중(%)",
+      "formula": "gender_sales['F'] / gender_sales.sum() * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Gender"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:58:49",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_021",
+      "value": "30대",
+      "description": "최고 매출 연령대",
+      "formula": "age_sales.index[0]",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:58:49",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_022",
+      "value": 34.686599026586144,
+      "description": "최고 매출 연령대 비중(%)",
+      "formula": "age_sales.iloc[0] / age_sales.sum() * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Age Group"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:58:49",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_023",
+      "value": 91.55737704918033,
+      "description": "프로모션 사용 비율(%)",
+      "formula": "df['Has_Promotion'].mean() * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "promotion-ids"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:58:49",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_024",
+      "value": 1.9577831893851418,
+      "description": "프로모션 사용 시 평균 주문 금액 비율",
+      "formula": "promo_vs_no_promo['Amount']['mean'][True] / promo_vs_no_promo['Amount']['mean'][False]",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:58:49",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_025",
+      "value": "8619150",
+      "description": "총 매출액",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_026",
+      "value": 7064.877049180328,
+      "description": "평균 주문 금액",
+      "formula": "total_sales / COUNT(index)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_027",
+      "value": 3937.4828688899042,
+      "description": "평균 상품 가격",
+      "formula": "total_sales / SUM(Qty)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Qty"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_028",
+      "value": 1.46233809317174,
+      "description": "평균 월별 매출 성장률",
+      "formula": "MEAN(monthly_growth)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Date"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_029",
+      "value": 46.029480865282544,
+      "description": "최고 매출 카테고리 비중",
+      "formula": "category_sales.iloc[0] / total_sales * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_030",
+      "value": 1.9577831893851418,
+      "description": "프로모션 효과 배수",
+      "formula": "df[df['Has_Promotion']]['Amount'].mean() / df[~df['Has_Promotion']]['Amount'].mean()",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "promotion-ids"
+      ],
+      "importance": "high",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_031",
+      "value": 110.9090909090909,
+      "description": "고객 세그먼트별 평균 구매 횟수",
+      "formula": "COUNT(index) / COUNT(UNIQUE(Gender, Age Group))",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Gender",
+        "Age Group"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_032",
+      "value": 83.36065573770492,
+      "description": "배송 완료율",
+      "formula": "COUNT(Courier Status='Delivered') / COUNT(index) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Courier Status"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_033",
+      "value": 33.032786885245905,
+      "description": "주요 배송 서비스 비율",
+      "formula": "COUNT(ship-service-level=most_common) / COUNT(index) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "ship-service-level"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:59:43",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_034",
+      "value": 76.56068173775836,
+      "description": "최고 매출 지역 비중",
+      "formula": "MAX(region_share)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "ship-state"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-10-20 07:59:43",
       "verification_notes": ""
     }
   ]

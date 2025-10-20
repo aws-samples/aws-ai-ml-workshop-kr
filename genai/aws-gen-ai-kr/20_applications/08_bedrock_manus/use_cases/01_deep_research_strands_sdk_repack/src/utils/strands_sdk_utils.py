@@ -129,7 +129,7 @@ class strands_utils():
             model=llm,
             system_prompt=system_prompts,
             tools=tools,
-            conversation_manager=CustomConversationManager(
+            conversation_manager=ConversationEditor(
                 window_size=context_overflow_window_size,
                 should_truncate_results=context_overflow_should_truncate_results
             ),
@@ -403,7 +403,7 @@ class strands_utils():
                     truncated_output = output[:500] + "..." if len(output) > 500 else output
                     callback_tool.on_llm_new_token(f"File content preview:\n{truncated_output}\n")
 
-                else: # 기타 모든 툴 결과 표시, 코더 툴, 리포터 툴, 태빌리, 크롤러 툴 결과도 다 출력 (for debug)
+                else: # 기타 모든 툴 결과 표시, 코더 툴, 리포터 툴 결과도 다 출력 (for debug)
                     callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
                     #callback_default.on_llm_new_token(f"Output: {output}\n")
                     #pass
@@ -447,36 +447,36 @@ class FunctionNode(MultiAgentBase):
         )
 
 
-class CustomConversationManager(SlidingWindowConversationManager):
-    
+class ConversationEditor(SlidingWindowConversationManager):
+
     """
     Manager that only operates on overflow.
-        
+
         Args:
-            window_size (int, optional): Maximum number of messages to retain when 
+            window_size (int, optional): Maximum number of messages to retain when
                 context overflow occurs. Defaults to 20.
-            should_truncate_results (bool, optional): If True, truncate large tool 
-                results with a placeholder message when overflow happens. If False, 
-                preserve full tool results but remove more historical messages. 
+            should_truncate_results (bool, optional): If True, truncate large tool
+                results with a placeholder message when overflow happens. If False,
+                preserve full tool results but remove more historical messages.
                 Defaults to True.
     """
-    
+
     def __init__(self, window_size=7, should_truncate_results=False):
         super().__init__(
             window_size=window_size,
             should_truncate_results=should_truncate_results
         )
-    
+
     def apply_management(self, agent, **kwargs):
         """After each event loop - do nothing"""
         print("None")
-        pass  
-    
+        pass
+
     def reduce_context(self, agent, e=None, **kwargs):
         """Only on overflow - use parent class's reduce_context"""
         print(f"⚠️ Overflow occurred! Cleaning up {len(agent.messages)} messages...")
-    
+
         # 부모 클래스의 reduce_context는 should_truncate_results를 자동으로 처리
         super().reduce_context(agent, e, **kwargs)
-        
+
         print(f"✅ Cleanup complete: {len(agent.messages)} messages remaining")

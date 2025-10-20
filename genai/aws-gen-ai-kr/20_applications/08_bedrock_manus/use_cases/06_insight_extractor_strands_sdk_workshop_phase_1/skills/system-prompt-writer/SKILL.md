@@ -71,6 +71,106 @@ Use **Markdown headers** for major sections and **XML tags** for content within 
 - **Structure** (XML tags clearly delineate content and support programmatic parsing)
 - **Flexibility** (Matches Anthropic's actual examples and recommendations)
 
+#### CRITICAL: Template Variable Escaping Rules
+
+**This project uses a template system (`src/prompts/template.py`) that processes system prompts with variable substitution using Python's `.format()` method. Understanding and applying the correct escaping is MANDATORY.**
+
+**How the Template System Works:**
+
+```python
+# template.py uses this pattern:
+system_prompts = system_prompts.format(**context)
+
+# Where context contains variables like:
+# {CURRENT_TIME}, {USER_REQUEST}, {FULL_PLAN}, etc.
+```
+
+**Escaping Rule:**
+- **Single braces `{}`** → Interpreted as template variables that must be replaced
+- **Double braces `{{}}`** → Escaped to single braces `{}` in the output
+
+**What This Means for Prompt Writing:**
+
+1. **Template Variables (Single Braces):**
+   ```markdown
+   ---
+   CURRENT_TIME: {CURRENT_TIME}
+   USER_REQUEST: {USER_REQUEST}
+   FULL_PLAN: {FULL_PLAN}
+   ---
+   ```
+   These are **intentional placeholders** that will be replaced with actual values.
+
+2. **Code Samples (Double Braces Required):**
+   ```markdown
+   ❌ WRONG (Will cause KeyError):
+   ```python
+   print(f"Total: {value}")
+   df_dict = {"key": "value"}
+   track_calculation("id", {value})
+   ```
+
+   ✅ CORRECT (Use double braces):
+   ```python
+   print(f"Total: {{value}}")
+   df_dict = {{"key": "value"}}
+   track_calculation("id", {{value}})
+   ```
+   ```
+
+**Common Scenarios Requiring Double Braces:**
+
+| Context | Wrong | Correct |
+|---------|-------|---------|
+| Python f-strings | `f"Count: {n}"` | `f"Count: {{n}}"` |
+| Dictionary literals | `{"key": "val"}` | `{{"key": "val"}}` |
+| Set literals | `{1, 2, 3}` | `{{1, 2, 3}}` |
+| Format strings | `"{:.2f}".format(x)` | `"{{:.2f}}".format(x)` |
+| JSON examples | `{"name": "John"}` | `{{"name": "John"}}` |
+| Placeholders in text | `Use {variable}` | `Use {{variable}}` |
+
+**Why This Matters:**
+
+If you use single braces `{}` in code samples, the template system will:
+1. Try to replace `{value}` with a variable named `value` from context
+2. Raise `KeyError: 'value'` when the variable doesn't exist
+3. Cause agent initialization to fail
+
+**Example from Real Prompt (coder.md):**
+
+```markdown
+**Result Storage After Each Task:**
+```python
+current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+result_text = f"""
+{{'='*50}}
+## Analysis Stage: {{stage_name}}
+## Execution Time: {{current_time}}
+{{'-'*50}}
+Result: {{result_description}}
+{{'-'*50}}
+Key Insights:
+{{key_insights}}
+{{'-'*50}}
+Files: ./artifacts/category_chart.png
+{{'='*50}}
+"""
+```
+```
+
+Notice:
+- `{{'='*50}}` → Becomes `{'='*50}` in the actual prompt (Python expression)
+- `{{stage_name}}` → Becomes `{stage_name}` (Python f-string variable)
+- `{{current_time}}` → Becomes `{current_time}` (Python f-string variable)
+
+**Pre-Writing Checklist:**
+
+Before finalizing any system prompt:
+- [ ] Identify all code samples with curly braces
+- [ ] Convert ALL `{}` in code samples to `{{}}`
+- [ ] Verify template variables (like `{CURRENT_TIME}`) use single braces
+- [ ] Test prompt loading to catch any KeyError exceptions
+
 **Recommended Structure:**
 
 ```markdown
@@ -461,6 +561,40 @@ When conversation history exceeds 50 messages:
 ❌ **Premature optimization:** Don't guess what context will be needed
 ❌ **Rigid workflows:** Allow flexibility for unexpected user needs
 ❌ **Excessive background:** Stick to actionable information
+❌ **Incorrect brace escaping:** Using single braces `{}` in code samples instead of double braces `{{}}`
+
+### Anti-Pattern: Missing Brace Escaping
+
+**❌ Problem Example:**
+```markdown
+## Python Code Pattern
+```python
+# This will cause KeyError!
+result = {"key": "value"}
+print(f"Total: {amount}")
+for item in {1, 2, 3}:
+    track_calculation("id", {value})
+```
+```
+
+**Why it fails:**
+- Template system tries to replace `{key}`, `{amount}`, `{1, 2, 3}`, `{value}`
+- Raises `KeyError` when these variables don't exist in template context
+- Agent initialization fails before it can even start
+
+**✅ Correct Version:**
+```markdown
+## Python Code Pattern
+```python
+# Properly escaped
+result = {{"key": "value"}}
+print(f"Total: {{amount}}")
+for item in {{1, 2, 3}}:
+    track_calculation("id", {{value}})
+```
+```
+
+**Impact:** This is a CRITICAL error that prevents the prompt from loading. Always use double braces in code samples.
 
 ## Domain-Specific System Prompt Patterns
 
@@ -702,6 +836,13 @@ Before finalizing your system prompt, verify:
 - [ ] Logical flow from general to specific
 - [ ] Related information grouped together
 - [ ] Supporting files properly referenced (examples.md, etc.)
+
+**Template Variable Escaping (CRITICAL):**
+- [ ] All template variables use single braces: `{CURRENT_TIME}`, `{USER_REQUEST}`, etc.
+- [ ] All code samples with braces use double braces: `{{value}}`, `{{"key": "val"}}`
+- [ ] Python f-strings in examples use double braces: `f"Count: {{n}}"`
+- [ ] JSON/dict examples use double braces: `{{"name": "John"}}`
+- [ ] Tested prompt loading to verify no KeyError exceptions
 
 **Tool Guidance:**
 - [ ] Tool usage conditions are unambiguous
@@ -1123,6 +1264,7 @@ As you write:
 - **Clear structure:** Use Markdown + XML hybrid format
 - **Unambiguous tool guidance:** Provide clear decision criteria
 - **Few-shot examples:** 2-3 diverse, canonical examples (if needed)
+- **CRITICAL - Template escaping:** Use double braces `{{}}` in ALL code samples, single braces `{}` only for template variables
 
 ### Step 4: Follow Iterative Development
 **Don't try to be perfect on first draft:**
@@ -1187,5 +1329,10 @@ Remember these core tenets:
    - Sufficient information to succeed
    - No redundancy, no low-signal content
    - Active context management
+
+7. **CRITICAL: Template Variable Escaping**
+   - Double braces `{{}}` in ALL code samples
+   - Single braces `{}` ONLY for template variables like `{CURRENT_TIME}`
+   - Missing escaping causes KeyError and prevents prompt loading
 
 The goal is not perfection, but **effectiveness** - write prompts that work while leaving maximum context space for dynamic information that matters.

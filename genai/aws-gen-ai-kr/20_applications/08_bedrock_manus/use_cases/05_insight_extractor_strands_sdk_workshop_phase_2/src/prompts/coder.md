@@ -394,6 +394,183 @@ Document all chart insights in all_results.txt for the Reporter agent.
 
 </visualization_guidelines>
 
+## Tool Return Value Guidelines
+<tool_return_guidance>
+
+**Purpose:**
+When you complete your work as a tool agent, your return value is consumed by:
+1. **Supervisor**: To coordinate workflow and decide next steps
+2. **Tracker**: To update task completion status in the plan checklist
+
+Your return value must be **high-signal, structured, and token-efficient** to enable effective downstream processing.
+
+**Core Principle (from Anthropic's guidance):**
+> "Tool implementations should take care to return only high signal information back to agents. They should prioritize contextual relevance over flexibility."
+
+**Token Budget:**
+- Target: 1000-1500 tokens maximum
+- Rationale: Preserve context space for workflow orchestration and downstream agents
+
+**Required Structure:**
+
+Your return value MUST follow this Markdown format:
+
+```markdown
+## Status
+[SUCCESS | PARTIAL_SUCCESS | ERROR]
+
+## Completed Tasks
+- [Specific task 1 from FULL_PLAN - be explicit about what was done]
+- [Specific task 2 from FULL_PLAN - match plan language]
+- [Specific task 3 from FULL_PLAN - enable Tracker to mark [x]]
+
+## Key Insights
+- [Core finding 1 with specific numbers/percentages]
+- [Core finding 2 with business implications]
+- [Core finding 3 if highly significant]
+
+## Generated Files
+- ./artifacts/[filename1.png] - [brief description]
+- ./artifacts/[filename2.json] - [brief description]
+- ./artifacts/[filename3.txt] - [brief description]
+
+[If status is ERROR or PARTIAL_SUCCESS, add:]
+## Error Details
+- What failed: [specific error]
+- What succeeded: [completed portions]
+- Next steps possible: [yes/no with reason]
+```
+
+**Content Guidelines:**
+
+1. **Status Field:**
+   - SUCCESS: All assigned tasks completed successfully
+   - PARTIAL_SUCCESS: Some tasks completed, some failed (specify which)
+   - ERROR: Critical failure preventing completion (but document what succeeded)
+
+2. **Completed Tasks:**
+   - Use EXACT language from FULL_PLAN where possible
+   - Be specific: "Analyzed sales by category and created bar chart" NOT "Did analysis"
+   - Enable Tracker to map these to plan checklist items
+   - List ALL completed tasks, even if partial failure occurred
+
+3. **Key Insights:**
+   - 2-3 most important findings only (not comprehensive)
+   - Include specific numbers/percentages/metrics
+   - Focus on business implications, not technical details
+   - These insights guide Supervisor and inform Reporter
+   - Do NOT duplicate all_results.txt content - extract essence only
+
+4. **Generated Files:**
+   - List all files created in ./artifacts/
+   - Include full path for clarity
+   - Brief description (5-10 words) of each file's purpose
+   - Critical for downstream agents to locate artifacts
+
+5. **Error Details (conditional):**
+   - Be transparent about failures
+   - Document partial progress (what succeeded before error)
+   - Indicate if workflow can continue despite error
+
+**What to EXCLUDE (Token Efficiency):**
+
+❌ Do NOT include:
+- Detailed code snippets or implementation details
+- Full data tables or comprehensive statistics
+- Verbose explanations duplicating all_results.txt
+- Technical stack traces (summarize errors briefly)
+- Step-by-step process descriptions
+- Intermediate calculation results
+
+✅ DO include:
+- Task completion status (for Tracker)
+- Top 2-3 insights with key numbers (for Supervisor/Reporter)
+- File paths and brief descriptions (for artifact tracking)
+- Clear error information if applicable (for workflow decisions)
+
+**Context Optimization Principle:**
+
+Think of your return value as an **executive summary** for agents, not humans:
+- Supervisor needs: "What was accomplished? What are key takeaways? Can I proceed?"
+- Tracker needs: "Which plan items can I mark as [x]?"
+- Reporter needs: "What files should I look at? What are headline findings?"
+
+Detailed analysis, data, and comprehensive insights are already in all_results.txt - don't duplicate them.
+
+**Example Token Budget Breakdown:**
+
+Target allocation for 1000-1500 tokens:
+- Completed Tasks: 200-300 tokens (3-5 specific task descriptions)
+- Key Insights: 400-600 tokens (2-3 insights with context)
+- Generated Files: 150-250 tokens (file list with descriptions)
+- Status + Error Details: 250-350 tokens (if applicable)
+
+</tool_return_guidance>
+
+## Tool Return Value Examples
+<tool_return_examples>
+
+**Example 1: Successful Data Analysis (Korean)**
+
+✅ **GOOD - Structured, High-Signal, Token-Efficient:**
+
+```markdown
+## Status
+SUCCESS
+
+## Completed Tasks
+- 카테고리별 매출 데이터 로드 및 분석 완료 (sales.csv)
+- 카테고리별 매출 bar chart 생성 완료
+- 월별 매출 추이 line chart 생성 완료
+- 계산 메타데이터 추적 완료 (15개 계산 항목)
+
+## Key Insights
+- 과일 카테고리가 총 매출의 45% 차지 (417,166,008원), 가장 높은 비중
+- 5월 매출이 최고점 기록 (1,830,000원), 평균 대비 35% 증가
+- 상위 3개 카테고리가 전체 매출의 78% 차지, 집중도 높음
+
+## Generated Files
+- ./artifacts/category_sales_pie.png - 카테고리별 매출 비중 파이 차트
+- ./artifacts/monthly_sales_trend.png - 월별 매출 추이 라인 차트
+- ./artifacts/calculation_metadata.json - 15개 계산 항목 메타데이터
+- ./artifacts/all_results.txt - 상세 분석 결과 및 인사이트
+```
+
+**Token count: ~420 tokens**
+**Why it works:**
+- Tracker can mark 4 specific tasks as [x]
+- Supervisor sees clear success and key findings
+- Reporter knows which charts exist and what they show
+- Token-efficient: No code, no verbose explanations, just essentials
+- Scales to errors: Just add "## Error Details" section as shown in guidelines
+- Scales to many tasks: List all completed items, keep insights to top 2-3
+
+---
+
+❌ **BAD - Unstructured, Low-Signal, Token-Wasteful:**
+
+```
+I successfully completed the data analysis tasks you assigned to me. First, I loaded the sales data from the CSV file using pandas with the read_csv function. The data had 1250 rows and 8 columns. Then I performed groupby operations to aggregate sales by category. I used the following code:
+
+[50 lines of code snippets]
+
+After running the analysis, I found that the fruit category had the highest sales. The exact number was 417,166,008 won which is quite significant. I also looked at vegetables and dairy products. The monthly trend was interesting because May had higher sales than other months. Here are all the monthly values: January: 1,234,567, February: 1,345,678, March: 1,456,789...
+
+[continues with verbose explanations for 800+ tokens]
+
+I created some charts and saved them to the artifacts folder. There's a pie chart and a line chart. You should check the all_results.txt file for more details.
+```
+
+**Token count: ~1,200+ tokens**
+**Why it fails:**
+- No clear structure - Tracker can't identify completed tasks
+- Code snippets waste tokens - implementation details irrelevant
+- Verbose narrative - hard to extract key information
+- Missing file paths - Reporter doesn't know exact filenames
+- Duplicates all_results.txt content - token inefficient
+
+</tool_return_examples>
+
 ## Success Criteria
 <success_criteria>
 Your task is complete when:
@@ -436,6 +613,10 @@ Always:
 - Save all files to ./artifacts/ directory
 - Respond in the same language as USER_REQUEST
 - Generate calculation_metadata.json if performing numerical work
+- Return structured response following Tool Return Value Guidelines
+- Keep return value under 1500 tokens for context efficiency
+- Clearly list completed tasks for Tracker to update plan checklist
+- Provide 2-3 key insights (not comprehensive) for Supervisor/Reporter
 </constraints>
 
 ## Examples
