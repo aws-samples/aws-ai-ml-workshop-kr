@@ -1,6 +1,6 @@
 ---
 name: system-prompt-writer
-description: Expert guidance for writing effective system prompts for AI agents using Anthropic's context engineering principles
+description: This skill should be used when writing or improving system prompts for AI agents, providing expert guidance based on Anthropic's context engineering principles.
 ---
 
 # System Prompt Writer Skill
@@ -17,7 +17,7 @@ This skill provides comprehensive guidelines for writing effective system prompt
 
 ### 1. Write at the "Right Altitude"
 
-Your system prompt should be in the **Goldilocks zone** - not too rigid, not too vague.
+System prompts should be in the **Goldilocks zone** - not too rigid, not too vague.
 
 **Too Rigid (Avoid):**
 ```
@@ -40,10 +40,10 @@ You are a weather assistant. When users ask about weather:
 
 ### 2. Minimum Effective Information
 
-**Key Question:** "What is the smallest amount of context needed for the agent to succeed?"
+**Key Question:** Determine the smallest amount of context needed for the agent to succeed.
 
 **Important Note:**
-> "Minimal does not necessarily mean short; you still need to give the agent sufficient information up front to ensure it adheres to the desired behavior."
+> "Minimal does not necessarily mean short; sufficient information must be provided to the agent up front to ensure it adheres to the desired behavior."
 
 Focus on **high-signal tokens** that drive behavior, not arbitrary brevity.
 
@@ -57,7 +57,7 @@ You are a customer service agent for Acme Corp, founded in 1985 by John Smith in
 You are an Acme Corp customer service agent. Help customers with product inquiries, orders, and support issues. Use available tools to access order history and product information. Escalate complex technical issues to specialists.
 ```
 
-The optimized version is shorter AND higher-signal. But if your agent needs detailed decision-making criteria to function correctly, include them - minimal doesn't mean inadequate.
+The optimized version is shorter AND higher-signal. However, if the agent needs detailed decision-making criteria to function correctly, include them - minimal doesn't mean inadequate.
 
 ### 3. Structure for Clarity
 
@@ -73,7 +73,7 @@ Use **Markdown headers** for major sections and **XML tags** for content within 
 
 #### CRITICAL: Template Variable Escaping Rules
 
-**This project uses a template system (`src/prompts/template.py`) that processes system prompts with variable substitution using Python's `.format()` method. Understanding and applying the correct escaping is MANDATORY.**
+**The project uses a template system (`src/prompts/template.py`) that processes system prompts with variable substitution using Python's `.format()` method. Understanding and applying the correct escaping is MANDATORY.**
 
 **How the Template System Works:**
 
@@ -89,7 +89,7 @@ system_prompts = system_prompts.format(**context)
 - **Single braces `{}`** → Interpreted as template variables that must be replaced
 - **Double braces `{{}}`** → Escaped to single braces `{}` in the output
 
-**What This Means for Prompt Writing:**
+**Implications for Prompt Writing:**
 
 1. **Template Variables (Single Braces):**
    ```markdown
@@ -131,8 +131,8 @@ system_prompts = system_prompts.format(**context)
 
 **Why This Matters:**
 
-If you use single braces `{}` in code samples, the template system will:
-1. Try to replace `{value}` with a variable named `value` from context
+Using single braces `{}` in code samples causes the template system to:
+1. Attempt to replace `{value}` with a variable named `value` from context
 2. Raise `KeyError: 'value'` when the variable doesn't exist
 3. Cause agent initialization to fail
 
@@ -268,7 +268,7 @@ You are a data analysis specialist focused on deriving insights from datasets th
 **Key Heuristic:**
 > "If a human engineer can't definitively say which tool should be used in a given situation, an AI agent can't be expected to do better."
 
-Your system prompt should provide **clear, unambiguous guidance** about when to use each tool.
+System prompts should provide **clear, unambiguous guidance** about when to use each tool.
 
 #### Poor Tool Guidance
 
@@ -396,14 +396,14 @@ Special Notes:
 
 #### Collaboration with Tool Developers
 
-While this skill focuses on **prompt-level guidance**, effective tool usage in prompts depends on well-designed tools. When working with tool developers, request:
+While this skill focuses on **prompt-level guidance**, effective tool usage in prompts depends on well-designed tools. When collaborating with tool developers, request:
 
 - **Clear tool names** that indicate purpose
 - **Unambiguous tool descriptions**
 - **Minimal overlap** between tools
 - **Token-efficient returns** (only necessary data)
 
-If tools are ambiguous or overlapping, even the best prompt guidance won't help. Advocate for clean tool design to make your prompts effective.
+If tools are ambiguous or overlapping, even the best prompt guidance won't help. Advocate for clean tool design to make prompts effective.
 
 ### 5. Few-Shot Prompting: Use Examples Wisely
 
@@ -464,7 +464,7 @@ This teaches the LLM the behavior pattern without trying to cover every possible
 
 ### 6. Define Success Criteria
 
-Be explicit about what constitutes successful task completion:
+Define explicitly what constitutes successful task completion:
 
 ```
 Success means:
@@ -473,8 +473,8 @@ Success means:
 - Response is conversational and helpful
 - Appropriate tools were used when needed
 
-You may ask clarifying questions if the user's request is ambiguous.
-You should acknowledge when you don't have sufficient information.
+May ask clarifying questions if the user's request is ambiguous.
+Should acknowledge when sufficient information is unavailable.
 ```
 
 ## Context Management Strategies
@@ -484,7 +484,7 @@ You should acknowledge when you don't have sufficient information.
 Instead of loading all information upfront, maintain lightweight identifiers:
 
 ```
-You have access to these knowledge sources:
+Available knowledge sources:
 - Product catalog: /data/products.json
 - User manual: /docs/manual.pdf
 - FAQ database: knowledge_base://faq
@@ -556,12 +556,12 @@ When conversation history exceeds 50 messages:
 
 ## Anti-Patterns to Avoid
 
-❌ **Over-specification:** Don't write step-by-step algorithms - let the LLM reason
-❌ **Redundancy:** Don't repeat information available in tool descriptions
-❌ **Premature optimization:** Don't guess what context will be needed
+❌ **Over-specification:** Avoid writing step-by-step algorithms - let the LLM reason
+❌ **Redundancy:** Avoid repeating information available in tool descriptions
+❌ **Premature optimization:** Avoid guessing what context will be needed
 ❌ **Rigid workflows:** Allow flexibility for unexpected user needs
 ❌ **Excessive background:** Stick to actionable information
-❌ **Incorrect brace escaping:** Using single braces `{}` in code samples instead of double braces `{{}}`
+❌ **Incorrect brace escaping:** Avoid using single braces `{}` in code samples instead of double braces `{{}}`
 
 ### Anti-Pattern: Missing Brace Escaping
 
@@ -1216,7 +1216,7 @@ This skill uses a multi-file structure for comprehensive coverage:
 ### Main SKILL.md (This File)
 Contains core principles, guidelines, templates, and patterns for writing system prompts. Use this as your primary reference.
 
-### examples.md
+### references/examples.md
 Provides complete real-world examples of system prompts across different agent types:
 - Coordinator agents
 - Planner agents
@@ -1229,7 +1229,7 @@ Provides complete real-world examples of system prompts across different agent t
 
 **When to use:** Need concrete examples to understand patterns or inspire your own prompts.
 
-### section-organization-guide.md
+### references/section-organization-guide.md
 Deep-dive into structuring system prompts with detailed section-by-section recommendations:
 - Recommended section types (Role, Instructions, Tool Guidance, etc.)
 - Section formatting patterns
@@ -1241,7 +1241,7 @@ Deep-dive into structuring system prompts with detailed section-by-section recom
 
 ## Using This Skill
 
-When writing a system prompt, follow this process:
+Follow this process when writing a system prompt:
 
 ### Step 1: Identify Agent Type
 Determine which domain-specific pattern fits your use case:
@@ -1258,7 +1258,7 @@ Choose the appropriate template:
 - **Domain-specific template** (from Domain-Specific Patterns section)
 
 ### Step 3: Apply Core Principles
-As you write:
+Apply these principles when writing:
 - **Right altitude:** Balance specificity with flexibility
 - **Minimum effective information:** Cut ruthlessly, keep high-signal content
 - **Clear structure:** Use Markdown + XML hybrid format
@@ -1267,7 +1267,7 @@ As you write:
 - **CRITICAL - Template escaping:** Use double braces `{{}}` in ALL code samples, single braces `{}` only for template variables
 
 ### Step 4: Follow Iterative Development
-**Don't try to be perfect on first draft:**
+Avoid attempting perfection on first draft:
 1. Start minimal (role + basic instructions)
 2. Test with best available model
 3. Identify specific failure modes
@@ -1285,8 +1285,8 @@ Use the comprehensive checklist in this file to ensure:
 - Context management is considered
 
 ### Step 6: Reference Supporting Files
-- **Need examples?** → See `examples.md`
-- **Complex structure questions?** → See `section-organization-guide.md`
+- **Need examples?** → See `references/examples.md`
+- **Complex structure questions?** → See `references/section-organization-guide.md`
 - **Template starting point?** → Use templates in this file
 
 ### Quick Reference: When to Use What
@@ -1294,8 +1294,8 @@ Use the comprehensive checklist in this file to ensure:
 | Scenario | Reference |
 |----------|-----------|
 | Starting a new prompt | Templates section (this file) |
-| Understanding section organization | section-organization-guide.md |
-| Seeing real-world examples | examples.md |
+| Understanding section organization | references/section-organization-guide.md |
+| Seeing real-world examples | references/examples.md |
 | Writing tool guidance | Tool Guidance section (this file) |
 | Adding few-shot examples | Few-Shot Prompting section (this file) |
 | Optimizing context usage | Context Management Strategies (this file) |
@@ -1335,4 +1335,4 @@ Remember these core tenets:
    - Single braces `{}` ONLY for template variables like `{CURRENT_TIME}`
    - Missing escaping causes KeyError and prevents prompt loading
 
-The goal is not perfection, but **effectiveness** - write prompts that work while leaving maximum context space for dynamic information that matters.
+The goal is not perfection, but **effectiveness** - prompts should work while leaving maximum context space for dynamic information that matters.

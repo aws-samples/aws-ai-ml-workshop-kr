@@ -8,7 +8,7 @@ from strands import Agent
 from strands.models import BedrockModel
 from botocore.config import Config
 from botocore.exceptions import ClientError
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from strands.types.exceptions import EventLoopException
 
 from strands.agent.agent_result import AgentResult
