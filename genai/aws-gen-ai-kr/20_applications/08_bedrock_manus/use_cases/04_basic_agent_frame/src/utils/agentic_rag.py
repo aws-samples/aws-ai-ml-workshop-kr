@@ -30,14 +30,14 @@ from src.utils.common_utils import print_html
 from src.utils.opensearch import opensearch_utils
 from src.utils.genai_analysis import llm_call
 
-from langchain.schema import Document
-from langchain.schema import BaseRetriever
+from langchain_core.documents import Document
+from langchain_core.retrievers import BaseRetriever
 #from langchain.prompts import PromptTemplate
 from langchain_core.tracers import ConsoleCallbackHandler
-from langchain.schema.output_parser import StrOutputParser
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.callbacks.manager import CallbackManagerForRetrieverRun
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain_core.output_parsers import StrOutputParser
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.callbacks.manager import CallbackManagerForRetrieverRun
+from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
 from langchain_core.messages.ai import AIMessage
 

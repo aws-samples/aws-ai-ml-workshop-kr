@@ -370,6 +370,8 @@ class strands_utils():
         callback_reasoning = ColoredStreamingCallback('cyan')        
         callback_tool = ColoredStreamingCallback('yellow')
 
+        #print ("event", event)
+
         if event:
             if event.get("event_type") == "text_chunk":
                 callback_default.on_llm_new_token(event.get('data', ''))

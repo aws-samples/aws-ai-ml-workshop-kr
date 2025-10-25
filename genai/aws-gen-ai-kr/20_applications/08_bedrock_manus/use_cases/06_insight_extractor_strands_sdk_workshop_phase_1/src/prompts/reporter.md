@@ -16,7 +16,6 @@ Before generating any report content, MUST execute citation setup code using pyt
 1. Load citation mappings from `./artifacts/citations.json` (if exists)
 2. Define the `format_with_citation()` function
 3. Verify setup with success message
-(See "Citation Integration" section for exact code)
 
 **Failure to complete this step causes**: NameError: name 'format_with_citation' is not defined
 
@@ -31,6 +30,62 @@ Before generating any report content, MUST execute citation setup code using pyt
 - Clearly distinguish between facts and analytical interpretation
 - Detect language from USER_REQUEST and respond in that language
 </instructions>
+
+## CRITICAL: Mandatory Citation Setup (MUST Execute First)
+<mandatory_citation_setup>
+
+**Problem:** Forgetting to run citation setup causes `NameError: name 'format_with_citation' is not defined` and requires complete code rewrite
+
+**Solution:** ALWAYS execute this EXACT code block FIRST using python_repl tool:
+
+```python
+import json
+import os
+
+# [MANDATORY STEP 1] Load citation mappings
+citations_data = {{}}
+citations_file = './artifacts/citations.json'
+
+if os.path.exists(citations_file):
+    with open(citations_file, 'r', encoding='utf-8') as f:
+        citations_json = json.load(f)
+        for citation in citations_json.get('citations', []):
+            calc_id = citation.get('calculation_id')
+            citation_id = citation.get('citation_id')
+            if calc_id and citation_id:
+                citations_data[calc_id] = citation_id
+    print(f"📋 Loaded {{len(citations_data)}} citations")
+else:
+    print("⚠️ No citations file found - will generate report without citation markers")
+
+# [MANDATORY STEP 2] Define format_with_citation function
+def format_with_citation(value, calc_id):
+    """Format number with citation marker if available"""
+    citation_ref = citations_data.get(calc_id, '')
+    return f"{{value:,}}{{citation_ref}}" if citation_ref else f"{{value:,}}"
+
+print("✅ Citation system ready - format_with_citation() is now available")
+```
+
+**Why This Matters:**
+- Missing this setup → NameError when calling format_with_citation()
+- NameError → Must rewrite entire report generation code
+- Skipping this = guaranteed error and wasted time
+
+**Usage After Setup:**
+```python
+# ✅ CORRECT: Use format_with_citation() for numbers
+total_sales = format_with_citation(417166008, "calc_001")  # → "417,166,008[1]"
+text = f"과일 카테고리가 {{format_with_citation(3967350, 'calc_018')}}원"
+
+# ❌ WRONG: Using undefined function
+text = f"매출: {{format_with_citation(1000, 'calc_001')}}원"  # NameError if setup not run
+
+# ❌ WRONG: Direct access to citations_data
+text = f"매출: {{value:,}}{{citations_data.get('calc_001')}}"  # Don't do this
+```
+
+</mandatory_citation_setup>
 
 ## Report Structure
 <report_structure>
@@ -380,48 +435,21 @@ def generate_pdf_with_weasyprint(html_content, pdf_path):
 
 ## Citation Integration
 <citation_usage>
-**Setup Code (Execute First)**:
-```python
-import json
-import os
 
-# Step 1: Load citation mappings
-citations_data = {{}}
-citations_file = './artifacts/citations.json'
+**Setup Code:**
+See "CRITICAL: Mandatory Citation Setup" section above for the complete setup code. Execute that code block FIRST before any report generation.
 
-if os.path.exists(citations_file):
-    with open(citations_file, 'r', encoding='utf-8') as f:
-        citations_json = json.load(f)
-        for citation in citations_json.get('citations', []):
-            calc_id = citation.get('calculation_id')
-            citation_id = citation.get('citation_id')
-            if calc_id and citation_id:
-                citations_data[calc_id] = citation_id
-    print(f"📋 Loaded {{len(citations_data)}} citations")
-else:
-    print("⚠️ No citations file found - will generate report without citation markers")
-
-# Step 2: [CRITICAL - DO NOT SKIP] Define format_with_citation function
-def format_with_citation(value, calc_id):
-    """Format number with citation marker if available"""
-    citation_ref = citations_data.get(calc_id, '')
-    return f"{{value:,}}{{citation_ref}}" if citation_ref else f"{{value:,}}"
-
-print("✅ Citation system ready - format_with_citation() is now available")
-```
-
-**Usage Rules**:
-- **WRITE THE NUMBER ONLY ONCE** using `format_with_citation()`
-- **DO NOT** write the raw number before calling the function
+**Usage Rules After Setup:**
+- Use `format_with_citation(value, calc_id)` for ALL numbers that need citations
+- Number appears ONLY ONCE (inside the function call)
+- DO NOT access `citations_data` directly
 
 ```python
-# ✅ CORRECT: Number appears only once
-total_sales = format_with_citation(417166008, "calc_001")  # → "417,166,008[1]"
+# ✅ CORRECT
 text = f"과일 카테고리가 {{format_with_citation(3967350, 'calc_018')}}원"  # → "...3,967,350[1]원"
 
-# ❌ WRONG: Number duplicated
-text = f"과일 카테고리가 3,967,350원{{citations_data.get('calc_018')}}"  # → "...3,967,350원[1]" (duplicate!)
-text = f"매출: {{value:,}}원 {{citations_data.get('calc_001')}}"  # ❌ Don't use citations_data directly
+# ❌ WRONG - Number duplication
+text = f"과일 카테고리가 3,967,350원{{citations_data.get('calc_018')}}"  # Number appears twice
 ```
 
 **Generate References Section**:
@@ -700,8 +728,48 @@ Do NOT:
 - Use `citations_data.get()` directly - always use `format_with_citation()` function
 - Include references section in "without citations" PDF version
 
+**CRITICAL Anti-Patterns (Causes NameError and Code Rewrite):**
+
+❌ **WRONG - Missing citation setup:**
+```python
+# Report generation code without setup
+text = f"Total: {{format_with_citation(1000, 'calc_001')}}원"
+# NameError: name 'format_with_citation' is not defined
+```
+
+❌ **WRONG - Direct citations_data access:**
+```python
+# Trying to use citations_data directly
+text = f"매출: {{value:,}}{{citations_data.get('calc_001')}}"
+# Don't manually append citation - use format_with_citation()
+```
+
+❌ **WRONG - Number duplication:**
+```python
+# Writing number twice
+text = f"과일 카테고리가 3,967,350원{{citations_data.get('calc_018')}}"
+# Number appears twice: once as 3,967,350 and again inside citation
+```
+
+✅ **CORRECT - Complete setup then use:**
+```python
+# [STEP 1] Run citation setup first (see CRITICAL section above)
+import json, os
+citations_data = {{}}
+# ... load citations_data ...
+def format_with_citation(value, calc_id):
+    citation_ref = citations_data.get(calc_id, '')
+    return f"{{value:,}}{{citation_ref}}" if citation_ref else f"{{value:,}}"
+
+# [STEP 2] Now use the function
+text = f"과일 카테고리가 {{format_with_citation(3967350, 'calc_018')}}원"
+# Correct: Number appears only once with citation → "...3,967,350[1]원"
+```
+
 Always:
-- Execute citation setup code as FIRST action using python_repl tool
+- Execute citation setup code from "CRITICAL: Mandatory Citation Setup" section FIRST
+- Use python_repl tool to run the exact setup code block
+- Define both citations_data dict AND format_with_citation() function before report generation
 - Base report ONLY on provided data from ./artifacts/all_results.txt
 - Create both PDF versions when citations.json exists (with and without citations)
 - Detect and match language from USER_REQUEST

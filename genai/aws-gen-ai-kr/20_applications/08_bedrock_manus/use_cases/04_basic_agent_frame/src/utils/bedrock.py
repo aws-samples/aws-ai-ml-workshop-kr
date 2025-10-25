@@ -14,7 +14,7 @@ from botocore.config import Config
 from botocore.exceptions import ClientError
 
 # Langchain
-from langchain.callbacks.base import BaseCallbackHandler
+from langchain_core.callbacks.base import BaseCallbackHandler
 
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
@@ -74,7 +74,7 @@ def get_bedrock_client(
         session_kwargs["profile_name"] = profile_name
 
     retry_config = Config(
-        read_timeout=900,
+        read_timeout=300,
         region_name=target_region,
         retries={
             "max_attempts": 50,
@@ -125,6 +125,7 @@ class bedrock_info():
         "Claude-V3-5-V-2-Sonnet-CRI": "us.anthropic.claude-3-5-sonnet-20241022-v2:0",
         "Claude-V3-7-Sonnet-CRI": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
         "Claude-V4-Sonnet-CRI": "us.anthropic.claude-sonnet-4-20250514-v1:0",
+        "Claude-V4-1-Opus-CRI": "us.anthropic.claude-opus-4-1-20250805-v1:0",
         "Claude-V4-Opus-CRI": "us.anthropic.claude-opus-4-20250514-v1:0",
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
@@ -374,7 +375,3 @@ class bedrock_utils():
                 print("A client error occurred: %s", message)
         
         return output, message
-
-
-
-

@@ -13,7 +13,7 @@ from typing import Any, Annotated
 
 from langchain_aws import ChatBedrock
 from langchain_aws import BedrockEmbeddings
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 from src.utils import bedrock
 from src.utils.bedrock import bedrock_info

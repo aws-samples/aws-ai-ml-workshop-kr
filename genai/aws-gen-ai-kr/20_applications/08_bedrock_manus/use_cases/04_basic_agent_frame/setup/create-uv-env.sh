@@ -191,6 +191,40 @@ echo ""
 echo "=== 등록된 Jupyter 커널 ==="
 jupyter kernelspec list 2>/dev/null | grep -E "(Available|$ENV_NAME)" || echo "커널 목록을 가져올 수 없습니다."
 
+# 7. 루트 디렉토리에 환경 파일 연결 (심링크 생성)
+print_info "루트 디렉토리에 UV 환경 파일 연결 중..."
+cd ..
+
+# 기존 파일들이 있다면 백업 후 제거
+for file in pyproject.toml .venv uv.lock; do
+    if [ -e "$file" ] && [ ! -L "$file" ]; then
+        print_warning "기존 $file 파일을 ${file}.backup으로 백업합니다."
+        mv "$file" "${file}.backup"
+    elif [ -L "$file" ]; then
+        print_info "기존 심링크 $file를 제거합니다."
+        rm "$file"
+    fi
+done
+
+# 심링크 생성
+ln -s setup/pyproject.toml . || {
+    print_error "pyproject.toml 심링크 생성 실패"
+    exit 1
+}
+
+ln -s setup/.venv . || {
+    print_error ".venv 심링크 생성 실패"
+    exit 1
+}
+
+if [ -f "setup/uv.lock" ]; then
+    ln -s setup/uv.lock . || {
+        print_warning "uv.lock 심링크 생성 실패"
+    }
+fi
+
+print_success "루트 디렉토리에 UV 환경 파일이 연결되었습니다!"
+
 echo ""
 print_success "환경 설정이 완료되었습니다!"
 echo ""
@@ -198,14 +232,15 @@ echo "=== 사용 방법 ==="
 echo "1. 패키지 추가: uv add <패키지명>"
 echo "2. 패키지 제거: uv remove <패키지명>"
 echo "3. 의존성 동기화: uv sync"
-echo "4. 스크립트 실행: uv run python your_script.py"
+echo "4. 스크립트 실행: uv run python main.py (루트에서 실행 가능!)"
 echo "5. Jupyter Lab 실행: uv run jupyter lab"
 echo "6. 새 노트북 생성 시 '$DISPLAY_NAME' 커널 선택"
 echo ""
 echo "=== 파일 정보 ==="
-echo "- pyproject.toml: 프로젝트 설정 및 의존성"
+echo "- pyproject.toml: 프로젝트 설정 및 의존성 (setup/에서 관리, 루트에는 심링크)"
 echo "- uv.lock: 정확한 버전 락 파일 (버전 관리에 포함 권장)"
 echo "- .venv/: 가상 환경 디렉토리 (버전 관리에서 제외)"
 echo ""
-print_info "전통적인 방식으로 활성화: source $VENV_PATH/bin/activate"
+print_info "이제 루트 디렉토리에서 'uv run python main.py' 실행이 가능합니다!"
+print_info "전통적인 방식으로 활성화: source .venv/bin/activate"
 print_info "UV 권장 방식: uv run <명령어>"
