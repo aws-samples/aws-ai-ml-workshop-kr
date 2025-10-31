@@ -13,9 +13,6 @@ from textwrap import dedent
 from botocore.config import Config
 from botocore.exceptions import ClientError
 
-# Langchain
-from langchain_core.callbacks.base import BaseCallbackHandler
-
 # 새 핸들러와 포맷터 설정
 logger = logging.getLogger(__name__)
 logger.propagate = False  # 상위 로거로 메시지 전파 중지
@@ -127,6 +124,7 @@ class bedrock_info():
         "Claude-V4-Sonnet-CRI": "us.anthropic.claude-sonnet-4-20250514-v1:0",
         "Claude-V4-1-Opus-CRI": "us.anthropic.claude-opus-4-1-20250805-v1:0",
         "Claude-V4-Opus-CRI": "us.anthropic.claude-opus-4-20250514-v1:0",
+        "Claude-V4-5-Sonnet-CRI": "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",
@@ -375,7 +373,3 @@ class bedrock_utils():
                 print("A client error occurred: %s", message)
         
         return output, message
-
-
-
-

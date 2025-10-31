@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Market Sales Performance Analysis Report</title>
+    <style>
+        body {
+            font-family: 'DejaVu Sans', 'Arial', sans-serif;
+            margin: 0.8cm 0.7cm;
+            line-height: 1.6;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+        
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2c5aa0;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #e1e8ed;
+        }
+        
+        h3 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+        
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e1e8ed;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .citation {
+            font-size: 0.9em;
+            color: #2196f3;
+            font-weight: bold;
+        }
+        
+        .status-positive {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .status-negative {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 25px 0;
+            page-break-inside: avoid;
+        }
+        
+        .image-container img {
+            width: 85%;
+            max-height: 400px;
+            object-fit: contain;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .image-caption {
+            font-size: 12px;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 8px;
+        }
+        
+        .executive-summary {
+            background: linear-gradient(135deg, #e3f2fd 0%, #e8f4f8 100%);
+            padding: 20px 25px;
+            border-left: 6px solid #2196f3;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            page-break-inside: avoid;
+        }
+        
+        .key-findings {
+            background: linear-gradient(135deg, #fff3e0 0%, #fff2e6 100%);
+            padding: 20px 25px;
+            border-left: 6px solid #ff9800;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .business-proposals {
+            background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%);
+            padding: 20px 25px;
+            border-left: 6px solid #9c27b0;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .detailed-analysis {
+            background-color: #fafbfc;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .metric-highlight {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%);
+            border-left: 5px solid #27ae60;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .data-insight {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+            border-left: 5px solid #e74c3c;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5cc 100%);
+            border-left: 5px solid #f39c12;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .references {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 12px;
+        }
+        
+        .references h2 {
+            font-size: 16px;
+            color: #495057;
+            margin-top: 0;
+        }
+        
+        .references p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .report-meta {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="report-header">
+        <h1>Moon Market Sales Performance Analysis Report</h1>
+        <div class="report-meta">
+            <p><strong>Analysis Period:</strong> January - June 2024 (H1 2024)</p>
+            <p><strong>Report Generated:</strong> October 30, 2025</p>
+            <p><strong>Data Source:</strong> Dat-fresh-food-claude.csv</p>
+        </div>
+    </div>
+
+    <div class="executive-summary">
+        <h2>Executive Summary</h2>
+        <p>
+            Moon Market achieved <strong>₹8,619,150</strong> in total revenue 
+            across <strong>1,220</strong> transactions during the first half of 2024. 
+            The business operates in the fresh food sector, serving customers primarily in the Seoul metropolitan area 
+            through a diverse portfolio of 1,135 products across three main categories: Fruits, Vegetables, and Dairy.
+        </p>
+        
+        <div class="metric-highlight">
+            Key Performance Metrics: Average Order Value of <strong>₹7,065</strong>, 
+            Total Quantity Sold of <strong>1,440</strong> units, 
+            and Promotion AOV Uplift of <strong>95.8%</strong>
+        </div>
+        
+        <p>
+            The analysis reveals strong revenue performance with significant promotional effectiveness, balanced customer 
+            demographics, and a well-diversified product portfolio. However, the business faces challenges including high 
+            promotion dependency (91.6% of orders), revenue volatility (40.9% variance between peak and low months), 
+            and geographic concentration in Seoul (76.6% of revenue).
+        </p>
+    </div>
+
+    <div class="key-findings">
+        <h2>Key Findings</h2>
+        
+        <h3>1. Revenue Performance and Temporal Trends</h3>
+        <p>
+            Moon Market's revenue performance shows strong overall results with notable volatility. The six-month period 
+            generated <strong>₹8,619,150</strong> in total revenue with an average 
+            order value of <strong>₹7,065</strong>. Monthly performance varied 
+            significantly, with May 2024 representing the peak at <strong>₹1,834,730</strong>, 
+            showing exceptional 28.9% growth over April.
+        </p>
+        
+        <div class="image-container">
+            <img src="./artifacts/monthly_revenue_trend.png" alt="Monthly Revenue Trend"/>
+            <div class="image-caption">Figure 1: Monthly Revenue Trend (January - June 2024)</div>
+        </div>
+        
+        <p>
+            The monthly revenue trend reveals a volatile pattern. January started at <strong>₹1,357,640</strong>, 
+            February dipped to <strong>₹1,301,850</strong>, March recovered 
+            to <strong>₹1,355,050</strong>, April grew to <strong>₹1,423,340</strong>, 
+            and May peaked dramatically. This 40.9% variance between peak and low months suggests strong seasonal factors.
+        </p>
+
+        <div class="image-container">
+            <img src="./artifacts/monthly_orders_trend.png" alt="Monthly Orders Trend"/>
+            <div class="image-caption">Figure 2: Monthly Order Volume Trend</div>
+        </div>
+
+        <h3>2. Category Performance</h3>
+        <p>
+            Fruits dominate the revenue mix at <strong>₹3,967,350</strong> (46.0% market share), 
+            followed by Dairy at <strong>₹2,262,100</strong> (26.2%), and Vegetables at 
+            <strong>₹2,389,700</strong> (27.7%).
+        </p>
+        
+        <div class="image-container">
+            <img src="./artifacts/category_revenue_pie.png" alt="Category Revenue Distribution"/>
+            <div class="image-caption">Figure 3: Revenue Distribution by Product Category</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/category_revenue_bar.png" alt="Category Revenue Comparison"/>
+            <div class="image-caption">Figure 4: Category Revenue Comparison with Order Volume</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/monthly_category_trend.png" alt="Monthly Category Performance"/>
+            <div class="image-caption">Figure 5: Monthly Performance Trends by Category</div>
+        </div>
+
+        <h3>3. Customer Segmentation</h3>
+        <p>
+            Male customers generate <strong>₹4,655,800</strong> (54.0% of revenue) compared 
+            to female customers at <strong>₹3,963,350</strong> (46.0%). The 30s age group 
+            dominates with <strong>₹2,989,690</strong> (34.7% of revenue), while the 50s 
+            age group shows premium characteristics with <strong>₹2,517,900</strong> (29.2%).
+            The 40s age group contributes <strong>₹1,803,290</strong> (20.9%), while the 
+            20s age group shows <strong>₹761,340</strong> (8.8%).
+        </p>
+        
+        <div class="image-container">
+            <img src="./artifacts/age_group_revenue.png" alt="Age Group Revenue Distribution"/>
+            <div class="image-caption">Figure 6: Revenue Distribution by Age Group</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/gender_category_heatmap.png" alt="Gender-Category Preference Matrix"/>
+            <div class="image-caption">Figure 7: Category Preferences by Gender</div>
+        </div>
+
+        <h3>4. Marketing Effectiveness</h3>
+        <p>
+            The promotion AOV uplift of <strong>95.8%</strong> demonstrates exceptional 
+            promotional effectiveness, but the 91.6% promotion usage rate indicates dangerous dependency on discounting strategies.
+        </p>
+        
+        <div class="image-container">
+            <img src="./artifacts/promotion_impact.png" alt="Promotional Impact Analysis"/>
+            <div class="image-caption">Figure 8: Promotional vs Non-Promotional Order Comparison</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/fulfilment_channel_revenue.png" alt="Fulfilment Channel Performance"/>
+            <div class="image-caption">Figure 9: Revenue Distribution by Fulfilment Channel</div>
+        </div>
+
+        <h3>5. Product Portfolio</h3>
+        <div class="image-container">
+            <img src="./artifacts/top_products_revenue.png" alt="Top Products by Revenue"/>
+            <div class="image-caption">Figure 10: Top 10 Products by Revenue Performance</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/size_revenue.png" alt="Product Size Performance"/>
+            <div class="image-caption">Figure 11: Revenue Performance by Product Size/Packaging</div>
+        </div>
+
+        <h3>6. Geographic Distribution</h3>
+        <div class="image-container">
+            <img src="./artifacts/top_states_revenue.png" alt="State-Level Revenue Distribution"/>
+            <div class="image-caption">Figure 12: Revenue Distribution by State/Province</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/top_cities_revenue.png" alt="Top Cities by Revenue"/>
+            <div class="image-caption">Figure 13: Top 10 Cities by Revenue Performance</div>
+        </div>
+
+        <div class="image-container">
+            <img src="./artifacts/kpi_dashboard.png" alt="KPI Dashboard"/>
+            <div class="image-caption">Figure 14: Comprehensive KPI Dashboard Overview</div>
+        </div>
+    </div>
+
+    <div class="business-proposals">
+        <h2>Strategic Recommendations</h2>
+        
+        <h3>Priority 1: Reduce Promotion Dependency</h3>
+        <p><strong>Objective:</strong> Reduce promotion usage from 91.6% to 70% while maintaining revenue growth.</p>
+        <ul>
+            <li>Launch tiered loyalty program with points-based rewards</li>
+            <li>Implement subscription boxes for recurring revenue</li>
+            <li>Test "everyday low price" positioning on core products</li>
+            <li>Develop quality-focused brand messaging</li>
+        </ul>
+
+        <h3>Priority 2: Stabilize Revenue Growth</h3>
+        <p><strong>Objective:</strong> Achieve consistent 10% month-over-month growth.</p>
+        <ul>
+            <li>Analyze May success factors for replication</li>
+            <li>Develop 12-month promotional calendar</li>
+            <li>Implement customer retention campaigns</li>
+            <li>Create seasonal product rotations</li>
+        </ul>
+
+        <h3>Priority 3: Geographic Expansion</h3>
+        <p><strong>Objective:</strong> Reduce Seoul dependency from 76.6% to 60%.</p>
+        <ul>
+            <li>Expand to 5 additional Gyeonggi cities</li>
+            <li>Enter Incheon market (3.0M population)</li>
+            <li>Launch in Busan and Daegu markets</li>
+            <li>Establish regional distribution centers</li>
+        </ul>
+
+        <h3>Priority 4: Increase Basket Size</h3>
+        <p><strong>Objective:</strong> Increase items per order from 1.79 to 2.5+.</p>
+        <ul>
+            <li>Implement "Frequently Bought Together" recommendations</li>
+            <li>Create pre-made bundles and meal kits</li>
+            <li>Offer free delivery threshold at ₹10,000</li>
+            <li>Launch subscription boxes with multi-category selections</li>
+        </ul>
+
+        <h3>Priority 5: Portfolio Optimization</h3>
+        <p><strong>Objective:</strong> Improve top 20 product concentration from 5.5% to 15%.</p>
+        <ul>
+            <li>Conduct comprehensive ABC analysis of all 1,135 SKUs</li>
+            <li>Discontinue bottom 200-300 SKUs</li>
+            <li>Standardize sizes to 5-7 core options</li>
+            <li>Focus marketing on top 100 products</li>
+        </ul>
+    </div>
+
+    <div class="executive-summary">
+        <h2>Conclusion</h2>
+        <p>
+            Moon Market has established a solid foundation with <strong>₹8,619,150</strong> 
+            in H1 2024 revenue. The business shows particular strength in promotional effectiveness 
+            (<strong>95.8%</strong> AOV uplift) and customer segmentation.
+        </p>
+        
+        <p>
+            With disciplined execution of the five strategic priorities, Moon Market can achieve ₹25M in annual revenue 
+            within 12-18 months, reduce critical dependencies, and build a sustainable, scalable business model.
+        </p>
+        
+        <div class="metric-highlight">
+            <strong>Recommended Immediate Focus:</strong> Launch loyalty program, analyze May success factors, implement 
+            basket-building features, begin Gyeonggi expansion, and start portfolio optimization—all within the next 30 days.
+        </div>
+    </div>
+
+
+</body>
+</html>

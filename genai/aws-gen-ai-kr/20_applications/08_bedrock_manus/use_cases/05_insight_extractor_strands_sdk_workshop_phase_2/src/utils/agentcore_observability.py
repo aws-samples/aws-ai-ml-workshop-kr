@@ -38,7 +38,7 @@ def set_session_context(session_id, user_type=None, experiment_id=None):
 def add_span_event(span, event_name: str, attributes: dict = None):
     """
     Add an event to the specified span.
-    
+
     Args:
         span: The OpenTelemetry span to add the event to
         event_name: Name of the event

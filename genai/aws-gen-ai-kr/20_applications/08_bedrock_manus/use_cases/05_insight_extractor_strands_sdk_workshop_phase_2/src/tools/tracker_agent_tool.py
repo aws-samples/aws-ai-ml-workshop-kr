@@ -82,7 +82,7 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
                 "FULL_PLAN": full_plan
             }
         ),
-        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(True, None),  # reasoning agent uses prompt caching
         tools=[],  # tracker doesn't need additional tools

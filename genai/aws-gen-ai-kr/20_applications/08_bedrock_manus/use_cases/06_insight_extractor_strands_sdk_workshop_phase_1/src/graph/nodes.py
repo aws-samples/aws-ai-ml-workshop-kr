@@ -1,5 +1,3 @@
-
-import os
 import logging
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
@@ -126,8 +124,10 @@ async def planner_node(task=None, **kwargs):
         streaming=True,
     )
 
-    full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
-    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    #full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
+    messages = shared_state["messages"]
+    #message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
+    message = messages[-1]["content"][-1]["text"]
 
     # Process streaming response and collect text in one pass
     full_text = ""

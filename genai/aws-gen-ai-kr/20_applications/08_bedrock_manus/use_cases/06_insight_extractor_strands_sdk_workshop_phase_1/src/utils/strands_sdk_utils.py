@@ -15,7 +15,8 @@ from strands.agent.agent_result import AgentResult
 from strands.types.content import ContentBlock, Message
 from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
 
-from strands.agent.conversation_manager import SlidingWindowConversationManager
+from strands.agent.conversation_manager import SummarizingConversationManager
+from src.prompts.template import apply_prompt_template
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -58,10 +59,11 @@ class strands_utils():
         cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
 
-        if llm_type in ["claude-sonnet-3-7", "claude-sonnet-4"]:
+        if llm_type in ["claude-sonnet-3-7", "claude-sonnet-4", "claude-sonnet-4-5"]:
             
             if llm_type == "claude-sonnet-3-7": model_name = "Claude-V3-7-Sonnet-CRI"
             elif llm_type == "claude-sonnet-4": model_name = "Claude-V4-Sonnet-CRI"
+            elif llm_type == "claude-sonnet-4-5": model_name = "Claude-V4-5-Sonnet-CRI"
 
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
@@ -115,8 +117,9 @@ class strands_utils():
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
         
-        context_overflow_window_size = kwargs.get("context_overflow_window_size", 15)
-        context_overflow_should_truncate_results = kwargs.get("context_overflow_should_truncate_results", False)
+        # Context management parameters for SummarizingConversationManager
+        context_overflow_summary_ratio = kwargs.get("context_overflow_summary_ratio", 0.5)  # Summarize 50% of older messages
+        context_overflow_preserve_recent_messages = kwargs.get("context_overflow_preserve_recent_messages", 10)  # Keep recent 10 messages
 
         prompt_cache, cache_type = prompt_cache_info
         if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
@@ -129,9 +132,10 @@ class strands_utils():
             model=llm,
             system_prompt=system_prompts,
             tools=tools,
-            conversation_manager=ConversationEditor(
-                window_size=context_overflow_window_size,
-                should_truncate_results=context_overflow_should_truncate_results
+            conversation_manager=SummarizingConversationManager(
+                summary_ratio=context_overflow_summary_ratio,
+                preserve_recent_messages=context_overflow_preserve_recent_messages,
+                summarization_system_prompt=apply_prompt_template(prompt_name="summarization", prompt_context={})
             ),
             callback_handler=None # async iterator로 대체 하기 때문에 None 설정
         )
@@ -447,38 +451,3 @@ class FunctionNode(MultiAgentBase):
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
         )
-
-
-class ConversationEditor(SlidingWindowConversationManager):
-
-    """
-    Manager that only operates on overflow.
-
-        Args:
-            window_size (int, optional): Maximum number of messages to retain when
-                context overflow occurs. Defaults to 20.
-            should_truncate_results (bool, optional): If True, truncate large tool
-                results with a placeholder message when overflow happens. If False,
-                preserve full tool results but remove more historical messages.
-                Defaults to True.
-    """
-
-    def __init__(self, window_size=7, should_truncate_results=False):
-        super().__init__(
-            window_size=window_size,
-            should_truncate_results=should_truncate_results
-        )
-
-    def apply_management(self, agent, **kwargs):
-        """After each event loop - do nothing"""
-        print("None")
-        pass
-
-    def reduce_context(self, agent, e=None, **kwargs):
-        """Only on overflow - use parent class's reduce_context"""
-        print(f"⚠️ Overflow occurred! Cleaning up {len(agent.messages)} messages...")
-
-        # 부모 클래스의 reduce_context는 should_truncate_results를 자동으로 처리
-        super().reduce_context(agent, e, **kwargs)
-
-        print(f"✅ Cleanup complete: {len(agent.messages)} messages remaining")

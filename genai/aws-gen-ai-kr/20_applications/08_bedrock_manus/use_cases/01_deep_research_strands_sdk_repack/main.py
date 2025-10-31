@@ -101,8 +101,9 @@ if __name__ == "__main__":
     else:
         # Full comprehensive analysis query (main version):
         payload = {
-            "user_query": "AWS Cloud Market Analysis: Growth Prospects in Korea (2025-2030) 조사해줘. 결과는 pdf로 만들어줘. research와 coder는 정말 간단하게 1번씩만 호출 하고 조사도 아주 간단하게만 해. reporter 에이전트 테스트 중이거든."
+            #"user_query": "AWS Cloud Market Analysis: Growth Prospects in Korea (2025-2030) 조사해줘. 결과는 pdf로 만들어줘. research와 coder는 정말 간단하게 1번씩만 호출 하고 조사도 아주 간단하게만 해. reporter 에이전트 테스트 중이거든."
             #"user_query": "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다. planning 할때 coder 분석항목은 1-2개로 최대한 간단하게 하고 Validator는 제외해줘. 왜냐하면 리포터 에이전트 테스트 중이거든. Validator가 있으면 시간을 많이 먹어 "
+            "user_query": "You’re a researcher analyzing new and emerging technology trends. Your goal is to produce Part 1 of a set of reports for a CIO/CTO of a specific company to track and prioritize emerging technologies. Part 1 focuses on a broad landscape analysis that can help them understand all emerging technologies they should keep track of, and use the content to engage other executives"
         }
 
     #########################

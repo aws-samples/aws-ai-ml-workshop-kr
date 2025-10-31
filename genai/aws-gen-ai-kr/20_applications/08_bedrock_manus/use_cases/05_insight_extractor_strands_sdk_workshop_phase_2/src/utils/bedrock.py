@@ -127,6 +127,7 @@ class bedrock_info():
         "Claude-V4-Sonnet-CRI": "us.anthropic.claude-sonnet-4-20250514-v1:0",
         "Claude-V4-1-Opus-CRI": "us.anthropic.claude-opus-4-1-20250805-v1:0",
         "Claude-V4-Opus-CRI": "us.anthropic.claude-opus-4-20250514-v1:0",
+        "Claude-V4-5-Sonnet-CRI": "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
         "Jurassic-2-Mid": "ai21.j2-mid-v1",
         "Jurassic-2-Ultra": "ai21.j2-ultra-v1",
         "Command": "cohere.command-text-v14",
