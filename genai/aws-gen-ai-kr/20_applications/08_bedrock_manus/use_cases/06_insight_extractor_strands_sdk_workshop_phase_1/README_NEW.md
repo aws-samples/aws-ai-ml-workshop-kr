@@ -26,31 +26,37 @@
 
 ### Key Highlights
 
-- **🔧 Full Customization**: Deploy open-source code in your AWS VPC and freely modify prompts, agents, and workflows for your specific needs
-- **🤖 Hierarchical Multi-Agent System**: Coordinator, Planner, Supervisor orchestrate specialized agents (Coder, Validator, Reporter, Tracker) for systematic task execution
-- **📊 Verifiable Insights**: Generated reports include calculation methods and original data sources for analysis reliability verification
-- **🔗 Extensible Integration**: AgentCore Gateway enables connected analysis by combining with external data sources (e.g., YouTube API via MCP)
-- **🚀 Beyond Reporting**: Extend the codebase to other agent use cases—customer service, shopping assistance, log analysis, and more
-- **🔒 Enterprise Security**: Entire runtime operates within AWS Customer VPC, isolating data for sensitive workloads
-- **⚡ Rapid Cycle**: Dramatically reduce waterfall sequential work structure through multi-agent collaboration
+- **🔧 Full Customization** - Deploy and modify in your AWS VPC
+- **🤖 Multi-Agent System** - Hierarchical workflow with specialized agents
+- **📊 Verifiable Insights** - Reports with calculation methods and sources
+- **🔗 Extensible Integration** - Connect external data via AgentCore Gateway
+- **🚀 Beyond Reporting** - Extend to any agent use case
+- **🔒 Enterprise Security** - Complete VPC isolation for sensitive data
+- **⚡ Rapid Execution** - Transform waterfall to parallel workflows
 
 ### What is Deep Insight?
 
-Deep Insight is a **customizable reporting agent platform** built on Strands Agent and AgentCore that enables enterprises to deploy, modify, and extend multi-agent systems within their own AWS environment. Unlike managed services that prioritize speed and simplicity, Deep Insight empowers organizations with unique workflows and stringent requirements to build and evolve their own agent infrastructure while maintaining full ownership of data, compute resources, and competitive differentiation.
+Deep Insight is a **customizable reporting agent platform** that gives you:
+
+- **Full Control**: Deploy and modify multi-agent systems in your AWS environment
+- **Built on Best Practices**: Leverages Strands Agent and AgentCore frameworks
+- **Complete Ownership**: Your data, compute, and agent infrastructure stay yours
+- **For Unique Needs**: Perfect when managed services can't meet your requirements
 
 ### Why Deep Insight?
 
-**The Problem**: Traditional reporting processes follow waterfall methodology, requiring significant time and manpower from topic selection to final report creation. Enterprises face unique challenges:
-- Unique workflows requiring deep modification of agent behavior and logic
-- Regulatory or security mandates requiring data/compute to remain within AWS environment
-- Domain-specific requirements beyond standard analytical use cases
-- Strategic need to own and evolve agent infrastructure as competitive differentiator
+**The Problem**
+Traditional reporting takes days/weeks through waterfall processes. Enterprises need:
+- Deep customization of agent workflows and logic
+- Data/compute isolation within their AWS environment
+- Agent systems as competitive differentiators
 
-**The Solution**: Deep Insight transforms sequential workflows into multi-agent collaboration:
-1. Describe your analysis needs in natural language
-2. Multi-agents automatically perform data exploration to advanced statistical analysis
-3. Generate professional reports with charts, calculations, and data sources for verification
-4. Deploy and customize within your AWS VPC with full control over prompts, agents, and workflows
+**The Solution**
+Transform sequential work into parallel multi-agent execution:
+1. **Describe** your analysis needs in natural language
+2. **Automate** data exploration through statistical analysis
+3. **Generate** professional reports with charts and verification data
+4. **Customize** everything—prompts, agents, workflows—in your VPC
 
 ### Architecture at a Glance
 
