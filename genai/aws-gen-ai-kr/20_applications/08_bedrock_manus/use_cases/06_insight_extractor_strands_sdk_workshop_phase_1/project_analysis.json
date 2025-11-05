@@ -1,0 +1,113 @@
+{
+  "project_root": "/home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1",
+  "project_name": "06_insight_extractor_strands_sdk_workshop_phase_1",
+  "entry_points": [
+    {
+      "file": "main.py",
+      "type": "main.py",
+      "absolute_path": "/home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1/main.py"
+    },
+    {
+      "file": "app/app.py",
+      "type": "app.py",
+      "absolute_path": "/home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1/app/app.py"
+    },
+    {
+      "file": "setup/aws-mcp-sandbox/mcp-server/server.py",
+      "type": "server.py",
+      "absolute_path": "/home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1/setup/aws-mcp-sandbox/mcp-server/server.py"
+    }
+  ],
+  "dependencies": {
+    "pyproject.toml": [
+      "matplotlib",
+      "termcolor",
+      "jupyter",
+      "langchain",
+      "requests-toolbelt",
+      "markdown",
+      "streamlit",
+      "ipykernel",
+      "pandas",
+      "mcp",
+      "koreanize-matplotlib",
+      "boto3",
+      "numpy",
+      "scikit-learn",
+      "lovelyplots",
+      "awscli",
+      "strands-agents-tools",
+      "fpdf2",
+      "plotly",
+      "strands-agents",
+      "sagemaker",
+      "pillow",
+      "matplotlib-inline",
+      "seaborn",
+      "python-dotenv",
+      "bedrock-manus-agentcore",
+      "weasyprint",
+      "reportlab"
+    ]
+  },
+  "frameworks": [
+    "LangChain",
+    "Pandas",
+    "Scikit-learn",
+    "Boto3",
+    "Strands SDK",
+    "NumPy",
+    "Jupyter",
+    "Streamlit"
+  ],
+  "directory_structure": {
+    "src": {
+      "exists": true,
+      "file_count": 1,
+      "dir_count": 6
+    },
+    "app": {
+      "exists": true,
+      "file_count": 1,
+      "dir_count": 0
+    },
+    "setup": {
+      "exists": true,
+      "file_count": 6,
+      "dir_count": 2
+    },
+    "data": {
+      "exists": true,
+      "file_count": 1,
+      "dir_count": 0
+    },
+    "artifacts": {
+      "exists": true,
+      "file_count": 14,
+      "dir_count": 0
+    }
+  },
+  "documentation_files": [
+    {
+      "file": "README.md",
+      "size_bytes": 7819
+    },
+    {
+      "file": "CLAUDE.md",
+      "size_bytes": 9946
+    },
+    {
+      "file": "CONTRIBUTING.md",
+      "size_bytes": 2603
+    }
+  ],
+  "configuration_files": [
+    ".env.example"
+  ],
+  "test_directories": [],
+  "license_file": "LICENSE",
+  "readme_exists": true,
+  "python_version": null,
+  "license_type": "MIT",
+  "existing_readme": "README.md"
+}

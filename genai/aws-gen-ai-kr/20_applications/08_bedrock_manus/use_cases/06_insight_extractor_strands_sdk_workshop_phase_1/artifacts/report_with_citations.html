@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Moon Market 판매 현황 보고서</title>
+<style>
+@page { margin: 0.8cm 0.7cm; size: A4; }
+body { font-family: "NanumGothic", "Malgun Gothic", "DejaVu Sans", sans-serif; margin: 0; padding: 0; line-height: 1.6; font-size: 14px; color: #2c3e50; }
+h1 { font-size: 24px; font-weight: bold; text-align: center; color: #2c5aa0; margin: 20px 0; padding-bottom: 10px; border-bottom: 3px solid #2c5aa0; }
+h2 { font-size: 18px; font-weight: bold; color: #34495e; margin-top: 25px; margin-bottom: 15px; padding-left: 10px; border-left: 5px solid #3498db; }
+h3 { font-size: 16px; font-weight: bold; color: #2c3e50; margin-top: 20px; margin-bottom: 10px; }
+p { margin: 10px 0; text-align: justify; }
+ul, ol { margin: 10px 0; padding-left: 30px; }
+li { margin: 8px 0; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+th { background-color: #3498db; color: white; padding: 12px; text-align: left; font-weight: bold; font-size: 14px; }
+td { padding: 10px 12px; border-bottom: 1px solid #e1e8ed; }
+tr:nth-child(even) { background-color: #f8f9fa; }
+.citation { font-size: 0.9em; color: #2196f3; font-weight: bold; vertical-align: super; }
+.status-positive { color: #27ae60; font-weight: bold; }
+.status-negative { color: #e74c3c; font-weight: bold; }
+.image-container { text-align: center; margin: 25px 0; page-break-inside: avoid; }
+.image-container img { width: 85%; max-height: 380px; object-fit: contain; border: 1px solid #e1e8ed; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.image-caption { font-size: 12px; color: #7f8c8d; font-style: italic; margin-top: 8px; }
+.executive-summary { background: linear-gradient(135deg, #e3f2fd 0%, #e8f4f8 100%); padding: 20px 25px; border-left: 6px solid #2196f3; margin: 20px 0; border-radius: 0 8px 8px 0; page-break-inside: avoid; }
+.key-findings { background: linear-gradient(135deg, #fff3e0 0%, #fff2e6 100%); padding: 20px 25px; border-left: 6px solid #ff9800; margin: 20px 0; border-radius: 0 8px 8px 0; }
+.business-proposals { background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%); padding: 20px 25px; border-left: 6px solid #9c27b0; margin: 20px 0; border-radius: 0 8px 8px 0; }
+.detailed-analysis { background-color: #fafbfc; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; margin: 20px 0; }
+.metric-highlight { background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%); border-left: 5px solid #27ae60; padding: 15px 20px; margin: 15px 0; border-radius: 0 8px 8px 0; font-weight: bold; color: #27ae60; }
+.data-insight { background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%); border-left: 5px solid #e74c3c; padding: 15px 20px; margin: 15px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #c0392b; }
+.references { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 30px 0; font-size: 12px; }
+.references h2 { font-size: 16px; color: #495057; border-left: 5px solid #6c757d; }
+.references p { margin: 8px 0; line-height: 1.5; }
+.report-header { text-align: center; margin-bottom: 30px; }
+.report-date { text-align: center; color: #7f8c8d; font-size: 13px; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+<div class="report-header">
+<h1>Moon Market 판매 현황 분석 보고서</h1>
+<div class="report-date">
+분석 기간: 2024년 1월 1일 ~ 2024년 6월 30일<br>

@@ -111,7 +111,7 @@ class strands_utils():
     def get_agent(**kwargs):
 
         agent_name, system_prompts = kwargs["agent_name"], kwargs["system_prompts"]
-        agent_type = kwargs.get("agent_type", "claude-sonnet-3-7")
+        agent_type = kwargs.get("agent_type", "claude-sonnet-4-5")
         enable_reasoning = kwargs.get("enable_reasoning", False)
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
         tools = kwargs.get("tools", None)
