@@ -67,7 +67,10 @@ Create README sections in this recommended order (funnel approach):
 
 1. **Header Section**
    - Project title
-   - Tagline (1 sentence description)
+   - Subtitle (using H2 heading with emoji for visual impact)
+     - Format: `<h2 align="center">🤖 Main Tagline</h2>`
+     - Keep it prominent and clear
+   - Supporting text (built on, powered by, etc.)
    - Badges (optional: build status, license)
    - Language switcher (if multilingual)
 
@@ -81,6 +84,11 @@ Create README sections in this recommended order (funnel approach):
 4. **Overview / Introduction**
    - 2-3 paragraphs explaining what the project does
    - Why it exists (problem it solves)
+   - **Key Highlights** (place early for quick value comprehension)
+     - 5-7 bullet points with emoji icons for visual scanning
+     - Format: `- **🔧 Feature Name**: Brief description`
+     - Focus on unique value propositions and differentiators
+     - Should appear BEFORE detailed "What is" and "Why" sections
    - Key benefits
 
 5. **Features**
@@ -296,11 +304,13 @@ Key elements:
 
 ### Example Reference
 
-See the current project's README.md as a reference example:
-`/home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1/README.md`
+See the current project's README_NEW.md as a reference example:
+`/home/ubuntu/projects/aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1/README_NEW.md`
 
 This README demonstrates:
-- Clear funnel structure (overview → quick start → details)
+- **Prominent subtitle**: H2 heading with emoji for visual impact
+- **Key Highlights positioned early**: Before detailed explanations for quick value comprehension
+- Clear funnel structure (overview → key highlights → quick start → details)
 - Multiple installation options
 - Visual elements (architecture diagram)
 - User-friendly language

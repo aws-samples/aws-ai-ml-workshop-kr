@@ -12,9 +12,9 @@
     </a>
 </p>
 
-<p align="center">
-    <strong>Customizable Reporting Agent Platform built on AgentCore and Strands Agent</strong>
-</p>
+<h2 align="center">
+    🤖 Customizable Reporting Agent Platform built on AgentCore and Strands Agent
+</h2>
 
 ---
 
@@ -23,6 +23,16 @@
 > **When Customization and Control Matter Most**
 >
 > Not all enterprises can rely on managed services. When you need deep workflow customization, regulatory compliance within your AWS VPC, or domain-specific agent behavior that goes beyond standard use cases, **Deep Insight** provides the open, customizable framework you need to build exactly what your unique situation demands.
+
+### Key Highlights
+
+- **🔧 Full Customization**: Deploy open-source code in your AWS VPC and freely modify prompts, agents, and workflows for your specific needs
+- **🤖 Hierarchical Multi-Agent System**: Coordinator, Planner, Supervisor orchestrate specialized agents (Coder, Validator, Reporter, Tracker) for systematic task execution
+- **📊 Verifiable Insights**: Generated reports include calculation methods and original data sources for analysis reliability verification
+- **🔗 Extensible Integration**: AgentCore Gateway enables connected analysis by combining with external data sources (e.g., YouTube API via MCP)
+- **🚀 Beyond Reporting**: Extend the codebase to other agent use cases—customer service, shopping assistance, log analysis, and more
+- **🔒 Enterprise Security**: Entire runtime operates within AWS Customer VPC, isolating data for sensitive workloads
+- **⚡ Rapid Cycle**: Dramatically reduce waterfall sequential work structure through multi-agent collaboration
 
 ### What is Deep Insight?
 
@@ -41,16 +51,6 @@ Deep Insight is a **customizable reporting agent platform** built on Strands Age
 2. Multi-agents automatically perform data exploration to advanced statistical analysis
 3. Generate professional reports with charts, calculations, and data sources for verification
 4. Deploy and customize within your AWS VPC with full control over prompts, agents, and workflows
-
-### Key Highlights
-
-- **🔧 Full Customization**: Deploy open-source code in your AWS VPC and freely modify prompts, agents, and workflows for your specific needs
-- **🤖 Hierarchical Multi-Agent System**: Coordinator, Planner, Supervisor orchestrate specialized agents (Coder, Validator, Reporter, Tracker) for systematic task execution
-- **📊 Verifiable Insights**: Generated reports include calculation methods and original data sources for analysis reliability verification
-- **🔗 Extensible Integration**: AgentCore Gateway enables connected analysis by combining with external data sources (e.g., YouTube API via MCP)
-- **🚀 Beyond Reporting**: Extend the codebase to other agent use cases—customer service, shopping assistance, log analysis, and more
-- **🔒 Enterprise Security**: Entire runtime operates within AWS Customer VPC, isolating data for sensitive workloads
-- **⚡ Rapid Cycle**: Dramatically reduce waterfall sequential work structure through multi-agent collaboration
 
 ### Architecture at a Glance
 
