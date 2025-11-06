@@ -22,7 +22,7 @@
 
 - **[2025/01]** Released Deep Insight framework built on Strands SDK and Amazon Bedrock with hierarchical multi-agent architecture
 - **[2025/01]** Added support for Claude Sonnet 4.5 with enhanced reasoning capabilities
-- **[2025/01]** Integrated AgentCore Gateway for extensible MCP tool integration
+- **[2025/01]** Integrated MCP protocol for extensible tool integration
 
 ## Feature Overview
 
@@ -31,7 +31,7 @@ Deep Insight transforms weeks of manual reporting work into minutes using hierar
 - **🔧 Full Customization**: Deploy and modify multi-agent workflows in your AWS VPC with complete code access
 - **🤖 Multi-Agent System**: Hierarchical workflow with Coordinator, Planner, Supervisor, and specialized tool agents
 - **📊 Verifiable Insights**: Reports with calculation methods, sources, and transparent reasoning processes
-- **🔗 Extensible Integration**: Connect external data sources via AgentCore Gateway and MCP protocol
+- **🔗 Extensible Integration**: Connect external data sources via MCP protocol
 - **🚀 Beyond Reporting**: Extend framework to any agent use case—shopping, support, log analysis, and more
 - **🔒 Enterprise Security**: Complete VPC isolation for sensitive data with single-tenant deployment
 - **⚡ Rapid Execution**: Transform waterfall sequential workflows into parallel multi-agent collaboration
@@ -165,31 +165,6 @@ cp .env.example .env
 │ Analysis│ │ Generate│ │ State   │ │ Verify   │
 └─────────┘ └─────────┘ └─────────┘ └──────────┘
 ```
-
-### Key Components
-
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| **Graph Builder** | `src/graph/builder.py` | StreamableGraph construction and workflow orchestration |
-| **Agent Nodes** | `src/graph/nodes.py` | Coordinator, Planner, Supervisor implementations |
-| **Strands Utils** | `src/utils/strands_sdk_utils.py` | Agent creation, model selection, streaming processing |
-| **Event Queue** | `src/utils/event_queue.py` | Thread-safe event streaming infrastructure |
-| **Tool Agents** | `src/tools/*_agent_tool.py` | Specialized agents wrapped as tools |
-| **Prompts** | `src/prompts/*.md` | System prompts for each agent |
-
-### Global State Management
-
-The framework uses a shared state system (`_global_node_states` in `src/graph/nodes.py`):
-
-| State Field | Purpose |
-|-------------|---------|
-| `messages` | Current conversation messages for each agent |
-| `request` | User's original request |
-| `full_plan` | Planner's execution plan |
-| `clues` | Accumulated context from agent executions |
-| `history` | List of agent interactions with format `{"agent": "name", "message": "text"}` |
-
-This enables stateful communication across the entire workflow.
 
 ## When to Choose Deep Insight
 
