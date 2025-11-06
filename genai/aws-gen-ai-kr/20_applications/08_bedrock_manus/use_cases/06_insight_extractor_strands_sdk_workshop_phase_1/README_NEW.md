@@ -24,7 +24,7 @@
 
 ## *Latest News* 🔥
 
-- **[2025/10]** Deep Insight 용 [AWS workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/ee17ba6e-edc4-4921-aaf6-ca472841c49b/ko-KR) 릴리즈 (한국어)
+- **[2025/10]** Released [AWS workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/ee17ba6e-edc4-4921-aaf6-ca472841c49b/ko-KR) for Deep Insight (Korean)
 - **[2025/10]** Added support for Claude Sonnet 4.5 with enhanced reasoning capabilities
 - **[2025/09]** Released Deep Insight framework built on Strands SDK and Amazon Bedrock with hierarchical multi-agent architecture
 
