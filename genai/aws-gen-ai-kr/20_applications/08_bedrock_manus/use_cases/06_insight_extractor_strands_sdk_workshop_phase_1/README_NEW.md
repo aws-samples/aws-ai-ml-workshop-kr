@@ -60,10 +60,8 @@ uv run python main.py --user_query "너가 작성할 것은 moon market 의 판�
 
 ### Sample Outputs
 
-- 📄 [English Report (6 pages)](./assets/report_en.pdf)
-- 📄 [Korean Report (10 pages)](./assets/report.pdf)
-
-Results are automatically saved to `./artifacts/` directory.
+- 📄 [English Report](./assets/report_en.pdf)
+- 📄 [Korean Report](./assets/report.pdf)
 
 ## Installation
 
