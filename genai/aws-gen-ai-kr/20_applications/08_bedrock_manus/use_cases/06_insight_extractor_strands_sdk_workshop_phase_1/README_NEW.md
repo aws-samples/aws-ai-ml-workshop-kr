@@ -132,17 +132,7 @@ python setup/test_korean_font.py
 
 ### System Overview
 
-```
-User Query + Data File → Coordinator → Planner → Supervisor
-                                                     ├─→ Coder (Data Analysis & Execution)
-                                                     ├─→ Validator (Quality & Verification)
-                                                     ├─→ Reporter (Report Generation)
-                                                     └─→ Tracker (Process Transparency)
-                                                            ↓
-                                                   AgentCore Gateway (MCP Tools)
-                                                            ↓
-                                                   PDF Report + Verification Files
-```
+![Deep Insight Architecture](./assets/architecture.png)
 
 ### Three-Tier Agent Hierarchy
 
