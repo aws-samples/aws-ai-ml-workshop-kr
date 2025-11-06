@@ -1,9 +1,9 @@
 <div align="center">
   <div>
-    <img src="./assets/deepinsight_logo.png" alt="Deep Insight" width="55px" height="105px">
+    <img src="./assets/deepinsight_logo.png" alt="Deep Insight" width="110px" height="210px">
   </div>
 
-  <h1>Deep Insight</h1>
+  <h1 style="margin-top: 10px;">Deep Insight</h1>
 
   <h2>A model-driven approach to building customizable reporting agents with Amazon Bedrock</h2>
 
