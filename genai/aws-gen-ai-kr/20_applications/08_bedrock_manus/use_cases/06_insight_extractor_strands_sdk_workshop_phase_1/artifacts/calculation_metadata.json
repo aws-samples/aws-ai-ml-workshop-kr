@@ -1,0 +1,60 @@
+{
+  "calculations": [
+    {
+      "id": "calc_004",
+      "value": "8619150",
+      "description": "Total sales across all categories",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-11-06 08:11:05",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_005",
+      "value": "3967350",
+      "description": "Sales for top category (과일)",
+      "formula": "SUM(Amount) WHERE Category = '{category_sales.iloc[0]['Category']}'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-11-06 08:11:05",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_006",
+      "value": 46.029480865282544,
+      "description": "Percentage of total sales for top category (과일)",
+      "formula": "(Category Sales / Total Sales) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "high",
+      "timestamp": "2025-11-06 08:11:05",
+      "verification_notes": ""
+    },
+    {
+      "id": "calc_007",
+      "value": 9582.971014492754,
+      "description": "Average order value for top category (과일)",
+      "formula": "SUM(Amount) / COUNT(Orders) WHERE Category = '{category_avg_order.iloc[0]['Category']}'",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount",
+        "Category"
+      ],
+      "importance": "medium",
+      "timestamp": "2025-11-06 08:11:06",
+      "verification_notes": ""
+    }
+  ]
+}
