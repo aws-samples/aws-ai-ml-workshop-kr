@@ -18,6 +18,12 @@
   </p>
 </div>
 
+## *Latest News* 🔥
+
+- **[2025/01]** Released Deep Insight framework built on Strands SDK and Amazon Bedrock with hierarchical multi-agent architecture
+- **[2025/01]** Added support for Claude Sonnet 4.5 with enhanced reasoning capabilities
+- **[2025/01]** Integrated AgentCore Gateway for extensible MCP tool integration
+
 ## Feature Overview
 
 Deep Insight transforms weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
