@@ -202,7 +202,7 @@ We believe in the power of open collaboration. Deep Insight takes the excellent 
 
 ## Contributors
 
-- **Dongjin Jang, Ph.D.** - AWS AI/ML Specialist Solutions Architect
+- **Dongjin Jang, Ph.D.** - AWS Sr. AI/ML Specialist Solutions Architect
   - [Email](mailto:dongjinj@amazon.com) | [LinkedIn](https://www.linkedin.com/in/dongjin-jang-kr/) | [GitHub](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)
 
 ---
