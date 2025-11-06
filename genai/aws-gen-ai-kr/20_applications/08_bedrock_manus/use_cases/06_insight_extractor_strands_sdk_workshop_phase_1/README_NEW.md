@@ -139,7 +139,7 @@ python setup/test_korean_font.py
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                     User Input                          │
-│              (Natural Language Query)                    │
+│              (Natural Language Query)                   │
 └──────────────────────┬──────────────────────────────────┘
                        │
                        ▼
@@ -167,17 +167,17 @@ python setup/test_korean_font.py
 │  • Monitors progress and coordinates workflow           │
 │  • Aggregates results from tool agents                  │
 │  Model: Claude Sonnet 4 (prompt caching enabled)        │
-└──────────┬──────────┬──────────┬──────────┬─────────────┘
+└──────────┬──────────┬──────────┬────────────────────────┘
            │          │          │          │
-     ┌─────┘    ┌─────┘    ┌─────┘    └─────┐
-     ▼          ▼          ▼                 ▼
-┌─────────┐ ┌─────────┐ ┌─────────┐ ┌──────────────┐
-│  CODER  │ │REPORTER │ │TRACKER  │ │  VALIDATOR   │
-│         │ │         │ │         │ │              │
-│ Python  │ │ Report  │ │Progress │ │ Quality      │
-│ Bash    │ │ Format  │ │Monitor  │ │ Validation   │
-│ Analysis│ │ Generate│ │ State   │ │ Verification │
-└─────────┘ └─────────┘ └─────────┘ └──────────────┘
+     ┌─────┘    ┌─────┘    ┌─────┘    ┌─────┘
+     ▼          ▼          ▼          ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐
+│  CODER  │ │REPORTER │ │TRACKER  │ │VALIDATOR │
+│         │ │         │ │         │ │          │
+│ Python  │ │ Report  │ │Progress │ │ Quality  │
+│ Bash    │ │ Format  │ │Monitor  │ │ Validate │
+│ Analysis│ │ Generate│ │ State   │ │ Verify   │
+└─────────┘ └─────────┘ └─────────┘ └──────────┘
 ```
 
 ### Key Components
