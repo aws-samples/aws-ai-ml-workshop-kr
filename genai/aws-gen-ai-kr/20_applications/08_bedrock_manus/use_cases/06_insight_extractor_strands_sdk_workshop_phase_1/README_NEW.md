@@ -46,25 +46,9 @@ cd ..
 uv run python main.py
 ```
 
-**Expected output:**
-```
-✓ Environment initialized
-✓ Agents loaded: Coordinator, Planner, Supervisor
-✓ Starting workflow...
-[Real-time streaming output will appear here]
-```
-
-> **Note**: Requires Python 3.12+, AWS credentials configured, and Claude model access enabled in Amazon Bedrock (us-west-2 region recommended).
+> **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
 
 ## Installation
-
-Ensure you have Python 3.12+ installed, then:
-
-```bash
-# Clone the repository
-git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
-cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1
-```
 
 ### Option 1: UV Environment (Recommended)
 
@@ -99,26 +83,24 @@ python main.py
 
 ### Configure AWS Credentials
 
-```bash
-# Option 1: AWS CLI configuration
-aws configure
+**Option 1: AWS CLI (Recommended)**
 
-# Option 2: Environment variables
+```bash
+aws configure
+```
+
+**Option 2: Environment Variables**
+
+```bash
+# Direct export
 export AWS_REGION=us-west-2
 export AWS_ACCESS_KEY_ID=your_access_key
 export AWS_SECRET_ACCESS_KEY=your_secret_key
 
-# Option 3: Use .env file
+# OR use .env file
 cp .env.example .env
-# Edit .env with your AWS credentials and settings
+# Edit .env with your AWS credentials
 ```
-
-### Enable Bedrock Model Access
-
-1. Navigate to [AWS Bedrock Console](https://console.aws.amazon.com/bedrock/)
-2. Go to "Model access" section
-3. Request access for Claude Sonnet models
-4. Wait for approval (usually instant)
 
 ### Verify Installation
 
@@ -525,32 +507,7 @@ cd ..
 uv run python main.py
 ```
 
----
-
-**Problem**: Python version mismatch
-
-**Solution**: This project requires Python 3.12+. Check your version:
-```bash
-python --version
-```
-
-If older version, install Python 3.12 or use conda:
-```bash
-conda create -n deep-insight python=3.12
-conda activate deep-insight
-```
-
 ### AWS & Bedrock Issues
-
-**Problem**: `AccessDeniedException: Model access denied`
-
-**Solution**: Enable Claude models in Amazon Bedrock console:
-1. Navigate to AWS Bedrock console
-2. Go to "Model access" section
-3. Request access for Claude Sonnet models
-4. Wait for approval (usually instant)
-
----
 
 **Problem**: `CredentialsError: Unable to locate credentials`
 
@@ -567,17 +524,6 @@ export AWS_REGION=us-west-2
 
 ### Runtime Issues
 
-**Problem**: PDF report generation fails
-
-**Solution**: Install Korean font (if using Korean text):
-```bash
-cd setup/
-./install_korean_font.sh
-python test_korean_font.py
-```
-
----
-
 **Problem**: Workflow hangs or times out
 
 **Solution**: Check event queue and clear if needed:
@@ -585,12 +531,6 @@ python test_korean_font.py
 from src.utils.event_queue import clear_queue
 clear_queue()
 ```
-
-### Getting Help
-
-- **Documentation**: See [CLAUDE.md](CLAUDE.md) for developer documentation
-- **Issues**: [Report bugs or request features](https://github.com/aws-samples/aws-ai-ml-workshop-kr/issues)
-- **Debugging**: Enable debug logging with `export LOG_LEVEL=DEBUG`
 
 ## Contributing
 
@@ -604,25 +544,21 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on:
 ### Quick Start for Contributors
 
 ```bash
-# Fork and clone
+# Fork the repository on GitHub, then clone your fork
 git clone https://github.com/YOUR_USERNAME/aws-ai-ml-workshop-kr.git
 cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1
 
-# Create development environment
-cd setup/
-./create-uv-env.sh deep-insight 3.12
+# Follow installation steps above to set up your environment
 
 # Create feature branch
 git checkout -b feature/your-feature-name
 
-# Make changes and test
-cd ..
-uv run python main.py
-
-# Commit and push
+# Make changes, test, then commit and push
 git add .
 git commit -m "Add feature: description"
 git push origin feature/your-feature-name
+
+# Open a Pull Request on GitHub
 ```
 
 ### Contribution Areas
@@ -652,13 +588,6 @@ Deep Insight is built on the shoulders of giants:
 - **[Strands Agent SDK](https://github.com/strands-agents/sdk-python)** - Agent orchestration and LLM integration
 - **[AgentCore](https://aws.amazon.com/agentcore/)** - MCP server integration and tool gateway
 - **[Amazon Bedrock](https://aws.amazon.com/bedrock/)** - Managed LLM service
-
-### Key Libraries
-
-- **Data Analysis**: Pandas, NumPy, Scikit-learn
-- **Visualization**: Matplotlib, Seaborn, Plotly
-- **Document Generation**: WeasyPrint, ReportLab
-- **UI**: Streamlit
 
 ### Philosophy
 
