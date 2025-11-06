@@ -11,8 +11,8 @@
 
   <p>
     <a href="#quick-start">Quick Start</a>
+    ◆ <a href="#demo">Demo</a>
     ◆ <a href="#installation">Installation</a>
-    ◆ <a href="#features-at-a-glance">Features</a>
     ◆ <a href="#architecture">Architecture</a>
     ◆ <a href="#usage">Usage</a>
   </p>
@@ -126,118 +126,6 @@ python -c "from src.graph.builder import build_graph; print('✓ Installation su
 
 # (Optional) Test Korean font for PDF reports
 python setup/test_korean_font.py
-```
-
-## Features at a Glance
-
-### Hierarchical Multi-Agent System
-
-Built on Strands SDK with three-tier agent hierarchy:
-
-```python
-# Coordinator handles user requests
-# Planner creates execution plans with reasoning
-# Supervisor orchestrates specialized tool agents
-
-from src.graph.builder import build_graph
-
-graph = build_graph()
-result = await graph.stream_async("Analyze sales data in ./data/sales.csv")
-```
-
-**Agent Workflow:**
-- **Coordinator**: Routes queries and handles simple requests directly
-- **Planner**: Creates detailed execution plans using reasoning capabilities
-- **Supervisor**: Delegates tasks to Coder, Reporter, Tracker, and Validator agents
-- **Tool Agents**: Execute specialized tasks (data analysis, report generation, validation)
-
-### Streaming Execution
-
-Real-time progress updates with event-based streaming:
-
-```python
-from src.utils.event_queue import get_event, has_events
-
-# Events stream in real-time
-while has_events():
-    event = get_event()
-    if event.get("event_type") == "text_chunk":
-        print(event.get("data"), end="", flush=True)
-```
-
-**Key features:**
-- Background task execution with event queue pattern
-- Thread-safe global state management
-- Live UI updates via `StreamableGraph`
-
-### Multi-Model Support
-
-```python
-from src.utils.strands_sdk_utils import strands_utils
-
-# Configure model per agent
-agent = strands_utils.get_agent(
-    agent_name="planner",
-    agent_type="claude-sonnet-4",  # or claude-sonnet-4-5, claude-sonnet-3-7
-    enable_reasoning=True
-)
-```
-
-**Supported models:**
-- `claude-sonnet-4-5` - Latest Claude Sonnet 4.5
-- `claude-sonnet-4` - Claude Sonnet 4
-- `claude-sonnet-3-7` - Claude Sonnet 3.7
-
-### Professional Report Generation
-
-Automated report creation with visualizations:
-
-```python
-# Reports generated automatically with:
-# - Executive summaries
-# - Statistical analysis
-# - Data visualizations
-# - Methodology explanations
-# - Multi-format output (PDF, HTML, Markdown)
-
-# Output saved to ./artifacts/
-# - analysis_report.pdf
-# - visualizations/*.png
-# - data_summary.json
-```
-
-**Visualization capabilities:**
-- Line charts, bar charts, scatter plots, heatmaps
-- Korean language support with custom fonts
-- Publication-ready formatting
-
-### Extensible Tool System
-
-Add custom tools to agents:
-
-```python
-# Create custom tool in src/tools/custom_tool.py
-TOOL_SPEC = {
-    "name": "custom_analyzer",
-    "description": "Performs custom analysis",
-    "inputSchema": {
-        "json": {
-            "type": "object",
-            "properties": {
-                "data": {"type": "string", "description": "Data to analyze"}
-            },
-            "required": ["data"]
-        }
-    }
-}
-
-def handle_custom_analyzer(data: str):
-    # Your custom logic
-    return analysis_result
-
-# Register tool with agent
-from src.tools.custom_tool import TOOL_SPEC, handle_custom_analyzer
-agent = strands_utils.get_agent(tools=[TOOL_SPEC])
 ```
 
 ## Architecture
