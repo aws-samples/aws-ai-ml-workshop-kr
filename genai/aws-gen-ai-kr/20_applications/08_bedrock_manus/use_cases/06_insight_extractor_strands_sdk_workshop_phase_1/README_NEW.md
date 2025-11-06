@@ -26,29 +26,22 @@
 
 ## Why Deep Insight?
 
-Deep Insight transforms weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
-
-### ✅ Choose Deep Insight When You Need:
+Transform weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
 
 **🎨 Full Customization & Control**
-- Modify agents, prompts, and workflows with complete code access
-- Deploy multi-agent workflows in your AWS VPC
+- Modify agents, prompts, and workflows with complete code access in your AWS VPC
 
 **🔒 Enterprise-Grade Security**
 - Single-tenant VPC deployment with complete data isolation
-- Keep sensitive data within your infrastructure
 
 **🤖 Advanced Multi-Agent Architecture**
-- Hierarchical workflow: Coordinator, Planner, Supervisor, and specialized tool agents
-- Transform sequential workflows into parallel multi-agent collaboration
+- Hierarchical workflow with Coordinator, Planner, Supervisor, and specialized tool agents
 
 **📊 Transparency & Verifiability**
 - Reports with calculation methods, sources, and reasoning processes
-- Extensible integration with external data via MCP protocol
 
 **🚀 Beyond Reporting**
-- Build domain-specific agent systems (shopping, support, log analysis, etc.)
-- Develop proprietary AI capabilities for competitive edge
+- Extend to any agent use case: shopping, support, log analysis, and more
 
 ## Quick Start
 
