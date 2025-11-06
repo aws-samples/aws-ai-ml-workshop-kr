@@ -54,7 +54,7 @@ uv run python main.py --user_query "Create a sales performance report for Moon M
 
 ## Demo
 
-### Amazon Sales Data Analysis
+### Fresh Food Sales Data Analysis
 
 > **Task**: "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
 
