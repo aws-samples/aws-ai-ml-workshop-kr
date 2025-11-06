@@ -50,9 +50,7 @@ uv run python main.py
 
 ## Installation
 
-### Option 1: UV Environment (Recommended)
-
-UV provides fast and reliable dependency management:
+### Environment Setup
 
 ```bash
 # Navigate to setup directory
@@ -64,21 +62,6 @@ cd setup/
 # Return to project root and run
 cd ..
 uv run python main.py
-```
-
-### Option 2: Conda Environment
-
-```bash
-# Create conda environment
-cd setup/
-./create_conda_virtual_env.sh deep-insight 3.12
-
-# Activate environment
-source .venv/bin/activate
-
-# Run from project root
-cd ..
-python main.py
 ```
 
 ### Configure AWS Credentials
@@ -159,29 +142,21 @@ while has_events():
 
 ### Multi-Model Support
 
-Leverage all Amazon Bedrock models with intelligent routing:
-
 ```python
 from src.utils.strands_sdk_utils import strands_utils
 
-# Configure different models per agent
-coordinator_agent = strands_utils.get_agent(
-    agent_name="coordinator",
-    agent_type="claude-sonnet-4",  # Fast responses
-    enable_reasoning=False
-)
-
-planner_agent = strands_utils.get_agent(
+# Configure model per agent
+agent = strands_utils.get_agent(
     agent_name="planner",
-    agent_type="claude-sonnet-4",  # Reasoning enabled
+    agent_type="claude-sonnet-4",  # or claude-sonnet-4-5, claude-sonnet-3-7
     enable_reasoning=True
 )
 ```
 
 **Supported models:**
-- Anthropic Claude (Sonnet 4, Sonnet 3.7, Sonnet 3.5, Opus, Haiku)
-- Amazon Nova (Nova Pro, Nova Lite)
-- Meta Llama, Mistral AI, Cohere
+- `claude-sonnet-4-5` - Latest Claude Sonnet 4.5
+- `claude-sonnet-4` - Claude Sonnet 4
+- `claude-sonnet-3-7` - Claude Sonnet 3.7
 
 ### Professional Report Generation
 
