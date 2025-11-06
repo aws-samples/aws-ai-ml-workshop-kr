@@ -39,20 +39,44 @@ Deep Insight transforms weeks of manual reporting work into minutes using hierar
 ## Quick Start
 
 ```bash
-# Clone repository
+# 1. Clone and setup (see Installation for details)
 git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
 cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1
+cd setup/ && ./create-uv-env.sh deep-insight 3.12 && cd ..
 
-# Create UV environment (automatically installs dependencies)
-cd setup/
-./create-uv-env.sh deep-insight 3.12
-
-# Run with your query
-cd ..
+# 2. Run your analysis
 uv run python main.py --user_query "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다."
 ```
 
 > **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
+
+## Demo
+
+### Amazon Sales Data Analysis
+
+> **Task**: "I would like to analyze Amazon product sales data. The target file is `./data/Amazon_Sale_Report.csv`. Please conduct comprehensive analysis to extract marketing insights—explore data attributes, product trends, variable relationships, and combinations. Include detailed analysis with supporting charts and save the final report as PDF."
+
+[![Demo](./assets/demo.gif)](https://youtu.be/DwWICGLEv14)
+
+[▶️ Watch Full Demo on YouTube](https://youtu.be/DwWICGLEv14)
+
+### Sample Outputs
+
+- 📄 [English Report (6 pages)](./assets/report_en.pdf)
+- 📄 [Korean Report (10 pages)](./assets/report.pdf)
+- 📊 Dataset: [Amazon Sale Report from Kaggle](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
+
+### What Happened Behind the Scenes
+
+1. **Coordinator** received the natural language query
+2. **Planner** created a 7-step execution plan
+3. **Supervisor** delegated tasks to:
+   - **Coder Agent**: Loaded CSV, performed statistical analysis, created visualizations
+   - **Reporter Agent**: Compiled findings into structured report with charts
+   - **Validator Agent**: Verified data quality and analysis correctness
+4. Final PDF report generated with executive summary, trend analysis, and recommendations
+
+**Time**: Completed in ~15 minutes (traditional manual process: 2-3 days)
 
 ## Installation
 
@@ -67,7 +91,7 @@ cd setup/
 
 # Return to project root and run
 cd ..
-uv run python main.py
+uv run python main.py --user_query "Your analysis request here"
 ```
 
 ### Configure AWS Credentials
@@ -214,22 +238,6 @@ def handle_custom_analyzer(data: str):
 # Register tool with agent
 from src.tools.custom_tool import TOOL_SPEC, handle_custom_analyzer
 agent = strands_utils.get_agent(tools=[TOOL_SPEC])
-```
-
-### Alternative Interfaces
-
-Multiple ways to interact with the framework:
-
-```bash
-# CLI with custom query
-python main.py --user_query "Analyze customer churn patterns"
-
-# Jupyter Notebook
-jupyter lab main.ipynb
-
-# Streamlit Web UI
-cd app/
-streamlit run app.py
 ```
 
 ## Architecture
@@ -419,34 +427,6 @@ streamlit run app.py
 # - Download links for artifacts
 # - Workflow visualization
 ```
-
-## Demo
-
-### Amazon Sales Data Analysis
-
-> **Task**: "I would like to analyze Amazon product sales data. The target file is `./data/Amazon_Sale_Report.csv`. Please conduct comprehensive analysis to extract marketing insights—explore data attributes, product trends, variable relationships, and combinations. Include detailed analysis with supporting charts and save the final report as PDF."
-
-[![Demo](./assets/demo.gif)](https://youtu.be/DwWICGLEv14)
-
-[▶️ Watch Full Demo on YouTube](https://youtu.be/DwWICGLEv14)
-
-### Sample Outputs
-
-- 📄 [English Report (6 pages)](./assets/report_en.pdf)
-- 📄 [Korean Report (10 pages)](./assets/report.pdf)
-- 📊 Dataset: [Amazon Sale Report from Kaggle](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
-
-### What Happened Behind the Scenes
-
-1. **Coordinator** received the natural language query
-2. **Planner** created a 7-step execution plan
-3. **Supervisor** delegated tasks to:
-   - **Coder Agent**: Loaded CSV, performed statistical analysis, created visualizations
-   - **Reporter Agent**: Compiled findings into structured report with charts
-   - **Validator Agent**: Verified data quality and analysis correctness
-4. Final PDF report generated with executive summary, trend analysis, and recommendations
-
-**Time**: Completed in ~15 minutes (traditional manual process: 2-3 days)
 
 ## When to Choose Deep Insight
 
