@@ -28,20 +28,11 @@
 
 Transform weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
 
-**🎨 Full Customization & Control**
-- Modify agents, prompts, and workflows with complete code access in your AWS VPC
-
-**🔒 Enterprise-Grade Security**
-- Single-tenant VPC deployment with complete data isolation
-
-**🤖 Advanced Multi-Agent Architecture**
-- Hierarchical workflow with Coordinator, Planner, Supervisor, and specialized tool agents
-
-**📊 Transparency & Verifiability**
-- Reports with calculation methods, sources, and reasoning processes
-
-**🚀 Beyond Reporting**
-- Extend to any agent use case: shopping, support, log analysis, and more
+- **🎨 Full Customization & Control** - Modify agents, prompts, and workflows with complete code access in your AWS VPC
+- **🔒 Enterprise-Grade Security** - Single-tenant VPC deployment with complete data isolation
+- **🤖 Advanced Multi-Agent Architecture** - Hierarchical workflow with Coordinator, Planner, Supervisor, and specialized tool agents
+- **📊 Transparency & Verifiability** - Reports with calculation methods, sources, and reasoning processes
+- **🚀 Beyond Reporting** - Extend to any agent use case: shopping, support, log analysis, and more
 
 ## Quick Start
 
