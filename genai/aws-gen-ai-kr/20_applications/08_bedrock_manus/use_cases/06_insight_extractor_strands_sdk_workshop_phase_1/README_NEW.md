@@ -10,7 +10,7 @@
   </div>
 
   <p>
-    ◆ <a href="#feature-overview">Feature-overview</a>
+    <a href="#why-deep-insight">Why Deep Insight?</a>
     ◆ <a href="#quick-start">Quick Start</a>
     ◆ <a href="#demo">Demo</a>
     ◆ <a href="#installation">Installation</a>
@@ -26,25 +26,29 @@
 
 ## Why Deep Insight?
 
-### ✅ Choose Deep Insight When You Need:
-
-- 🎨 **Full Customization** - Modify agents, prompts, and workflows
-- 🔒 **Data Isolation** - Single-tenant VPC deployment
-- 🏢 **Domain Expertise** - Build specialized agent systems
-- 🚀 **Competitive Edge** - Develop proprietary AI capabilities
-- 🔧 **Multi-Use Cases** - Extend beyond reporting to any agent application
-
-## Feature Overview
-
 Deep Insight transforms weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
 
-- **🔧 Full Customization**: Deploy and modify multi-agent workflows in your AWS VPC with complete code access
-- **🤖 Multi-Agent System**: Hierarchical workflow with Coordinator, Planner, Supervisor, and specialized tool agents
-- **📊 Verifiable Insights**: Reports with calculation methods, sources, and transparent reasoning processes
-- **🔗 Extensible Integration**: Connect external data sources via MCP protocol
-- **🚀 Beyond Reporting**: Extend framework to any agent use case—shopping, support, log analysis, and more
-- **🔒 Enterprise Security**: Complete VPC isolation for sensitive data with single-tenant deployment
-- **⚡ Rapid Execution**: Transform waterfall sequential workflows into parallel multi-agent collaboration
+### ✅ Choose Deep Insight When You Need:
+
+**🎨 Full Customization & Control**
+- Modify agents, prompts, and workflows with complete code access
+- Deploy multi-agent workflows in your AWS VPC
+
+**🔒 Enterprise-Grade Security**
+- Single-tenant VPC deployment with complete data isolation
+- Keep sensitive data within your infrastructure
+
+**🤖 Advanced Multi-Agent Architecture**
+- Hierarchical workflow: Coordinator, Planner, Supervisor, and specialized tool agents
+- Transform sequential workflows into parallel multi-agent collaboration
+
+**📊 Transparency & Verifiability**
+- Reports with calculation methods, sources, and reasoning processes
+- Extensible integration with external data via MCP protocol
+
+**🚀 Beyond Reporting**
+- Build domain-specific agent systems (shopping, support, log analysis, etc.)
+- Develop proprietary AI capabilities for competitive edge
 
 ## Quick Start
 
