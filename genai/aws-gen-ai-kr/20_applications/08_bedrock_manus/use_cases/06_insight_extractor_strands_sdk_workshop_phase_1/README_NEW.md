@@ -10,7 +10,8 @@
   </div>
 
   <p>
-    <a href="#quick-start">Quick Start</a>
+    <a href="#why-deep-insight">Why Deep Insight?</a>
+    ◆ <a href="#quick-start">Quick Start</a>
     ◆ <a href="#demo">Demo</a>
     ◆ <a href="#installation">Installation</a>
     ◆ <a href="#architecture">Architecture</a>
