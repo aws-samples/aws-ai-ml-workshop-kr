@@ -155,12 +155,7 @@ cp .env.example .env
 
 ## Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details on:
-- Reporting bugs & requesting features
-- Development setup and workflow
-- Submitting Pull Requests
-- Code style guidelines
-- Security issue reporting
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ### Quick Start for Contributors
 
