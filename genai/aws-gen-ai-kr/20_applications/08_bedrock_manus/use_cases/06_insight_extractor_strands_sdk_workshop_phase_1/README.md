@@ -1,203 +1,215 @@
-# Bedrock-Manus: AI Automation Framework Based on Amazon Bedrock
+<div align="center">
+  <div>
+    <img src="./assets/deepinsight_logo.png" alt="Deep Insight" width="110px" height="210px">
+  </div>
 
-<p align="left">
-    <a href="https://github.com/aws-samples">
-            <img alt="Build" src="https://img.shields.io/badge/Contribution-Welcome-blue">
-    </a>
-    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE">
-        <img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green">
-    </a>
-</p>
+  <h1 style="margin-top: 10px;">Deep Insight</h1>
 
-[English](./README.md)
+  <h2>A model-driven approach to building customizable reporting agents with Amazon Bedrock</h2>
 
-> Amazon Bedrock-Optimized AI Automation Framework
+  <div align="center">
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/graphs/commit-activity"><img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/aws-samples/aws-ai-ml-workshop-kr"/></a>
+    <a href="https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green"/></a>
+    <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/python-3.12+-blue.svg"/></a>
+  </div>
 
-Bedrock-Manus is an AI automation framework optimized for Amazon Bedrock and business use cases.
+  <p>
+    <a href="#why-deep-insight">Why Deep Insight?</a>
+    ◆ <a href="#quick-start">Quick Start</a>
+    ◆ <a href="#demo">Demo</a>
+    ◆ <a href="#installation">Installation</a>
+    ◆ <a href="#architecture">Architecture</a>
+  </p>
+</div>
 
-> Come From Open Source, Back to Open Source
+## *Latest News* 🔥
 
-Bedrock-Manus is based on the open-source project [LangManus](https://github.com/Darwin-lfl/langmanus).
+- **[2025/10]** Released [Deep Insight Workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/ee17ba6e-edc4-4921-aaf6-ca472841c49b/ko-KR) (Korean)
+- **[2025/10]** Added support for Claude Sonnet 4.5 with enhanced reasoning capabilities
+- **[2025/09]** Released Deep Insight framework built on Strands SDK and Amazon Bedrock with hierarchical multi-agent architecture
 
-## Demo Video
+## Why Deep Insight?
 
-> **Task**: I would like to analyze Amazon product sales data. The target for analysis is the './data/Amazon_Sale_Report.csv' file. Please conduct an analysis to extract marketing insights based on this data. Please perform various analytical techniques starting from basic data attribute exploration, product sales trends, variable relationships, variable combinations, etc. If there are any additional analyses needed to extract insights after the data analysis, please perform those as well. Please include detailed analysis in the report along with supporting images and charts. Please save the final report in PDF format.
+Transform weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
 
-[![Demo](./assets/demo.gif)]
-
-- [View on YouTube](https://youtu.be/DwWICGLEv14)
-- Output in Demo is [English- Report.pdf (6 pages)](./assets/report_en.pdf) | [Korean - Report.pdf (10 pages)](./assets/report.pdf)
-- Dataset in Demo is [Amazon Sale Report](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
-
-## Table of Contents
-- [Quick Start](#quick-start)
-- [Architecture](#architecture)
-- [Features](#features)
-- [Setup](#setup)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-- [Usage](#usage)
-- [Contributors](#contributors)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- **🎨 Full Customization & Control** - Modify agents, prompts, and workflows with complete code access in your AWS VPC
+- **🔒 Enterprise-Grade Security** - Single-tenant VPC deployment with complete data isolation
+- **🤖 Advanced Multi-Agent Architecture** - Hierarchical workflow with Coordinator, Planner, Supervisor, and specialized tool agents
+- **📊 Transparency & Verifiability** - Reports with calculation methods, sources, and reasoning processes
+- **🚀 Beyond Reporting** - Extend to any agent use case: shopping, support, log analysis, and more
 
 ## Quick Start
 
-### Option 1: UV Environment (Recommended)
+```bash
+# 1. Clone and setup (see Installation for details)
+git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
+cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1
+cd setup/ && ./create-uv-env.sh deep-insight 3.12 && cd ..
+
+# 2. Run your analysis
+uv run python main.py --user_query "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
+```
+
+> **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
+
+## Demo
+
+### Fresh Food Sales Data Analysis
+
+> **Task**: "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
+
+[▶️ Watch Full Demo on YouTube](https://www.youtube.com/watch?v=pn5aPfYSnp0)
+
+### Sample Outputs
+
+📄 [English Report](./assets/report_en.pdf) | 📄 [Korean Report](./assets/report.pdf)
+
+## Installation
+
+### Environment Setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
-cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_agentcore/
-
-# Create UV environment (automatically creates symlinks in root)
+# Navigate to setup directory
 cd setup/
-./create-uv-env.sh bedrock-manus-agentcore 3.12
 
-# Run the project (from root directory)
+# Create UV environment with Python 3.12
+./create-uv-env.sh deep-insight 3.12
+
+# Return to project root and run
 cd ..
-uv run python main.py
+uv run python main.py --user_query "Your analysis request here"
 ```
 
-### Option 2: Traditional Conda Environment
+### Configure AWS Credentials
+
+**Option 1: AWS CLI (Recommended)**
 
 ```bash
-# Clone the repository
-git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
-cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/05_insight_extractor_strands_sdk_agentcore/
-
-# Create and activate virtual environment
-cd setup/
-./create_conda_virtual_env.sh bedrock-manus-agentcore 3.12
-
-# Run the project
-cd setup/
-source .venv/bin/activate
-
-# Run from root directory
-python main.py 
+aws configure
 ```
 
-## UI (Application)
-![Bedrock-Manus Application](./assets/streamlit.png)
-![Bedrock-Manus Application](./assets/streamlit_2.png)
+**Option 2: Environment Variables**
+
+```bash
+# Direct export
+export AWS_REGION=us-west-2
+export AWS_ACCESS_KEY_ID=your_access_key
+export AWS_SECRET_ACCESS_KEY=your_secret_key
+
+# OR use .env file
+cp .env.example .env
+# Edit .env with your AWS credentials
+```
 
 ## Architecture
 
-Bedrock-Manus implements a hierarchical multi-agent system where a supervisor coordinates specialized agents to accomplish complex tasks:
+### System Overview
 
-![Bedrock-Manus Architecture](./assets/architecture.png)
+<div align="center">
+  <img src="./assets/architecture.png" alt="Deep Insight Architecture" width="750">
+</div>
 
-The system consists of the following agents working together:
+### Three-Tier Agent Hierarchy
 
-1. **Coordinator** - The entry point that handles initial interactions and routes tasks
-2. **Planner** - Analyzes tasks and creates execution strategies
-3. **Supervisor** - Oversees and manages the execution of other agents
-5. **Coder** - Handles code generation and modifications
-7. **Reporter** - Generates reports and summaries of the workflow results
-
-## Features
-
-### Core Capabilities
-- 🤖 **LLM Integration**
-    - Support for all models provided in Amazon Bedrock (Nova, Claude, DeepSeek, Llama, etc.)
-    - Multi-tier LLM system for different task complexities
-
-### Development Features
-- 🐍 **Python Integration**
-    - Built-in Python REPL
-    - Code execution environment
-
-### Workflow Management
-- 📊 **Visualization and Control**
-    - Planning based on TODO list
-    - Workflow graph visualization
-    - Multi-agent orchestration
-    - Task delegation and monitoring
-
-## Setup
-
-### Prerequisites
-
-- This code has been tested in the environments listed below.
-    - Amazon SageMaker AI Studio (CodeEditor and JypyterLab)
-
-### Installation
-
-Bedrock-Manus leverages `UV` for fast and reliable dependency management.
-Follow the steps below to set up a virtual environment and install the necessary dependencies:
-
-```bash
-# Step 1: Create UV environment (automatically installs dependencies and creates symlinks)
-cd setup/
-./create-uv-env.sh bedrock-manus-agentcore 3.12
-
-# Step 2: Run from root directory
-cd ..
-uv run python main.py
+```
+┌─────────────────────────────────────────────────────────┐
+│                     User Input                          │
+│              (Natural Language Query)                   │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│  COORDINATOR (Entry Point)                              │
+│  • Handles initial user requests                        │
+│  • Routes simple queries directly                       │
+│  • Hands off complex tasks to Planner                   │
+│  Model: Claude Sonnet 4 (no reasoning)                  │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│  PLANNER (Strategic Thinking)                           │
+│  • Analyzes task complexity                             │
+│  • Creates detailed execution plan                      │
+│  • Uses reasoning for step-by-step strategy             │
+│  Model: Claude Sonnet 4 (reasoning enabled)             │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│  SUPERVISOR (Task Orchestrator)                         │
+│  • Delegates tasks to specialized agents                │
+│  • Monitors progress and coordinates workflow           │
+│  • Aggregates results from tool agents                  │
+│  Model: Claude Sonnet 4 (prompt caching enabled)        │
+└──────────┬──────────┬──────────┬────────────────────────┘
+           │          │          │          │
+     ┌─────┘    ┌─────┘    ┌─────┘    ┌─────┘
+     ▼          ▼          ▼          ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐ ┌──────────┐
+│  CODER  │ │REPORTER │ │TRACKER  │ │VALIDATOR │
+│         │ │         │ │         │ │          │
+│ Python  │ │ Report  │ │Progress │ │ Quality  │
+│ Bash    │ │ Format  │ │Monitor  │ │ Validate │
+│ Analysis│ │ Generate│ │ State   │ │ Verify   │
+└─────────┘ └─────────┘ └─────────┘ └──────────┘
 ```
 
-By completing these steps, you'll ensure your environment is properly configured with UV and ready for development. The script automatically creates symlinks in the root directory, allowing you to run `uv run` commands from the project root.
+## Contributing
 
-## Usage
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-### Basic Execution
-
-To run Bedrock-Manus with default settings:
+### Quick Start for Contributors
 
 ```bash
-python main.py
+# Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/aws-ai-ml-workshop-kr.git
+cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1
+
+# Follow installation steps above to set up your environment
+
+# Create feature branch
+git checkout -b feature/your-feature-name
+
+# Make changes, test, then commit and push
+git add .
+git commit -m "Add feature: description"
+git push origin feature/your-feature-name
+
+# Open a Pull Request on GitHub
 ```
-or use `main.ipynb`
 
-To run Bedrock-Manus with UI (Streamlit):
-```bash
-cd app/
-streamlit run app.py
-```
+### Contribution Areas
 
-### Advanced Configuration
-
-Bedrock-Manus can be customized through various configuration files in the `src/config` directory:
-- `agents.py`: Modify team composition, agent system prompts, and `prompt caching` enablement
-
-### Agent Prompts System
-
-Bedrock-Manus uses a sophisticated prompting system in the `src/prompts` directory to define agent behaviors and responsibilities:
-
-#### Core Agent Roles
-
-- **Supervisor ([`src/prompts/supervisor.md`](src/prompts/supervisor.md))**: Coordinates the team and delegates tasks by analyzing requests and determining which specialist should handle them. Makes decisions about task completion and workflow transitions.
-
-- **Planner ([`src/prompts/planner.md`](src/prompts/file_manager.md))**: Plan and Execute tasks using a team of specialized agents to achieve the desired outcome.
-
-- **Coder ([`src/prompts/coder.md`](src/prompts/coder.md))**: Professional software engineer role focused on Python and bash scripting. Handles:
-    - Python code execution and analysis
-    - Shell command execution
-    - Technical problem-solving and implementation
-
-- **Reporter ([`src/prompts/reporter.md`](src/prompts/coder.md))**: Professional reporter responsible for writing clear, comprehensive reports based ONLY on provided information and verifiable facts.
-    - Summary imtermideate results
-    - Python code execution (results generation)
-    - Shell command execution (results generation)
-
-#### Prompt System Architecture
-
-The prompts system uses a template engine ([`src/prompts/template.py`](src/prompts/template.py)) that:
-- Loads role-specific markdown templates
-- Handles variable substitution (e.g., current time, team member information)
-- Formats system prompts for each agent
-
-Each agent's prompt is defined in a separate markdown file, making it easy to modify behavior and responsibilities without changing the underlying code.
-
-## Contributors
-
-- **Dongjin Jang, Ph.D.** (AWS AI/ML Specislist Solutions Architect) | [Mail](mailto:dongjinj@amazon.com) | [Linkedin](https://www.linkedin.com/in/dongjin-jang-kr/) | [Git](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr) |
+- **New Agent Types**: Add specialized agents for specific domains
+- **Tool Integration**: Create new tools for agent capabilities
+- **Model Support**: Add support for additional LLM providers
+- **Documentation**: Improve guides, examples, and tutorials
+- **Bug Fixes**: Fix issues and improve stability
+- **Performance**: Optimize streaming, caching, and execution
 
 ## License
 
-- <span style="#FF69B4;"> This is licensed under the [MIT License](https://github.com/aws-samples/aws-ai-ml-workshop-kr/blob/master/LICENSE). </span>
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-Special thanks to all the open source projects and contributors (especilly LangMauns) that make BedrockManus possible. We stand on the shoulders of giants.
+### Philosophy
+
+> **"Come From Open Source, Back to Open Source"**
+
+We believe in the power of open collaboration. Deep Insight takes the excellent work of the LangManus community and extends it with AWS-native capabilities, then contributes those enhancements back to the community.
+
+## Contributors
+
+- **Dongjin Jang, Ph.D.** - AWS AI/ML Specialist Solutions Architect
+  - [Email](mailto:dongjinj@amazon.com) | [LinkedIn](https://www.linkedin.com/in/dongjin-jang-kr/) | [GitHub](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)
+
+---
+
+<div align="center">
+  <p>
+    <strong>Built with ❤️ by AWS KOREA SA Team</strong><br>
+    <sub>Empowering enterprises to build customizable agentic AI systems</sub>
+  </p>
+</div>
