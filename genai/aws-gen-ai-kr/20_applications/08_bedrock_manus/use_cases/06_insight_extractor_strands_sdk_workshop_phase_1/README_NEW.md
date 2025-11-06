@@ -66,17 +66,18 @@ uv run python main.py --user_query "너가 작성할 것은 moon market 의 판�
 - 📄 [Korean Report (10 pages)](./assets/report.pdf)
 - 📊 Dataset: [Amazon Sale Report from Kaggle](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
-### What Happened Behind the Scenes
+### Output Structure
 
-1. **Coordinator** received the natural language query
-2. **Planner** created a 7-step execution plan
-3. **Supervisor** delegated tasks to:
-   - **Coder Agent**: Loaded CSV, performed statistical analysis, created visualizations
-   - **Reporter Agent**: Compiled findings into structured report with charts
-   - **Validator Agent**: Verified data quality and analysis correctness
-4. Final PDF report generated with executive summary, trend analysis, and recommendations
+Results are automatically saved to `./artifacts/` directory:
 
-**Time**: Completed in ~15 minutes (traditional manual process: 2-3 days)
+```
+artifacts/
+├── analysis_report.pdf       # Final PDF report
+├── data_summary.json         # Structured results
+└── visualizations/           # Generated charts
+    ├── trend_chart.png
+    └── correlation_matrix.png
+```
 
 ## Installation
 
@@ -191,109 +192,6 @@ The framework uses a shared state system (`_global_node_states` in `src/graph/no
 | `history` | List of agent interactions with format `{"agent": "name", "message": "text"}` |
 
 This enables stateful communication across the entire workflow.
-
-## Usage
-
-### Basic Execution
-
-Run with default predefined query:
-
-```bash
-python main.py
-```
-
-Run with custom query:
-
-```bash
-python main.py --user_query "Analyze sales trends for Q4 2024"
-```
-
-### Configuration
-
-Edit `.env` file for custom settings:
-
-```bash
-# AWS Configuration
-AWS_REGION=us-west-2
-AWS_DEFAULT_REGION=us-west-2
-
-# Model Configuration
-BEDROCK_MODEL_ID=claude-sonnet-4
-```
-
-### Output Files
-
-Results are saved to `./artifacts/` directory:
-
-```
-artifacts/
-├── analysis_report.pdf       # Final PDF report
-├── analysis_report.html      # HTML version
-├── analysis_report.md        # Markdown version
-├── data_summary.json         # Structured results
-└── visualizations/           # Generated charts
-    ├── trend_chart.png
-    └── correlation_matrix.png
-```
-
-**Note**: The `artifacts/` directory is automatically cleaned at the start of each run. Backup important results before running again.
-
-### Advanced Usage Examples
-
-**Example 1: Batch Processing**
-
-```python
-from src.graph.builder import build_graph
-
-graph = build_graph()
-
-queries = [
-    "Analyze Q1 sales data",
-    "Analyze Q2 sales data",
-    "Analyze Q3 sales data",
-    "Analyze Q4 sales data"
-]
-
-for query in queries:
-    result = await graph.stream_async(query)
-    # Results automatically saved to ./artifacts/
-```
-
-**Example 2: Custom Model Selection**
-
-```python
-import os
-os.environ['BEDROCK_MODEL_ID'] = 'claude-opus'
-
-# Run with premium model for complex reasoning
-python main.py --user_query "Perform advanced statistical analysis"
-```
-
-**Example 3: Jupyter Notebook**
-
-```bash
-# Launch Jupyter Lab
-jupyter lab main.ipynb
-
-# Execute cells to:
-# 1. Initialize framework
-# 2. Submit query
-# 3. View streaming results
-# 4. Access generated artifacts
-```
-
-**Example 4: Streamlit Web UI**
-
-```bash
-cd app/
-streamlit run app.py
-
-# Web interface provides:
-# - Text input for queries
-# - Real-time streaming output
-# - Download links for artifacts
-# - Workflow visualization
-```
 
 ## When to Choose Deep Insight
 
