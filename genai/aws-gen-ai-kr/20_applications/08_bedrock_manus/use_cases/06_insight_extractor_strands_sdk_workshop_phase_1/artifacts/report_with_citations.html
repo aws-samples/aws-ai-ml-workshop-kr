@@ -4,39 +4,272 @@
 <meta charset="UTF-8">
 <title>Moon Market 판매 현황 보고서</title>
 <style>
-@page { margin: 0.8cm 0.7cm; size: A4; }
-body { font-family: "NanumGothic", "Malgun Gothic", "DejaVu Sans", sans-serif; margin: 0; padding: 0; line-height: 1.6; font-size: 14px; color: #2c3e50; }
-h1 { font-size: 24px; font-weight: bold; text-align: center; color: #2c5aa0; margin: 20px 0; padding-bottom: 10px; border-bottom: 3px solid #2c5aa0; }
-h2 { font-size: 18px; font-weight: bold; color: #34495e; margin-top: 25px; margin-bottom: 15px; padding-left: 10px; border-left: 5px solid #3498db; }
-h3 { font-size: 16px; font-weight: bold; color: #2c3e50; margin-top: 20px; margin-bottom: 10px; }
-p { margin: 10px 0; text-align: justify; }
-ul, ol { margin: 10px 0; padding-left: 30px; }
-li { margin: 8px 0; }
-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
-th { background-color: #3498db; color: white; padding: 12px; text-align: left; font-weight: bold; font-size: 14px; }
-td { padding: 10px 12px; border-bottom: 1px solid #e1e8ed; }
-tr:nth-child(even) { background-color: #f8f9fa; }
-.citation { font-size: 0.9em; color: #2196f3; font-weight: bold; vertical-align: super; }
-.status-positive { color: #27ae60; font-weight: bold; }
-.status-negative { color: #e74c3c; font-weight: bold; }
-.image-container { text-align: center; margin: 25px 0; page-break-inside: avoid; }
-.image-container img { width: 85%; max-height: 380px; object-fit: contain; border: 1px solid #e1e8ed; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.image-caption { font-size: 12px; color: #7f8c8d; font-style: italic; margin-top: 8px; }
-.executive-summary { background: linear-gradient(135deg, #e3f2fd 0%, #e8f4f8 100%); padding: 20px 25px; border-left: 6px solid #2196f3; margin: 20px 0; border-radius: 0 8px 8px 0; page-break-inside: avoid; }
-.key-findings { background: linear-gradient(135deg, #fff3e0 0%, #fff2e6 100%); padding: 20px 25px; border-left: 6px solid #ff9800; margin: 20px 0; border-radius: 0 8px 8px 0; }
-.business-proposals { background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%); padding: 20px 25px; border-left: 6px solid #9c27b0; margin: 20px 0; border-radius: 0 8px 8px 0; }
-.detailed-analysis { background-color: #fafbfc; border: 1px solid #e1e8ed; border-radius: 8px; padding: 20px; margin: 20px 0; }
-.metric-highlight { background: linear-gradient(135deg, #e8f5e8 0%, #f0fff0 100%); border-left: 5px solid #27ae60; padding: 15px 20px; margin: 15px 0; border-radius: 0 8px 8px 0; font-weight: bold; color: #27ae60; }
-.data-insight { background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%); border-left: 5px solid #e74c3c; padding: 15px 20px; margin: 15px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #c0392b; }
-.references { background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 30px 0; font-size: 12px; }
-.references h2 { font-size: 16px; color: #495057; border-left: 5px solid #6c757d; }
-.references p { margin: 8px 0; line-height: 1.5; }
-.report-header { text-align: center; margin-bottom: 30px; }
-.report-date { text-align: center; color: #7f8c8d; font-size: 13px; margin-bottom: 20px; }
+@page{margin:0.8cm;size:A4}
+body{font-family:'NanumGothic','Malgun Gothic',sans-serif;line-height:1.6;font-size:14px;color:#2c3e50}
+h1{font-size:26px;text-align:center;color:#2c5aa0;border-bottom:3px solid #2c5aa0;padding-bottom:10px}
+h2{font-size:18px;color:#34495e;border-left:5px solid #3498db;padding-left:10px;margin-top:25px}
+h3{font-size:16px;color:#2c3e50;margin-top:20px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:13px}
+th{background:#3498db;color:white;padding:12px 8px;text-align:center}
+td{padding:10px 8px;text-align:center;border-bottom:1px solid #e1e8ed}
+tr:nth-child(even){background:#f8f9fa}
+.exec-sum{background:#e3f2fd;padding:20px;border-left:6px solid #2196f3;margin:20px 0;border-radius:0 8px 8px 0}
+.key-find{background:#fff3e0;padding:20px;border-left:6px solid #ff9800;margin:20px 0}
+.metric{background:#e8f5e8;border-left:5px solid #27ae60;padding:15px;margin:15px 0;font-weight:bold;color:#27ae60}
+.insight{background:#fff5f5;border-left:5px solid #e74c3c;padding:15px;margin:15px 0}
+.refs{background:#f8f9fa;border:1px solid #dee2e6;padding:20px;margin:30px 0;font-size:12px}
+.refs code{background:#e9ecef;padding:2px 6px;border-radius:3px;font-family:monospace;font-size:11px}
+.img-cont{text-align:center;margin:25px 0}
+.img-cont img{width:85%;max-height:400px;border:1px solid #e1e8ed;border-radius:8px}
+.img-cap{font-size:12px;color:#7f8c8d;font-style:italic;margin-top:8px}
+.date{text-align:center;color:#7f8c8d;font-size:13px;margin-bottom:30px}
+.status-pos{color:#27ae60;font-weight:bold}
+.status-neg{color:#e74c3c;font-weight:bold}
 </style>
 </head>
 <body>
-<div class="report-header">
-<h1>Moon Market 판매 현황 분석 보고서</h1>
-<div class="report-date">
-분석 기간: 2024년 1월 1일 ~ 2024년 6월 30일<br>
+<h1>🌙 Moon Market 판매 현황 보고서</h1>
+<div class="date">세일즈 및 마케팅 분석 리포트 | 분석 기간: 2024년 1월 ~ 6월</div>
+
+<div class="exec-sum">
+<h2>📋 개요 (Executive Summary)</h2>
+<p>본 보고서는 Moon Market의 2024년 1월부터 6월까지 6개월간의 판매 데이터를 세일즈 및 마케팅 관점에서 종합 분석한 결과입니다. 총 8,619,150[1]원의 매출을 기록하였으며, 1,220건의 주문을 처리하였습니다.</p>
+
+<div class="metric">
+<strong>핵심 성과 지표 (KPI)</strong><br/>
+• 총 매출: 8,619,150[1]원 (6개월)<br/>
+• 평균 객단가: 7,065[2]원<br/>
+• 총 주문 건수: 1,220건<br/>
+• 매출 성장률: -0.82[3]% (1월 대비 6월)
+</div>
+
+<p>과일 카테고리가 전체 매출의 46.0%를 차지하며 최고 성과를 보였고, 프로모션 침투율이 91.6%에 달해 프로모션이 매출에 핵심적인 역할을 하고 있습니다. 특히 프로모션 적용 시 평균 객단가가 95.78[4]% 상승하는 효과를 보였습니다.</p>
+</div>
+
+<div class="key-find">
+<h2>🔍 주요 발견사항 (Key Findings)</h2>
+
+<h3>1. 월별 판매 트렌드</h3>
+<p>6개월간의 월별 매출 분석 결과, 5월이 1,834,730원으로 최고 매출을 기록하였으며 이는 월평균 대비 27.7% 높은 수치입니다. 반면 2월은 1,301,850원으로 최저 매출을 기록하여 평균 대비 9.4% 낮았습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/monthly_sales_trend.png"/>
+<div class="img-cap">그림 1. 2024년 1-6월 월별 매출 트렌드</div>
+</div>
+
+<p>1월 대비 6월의 매출 성장률이 -0.82[3]%로 소폭 감소한 점은 하반기 성장 전략 강화가 필요함을 시사합니다.</p>
+
+<h3>2. 카테고리별 판매 성과</h3>
+<p>과일이 3,967,350원으로 전체 매출의 46.0%를 차지하며 압도적인 1위를 기록했습니다. 채소는 2,389,700원(27.7%), 유제품은 2,262,100원(26.2%)으로 뒤를 이었습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/category_sales_pie.png"/>
+<div class="img-cap">그림 2. 카테고리별 매출 비중</div>
+</div>
+
+<p>과일의 평균 객단가는 9,583원으로 가장 높아 프리미엄 전략이 효과적임을 보여줍니다. 채소는 5,218원으로 가장 낮지만 주문건수가 458건으로 가장 많아 높은 구매 빈도를 나타냅니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/category_comparison.png"/>
+<div class="img-cap">그림 3. 카테고리별 주문건수 및 평균 객단가 비교</div>
+</div>
+
+<div class="insight">
+<strong>💡 인사이트:</strong> 과일은 "고객단가 극대화", 채소는 "구매 빈도 극대화", 유제품은 "크로스셀링 기회"로 각각 차별화된 전략이 필요합니다.
+</div>
+
+<h3>3. 고객 세그먼트 분석</h3>
+<p>남성 고객이 4,655,800원(54.0%)으로 여성 고객 3,963,350원(46.0%)보다 약간 높은 매출을 기록했습니다. 평균 객단가는 남성이 7,658원, 여성이 6,476원으로 남성이 18.2% 더 높습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/gender_sales.png"/>
+<div class="img-cap">그림 4. 성별 매출 비교</div>
+</div>
+
+<p>연령대별로는 30대가 2,989,690원(34.7%)으로 최대 고객층을 형성하고 있으며, 주문건수도 412건으로 가장 많습니다. 50대는 평균 객단가가 8,365원으로 전 연령대 중 가장 높아 구매력이 가장 큰 세그먼트입니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/age_sales.png"/>
+<div class="img-cap">그림 5. 연령대별 매출 비교</div>
+</div>
+
+<h3>4. 프로모션 효과 분석</h3>
+<p>전체 주문의 91.6%(1,117건)가 프로모션을 적용받았으며, 프로모션 적용 시 평균 객단가가 7,369원으로 일반 주문(3,764원) 대비 95.78[4]% 상승하는 놀라운 효과를 보였습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/promotion_effect.png"/>
+<div class="img-cap">그림 6. 프로모션 유무별 매출 및 객단가 비교</div>
+</div>
+
+<p>상위 5개 프로모션 중 DAIRYPROMO가 1,602,000원으로 최고 성과를 기록했으며, FRUITPROMO5(1,593,650원), SUMMERFRUIT(1,455,200원)가 뒤를 이었습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/top_promotions.png"/>
+<div class="img-cap">그림 7. 상위 5개 프로모션 성과 비교</div>
+</div>
+
+<div class="metric">
+<strong>프로모션 ROI 핵심 지표</strong><br/>
+• 프로모션 침투율: 91.6%<br/>
+• 객단가 상승률: 95.78[4]%<br/>
+• 최고 성과 프로모션: DAIRYPROMO (1,602,000원)<br/>
+• 최고 객단가 프로모션: EARLY5 (10,898원)
+</div>
+
+<h3>5. 지역별 판매 분석</h3>
+<p>서울이 6,598,880원으로 전체 매출의 76.6%를 차지하며 압도적인 비중을 보였고, 경기도가 2,020,270원(23.4%)으로 2위를 기록했습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/top_cities_sales.png"/>
+<div class="img-cap">그림 8. 상위 10개 도시별 매출</div>
+</div>
+
+<div class="img-cont">
+<img src="./artifacts/top_states_sales.png"/>
+<div class="img-cap">그림 9. 주(State)별 매출 비교</div>
+</div>
+
+<h3>6. 제품 포트폴리오 분석</h3>
+<p>총 1,135개의 SKU를 운영하고 있으며, 상위 10개 상품이 전체 매출의 2.9%를 차지하고 있습니다. 베스트셀러는 수박과 딸기로 각각 25,800원의 매출을 기록했습니다.</p>
+
+<div class="img-cont">
+<img src="./artifacts/top_products.png"/>
+<div class="img-cap">그림 10. 상위 10개 인기 상품 매출</div>
+</div>
+</div>
+
+<div style="background:#fafbfc;border:1px solid #e1e8ed;padding:20px;margin:20px 0">
+<h2>📊 상세 분석 (Detailed Analysis)</h2>
+
+<h3>세일즈 관점 분석</h3>
+<table>
+<tr><th>지표</th><th>값</th><th>비고</th></tr>
+<tr><td>총 매출</td><td>8,619,150[1]원</td><td>6개월 누적</td></tr>
+<tr><td>월평균 매출</td><td>1,436,525원</td><td>안정적 수준</td></tr>
+<tr><td>평균 객단가</td><td>7,065[2]원</td><td>업계 평균 수준</td></tr>
+<tr><td>총 주문 건수</td><td>1,220건</td><td>월평균 203건</td></tr>
+<tr><td>매출 성장률</td><td><span class="status-neg">-0.82[3]%</span></td><td>1월 대비 6월</td></tr>
+</table>
+
+<h4>카테고리별 수익성 분석</h4>
+<table>
+<tr><th>카테고리</th><th>총 매출</th><th>매출 비중</th><th>평균 객단가</th><th>주문 건수</th><th>전략 방향</th></tr>
+<tr><td>과일</td><td>3,967,350원</td><td><span class="status-pos">46.0%</span></td><td><span class="status-pos">9,583원</span></td><td>414건</td><td>프리미엄 전략</td></tr>
+<tr><td>채소</td><td>2,389,700원</td><td>27.7%</td><td>5,218원</td><td><span class="status-pos">458건</span></td><td>빈도 증대</td></tr>
+<tr><td>유제품</td><td>2,262,100원</td><td>26.2%</td><td>6,500원</td><td>348건</td><td>크로스셀링</td></tr>
+</table>
+
+<h4>고객 세그먼트별 기여도</h4>
+<table>
+<tr><th>세그먼트</th><th>총 매출</th><th>매출 비중</th><th>평균 객단가</th><th>주문 건수</th></tr>
+<tr><td>30대</td><td>2,989,690원</td><td><span class="status-pos">34.7%</span></td><td>7,257원</td><td><span class="status-pos">412건</span></td></tr>
+<tr><td>50대</td><td>2,517,900원</td><td>29.2%</td><td><span class="status-pos">8,365원</span></td><td>301건</td></tr>
+<tr><td>40대</td><td>1,803,290원</td><td>20.9%</td><td>6,051원</td><td>298건</td></tr>
+<tr><td>20대</td><td>761,340원</td><td>8.8%</td><td>6,798원</td><td>112건</td></tr>
+<tr><td>60대</td><td>543,430원</td><td>6.3%</td><td>5,661원</td><td>96건</td></tr>
+</table>
+
+<h3>마케팅 관점 분석</h3>
+<p>프로모션은 Moon Market의 핵심 성장 동력입니다. 91.6%의 높은 침투율과 95.78[4]%의 객단가 상승 효과는 프로모션 전략이 매우 효과적임을 입증합니다.</p>
+
+<div class="metric">
+프로모션 적용 시 평균 객단가가 3,764원에서 7,369원으로 95.78[4]% 상승하여, 프로모션이 단순한 할인이 아닌 객단가 증대 수단으로 작용하고 있습니다.
+</div>
+</div>
+
+<div style="background:#f3e5f5;padding:20px;border-left:6px solid #9c27b0;margin:20px 0">
+<h2>💡 결론 및 제안사항 (Conclusions and Recommendations)</h2>
+
+<h3>세일즈 전략 제안</h3>
+<ol>
+<li><strong>과일 카테고리 프리미엄 전략 강화</strong>
+<ul>
+<li>평균 객단가 9,583원의 프리미엄 포지셔닝 유지 및 강화</li>
+<li>고급 과일 라인업 확대 (수입 과일, 유기농 과일 등)</li>
+<li>과일 선물 세트 등 고객단가 상품 개발</li>
+</ul>
+</li>
+
+<li><strong>채소 카테고리 구매 빈도 극대화</strong>
+<ul>
+<li>주문건수 458건의 높은 빈도 활용한 로열티 프로그램 도입</li>
+<li>정기 구독 서비스 (주간/월간 채소 박스) 출시</li>
+<li>신선도 보장 및 빠른 배송으로 재구매율 향상</li>
+</ul>
+</li>
+
+<li><strong>유제품 크로스셀링 전략</strong>
+<ul>
+<li>과일+유제품, 채소+유제품 번들 상품 개발</li>
+<li>유제품 카테고리 매출 비중 26.2%를 30% 이상으로 확대</li>
+<li>프리미엄 유제품 라인 강화로 객단가 향상</li>
+</ul>
+</li>
+
+<li><strong>매출 성장률 개선</strong>
+<ul>
+<li>1월 대비 6월 성장률 -0.82[3]% 개선 필요</li>
+<li>하반기 공격적 마케팅 및 신규 고객 확보 전략</li>
+<li>기존 고객 재구매율 향상 프로그램 강화</li>
+</ul>
+</li>
+</ol>
+
+<h3>마케팅 전략 제안</h3>
+<ol>
+<li><strong>프로모션 전략 최적화</strong>
+<ul>
+<li>고성과 프로모션(DAIRYPROMO, FRUITPROMO5) 확대 및 상시화</li>
+<li>객단가 상승률 95.78[4]%의 효과 유지</li>
+<li>카테고리별 맞춤형 프로모션 개발</li>
+<li>프로모션 침투율 91.6%를 95% 이상으로 확대</li>
+</ul>
+</li>
+
+<li><strong>타겟 고객 세그먼트 마케팅</strong>
+<ul>
+<li>30대 주력 고객층: 편의성 및 건강 가치 강조 메시지</li>
+<li>50대 고가치 고객층: 프리미엄 품질 및 안전성 강조</li>
+<li>남성 고객: 평균 객단가 18.2% 높음, 남성 타겟 캠페인 강화</li>
+<li>20대 고객 확대: 소셜 미디어 마케팅 및 인플루언서 협업</li>
+</ul>
+</li>
+
+<li><strong>지역별 차별화 전략</strong>
+<ul>
+<li>서울(76.6%): 시장 점유율 유지 및 심화 전략</li>
+<li>경기도(23.4%): 높은 객단가(8,280원) 활용한 프리미엄 전략</li>
+<li>신규 지역 확대: 인천, 대전 등 수도권 외곽 진출</li>
+</ul>
+</li>
+</ol>
+
+<h3>기대 효과</h3>
+<ul>
+<li><strong>매출 증대:</strong> 월평균 매출 1,436,525원에서 1,800,000원 이상으로 25% 증가 목표</li>
+<li><strong>객단가 향상:</strong> 평균 객단가 7,065[2]원에서 8,000원 이상으로 13% 증가</li>
+<li><strong>고객 확대:</strong> 월평균 주문건수 203건에서 250건 이상으로 23% 증가</li>
+<li><strong>프로모션 효율:</strong> 프로모션 ROI 지속 개선 및 객단가 상승률 95.78[4]% 유지</li>
+</ul>
+</div>
+
+<div class="img-cont" style="page-break-before:always">
+<img src="./artifacts/comprehensive_dashboard.png"/>
+<div class="img-cap">그림 11. Moon Market 판매 현황 종합 대시보드</div>
+</div>
+
+<div class="refs">
+<h2>📚 데이터 출처 및 계산 근거</h2>
+<p><strong>[1]</strong> 총 매출액<br/>계산식: <code>SUM(Amount)</code><br/>출처: ./data/Dat-fresh-food-claude.csv (Amount 컬럼)</p>
+<p><strong>[2]</strong> 평균 객단가<br/>계산식: <code>AVG(Amount)</code><br/>출처: ./data/Dat-fresh-food-claude.csv (Amount 컬럼)</p>
+<p><strong>[3]</strong> 매출 성장률 (1월→6월)<br/>계산식: <code>(Last_Month / First_Month - 1) * 100</code><br/>출처: ./data/Dat-fresh-food-claude.csv (Amount, Date 컬럼)</p>
+<p><strong>[4]</strong> 프로모션 객단가 상승률<br/>계산식: <code>(Promo_AOV / Non_Promo_AOV - 1) * 100</code><br/>출처: ./data/Dat-fresh-food-claude.csv (Amount, promotion-ids 컬럼)</p>
+</div>
+
+<div style="text-align:center;margin-top:40px;padding-top:20px;border-top:2px solid #e1e8ed;color:#95a5a6;font-size:12px">
+<p><strong>Moon Market 판매 현황 보고서</strong></p>
+<p>분석 기간: 2024년 1월 ~ 6월 | 보고서 생성일: 2025년 11월 6일</p>
+<p>© 2024 Moon Market. All rights reserved.</p>
+</div>
+</body>
+</html>

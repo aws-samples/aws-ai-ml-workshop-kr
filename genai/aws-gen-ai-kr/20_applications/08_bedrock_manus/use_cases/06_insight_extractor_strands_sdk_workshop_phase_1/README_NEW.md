@@ -54,17 +54,14 @@ uv run python main.py --user_query "너가 작성할 것은 moon market 의 판�
 
 ### Amazon Sales Data Analysis
 
-> **Task**: "I would like to analyze Amazon product sales data. The target file is `./data/Amazon_Sale_Report.csv`. Please conduct comprehensive analysis to extract marketing insights—explore data attributes, product trends, variable relationships, and combinations. Include detailed analysis with supporting charts and save the final report as PDF."
+> **Task**: "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
 
-[![Demo](./assets/demo.gif)](https://youtu.be/DwWICGLEv14)
-
-[▶️ Watch Full Demo on YouTube](https://youtu.be/DwWICGLEv14)
+[▶️ Watch Full Demo on YouTube](https://www.youtube.com/watch?v=pn5aPfYSnp0)
 
 ### Sample Outputs
 
 - 📄 [English Report (6 pages)](./assets/report_en.pdf)
 - 📄 [Korean Report (10 pages)](./assets/report.pdf)
-- 📊 Dataset: [Amazon Sale Report from Kaggle](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
 Results are automatically saved to `./artifacts/` directory.
 
