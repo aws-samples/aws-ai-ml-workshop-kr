@@ -45,7 +45,7 @@ cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/us
 cd setup/ && ./create-uv-env.sh deep-insight 3.12 && cd ..
 
 # 2. Run your analysis
-uv run python main.py --user_query "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다."
+uv run python main.py --user_query "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
 ```
 
 > **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
