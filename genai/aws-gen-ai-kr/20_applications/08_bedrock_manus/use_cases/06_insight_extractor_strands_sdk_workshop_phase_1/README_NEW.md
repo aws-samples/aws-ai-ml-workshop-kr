@@ -115,19 +115,6 @@ cp .env.example .env
 # Edit .env with your AWS credentials
 ```
 
-### Verify Installation
-
-```bash
-# Check Python version
-python --version  # Should show Python 3.12.x
-
-# Test framework import
-python -c "from src.graph.builder import build_graph; print('✓ Installation successful!')"
-
-# (Optional) Test Korean font for PDF reports
-python setup/test_korean_font.py
-```
-
 ## Architecture
 
 ### System Overview
@@ -195,11 +182,13 @@ python setup/test_korean_font.py
 
 The framework uses a shared state system (`_global_node_states` in `src/graph/nodes.py`):
 
-- **messages**: Current conversation messages for each agent
-- **request**: User's original request
-- **full_plan**: Planner's execution plan
-- **clues**: Accumulated context from agent executions
-- **history**: List of agent interactions with format `{"agent": "name", "message": "text"}`
+| State Field | Purpose |
+|-------------|---------|
+| `messages` | Current conversation messages for each agent |
+| `request` | User's original request |
+| `full_plan` | Planner's execution plan |
+| `clues` | Accumulated context from agent executions |
+| `history` | List of agent interactions with format `{"agent": "name", "message": "text"}` |
 
 This enables stateful communication across the entire workflow.
 
