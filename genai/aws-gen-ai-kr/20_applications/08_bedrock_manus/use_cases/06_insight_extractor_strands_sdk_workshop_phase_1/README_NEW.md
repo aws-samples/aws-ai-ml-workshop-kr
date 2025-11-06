@@ -312,7 +312,6 @@ Deep Insight is built on the shoulders of giants:
 
 - **[LangManus](https://github.com/Darwin-lfl/langmanus)** - Original open-source framework that inspired this project
 - **[Strands Agent SDK](https://github.com/strands-agents/sdk-python)** - Agent orchestration and LLM integration
-- **[AgentCore](https://aws.amazon.com/agentcore/)** - MCP server integration and tool gateway
 - **[Amazon Bedrock](https://aws.amazon.com/bedrock/)** - Managed LLM service
 
 ### Philosophy
