@@ -39,3 +39,92 @@ Files:
 - ./artifacts/category_order_count.png
 - ./artifacts/category_avg_order.png
 ==================================================
+
+==================================================
+## Analysis Stage: Demographic Sales Analysis
+## Execution Time: 2025-11-06 08:11:44
+--------------------------------------------------
+Result: Analyzed sales by gender and age group, created bar charts and heatmap
+--------------------------------------------------
+Key Insights:
+
+- Gender distribution: F (46.0%) vs M (54.0%)
+- Top age group by sales: 20대 with 761,340 KRW (8.8% of total)
+- Highest spending demographic segment: M-50대 with 1,677,000 KRW
+
+--------------------------------------------------
+Files: 
+- ./artifacts/gender_sales_bar.png
+- ./artifacts/gender_order_count.png
+- ./artifacts/age_sales_bar.png
+- ./artifacts/age_order_count.png
+- ./artifacts/gender_age_sales_heatmap.png
+==================================================
+
+==================================================
+## Analysis Stage: Promotion Analysis
+## Execution Time: 2025-11-06 08:12:34
+--------------------------------------------------
+Result: Analyzed sales by promotion, created bar charts and heatmap
+--------------------------------------------------
+Key Insights:
+
+- Top performing promotion: DAIRYPROMO with 1,602,000 KRW (18.6% of total sales)
+- Sales with promotions: 8,231,450 KRW (95.5% of total sales)
+- Average order value with promotions: 7369 KRW vs without promotions: 3764 KRW (95.8% lift)
+- Most effective promotion for fruits: 11
+- Most effective promotion for vegetables: 20
+
+--------------------------------------------------
+Files: 
+- ./artifacts/promotion_sales_bar.png
+- ./artifacts/promotion_order_count.png
+- ./artifacts/promotion_avg_order.png
+- ./artifacts/promotion_category_heatmap.png
+==================================================
+
+==================================================
+## Analysis Stage: Correlation and Price Analysis
+## Execution Time: 2025-11-06 08:13:04
+--------------------------------------------------
+Result: Analyzed correlations between variables and price points by category
+--------------------------------------------------
+Key Insights:
+
+- Correlation between Quantity and Amount: 0.38
+- Highest average price per item: 과일 (6,157 KRW)
+- Lowest average price per item: 채소 (3,259 KRW)
+- Price difference between highest and lowest category: 2,899 KRW
+- Average order value increases with quantity for all categories, showing volume purchasing behavior
+
+--------------------------------------------------
+Files: 
+- ./artifacts/correlation_heatmap.png
+- ./artifacts/qty_amount_scatter.png
+- ./artifacts/avg_order_by_cat_qty.png
+- ./artifacts/avg_price_by_category.png
+==================================================
+
+==================================================
+## Analysis Stage: Sales Dashboard and Insights
+## Execution Time: 2025-11-06 08:14:35
+--------------------------------------------------
+Result: Created comprehensive sales dashboard, KPI summary, and actionable insights
+--------------------------------------------------
+Key Insights:
+
+- Total Revenue: 8,619,150 KRW
+- Total Orders: 1,220
+- Average Order Value: 7,065 KRW
+- May shows 35% higher sales than average monthly performance
+- Fruit category dominates with 46% of total sales
+- Top promotions (DAIRYPROMO and FRUITPROMO5) account for 37% of sales
+- 30-50 age groups represent 85% of total sales
+- Clear correlation between quantity and order value across all categories
+
+--------------------------------------------------
+Files: 
+- ./artifacts/sales_dashboard.png
+- ./artifacts/kpi_summary.png
+- ./artifacts/insights_recommendations.png
+==================================================
