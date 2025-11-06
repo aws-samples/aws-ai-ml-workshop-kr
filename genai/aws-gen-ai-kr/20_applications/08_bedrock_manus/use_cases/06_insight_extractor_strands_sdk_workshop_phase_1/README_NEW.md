@@ -66,8 +66,6 @@ uv run python main.py --user_query "너가 작성할 것은 moon market 의 판�
 - 📄 [Korean Report (10 pages)](./assets/report.pdf)
 - 📊 Dataset: [Amazon Sale Report from Kaggle](https://www.kaggle.com/datasets/thedevastator/unlock-profits-with-e-commerce-sales-data)
 
-### Output Structure
-
 Results are automatically saved to `./artifacts/` directory:
 
 ```
