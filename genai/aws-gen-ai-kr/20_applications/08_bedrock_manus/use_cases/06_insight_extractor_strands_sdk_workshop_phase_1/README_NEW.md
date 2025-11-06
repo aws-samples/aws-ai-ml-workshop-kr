@@ -105,7 +105,9 @@ cp .env.example .env
 
 ### System Overview
 
-<img src="./assets/architecture.png" alt="Deep Insight Architecture" width="750">
+<div align="center">
+  <img src="./assets/architecture.png" alt="Deep Insight Architecture" width="750">
+</div>
 
 ### Three-Tier Agent Hierarchy
 
