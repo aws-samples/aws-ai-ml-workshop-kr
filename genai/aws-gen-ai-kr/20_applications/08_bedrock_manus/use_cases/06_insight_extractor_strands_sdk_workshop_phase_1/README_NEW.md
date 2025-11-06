@@ -62,8 +62,7 @@ uv run python main.py --user_query "Create a sales performance report for Moon M
 
 ### Sample Outputs
 
-- 📄 [English Report](./assets/report_en.pdf)
-- 📄 [Korean Report](./assets/report.pdf)
+📄 [English Report](./assets/report_en.pdf) | 📄 [Korean Report](./assets/report.pdf)
 
 ## Installation
 
