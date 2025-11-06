@@ -23,6 +23,16 @@
 - **[2025/01]** Added support for Claude Sonnet 4.5 with enhanced reasoning capabilities
 - **[2025/01]** Integrated MCP protocol for extensible tool integration
 
+## Why Deep Insight?
+
+### ✅ Choose Deep Insight When You Need:
+
+- 🎨 **Full Customization** - Modify agents, prompts, and workflows
+- 🔒 **Data Isolation** - Single-tenant VPC deployment
+- 🏢 **Domain Expertise** - Build specialized agent systems
+- 🚀 **Competitive Edge** - Develop proprietary AI capabilities
+- 🔧 **Multi-Use Cases** - Extend beyond reporting to any agent application
+
 ## Feature Overview
 
 Deep Insight transforms weeks of manual reporting work into minutes using hierarchical multi-agent systems built on Strands SDK and Amazon Bedrock.
@@ -150,16 +160,6 @@ cp .env.example .env
 │ Analysis│ │ Generate│ │ State   │ │ Verify   │
 └─────────┘ └─────────┘ └─────────┘ └──────────┘
 ```
-
-## Why Deep Insight?
-
-### ✅ Choose Deep Insight When You Need:
-
-- 🎨 **Full Customization** - Modify agents, prompts, and workflows
-- 🔒 **Data Isolation** - Single-tenant VPC deployment
-- 🏢 **Domain Expertise** - Build specialized agent systems
-- 🚀 **Competitive Edge** - Develop proprietary AI capabilities
-- 🔧 **Multi-Use Cases** - Extend beyond reporting to any agent application
 
 ## Contributing
 
