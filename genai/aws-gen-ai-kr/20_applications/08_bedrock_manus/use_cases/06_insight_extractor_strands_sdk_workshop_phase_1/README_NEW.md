@@ -166,31 +166,21 @@ cp .env.example .env
 └─────────┘ └─────────┘ └─────────┘ └──────────┘
 ```
 
-## When to Choose Deep Insight
+## Why Deep Insight?
 
-### Deep Insight is Best For:
+### ✅ Choose Deep Insight When You Need:
 
-- **Full Customization Needs**: Modify agent behavior, prompts, and workflows
-- **Regulatory Compliance**: Deploy in single-tenant VPC with complete data isolation
-- **Domain-Specific Workflows**: Build specialized agent systems beyond general-purpose tools
-- **Competitive Differentiation**: Develop proprietary AI capabilities
-- **Strategic Ownership**: Control infrastructure evolution as strategic asset
-- **Multi-Use Cases**: Extend framework beyond reporting to other agent applications
+- 🎨 **Full Customization** - Modify agents, prompts, and workflows
+- 🔒 **Data Isolation** - Single-tenant VPC deployment
+- 🏢 **Domain Expertise** - Build specialized agent systems
+- 🚀 **Competitive Edge** - Develop proprietary AI capabilities
+- 🔧 **Multi-Use Cases** - Extend beyond reporting to any agent application
 
-### Managed Services are Best For:
+### ❌ Use Managed Services When You Have:
 
-- **Immediate Deployment**: Zero setup, vendor-managed infrastructure
-- **General-Purpose Tasks**: Standard analytical workflows
-- **Limited Customization**: Pre-built agents meet requirements
-- **Multi-Tenant SaaS**: Shared infrastructure is acceptable
-
-### Strategic Benefits
-
-1. **Knowledge Accumulation**: Build internal expertise in Strands SDK and AgentCore
-2. **Competitive Edge**: Develop capabilities competitors can't replicate
-3. **Cost Predictability**: Control infrastructure costs in your AWS account
-4. **Data Sovereignty**: Maintain complete control over sensitive data
-5. **Innovation Speed**: Rapidly prototype new agent use cases
+- ⚡ **Quick Deployment** - Zero setup needed
+- 📊 **Standard Tasks** - General-purpose workflows
+- 🔌 **Pre-built Tools** - Limited customization required
 
 ## Troubleshooting
 
