@@ -207,7 +207,7 @@ We believe in the power of open collaboration. Deep Insight takes the excellent 
 
 <div align="center">
   <p>
-    <strong>Built with ❤️ by the AWS AI/ML team</strong><br>
+    <strong>Built with ❤️ by AWS KOREA SA Team</strong><br>
     <sub>Empowering enterprises to build customizable agentic AI systems</sub>
   </p>
 </div>
