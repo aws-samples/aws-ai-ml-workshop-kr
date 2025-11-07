@@ -41,16 +41,22 @@ Transform weeks of manual reporting work into minutes using hierarchical multi-a
 ## Quick Start
 
 ```bash
-# 1. Clone and setup (see Installation for details)
+# 1. Clone and setup environment
 git clone https://github.com/aws-samples/aws-ai-ml-workshop-kr.git
 cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/use_cases/06_insight_extractor_strands_sdk_workshop_phase_1
 cd setup/ && ./create-uv-env.sh deep-insight 3.12 && cd ..
 
-# 2. Run your analysis
-uv run python main.py --user_query "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a docx file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
+# 2. Configure AWS credentials
+aws configure
+# Enter your AWS Access Key ID, Secret Access Key, and set region to us-west-2
+
+# 3. Run your analysis
+uv run python main.py --user_query "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a docx file. The analysis target is the ./data/Dat-fresh-food-claude.csv file."
 ```
 
-> **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
+> **Prerequisites**: Python 3.12+, AWS credentials with Bedrock access (tested in us-west-2 region)
+>
+> **Need more options?** See [Installation](#installation) section below for detailed setup instructions and alternative configuration methods.
 
 ## Demo
 
@@ -66,6 +72,8 @@ uv run python main.py --user_query "Create a sales performance report for Moon M
 
 ## Installation
 
+This section provides detailed installation instructions and alternative configuration options. For a quick 3-step setup, see [Quick Start](#quick-start) above.
+
 ### Environment Setup
 
 ```bash
@@ -75,31 +83,42 @@ cd setup/
 # Create UV environment with Python 3.12
 ./create-uv-env.sh deep-insight 3.12
 
-# Return to project root and run
+# Return to project root
 cd ..
-uv run python main.py --user_query "Your analysis request here"
 ```
+
+The setup script automatically:
+- Creates a UV virtual environment with Python 3.12
+- Installs all required dependencies from `setup/pyproject.toml`
+- Creates symbolic links (`.venv`, `pyproject.toml`, `uv.lock`) in the project root
 
 ### Configure AWS Credentials
 
-**Option 1: AWS CLI (Recommended)**
+**Option 1: AWS CLI (Recommended for Quick Start)**
 
 ```bash
 aws configure
+# Enter your credentials and set region to us-west-2
 ```
 
 **Option 2: Environment Variables**
 
 ```bash
-# Direct export
+# Direct export (session-based)
 export AWS_REGION=us-west-2
 export AWS_ACCESS_KEY_ID=your_access_key
 export AWS_SECRET_ACCESS_KEY=your_secret_key
+```
 
-# OR use .env file
+**Option 3: .env File (Persistent)**
+
+```bash
+# Copy example file and edit
 cp .env.example .env
 # Edit .env with your AWS credentials
 ```
+
+> **Security Note**: Never commit `.env` files with real credentials to version control. The `.env` file is already in `.gitignore`.
 
 ## Architecture
 
@@ -204,6 +223,9 @@ We believe in the power of open collaboration. Deep Insight takes the excellent 
 
 - **Dongjin Jang, Ph.D.** - AWS Sr. AI/ML Specialist Solutions Architect
   - [Email](mailto:dongjinj@amazon.com) | [LinkedIn](https://www.linkedin.com/in/dongjin-jang-kr/) | [GitHub](https://github.com/dongjin-ml) | [Hugging Face](https://huggingface.co/Dongjin-kr)
+
+- **Gonsoo Moon** - AWS Sr. AI/ML Specialist Solutions Architect
+  - [Email](mailto:moongons@amazon.com) | [LinkedIn](https://www.linkedin.com/in/gonsoomoon) | [GitHub](https://github.com/gonsoomoon-ml) | [Hugging Face](https://huggingface.co/Gonsoo)
 
 ---
 
