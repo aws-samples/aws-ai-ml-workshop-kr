@@ -219,6 +219,87 @@
           }
         }
       }
+    },
+    "/videos": {
+      "get": {
+        "operationId": "getVideoDetails",
+        "summary": "Get detailed information about specific videos",
+        "parameters": [
+          {
+            "name": "part",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "snippet,statistics,contentDetails"
+            },
+            "description": "Specifies the resource properties that the API response will include"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of video IDs"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful video details response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "example": "youtube#videoListResponse"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "snippet": {
+                            "type": "object"
+                          },
+                          "statistics": {
+                            "type": "object",
+                            "properties": {
+                              "viewCount": {
+                                "type": "string"
+                              },
+                              "likeCount": {
+                                "type": "string"
+                              },
+                              "commentCount": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "contentDetails": {
+                            "type": "object",
+                            "properties": {
+                              "duration": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -358,7 +358,18 @@ def create_agentcore_gateway_role(gateway_name):
                     "agent-credential-provider:*",
                     "iam:PassRole",
                     "secretsmanager:GetSecretValue",
-                    "lambda:InvokeFunction"
+                    "secretsmanager:CreateSecret",
+                    "secretsmanager:UpdateSecret",
+                    "secretsmanager:DeleteSecret",
+                    "secretsmanager:DescribeSecret",
+                    "lambda:InvokeFunction",
+                    "cognito-idp:DescribeResourceServer",
+                    "cognito-idp:DescribeUserPool",
+                    "cognito-idp:DescribeUserPoolClient",
+                    "cognito-idp:ListUserPools",
+                    "cognito-idp:CreateResourceServer",
+                    "cognito-idp:UpdateResourceServer",
+                    "cognito-idp:DeleteResourceServer"
                 ],
                 "Resource": "*"
             }

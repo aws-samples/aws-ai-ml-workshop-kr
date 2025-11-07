@@ -123,9 +123,20 @@ if __name__ == "__main__":
             "session-id": args.session_id
         }
     else:
-        # Full comprehensive analysis query (main version):
+        # Full comprehensive analysis query using existing data files:
         payload = {
-            "user_query": "너가 작성할 것은 moon market 의 판매 현황 보고서야. 세일즈 및 마케팅 관점으로 분석을 해주고, 차트 생성 및 인사이트도 뽑아서 pdf 파일로 만들어줘. 분석대상은 './data/Dat-fresh-food-claude.csv' 파일 입니다.",
+            "user_query": """
+            moon market의 판매 현황 보고서를 작성해주세요.
+            
+            분석 요구사항:
+            1. './data/Dat-fresh-food-claude.csv' 파일의 세일즈 및 마케팅 관점 분석
+            2. './data/youtube_raw_data.json' 파일의 YouTube 시장 동향 데이터 활용
+               (이 파일은 CSV 데이터를 기반으로 추출된 키워드로 수집된 YouTube 트렌드 정보입니다)
+            3. CSV 판매 데이터와 YouTube 트렌드 정보를 종합한 인사이트 도출
+            4. 차트 생성 및 PDF 파일로 최종 보고서 작성
+            
+            두 데이터 소스를 결합해서 포괄적인 시장 분석 보고서를 만들어주세요.
+            """,
             "session-id": "insight-extractor-1"
         }
         
