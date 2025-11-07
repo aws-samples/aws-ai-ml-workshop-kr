@@ -141,9 +141,9 @@ def handle_validator_agent_tool(_task: Annotated[str, "The validation task or in
     validator_agent = strands_utils.get_agent(
         agent_name="validator",
         system_prompts=apply_prompt_template(prompt_name="validator", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
-        agent_type="claude-sonnet-3-7", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        agent_type="claude-sonnet-4", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
-        prompt_cache_info=(True, None), # reasoning agent uses prompt caching
+        prompt_cache_info=(True, "default"), # reasoning agent uses prompt caching
         tools=[python_repl_tool, bash_tool, file_read],
         streaming=True  # Enable streaming for consistency
     )

@@ -1,44 +1,44 @@
 ---
 name: readme-generator
-description: This skill should be used when users want to create or improve README.md files for their projects. It generates professional, balanced documentation following the Strands SDK style - comprehensive yet focused, with clear structure and practical examples.
+description: This skill should be used when users want to create or improve README.md files for their projects. It generates professional documentation following the Deep Insight/Strands SDK style - comprehensive yet focused, with clear structure and practical examples.
 ---
 
 # README Generator
 
 ## Overview
 
-Generate professional README.md files that follow the Strands SDK style: clear structure, progressive disclosure, and balanced depth. This skill uses Claude Code's native tools (Read, Glob, Grep) to explore codebases and creates user-friendly documentation through guided conversation.
+Generate professional README.md files that follow the Deep Insight/Strands SDK style: clear structure, progressive disclosure, and balanced depth. This skill uses Claude Code's native tools (Read, Glob, Grep) to explore codebases and creates user-friendly documentation.
 
-**Target style**: Strands SDK README - not too minimal, not too verbose, just right.
+**Target style**: Deep Insight README - professional, visual, and user-focused.
 
 ## When to Use This Skill
 
 Use this skill when:
 - Creating a new README.md from scratch
 - Improving an existing README with better structure and balance
-- Adopting the Strands SDK documentation style
+- Adopting the Deep Insight/Strands SDK documentation style
 - Converting technical documentation to user-friendly format
 
 Do NOT use this skill for:
 - API-only documentation (use API doc generators instead)
 - Internal technical specs (use architectural docs instead)
 
-## The Strands SDK README Pattern
-
-The gold standard we follow has these characteristics:
+## The Deep Insight README Pattern
 
 ### Structure
-1. **Center-aligned header** with logo, badges, and quick navigation links
-2. **Feature Overview** - Brief, scannable (3-5 bullet points)
-3. **Quick Start** - Get running in 2 minutes (install + basic example)
-4. **Installation** - Detailed setup instructions
-5. **Features at a Glance** - Code examples for each major feature (optional for complex projects)
-6. **Documentation** - Links to comprehensive docs
-7. **Contributing** - Brief welcome with link to details
-8. **License** - Clear license type
-9. **Security** - Security policy if applicable
+1. **Center-aligned header** with logo, title, tagline, badges, and quick navigation links
+2. **Latest News** - Recent updates and releases
+3. **Why [Project]?** - Value proposition with key benefits
+4. **Quick Start** - Get running in 2 minutes (install + basic example)
+5. **Demo** - Video/screenshots with sample outputs
+6. **Installation** - Detailed setup instructions
+7. **Architecture** - System overview with diagrams
+8. **Contributing** - Brief welcome with contribution areas
+9. **License** - Clear license type
+10. **Acknowledgments/Contributors** - Credits and team info
 
 ### Key Principles
+- **Visual first**: Logo, centered layout, badges, architecture diagrams
 - **Balanced depth**: Substantial enough to be useful, focused enough to stay readable
 - **Progressive disclosure**: Quick value at top, details further down
 - **Code-first**: Show working examples, not just descriptions
@@ -55,6 +55,7 @@ Use Claude Code's native tools to gather essential information:
 Use Glob to find key files:
 - Entry points: main.py, app.py, *.ipynb
 - Config: pyproject.toml, requirements.txt, .env.example
+- Assets: logos, screenshots, diagrams in assets/
 - Docs: CLAUDE.md, existing README, CONTRIBUTING.md
 ```
 
@@ -74,383 +75,288 @@ Use Read to understand:
 - Output artifacts or deliverables
 ```
 
-**Important**: Be selective. Only gather information that will appear in the README. Don't extract implementation details.
+### Step 2: Build the README
 
-### Step 2: Gather User Context
+Create sections following the Deep Insight pattern:
 
-Ask the user conversational questions (one at a time) for information you can't detect:
-
-**Essential questions** (if not obvious from code):
-- "What's the main purpose of this project?" (for tagline)
-- "What problem does it solve?" (for Overview section)
-- "Who is the target audience?" (general users, developers, data scientists)
-
-**Optional questions** (if relevant):
-- "Do you have a demo video or screenshot URL?"
-- "Are there any special prerequisites or system dependencies?"
-- "What's the GitHub repository URL?" (for badges)
-
-**Example approach**:
-```
-"I can see this is a multi-agent system using Strands SDK for data analysis.
-What would you say is the main value proposition for users?
-For example: 'Automate data analysis with AI agents' or 'Generate reports from natural language queries'"
-```
-
-### Step 3: Build the README
-
-Create sections following the Strands SDK pattern:
-
-#### 1. Header Section
-
-Use center-aligned format with badges and navigation:
+#### 1. Header Section with Logo
 
 ```markdown
 <div align="center">
-  <h1>Project Name</h1>
+  <div>
+    <img src="./assets/project_logo.png" alt="Project Name" width="110px" height="210px">
+  </div>
+
+  <h1 style="margin-top: 10px;">Project Name</h1>
 
   <h2>Concise value proposition in one sentence</h2>
 
   <div align="center">
     <a href="https://github.com/user/repo/graphs/commit-activity"><img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/user/repo"/></a>
-    <a href="https://github.com/user/repo/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/user/repo"/></a>
-    <a href="https://github.com/user/repo/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/user/repo"/></a>
-    <a href="https://python.org"><img alt="Python" src="https://img.shields.io/badge/python-3.12+-blue.svg"/></a>
+    <a href="https://github.com/user/repo/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/LICENSE-MIT-green"/></a>
+    <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/python-3.12+-blue.svg"/></a>
   </div>
 
   <p>
-    <a href="#installation">Installation</a>
-    ◆ <a href="#usage">Usage</a>
-    ◆ <a href="#features-at-a-glance">Features</a>
-    ◆ <a href="#documentation">Documentation</a>
+    <a href="#why-project">Why Project?</a>
+    ◆ <a href="#quick-start">Quick Start</a>
+    ◆ <a href="#demo">Demo</a>
+    ◆ <a href="#installation">Installation</a>
+    ◆ <a href="#architecture">Architecture</a>
   </p>
 </div>
 ```
 
 **Key points**:
-- Title (H1) and value proposition (H2)
-- Relevant badges only (commit activity, issues, license, Python version)
-- Quick navigation links with ◆ separator
-- Links should point to sections that exist in your README
+- Logo at the top, adjust size as needed
+- Title with reduced margin (`margin-top: 10px`)
+- Navigation links with ◆ separator
 
-#### 2. Feature Overview
+#### 2. Latest News
 
-Brief introduction with 3-5 key capabilities:
+Show recent updates in reverse chronological order:
 
 ```markdown
-## Feature Overview
+## *Latest News* 🔥
 
-Brief 1-2 sentence description of what the project does.
-
-- **Capability 1**: Brief description focusing on user benefit
-- **Capability 2**: Brief description focusing on user benefit
-- **Capability 3**: Brief description focusing on user benefit
-- **Capability 4**: Brief description focusing on user benefit
+- **[2025/10]** Released [Project Workshop](link) (Korean)
+- **[2025/10]** Added support for Claude Sonnet 4.5 with enhanced reasoning capabilities
+- **[2025/09]** Released Project framework with multi-agent architecture
 ```
 
-**Guidelines**:
-- Focus on WHAT it does, not HOW
-- User benefits, not technical implementation
-- Each bullet under 15 words
+#### 3. Why [Project]?
 
-#### 3. Quick Start
+Value proposition with key benefits:
 
-Minimal commands to get running fast:
+```markdown
+## Why Project Name?
+
+Brief description of the transformation or value provided.
+
+- **🎨 Benefit 1** - Description
+- **🔒 Benefit 2** - Description
+- **🤖 Benefit 3** - Description
+- **📊 Benefit 4** - Description
+- **🚀 Benefit 5** - Description
+```
+
+#### 4. Quick Start
+
+Minimal commands to get running:
 
 ```markdown
 ## Quick Start
 
 \`\`\`bash
-# Install
-pip install package-name
-# OR for development
+# 1. Clone and setup
 git clone repo-url
-cd project-name
-./setup.sh
+cd project-dir
+cd setup/ && ./create-uv-env.sh env-name 3.12 && cd ..
+
+# 2. Run your analysis
+uv run python main.py --user_query "Your task here"
 \`\`\`
 
-\`\`\`python
-# Basic usage
-from package import Module
-result = Module().run("your query")
-\`\`\`
-
-> **Note**: Requires Python 3.12+ and AWS credentials configured.
+> **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
 ```
 
-**Guidelines**:
-- Keep it under 10 lines of code
-- Show the absolute minimum to see value
-- Include prerequisite note inline
+#### 5. Demo
 
-#### 4. Installation (Detailed)
+Video and sample outputs:
 
-Complete setup instructions with multiple options if applicable:
+```markdown
+## Demo
+
+### Use Case Title
+
+> **Task**: "Detailed task description"
+
+[▶️ Watch Full Demo on YouTube](video-url)
+
+### Sample Outputs
+
+📄 [Output 1](link) | 📄 [Output 2](link)
+```
+
+#### 6. Installation
+
+Complete setup with configuration:
 
 ```markdown
 ## Installation
 
-Ensure you have Python 3.10+ installed, then:
+### Environment Setup
 
 \`\`\`bash
-# Create and activate virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+# Navigate to setup directory
+cd setup/
 
-# Install dependencies
-pip install -r requirements.txt
+# Create UV environment
+./create-uv-env.sh project-name 3.12
+
+# Return to project root and run
+cd ..
+uv run python main.py --user_query "Your request here"
 \`\`\`
 
-### Configuration
+### Configure AWS Credentials
 
-Configure environment variables:
+**Option 1: AWS CLI (Recommended)**
 
 \`\`\`bash
-# Copy template
+aws configure
+\`\`\`
+
+**Option 2: Environment Variables**
+
+\`\`\`bash
+export AWS_REGION=us-west-2
+export AWS_ACCESS_KEY_ID=your_access_key
+export AWS_SECRET_ACCESS_KEY=your_secret_key
+
+# OR use .env file
 cp .env.example .env
-
-# Edit with your settings
-# AWS_REGION=us-west-2
-# MODEL_ID=claude-sonnet-4
-\`\`\`
-
-### Verify Installation
-
-\`\`\`bash
-python --version  # Should show Python 3.10+
-python -c "import package_name; print('Success!')"
+# Edit .env with your AWS credentials
 \`\`\`
 ```
 
-**Guidelines**:
-- Show complete steps from clone to running
-- Provide multiple paths (UV, pip, conda) if applicable
-- Include verification steps
-- Specify working directory when needed
+#### 7. Architecture
 
-#### 5. Features at a Glance (Optional)
-
-For complex projects with multiple capabilities, show code examples for each:
+System overview with centered diagram:
 
 ```markdown
-## Features at a Glance
+## Architecture
 
-### Python-Based Tools
+### System Overview
 
-Easily build tools using Python decorators:
+<div align="center">
+  <img src="./assets/architecture.png" alt="Project Architecture" width="750">
+</div>
 
-\`\`\`python
-from project import tool
+### Architecture Details
 
-@tool
-def analyze(text: str) -> dict:
-    """Analyze text and return insights."""
-    return {"word_count": len(text.split())}
-\`\`\`
-
-### Multi-Model Support
-
-Support for various model providers:
-
-\`\`\`python
-from project import Agent, BedrockModel
-
-model = BedrockModel(model_id="claude-sonnet-4")
-agent = Agent(model=model)
-response = agent("Analyze this data")
-\`\`\`
-
-### Streaming Output
-
-Real-time progress updates:
-
-\`\`\`python
-for event in agent.stream("Long running task"):
-    print(event)
-\`\`\`
+Include text diagrams or additional details as needed.
 ```
 
-**Guidelines**:
-- Each feature gets H3 heading + brief intro + code example
-- Keep examples practical and runnable
-- Link to detailed docs for more info
-
-#### 6. Documentation (for complex projects)
-
-Link to comprehensive documentation:
-
-```markdown
-## Documentation
-
-For detailed guidance, explore our documentation:
-
-- [User Guide](url) - Getting started and core concepts
-- [API Reference](url) - Complete API documentation
-- [Examples](url) - Sample projects and use cases
-- [Deployment Guide](url) - Production deployment
-```
-
-**Guidelines**:
-- Organize by audience/purpose
-- Brief description for each link
-- Only include if you have extensive external docs
-
-#### 7. Contributing
-
-Brief welcome statement:
+#### 8. Contributing
 
 ```markdown
 ## Contributing
 
-We welcome contributions! See our [Contributing Guide](CONTRIBUTING.md) for details on:
-- Reporting bugs & features
-- Development setup
-- Submitting Pull Requests
-- Code of Conduct
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+### Quick Start for Contributors
+
+\`\`\`bash
+# Fork the repository on GitHub, then clone your fork
+git clone https://github.com/YOUR_USERNAME/repo.git
+cd repo-path
+
+# Follow installation steps above
+
+# Create feature branch
+git checkout -b feature/your-feature-name
+
+# Make changes, test, then commit and push
+git add .
+git commit -m "Add feature: description"
+git push origin feature/your-feature-name
+\`\`\`
+
+### Contribution Areas
+
+- **Area 1**: Description
+- **Area 2**: Description
+- **Area 3**: Description
 ```
 
-**Guidelines**:
-- Keep it brief in README
-- Link to CONTRIBUTING.md for details
-- Mention key contribution areas
-
-#### 8. License
-
-Clear license statement:
+#### 9. License
 
 ```markdown
 ## License
 
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 ```
 
-#### 9. Security (if applicable)
+#### 10. Acknowledgments/Contributors
 
 ```markdown
-## Security
+## Acknowledgments
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for information on reporting security issues.
+### Philosophy
+
+> **"Project Philosophy"**
+
+Brief description of project philosophy or approach.
+
+## Contributors
+
+- **Name** - Title
+  - [Email](mailto:email) | [LinkedIn](url) | [GitHub](url)
+
+---
+
+<div align="center">
+  <p>
+    <strong>Built with ❤️ by Team Name</strong><br>
+    <sub>Project mission statement</sub>
+  </p>
+</div>
 ```
-
-### Step 4: Polish and Refine
-
-Apply these final touches:
-
-**Formatting checklist**:
-- [ ] All code blocks have language tags (\`\`\`python, \`\`\`bash)
-- [ ] Links are valid and use descriptive text
-- [ ] Headings follow proper hierarchy (H1 → H2 → H3)
-- [ ] Internal anchor links match section headings (lowercase with hyphens)
-- [ ] No broken references
-
-**Content checklist**:
-- [ ] Value proposition is clear and compelling
-- [ ] At least one working code example in Quick Start
-- [ ] Installation steps are complete and ordered
-- [ ] No unexplained technical jargon
-- [ ] Contact/support info is available
-
-**Balance checklist**:
-- [ ] Not too minimal (has substance and examples)
-- [ ] Not too verbose (stays focused on essentials)
-- [ ] Follows progressive disclosure (quick value → details)
-- [ ] Matches Strands SDK style
 
 ## Writing Guidelines
 
-### Clarity
-- Use simple, direct language
-- Define technical terms when first used
-- Write in active voice ("The agent processes data" not "Data is processed")
-- Use concrete examples over abstract descriptions
+### Visual Elements
+- **Logo**: Size to 110x210px or adjust proportionally
+- **Images**: Center-align with `<div align="center">`, size to ~750px width
+- **Badges**: Use relevant badges only (commit activity, license, Python version)
+- **Navigation**: Use ◆ separator between links
+
+### Content
+- **Latest News**: Most recent first, use `[YYYY/MM]` format
+- **Benefits**: Use emojis for visual appeal
+- **Code blocks**: Always specify language
+- **Links**: Descriptive text, not "click here"
 
 ### Structure
-- Maintain clear heading hierarchy
-- Use consistent formatting throughout
+- Center-align header section
+- Progressive disclosure (quick value → details)
+- Clear heading hierarchy (H1 → H2 → H3)
 - Keep paragraphs short (3-4 lines max)
-- Use bullet points for lists
-
-### Code Examples
-- Always specify language for syntax highlighting
-- Include comments for complex commands
-- Use real values, not placeholders (with notes on what to change)
-- Test all commands before including
-
-### Visual Elements
-- Use center alignment for header section
-- Include badges for project status
-- Add navigation links with ◆ separator
-- Consider adding architecture diagram if helpful
 
 ## Best Practices
 
-### Structure and Organization
-1. **Follow the Strands SDK pattern** - Proven, professional structure
-2. **Progressive disclosure** - Most important info first
-3. **Keep it balanced** - Comprehensive yet focused
-4. **Use code examples liberally** - Show, don't just tell
-
-### Content and Writing
-5. **Start with codebase exploration** - Use Read/Glob/Grep to gather facts
-6. **Ask minimal questions** - Only request what you can't detect
-7. **Write for users** - Clear, accessible language
-8. **Be specific** - Actual commands, not placeholders
-
-### Visual and Formatting
-9. **Center-align header** - Professional, polished appearance
-10. **Include status badges** - Shows project health
-11. **Add navigation links** - Easy access to key sections
-12. **Proper markdown** - Syntax highlighting, alt text, proper hierarchy
+1. **Follow the Deep Insight pattern** - Visual, professional structure
+2. **Use center alignment** - Header and diagrams
+3. **Include logo** - Brand identity at top
+4. **Show real examples** - Actual commands and outputs
+5. **Link to resources** - Videos, workshops, sample outputs
+6. **Credit contributors** - Team info at bottom
+7. **Add Latest News** - Keep users informed of updates
 
 ## Common Pitfalls to Avoid
 
-### Content Issues
-- **Too minimal** - Just a title and install command isn't enough
-- **Too verbose** - Don't document every detail in README
-- **Vague instructions** - Show specific commands, not "install dependencies"
-- **Assuming knowledge** - Define terms, list prerequisites
-
-### Structure Issues
-- **Poor hierarchy** - Most important info should come first
-- **Missing Quick Start** - Users need working code fast
-- **No examples** - Show working code, not just API docs
-- **Broken examples** - Test all commands
-
-### Visual Issues
-- **Wall of text** - Use headings, bullets, code blocks
-- **No status indicators** - Add badges for project health
-- **Missing navigation** - Add quick links at top
-
-## Examples and References
-
-**Gold Standard**: Strands Agents SDK README
-- Perfect balance of depth and focus
-- Clear progressive disclosure
-- Excellent code examples
-- Professional presentation
-
-**Key characteristics to emulate**:
-- Center-aligned header with badges
-- Feature Overview before diving into details
-- Quick Start gets you running in 2 minutes
-- Features at a Glance shows practical usage
-- Documentation links for deeper exploration
-- Clean, professional appearance
-
-Use this as your template when generating READMEs.
+- Missing logo or visual elements
+- Not center-aligning header
+- Outdated "Latest News" section
+- Missing demo video or screenshots
+- Generic placeholder text
+- Broken internal links
+- Inconsistent formatting
 
 ## Validation
 
 Before finalizing, verify:
 
-1. **Completeness**: All essential sections present
-2. **Accuracy**: All commands and paths work
-3. **Clarity**: Non-technical user can follow instructions
-4. **Balance**: Not too minimal, not too verbose
-5. **Style**: Matches Strands SDK pattern
+1. **Visual appeal**: Logo, centered header, proper spacing
+2. **Completeness**: All essential sections present
+3. **Accuracy**: All commands and links work
+4. **Clarity**: Non-technical user can follow
+5. **Style**: Matches Deep Insight pattern
 
 A well-written README enables users to:
 - Understand what it does in 30 seconds
+- See visual proof (logo, diagrams, demos)
 - Get it running in 2-5 minutes
-- Find detailed docs if needed
+- Find detailed resources if needed
 - Feel confident about the project's quality

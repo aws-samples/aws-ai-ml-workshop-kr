@@ -24,6 +24,7 @@ dependencies = [
     "langchain>=1.0.1",
     "lovelyplots>=1.0.2",
     "weasyprint>=66.0",
+    "python-docx>=1.2.0",
     "scikit-learn>=1.7.1",
     "numpy>=1.26.4",
     "pandas>=2.3.1",

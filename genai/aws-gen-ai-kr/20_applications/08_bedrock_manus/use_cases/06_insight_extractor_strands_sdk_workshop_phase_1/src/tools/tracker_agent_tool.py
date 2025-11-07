@@ -84,7 +84,7 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
         ),
         agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
-        prompt_cache_info=(True, None),  # reasoning agent uses prompt caching
+        prompt_cache_info=(True, "default"),  # reasoning agent uses prompt caching
         tools=[],  # tracker doesn't need additional tools
         streaming=True
     )

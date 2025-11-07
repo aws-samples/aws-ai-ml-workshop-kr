@@ -74,6 +74,7 @@ def handle_researcher_agent_tool(task: Annotated[str, "The research task or ques
         system_prompts=apply_prompt_template(prompt_name="researcher", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
         agent_type="claude-sonnet-4-5", #claude-sonnet-3-7, claude-sonnet-4
         enable_reasoning=False,
+        prompt_cache_info=(True, "default"),  # reasoning agent uses prompt caching
         tools=[crawl_tool, tavily_tool, python_repl_tool, bash_tool],
         #tools=[tavily_tool, python_repl_tool, bash_tool],
         streaming=True  # Enable streaming for consistency
