@@ -1,0 +1,18 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cognito-idp:DescribeResourceServer",
+                "cognito-idp:DescribeUserPool",
+                "cognito-idp:DescribeUserPoolClient",
+                "cognito-idp:ListUserPools",
+                "cognito-idp:CreateResourceServer",
+                "cognito-idp:UpdateResourceServer",
+                "cognito-idp:DeleteResourceServer"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
