@@ -47,7 +47,7 @@ cd aws-ai-ml-workshop-kr/genai/aws-gen-ai-kr/20_applications/08_bedrock_manus/us
 cd setup/ && ./create-uv-env.sh deep-insight 3.12 && cd ..
 
 # 2. Run your analysis
-uv run python main.py --user_query "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
+uv run python main.py --user_query "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a docx file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
 ```
 
 > **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
@@ -56,13 +56,13 @@ uv run python main.py --user_query "Create a sales performance report for Moon M
 
 ### Fresh Food Sales Data Analysis
 
-> **Task**: "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a PDF file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
+> **Task**: "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a docx file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
 
 [▶️ Watch Full Demo on YouTube](https://www.youtube.com/watch?v=pn5aPfYSnp0)
 
 ### Sample Outputs
 
-📄 [English Report](./assets/report_en.pdf) | 📄 [Korean Report](./assets/report.pdf)
+📄 [English Report](./assets/report_en.docx) | 📄 [Korean Report](./assets/report.docx)
 
 ## Installation
 

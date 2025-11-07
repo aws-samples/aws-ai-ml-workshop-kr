@@ -279,7 +279,7 @@ doc = load_or_create_docx()
 # **CRITICAL: Check if this section already exists to prevent duplicates**
 section_title = "주요 발견사항 (Key Findings)"
 if section_exists(doc, section_title) or section_exists(doc, "Key Findings"):
-    print(f"⚠️  Section '{{section_title}}' already exists. Skipping to prevent duplicates.")
+    print(f"⚠️  Section '{section_title}' already exists. Skipping to prevent duplicates.")
     print("✅ Step 2 complete (already exists)")
 else:
     # Add section heading (if needed)

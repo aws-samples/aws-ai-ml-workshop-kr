@@ -1,0 +1,211 @@
+{
+  "metadata": {
+    "generated_at": "2025-11-07 09:12:28",
+    "total_calculations": 15,
+    "cited_calculations": 14,
+    "validation_status": "completed",
+    "data_source": "./data/Dat-fresh-food-claude.csv",
+    "validation_success_rate": "14/14"
+  },
+  "citations": [
+    {
+      "citation_id": "[1]",
+      "calculation_id": "calc_001",
+      "value": 8619150.0,
+      "description": "총 매출액",
+      "formula": "SUM(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[2]",
+      "calculation_id": "calc_002",
+      "value": 1220.0,
+      "description": "총 주문 건수",
+      "formula": "COUNT(*)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "index"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[3]",
+      "calculation_id": "calc_003",
+      "value": 2189.0,
+      "description": "총 판매 수량",
+      "formula": "SUM(Qty)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Qty"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[4]",
+      "calculation_id": "calc_004",
+      "value": 7064.877049180328,
+      "description": "평균 객단가 (AOV)",
+      "formula": "AVG(Amount)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[5]",
+      "calculation_id": "calc_005",
+      "value": 1834730.0,
+      "description": "최고 매출 월 (2024-05)",
+      "formula": "MAX(SUM(Amount) GROUP BY Month)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Date",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[6]",
+      "calculation_id": "calc_006",
+      "value": 3967350.0,
+      "description": "최고 매출 카테고리 (과일)",
+      "formula": "MAX(SUM(Amount) GROUP BY Category)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[7]",
+      "calculation_id": "calc_007",
+      "value": 46.029480865282544,
+      "description": "과일 매출 점유율 (%)",
+      "formula": "(SUM(Amount WHERE Category=top) / SUM(Amount)) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Category",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[8]",
+      "calculation_id": "calc_008",
+      "value": 440300.0,
+      "description": "최고 매출 도시 (성동구)",
+      "formula": "MAX(SUM(Amount) GROUP BY City)",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "ship-city",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[9]",
+      "calculation_id": "calc_009",
+      "value": 76.56068173775836,
+      "description": "서울 매출 점유율 (%)",
+      "formula": "(SUM(Amount WHERE State='서울') / SUM(Amount)) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "ship-state",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[10]",
+      "calculation_id": "calc_010",
+      "value": 54.016927423237796,
+      "description": "남성 고객 매출 점유율 (%)",
+      "formula": "(SUM(Amount WHERE Gender='M') / SUM(Amount)) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Gender",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[11]",
+      "calculation_id": "calc_011",
+      "value": 34.686599026586144,
+      "description": "30대 매출 점유율 (%)",
+      "formula": "(SUM(Amount WHERE Age='30대') / SUM(Amount)) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "Age Group",
+        "Amount"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    },
+    {
+      "citation_id": "[12]",
+      "calculation_id": "calc_012",
+      "value": 91.55737704918033,
+      "description": "프로모션 활용률 (%)",
+      "formula": "(COUNT(promotion-ids IS NOT NULL) / COUNT(*)) * 100",
+      "source_file": "./data/Dat-fresh-food-claude.csv",
+      "source_columns": [
+        "promotion-ids"
+      ],
+      "source_rows": "all rows",
+      "verification_status": "verified",
+      "verification_notes": "핵심 비즈니스 지표",
+      "timestamp": "2025-11-07 09:12:28",
+      "importance": "high"
+    }
+  ]
+}

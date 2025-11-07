@@ -7,15 +7,16 @@ from src.utils.bedrock import bedrock_info
 from strands import Agent
 from strands.models import BedrockModel
 from botocore.config import Config
-from botocore.exceptions import ClientError
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from botocore.exceptions import ClientError, EventStreamError
+from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from strands.types.exceptions import EventLoopException
 
 from strands.agent.agent_result import AgentResult
 from strands.types.content import ContentBlock, Message
 from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
 
-from strands.agent.conversation_manager import SlidingWindowConversationManager
+from strands.agent.conversation_manager import SummarizingConversationManager
+from src.prompts.template import apply_prompt_template
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
@@ -63,7 +64,7 @@ class strands_utils():
             if llm_type == "claude-sonnet-3-7": model_name = "Claude-V3-7-Sonnet-CRI"
             elif llm_type == "claude-sonnet-4": model_name = "Claude-V4-Sonnet-CRI"
             elif llm_type == "claude-sonnet-4-5": model_name = "Claude-V4-5-Sonnet-CRI"
-            
+
             ## BedrockModel params: https://strandsagents.com/latest/api-reference/models/?h=bedrockmodel#strands.models.bedrock.BedrockModel
             llm = BedrockModel(
                 model_id=bedrock_info.get_model_id(model_name=model_name),
@@ -110,14 +111,15 @@ class strands_utils():
     def get_agent(**kwargs):
 
         agent_name, system_prompts = kwargs["agent_name"], kwargs["system_prompts"]
-        agent_type = kwargs.get("agent_type", "claude-sonnet-3-7")
+        agent_type = kwargs.get("agent_type", "claude-sonnet-4-5")
         enable_reasoning = kwargs.get("enable_reasoning", False)
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
         
-        context_overflow_window_size = kwargs.get("context_overflow_window_size", 15)
-        context_overflow_should_truncate_results = kwargs.get("context_overflow_should_truncate_results", False)
+        # Context management parameters for SummarizingConversationManager
+        context_overflow_summary_ratio = kwargs.get("context_overflow_summary_ratio", 0.5)  # Summarize 50% of older messages
+        context_overflow_preserve_recent_messages = kwargs.get("context_overflow_preserve_recent_messages", 10)  # Keep recent 10 messages
 
         prompt_cache, cache_type = prompt_cache_info
         if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
@@ -130,9 +132,10 @@ class strands_utils():
             model=llm,
             system_prompt=system_prompts,
             tools=tools,
-            conversation_manager=ConversationEditor(
-                window_size=context_overflow_window_size,
-                should_truncate_results=context_overflow_should_truncate_results
+            conversation_manager=SummarizingConversationManager(
+                summary_ratio=context_overflow_summary_ratio,
+                preserve_recent_messages=context_overflow_preserve_recent_messages,
+                summarization_system_prompt=apply_prompt_template(prompt_name="summarization", prompt_context={})
             ),
             callback_handler=None # async iterator로 대체 하기 때문에 None 설정
         )
@@ -213,9 +216,11 @@ class strands_utils():
                 # If we get here, streaming was successful
                 return
 
-            except (EventLoopException, ClientError) as e:
-                # Check if it's a throttling error
+            except (EventLoopException, ClientError, EventStreamError) as e:
+                # Check if it's a throttling error or transient service error
                 is_throttling = False
+                is_transient = False
+
                 if isinstance(e, EventLoopException):
                     # Check if the underlying error is throttling
                     error_msg = str(e).lower()
@@ -223,20 +228,37 @@ class strands_utils():
                 elif isinstance(e, ClientError):
                     error_code = e.response.get('Error', {}).get('Code', '')
                     is_throttling = error_code == 'ThrottlingException'
+                elif isinstance(e, EventStreamError):
+                    # Check for transient service errors
+                    error_msg = str(e).lower()
+                    is_transient = 'serviceunavailable' in error_msg or 'unable to process' in error_msg
+                    is_throttling = 'throttling' in error_msg
 
-                if is_throttling and attempt < max_attempts - 1:
+                # Retry for throttling or transient errors
+                if (is_throttling or is_transient) and attempt < max_attempts - 1:
                     delay = base_delay * (2 ** attempt)  # Exponential backoff
                     next_attempt = attempt + 2  # Next attempt number (attempt is 0-indexed)
-                    logger.info(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
-                    logger.info(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
-                    await asyncio.sleep(delay)
-                    logger.info(f"🚀 Starting retry attempt {next_attempt}/{max_attempts}")
+
+                    if is_throttling:
+                        logger.info(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
+                        logger.info(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
+                        await asyncio.sleep(delay)
+                        logger.info(f"🚀 Starting retry attempt {next_attempt}/{max_attempts}")
+                    else:
+                        # Silent retry for transient service errors
+                        await asyncio.sleep(delay)
                     continue
                 else:
-                    logger.error(f"Error in streaming response (attempt {attempt + 1}/{max_attempts}): {e}")
-                    logger.error(traceback.format_exc())
+                    # Only log errors on final attempt to reduce noise
                     if attempt == max_attempts - 1:
+                        logger.error(f"Error in streaming response (attempt {attempt + 1}/{max_attempts}): {e}")
+                        logger.error(traceback.format_exc())
                         raise  # Re-raise on final attempt
+                    else:
+                        # Silent retry for other errors
+                        delay = base_delay * (2 ** attempt)
+                        await asyncio.sleep(delay)
+                        continue
             except Exception as e:
                 logger.error(f"Unexpected error in streaming response: {e}")
                 logger.error(traceback.format_exc())
@@ -371,6 +393,8 @@ class strands_utils():
         callback_reasoning = ColoredStreamingCallback('cyan')        
         callback_tool = ColoredStreamingCallback('yellow')
 
+        #print ("event", event)
+
         if event:
             if event.get("event_type") == "text_chunk":
                 callback_default.on_llm_new_token(event.get('data', ''))
@@ -446,37 +470,3 @@ class FunctionNode(MultiAgentBase):
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
         )
-
-class ConversationEditor(SlidingWindowConversationManager):
-
-    """
-    Manager that only operates on overflow.
-
-        Args:
-            window_size (int, optional): Maximum number of messages to retain when
-                context overflow occurs. Defaults to 20.
-            should_truncate_results (bool, optional): If True, truncate large tool
-                results with a placeholder message when overflow happens. If False,
-                preserve full tool results but remove more historical messages.
-                Defaults to True.
-    """
-
-    def __init__(self, window_size=7, should_truncate_results=False):
-        super().__init__(
-            window_size=window_size,
-            should_truncate_results=should_truncate_results
-        )
-
-    def apply_management(self, agent, **kwargs):
-        """After each event loop - do nothing"""
-        print("None")
-        pass
-
-    def reduce_context(self, agent, e=None, **kwargs):
-        """Only on overflow - use parent class's reduce_context"""
-        print(f"⚠️ Overflow occurred! Cleaning up {len(agent.messages)} messages...")
-
-        # 부모 클래스의 reduce_context는 should_truncate_results를 자동으로 처리
-        super().reduce_context(agent, e, **kwargs)
-
-        print(f"✅ Cleanup complete: {len(agent.messages)} messages remaining")
