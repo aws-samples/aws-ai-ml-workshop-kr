@@ -63,12 +63,12 @@ uv run python main.py --user_query "Create a sales performance report for Moon M
 ### Fresh Food Sales Data Analysis
 
 > **Task**: "Create a sales performance report for Moon Market. Analyze from sales and marketing perspectives, generate charts and extract insights, then create a docx file. The analysis target is the `./data/Dat-fresh-food-claude.csv` file."
+>
+> **Workflow**: Input (CSV data file: `Dat-fresh-food-claude.csv`) → Process (Natural language prompt: "Analyze sales performance, generate charts, extract insights") → Output (DOCX report with analysis, visualizations, and marketing insights)
 
 [▶️ Watch Full Demo on YouTube](https://www.youtube.com/watch?v=pn5aPfYSnp0)
 
 ### Sample Outputs
-
-**Workflow**: Input (CSV data file: `Dat-fresh-food-claude.csv`) → Process (Natural language prompt: "Analyze sales performance, generate charts, extract insights") → Output (DOCX report with analysis, visualizations, and marketing insights)
 
 📄 [English Report](./assets/report_en.docx) | 📄 [Korean Report](./assets/report.docx)
 
