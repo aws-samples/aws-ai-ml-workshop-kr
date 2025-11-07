@@ -68,6 +68,8 @@ uv run python main.py --user_query "Create a sales performance report for Moon M
 
 ### Sample Outputs
 
+**Workflow**: Input (CSV data file: `Dat-fresh-food-claude.csv`) → Process (Natural language prompt: "Analyze sales performance, generate charts, extract insights") → Output (DOCX report with analysis, visualizations, and marketing insights)
+
 📄 [English Report](./assets/report_en.docx) | 📄 [Korean Report](./assets/report.docx)
 
 ## Installation
