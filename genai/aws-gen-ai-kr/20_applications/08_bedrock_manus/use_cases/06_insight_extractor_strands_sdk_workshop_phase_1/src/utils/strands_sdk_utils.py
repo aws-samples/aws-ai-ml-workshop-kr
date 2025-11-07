@@ -12,7 +12,7 @@ from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHan
 from strands.types.exceptions import EventLoopException
 
 from strands.agent.agent_result import AgentResult
-from strands.types.content import ContentBlock, Message
+from strands.types.content import ContentBlock, Message, SystemContentBlock
 from strands.multiagent.base import MultiAgentBase, NodeResult, MultiAgentResult, Status
 
 from strands.agent.conversation_manager import SummarizingConversationManager
@@ -56,7 +56,6 @@ class strands_utils():
     def get_model(**kwargs):
 
         llm_type = kwargs["llm_type"]
-        cache_type = kwargs["cache_type"]
         enable_reasoning = kwargs["enable_reasoning"]
 
         if llm_type in ["claude-sonnet-3-7", "claude-sonnet-4", "claude-sonnet-4-5"]:
@@ -71,14 +70,14 @@ class strands_utils():
                 streaming=True,
                 max_tokens=8192*5,
                 stop_sequences=["\n\nHuman"],
-                temperature=1 if enable_reasoning else 0.01, 
+                temperature=1 if enable_reasoning else 0.01,
                 additional_request_fields={
                     "thinking": {
-                        "type": "enabled" if enable_reasoning else "disabled", 
+                        "type": "enabled" if enable_reasoning else "disabled",
                         **({"budget_tokens": 8192} if enable_reasoning else {}),
                     }
                 },
-                cache_prompt=cache_type, # None/ephemeral/defalut
+                # cache_prompt parameter removed - use SystemContentBlock with cachePoint instead
                 #cache_tools: Cache point type for tools
                 boto_client_config=Config(
                     read_timeout=900,
@@ -94,7 +93,7 @@ class strands_utils():
                 max_tokens=8192,
                 stop_sequences=["\n\nHuman"],
                 temperature=0.01,
-                cache_prompt=cache_type, # None/ephemeral/defalut
+                # cache_prompt parameter removed - use SystemContentBlock with cachePoint instead
                 #cache_tools: Cache point type for tools
                 boto_client_config=Config(
                     read_timeout=900,
@@ -122,15 +121,24 @@ class strands_utils():
         context_overflow_preserve_recent_messages = kwargs.get("context_overflow_preserve_recent_messages", 10)  # Keep recent 10 messages
 
         prompt_cache, cache_type = prompt_cache_info
-        if prompt_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
-        else: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
-
-        llm = strands_utils.get_model(llm_type=agent_type, cache_type=cache_type, enable_reasoning=enable_reasoning)
+        llm = strands_utils.get_model(llm_type=agent_type, enable_reasoning=enable_reasoning)
         llm.config["streaming"] = streaming
+
+        # Convert system_prompt to SystemContentBlock array with cachePoint if caching is enabled
+        if prompt_cache:
+            logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Enabled{Colors.END}")
+            system_prompt_with_cache = [
+                SystemContentBlock(text=system_prompts),
+                SystemContentBlock(cachePoint={"type": cache_type})
+            ]
+        else:
+            # If caching is disabled, pass the string as-is
+            logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
+            system_prompt_with_cache = system_prompts
 
         agent = Agent(
             model=llm,
-            system_prompt=system_prompts,
+            system_prompt=system_prompt_with_cache,
             tools=tools,
             conversation_manager=SummarizingConversationManager(
                 summary_ratio=context_overflow_summary_ratio,
