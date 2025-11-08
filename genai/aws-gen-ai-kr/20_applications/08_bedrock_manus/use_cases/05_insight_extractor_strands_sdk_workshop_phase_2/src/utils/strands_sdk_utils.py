@@ -7,7 +7,7 @@ from src.utils.bedrock import bedrock_info
 from strands import Agent
 from strands.models import BedrockModel
 from botocore.config import Config
-from botocore.exceptions import ClientError, EventStreamError
+from botocore.exceptions import ClientError
 from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from strands.types.exceptions import EventLoopException
 
@@ -224,10 +224,9 @@ class strands_utils():
                 # If we get here, streaming was successful
                 return
 
-            except (EventLoopException, ClientError, EventStreamError) as e:
-                # Check if it's a throttling error or transient service error
+            except (EventLoopException, ClientError) as e:
+                # Check if it's a throttling error
                 is_throttling = False
-                is_transient = False
 
                 if isinstance(e, EventLoopException):
                     # Check if the underlying error is throttling
@@ -236,25 +235,16 @@ class strands_utils():
                 elif isinstance(e, ClientError):
                     error_code = e.response.get('Error', {}).get('Code', '')
                     is_throttling = error_code == 'ThrottlingException'
-                elif isinstance(e, EventStreamError):
-                    # Check for transient service errors
-                    error_msg = str(e).lower()
-                    is_transient = 'serviceunavailable' in error_msg or 'unable to process' in error_msg
-                    is_throttling = 'throttling' in error_msg
 
-                # Retry for throttling or transient errors
-                if (is_throttling or is_transient) and attempt < max_attempts - 1:
+                # Retry for throttling errors
+                if is_throttling and attempt < max_attempts - 1:
                     delay = base_delay * (2 ** attempt)  # Exponential backoff
                     next_attempt = attempt + 2  # Next attempt number (attempt is 0-indexed)
 
-                    if is_throttling:
-                        logger.info(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
-                        logger.info(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
-                        await asyncio.sleep(delay)
-                        logger.info(f"🚀 Starting retry attempt {next_attempt}/{max_attempts}")
-                    else:
-                        # Silent retry for transient service errors
-                        await asyncio.sleep(delay)
+                    logger.info(f"🔄 Throttling detected - Retry Step {attempt + 1}/{max_attempts}")
+                    logger.info(f"⏱️  Waiting {delay} seconds before Step {next_attempt} retry...")
+                    await asyncio.sleep(delay)
+                    logger.info(f"🚀 Starting retry attempt {next_attempt}/{max_attempts}")
                     continue
                 else:
                     # Only log errors on final attempt to reduce noise

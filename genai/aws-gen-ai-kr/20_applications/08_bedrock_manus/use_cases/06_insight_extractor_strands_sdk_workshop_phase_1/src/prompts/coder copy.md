@@ -212,9 +212,7 @@ print("✅ Results saved to all_results.txt")
 
 **CRITICAL: Mandatory Initialization (MUST Execute First)**
 
-**Problem:**
-- Forgetting to initialize `korean_font` causes NameError when setting fontproperties
-- Python REPL sessions do NOT persist variables between calls
+**Problem:** Forgetting to initialize `korean_font`, `va`, `xytext` causes NameError and requires code rewrite
 
 **Solution:** ALWAYS execute this initialization block BEFORE creating any charts:
 
@@ -237,12 +235,6 @@ plt.rcParams['figure.dpi'] = 200
 - Missing `korean_font` → NameError when setting fontproperties
 - Missing font setup → Korean text renders as boxes (□□□)
 - Skipping this = guaranteed error and code rewrite
-
-**⚠️ IMPORTANT - Parameter Usage Guidelines:**
-- `va`, `ha` are function PARAMETERS, not variables - use string literals: `va='bottom'`, `ha='center'`
-- `xytext` only works with `ax.annotate()`, NOT with `ax.text()`
-- For `ax.text()` offsets: Calculate manually (e.g., `y + offset_value`)
-- See "Data Label Positioning Best Practices" section below for details
 
 **Core Principles:**
 
@@ -337,9 +329,9 @@ ax.set_ylabel('값', fontproperties=korean_font, fontsize=12)
 
 # Add data labels - use literals directly, NOT undefined variables
 for i, (x, y) in enumerate(zip(x_data, y_data)):
-    # Use ax.text() with manual offset calculation (simple and clear)
-    ax.text(x, y + (max(y_data) * 0.02), f'{{y:,.0f}}원',  # Offset by 2% of max value
+    ax.text(x, y, f'{{y:,.0f}}원',
             ha='center', va='bottom',  # String literals, not variables
+            xytext=(0, 5), textcoords='offset points',  # Tuple and string, not variables
             fontproperties=korean_font, fontsize=10)
 
 ax.grid(True, alpha=0.3)
@@ -347,43 +339,27 @@ ax.grid(True, alpha=0.3)
 
 **Data Label Positioning Best Practices:**
 
-**CRITICAL: ax.text() vs ax.annotate() - Know the difference!**
-
-*Two Ways to Add Labels:*
-
-**Method 1: ax.text() - Simple, direct positioning**
-- Parameters: `x`, `y`, `text`, `va`, `ha`, `fontproperties`
-- **Does NOT support `xytext` or `textcoords`**
-- Use manual offset: `ax.text(x, y + offset, label, va='bottom')`
-
-**Method 2: ax.annotate() - Advanced with offset support**
-- Parameters: `text`, `xy`, `xytext`, `textcoords`, `va`, `ha`, `fontproperties`
-- **Supports `xytext` and `textcoords` for smart offsets**
-- Use offset: `ax.annotate(label, xy=(x, y), xytext=(0, 5), textcoords='offset points')`
+**CRITICAL: These parameters must be set explicitly in ax.text() calls**
 
 *Positioning Parameters (NOT variables - use directly in function calls):*
 - `va` (vertical alignment): String parameter, use `va='bottom'`, `va='center'`, or `va='top'`
 - `ha` (horizontal alignment): String parameter, use `ha='center'`, `ha='left'`, or `ha='right'`
+- `xytext`: Tuple parameter for offset, use `xytext=(0, 5)` for 5pt above, `xytext=(0, -5)` for 5pt below
+- `textcoords='offset points'`: String parameter to interpret xytext as point units
 
-**Common Errors:**
+**Common Error:**
 ```python
-# ❌ WRONG - Using undefined variables
-ax.text(x, y, label, va=va, ha=ha)  # NameError: va, ha not defined
+# ❌ WRONG - Trying to use undefined variables
+ax.text(x, y, label, va=va, xytext=xytext)  # NameError: va, xytext not defined
 
-# ❌ WRONG - ax.text() does NOT support xytext
-ax.text(x, y, label, va='bottom', xytext=(0, 5))  # AttributeError: no property 'xytext'
-
-# ✅ CORRECT - ax.text() with manual offset
-ax.text(x, y + offset_value, label, va='bottom', ha='center')
-
-# ✅ CORRECT - ax.annotate() with xytext offset
-ax.annotate(label, xy=(x, y), xytext=(0, 5), textcoords='offset points', va='bottom', ha='center')
+# ✅ CORRECT - Use string/tuple literals directly
+ax.text(x, y, label, va='bottom', xytext=(0, 5), textcoords='offset points')
 ```
 
-*Recommended Approach by Chart Type:*
-- **Bar charts**: Use `ax.text()` with manual offset or place directly on bar tops
-- **Line charts**: Use `ax.text()` with calculated offset based on data range
-- **Complex annotations**: Use `ax.annotate()` when you need arrows or precise offset control
+*Recommended Settings by Chart Type:*
+- **Bar charts**: `va='bottom'` with no xytext (labels sit on top of bars)
+- **Line charts**: `va='bottom'`, `xytext=(0, 5)`, `textcoords='offset points'` (5-8pt offset prevents overlap)
+- **Scatter plots**: `va='center'`, `xytext=(5, 0)`, `textcoords='offset points'` (side offset)
 
 *Safe General Annotation:*
 ```python
@@ -663,12 +639,7 @@ ax.set_title('제목', fontproperties=korean_font)  # NameError: korean_font not
 
 ❌ **WRONG - Using undefined parameter variables:**
 ```python
-ax.text(x, y, label, va=va, ha=ha)  # NameError: va, ha not defined
-```
-
-❌ **WRONG - Using xytext with ax.text():**
-```python
-ax.text(x, y, label, xytext=(0, 5))  # AttributeError: 'Text' object has no property 'xytext'
+ax.text(x, y, label, va=va, ha=ha, xytext=xytext)  # NameError: va, ha, xytext not defined
 ```
 
 ❌ **WRONG - Missing imports:**
@@ -693,12 +664,7 @@ df = pd.read_csv('data.csv')
 # Create chart with explicit parameters
 fig, ax = plt.subplots()
 ax.set_title('제목', fontproperties=korean_font)
-
-# Method 1: ax.text() with manual offset
-ax.text(x, y + offset_value, label, va='bottom', ha='center')
-
-# Method 2: ax.annotate() with xytext (if offset needed)
-ax.annotate(label, xy=(x, y), xytext=(0, 5), textcoords='offset points', va='bottom', ha='center')
+ax.text(x, y, label, va='bottom', ha='center', xytext=(0, 5), textcoords='offset points')
 ```
 
 Always:
@@ -837,12 +803,11 @@ ax.set_title('월별 매출 추이', fontproperties=korean_font, fontsize=16, fo
 ax.set_xlabel('월', fontproperties=korean_font, fontsize=12)
 ax.set_ylabel('매출액 (원)', fontproperties=korean_font, fontsize=12)
 
-# Add data labels with manual offset
-max_value = monthly_sales.values.max()
-offset = max_value * 0.02  # 2% of max value
+# Add data labels with proper offset
 for i, value in enumerate(monthly_sales.values):
-    ax.text(i, value + offset, f'{{value:,.0f}}원', ha='center', va='bottom',
-            fontproperties=korean_font, fontsize=10)
+    ax.text(i, value, f'{{value:,.0f}}원', ha='center', va='bottom',
+            fontproperties=korean_font, fontsize=10,
+            xytext=(0, 5), textcoords='offset points')
 
 ax.grid(True, alpha=0.3)
 plt.tight_layout()
