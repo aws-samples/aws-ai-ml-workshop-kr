@@ -142,22 +142,28 @@ Brief description of the transformation or value provided.
 
 #### 4. Quick Start
 
-Minimal commands to get running:
+Minimal commands to get running (2-3 steps max):
 
 ```markdown
 ## Quick Start
 
 \`\`\`bash
-# 1. Clone and setup
-git clone repo-url
-cd project-dir
-cd setup/ && ./create-uv-env.sh env-name 3.12 && cd ..
+# 1. Clone and setup environment
+git clone https://github.com/user/repo.git
+cd repo-directory
+./setup.sh  # or your setup command
 
-# 2. Run your analysis
-uv run python main.py --user_query "Your task here"
+# 2. Configure credentials/environment (if needed)
+cp .env.example .env
+# Edit .env with your configuration
+
+# 3. Run basic example
+python main.py --example "basic task"
 \`\`\`
 
-> **Note**: Requires Python 3.12+ and AWS credentials configured (tested in us-west-2 region).
+> **Prerequisites**: List key requirements (e.g., Python 3.12+, API keys, system dependencies)
+>
+> **Need more options?** See [Installation](#installation) section below for detailed setup instructions and alternative configuration methods.
 ```
 
 #### 5. Demo
@@ -170,6 +176,8 @@ Video and sample outputs:
 ### Use Case Title
 
 > **Task**: "Detailed task description"
+>
+> **Workflow**: Input (data source) → Process (natural language prompt) → Output (deliverables with analysis)
 
 [▶️ Watch Full Demo on YouTube](video-url)
 
@@ -185,44 +193,61 @@ Complete setup with configuration:
 ```markdown
 ## Installation
 
+This section provides detailed installation instructions and alternative configuration options. For a quick setup, see [Quick Start](#quick-start) above.
+
 ### Environment Setup
 
 \`\`\`bash
-# Navigate to setup directory
-cd setup/
+# Clone the repository
+git clone https://github.com/user/repo.git
+cd repo-directory
 
-# Create UV environment
-./create-uv-env.sh project-name 3.12
-
-# Return to project root and run
-cd ..
-uv run python main.py --user_query "Your request here"
+# Install dependencies (choose your method)
+pip install -r requirements.txt
+# OR
+poetry install
+# OR
+./setup.sh
 \`\`\`
 
-### Configure AWS Credentials
+The setup automatically:
+- Installs required dependencies
+- Sets up virtual environment
+- Configures initial settings
 
-**Option 1: AWS CLI (Recommended)**
+### Configuration
+
+Provide multiple configuration options for flexibility:
+
+**Option 1: Configuration File (Recommended)**
 
 \`\`\`bash
-aws configure
+cp config.example.yaml config.yaml
+# Edit config.yaml with your settings
 \`\`\`
 
 **Option 2: Environment Variables**
 
 \`\`\`bash
-export AWS_REGION=us-west-2
-export AWS_ACCESS_KEY_ID=your_access_key
-export AWS_SECRET_ACCESS_KEY=your_secret_key
-
-# OR use .env file
-cp .env.example .env
-# Edit .env with your AWS credentials
+# Direct export (session-based)
+export API_KEY=your_api_key
+export ENVIRONMENT=production
 \`\`\`
+
+**Option 3: .env File (Persistent)**
+
+\`\`\`bash
+# Copy example file and edit
+cp .env.example .env
+# Edit .env with your configuration
+\`\`\`
+
+> **Security Note**: Never commit files with real credentials to version control. Sensitive files should be in \`.gitignore\`.
 ```
 
 #### 7. Architecture
 
-System overview with centered diagram:
+System overview with visual diagram and optional text-based architecture:
 
 ```markdown
 ## Architecture
@@ -233,9 +258,46 @@ System overview with centered diagram:
   <img src="./assets/architecture.png" alt="Project Architecture" width="750">
 </div>
 
-### Architecture Details
+### Component Architecture (Optional)
 
-Include text diagrams or additional details as needed.
+For complex systems, include text-based diagrams to explain flow:
+
+\`\`\`
+┌─────────────────────────────────────────────────────────┐
+│                     User Input                          │
+│                   (Entry Point)                         │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│  COMPONENT A (Primary Handler)                          │
+│  • Responsibility 1                                     │
+│  • Responsibility 2                                     │
+│  • Responsibility 3                                     │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│  COMPONENT B (Processor)                                │
+│  • Processing step 1                                    │
+│  • Processing step 2                                    │
+└──────────┬──────────┬──────────┬────────────────────────┘
+           │          │          │
+     ┌─────┘    ┌─────┘    ┌─────┘
+     ▼          ▼          ▼
+┌─────────┐ ┌─────────┐ ┌─────────┐
+│ MODULE1 │ │ MODULE2 │ │ MODULE3 │
+│         │ │         │ │         │
+│ Task A  │ │ Task B  │ │ Task C  │
+└─────────┘ └─────────┘ └─────────┘
+\`\`\`
+
+### Key Design Decisions
+
+Explain architectural choices:
+- **Pattern Used**: Description of architectural pattern (e.g., microservices, event-driven)
+- **Technology Stack**: Key frameworks and libraries
+- **Scalability**: How the system scales
 ```
 
 #### 8. Contributing
@@ -265,9 +327,12 @@ git push origin feature/your-feature-name
 
 ### Contribution Areas
 
-- **Area 1**: Description
-- **Area 2**: Description
-- **Area 3**: Description
+- **Feature Development**: Add new features and capabilities
+- **Bug Fixes**: Fix issues and improve stability
+- **Documentation**: Improve guides, examples, and tutorials
+- **Testing**: Add tests and improve test coverage
+- **Performance**: Optimize code and improve efficiency
+- **Design**: Improve UI/UX and visual elements
 ```
 
 #### 9. License
@@ -283,23 +348,32 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ```markdown
 ## Acknowledgments
 
-### Philosophy
+### Philosophy (Optional)
 
-> **"Project Philosophy"**
+> **"Your project philosophy or motto"**
 
-Brief description of project philosophy or approach.
+Brief description of project values, inspiration, or approach.
 
 ## Contributors
 
-- **Name** - Title
-  - [Email](mailto:email) | [LinkedIn](url) | [GitHub](url)
+**Option 1: Simple List**
+- **Name** - Role
+  - [Email](mailto:email) · [GitHub](https://github.com/username)
+
+**Option 2: Table Format (for multiple contributors)**
+
+| Name | Role | Contact |
+|------|------|---------|
+| **Person 1** | Lead Developer | [Email](mailto:email1) · [LinkedIn](url) · [GitHub](url) |
+| **Person 2** | Contributor | [Email](mailto:email2) · [LinkedIn](url) · [GitHub](url) |
+| **Person 3** | Documentation | [Email](mailto:email3) · [LinkedIn](url) · [GitHub](url) |
 
 ---
 
 <div align="center">
   <p>
-    <strong>Built with ❤️ by Team Name</strong><br>
-    <sub>Project mission statement</sub>
+    <strong>Built with ❤️ by [Team Name]</strong><br>
+    <sub>Your project mission or tagline</sub>
   </p>
 </div>
 ```
