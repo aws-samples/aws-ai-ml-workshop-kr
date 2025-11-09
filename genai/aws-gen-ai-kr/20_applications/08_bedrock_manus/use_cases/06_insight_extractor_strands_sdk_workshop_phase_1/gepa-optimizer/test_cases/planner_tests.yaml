@@ -1,0 +1,35 @@
+test_cases:
+  - input: "Python으로 CSV 데이터를 분석하고 시각화해서 보고서 작성"
+    expected: "Should create detailed plan with: 1) data loading, 2) exploratory analysis, 3) visualization creation, 4) report generation"
+    metadata:
+      category: "data_analysis"
+      priority: "high"
+      min_steps: 4
+
+  - input: "간단한 덧셈 계산"
+    expected: "Should create concise plan for simple task without over-engineering"
+    metadata:
+      category: "simple"
+      priority: "medium"
+      min_steps: 1
+
+  - input: "머신러닝 모델 학습 파이프라인 구축"
+    expected: "Should create comprehensive plan with: data preprocessing, feature engineering, model selection, training, evaluation, and validation"
+    metadata:
+      category: "ml_pipeline"
+      priority: "high"
+      min_steps: 6
+
+  - input: "웹사이트에서 데이터 수집하고 분석"
+    expected: "Should create plan with: web scraping setup, data extraction, cleaning, storage, and analysis"
+    metadata:
+      category: "data_collection"
+      priority: "high"
+      min_steps: 5
+
+  - input: "텍스트 파일 생성"
+    expected: "Should create simple plan without unnecessary complexity"
+    metadata:
+      category: "simple"
+      priority: "low"
+      min_steps: 1

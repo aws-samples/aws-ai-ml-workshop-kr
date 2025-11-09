@@ -1,0 +1,56 @@
+test_cases:
+  - input: "안녕하세요"
+    expected: "Should respond directly without handoff to planner"
+    metadata:
+      category: "greeting"
+      priority: "medium"
+      expected_action: "respond_to_user"
+
+  - input: "서울시 아파트 매매 데이터를 분석해서 상세한 보고서를 작성해주세요"
+    expected: "Should handoff to planner for complex multi-step task"
+    metadata:
+      category: "complex_task"
+      priority: "high"
+      expected_action: "handoff_to_planner"
+
+  - input: "고마워요"
+    expected: "Should respond directly with acknowledgment"
+    metadata:
+      category: "simple"
+      priority: "low"
+      expected_action: "respond_to_user"
+
+  - input: "Python으로 CSV 파일을 읽어서 통계 분석하고 시각화한 다음 PDF 보고서로 만들어줘"
+    expected: "Should handoff to planner - requires multiple tools and steps"
+    metadata:
+      category: "complex_task"
+      priority: "high"
+      expected_action: "handoff_to_planner"
+
+  - input: "현재 날씨가 어때?"
+    expected: "Should respond directly - simple informational query"
+    metadata:
+      category: "simple_query"
+      priority: "medium"
+      expected_action: "respond_to_user"
+
+  - input: "데이터셋의 결측치를 처리하고, 이상치를 탐지한 다음, 머신러닝 모델을 학습시켜서 예측 결과를 시각화해줘"
+    expected: "Should handoff to planner - complex multi-stage ML pipeline"
+    metadata:
+      category: "complex_task"
+      priority: "high"
+      expected_action: "handoff_to_planner"
+
+  - input: "1 + 1은 얼마야?"
+    expected: "Should respond directly with simple answer"
+    metadata:
+      category: "simple"
+      priority: "low"
+      expected_action: "respond_to_user"
+
+  - input: "재무 데이터를 분석해서 트렌드 파악하고 리스크 요인을 찾아낸 다음 전략을 제안해줘"
+    expected: "Should handoff to planner - complex analytical task with multiple deliverables"
+    metadata:
+      category: "complex_task"
+      priority: "high"
+      expected_action: "handoff_to_planner"

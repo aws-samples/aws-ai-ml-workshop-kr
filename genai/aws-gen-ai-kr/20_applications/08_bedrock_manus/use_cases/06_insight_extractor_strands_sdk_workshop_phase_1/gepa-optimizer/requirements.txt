@@ -1,0 +1,12 @@
+# GEPA Optimizer - Core Dependencies
+
+# Required for test case loading
+pyyaml>=6.0
+
+# Optional - only needed if using this outside of projects with these dependencies
+# boto3>=1.40.0  # For Amazon Bedrock
+# strands-agents>=1.12.0  # For Strands SDK
+
+# Note: This framework is designed to work with Strands SDK and Amazon Bedrock.
+# If your project already has these dependencies, you only need pyyaml.
+# Otherwise, uncomment the optional dependencies above.

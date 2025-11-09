@@ -1,0 +1,30 @@
+test_cases:
+  - input: "Hello, how are you?"
+    expected: "Should respond with a friendly greeting"
+    metadata:
+      category: "greeting"
+      priority: "medium"
+
+  - input: "Explain machine learning in simple terms"
+    expected: "Should provide clear, concise explanation suitable for beginners"
+    metadata:
+      category: "explanation"
+      priority: "high"
+
+  - input: "What is 2 + 2?"
+    expected: "Should answer correctly and concisely"
+    metadata:
+      category: "simple_question"
+      priority: "low"
+
+  - input: "Can you help me with a complex data analysis task?"
+    expected: "Should acknowledge the request appropriately"
+    metadata:
+      category: "request"
+      priority: "medium"
+
+  - input: "Thank you for your help!"
+    expected: "Should respond graciously"
+    metadata:
+      category: "gratitude"
+      priority: "low"
