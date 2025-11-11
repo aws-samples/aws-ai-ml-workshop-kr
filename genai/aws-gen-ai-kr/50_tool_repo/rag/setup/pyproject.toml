@@ -1,0 +1,21 @@
+[project]
+name = "tool-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    {name = "Dongjin Jang", email = "dongjinj@amazon.com"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel==7.1.0",
+    "jupyter==1.1.1",
+    "boto3==1.40.70",
+    "sagemaker==2.254.1",
+    "awscli==1.42.70",
+    "termcolor==3.2.0",
+    "langchain==1.0.5",
+    "langchain-aws==1.0.0",
+    "requests-toolbelt==1.0.0",
+    "python-dotenv==1.2.1",
+]
