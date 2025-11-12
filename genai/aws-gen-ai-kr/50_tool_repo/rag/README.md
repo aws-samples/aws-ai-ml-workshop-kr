@@ -74,26 +74,30 @@ Edit `.env` with your settings:
 # AWS Configuration
 AWS_REGION=us-west-2
 AWS_DEFAULT_REGION=us-west-2
+AWS_ACCOUNT_ID=your-account-id
+
+# SageMaker Configuration
+SAGEMAKER_EXECUTION_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/service-role/AmazonSageMaker-ExecutionRole-XXXXXXXX
+DOCUMENT_PARSE_ENDPOINT_NAME=Upstage-Document-Parse-Test
 
 # Model Configuration
 LLM_MODEL_NAME=Claude-V4-5-Sonnet-CRI
 EMBEDDING_MODEL_NAME=Cohere-Embed-V4-CRI
 EMBEDDING_DIMENSION=1024
 
-# OpenSearch Configuration (will be auto-populated after OpenSearch setup)
-OPENSEARCH_DOMAIN_ENDPOINT=https://your-domain.us-west-2.es.amazonaws.com
-OPENSEARCH_USER_ID=your-username
-OPENSEARCH_USER_PASSWORD=your-password
-INDEX_NAME=complex-doc-index
-
-# SageMaker Configuration
-DOCUMENT_PARSE_ENDPOINT_NAME=Upstage-Document-Parse-Test
-
 # Chunking Configuration
 PARENT_CHUNK_SIZE=1024
 PARENT_CHUNK_OVERLAP=0
 CHILD_CHUNK_SIZE=256
 CHILD_CHUNK_OVERLAP=64
+
+# OpenSearch Configuration (will be auto-populated after OpenSearch setup)
+INDEX_NAME=complex-doc-index
+OPENSEARCH_VERSION=3.1
+OPENSEARCH_DOMAIN_NAME=my-opensearch-domain
+OPENSEARCH_DOMAIN_ENDPOINT=https://your-opensearch-domain.us-west-2.es.amazonaws.com
+OPENSEARCH_USER_ID=your-opensearch-username
+OPENSEARCH_USER_PASSWORD=your-opensearch-password
 ```
 
 ### 3. Setup OpenSearch
