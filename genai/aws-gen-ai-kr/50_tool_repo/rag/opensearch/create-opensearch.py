@@ -17,35 +17,47 @@ import botocore
 import time
 import argparse
 import re
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load .env file
+env_path = Path(__file__).parent.parent / '.env'
+if env_path.exists():
+    load_dotenv(env_path)
+    print(f"Loaded configuration from {env_path}")
 
 # 모듈 경로 추가
 module_path = ".."
 sys.path.append(os.path.abspath(module_path))
 
-from utils.ssm import parameter_store
-
 def parse_arguments():
-    """명령행 인수 파싱"""
+    """명령행 인수 파싱 (.env 파일에서 기본값 로드)"""
+    # .env에서 기본값 가져오기 (없으면 하드코딩된 기본값 사용)
+    default_user_id = os.getenv('OPENSEARCH_USER_ID', 'raguser')
+    default_password = os.getenv('OPENSEARCH_USER_PASSWORD', 'MarsEarth1!')
+    default_version = os.getenv('OPENSEARCH_VERSION', '3.1')
+    default_domain_name = os.getenv('OPENSEARCH_DOMAIN_NAME', '')
+
     parser = argparse.ArgumentParser(description='OpenSearch 클러스터 설정 스크립트')
-    parser.add_argument('--version', '-v', default="2.11", 
-                       help='OpenSearch 버전 (예: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19). 기본값: 2.11')
-    parser.add_argument('--user-id', '-u', default="raguser",
-                       help='OpenSearch 사용자 ID. 기본값: raguser')
-    parser.add_argument('--password', '-p', default="MarsEarth1!",
-                       help='OpenSearch 사용자 비밀번호. 기본값: MarsEarth1!')
-    parser.add_argument('--domain-name', '-d', default="",
-                       help='OpenSearch 도메인 이름. 지정하지 않으면 자동 생성됩니다. (예: my-opensearch-cluster)')
+    parser.add_argument('--version', '-v', default=default_version,
+                       help=f'OpenSearch 버전 (예: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19, 3.1). 기본값: {default_version}')
+    parser.add_argument('--user-id', '-u', default=default_user_id,
+                       help=f'OpenSearch 사용자 ID. 기본값: {default_user_id}')
+    parser.add_argument('--password', '-p', default=default_password,
+                       help=f'OpenSearch 사용자 비밀번호. 기본값: {"*" * len(default_password)}')
+    parser.add_argument('--domain-name', '-d', default=default_domain_name,
+                       help=f'OpenSearch 도메인 이름. 지정하지 않으면 자동 생성됩니다. (예: my-opensearch-cluster). 기본값: {default_domain_name if default_domain_name else "자동 생성"}')
     parser.add_argument('--dev', action='store_true', default=True,
                        help='개발 모드 (1-AZ without standby). 기본값: True')
     parser.add_argument('--prod', action='store_true',
                        help='프로덕션 모드 (3-AZ with standby)')
-    
+
     args = parser.parse_args()
-    
+
     # --prod 플래그가 설정되면 DEV를 False로 변경
     if args.prod:
         args.dev = False
-    
+
     return args
 
 def validate_domain_name(domain_name):
@@ -155,32 +167,37 @@ def wait_for_domain_creation(opensearch, domain_name):
             raise error
 
 def store_credentials_in_ssm(opensearch_domain_endpoint, user_id, password, region):
-    """OpenSearch 인증정보를 SSM에 저장"""
-    print("SSM에 인증정보 저장 중...")
-    pm = parameter_store(region)
+    """OpenSearch 인증정보를 SSM에 저장 (선택적)"""
+    try:
+        from src.utils.ssm import parameter_store
+        print("SSM에 인증정보 저장 중...")
+        pm = parameter_store(region)
 
-    pm.put_params(
-        key="opensearch_domain_endpoint",
-        value=f'{opensearch_domain_endpoint}',
-        overwrite=True,
-        enc=False
-    )
+        pm.put_params(
+            key="opensearch_domain_endpoint",
+            value=f'{opensearch_domain_endpoint}',
+            overwrite=True,
+            enc=False
+        )
 
-    pm.put_params(
-        key="opensearch_user_id",
-        value=f'{user_id}',
-        overwrite=True,
-        enc=False
-    )
+        pm.put_params(
+            key="opensearch_user_id",
+            value=f'{user_id}',
+            overwrite=True,
+            enc=False
+        )
 
-    pm.put_params(
-        key="opensearch_user_password",
-        value=f'{password}',
-        overwrite=True,
-        enc=True
-    )
-    
-    return pm
+        pm.put_params(
+            key="opensearch_user_password",
+            value=f'{password}',
+            overwrite=True,
+            enc=True
+        )
+
+        return pm
+    except ImportError:
+        print("SSM 모듈을 찾을 수 없습니다. .env 파일을 사용하여 설정을 관리하세요.")
+        return None
 
 def install_nori_plugin(opensearch, domain_name, region, version):
     """한국어 분석을 위한 노리(Nori) 플러그인 설치"""
@@ -192,25 +209,27 @@ def install_nori_plugin(opensearch, domain_name, region, version):
             '1.3': 'G39874436',
             '2.3': 'G196105221',
             '2.5': 'G240285063',
-            '2.7': 'G16029449', 
+            '2.7': 'G16029449',
             '2.9': 'G60209291',
             '2.11': 'G181660338',
             '2.13': 'G225840180',
             '2.15': 'G1584566',
             '2.17': 'G45764408',
-            '2.19': 'G89944250'
+            '2.19': 'G89944250',
+            '3.1': 'G39720708'
         },
         'us-west-2': {
             '1.3': 'G206252145',
             '2.3': 'G94047474',
             '2.5': 'G138227316',
-            '2.7': 'G182407158', 
+            '2.7': 'G182407158',
             '2.9': 'G226587000',
             '2.11': 'G79602591',
             '2.13': 'G123782433',
             '2.15': 'G167962275',
             '2.17': 'G212142117',
-            '2.19': 'G256321959'
+            '2.19': 'G256321959',
+            '3.1': 'G206098417'
         },
         'ap-northeast-2': {
             '1.3': 'G81033971',
@@ -222,7 +241,8 @@ def install_nori_plugin(opensearch, domain_name, region, version):
             '2.13': 'G255151171',
             '2.15': 'G261475329',
             '2.17': 'G267799487',
-            '2.19': 'G5688189'
+            '2.19': 'G5688189',
+            '3.1': 'G246645619'
         }
     }
 
@@ -247,7 +267,7 @@ def wait_for_associate_package(opensearch, domain_name, max_results=1):
         DomainName=domain_name,
         MaxResults=1
     )
-    
+
     # 패키지 연결이 완료될 때까지 60초마다 확인
     while response['DomainPackageDetailsList'][0]['DomainPackageStatus'] == "ASSOCIATING":
         print('패키지 연결 중...')
@@ -259,12 +279,67 @@ def wait_for_associate_package(opensearch, domain_name, max_results=1):
 
     print('Nori 플러그인 연결 완료!')
 
-def verify_stored_credentials(pm):
-    """저장된 인증정보 확인"""
-    print("\n=== 저장된 인증정보 확인 ===")
-    print("OpenSearch 엔드포인트:", pm.get_params(key="opensearch_domain_endpoint", enc=False))
-    print("사용자 ID:", pm.get_params(key="opensearch_user_id", enc=False))
-    print("사용자 비밀번호:", pm.get_params(key="opensearch_user_password", enc=True))
+def update_env_file(domain_name, opensearch_domain_endpoint):
+    """OpenSearch 설정 정보를 .env 파일에 업데이트"""
+    env_path = Path(__file__).parent.parent / '.env'
+
+    if not env_path.exists():
+        print(f"경고: .env 파일을 찾을 수 없습니다: {env_path}")
+        return False
+
+    # .env 파일 읽기
+    with open(env_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    # 업데이트할 항목
+    updated_domain_name = False
+    updated_endpoint = False
+
+    # 기존 라인 업데이트
+    new_lines = []
+    for line in lines:
+        if line.strip().startswith('OPENSEARCH_DOMAIN_NAME='):
+            new_lines.append(f'OPENSEARCH_DOMAIN_NAME={domain_name}\n')
+            updated_domain_name = True
+        elif line.strip().startswith('OPENSEARCH_DOMAIN_ENDPOINT='):
+            new_lines.append(f'OPENSEARCH_DOMAIN_ENDPOINT={opensearch_domain_endpoint}\n')
+            updated_endpoint = True
+        else:
+            new_lines.append(line)
+
+    # 없으면 추가 (OpenSearch Configuration 섹션에)
+    if not updated_domain_name or not updated_endpoint:
+        final_lines = []
+        opensearch_section_found = False
+
+        for i, line in enumerate(new_lines):
+            final_lines.append(line)
+
+            # OpenSearch Configuration 섹션 찾기
+            if '# OpenSearch Configuration' in line:
+                opensearch_section_found = True
+
+            # OpenSearch 섹션 내에서 적절한 위치에 추가
+            if opensearch_section_found and line.strip().startswith('OPENSEARCH_VERSION='):
+                if not updated_domain_name:
+                    final_lines.append(f'OPENSEARCH_DOMAIN_NAME={domain_name}\n')
+                    updated_domain_name = True
+                if not updated_endpoint:
+                    # DOMAIN_ENDPOINT는 다음 줄에 추가
+                    if i + 1 < len(new_lines) and not new_lines[i + 1].strip().startswith('OPENSEARCH_DOMAIN_NAME='):
+                        pass  # 다음 반복에서 처리
+
+        new_lines = final_lines
+
+    # .env 파일 쓰기
+    with open(env_path, 'w', encoding='utf-8') as f:
+        f.writelines(new_lines)
+
+    print(f"\n✓ .env 파일 업데이트 완료: {env_path}")
+    print(f"  - OPENSEARCH_DOMAIN_NAME={domain_name}")
+    print(f"  - OPENSEARCH_DOMAIN_ENDPOINT={opensearch_domain_endpoint}")
+
+    return True
 
 def main():
     """메인 실행 함수"""
@@ -300,13 +375,13 @@ def main():
         
         # 5. 플러그인 설치 완료 대기
         wait_for_associate_package(opensearch, domain_name)
-        
-        # 6. 저장된 인증정보 확인
-        verify_stored_credentials(pm)
-        
+
+        # 6. .env 파일 업데이트
+        update_env_file(domain_name, opensearch_domain_endpoint)
+
         end_time = time.time()
         elapsed_time = (end_time - start_time) / 60  # 분 단위로 변환
-        
+
         print(f"\n=== 설정 완료 ===")
         print(f"총 소요 시간: {elapsed_time:.1f}분")
         print(f"도메인 이름: {domain_name}")

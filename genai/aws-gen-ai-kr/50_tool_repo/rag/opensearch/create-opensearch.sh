@@ -12,11 +12,19 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# 기본값 설정
-DEFAULT_VERSION="2.19"
-DEFAULT_USER_ID="raguser"
-DEFAULT_PASSWORD="MarsEarth1!"
-DEFAULT_DOMAIN_NAME=""
+# .env 파일 로드
+ENV_FILE="../.env"
+if [[ -f "$ENV_FILE" ]]; then
+    echo -e "${GREEN}Loading configuration from $ENV_FILE${NC}"
+    # .env에서 값 추출 (주석과 빈 줄 제외)
+    export $(grep -v '^#' "$ENV_FILE" | grep -v '^$' | xargs)
+fi
+
+# 기본값 설정 (.env에서 로드하거나 하드코딩된 기본값 사용)
+DEFAULT_VERSION="${OPENSEARCH_VERSION:-3.1}"
+DEFAULT_USER_ID="${OPENSEARCH_USER_ID:-raguser}"
+DEFAULT_PASSWORD="${OPENSEARCH_USER_PASSWORD:-MarsEarth1!}"
+DEFAULT_DOMAIN_NAME="${OPENSEARCH_DOMAIN_NAME:-}"
 DEFAULT_MODE="dev"
 
 # 도움말 함수
@@ -27,7 +35,7 @@ show_help() {
     echo ""
     echo "옵션:"
     echo "  -v, --version VERSION     OpenSearch 버전 (기본값: $DEFAULT_VERSION)"
-    echo "                           지원 버전: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19"
+    echo "                           지원 버전: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19, 3.1"
     echo "  -u, --user-id USER_ID     OpenSearch 사용자 ID (기본값: $DEFAULT_USER_ID)"
     echo "  -p, --password PASSWORD   OpenSearch 사용자 비밀번호 (기본값: $DEFAULT_PASSWORD)"
     echo "  -d, --domain-name NAME    OpenSearch 도메인 이름 (기본값: 자동 생성)"
@@ -42,7 +50,7 @@ show_help() {
     echo ""
     echo "예시:"
     echo "  $0                                          # 기본값으로 실행"
-    echo "  $0 -v 2.19 -u myuser -p mypass123          # 최신 버전으로 실행"
+    echo "  $0 -v 3.1 -u myuser -p mypass123           # 최신 버전으로 실행"
     echo "  $0 -d my-search-cluster                     # 도메인 이름 지정"
     echo "  $0 --interactive                           # 대화형 모드"
     echo "  $0 --mode prod                             # 프로덕션 모드"
@@ -54,12 +62,12 @@ show_help() {
 validate_version() {
     local version=$1
     case $version in
-        1.3|2.3|2.5|2.7|2.9|2.11|2.13|2.15|2.17|2.19)
+        1.3|2.3|2.5|2.7|2.9|2.11|2.13|2.15|2.17|2.19|3.1)
             return 0
             ;;
         *)
             echo -e "${RED}오류: 지원되지 않는 OpenSearch 버전입니다: $version${NC}"
-            echo -e "${YELLOW}지원 버전: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19${NC}"
+            echo -e "${YELLOW}지원 버전: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19, 3.1${NC}"
             return 1
             ;;
     esac
@@ -125,7 +133,7 @@ interactive_input() {
     
     # OpenSearch 버전 입력
     while true; do
-        read -p "OpenSearch 버전을 입력하세요 (1.3/2.3/2.5/2.7/2.9/2.11/2.13/2.15/2.17/2.19) [기본값: $DEFAULT_VERSION]: " input_version
+        read -p "OpenSearch 버전을 입력하세요 (1.3/2.3/2.5/2.7/2.9/2.11/2.13/2.15/2.17/2.19/3.1) [기본값: $DEFAULT_VERSION]: " input_version
         version=${input_version:-$DEFAULT_VERSION}
         if validate_version "$version"; then
             break

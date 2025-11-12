@@ -84,4 +84,4 @@ def build_graph():
     builder.add_edge("planner", "supervisor")
 
     # Return graph with streaming capability
-    return StreamableGraph(builder.build())
+    return ㄱ

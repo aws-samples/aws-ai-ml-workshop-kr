@@ -40,6 +40,11 @@ setup/.venv/
 # Artifacts (all generated files)
 artifacts/
 
+# Document Parser Output
+document_parser/output/
+document_parser/fig/
+document_parser/*.pkl
+
 # IDE & Editors
 .vscode/
 .idea/
