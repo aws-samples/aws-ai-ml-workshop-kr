@@ -143,6 +143,7 @@ class strands_utils():
 
         llm_type = kwargs["llm_type"]
         enable_reasoning = kwargs["enable_reasoning"]
+        tool_cache = kwargs["tool_cache"]
 
         if llm_type in ["claude-sonnet-3-7", "claude-sonnet-4", "claude-sonnet-4-5"]:
             
@@ -154,6 +155,7 @@ class strands_utils():
             llm = BedrockModel(
                 model_id=bedrock_info.get_model_id(model_name=model_name),
                 streaming=True,
+                cache_tools="default" if tool_cache else None,
                 max_tokens=8192*5,
                 stop_sequences=["\n\nHuman"],
                 temperature=1 if enable_reasoning else 0.01,
@@ -199,6 +201,7 @@ class strands_utils():
         agent_type = kwargs.get("agent_type", "claude-sonnet-4-5")
         enable_reasoning = kwargs.get("enable_reasoning", False)
         prompt_cache_info = kwargs.get("prompt_cache_info", (False, None)) # (True, "default")
+        tool_cache = kwargs.get("tool_cache", False)
         tools = kwargs.get("tools", None)
         streaming = kwargs.get("streaming", True)
         
@@ -207,7 +210,7 @@ class strands_utils():
         context_overflow_preserve_recent_messages = kwargs.get("context_overflow_preserve_recent_messages", 10)  # Keep recent 10 messages
 
         prompt_cache, cache_type = prompt_cache_info
-        llm = strands_utils.get_model(llm_type=agent_type, enable_reasoning=enable_reasoning)
+        llm = strands_utils.get_model(llm_type=agent_type, enable_reasoning=enable_reasoning, tool_cache=tool_cache)
         llm.config["streaming"] = streaming
 
         # Convert system_prompt to SystemContentBlock array with cachePoint if caching is enabled
@@ -221,6 +224,9 @@ class strands_utils():
             # If caching is disabled, pass the string as-is
             logger.info(f"{Colors.GREEN}{agent_name.upper()} - Prompt Cache Disabled{Colors.END}")
             system_prompt_with_cache = system_prompts
+        
+        if tool_cache: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Tool Cache Enabled{Colors.END}")
+        else: logger.info(f"{Colors.GREEN}{agent_name.upper()} - Tool Cache Disabled{Colors.END}")
 
         agent = Agent(
             model=llm,

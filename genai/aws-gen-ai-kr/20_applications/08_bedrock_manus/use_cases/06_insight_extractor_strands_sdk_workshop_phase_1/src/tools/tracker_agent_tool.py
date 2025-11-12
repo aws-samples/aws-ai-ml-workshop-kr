@@ -90,18 +90,18 @@ def handle_tracker_agent_tool(completed_agent: Annotated[str, "The name of the a
         ),
         agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
-        prompt_cache_info=(True, "default"),  # reasoning agent uses prompt caching
+        prompt_cache_info=(False, None),  # reasoning agent uses prompt caching
+        tool_cache=False,
         tools=[],  # tracker doesn't need additional tools
         streaming=True
     )
     
     # Prepare tracking message with context
     tracking_message = f"Agent '{completed_agent}' has completed its task. Here's what was accomplished:\n\n{completion_summary}\n\nPlease update the task completion status accordingly."
-    
+
     # Add context from previous messages and clues if available
-    if messages:
-        tracking_message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues, tracking_message])
-    
+    if messages: tracking_message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues, tracking_message])
+
     # Process streaming response and collect text in one pass
     async def process_tracker_stream():
         full_text = ""

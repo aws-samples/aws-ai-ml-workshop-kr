@@ -2,6 +2,7 @@ import logging
 import asyncio
 from typing import Any, Annotated, Dict, List
 from strands.types.tools import ToolResult, ToolUse
+from strands.types.content import ContentBlock
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
@@ -149,12 +150,17 @@ def handle_validator_agent_tool(_task: Annotated[str, "The validation task or in
         agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(True, "default"), # reasoning agent uses prompt caching
+        tool_cache=True,
         tools=[python_repl_tool, bash_tool, file_read],
         streaming=True  # Enable streaming for consistency
     )
 
     # Prepare message with context if available
     message = '\n\n'.join([messages[-1]["content"][-1]["text"], clues])
+
+    # Create message with cache point for messages caching
+    # This caches the large context (clues) for cost savings
+    message = [ContentBlock(text=message), ContentBlock(cachePoint={"type": "default"})]  # Cache point for messages caching
 
     # Process streaming response
     async def process_validator_stream():

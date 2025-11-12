@@ -1,4 +1,5 @@
 import logging
+from strands.types.content import ContentBlock
 from src.utils.strands_sdk_utils import strands_utils, TokenTracker
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
@@ -75,6 +76,7 @@ async def coordinator_node(task=None, **kwargs):
         agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(False, None), #(False, None), (True, "default")
+        tool_cache=False,
         streaming=True,
     )
 
@@ -129,6 +131,7 @@ async def planner_node(task=None, **kwargs):
         agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=True,
         prompt_cache_info=(False, None),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
+        tool_cache=False,
         streaming=True,
     )
 
@@ -174,12 +177,17 @@ async def supervisor_node(task=None, **kwargs):
         agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(True, "default"),  # enable prompt caching for reasoning agent
+        tool_cache=True,
         tools=[coder_agent_tool, reporter_agent_tool, tracker_agent_tool, validator_agent_tool],  # Add coder, reporter, tracker and validator agents as tools
         streaming=True,
     )
 
     clues, full_plan, messages = shared_state.get("clues", ""), shared_state.get("full_plan", ""), shared_state["messages"]
-    message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+    message_text = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan), clues])
+
+    # Create message with cache point for messages caching
+    # This caches the large context (full_plan, clues) for cost savings
+    message = [ContentBlock(text=message_text), ContentBlock(cachePoint={"type": "default"})]  # Cache point for messages caching
 
     # Process streaming response and collect text in one pass
     full_text = ""
