@@ -6,7 +6,7 @@ from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 import pandas as pd
-from datetime import datetime
+from src.utils.strands_sdk_utils import TokenTracker
 
 from src.tools import python_repl_tool, bash_tool
 from strands_tools import file_read
@@ -17,6 +17,11 @@ load_dotenv()
 # Simple logger setup
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+class Colors:
+    GREEN = '\033[92m'
+    CYAN = '\033[96m'
+    END = '\033[0m'
 
 TOOL_SPEC = {
     "name": "validator_agent_tool",
@@ -141,7 +146,7 @@ def handle_validator_agent_tool(_task: Annotated[str, "The validation task or in
     validator_agent = strands_utils.get_agent(
         agent_name="validator",
         system_prompts=apply_prompt_template(prompt_name="validator", prompt_context={"USER_REQUEST": request_prompt, "FULL_PLAN": full_plan}),
-        agent_type="claude-sonnet-4", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(True, "default"), # reasoning agent uses prompt caching
         tools=[python_repl_tool, bash_tool, file_read],
@@ -153,19 +158,16 @@ def handle_validator_agent_tool(_task: Annotated[str, "The validation task or in
 
     # Process streaming response
     async def process_validator_stream():
-        streaming_events = []
+        full_text = ""
         async for event in strands_utils.process_streaming_response_yield(
             validator_agent, message, agent_name="validator", source="validator_tool"
         ):
-            streaming_events.append(event)
-
-        # Reconstruct response from streaming events for return value
-        response = {"text": ""}
-        for event in streaming_events:
             if event.get("event_type") == "text_chunk":
-                response["text"] += event.get("data", "")
+                full_text += event.get("data", "")
+            # Accumulate token usage
+            TokenTracker.accumulate(event, shared_state)
 
-        return validator_agent, response
+        return validator_agent, {"text": full_text}
 
     validator_agent, response = asyncio.run(process_validator_stream())
     result_text = response['text']
@@ -183,6 +185,8 @@ def handle_validator_agent_tool(_task: Annotated[str, "The validation task or in
     shared_state['history'] = history
 
     logger.info(f"\n{Colors.GREEN}Validator Agent Tool completed{Colors.END}")
+    # Print token usage using TokenTracker
+    TokenTracker.print_current(shared_state)
     return result_text
 
 # Function name must match tool name

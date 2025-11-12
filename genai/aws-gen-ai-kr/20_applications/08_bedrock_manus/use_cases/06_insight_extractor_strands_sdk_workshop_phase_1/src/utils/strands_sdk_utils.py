@@ -50,6 +50,92 @@ class ColoredStreamingCallback(StreamingStdOutCallbackHandler):
     def on_llm_new_token(self, token: str, **kwargs) -> None:
         print(f"{self.color_code}{token}{self.reset_code}", end="", flush=True)
 
+# Wrap agent with StreamableAgent for queue-based streaming (Agent as a tool 사용할 경우, tool response 또한 스트리밍 하기 위해서)
+# Graph를 사용한다면 에이전트 마다 StreamableAgent를 감싸면 안된다. 그래프는 그래프 완성 후 StreamableGprah로 래핑함. 
+class StreamableAgent:
+    """Agent wrapper that adds streaming capability with event queue pattern."""
+
+    def __init__(self, agent):
+        """Wrap a Strands Agent to add queue-based streaming."""
+        self.agent = agent
+        # Expose common agent attributes for compatibility
+        self.messages = agent.messages
+        self.system_prompt = agent.system_prompt
+        self.model = agent.model
+        # Only expose tools if agent has it
+        if hasattr(agent, 'tools'): self.tools = agent.tools
+
+    def __getattr__(self, name):
+        """Delegate attribute access to wrapped agent."""
+        return getattr(self.agent, name)
+
+    async def _cleanup_agent(self, agent_task):
+        """Handle agent completion and cleanup."""
+        if not agent_task.done():
+            try: await asyncio.wait_for(agent_task, timeout=2.0)
+            except asyncio.TimeoutError:
+                agent_task.cancel()
+                try: await agent_task
+                except asyncio.CancelledError: pass
+
+    async def _yield_pending_events(self):
+        """Yield any pending events from global queue."""
+        from src.utils.event_queue import get_event, has_events
+
+        while has_events():
+            event = get_event()
+            if event: yield event
+
+    async def stream_async_with_queue(self, message, agent_name=None, source=None):
+        """
+        Stream agent response using background task + event queue pattern.
+        Following pattern from StreamableGraph.stream_async()
+
+        Args:
+            message: Message to send to agent
+            agent_name: Name of the agent for event tagging (optional)
+            source: Source identifier for the event (optional)
+
+        Yields:
+            Events from global queue (formatted for display)
+        """
+        from src.utils.event_queue import clear_queue
+
+        # Use agent's name if not provided
+        if agent_name is None: agent_name = getattr(self.agent, 'name', 'agent')
+        if source is None: source = agent_name
+
+        # Clear queue before starting
+        clear_queue()
+
+        # Step 1: Run agent in background - events go to global queue
+        async def run_agent():
+            try:
+                full_text = ""
+                async for event in strands_utils.process_streaming_response_yield(
+                    self.agent, message, agent_name=agent_name, source=source
+                ):
+                    if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+                return full_text
+            except Exception as e:
+                print(f"Agent error: {e}")
+                raise
+
+        agent_task = asyncio.create_task(run_agent())
+
+        # Step 2: Consume events from global queue
+        try:
+            while not agent_task.done():
+                async for event in self._yield_pending_events():
+                    yield event
+                await asyncio.sleep(0.005)
+        finally:
+            await self._cleanup_agent(agent_task)
+            async for event in self._yield_pending_events():
+                yield event
+
+        yield {"type": "agent_complete", "event_type": "complete", "message": f"{agent_name} processing complete"}
+
 class strands_utils():
 
     @staticmethod
@@ -289,6 +375,38 @@ class strands_utils():
                 put_event(agentcore_event)
                 yield agentcore_event
 
+        # After streaming completes, extract usage info from agent's metrics (에이전트 응답이 종료된 이후 최종적으로 한번만 보낸다)
+        # Reference: https://strandsagents.com/latest/documentation/docs/user-guide/observability-evaluation/metrics/
+        try:
+            usage_info = None
+
+            # Strands SDK stores token usage in agent.event_loop_metrics.accumulated_usage
+            if hasattr(agent, 'event_loop_metrics'):
+                metrics = agent.event_loop_metrics
+                if hasattr(metrics, 'accumulated_usage'):
+                    usage_info = metrics.accumulated_usage
+
+            # If we found usage info, create and yield the event
+            if usage_info:
+                usage_event = {
+                    "timestamp": datetime.now().isoformat(),
+                    "session_id": session_id,
+                    "agent_name": agent_name,
+                    "source": source or f"{agent_name}_node",
+                    "type": "agent_usage_stream",
+                    "event_type": "usage_metadata",
+                    "input_tokens": usage_info.get("inputTokens", 0),
+                    "output_tokens": usage_info.get("outputTokens", 0),
+                    "total_tokens": usage_info.get("totalTokens", 0),
+                    "cache_read_input_tokens": usage_info.get("cacheReadInputTokens", 0),
+                    "cache_write_input_tokens": usage_info.get("cacheWriteInputTokens", 0)
+                }
+                put_event(usage_event)
+                yield usage_event
+
+        except Exception as e:
+            logger.warning(f"Could not extract usage info from {agent_name}: {e}")
+
     # 툴 사용 ID와 툴 이름 매핑을 위한 클래스 변수
     _tool_use_mapping = {}
 
@@ -362,6 +480,18 @@ class strands_utils():
                 "reasoning_text": strands_event.get("reasoningText", "")[:200]
             }
 
+        # 사용량/메타데이터 이벤트
+        elif "metadata" in strands_event and "usage" in strands_event["metadata"]:
+            usage = strands_event["metadata"]["usage"]
+            return {
+                **base_event,
+                "type": "agent_usage_stream",
+                "event_type": "usage_metadata",
+                "input_tokens": usage.get("inputTokens", 0),
+                "output_tokens": usage.get("outputTokens", 0),
+                "total_tokens": usage.get("totalTokens", 0)
+            }
+
         return None
 
     @staticmethod
@@ -390,8 +520,6 @@ class strands_utils():
         callback_default = ColoredStreamingCallback('white')
         callback_reasoning = ColoredStreamingCallback('cyan')        
         callback_tool = ColoredStreamingCallback('yellow')
-
-        #print ("event", event)
 
         if event:
             if event.get("event_type") == "text_chunk":
@@ -425,6 +553,9 @@ class strands_utils():
                     # file_read 결과는 보통 길어서 앞부분만 표시
                     truncated_output = output[:500] + "..." if len(output) > 500 else output
                     callback_tool.on_llm_new_token(f"File content preview:\n{truncated_output}\n")
+                
+                elif tool_name == "rag_tool":
+                    callback_tool.on_llm_new_token(f"rag response:\n{output}\n")
 
                 else: # 기타 모든 툴 결과 표시, 코더 툴, 리포터 툴 결과도 다 출력 (for debug)
                     callback_tool.on_llm_new_token(f"Output: pass - you can see that in debug mode\n")
@@ -468,3 +599,79 @@ class FunctionNode(MultiAgentBase):
             status=Status.COMPLETED,
             results={self.name: NodeResult(result=agent_result)}
         )
+
+
+# ============================================================================
+# Token Tracking Helper Class
+# ============================================================================
+
+class TokenTracker:
+    """Helper class for tracking and reporting token usage across agents."""
+
+    # ANSI color codes
+    CYAN = '\033[96m'
+    YELLOW = '\033[93m'
+    END = '\033[0m'
+
+    @staticmethod
+    def initialize(shared_state):
+        """Initialize token tracking structure in shared state if not exists."""
+        if 'token_usage' not in shared_state:
+            shared_state['token_usage'] = {
+                'total_input_tokens': 0,
+                'total_output_tokens': 0,
+                'total_tokens': 0,
+                'cache_read_input_tokens': 0,   # Cache hits (90% discount)
+                'cache_write_input_tokens': 0,  # Cache creation (25% extra cost)
+                'by_agent': {}
+            }
+
+    @staticmethod
+    def accumulate(event, shared_state):
+        """Accumulate token usage from metadata events into shared state."""
+        if event.get("event_type") == "usage_metadata":
+            TokenTracker.initialize(shared_state)
+            usage = shared_state['token_usage']
+
+            input_tokens = event.get('input_tokens', 0)
+            output_tokens = event.get('output_tokens', 0)
+            total_tokens = event.get('total_tokens', 0)
+            cache_read = event.get('cache_read_input_tokens', 0)
+            cache_write = event.get('cache_write_input_tokens', 0)
+
+            # Accumulate total tokens
+            usage['total_input_tokens'] += input_tokens
+            usage['total_output_tokens'] += output_tokens
+            usage['total_tokens'] += total_tokens
+            usage['cache_read_input_tokens'] += cache_read
+            usage['cache_write_input_tokens'] += cache_write
+
+            # Track by agent
+            agent_name = event.get('agent_name')
+            if agent_name:
+                if agent_name not in usage['by_agent']:
+                    usage['by_agent'][agent_name] = {
+                        'input': 0,
+                        'output': 0,
+                        'cache_read': 0,
+                        'cache_write': 0
+                    }
+                usage['by_agent'][agent_name]['input'] += input_tokens
+                usage['by_agent'][agent_name]['output'] += output_tokens
+                usage['by_agent'][agent_name]['cache_read'] += cache_read
+                usage['by_agent'][agent_name]['cache_write'] += cache_write
+
+    @staticmethod
+    def print_current(shared_state):
+        """Print current cumulative token usage."""
+        token_usage = shared_state.get('token_usage', {})
+        if token_usage and token_usage.get('total_tokens', 0) > 0:
+            total_input = token_usage.get('total_input_tokens', 0)
+            total_output = token_usage.get('total_output_tokens', 0)
+            total = token_usage.get('total_tokens', 0)
+            cache_read = token_usage.get('cache_read_input_tokens', 0)
+            cache_write = token_usage.get('cache_write_input_tokens', 0)
+
+            # Display breakdown showing total includes all token types
+            print(f"{TokenTracker.CYAN}>>> Cumulative Tokens (Total: {total:,}):{TokenTracker.END}")
+            print(f"{TokenTracker.CYAN}    Regular Input: {total_input:,} | Cache Read: {cache_read:,} (90% off) | Cache Write: {cache_write:,} (25% extra) | Output: {total_output:,}{TokenTracker.END}")

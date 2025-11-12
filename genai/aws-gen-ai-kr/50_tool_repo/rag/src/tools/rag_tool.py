@@ -252,10 +252,7 @@ async def perform_rag_with_agent(query: str):
             logger.info(f"{Colors.YELLOW}  - Image {idx+1}: {len(image_bytes)} bytes{Colors.END}")
 
             # Create Strands ImageContent and ContentBlock with bytes
-            image_content = ImageContent(
-                format="png",
-                source={"bytes": image_bytes}
-            )
+            image_content = ImageContent(format="png", source={"bytes": image_bytes})
             user_message_content.append(ContentBlock(image=image_content))
 
     # Add tables as images if they have image_base64 in metadata
@@ -264,19 +261,13 @@ async def perform_rag_with_agent(query: str):
             if "image_base64" in table_doc.metadata and table_doc.metadata["image_base64"]:
                 table_image_bytes = base64.b64decode(table_doc.metadata["image_base64"])
                 logger.info(f"{Colors.YELLOW}Adding table {idx+1} as image to agent input: {len(table_image_bytes)} bytes{Colors.END}")
-                image_content = ImageContent(
-                    format="png",
-                    source={"bytes": table_image_bytes}
-                )
+                image_content = ImageContent(format="png", source={"bytes": table_image_bytes})
                 user_message_content.append(ContentBlock(image=image_content))
 
     # Build text content
-    text_parts = [
-        f"Here is the contexts as texts: <contexts>{context_text}</contexts>"
-    ]
+    text_parts = [f"Here is the contexts as texts: <contexts>{context_text}</contexts>"]
 
-    if tables_text:
-        text_parts.append(f"\nHere are some tables: <tables>{tables_text}</tables>")
+    if tables_text: text_parts.append(f"\nHere are some tables: <tables>{tables_text}</tables>")
 
     text_parts.append(dedent(
         f"""

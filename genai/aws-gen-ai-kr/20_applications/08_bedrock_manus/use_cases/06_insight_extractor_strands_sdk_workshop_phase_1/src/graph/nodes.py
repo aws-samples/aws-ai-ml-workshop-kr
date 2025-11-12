@@ -1,5 +1,5 @@
 import logging
-from src.utils.strands_sdk_utils import strands_utils
+from src.utils.strands_sdk_utils import strands_utils, TokenTracker
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
 
@@ -13,6 +13,7 @@ logger.setLevel(logging.INFO)
 class Colors:
     GREEN = '\033[92m'
     YELLOW = '\033[93m'
+    CYAN = '\033[96m'
     END = '\033[0m'
 
 def log_node_start(node_name: str):
@@ -24,6 +25,11 @@ def log_node_complete(node_name: str):
     """Log the completion of a node."""
     print()  # Add newline before log
     logger.info(f"{Colors.GREEN}===== {node_name} completed ====={Colors.END}")
+
+    # Print token usage using TokenTracker
+    global _global_node_states
+    shared_state = _global_node_states.get('shared', {})
+    TokenTracker.print_current(shared_state)
 
 # Global state storage for sharing between nodes
 _global_node_states = {}
@@ -66,24 +72,26 @@ async def coordinator_node(task=None, **kwargs):
     agent = strands_utils.get_agent(
         agent_name="coordinator",
         system_prompts=apply_prompt_template(prompt_name="coordinator", prompt_context={}), # apply_prompt_template(prompt_name="task_agent", prompt_context={"TEST": "sdsd"})
-        agent_type="claude-sonnet-4", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=False,
         prompt_cache_info=(False, None), #(False, None), (True, "default")
         streaming=True,
     )
+
+    # Store data directly in shared global storage
+    if 'shared' not in _global_node_states: _global_node_states['shared'] = {}
+    shared_state = _global_node_states['shared']
 
     # Process streaming response and collect text in one pass
     full_text = ""
     async for event in strands_utils.process_streaming_response_yield(
         agent, request_prompt, agent_name="coordinator", source="coordinator_node"
     ):
-        if event.get("event_type") == "text_chunk": 
+        if event.get("event_type") == "text_chunk":
             full_text += event.get("data", "")
+        # Accumulate token usage
+        TokenTracker.accumulate(event, shared_state)
     response = {"text": full_text}
-
-    # Store data directly in shared global storage
-    if 'shared' not in _global_node_states: _global_node_states['shared'] = {}
-    shared_state = _global_node_states['shared']
 
     # Update shared global state
     shared_state['messages'] = agent.messages
@@ -118,15 +126,13 @@ async def planner_node(task=None, **kwargs):
     agent = strands_utils.get_agent(
         agent_name="planner",
         system_prompts=apply_prompt_template(prompt_name="planner", prompt_context={"USER_REQUEST": request}),
-        agent_type="claude-sonnet-4", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
+        agent_type="claude-sonnet-4-5", # claude-sonnet-3-5-v-2, claude-sonnet-3-7
         enable_reasoning=True,
         prompt_cache_info=(False, None),  # enable prompt caching for reasoning agent, (False, None), (True, "default")
         streaming=True,
     )
 
-    #full_plan, messages = shared_state.get("full_plan", ""), shared_state["messages"]
     messages = shared_state["messages"]
-    #message = '\n\n'.join([messages[-1]["content"][-1]["text"], FULL_PLAN_FORMAT.format(full_plan)])
     message = messages[-1]["content"][-1]["text"]
 
     # Process streaming response and collect text in one pass
@@ -134,7 +140,10 @@ async def planner_node(task=None, **kwargs):
     async for event in strands_utils.process_streaming_response_yield(
         agent, message, agent_name="planner", source="planner_node"
     ):
-        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+        if event.get("event_type") == "text_chunk":
+            full_text += event.get("data", "")
+        # Accumulate token usage
+        TokenTracker.accumulate(event, shared_state)
     response = {"text": full_text}
 
     # Update shared global state
@@ -177,7 +186,10 @@ async def supervisor_node(task=None, **kwargs):
     async for event in strands_utils.process_streaming_response_yield(
         agent, message, agent_name="supervisor", source="supervisor_node"
     ):
-        if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+        if event.get("event_type") == "text_chunk":
+            full_text += event.get("data", "")
+        # Accumulate token usage
+        TokenTracker.accumulate(event, shared_state)
     response = {"text": full_text}
 
     # Update shared global state

@@ -51,6 +51,55 @@ def _print_conversation_history():
     else:
         print("No conversation history found")
 
+def _print_token_usage_summary():
+    """Print final token usage statistics"""
+    print("\n" + "="*60)
+    print("=== Token Usage Summary ===")
+    print("="*60)
+
+    from src.graph.nodes import _global_node_states
+    shared_state = _global_node_states.get('shared', {})
+    token_usage = shared_state.get('token_usage', {})
+
+    if token_usage:
+        total_input = token_usage.get('total_input_tokens', 0)
+        total_output = token_usage.get('total_output_tokens', 0)
+        total = token_usage.get('total_tokens', 0)
+        cache_read = token_usage.get('cache_read_input_tokens', 0)
+        cache_write = token_usage.get('cache_write_input_tokens', 0)
+
+        print(f"\nTotal Tokens: {total:,}")
+        print(f"  - Regular Input:  {total_input:>8,} (100% cost)")
+        print(f"  - Cache Read:     {cache_read:>8,} (10% cost - 90% discount)")
+        print(f"  - Cache Write:    {cache_write:>8,} (125% cost - 25% extra)")
+        print(f"  - Output:         {total_output:>8,}")
+
+        by_agent = token_usage.get('by_agent', {})
+        if by_agent:
+            print("\n" + "-"*60)
+            print("Token Usage by Agent:")
+            print("-"*60)
+
+            # Sort agents for consistent display
+            for agent_name in sorted(by_agent.keys()):
+                usage = by_agent[agent_name]
+                input_tokens = usage.get('input', 0)
+                output_tokens = usage.get('output', 0)
+                agent_cache_read = usage.get('cache_read', 0)
+                agent_cache_write = usage.get('cache_write', 0)
+                agent_total = input_tokens + output_tokens + agent_cache_read + agent_cache_write
+
+                print(f"\n  [{agent_name}] Total: {agent_total:,}")
+                print(f"    - Regular Input:  {input_tokens:>8,} (100% cost)")
+                print(f"    - Cache Read:     {agent_cache_read:>8,} (10% cost - 90% discount)")
+                print(f"    - Cache Write:    {agent_cache_write:>8,} (125% cost - 25% extra)")
+                print(f"    - Output:         {output_tokens:>8,}")
+
+        print("="*60)
+    else:
+        print("No token usage data available")
+        print("="*60)
+
 async def graph_streaming_execution(payload):
     """Execute full graph streaming workflow using new graph.stream_async method"""
 
@@ -80,6 +129,7 @@ async def graph_streaming_execution(payload):
     #########################
     
     _print_conversation_history()
+    _print_token_usage_summary()
     print("=== Queue-Only Event Stream Complete ===")
 
 if __name__ == "__main__":
@@ -108,8 +158,6 @@ if __name__ == "__main__":
     #########################
     ## modification END    ##
     #########################
-
-    remove_artifact_folder()
 
     # Use full graph streaming execution for real-time streaming with graph structure
     async def run_streaming():

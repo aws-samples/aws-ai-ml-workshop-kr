@@ -13,26 +13,18 @@ import numpy as np
 import pandas as pd
 from io import StringIO
 from copy import deepcopy
-from pprint import pprint
-from textwrap import dedent
-from operator import itemgetter
-from itertools import chain as ch
-from typing import Any, Dict, List, Optional, List, Tuple
-#from opensearchpy import OpenSearch, RequestsHttpConnection
+from typing import Any, List, Optional
 
 import base64
 from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
 
-from src.utils.bedrock import bedrock_utils
 from src.utils.common_utils import print_html
 from src.utils.opensearch import opensearch_utils
-from src.utils.genai_analysis import llm_call
 
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
-#from langchain.prompts import PromptTemplate
 from langchain_core.tracers import ConsoleCallbackHandler
 from langchain_core.output_parsers import StrOutputParser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -41,7 +33,6 @@ from langchain_core.callbacks.streaming_stdout import StreamingStdOutCallbackHan
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, SystemMessagePromptTemplate
 from langchain_core.messages.ai import AIMessage
 
-import threading
 from functools import partial
 from multiprocessing.pool import ThreadPool
 
@@ -1181,38 +1172,38 @@ def print_ww(*args, width: int = 100, **kwargs):
 ############################################################
 
 class rag_chain():
-    
+
     def __init__(self, **kwargs):
 
         system_prompt = kwargs["system_prompt"]
         self.system_prompt = self._get_message_from_string(role="system", string=system_prompt)
-        
+
         human_prompt=kwargs["human_prompt"]
         self.human_prompt = self._get_message_from_string(role="human", string=human_prompt)
-        
-        
-        self.llm_text = kwargs["llm_text"]        
+
+
+        self.llm_text = kwargs["llm_text"]
         self.retriever = kwargs["retriever"]
-        
+
         self.return_context = kwargs.get("return_context", False)
         self.verbose = kwargs.get("verbose", False)
-                     
+
     def _get_message_from_string(self, role, string):
-        
+
         if role == "system": message= SystemMessagePromptTemplate.from_template(string)
         elif role == "human": message= HumanMessagePromptTemplate.from_template(string)
         elif role == "ai": message = AIMessage(content=string)
-            
+
         return message
-        
-        
+
+
     def invoke(self, **kwargs):
-               
+
         query, verbose = kwargs["query"], kwargs.get("verbose", self.verbose)
         tables, images = None, None
-        
+
         print ("verbose", verbose)
-        
+
         if self.retriever.complex_doc:
             retrieval, tables, images = self.retriever.invoke(query)
 
@@ -1225,30 +1216,30 @@ class rag_chain():
             human_prompt_complex_doc = prompt_repo.get_human_prompt(images=images, tables=tables)
             human_prompt_complex_doc = self._get_message_from_string(role="human", string=human_prompt_complex_doc)
             prompt = ChatPromptTemplate([self.system_prompt, human_prompt_complex_doc])
-                
+
             self.chain = prompt | self.llm_text | StrOutputParser()
-            
+
         else:
             retrieval = self.retriever.invoke(query)
 
             print (retrieval)
 
-            
+
             invoke_args = {
                 "contexts": "\n\n".join([doc.page_content for doc in retrieval]),
                 "question": query
             }
             prompt = ChatPromptTemplate([self.system_prompt, self.human_prompt])
             self.chain = prompt | self.llm_text | StrOutputParser()
-            
+
         # Invoke the chain
         stream = self.chain.stream(
             invoke_args,
             config={'callbacks': [ConsoleCallbackHandler()]} if verbose else {}
         )
-            
+
         response = ""
         for chunk in stream: response += chunk
 
-        
+
         return response, retrieval if self.return_context else response

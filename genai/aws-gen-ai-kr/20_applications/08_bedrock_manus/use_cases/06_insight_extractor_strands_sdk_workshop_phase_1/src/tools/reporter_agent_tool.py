@@ -5,13 +5,18 @@ from strands.types.tools import ToolResult, ToolUse
 from src.utils.strands_sdk_utils import strands_utils
 from src.prompts.template import apply_prompt_template
 from src.utils.common_utils import get_message_from_string
-
 from src.tools import python_repl_tool, bash_tool
 from strands_tools import file_read
+from src.utils.strands_sdk_utils import TokenTracker
 
 # Simple logger setup
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+class Colors:
+    GREEN = '\033[92m'
+    CYAN = '\033[96m'
+    END = '\033[0m'
 
 TOOL_SPEC = {
     "name": "reporter_agent_tool",
@@ -89,7 +94,10 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
         async for event in strands_utils.process_streaming_response_yield(
             reporter_agent, message, agent_name="reporter", source="reporter_tool"
         ):
-            if event.get("event_type") == "text_chunk": full_text += event.get("data", "")
+            if event.get("event_type") == "text_chunk":
+                full_text += event.get("data", "")
+            # Accumulate token usage
+            TokenTracker.accumulate(event, shared_state)
         return {"text": full_text}
 
     response = asyncio.run(process_reporter_stream())
@@ -108,6 +116,8 @@ def handle_reporter_agent_tool(_task: Annotated[str, "The reporting task or inst
     shared_state['history'] = history
 
     logger.info(f"\n{Colors.GREEN}Reporter Agent Tool completed{Colors.END}")
+    # Print token usage using TokenTracker
+    TokenTracker.print_current(shared_state)
     return result_text
 
 # Function name must match tool name
