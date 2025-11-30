@@ -1,0 +1,726 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Unified template for Protein Design Agent with corrected workflow creation'
+
+Parameters:
+  S3BucketName:
+    Type: String
+    Description: S3 bucket for storing workflow definition files and models
+
+  StackPrefix:
+    Type: String
+    Description: Prefix for stack resources
+    Default: protein-design
+
+  ApplicationName:
+    Type: String
+    Description: Name of the application
+    Default: HealthOmics-Workflow
+
+  GitHubRepo:
+    Type: String
+    Description: GitHub repository URL for source code
+    Default: https://github.com/aws-samples/amazon-bedrock-agents-healthcare-lifesciences.git
+
+Resources:
+  # ECR Repository
+  ECRRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: !Sub ${StackPrefix}-evoprotgrad
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      ImageTagMutability: IMMUTABLE
+      RepositoryPolicyText:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowHealthOmicsPull
+            Effect: Allow
+            Principal:
+              Service: omics.amazonaws.com
+            Action:
+              - ecr:GetDownloadUrlForLayer
+              - ecr:BatchGetImage
+              - ecr:BatchCheckLayerAvailability
+
+  # S3 bucket policy
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    DependsOn: CodeBuildRole
+    Properties:
+      Bucket: !Ref S3BucketName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowCodeBuildServiceRole
+            Effect: Allow
+            Principal:
+              AWS: !GetAtt CodeBuildRole.Arn
+            Action:
+              - s3:GetObject
+              - s3:GetObjectVersion
+              - s3:ListBucket
+              - s3:PutObject
+            Resource:
+              - !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}"
+              - !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}/*"
+          - Sid: AllowOmicsService
+            Effect: Allow
+            Principal:
+              Service: omics.amazonaws.com
+            Action:
+              - s3:GetObject
+              - s3:GetObjectVersion
+              - s3:ListBucket
+            Resource:
+              - !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}"
+              - !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}/*"
+
+  # Unified CodeBuild Role
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${StackPrefix}-CodeBuildRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser
+      Policies:
+        - PolicyName: CodeBuildPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}"
+                  - !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}/*"
+              - Effect: Allow
+                Action:
+                  - codebuild:CreateReportGroup
+                  - codebuild:CreateReport
+                  - codebuild:UpdateReport
+                  - codebuild:BatchPutTestCases
+                  - codebuild:BatchPutCodeCoverages
+                Resource: !Sub "arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:report-group/*"
+              - Effect: Allow
+                Action:
+                  - omics:CreateWorkflow
+                  - omics:GetWorkflow
+                  - omics:ListWorkflows
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - iam:PassRole
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    iam:PassedToService: omics.amazonaws.com
+
+  # CodeBuild Project for Code Preparation and Model Download
+  CodePreparationProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub "${StackPrefix}-code-preparation"
+      Description: Prepare code.zip and download model weights
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_LARGE
+        Image: aws/codebuild/standard:7.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: true
+        EnvironmentVariables:
+          - Name: S3_BUCKET_NAME
+            Value: !Ref S3BucketName
+          - Name: GITHUB_REPO
+            Value: !Ref GitHubRepo
+      Source:
+        Type: NO_SOURCE
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - echo "Starting code preparation and model download"
+                - echo "Installing required tools"
+                - pip install huggingface_hub
+            build:
+              commands:
+                - echo "Cloning repository"
+                - git clone $GITHUB_REPO /tmp/repo
+                - cd /tmp/repo/agents_catalog/08-Protein-Design-Agent
+                
+                - echo "Creating code.zip with container and workflow files"
+                - mkdir -p /tmp/code_package
+                - cp -r container/ /tmp/code_package/
+                - cp -r aho_workflow/ /tmp/code_package/workflow/
+                - cd /tmp/code_package
+                - zip -r /tmp/code.zip .
+                
+                - echo "Creating workflow.zip"
+                - cd /tmp/repo/agents_catalog/08-Protein-Design-Agent/aho_workflow
+                - zip -r /tmp/workflow.zip .
+                
+                - echo "Uploading files to S3"
+                - aws s3 cp /tmp/code.zip s3://$S3_BUCKET_NAME/code.zip
+                - aws s3 cp /tmp/workflow.zip s3://$S3_BUCKET_NAME/workflow.zip
+                
+                - echo "Downloading ESM-2 model weights"
+                - mkdir -p /tmp/models/esm2_t33_650M_UR50D
+                - |
+                  cat > /tmp/download_model.py << 'EOF'
+                  import os
+                  from huggingface_hub import snapshot_download
+                  
+                  repo_id = 'facebook/esm2_t33_650M_UR50D'
+                  local_dir = '/tmp/models/esm2_t33_650M_UR50D'
+                  
+                  print(f'Downloading {repo_id} to {local_dir}...')
+                  
+                  try:
+                      snapshot_download(
+                          repo_id=repo_id,
+                          local_dir=local_dir
+                      )
+                      
+                      # Verify key files
+                      key_files = ['config.json', 'pytorch_model.bin']
+                      for file in key_files:
+                          file_path = os.path.join(local_dir, file)
+                          if os.path.exists(file_path):
+                              size = os.path.getsize(file_path)
+                              print(f'✓ Verified {file}: {size:,} bytes')
+                          else:
+                              raise Exception(f'Missing required file: {file}')
+                      
+                      print('✓ Model download completed successfully')
+                      
+                  except Exception as e:
+                      print(f'✗ Model download failed: {e}')
+                      exit(1)
+                  EOF
+                - python3 /tmp/download_model.py
+                
+                - echo "Uploading model weights to S3"
+                - aws s3 sync /tmp/models/esm2_t33_650M_UR50D/ s3://$S3_BUCKET_NAME/models/esm2_t33_650M_UR50D/
+                
+                - echo "Uploading workflow files to S3"
+                - aws s3 sync /tmp/repo/agents_catalog/08-Protein-Design-Agent/aho_workflow/ s3://$S3_BUCKET_NAME/workflow/
+            post_build:
+              commands:
+                - echo "Code preparation and model download completed"
+                - echo "Verifying S3 uploads..."
+                - aws s3 ls s3://$S3_BUCKET_NAME/code.zip
+                - aws s3 ls s3://$S3_BUCKET_NAME/workflow.zip
+                - aws s3 ls s3://$S3_BUCKET_NAME/models/esm2_t33_650M_UR50D/ --recursive 2>/dev/null | head -5 || true
+                - aws s3 ls s3://$S3_BUCKET_NAME/workflow/
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Sub /aws/codebuild/${StackPrefix}-code-preparation
+      TimeoutInMinutes: 90
+
+  # Docker Build Project
+  DockerBuildProject:
+    Type: AWS::CodeBuild::Project
+    DependsOn:
+      - ECRRepository
+      - CodePreparationCustomResource
+    Properties:
+      Name: !Sub "${StackPrefix}-docker-build"
+      Description: Build Docker container
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_LARGE
+        Image: aws/codebuild/standard:7.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: true
+        EnvironmentVariables:
+          - Name: AWS_ACCOUNT_ID
+            Value: !Ref AWS::AccountId
+          - Name: AWS_REGION
+            Value: !Ref AWS::Region
+          - Name: ECR_REPOSITORY
+            Value: !Ref ECRRepository
+      Source:
+        Type: S3
+        Location: !Sub "${S3BucketName}/code.zip"
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - echo "Build started on `date`"
+                - echo "Logging in to AWS Deep Learning Containers ECR..."
+                - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 763104351884.dkr.ecr.$AWS_REGION.amazonaws.com
+                - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY
+                - cd container
+            build:
+              commands:
+                - echo "Building the Docker image..."
+                - docker build --build-arg AWS_DEFAULT_REGION=$AWS_REGION -t $REPOSITORY_URI:latest .
+            post_build:
+              commands:
+                - echo "Build completed on `date`"
+                - echo "Logging in to Amazon ECR..."
+                - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+                - echo "Pushing the Docker image..."
+                - docker push $REPOSITORY_URI:latest
+                - echo "Verifying image push..."
+                - aws ecr describe-images --repository-name $ECR_REPOSITORY --region $AWS_REGION
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Sub /aws/codebuild/${StackPrefix}-docker-build
+
+  # Workflow Build Project
+  WorkflowBuildProject:
+    Type: AWS::CodeBuild::Project
+    DependsOn: DockerBuildCustomResource
+    Properties:
+      Name: !Sub "${StackPrefix}-workflow-build"
+      Description: Build Amazon HealthOmics workflow
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        Image: aws/codebuild/standard:7.0
+        ImagePullCredentialsType: CODEBUILD
+        EnvironmentVariables:
+          - Name: ACCOUNT_ID
+            Value: !Ref "AWS::AccountId"
+          - Name: REGION
+            Value: !Ref "AWS::Region"
+          - Name: S3_BUCKET_NAME
+            Value: !Ref S3BucketName
+          - Name: ECR_REPO
+            Value: !Ref ECRRepository
+          - Name: STACK_PREFIX
+            Value: !Ref StackPrefix
+      Source:
+        Type: NO_SOURCE
+        BuildSpec: |
+          version: 0.2
+          phases:
+            pre_build:
+              commands:
+                - echo "Creating workflow using S3-stored workflow.zip"
+            build:
+              commands:
+                - WORKFLOW_RESPONSE=$(aws omics create-workflow --name $STACK_PREFIX-workflow --engine NEXTFLOW --definition-uri s3://$S3_BUCKET_NAME/workflow.zip --region $REGION --output json)
+                - WORKFLOW_ID=$(echo $WORKFLOW_RESPONSE | jq -r .id)
+                - echo "Created workflow with ID:" $WORKFLOW_ID
+                - echo "{\"workflowId\":\"$WORKFLOW_ID\"}" > workflow_output.json
+                - aws s3 cp workflow_output.json s3://$S3_BUCKET_NAME/workflow_output.json
+            post_build:
+              commands:
+                - echo "Workflow ID:" $WORKFLOW_ID
+                - aws omics get-workflow --id $WORKFLOW_ID --region $REGION
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Sub /aws/codebuild/${StackPrefix}-workflow-build
+      TimeoutInMinutes: 30
+
+  # Custom Resource Lambda
+  CustomResourceFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: !GetAtt CustomResourceFunctionRole.Arn
+      Code:
+        ZipFile: |
+          import boto3
+          import json
+          import time
+          
+          def send_response(event, context, response_status, response_data, physical_resource_id=None):
+              response_body = {
+                  'Status': response_status,
+                  'Reason': f'See details in CloudWatch Log Stream: {context.log_stream_name}',
+                  'PhysicalResourceId': physical_resource_id or context.log_stream_name,
+                  'StackId': event['StackId'],
+                  'RequestId': event['RequestId'],
+                  'LogicalResourceId': event['LogicalResourceId'],
+                  'Data': response_data
+              }
+              
+              import urllib3
+              http = urllib3.PoolManager()
+              response = http.request('PUT', event['ResponseURL'], body=json.dumps(response_body))
+
+          def handler(event, context):
+              try:
+                  if event['RequestType'] in ['Create', 'Update']:
+                      codebuild = boto3.client('codebuild')
+                      project_name = event['ResourceProperties']['ProjectName']
+                      
+                      response = codebuild.start_build(projectName=project_name)
+                      build_id = response['build']['id']
+                      
+                      # Wait for build completion
+                      while True:
+                          build = codebuild.batch_get_builds(ids=[build_id])['builds'][0]
+                          status = build['buildStatus']
+                          
+                          if status in ['SUCCEEDED', 'FAILED', 'STOPPED']:
+                              break
+                          time.sleep(10)
+                      
+                      if status == 'SUCCEEDED':
+                          response_data = {'Message': 'Build completed successfully', 'BuildId': build_id}
+                          
+                          # For workflow builds, get the workflow ID
+                          if event['ResourceProperties'].get('ProjectType') == 'workflow':
+                              s3_client = boto3.client('s3')
+                              s3_bucket = event['ResourceProperties']['S3BucketName']
+                              try:
+                                  obj = s3_client.get_object(Bucket=s3_bucket, Key='workflow_output.json')
+                                  workflow_data = json.loads(obj['Body'].read().decode('utf-8'))
+                                  response_data['workflowId'] = workflow_data['workflowId']
+                              except Exception as e:
+                                  print(f"Error getting workflow ID: {str(e)}")
+                          
+                          send_response(event, context, 'SUCCESS', response_data)
+                      else:
+                          raise Exception(f"Build failed with status: {status}")
+                          
+                  elif event['RequestType'] == 'Delete':
+                      send_response(event, context, 'SUCCESS', {'Message': 'Nothing to do for DELETE'})
+                      
+              except Exception as e:
+                  print(f"Error: {str(e)}")
+                  send_response(event, context, 'FAILED', {'Error': str(e)})
+      Runtime: python3.12
+      Timeout: 900
+
+  CustomResourceFunctionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - codebuild:StartBuild
+                  - codebuild:BatchGetBuilds
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                Resource: !Sub "arn:${AWS::Partition}:s3:::${S3BucketName}/*"
+
+  # Custom Resources
+  CodePreparationCustomResource:
+    Type: Custom::CodePreparation
+    Properties:
+      ServiceToken: !GetAtt CustomResourceFunction.Arn
+      ProjectName: !Ref CodePreparationProject
+      ProjectType: preparation
+
+  DockerBuildCustomResource:
+    Type: Custom::DockerBuild
+    DependsOn: CodePreparationCustomResource
+    Properties:
+      ServiceToken: !GetAtt CustomResourceFunction.Arn
+      ProjectName: !Ref DockerBuildProject
+      ProjectType: container
+
+  WorkflowBuildCustomResource:
+    Type: Custom::WorkflowBuild
+    DependsOn: DockerBuildCustomResource
+    Properties:
+      ServiceToken: !GetAtt CustomResourceFunction.Arn
+      ProjectName: !Ref WorkflowBuildProject
+      ProjectType: workflow
+      S3BucketName: !Ref S3BucketName
+
+  # Workflow Execution Role
+  WorkflowExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: omics.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: OmicsWorkflowPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                Resource:
+                  - !Sub arn:aws:s3:::${S3BucketName}
+                  - !Sub arn:aws:s3:::${S3BucketName}/*
+              - Effect: Allow
+                Action:
+                  - ecr:BatchGetImage
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:GetAuthorizationToken
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/omics/*
+
+  # Lambda Functions
+  WorkflowTriggerFunction:
+    Type: AWS::Lambda::Function
+    DependsOn: WorkflowBuildCustomResource
+    Properties:
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt WorkflowTriggerRole.Arn
+      Environment:
+        Variables:
+          DEFAULT_WORKFLOW_ID: !GetAtt WorkflowBuildCustomResource.workflowId
+          DEFAULT_ROLE_ARN: !GetAtt WorkflowExecutionRole.Arn
+          DEFAULT_ECR_URI: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepository}:latest
+          DEFAULT_S3_BUCKET: !Ref S3BucketName
+          DEFAULT_ESM_MODEL_FILES: !Sub "s3://${S3BucketName}/models/esm2_t33_650M_UR50D/"
+      Code:
+        ZipFile: |
+          import boto3
+          import json
+          import os
+          import uuid
+
+          def handler(event, context):
+              params = {}
+              for param in event.get('parameters', []):
+                  if "name" in param and "value" in param:
+                      params[param["name"]] = param["value"]
+              
+              client = boto3.client('omics')
+              
+              try:
+                  workflow_id = os.environ['DEFAULT_WORKFLOW_ID']
+                  role_arn = os.environ['DEFAULT_ROLE_ARN']
+                  container_image = os.environ['DEFAULT_ECR_URI']
+                  s3_bucket = os.environ['DEFAULT_S3_BUCKET']
+                  
+                  run_name = params.get('runName', f'workflow-run-{uuid.uuid4().hex[:8]}')
+                  output_uri = params.get('outputUri', f's3://{s3_bucket}/outputs/{run_name}/')
+                  
+                  workflow_parameters = {
+                      "container_image": container_image,
+                      "seed_sequence": params.get('seed_sequence', 'ACDEFGHIKLMNPQRSTVWY'),
+                      "esm_model_files": os.environ['DEFAULT_ESM_MODEL_FILES'],
+                      "output_type": params.get('output_type', 'all'),
+                      "parallel_chains": int(params.get('parallel_chains', '10')),
+                      "n_steps": int(params.get('n_steps', '100')),
+                      "max_mutations": int(params.get('max_mutations', '15'))
+                  }
+                  
+                  response = client.start_run(
+                      workflowId=workflow_id,
+                      name=run_name,
+                      parameters=workflow_parameters,
+                      outputUri=output_uri,
+                      roleArn=role_arn
+                  )
+                  
+                  return {
+                      "messageVersion": "1.0",
+                      "response": {
+                          "actionGroup": event.get("actionGroup", ""),
+                          "function": event.get("function", ""),
+                          "functionResponse": {
+                              "responseBody": {
+                                  "TEXT": {
+                                      "body": f"Successfully started protein optimization workflow.\n\nRun ID: {response['id']}\nStatus: {response['status']}\nOutput URI: {output_uri}"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              except Exception as e:
+                  return {
+                      "messageVersion": "1.0",
+                      "response": {
+                          "actionGroup": event.get("actionGroup", ""),
+                          "function": event.get("function", ""),
+                          "functionResponse": {
+                              "responseBody": {
+                                  "TEXT": {
+                                      "body": f"Error: {str(e)}"
+                                  }
+                              }
+                          }
+                      }
+                  }
+      Timeout: 900
+
+  WorkflowTriggerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: OmicsAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - omics:StartRun
+                  - omics:GetRun
+                  - omics:GetWorkflow
+                Resource: '*'
+              - Effect: Allow
+                Action: iam:PassRole
+                Resource: !GetAtt WorkflowExecutionRole.Arn
+
+  WorkflowMonitorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt WorkflowMonitorRole.Arn
+      Code:
+        ZipFile: |
+          import boto3
+          import json
+
+          def handler(event, context):
+              params = {}
+              for param in event.get('parameters', []):
+                  if "name" in param and "value" in param:
+                      params[param["name"]] = param["value"]
+              
+              run_id = params.get('runId')
+              if not run_id:
+                  return {"error": "runId parameter is required"}
+              
+              client = boto3.client('omics')
+              try:
+                  run_response = client.get_run(id=run_id)
+                  status = run_response.get('status')
+                  
+                  response_text = f"Run ID: {run_id}\nStatus: {status}\n"
+                  if run_response.get('startTime'):
+                      response_text += f"Start Time: {run_response.get('startTime').isoformat()}\n"
+                  
+                  return {
+                      "messageVersion": "1.0",
+                      "response": {
+                          "actionGroup": event.get("actionGroup", ""),
+                          "function": event.get("function", ""),
+                          "functionResponse": {
+                              "responseBody": {
+                                  "TEXT": {
+                                      "body": response_text
+                                  }
+                              }
+                          }
+                      }
+                  }
+              except Exception as e:
+                  return {
+                      "messageVersion": "1.0",
+                      "response": {
+                          "actionGroup": event.get("actionGroup", ""),
+                          "function": event.get("function", ""),
+                          "functionResponse": {
+                              "responseBody": {
+                                  "TEXT": {
+                                      "body": f"Error: {str(e)}"
+                                  }
+                              }
+                          }
+                      }
+                  }
+      Timeout: 30
+
+  WorkflowMonitorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: OmicsMonitorAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - omics:GetRun
+                  - omics:ListRuns
+                Resource: '*'
+
+Outputs:
+  ECRRepositoryUri:
+    Description: URI of the ECR repository
+    Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${ECRRepository}
+
+  TriggerFunctionArn:
+    Description: ARN of the workflow trigger Lambda function
+    Value: !GetAtt WorkflowTriggerFunction.Arn
+    
+  MonitorFunctionArn:
+    Description: ARN of the workflow monitor Lambda function
+    Value: !GetAtt WorkflowMonitorFunction.Arn
+
+  WorkflowExecutionRoleArn:
+    Description: ARN of the workflow execution role
+    Value: !GetAtt WorkflowExecutionRole.Arn
+    
+  WorkflowId:
+    Description: ID of the created HealthOmics workflow
+    Value: !GetAtt WorkflowBuildCustomResource.workflowId

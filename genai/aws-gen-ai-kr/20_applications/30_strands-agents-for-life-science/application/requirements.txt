@@ -1,0 +1,13 @@
+streamlit>=1.28.0
+strands-agents>=0.1.0
+strands-agents-tools>=0.2.9
+boto3>=1.37.1
+botocore>=1.37.1
+arxiv>=2.0.0
+chembl-webresource-client>=0.10.0
+python-dateutil>=2.8.0
+psycopg2-binary>=2.9.0
+defusedxml>=0.7.0
+httpx>=0.24.0
+pytrials>=0.3.0
+pandas>=2.0.0
