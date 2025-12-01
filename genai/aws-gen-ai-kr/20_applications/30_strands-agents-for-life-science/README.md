@@ -131,6 +131,8 @@
 
 
 ### (직접 배포시) CloudFormation 배포하기 
+0. 워크샵을 통해 기획된 레포이나, 아래의 방법을 통해 직접 배포하고 실험도 가능합니다. 다만 관련 비용이 청구되니 주의해 주세요.
+
 1. 내 계정에 cloudformation stack 배포하기:
 
     | Region | Launch URL |
