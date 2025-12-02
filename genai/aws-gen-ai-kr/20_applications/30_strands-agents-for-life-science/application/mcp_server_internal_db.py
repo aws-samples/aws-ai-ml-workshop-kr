@@ -78,20 +78,29 @@ async def fetch_table_schema() -> dict:
 async def execute_postgres_query(query: str) -> dict:
     """사용자가 요청한 SQL 쿼리를 실행하는 도구입니다.
     - 쿼리가 명확히 주어진 경우 이 도구만 호출하면 됩니다.
-    - 쿼리를 자동 생성해야 하는 경우, 필요하다면 먼저 fetch_table_schema를 호출해 스키마를 확인한 뒤 실행하세요."""
+    - 쿼리를 자동 생성해야 하는 경우, 필요하다면 먼저 fetch_table_schema를 호출해 스키마를 확인한 뒤 실행하세요.
+    - 보안상 SELECT 쿼리만 허용됩니다."""
     try:
+        # 데모에서는 읽기 전용 쿼리만 허용 (SQL Injection 완화)
+        query_upper = query.strip().upper()
+        if not query_upper.startswith('SELECT'):
+            return {
+                "message": "보안상 SELECT 쿼리만 허용됩니다.",
+                "status": "error"
+            }
         conn = psycopg2.connect(**DB_CONFIG)
+        conn.set_session(readonly=True)  # 읽기 전용 모드
         cur = conn.cursor()
         cur.execute(query)
         result = cur.fetchall()
-        conn.commit()
         return {
             "message": "\n".join(str(row) for row in result),
             "status": "success"
         }
     except Exception as e:
         return {
-            "message": str(e)
+            "message": str(e),
+            "status": "error"
         }
     finally:
         if 'cur' in locals():

@@ -2,7 +2,7 @@ from mcp.server.fastmcp import FastMCP
 import logging
 import sys
 import requests
-import xml.etree.ElementTree as ET
+from defusedxml import ElementTree as ET 
 from typing import List, Dict, Any, Optional
 
 logging.basicConfig(

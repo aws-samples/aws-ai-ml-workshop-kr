@@ -157,6 +157,7 @@ def search_clinical_trials_and_save_studies_to_csv(search_expr: str, max_studies
             # Save to CSV if requested
             if save_csv:
                 csv_filename = filename or f"search_results_{search_expr.replace('+', '_')}.csv"
+                csv_filename = os.path.basename(csv_filename)
                 df.to_csv(csv_filename, index=False)
                 storage_info = f"Complete results have been saved to file {csv_filename}"
                 return f"Results saved to {csv_filename}\n\n{format_limited_output(df)}\n{storage_info}"
@@ -214,6 +215,7 @@ def get_studies_by_keyword(keyword: str, max_studies: int = 20, save_csv: bool =
             # Save to CSV if requested
             if save_csv:
                 csv_filename = filename or f"keyword_results_{keyword.replace(' ', '_')}.csv"
+                csv_filename = os.path.basename(csv_filename)
                 df.to_csv(csv_filename, index=False)
                 storage_info = f"Complete results have been saved to file {csv_filename}"
                 return f"Results saved to {csv_filename}\n\n{format_limited_output(df)}\n{storage_info}"
@@ -243,11 +245,12 @@ def get_full_studies_and_save(search_expr: str, max_studies: int = 20, filename:
         if len(full_studies) > 1:  # Header + data
             # Convert to DataFrame
             df = pd.DataFrame.from_records(full_studies[1:], columns=full_studies[0])
-            
+
             # Save to CSV
-            df.to_csv(filename, index=False)
-            
-            return f"Successfully saved {len(df)} full studies to {filename}"
+            safe_filename = os.path.basename(filename)
+            df.to_csv(safe_filename, index=False)
+
+            return f"Successfully saved {len(df)} full studies to {safe_filename}"
         return "No results found to save"
     except Exception as e:
         return f"Error saving full studies to CSV: {str(e)}"
