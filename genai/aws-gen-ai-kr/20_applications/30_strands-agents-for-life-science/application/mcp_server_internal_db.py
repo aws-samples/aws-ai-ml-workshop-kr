@@ -1,6 +1,24 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
+# ============================================================================
+# ⚠️  보안 주의사항 (Security Notice)
+# ============================================================================
+# 이 코드는 워크샵/데모 목적으로 작성되었습니다.
+# 프로덕션 환경에서 사용 시 다음 사항을 반드시 수정하세요:
+#
+# 1. DB_PASSWORD: 하드코딩된 기본값("postgres")을 제거하고,
+#    AWS Secrets Manager 또는 환경 변수를 통해 안전하게 관리하세요.
+#
+# 2. SQL Injection: execute_postgres_query 함수는 사용자 입력 쿼리를
+#    직접 실행합니다. 프로덕션에서는 다음을 구현하세요:
+#    - 파라미터화된 쿼리 (Parameterized Queries)
+#    - 허용된 테이블/컬럼 화이트리스트 검증
+#    - 위험한 SQL 키워드 차단 (UNION, DROP, INSERT 등)
+#
+# 3. 에러 메시지: 상세한 에러 정보 대신 일반적인 메시지를 반환하세요.
+# ============================================================================
+
 import logging
 import sys
 from mcp.server.fastmcp import FastMCP
