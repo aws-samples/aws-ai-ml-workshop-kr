@@ -1,0 +1,738 @@
+Parameters:
+  DatabaseName:
+    Type: String
+    Default: agentdb
+    Description: The name of the Aurora PostgreSQL database
+  DBUsername:
+    Type: String
+    Default: dbadmin
+    Description: Username for the database (cannot be 'admin' as it's a reserved word)
+  DBPassword:
+    Type: String
+    Default: postgres
+    NoEcho: true
+    Description: Password for the database (must be at least 8 characters)
+    MinLength: 8
+
+Mappings:
+  RegionMap:
+    us-east-1:
+      PandasLayer: arn:aws:lambda:us-east-1:336392948345:layer:AWSSDKPandas-Python39:11
+      Psycopg2Layer: arn:aws:lambda:us-east-1:898466741470:layer:psycopg2-py39:7
+    us-east-2:
+      PandasLayer: arn:aws:lambda:us-east-2:336392948345:layer:AWSSDKPandas-Python39:11
+      Psycopg2Layer: arn:aws:lambda:us-east-2:898466741470:layer:psycopg2-py39:1
+    us-west-2:
+      PandasLayer: arn:aws:lambda:us-west-2:336392948345:layer:AWSSDKPandas-Python39:11
+      Psycopg2Layer: arn:aws:lambda:us-west-2:898466741470:layer:psycopg2-py39:7
+    ap-northeast-2:
+      PandasLayer: arn:aws:lambda:ap-northeast-2:336392948345:layer:AWSSDKPandas-Python39:11
+      Psycopg2Layer: arn:aws:lambda:ap-northeast-2:898466741470:layer:psycopg2-py39:7
+
+Resources:
+  # VPC Resources
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-VPC
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-PublicSubnet1
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-PublicSubnet2
+
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: 10.0.3.0/24
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-PrivateSubnet1
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      CidrBlock: 10.0.4.0/24
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-PrivateSubnet2
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-PublicRouteTable
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+
+  # VPC Endpoints for S3 access
+  S3VPCEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    DependsOn: PrivateRouteTable
+    Properties:
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.s3"
+      VpcId: !Ref VPC
+      VpcEndpointType: Gateway
+      RouteTableIds:
+        - !Ref PublicRouteTable
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: "*"
+            Action:
+              - "s3:GetObject"
+              - "s3:ListBucket"
+              - "s3:PutObject"
+            Resource: "*"
+
+  CloudFormationVPCEndpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.cloudformation"
+      VpcId: !Ref VPC
+      VpcEndpointType: Interface
+      PrivateDnsEnabled: true
+      SubnetIds:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      SecurityGroupIds:
+        - !Ref LambdaSecurityGroup
+
+  # NAT Gateway resources
+  NatGatewayEIP:
+    Type: AWS::EC2::EIP
+    DependsOn: AttachGateway
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-NatGatewayEIP
+
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt NatGatewayEIP.AllocationId
+      SubnetId: !Ref PublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-NatGateway
+
+  # Private Route Tables for Lambda subnets
+  PrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-PrivateRouteTable
+
+  # Route through NAT Gateway for internet access
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    DependsOn: NatGateway
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+
+  PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable
+
+  PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable
+
+  # PostgreSQL Database Resources
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for Aurora PostgreSQL
+      SubnetIds:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+
+  DBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Aurora PostgreSQL
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          CidrIp: 10.0.0.0/16
+
+  AuroraCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      Engine: aurora-postgresql
+      EngineVersion: 15.4
+      DatabaseName: !Ref DatabaseName
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref DBSecurityGroup
+      Port: 5432
+      BackupRetentionPeriod: 7
+      StorageEncrypted: true
+
+  AuroraInstance1:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      Engine: aurora-postgresql
+      DBClusterIdentifier: !Ref AuroraCluster
+      DBInstanceClass: db.r6g.large
+      PubliclyAccessible: false
+
+  LambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Lambda function
+      VpcId: !Ref VPC
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          FromPort: -1
+          ToPort: -1
+          CidrIp: 0.0.0.0/0
+      SecurityGroupIngress:
+        - IpProtocol: -1
+          FromPort: -1
+          ToPort: -1
+          CidrIp: 10.0.0.0/16
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      Policies:
+        - PolicyName: S3Access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                Resource:
+                  - !Sub arn:aws:s3:::${S3Bucket}
+                  - !Sub arn:aws:s3:::${S3Bucket}/*
+                  - arn:aws:s3:::cloudformation-custom-resource-response-*
+        - PolicyName: SecretsManagerAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: !Ref DBSecret
+
+  DataLoadFunction:
+    Type: AWS::Lambda::Function
+    DependsOn:
+      - S3VPCEndpoint
+      - NatGateway
+      - PrivateRoute
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          DB_HOST: !GetAtt AuroraCluster.Endpoint.Address
+          DB_NAME: !Ref DatabaseName
+          DB_SECRET_NAME: !Ref DBSecret
+          S3_BUCKET: !Ref S3Bucket
+      Runtime: python3.9
+      Timeout: 900
+      MemorySize: 512
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import os
+          import time
+          import pandas as pd
+          from botocore.exceptions import ClientError
+          import urllib.request
+          import sys
+          import subprocess
+          import importlib.util
+          import urllib3
+          import cfnresponse
+          http = urllib3.PoolManager()
+ 
+          # Install psycopg2-binary package at runtime
+          def install_and_import_psycopg2():
+              subprocess.check_call([sys.executable, "-m", "pip", "install", "psycopg2-binary", "-t", "/tmp/"])
+              sys.path.append('/tmp/')
+              global psycopg2
+              import psycopg2
+              return psycopg2
+
+          def get_secret():
+              secret_name = os.environ['DB_SECRET_NAME']
+              region_name = os.environ['AWS_REGION']
+              session = boto3.session.Session()
+              client = session.client(
+                  service_name='secretsmanager',
+                  region_name=region_name
+              )
+              try:
+                  get_secret_value_response = client.get_secret_value(
+                      SecretId=secret_name
+                  )
+              except ClientError as e:
+                  raise e
+              else:
+                  if 'SecretString' in get_secret_value_response:
+                      secret = json.loads(get_secret_value_response['SecretString'])
+                      return secret
+
+          def get_db_connection():
+              # Import psycopg2 dynamically
+              psycopg2 = install_and_import_psycopg2()
+              
+              secrets = get_secret()
+              conn = psycopg2.connect(
+                  host=os.environ['DB_HOST'],
+                  database=os.environ['DB_NAME'],
+                  user=secrets['username'],
+                  password=secrets['password']
+              )
+              return conn
+
+          def create_tables(conn):
+              with conn.cursor() as cur:
+                  # Create chemotherapy_survival table
+                  cur.execute("""
+                      CREATE TABLE IF NOT EXISTS chemotherapy_survival (
+                          LRIG1 FLOAT,
+                          Survival_Status BOOLEAN,
+                          Survival_Duration FLOAT,
+                          ExpressionGroup FLOAT
+                      );
+
+                      COMMENT ON TABLE chemotherapy_survival IS 'Chemotherapy survival data';
+                      COMMENT ON COLUMN chemotherapy_survival.LRIG1 IS 'Gene expression value for LRIG1';
+                      COMMENT ON COLUMN chemotherapy_survival.Survival_Status IS 'BOOLEAN false for Alive or true for Dead';
+                      COMMENT ON COLUMN chemotherapy_survival.Survival_Duration IS 'Survival duration in days';
+                      COMMENT ON COLUMN chemotherapy_survival.ExpressionGroup IS 'Integer 1 or 0 for expression group';
+                  """)
+
+                  # Create clinical_genomic table
+                  cur.execute("""
+                      CREATE TABLE IF NOT EXISTS clinical_genomic (
+                          Case_ID VARCHAR(50),
+                          LRIG1 FLOAT,
+                          HPGD FLOAT,
+                          GDF15 FLOAT,
+                          CDH2 FLOAT,
+                          POSTN FLOAT,
+                          VCAN FLOAT,
+                          PDGFRA FLOAT,
+                          VCAM1 FLOAT,
+                          CD44 FLOAT,
+                          CD48 FLOAT,
+                          CD4 FLOAT,
+                          LYL1 FLOAT,
+                          SPI1 FLOAT,
+                          CD37 FLOAT,
+                          VIM FLOAT,
+                          LMO2 FLOAT,
+                          EGR2 FLOAT,
+                          BGN FLOAT,
+                          COL4A1 FLOAT,
+                          COL5A1 FLOAT,
+                          COL5A2 FLOAT,
+                          Patient_affiliation VARCHAR(50),
+                          Age_at_Histological_Diagnosis INT,
+                          Weight_lbs FLOAT,
+                          Gender VARCHAR(10),
+                          Ethnicity VARCHAR(50),
+                          Smoking_status VARCHAR(50),
+                          Pack_Years INT,
+                          Percent_GG VARCHAR(20),
+                          Tumor_Location_RUL VARCHAR(20),
+                          Tumor_Location_RML VARCHAR(20),
+                          Tumor_Location_RLL VARCHAR(20),
+                          Tumor_Location_LUL VARCHAR(20),
+                          Tumor_Location_LLL VARCHAR(20),
+                          Tumor_Location_L_Lingula VARCHAR(20),
+                          Tumor_Location_Unknown VARCHAR(20),
+                          Histology VARCHAR(70),
+                          Pathological_T_stage VARCHAR(20),
+                          Pathological_N_stage VARCHAR(20),
+                          Pathological_M_stage VARCHAR(20),
+                          Histopathological_Grade VARCHAR(70),
+                          Lymphovascular_invasion VARCHAR(60),
+                          Pleural_invasion VARCHAR(50),
+                          EGFR_mutation_status VARCHAR(50),
+                          KRAS_mutation_status VARCHAR(50),
+                          ALK_translocation_status VARCHAR(50),
+                          Adjuvant_Treatment VARCHAR(20),
+                          Chemotherapy VARCHAR(20),
+                          Radiation VARCHAR(20),
+                          Recurrence VARCHAR(20),
+                          Recurrence_Location VARCHAR(50),
+                          Survival_Status BOOLEAN,
+                          Time_to_Death FLOAT,
+                          Days_between_CT_and_surgery INT,
+                          Survival_Duration FLOAT
+                      );
+                  """)
+                  conn.commit()
+
+          def load_chemotherapy_data(conn, df):
+              with conn.cursor() as cur:
+                  for _, row in df.iterrows():
+                      try: 
+                          
+                          # Check if all required columns exist
+                          required_columns = ['LRIG1', 'Survival_Status', 'Survival_Duration', 'ExpressionGroup']
+                          for col in required_columns:
+                              if col not in row:
+                                  print(f"Missing column: {col}")
+                                  print(f"Available columns: {row.keys()}")
+                                  raise ValueError(f"Missing column: {col}")
+                          
+                          cur.execute("""
+                              INSERT INTO chemotherapy_survival (
+                                  LRIG1, Survival_Status, Survival_Duration, ExpressionGroup
+                              ) VALUES (%s, %s, %s, %s)
+                          """, (
+                              float(row['LRIG1']),
+                              bool(row['Survival_Status']),
+                              float(row['Survival_Duration']),
+                              float(row['ExpressionGroup'])
+                          ))
+                      except Exception as e:
+                          print(f"Error inserting row: {row}")
+                          print(f"Error details: {str(e)}")
+                          print(f"Row keys: {row.keys()}")
+                          raise
+              conn.commit()
+
+          def load_clinical_genomic_data(conn, df):
+              with conn.cursor() as cur:
+                  for _, row in df.iterrows():
+                      try:
+                          # Create a copy of the row data to modify
+                          row_dict = row.to_dict()
+                          
+                          # Convert Survival_Status to boolean if it exists
+                          if 'Survival_Status' in row_dict:
+                              row_dict['Survival_Status'] = bool(row_dict['Survival_Status'])
+                          
+                          columns = list(row_dict.keys())
+                          placeholders = ','.join(['%s'] * len(columns))
+                          columns_str = ','.join(columns)
+                          
+                          cur.execute(f"""
+                              INSERT INTO clinical_genomic ({columns_str})
+                              VALUES ({placeholders})
+                          """, tuple(row_dict.values()))
+                      except Exception as e:
+                          print(f"Error inserting clinical data row")
+                          print(f"Error details: {str(e)}")
+                          raise
+              conn.commit()
+
+          def send_cfn_response(event, context, status, data):
+              response_url = event['ResponseURL']
+          
+              response_body = {
+                  'Status': status,
+                  'Reason': f'See details in CloudWatch Log Stream: {context.log_stream_name}',
+                  'PhysicalResourceId': context.log_stream_name,
+                  'StackId': event['StackId'],
+                  'RequestId': event['RequestId'],
+                  'LogicalResourceId': event['LogicalResourceId'],
+                  'Data': data
+              }
+          
+              json_response_body = json.dumps(response_body)
+          
+              headers = {
+                  'content-type': '',
+                  'content-length': str(len(json_response_body))
+              }
+          
+              print("Sending response to CFN:", response_url)
+              try:
+                  response = http.request('PUT', response_url, body=json_response_body, headers=headers)
+                  print("CFN response status:", response.status)
+              except Exception as e:
+                  print("Failed to send CFN response:", str(e))
+
+          def lambda_handler(event, context):
+              try:
+                  print(f"Received event: {json.dumps(event)}")
+                  
+                  if event.get('RequestType') == 'Delete':
+                      print("Delete request received, sending success response")
+                       # 성공 시
+                      cfnresponse.send(event, context, cfnresponse.SUCCESS, {'Message': 'Data loaded successfully'})
+
+                      return {
+                          'StatusCode': 200,
+                          'Body': json.dumps('Delete request processed')
+                      }
+                  
+                  # Use urllib to download files from public URLs
+                  chemotherapy_url = 'https://ws-assets-prod-iad-r-pdx-f3b3f9f1a7d6a3d0.s3.us-west-2.amazonaws.com/4004aa8f-bdce-4519-8dd6-3453b04b0d03/dataset/chemotherapy_survival.csv'
+                  clinical_genomic_url = 'https://ws-assets-prod-iad-r-pdx-f3b3f9f1a7d6a3d0.s3.us-west-2.amazonaws.com/4004aa8f-bdce-4519-8dd6-3453b04b0d03/dataset/clinical_genomic.csv'
+                  
+                  try:
+                      print(f"Downloading chemotherapy data from: {chemotherapy_url}")
+                      urllib.request.urlretrieve(chemotherapy_url, '/tmp/chemotherapy_survival.csv')
+                      print("Successfully downloaded chemotherapy data")
+                      print(f"Downloading clinical genomic data from: {clinical_genomic_url}")
+                      urllib.request.urlretrieve(clinical_genomic_url, '/tmp/clinical_genomic.csv')
+                      print("Successfully downloaded clinical genomic data")
+                  except Exception as e:
+                      print(f"Error downloading files: {str(e)}")
+                      import traceback
+                      print(traceback.format_exc())
+                      raise
+
+                  # Load data into DataFrames
+                  chemotherapy_df = pd.read_csv('/tmp/chemotherapy_survival.csv')
+                  clinical_df = pd.read_csv('/tmp/clinical_genomic.csv')
+                  
+                  # Print column names for debugging
+                  print("Chemotherapy DataFrame columns:", chemotherapy_df.columns.tolist())
+                  print("Clinical DataFrame columns:", clinical_df.columns.tolist())
+                  
+                  # Rename columns to match database schema
+                  chemotherapy_df = chemotherapy_df.rename(columns={
+                      'Survival Status': 'Survival_Status',
+                      'Survival duration': 'Survival_Duration',
+                      'LRIG1': 'LRIG1',
+                      'ExpressionGroup': 'ExpressionGroup'
+                  })
+                  
+                  if 'Survival Status' in clinical_df.columns:
+                      clinical_df = clinical_df.rename(columns={
+                          'Survival Status': 'Survival_Status'
+                      })
+                  
+                  # Convert string "TRUE"/"FALSE" to boolean
+                  if 'Survival_Status' in chemotherapy_df.columns:
+                      chemotherapy_df['Survival_Status'] = chemotherapy_df['Survival_Status'].map({'TRUE': True, 'FALSE': False})
+                  
+                  if 'Survival_Status' in clinical_df.columns:
+                      clinical_df['Survival_Status'] = clinical_df['Survival_Status'].map({'TRUE': True, 'FALSE': False})
+                  
+                  # Print updated column names for verification
+                  print("Updated chemotherapy columns:", chemotherapy_df.columns.tolist())
+
+                  # Connect to database and create tables
+                  conn = get_db_connection()
+                  create_tables(conn)
+
+                  # Load data into tables
+                  load_chemotherapy_data(conn, chemotherapy_df)
+                  load_clinical_genomic_data(conn, clinical_df) 
+                  conn.close() 
+                  
+                  # Send success response to CloudFormation
+                  print("Data loaded successfully, sending success response to CloudFormation")
+                  send_cfn_response(event, context, cfnresponse.SUCCESS, {'Message': 'Data loaded successfully'})
+
+                  return {
+                      'StatusCode': 200,
+                      'Body': json.dumps('Data loaded successfully')
+                  }
+
+              except Exception as e:
+                  print(f"Error: {str(e)}")
+                  print(f"Error type: {type(e)}")
+                  import traceback
+                  print(traceback.format_exc())
+                  
+                  # Send failure response to CloudFormation
+                  print("Sending failure response to CloudFormation")
+                  send_cfn_response(event, context, cfnresponse.FAILED, {"Error": str(e)})
+                  
+                  return {
+                      'StatusCode': 500,
+                      'Body': json.dumps(f'Error: {str(e)}')
+                  }
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref LambdaSecurityGroup
+        SubnetIds:
+          - !Ref PrivateSubnet1
+          - !Ref PrivateSubnet2
+      Layers:
+        - !FindInMap [RegionMap, !Ref "AWS::Region", PandasLayer]
+
+  DBSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub ${AWS::StackName}/db-credentials
+      Description: Aurora PostgreSQL database credentials
+      SecretString: !Sub '{"username": "${DBUsername}", "password": "${DBPassword}"}'
+
+  # S3 Resources
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::StackName}-${AWS::AccountId}-${AWS::Region}"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  S3BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3Bucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowCloudFormationReadAccess
+            Effect: Allow
+            Principal:
+              Service: cloudformation.amazonaws.com
+            Action:
+              - s3:GetObject
+            Resource: !Sub arn:aws:s3:::${S3Bucket}/*
+          - Sid: AllowLambdaAccess
+            Effect: Allow
+            Principal:
+              AWS: !GetAtt LambdaExecutionRole.Arn
+            Action:
+              - s3:PutObject
+              - s3:GetObject
+              - s3:ListBucket
+            Resource:
+              - !Sub arn:aws:s3:::${S3Bucket}
+              - !Sub arn:aws:s3:::${S3Bucket}/*
+
+  LoadDataToDatabase:
+    Type: Custom::LoadData
+    DependsOn:
+      - AuroraInstance1
+      - DataLoadFunction
+    Properties:
+      ServiceToken: !GetAtt DataLoadFunction.Arn
+
+Outputs:
+  AuroraClusterEndpoint:
+    Description: Aurora PostgreSQL Cluster Endpoint
+    Value: !GetAtt AuroraCluster.Endpoint.Address
+
+  DatabaseName:
+    Description: Aurora PostgreSQL Database Name
+    Value: !Ref DatabaseName
+
+  SecretName:
+    Description: Name of the secret storing database credentials
+    Value: !Ref DBSecret
+
+  S3BucketName:
+    Description: S3 Bucket for data storage
+    Value: !Ref S3Bucket
+    
+  VPC:
+    Description: VPC ID
+    Value: !Ref VPC
+    Export:
+      Name: !Sub "${AWS::StackName}-VPC"
+
+  PublicSubnet1:
+    Description: Public Subnet 1 ID
+    Value: !Ref PublicSubnet1
+    Export:
+      Name: !Sub "${AWS::StackName}-PublicSubnet1"
+
+  PublicSubnet2:
+    Description: Public Subnet 2 ID
+    Value: !Ref PublicSubnet2
+    Export:
+      Name: !Sub "${AWS::StackName}-PublicSubnet2"
+
+  PrivateSubnet1:
+    Description: Private Subnet 1 ID
+    Value: !Ref PrivateSubnet1
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet1"
+
+  PrivateSubnet2:
+    Description: Private Subnet 2 ID
+    Value: !Ref PrivateSubnet2
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateSubnet2"
