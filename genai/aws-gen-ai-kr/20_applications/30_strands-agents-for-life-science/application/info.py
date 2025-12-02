@@ -70,44 +70,43 @@ nova_micro_models = [   # Nova Micro
     }
 ]
 
-claude_4_5_sonnet_models = [   # Sonnet 4.5
+claude_4_5_sonnet_models = [   # Claude Sonnet 4.5 (Cross-Region Inference)
     {
         "bedrock_region": "us-west-2",  # Oregon
         "model_type": "claude",
-        "model_id": "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
+        "model_id": "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
     },
     {
         "bedrock_region": "us-east-1",  # N.Virginia
         "model_type": "claude",
-        "model_id": "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
+        "model_id": "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
     },
 ]
 
-claude_4_0_sonnet_models = [   # Sonnet 4.0
+claude_4_0_sonnet_models = [   # Claude Sonnet 4 (Cross-Region Inference)
     {
         "bedrock_region": "us-west-2",  # Oregon
         "model_type": "claude",
-        "model_id": "global.anthropic.claude-sonnet-4-20250514-v1:0"
+        "model_id": "us.anthropic.claude-sonnet-4-20250514-v1:0"
     },
     {
         "bedrock_region": "us-east-1",  # N.Virginia
         "model_type": "claude",
-        "model_id": "global.anthropic.claude-sonnet-4-20250514-v1:0"
+        "model_id": "us.anthropic.claude-sonnet-4-20250514-v1:0"
     },
 ]
 
-claude_4_5_haiku_models = [   # Haiku 4.5 
+claude_4_5_haiku_models = [   # Claude Haiku 4.5 (Cross-Region Inference)
     {
         "bedrock_region": "us-west-2",  # Oregon
         "model_type": "claude",
-        "model_id": "global.anthropic.claude-haiku-4-5-20251001-v1:0"
+        "model_id": "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     },
     {
         "bedrock_region": "us-east-1",  # N.Virginia
         "model_type": "claude",
-        "model_id": "global.anthropic.claude-haiku-4-5-20251001-v1:0"
+        "model_id": "us.anthropic.claude-haiku-4-5-20251001-v1:0"
     },
-    
 ]
 
 

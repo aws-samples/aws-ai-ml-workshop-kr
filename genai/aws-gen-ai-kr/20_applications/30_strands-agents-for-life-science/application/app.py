@@ -38,16 +38,16 @@ with st.sidebar:
     # Model selection
     modelName = st.selectbox(
         '🤖 모델 선택',
-        ('Claude 3.7 Sonnet', 'Claude 3.5 Sonnet', 'Claude 3.5 Haiku'),
+        ('Claude 4.5 Sonnet', 'Claude 4.0 Sonnet', 'Claude 4.5 Haiku'),
         index=0
     )
 
     # Extended thinking (reasoning mode)
     select_reasoning = st.checkbox(
-        '🧠 Extended Thinking 활성화 (Claude 3.7 Sonnet 전용)',
+        '🧠 Extended Thinking 활성화 (Claude 4.5 Sonnet 전용)',
         value=False
     )
-    reasoningMode = 'Enable' if select_reasoning and modelName == 'Claude 3.7 Sonnet' else 'Disable'
+    reasoningMode = 'Enable' if select_reasoning and modelName == 'Claude 4.5 Sonnet' else 'Disable'
     logger.info(f"reasoningMode: {reasoningMode}")
 
     chat.update(modelName, reasoningMode)

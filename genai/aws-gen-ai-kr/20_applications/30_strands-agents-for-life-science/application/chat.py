@@ -22,7 +22,7 @@ logger = logging.getLogger("chat")
 model_name = "Claude 4.5 Sonnet"
 model_type = "claude"
 debug_mode = "Enable"
-model_id = "global.anthropic.claude-sonnet-4-5-20250929-v1:0"
+model_id = "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 models = info.get_model_info(model_name)
 reasoning_mode = 'Disable'
 
@@ -76,7 +76,6 @@ def get_model():
             model_id=model_id,
             max_tokens=64000,
             stop_sequences=[STOP_SEQUENCE],
-            temperature=1,
             additional_request_fields={
                 "thinking": {
                     "type": "enabled",
@@ -94,13 +93,6 @@ def get_model():
             model_id=model_id,
             max_tokens=maxOutputTokens,
             stop_sequences=[STOP_SEQUENCE],
-            temperature=0.1,
-            top_p=0.9,
-            additional_request_fields={
-                "thinking": {
-                    "type": "disabled"
-                }
-            }
         )
     return model
 
