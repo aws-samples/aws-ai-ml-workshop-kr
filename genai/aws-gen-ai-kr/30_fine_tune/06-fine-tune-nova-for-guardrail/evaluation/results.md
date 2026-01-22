@@ -95,8 +95,8 @@ Fine-tuning으로 **100% 탐지 달성**한 Unsafe 카테고리:
 
 ### 모델 정보
 
-- **Custom Model ARN**: `arn:aws:bedrock:us-east-1:418272795925:custom-model/amazon.nova-2-lite-v1:0:256k/f8tb601f69qi`
-- **Deployment ARN**: `arn:aws:bedrock:us-east-1:418272795925:custom-model-deployment/bsi6zaryup1s`
+- **Custom Model ARN**: `arn:aws:bedrock:us-east-1:<ACCOUNT_ID>:custom-model/amazon.nova-2-lite-v1:0:256k/<MODEL_ID>`
+- **Deployment ARN**: `arn:aws:bedrock:us-east-1:<ACCOUNT_ID>:custom-model-deployment/<DEPLOYMENT_ID>`
 
 ---
 

@@ -89,7 +89,7 @@
       }
     },
     "finetuned_model": {
-      "model_id": "arn:aws:bedrock:us-east-1:418272795925:custom-model-deployment/bsi6zaryup1s",
+      "model_id": "arn:aws:bedrock:us-east-1:<ACCOUNT_ID>:custom-model-deployment/bsi6zaryup1s",
       "model_name": "Fine-tuned Nova 2 Lite",
       "accuracy": 0.8928571428571429,
       "correct": 75,
