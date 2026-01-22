@@ -1,0 +1,14 @@
+{
+  "job_name": "guard-rail-nova-2-lite-20260115-221123",
+  "status": "Completed",
+  "creation_time": "2026-01-15 13:11:25.106000+00:00",
+  "end_time": "2026-01-15 15:56:12.557000+00:00",
+  "base_model_arn": "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-2-lite-v1:0:256k",
+  "output_model_arn": "arn:aws:bedrock:us-east-1:418272795925:custom-model/amazon.nova-2-lite-v1:0:256k/4ios319wiaro",
+  "custom_model_name": "guard-rail-nova-2-lite-20260115-221123",
+  "failure_message": null,
+  "training_metrics": {
+    "trainingLoss": -1.0
+  },
+  "validation_metrics": []
+}

@@ -1,0 +1,13 @@
+{
+  "job_name": "guard-rail-nova-2-lite-20260122-130836",
+  "job_arn": "arn:aws:bedrock:us-east-1:418272795925:model-customization-job/amazon.nova-2-lite-v1:0:256k/9urovwzohlbk",
+  "custom_model_name": "guard-rail-nova-2-lite-20260122-130836",
+  "status": "SUBMITTED",
+  "base_model_id": "amazon.nova-2-lite-v1:0:256k",
+  "hyperparameters": {
+    "epochCount": "3",
+    "batchSize": "1",
+    "learningRate": "1e-5",
+    "learningRateWarmupSteps": "0"
+  }
+}
