@@ -14,28 +14,11 @@ Amazon Nova 2 Lite 모델을 가드레일 분류 작업에 맞게 Fine-tuning하
 
 ## 사전 준비
 
-### 1. AWS 자격 증명 설정
+### 1. 환경 설정
 
-```bash
-aws configure
-```
+프로젝트 루트의 [README.md](../README.md)의 "사전 준비" 섹션을 참조하세요.
 
-### 2. 의존성 설치
-
-```bash
-pip install boto3 tqdm python-dotenv
-```
-
-### 3. 환경 변수 설정 (선택)
-
-`.env` 파일 생성:
-
-```env
-AWS_REGION=us-east-1
-S3_BUCKET_NAME=guard-rail-fine-tuning-data
-```
-
-### 4. 데이터 준비
+### 2. 데이터 준비
 
 Fine-tuning 전에 데이터 변환이 필요합니다:
 
@@ -82,7 +65,7 @@ python fine-tuning/run_fine_tuning.py
 
 ## 출력 파일
 
-Fine-tuning 완료 후 `data/` 폴더에 생성되는 파일:
+Fine-tuning 완료 후 `evaluation/results/` 폴더에 생성되는 파일:
 
 | 파일 | 설명 |
 |------|------|
