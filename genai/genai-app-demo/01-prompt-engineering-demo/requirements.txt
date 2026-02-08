@@ -7,4 +7,4 @@ langchain==0.1.12
 streamlit==1.32.2
 requests==2.31.0
 streamlit-cropper==0.2.2
-pillow==10.2.0
+pillow==10.3.0
