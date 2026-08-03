@@ -2,6 +2,26 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: >
   This CloudFormation template configures SageMaker Studio with minimal VPC requirements and public internet access for non-EFS traffic.
 
+Parameters:
+  OpenSearchMasterUserName:
+    Type: String
+    Default: "raguser"
+    Description: Master user name for the OpenSearch internal user database.
+    MinLength: 1
+
+  OpenSearchMasterUserPassword:
+    Type: String
+    NoEcho: true
+    Description: >
+      Master user password for the OpenSearch internal user database. Must be at least 8 characters
+      and contain an uppercase letter, a lowercase letter, a number, and a special character.
+      No default is provided on purpose - supply a unique value at deployment time.
+    MinLength: 8
+    AllowedPattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+    ConstraintDescription: >
+      Must be at least 8 characters and include an uppercase letter, a lowercase letter, a number,
+      and a special character.
+
 Resources:
   LambdaHelper:
     Type: AWS::Lambda::Function
@@ -156,8 +176,8 @@ Resources:
         Enabled: true
         InternalUserDatabaseEnabled: true
         MasterUserOptions:
-          MasterUserName: "raguser"
-          MasterUserPassword: "MarsEarth1!"
+          MasterUserName: !Ref OpenSearchMasterUserName
+          MasterUserPassword: !Ref OpenSearchMasterUserPassword
       DomainEndpointOptions:
         EnforceHTTPS: true
         TLSSecurityPolicy: "Policy-Min-TLS-1-2-2019-07"
@@ -181,14 +201,17 @@ Resources:
     Properties:
       Name: "chatbot-opensearch_user_id"
       Type: "String"
-      Value: "raguser"
+      Value: !Ref OpenSearchMasterUserName
 
+  # NOTE: CloudFormation's AWS::SSM::Parameter resource does not support SecureString, so this
+  # parameter is created as a String. Restrict access to it with IAM, or replace it with a
+  # SecureString / Secrets Manager secret created outside of this template for non-workshop use.
   OpenSearchUserPasswordParameter:
     Type: "AWS::SSM::Parameter"
     Properties:
       Name: "chatbot-opensearch_user_password"
       Type: "String"
-      Value: "MarsEarth1!"
+      Value: !Ref OpenSearchMasterUserPassword
 
   StudioDomain:
     Type: AWS::SageMaker::Domain
@@ -253,11 +276,13 @@ Outputs:
 
   UserID:
     Description: "User ID for OpenSearch domain."
-    Value: "raguser"
+    Value: !Ref OpenSearchMasterUserName
 
-  UserPassword:
-    Description: "Password for OpenSearch domain."
-    Value: "MarsEarth1!"
+  UserPasswordParameterName:
+    Description: >
+      Name of the SSM parameter holding the OpenSearch master user password. The password itself is
+      not exposed as a stack output.
+    Value: !Ref OpenSearchUserPasswordParameter
 
   JupyterAppSpaceName:
     Description: Name of the JupyterLab App Space

@@ -28,12 +28,13 @@ OPENSEARCH_USER_PASSWORD=your-password
 
 ### Option 1: .env 파일 사용 (권장)
 
-1. `.env` 파일에 OpenSearch 설정 추가:
+1. `.env` 파일에 OpenSearch 설정 추가 (`.env`는 `.gitignore` 대상이므로 커밋되지 않습니다):
 ```bash
 OPENSEARCH_VERSION=3.1
 OPENSEARCH_DOMAIN_NAME=my-opensearch-domain
 OPENSEARCH_USER_ID=raguser
-OPENSEARCH_USER_PASSWORD=MarsEarth1!
+# 8자 이상, 대문자/소문자/숫자/특수문자 포함. 공용 비밀번호를 재사용하지 마세요.
+OPENSEARCH_USER_PASSWORD=<YOUR_PASSWORD>
 ```
 
 2. 스크립트 실행 권한 부여:
@@ -72,7 +73,7 @@ uv run ./create-opensearch.sh --interactive
 |-----------|-------|-------------|----------------|---------------------|
 | `--version` | `-v` | OpenSearch version (1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19, 3.1) | `OPENSEARCH_VERSION` | 3.1 |
 | `--user-id` | `-u` | OpenSearch master user ID | `OPENSEARCH_USER_ID` | raguser |
-| `--password` | `-p` | OpenSearch master password (8+ chars, mixed case, numbers, special chars) | `OPENSEARCH_USER_PASSWORD` | MarsEarth1! |
+| `--password` | `-p` | OpenSearch master password (8+ chars, mixed case, numbers, special chars) | `OPENSEARCH_USER_PASSWORD` | none (required) |
 | `--domain-name` | `-d` | Domain name (3-28 chars, lowercase, starts with letter) | `OPENSEARCH_DOMAIN_NAME` | auto-generated |
 | `--mode` | `-m` | Deployment mode: `dev` (1-AZ) or `prod` (3-AZ with standby) | - | dev |
 | `--interactive` | `-i` | Run in interactive mode | - | - |
@@ -80,7 +81,11 @@ uv run ./create-opensearch.sh --interactive
 
 ## 실행 예시
 
-### 기본 설정으로 개발 환경 구축
+> **참고:** 비밀번호는 기본값이 없습니다. 아래 예시처럼 `.env`의 `OPENSEARCH_USER_PASSWORD`를
+> 미리 설정했거나, `-p` 옵션으로 직접 전달해야 합니다. 둘 다 없으면 스크립트가 오류로 중단됩니다.
+> (`--interactive` 모드에서는 실행 중 입력받습니다.)
+
+### 기본 설정으로 개발 환경 구축 (.env에 비밀번호 설정 필요)
 ```bash
 uv run ./create-opensearch.sh
 ```

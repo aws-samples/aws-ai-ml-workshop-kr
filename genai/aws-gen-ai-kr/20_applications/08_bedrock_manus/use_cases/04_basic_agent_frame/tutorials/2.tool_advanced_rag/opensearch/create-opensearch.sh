@@ -15,7 +15,9 @@ NC='\033[0m' # No Color
 # 기본값 설정
 DEFAULT_VERSION="2.19"
 DEFAULT_USER_ID="raguser"
-DEFAULT_PASSWORD="MarsEarth1!"
+# 비밀번호는 기본값을 제공하지 않습니다. OPENSEARCH_USER_PASSWORD 환경변수 또는 -p 옵션으로
+# 반드시 직접 지정해야 합니다. (공용 기본 비밀번호로 도메인이 생성되는 것을 방지)
+DEFAULT_PASSWORD="${OPENSEARCH_USER_PASSWORD:-}"
 DEFAULT_DOMAIN_NAME=""
 DEFAULT_MODE="dev"
 
@@ -29,7 +31,8 @@ show_help() {
     echo "  -v, --version VERSION     OpenSearch 버전 (기본값: $DEFAULT_VERSION)"
     echo "                           지원 버전: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19"
     echo "  -u, --user-id USER_ID     OpenSearch 사용자 ID (기본값: $DEFAULT_USER_ID)"
-    echo "  -p, --password PASSWORD   OpenSearch 사용자 비밀번호 (기본값: $DEFAULT_PASSWORD)"
+    echo "  -p, --password PASSWORD   OpenSearch 사용자 비밀번호 (필수, 기본값 없음)"
+    echo "                           OPENSEARCH_USER_PASSWORD 환경변수로도 지정 가능"
     echo "  -d, --domain-name NAME    OpenSearch 도메인 이름 (기본값: 자동 생성)"
     echo "                           3-28자, 소문자로 시작, 소문자/숫자/하이픈만 사용"
     echo "  -m, --mode MODE          실행 모드 (기본값: $DEFAULT_MODE)"
@@ -67,6 +70,11 @@ validate_version() {
 
 validate_password() {
     local password=$1
+    if [[ -z "$password" ]]; then
+        echo -e "${RED}오류: 비밀번호가 지정되지 않았습니다.${NC}"
+        echo -e "${YELLOW}-p/--password 옵션 또는 OPENSEARCH_USER_PASSWORD 환경변수로 지정하세요.${NC}"
+        return 1
+    fi
     if [[ ${#password} -lt 8 ]]; then
         echo -e "${RED}오류: 비밀번호는 최소 8자 이상이어야 합니다.${NC}"
         return 1
@@ -138,7 +146,7 @@ interactive_input() {
     
     # 비밀번호 입력
     while true; do
-        read -s -p "OpenSearch 사용자 비밀번호를 입력하세요 [기본값: $DEFAULT_PASSWORD]: " input_password
+        read -s -p "OpenSearch 사용자 비밀번호를 입력하세요 (8자 이상, 대/소문자+숫자+특수문자): " input_password
         echo ""
         password=${input_password:-$DEFAULT_PASSWORD}
         if validate_password "$password"; then

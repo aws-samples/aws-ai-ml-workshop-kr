@@ -8,7 +8,7 @@
 2. opensearch 셋텡
     SSM, OpenSearch 권한 필요
     chmod +x create-opensearch.sh
-    ./create-opensearch.sh -v 2.19 -d dongjin-os -u dongjin -p MarsEarth1! -m prod
+    ./create-opensearch.sh -v 2.19 -d my-os-domain -u myuser -p <YOUR_PASSWORD> -m prod
     (버젼, 도메인네임, 유저네임, 패스워드, 모드 (dev or prod))
 
 3. os indexing

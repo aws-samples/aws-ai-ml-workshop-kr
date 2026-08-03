@@ -17,6 +17,7 @@ import botocore
 import time
 import argparse
 import re
+from getpass import getpass
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -34,7 +35,9 @@ def parse_arguments():
     """명령행 인수 파싱 (.env 파일에서 기본값 로드)"""
     # .env에서 기본값 가져오기 (없으면 하드코딩된 기본값 사용)
     default_user_id = os.getenv('OPENSEARCH_USER_ID', 'raguser')
-    default_password = os.getenv('OPENSEARCH_USER_PASSWORD', 'MarsEarth1!')
+    # 비밀번호는 기본값을 제공하지 않습니다. .env의 OPENSEARCH_USER_PASSWORD 또는 -p 옵션으로
+    # 반드시 직접 지정해야 합니다. (공용 기본 비밀번호로 도메인이 생성되는 것을 방지)
+    default_password = os.getenv('OPENSEARCH_USER_PASSWORD', '')
     default_version = os.getenv('OPENSEARCH_VERSION', '3.1')
     default_domain_name = os.getenv('OPENSEARCH_DOMAIN_NAME', '')
 
@@ -44,7 +47,8 @@ def parse_arguments():
     parser.add_argument('--user-id', '-u', default=default_user_id,
                        help=f'OpenSearch 사용자 ID. 기본값: {default_user_id}')
     parser.add_argument('--password', '-p', default=default_password,
-                       help=f'OpenSearch 사용자 비밀번호. 기본값: {"*" * len(default_password)}')
+                       help='OpenSearch 사용자 비밀번호 (필수, 기본값 없음). '
+                            '.env의 OPENSEARCH_USER_PASSWORD로도 지정 가능')
     parser.add_argument('--domain-name', '-d', default=default_domain_name,
                        help=f'OpenSearch 도메인 이름. 지정하지 않으면 자동 생성됩니다. (예: my-opensearch-cluster). 기본값: {default_domain_name if default_domain_name else "자동 생성"}')
     parser.add_argument('--dev', action='store_true', default=True,
@@ -57,6 +61,17 @@ def parse_arguments():
     # --prod 플래그가 설정되면 DEV를 False로 변경
     if args.prod:
         args.dev = False
+
+    # 비밀번호는 필수입니다. 지정되지 않으면 대화형으로 입력받고,
+    # 비대화형 환경에서는 오류로 중단합니다.
+    if not args.password:
+        if sys.stdin.isatty():
+            args.password = getpass('OpenSearch 사용자 비밀번호를 입력하세요: ')
+        if not args.password:
+            parser.error(
+                '비밀번호가 지정되지 않았습니다. --password/-p 옵션 또는 '
+                '.env의 OPENSEARCH_USER_PASSWORD로 지정하세요.'
+            )
 
     return args
 

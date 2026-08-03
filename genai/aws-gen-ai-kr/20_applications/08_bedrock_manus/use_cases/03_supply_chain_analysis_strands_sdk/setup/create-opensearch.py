@@ -17,6 +17,7 @@ import botocore
 import time
 import argparse
 import re
+from getpass import getpass
 
 # 모듈 경로 추가
 module_path = ".."
@@ -31,8 +32,11 @@ def parse_arguments():
                        help='OpenSearch 버전 (예: 1.3, 2.3, 2.5, 2.7, 2.9, 2.11, 2.13, 2.15, 2.17, 2.19). 기본값: 2.11')
     parser.add_argument('--user-id', '-u', default="raguser",
                        help='OpenSearch 사용자 ID. 기본값: raguser')
-    parser.add_argument('--password', '-p', default="MarsEarth1!",
-                       help='OpenSearch 사용자 비밀번호. 기본값: MarsEarth1!')
+    # 비밀번호는 기본값을 제공하지 않습니다. -p 옵션 또는 OPENSEARCH_USER_PASSWORD 환경변수로
+    # 반드시 직접 지정해야 합니다. (공용 기본 비밀번호로 도메인이 생성되는 것을 방지)
+    parser.add_argument('--password', '-p', default=os.getenv('OPENSEARCH_USER_PASSWORD', ''),
+                       help='OpenSearch 사용자 비밀번호 (필수, 기본값 없음). '
+                            'OPENSEARCH_USER_PASSWORD 환경변수로도 지정 가능')
     parser.add_argument('--domain-name', '-d', default="",
                        help='OpenSearch 도메인 이름. 지정하지 않으면 자동 생성됩니다. (예: my-opensearch-cluster)')
     parser.add_argument('--dev', action='store_true', default=True,
@@ -45,7 +49,18 @@ def parse_arguments():
     # --prod 플래그가 설정되면 DEV를 False로 변경
     if args.prod:
         args.dev = False
-    
+
+    # 비밀번호는 필수입니다. 지정되지 않으면 대화형으로 입력받고,
+    # 비대화형 환경에서는 오류로 중단합니다.
+    if not args.password:
+        if sys.stdin.isatty():
+            args.password = getpass('OpenSearch 사용자 비밀번호를 입력하세요: ')
+        if not args.password:
+            parser.error(
+                '비밀번호가 지정되지 않았습니다. --password/-p 옵션 또는 '
+                'OPENSEARCH_USER_PASSWORD 환경변수로 지정하세요.'
+            )
+
     return args
 
 def validate_domain_name(domain_name):

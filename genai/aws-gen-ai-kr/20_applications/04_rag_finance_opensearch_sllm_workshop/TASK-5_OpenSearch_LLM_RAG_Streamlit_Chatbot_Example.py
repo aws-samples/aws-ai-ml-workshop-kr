@@ -48,8 +48,10 @@ index_name = 'fsi-sample'
 # Opensearch domain_endpoin name :
 opensearch_domain_endpoint = "https://search-ragopensearch-2pz3fgitugmvrz7vbngitqljzu.us-east-1.es.amazonaws.com"
 # Opensearch master user auth
-username = 'raguser'
-password = 'MarsEarth1!'
+# 자격 증명은 소스에 하드코딩하지 않고 환경변수로 주입합니다.
+# ex) export OPENSEARCH_USER_ID=raguser OPENSEARCH_USER_PASSWORD='<YOUR_PASSWORD>'
+username = os.environ['OPENSEARCH_USER_ID']
+password = os.environ['OPENSEARCH_USER_PASSWORD']
 
 #aws_access_key = os.environ['AWS_ACCESS_KEY']
 #aws_secret_key =os.environ['AWS_SECRET_KEY']
