@@ -359,19 +359,23 @@ Resources:
         Statement: 
           - Sid: "AWSCloudTrailAclCheck"
             Effect: "Allow"
-            Principal: 
+            Principal:
               Service: "cloudtrail.amazonaws.com"
             Action: "s3:GetBucketAcl"
             Resource: !Sub arn:aws:s3:::${CloudTrailBucket}
+            Condition:
+              StringEquals:
+                aws:SourceArn: !Sub arn:aws:cloudtrail:${AWS::Region}:${AWS::AccountId}:trail/cloudtrail-${CloudTrailBucket}
           - Sid: "AWSCloudTrailWrite"
             Effect: "Allow"
-            Principal: 
+            Principal:
               Service: "cloudtrail.amazonaws.com"
             Action: "s3:PutObject"
             Resource: !Sub arn:aws:s3:::${CloudTrailBucket}/AWSLogs/${AWS::AccountId}/*
-            Condition: 
+            Condition:
               StringEquals:
                 s3:x-amz-acl: "bucket-owner-full-control"
+                aws:SourceArn: !Sub arn:aws:cloudtrail:${AWS::Region}:${AWS::AccountId}:trail/cloudtrail-${CloudTrailBucket}
 
   # The CloudTrail trail - uses the CloudTrailBucket as the trail name
   S3ObjectCloudTrail: 
