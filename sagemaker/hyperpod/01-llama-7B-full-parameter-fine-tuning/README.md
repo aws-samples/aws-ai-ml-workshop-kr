@@ -1,7 +1,7 @@
 # SageMaker-HyperPod-Step-By-Step
 아래의 가이드는 두 개의 자료를 기반으로 하였습니다. Amazon SageMaker HyperPod Workshop 은 HyperPod 의 환경 세팅을 주로 참고 하였고, 거의 내용이 비슷합니다. 하지만, 일부 에러 및 추가 설명을 하였습니다. 아래 내용과 같이 보셔도 좋습니다. Get Started Training Llama 2 with PyTorch FSDP in 5 Minutes 는 Llama2 의 모델 훈련을 실행하는데 초점을 두었습니다. 
 - [Amazon SageMaker HyperPod Workshop](https://catalog.workshops.aws/sagemaker-hyperpod/en-US)
-- [Get Started Training Llama 2 with PyTorch FSDP in 5 Minutes](https://github.com/aws-samples/awsome-distributed-training/tree/main/3.test_cases/10.FSDP)
+- [Get Started Training Llama 2 with PyTorch FSDP in 5 Minutes](https://github.com/awslabs/awsome-distributed-ai/tree/main/examples/training/fsdp)
 
 # 0. Tutorial Demo Video
 이 가이드에 대한 데모 비디오 입니다. 아래의 단계를 Step By Step 으로 따라가서 만들었습니다. Nover Version Video 가 17:54 초의 긴 시간이어서, Short Version Video (1:52 초) 도 생성 했습니다. 참고 하시기 바랍니다.
@@ -298,7 +298,7 @@
     ```
 - download a script easy-ssh.sh
     ```
-    wget https://raw.githubusercontent.com/aws-samples/awsome-distributed-training/main/1.architectures/5.sagemaker-hyperpod/easy-ssh.sh
+    wget https://raw.githubusercontent.com/awslabs/awsome-distributed-ai/main/architectures/sagemaker-hyperpod-slurm/easy-ssh.sh
     chmod +x easy-ssh.sh
     ```
 - easy_ssh Command to Head Node
